@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include "Query.h"
 
 class Evaluator {
 public:
