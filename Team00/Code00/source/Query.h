@@ -1,6 +1,5 @@
+#pragma once
 #include <string>
-
-using namespace std;
 
 class Query {
 public:
@@ -8,7 +7,8 @@ public:
     string getClause();
     Query(string type, string clause);
 private:
+    // could be declaration or select. maybe use enum?
     string type;
-    // "such that" clause (if any, could be none: point to null)
+    // "such that" clause (if any, could be none: point to nullptr)
     string clause;
-}
+};
