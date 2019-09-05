@@ -1,14 +1,16 @@
 #pragma once
 #include <string>
+#include <vector>
+#include <utility>
+#include "Clause.h"
 
 class Query {
 public:
-    string getType();
-    string getClause();
-    Query(string type, string clause);
+    Query(std::vector<std::pair<std::string, std::string> > decl,
+          std::vector<Clause> clauses);
+    std::vector<std::pair<std::string, std::string> > getDeclarations();
+    std::vector<Clause> getClauses();
 private:
-    // could be declaration or select. maybe use enum?
-    string type;
-    // "such that" clause (if any, could be none: point to nullptr)
-    string clause;
+    std::vector<std::pair<std::string, std::string> > declarations;
+    std::vector<Clause> clauses;
 };
