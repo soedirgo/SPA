@@ -1,12 +1,9 @@
-#include<stdio.h>
 #include <iostream>
 #include <string>
 #include <vector>
-
-using namespace std;
-
 #include "PKB.h"
 #include "TNode.h"
+using namespace std;
 
 int PKB::setProcToAST(PROC p, TNode* r) {
 	return 0;
