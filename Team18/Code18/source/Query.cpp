@@ -1,14 +1,19 @@
 #include <string>
 #include <utility>
+#include <unordered_map>
 #include "Query.h"
 #include "Clause.h"
 using namespace std;
 
-Query::Query(vector<pair<string, string>> decl, vector<Clause> cl)
-    : declarations(decl), clauses(cl) {}
+Query::Query(unordered_map<string, string> decl, string syn, vector<Clause> cl)
+    : declarations(decl), selectSyn(syn), clauses(cl) {}
 
-vector<pair<string, string> > Query::getDeclarations() {
+unordered_map<string, string> Query::getDeclarations() {
     return this->declarations;
+}
+
+string Query::getSelectSynonym() {
+    return this->selectSyn;
 }
 
 vector<Clause> Query::getClauses() {
