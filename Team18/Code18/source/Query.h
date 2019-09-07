@@ -4,17 +4,14 @@
 #include <utility>
 #include <unordered_map>
 #include "Clause.h"
+using namespace std;
 
 class Query {
 public:
-    Query(std::unordered_map<std::string, std::string> decl,
-          std::string selectSyn,
-          std::vector<Clause> clauses);
-    std::unordered_map<std::string, std::string> getDeclarations();
-    std::string getSelectSynonym();
-    std::vector<Clause> getClauses();
+	Query(unordered_map<string, string> declerationVariables, vector<string> selectVars,
+		vector<pair<string, pair<string, string>>> suchThat);
+	unordered_map<string, string> getDeclarations();
+	vector<pair<string, pair<string, string>>> getSuchThatClauses();
 private:
-    std::unordered_map<std::string, std::string> declarations;
-    std::string selectSyn;
-    std::vector<Clause> clauses;
+    vector<pair<string, string> > declarations;
 };
