@@ -9,6 +9,7 @@ using namespace std;
 #include <unordered_set>
 #include <unordered_map>
 #include "Query.h"
+#include "Clause.h"
 
 class QueryParser {
 public:
@@ -22,7 +23,7 @@ public:
 
 	static vector<pair<string, pair<string, string>>> splitSuchThat(vector<string> suchThat);
 
-	//static string evalQuery(Query q);
+	static string evalQuery(Query q);
 
 	static string trim(string str, string whitespace);
 

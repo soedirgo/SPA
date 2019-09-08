@@ -11,7 +11,10 @@ public:
 	Query(unordered_map<string, string> declerationVariables, vector<string> selectVars,
 		vector<pair<string, pair<string, string>>> suchThat);
 	unordered_map<string, string> getDeclarations();
-	vector<pair<string, pair<string, string>>> getSuchThatClauses();
+	vector<pair<string, pair<string, string>>> getClauses();
+
 private:
-    vector<pair<string, string> > declarations;
+	unordered_map<string, string> declerationVariables;
+	vector<string> selectVars;
+	vector<pair<string, pair<string, string>>> suchThat;
 };

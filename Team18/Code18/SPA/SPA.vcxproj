@@ -11,11 +11,14 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\source\Clause.cpp" />
     <ClCompile Include="..\source\DesignExtractor.cpp" />
+    <ClCompile Include="..\source\Query.cpp" />
     <ClCompile Include="..\source\QueryParser.cpp" />
     <ClCompile Include="..\source\TNode.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\source\Clause.h" />
     <ClInclude Include="..\source\PKB.h" />
     <ClInclude Include="..\source\Query.h" />
     <ClInclude Include="..\source\QueryParser.h" />

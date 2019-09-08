@@ -48,12 +48,10 @@ string QueryParser::parse(string query) {
 	}
 
 	suchThat = splitSuchThat(suchThatClauses);
-
-	//Query q = Query(declerationVariables, selectVars, suchThat);
-	//string finalOutput = evalQuery(q);
-	//return finalOutput;
-	string s = "";
-	return s;
+	
+	Query q = Query(declerationVariables, selectVars, suchThat);
+	string finalOutput = evalQuery(q);
+	return finalOutput;
 }
 
 //Finds delimiter ; and push initial declarations into a new vector and return the vector
@@ -76,33 +74,36 @@ vector<string> QueryParser::findInitialDecleration(string query) {
 	return stringVectors;
 }
 
-//
+//For the purpose of mapping variable to what it's declared for
 unordered_map<string, string> QueryParser::splitVariablesInDeclerations(vector<string> declerations) {
 	unordered_map<string, string> taggedDeclerationVariables;
 	int declerationsSize = declerations.size();
 	int i;
+	int posWhiteSpace;
+	string declarationType;
+	string variableName;
 	for (i = 0; i < declerationsSize - 1; i++) {
 		string currentDeclerations = declerations[i];
-		int charSpaceLoc = currentDeclerations.find_first_of(whitespace);
-		string type = currentDeclerations.substr(0, charSpaceLoc);
-		string varName = currentDeclerations.substr(charSpaceLoc);
+		posWhiteSpace = currentDeclerations.find_first_of(whitespace);
+		declarationType = currentDeclerations.substr(0, posWhiteSpace);
+		variableName = currentDeclerations.substr(posWhiteSpace);
 
-		if (varName.find(",") != -1) {
+		if (variableName.find(",") != -1) {
 			char delimiter = ',';
 			int start = 0;
-			int end = varName.find(delimiter);
+			int end = variableName.find(delimiter);
 
 			while (end != -1) {
-				string varNameSplitted = trim(varName.substr(start, end - start), whitespace);
-				taggedDeclerationVariables.insert(make_pair(varNameSplitted, type));
+				string variableNameSplitted = trim(variableName.substr(start, end - start), whitespace);
+				taggedDeclerationVariables.insert(make_pair(variableNameSplitted, declarationType));
 				start = end + 1;
-				end = varName.find(delimiter, start);
+				end = variableName.find(delimiter, start);
 			}
 
-			taggedDeclerationVariables.insert(make_pair(trim(varName.substr(start), whitespace), type));
+			taggedDeclerationVariables.insert(make_pair(trim(variableName.substr(start), whitespace), declarationType));
 		}
 		else {
-			taggedDeclerationVariables.insert(make_pair(trim(varName, whitespace), type));
+			taggedDeclerationVariables.insert(make_pair(trim(variableName, whitespace), declarationType));
 		}
 	}
 
@@ -113,23 +114,24 @@ unordered_map<string, string> QueryParser::splitVariablesInDeclerations(vector<s
 vector<string> QueryParser::splitSelect(string statements) {
 	vector<string> s;
 	int firstSpace = statements.find_first_of(whitespace);
-	string varName;
+	string variableName;
+	int pos;
 
 	if (firstSpace != -1) {
-		varName = removeSpaces(statements.substr(firstSpace), whitespace);
+		variableName = removeSpaces(statements.substr(firstSpace), whitespace);
 	}
 
-	if (varName.find("<") != -1 && varName.find(">") != -1) {
-		varName = varName.substr(1, varName.length() - 2);
+	if (variableName.find("<") != -1 && variableName.find(">") != -1) {
+		variableName = variableName.substr(1, variableName.length() - 2);
 
-		while (varName.find(",") != -1) {
-			int delimiterComma = varName.find(",");
-			s.push_back(varName.substr(0, delimiterComma));
-			varName = varName.substr(delimiterComma + 1);
+		while (variableName.find(",") != -1) {
+			pos = variableName.find(",");
+			s.push_back(variableName.substr(0, pos));
+			variableName = variableName.substr(pos + 1);
 		}
 	}
 
-	s.push_back(varName);
+	s.push_back(variableName);
 
 	return s;
 }
@@ -139,53 +141,56 @@ vector<string> QueryParser::splitSelect(string statements) {
 vector<pair<string, pair<string, string>>> QueryParser::splitSuchThat(vector<string> suchThat) {
 	vector<pair<string, pair<string, string>>> s;
 	int i = 0;
-
+	int posOfOpenBracket;
+	int posOfComma;
+	int posOfCloseBracket;
+	int lengthofString;
+	string clauseType;
 	for (i = 0; i < suchThat.size(); i++) {
-		int openBracket = suchThat[i].find("(");
-		int comma = suchThat[i].find(",");
-		int closeBracket = suchThat[i].find(")");
-		int strLen = suchThat[i].length();
-		string condition;
-
-		if (openBracket == -1 || comma == -1 || closeBracket == -1) {
+		posOfOpenBracket = suchThat[i].find("(");
+		posOfCloseBracket = suchThat[i].find(")");
+		posOfComma = suchThat[i].find(",");
+		
+		if (posOfOpenBracket == -1 || posOfComma == -1 || posOfCloseBracket == -1) {
 			s.push_back(make_pair("", make_pair("", "")));
 			continue;
 		}
 
 		if (suchThat[i].find("such") != -1) {
-			condition = removeSpaces(suchThat[i].substr(9, openBracket - 9), whitespace);
+			clauseType = removeSpaces(suchThat[i].substr(9, posOfOpenBracket - 9), whitespace);
 		}
 		else {
-			condition = removeSpaces(suchThat[i].substr(3, openBracket - 3), whitespace);
+			clauseType = removeSpaces(suchThat[i].substr(3, posOfOpenBracket - 3), whitespace);
 		}
 
 		string firstVar;
 		string secondVar;
 
-		if ((comma - openBracket - 1) < 0) {
+		if ((posOfComma - posOfOpenBracket - 1) < 0) {
 			firstVar = "";
 		}
 		else {
-			firstVar = removeSpaces(suchThat[i].substr(openBracket + 1, comma - openBracket - 1), whitespace);
+			firstVar = removeSpaces(suchThat[i].substr(posOfOpenBracket + 1, posOfComma - posOfOpenBracket - 1), whitespace);
 		}
 
-		if ((closeBracket - comma - 1) < 0) {
+		if ((posOfCloseBracket - posOfComma - 1) < 0) {
 			secondVar = "";
 		}
 		else {
-			secondVar = removeSpaces(suchThat[i].substr(comma + 1, closeBracket - comma - 1), whitespace);
+			secondVar = removeSpaces(suchThat[i].substr(posOfComma + 1, posOfCloseBracket - posOfComma - 1), whitespace);
 		}
 
-		s.push_back(make_pair(condition, make_pair(firstVar, secondVar)));
+		s.push_back(make_pair(clauseType, make_pair(firstVar, secondVar)));
 	}
 
 	return s;
 }
 
 //Split by brackets
-//string QueryParser::evalQuery(Query q) {
-//	return Evaluator::evalQuery(q);
-//}
+string QueryParser::evalQuery(Query q) {
+	string s = "";
+	return s;
+}
 
 //Trims front and back of the str with the given whitespace.
 string QueryParser::trim(string str, string whitespace) {
@@ -199,31 +204,6 @@ string QueryParser::trim(string str, string whitespace) {
 	int length = end - start + 1;
 	return str.substr(start, length);
 }
-
-//Splits the string based on the given limiter and returns a vector of substrings.
-/*
-vector<string> splitString(string statement, char delimiter) {
-	vector<string> stringVector;
-	string::size_type i = 0;
-	string::size_type j = statement.find(delimiter);
-
-	//Parse statements until it's end of string
-	while (j != string::npos) {
-		//Push result into vector.
-		stringVector.push_back(statement.substr(i, j - i));
-		//Update i after the delimiter position j
-		j = j + 1;
-		i = j;
-		//Get the new position for delimiter
-		j = statement.find(delimiter, j);
-	}
-
-	if (j == string::npos)
-		stringVector.push_back(statement.substr(i, statement.length()));
-
-	return stringVector;
-}
-*/
 
 //Removes all the whitespace in the given string
 string QueryParser::removeSpaces(string s, string whitespace) {

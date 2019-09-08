@@ -2,6 +2,7 @@
 #include "CppUnitTest.h"
 #include "QueryParser.h"
 #include "Query.h"
+#include "Clause.h"
 
 using namespace std;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
@@ -31,7 +32,7 @@ namespace UnitTesting
 		{
 			vector<string> suchThatString = { "such that Modifies(2,v)" };
 			vector<pair<string, pair<string, string>>> actual = QueryParser::splitSuchThat(suchThatString);
-			vector<pair<string, pair<string, string>>> expected{ {"Modifies", {"2", "v"}} };
+			vector<pair<string, pair<string, string>>> expected = { {"Modifies", {"2","v"}} };
 			Assert::AreEqual(actual == expected, true);
 		}
 		
