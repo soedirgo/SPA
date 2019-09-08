@@ -6,8 +6,8 @@ using namespace std;
 #include <vector>
 #include <unordered_set>
 
-//#include "Evaluator.h"
-//#include "Query.h"
+#include "Evaluator.h"
+#include "Query.h"
 #include "QueryParser.h"
 
 string whitespace = " \n\t";
@@ -51,9 +51,9 @@ string QueryParser::parse(string query) {
 
 	//Query q = Query(declerationVariables, selectVars, suchThat);
 	//string finalOutput = evalQuery(q);
+	//return finalOutput;
 	string s = "";
 	return s;
-	//return finalOutput;
 }
 
 //Finds delimiter ; and push initial declarations into a new vector and return the vector
@@ -63,12 +63,12 @@ vector<string> QueryParser::findInitialDecleration(string query) {
 	int start = 0;
 	int end = query.find(delimiter);
 
-	while (end != 1) {
+	while (end != -1) {
 		string trimmed = trim(query.substr(start, end - start), whitespace);
 		stringVectors.push_back(trimmed);
-		
-		//stack trace shows error here
+
 		start = end + 1;
+		end = query.find(delimiter, start);
 	}
 	string trimmed2 = trim(query.substr(start), whitespace);
 	stringVectors.push_back(trimmed2);
@@ -184,7 +184,7 @@ vector<pair<string, pair<string, string>>> QueryParser::splitSuchThat(vector<str
 
 //Split by brackets
 //string QueryParser::evalQuery(Query q) {
-//	return true;
+//	return Evaluator::evalQuery(q);
 //}
 
 //Trims front and back of the str with the given whitespace.

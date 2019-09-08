@@ -8,7 +8,7 @@ using namespace std;
 #include <vector>
 #include <unordered_set>
 #include <unordered_map>
-//#include "Query.h"
+#include "Query.h"
 
 class QueryParser {
 public:

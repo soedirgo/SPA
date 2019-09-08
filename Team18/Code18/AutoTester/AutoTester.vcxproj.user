@@ -8,4 +8,7 @@
     <LocalDebuggerCommandArguments> ..\Tests\Sample_source.txt ..\Tests\Sample_queries.txt ..\Tests\out.xml</LocalDebuggerCommandArguments>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
+  <PropertyGroup>
+    <ShowAllFiles>true</ShowAllFiles>
+  </PropertyGroup>
 </Project>
