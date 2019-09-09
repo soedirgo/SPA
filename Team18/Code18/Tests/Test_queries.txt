@@ -1,0 +1,8 @@
+procedure p1 {
+  read x; }
+
+procedure p2 {
+  print x; }
+
+procedure p3 {
+  x = y + 1; }
