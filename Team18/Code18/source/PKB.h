@@ -50,23 +50,27 @@ public:
 	//add stmt & var to varUsesByStmtTable
 	static bool setUsesVarByStmt(int stmtNo, string varName);
 	static unordered_set<string> getUsesVarByStmt(int stmtNo);
-	static  unordered_set<int> getAllUsesStmt();
+	static unordered_set<int> getAllUsesStmt();
 
 	static bool isModifiesStmtVar(int stmtNo, string varName);
 	static bool isUsesStmtVar(int stmtNo, string varName);
 
-	static int setProcToAST(PROC p, TNode* r);
-	static TNode* getRootAST (PROC p);
+	//Methods(varName) for modifies and uses SubTables
+	static unordered_set<int> getStmtsThatModVarByAssign(string varName);
+	
 
+
+	static int setProcToAST(PROC p, TNode* r);
+	static TNode* getRootAST(PROC p);
 
 private:
 	static unordered_set<string> varTable;
 	static unordered_set<string> constantTable;
 	static unordered_map<int, stmtType> stmtTable;
+
 	static unordered_map<string, unordered_set<int>> stmtModifiesByVarTable;
 	static unordered_map<string, unordered_set<int>> stmtUsesByVarTable;
 	static unordered_map<int, unordered_set<string>> varModifiesByStmtTable;
 	static unordered_map<int, unordered_set<string>> varUsesByStmtTable;
-
-
+	
 };

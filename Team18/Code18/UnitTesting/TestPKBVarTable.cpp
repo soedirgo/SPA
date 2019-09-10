@@ -47,7 +47,7 @@ namespace UnitTesting
 		TEST_METHOD(GetConstant)
 		{
 			//Actual PKB Data
-			unordered_set<string> consList = {"1"};
+			unordered_set<string> consList = { "1" };
 			Assert::IsTrue(PKB().getAllConstant() == consList);
 		}
 		TEST_METHOD(GetModifiesStmtByVar)
@@ -66,13 +66,15 @@ namespace UnitTesting
 		}
 		TEST_METHOD(isModifies)
 		{
-			Assert::IsTrue(PKB().isModifiesStmtVar(1,"x"));
-			Assert::IsFalse(PKB().isModifiesStmtVar(1,"y"));
+			Assert::IsTrue(PKB().isModifiesStmtVar(1, "x"));
+			Assert::IsFalse(PKB().isModifiesStmtVar(1, "y"));
 		}
 		TEST_METHOD(isUses)
 		{
 			Assert::IsTrue(PKB().isUsesStmtVar(1, "x"));
 			Assert::IsFalse(PKB().isUsesStmtVar(1, "y"));
-		}
+		};
 	};
-}
+};
+		
+		

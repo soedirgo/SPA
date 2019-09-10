@@ -230,3 +230,31 @@ bool PKB::isUsesStmtVar(int stmtNo, string varName) {
 	}
 	return false;
 }
+
+
+////////////////////////////////////
+// Higher Level APIs that use one or more tables
+////////////////////////////////////
+
+//Gets list of assignment statements that modifies a variable through an assignment statment
+//Modifies(a,v) holds if variable v appears on the left side of A 
+unordered_set<int> PKB::getStmtsThatModVarByAssign(string varName) {
+	unordered_set<int> varList = getModifiesStmtByVar(varName);  //{3,5,7,etc}
+	unordered_set<int> results;
+	for (auto stmtNo : varList) {
+		stmtType type = stmtTable[stmtNo];
+		stmtType assignment = Assign;
+		if (type == assignment) { //
+			results.insert(stmtNo );
+		}
+	}
+	for (auto stmNo : results) {
+		printf("%d", stmNo);
+	}
+	
+	return results;
+}
+
+	
+	
+	
