@@ -23,8 +23,8 @@ namespace UnitTesting
 		
 		TEST_METHOD(splitSelect)
 		{
-			vector<string> actual = QueryParser::splitSelect("Select v2");
-			vector<string> expected{ "v2" };
+			string actual = QueryParser::splitSelect("Select v2");
+			string expected{ "v2" };
 			Assert::AreEqual(actual == expected, true);
 		}
 

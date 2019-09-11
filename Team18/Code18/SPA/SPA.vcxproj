@@ -23,10 +23,8 @@
   <ItemGroup>
     <ClInclude Include="..\source\Clause.h" />
     <ClInclude Include="..\source\Entity.h" />
-    <ClInclude Include="..\source\Evaluator.h" />
     <ClInclude Include="..\source\Parser.h" />
     <ClInclude Include="..\source\PKB.h" />
-    <ClInclude Include="..\source\QueryParser.h" />
     <ClInclude Include="..\source\Relationship.h" />
     <ClInclude Include="..\source\Evaluator.h" />
     <ClInclude Include="..\source\Query.h" />
