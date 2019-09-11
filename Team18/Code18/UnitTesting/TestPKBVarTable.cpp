@@ -2,6 +2,7 @@
 #include "CppUnitTest.h"
 #include "PKB.h"
 
+using namespace std;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace UnitTesting
