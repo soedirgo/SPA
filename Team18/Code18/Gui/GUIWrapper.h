@@ -5,13 +5,8 @@
 #include <iostream>
 #include <list>
 
-#include"../source/PKB.h"
-#include"../source/Parser.h"
-
 class GUIWrapper {
 	public:
-	Parser parser;
-	PKB mainPKB;
 	// default constructor
 	GUIWrapper();
   

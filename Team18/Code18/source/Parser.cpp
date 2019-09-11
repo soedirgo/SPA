@@ -9,7 +9,11 @@
 #include "PKB.h"
 #include "TNode.h"
 
-int Parser::Parse (string filename, PKB pkb) {
+Parser::Parser() {
+	this ->pkb = PKB();
+}
+
+int Parser::Parse (string filename) {
 
 	ifstream programFile;
 	string line;
