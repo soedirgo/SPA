@@ -49,9 +49,10 @@ string QueryParser::parse(string query) {
 
 	suchThat = splitSuchThat(suchThatClauses);
 	
-	Query q = Query(declerationVariables, selectVars, suchThat);
-	string finalOutput = evalQuery(q);
-	return finalOutput;
+	//Query q = Query(declerationVariables, selectVars, suchThat);
+	//string finalOutput = evalQuery(q);
+	//return finalOutput;
+	return "";
 }
 
 //Finds delimiter ; and push initial declarations into a new vector and return the vector
