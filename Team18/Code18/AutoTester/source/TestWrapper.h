@@ -7,6 +7,14 @@
 
 // include your other headers here
 #include "AbstractWrapper.h"
+/*
+#include "PKB.h"
+#include "Parser.h"
+#include "QueryParser.h"
+#include "Evaluator.h"
+*/
+
+using namespace std;
 
 class TestWrapper : public AbstractWrapper {
  public:

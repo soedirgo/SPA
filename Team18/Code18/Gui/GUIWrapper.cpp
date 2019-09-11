@@ -1,6 +1,7 @@
 #include "GUIWrapper.h"
 
 #include <iostream>
+#include "../source/Parser.h"
 
 // a default constructor
 GUIWrapper::GUIWrapper() {
