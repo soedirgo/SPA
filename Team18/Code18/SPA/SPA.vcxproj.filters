@@ -33,10 +33,10 @@
     <ClCompile Include="..\source\Evaluator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\source\Query.cpp">
+    <ClCompile Include="..\source\QueryParser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\source\QueryParser.cpp">
+    <ClCompile Include="..\source\Query.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -50,10 +50,13 @@
     <ClInclude Include="..\source\Parser.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\source\Clause.h">
+    <ClInclude Include="..\source\Entity.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\source\Entity.h">
+    <ClInclude Include="..\source\Query.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\Clause.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\source\Evaluator.h">

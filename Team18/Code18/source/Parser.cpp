@@ -4,10 +4,10 @@
 #include <fstream>
 #include <string>
 #include <vector>
-
 #include "Parser.h"
 #include "PKB.h"
 #include "TNode.h"
+using namespace std;
 
 Parser::Parser() {
 	this ->pkb = PKB();

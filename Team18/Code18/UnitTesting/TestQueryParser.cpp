@@ -12,7 +12,7 @@ namespace UnitTesting
 	TEST_CLASS(TestQueryParser)
 	{
 	public:
-		/*
+
 		TEST_METHOD(findInitialDecleration)
 		{
 			vector<string> actual = QueryParser::findInitialDecleration("assign a; variable v;Select a such that Uses(a,v)");
@@ -23,8 +23,8 @@ namespace UnitTesting
 		
 		TEST_METHOD(splitSelect)
 		{
-			string actual = QueryParser::splitSelect("Select v2");
-			string expected{ "v2" };
+			vector<string> actual = QueryParser::splitSelect("Select v2");
+			vector<string> expected{ "v2" };
 			Assert::AreEqual(actual == expected, true);
 		}
 
@@ -35,6 +35,6 @@ namespace UnitTesting
 			vector<pair<string, pair<string, string>>> expected = { {"Modifies", {"2","v"}} };
 			Assert::AreEqual(actual == expected, true);
 		}
-		*/
+		
 	};
 }

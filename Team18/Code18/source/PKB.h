@@ -1,13 +1,10 @@
 #pragma once
-
-#include<stdio.h>
 #include <iostream>
 #include <string>
 #include <vector>
 #include <unordered_set>
 #include <unordered_map>
 
-using namespace std;
 typedef short PROC;
 
 class TNode;
@@ -24,49 +21,48 @@ public:
 	// Clear PKB database
 	bool clear();
 	// add a variable to varTable
-	static bool setVar(string varName);
-	static unordered_set<string> getAllVar();
-	static bool isVarExist(string varName);
+	static bool setVar(std::string varName);
+	static std::unordered_set<std::string> getAllVar();
+	static bool isVarExist(std::string varName);
 	// add a constant to constantTable
-	static bool setConstant(string constantName);
-	static unordered_set<string> getAllConstant();
-	static bool isConstantExist(string constantName);
+	static bool setConstant(std::string constantName);
+	static std::unordered_set<std::string> getAllConstant();
+	static bool isConstantExist(std::string constantName);
 	// add a stmt to stmtTable
 	static bool setStmt(int stmtNo, stmtType type);
-	static unordered_set<int> getAllStmt();
+	static std::unordered_set<int> getAllStmt();
 	static bool isStmtExist(int stmtNo);
 	//add var & stmt to varModifiesStmtTable
-	static bool setModifiesStmtByVar(int stmtNo, string varName);
-	static unordered_set<int> getModifiesStmtByVar(string varName);
-	static  unordered_set<string> getAllModifiesVar();
+	static bool setModifiesStmtByVar(int stmtNo, std::string varName);
+	static std::unordered_set<int> getModifiesStmtByVar(std::string varName);
+	static std::unordered_set<std::string> getAllModifiesVar();
 	//add var & stmt to varModifiesStmtTable
-	static bool setUsesStmtByVar(int stmtNo, string varName);
-	static unordered_set<int> getUsesStmtByVar(string varName);
-	static  unordered_set<string> getAllUsesVar();
+	static bool setUsesStmtByVar(int stmtNo, std::string varName);
+	static std::unordered_set<int> getUsesStmtByVar(std::string varName);
+	static std::unordered_set<std::string> getAllUsesVar();
 	//add stmt & var to varModifiesByStmtTable
-	static bool setModifiesVarByStmt(int stmtNo, string varName);
-	static unordered_set<string> getModifiesVarByStmt(int stmtNo);
-	static  unordered_set<int> getAllModifiesStmt();
+	static bool setModifiesVarByStmt(int stmtNo, std::string varName);
+	static std::unordered_set<std::string> getModifiesVarByStmt(int stmtNo);
+	static std::unordered_set<int> getAllModifiesStmt();
 	//add stmt & var to varUsesByStmtTable
-	static bool setUsesVarByStmt(int stmtNo, string varName);
-	static unordered_set<string> getUsesVarByStmt(int stmtNo);
-	static  unordered_set<int> getAllUsesStmt();
+	static bool setUsesVarByStmt(int stmtNo, std::string varName);
+	static std::unordered_set<std::string> getUsesVarByStmt(int stmtNo);
+	static std::unordered_set<int> getAllUsesStmt();
 
-	static bool isModifiesStmtVar(int stmtNo, string varName);
-	static bool isUsesStmtVar(int stmtNo, string varName);
+	static bool isModifiesStmtVar(int stmtNo, std::string varName);
+	static bool isUsesStmtVar(int stmtNo, std::string varName);
 
 	static int setProcToAST(PROC p, TNode* r);
 	static TNode* getRootAST (PROC p);
 
-
 private:
-	static unordered_set<string> varTable;
-	static unordered_set<string> constantTable;
-	static unordered_map<int, stmtType> stmtTable;
-	static unordered_map<string, unordered_set<int>> stmtModifiesByVarTable;
-	static unordered_map<string, unordered_set<int>> stmtUsesByVarTable;
-	static unordered_map<int, unordered_set<string>> varModifiesByStmtTable;
-	static unordered_map<int, unordered_set<string>> varUsesByStmtTable;
+	static std::unordered_set<std::string> varTable;
+	static std::unordered_set<std::string> constantTable;
+	static std::unordered_map<int, stmtType> stmtTable;
+	static std::unordered_map<std::string, std::unordered_set<int>> stmtModifiesByVarTable;
+	static std::unordered_map<std::string, std::unordered_set<int>> stmtUsesByVarTable;
+	static std::unordered_map<int, std::unordered_set<std::string>> varModifiesByStmtTable;
+	static std::unordered_map<int, std::unordered_set<std::string>> varUsesByStmtTable;
 
 
 };

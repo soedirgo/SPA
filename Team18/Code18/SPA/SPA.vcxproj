@@ -28,6 +28,9 @@
     <ClInclude Include="..\source\PKB.h" />
     <ClInclude Include="..\source\QueryParser.h" />
     <ClInclude Include="..\source\Relationship.h" />
+    <ClInclude Include="..\source\Evaluator.h" />
+    <ClInclude Include="..\source\Query.h" />
+    <ClInclude Include="..\source\QueryParser.h" />
     <ClInclude Include="..\source\TNode.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

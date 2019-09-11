@@ -1,12 +1,9 @@
-#include<stdio.h>
 #include <iostream>
 #include <string>
 #include <vector>
-
-using namespace std;
-
 #include "PKB.h"
 #include "TNode.h"
+using namespace std;
 
 unordered_set<string> PKB::varTable;
 unordered_set<string> PKB::constantTable;
