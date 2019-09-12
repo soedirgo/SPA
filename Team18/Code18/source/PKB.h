@@ -45,24 +45,84 @@ public:
 	static std::unordered_set<std::string> getModifiesVarByStmt(int stmtNo);
 	static std::unordered_set<int> getAllModifiesStmt();
 	//add stmt & var to varUsesByStmtTable
-	static bool setUsesVarByStmt(int stmtNo, std::string varName);
-	static std::unordered_set<std::string> getUsesVarByStmt(int stmtNo);
-	static std::unordered_set<int> getAllUsesStmt();
+	static bool setUsesVarByStmt(int stmtNo, string varName);
+	static unordered_set<string> getUsesVarByStmt(int stmtNo);
+	static unordered_set<int> getAllUsesStmt();
 
 	static bool isModifiesStmtVar(int stmtNo, std::string varName);
 	static bool isUsesStmtVar(int stmtNo, std::string varName);
 
+	//add var & stmt to assign table 
+	static unordered_set<int> getAllAssignStmt();
+	static bool setAssignStmt(int stmtNo, string varModified); 
+	static string getVarModifiedByAssignStmt(int stmtNo);
+	
+	static unordered_set<int> getAssignStmtByVar(string varName);
+	static bool setAssignStmtByVar(int stmtNo, string varName);
+
+
+	//Getters and setters for while table 
+	static unordered_set<int> getAllWhileStmt(); 
+	static bool setWhileStmt(int stmtNo);
+
+	//Getters and setters for if table
+	static unordered_set<int> getAllIfStmt();
+	static bool setIfStmt(int stmtNo);
+
+	//Getters and setters for print table
+	static unordered_set<int> getAllPrintStmt(); 
+	static bool setPrintStmt(int stmtNo, string varName);
+	static unordered_set<int> getPrintStmtByVar(string varName);
+	
+	//Getters and setters for Read table
+	static unordered_set<int> getAllReadStmt();
+	static bool setReadStmt(int stmtNo, string varName);
+	static unordered_set<int> getReadStmtByVar(string varName);
+
+	//Getters and setters for Procedure table
+	static unordered_set<string> getAllProc();
+	bool setProc(string procName);
+
+
+	//Getters and setters for Call table
+	static unordered_set<int> getAllCallStmt();
+	bool setCallStmt(int stmtNo, string procName);
+	unordered_set<int> getCallStmtByVar(string procName);
+
+
+	//Methods(varName) for modifies and uses SubTables
+	//static unordered_set<int> getStmtsThatModVarByAssign(string varName);
+	
+
+
 	static int setProcToAST(PROC p, TNode* r);
-	static TNode* getRootAST (PROC p);
+	static TNode* getRootAST(PROC p);
 
 private:
-	static std::unordered_set<std::string> varTable;
-	static std::unordered_set<std::string> constantTable;
-	static std::unordered_map<int, stmtType> stmtTable;
-	static std::unordered_map<std::string, std::unordered_set<int>> stmtModifiesByVarTable;
-	static std::unordered_map<std::string, std::unordered_set<int>> stmtUsesByVarTable;
-	static std::unordered_map<int, std::unordered_set<std::string>> varModifiesByStmtTable;
-	static std::unordered_map<int, std::unordered_set<std::string>> varUsesByStmtTable;
+	static unordered_set<string> varTable;
+	static unordered_set<string> constantTable;
+	static unordered_map<int, stmtType> stmtTable;
 
+	static unordered_map<string, unordered_set<int>> stmtModifiesByVarTable;
+	static unordered_map<string, unordered_set<int>> stmtUsesByVarTable;
+	static unordered_map<int, unordered_set<string>> varModifiesByStmtTable;
+	static unordered_map<int, unordered_set<string>> varUsesByStmtTable;
 
+	static unordered_map<int, string> assignStmtTable;
+	static unordered_map<string, unordered_set<int>> assignVarTable;
+
+	static unordered_set<int> whileTable;
+	static unordered_set<int> ifTable;
+	static unordered_map<string, unordered_set<int>> printTable;
+	static unordered_map<string, unordered_set<int>> readTable;
+	static unordered_set<string> procedureTable; 
+	static unordered_map<string, unordered_set<int>> callTable;
+
+	/*
+	
+	
+	static unordered_set<int> callTable; //Not for iteration 1 
+	
+	*/
+	
 };

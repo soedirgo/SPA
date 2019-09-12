@@ -12,6 +12,15 @@ unordered_map<string, unordered_set<int>> PKB::stmtModifiesByVarTable;
 unordered_map<string, unordered_set<int>> PKB::stmtUsesByVarTable;
 unordered_map<int, unordered_set<string>> PKB::varModifiesByStmtTable;
 unordered_map<int, unordered_set<string>> PKB::varUsesByStmtTable;
+unordered_map<int, string> PKB::assignStmtTable;
+unordered_map<string, unordered_set<int>> PKB::assignVarTable;
+unordered_set<int> PKB::whileTable;
+unordered_set<int> PKB::ifTable;
+unordered_map<string, unordered_set<int>> PKB::printTable;
+unordered_map<string, unordered_set<int>> PKB::readTable;
+unordered_set<string> PKB::procedureTable;
+unordered_map<string, unordered_set<int>> PKB:: callTable;
+
 
 bool PKB::clear()
 {
@@ -227,3 +236,253 @@ bool PKB::isUsesStmtVar(int stmtNo, string varName) {
 	}
 	return false;
 }
+
+////////////////////////////////////
+// assignStmtTable APIs
+////////////////////////////////////
+
+unordered_set<int> PKB::getAllAssignStmt() {
+	unordered_set<int> stmtList;
+	for (auto keyValue : assignStmtTable) {
+		stmtList.emplace(keyValue.first);
+	}
+	return stmtList;
+}
+
+bool PKB::setAssignStmt(int stmtNo, string varModified) {
+	std::pair<int, string> entry(stmtNo, varModified);
+	try {
+		assignStmtTable.insert(entry);
+		return true;
+	}
+	catch (errc e) {
+		return false;
+	}
+};
+
+string PKB::getVarModifiedByAssignStmt(int stmtNo) {
+	return assignStmtTable[stmtNo]; 
+}
+
+////////////////////////////////////
+// assignStmtByVarTable APIs
+////////////////////////////////////
+
+unordered_set<int> PKB::getAssignStmtByVar(string varName) {
+	return assignVarTable[varName];
+}
+
+
+bool PKB::setAssignStmtByVar(int stmtNo, string varName) {
+	try {
+		//get stmtList from PKB then add variable to varList
+		unordered_set<int> stmtList = getAssignStmtByVar(varName);
+		stmtList.emplace(stmtNo);
+		//add it to varModifiesStmtTable
+		assignVarTable[varName] = stmtList;
+		return true;
+	}
+	catch (errc e) {
+		return false;
+	}
+}
+
+
+////////////////////////////////////
+// whileTable APIs
+////////////////////////////////////
+
+unordered_set<int> PKB::getAllWhileStmt() {
+	return whileTable; 
+};
+
+
+bool PKB::setWhileStmt(int stmtNo) {
+	try {
+		whileTable.insert(stmtNo);
+		return true;
+	}
+	catch (errc e) {
+		return false;
+	}
+};
+
+////////////////////////////////////
+// ifTable APIs
+////////////////////////////////////
+
+unordered_set<int> PKB::getAllIfStmt() {
+	return ifTable;
+};
+
+
+bool PKB::setIfStmt(int stmtNo) {
+	try {
+		ifTable.insert(stmtNo);
+		return true;
+	}
+	catch (errc e) {
+		return false;
+	}
+};
+
+////////////////////////////////////
+// printTable APIs
+////////////////////////////////////
+
+unordered_set<int> PKB::getAllPrintStmt() {
+	unordered_set<int> stmtList;
+	stmtType printStmt = Print;
+	for (auto keyValue : stmtTable) {
+		if (keyValue.second == printStmt) {
+			stmtList.emplace(keyValue.first);
+
+		}
+	}
+	return stmtList;
+};
+
+
+unordered_set<int> PKB::getPrintStmtByVar(string varName) {
+	return printTable[varName];
+}
+
+
+bool PKB::setPrintStmt(int stmtNo, string varName) {
+	try {
+		//get stmtList from PKB then add variable to varList
+		unordered_set<int> stmtList = getPrintStmtByVar(varName);
+		stmtList.emplace(stmtNo);
+		//add it to varModifiesStmtTable
+		printTable[varName] = stmtList;
+		return true;
+	}
+	catch (errc e) {
+		return false;
+	}
+};
+
+
+
+
+////////////////////////////////////
+// ReadTable APIs
+////////////////////////////////////
+
+unordered_set<int> PKB::getAllReadStmt() {
+	unordered_set<int> stmtList;
+	stmtType readStmt = Read;
+	for (auto keyValue : stmtTable) {
+		if (keyValue.second == readStmt) {
+			stmtList.emplace(keyValue.first);
+
+		}
+	}
+	return stmtList;
+};
+
+
+unordered_set<int> PKB::getReadStmtByVar(string varName) {
+	return readTable[varName];
+}
+
+
+bool PKB::setReadStmt(int stmtNo, string varName) {
+	try {
+		//get stmtList from PKB then add variable to varList
+		unordered_set<int> stmtList = getReadStmtByVar(varName);
+		stmtList.emplace(stmtNo);
+		//add it to varModifiesStmtTable
+		readTable[varName] = stmtList;
+		return true;
+	}
+	catch (errc e) {
+		return false;
+	}
+};
+
+
+////////////////////////////////////
+// ProecedureTable APIs
+////////////////////////////////////
+
+unordered_set<string> PKB::getAllProc() {
+	return procedureTable;
+};
+
+
+bool PKB::setProc(string procName) {
+	try {
+		procedureTable.insert(procName);
+		return true;
+	}
+	catch (errc e) {
+		return false;
+	}
+};
+
+
+////////////////////////////////////
+// CallTable APIs
+////////////////////////////////////
+
+unordered_set<int> PKB::getAllCallStmt() {
+	unordered_set<int> stmtList;
+	stmtType callStmt = Call;
+	for (auto keyValue : stmtTable) {
+		if (keyValue.second == callStmt) {
+			stmtList.emplace(keyValue.first);
+		}
+	}
+	return stmtList;
+};
+
+
+unordered_set<int> PKB::getCallStmtByVar(string varName) {
+	return callTable[varName];
+}
+
+
+bool PKB::setCallStmt(int stmtNo, string varName) {
+	try {
+		//get stmtList from PKB then add variable to varList
+		unordered_set<int> stmtList = getCallStmtByVar(varName);
+		stmtList.emplace(stmtNo);
+		//add it to varModifiesStmtTable
+		callTable[varName] = stmtList;
+		return true;
+	}
+	catch (errc e) {
+		return false;
+	}
+};
+
+////////////////////////////////////
+// Higher Level APIs that use one or more tables
+////////////////////////////////////
+
+/* 
+//Archived as of 2019-09-11 
+//Gets list of assignment statements that modifies a variable through an assignment statment
+//Modifies(a,v) holds if variable v appears on the left side of A 
+unordered_set<int> PKB::getStmtsThatModVarByAssign(string varName) {
+	unordered_set<int> varList = getModifiesStmtByVar(varName);  //{3,5,7,etc}
+	unordered_set<int> results;
+	for (auto stmtNo : varList) {
+		stmtType type = stmtTable[stmtNo];
+		stmtType assignment = Assign;
+		if (type == assignment) { //
+			results.insert(stmtNo );
+		}
+	}
+	for (auto stmNo : results) {
+		printf("%d", stmNo);
+	}
+	
+	return results;
+}
+*/
+
+	
+	
+	
