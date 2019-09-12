@@ -167,11 +167,10 @@ namespace Evaluator {
 
         vector<string> results;
         for (auto result : resultCandidates) {
-            // vector<pair<string, pair<string, string>>> cls = clauses;
-            // unordered_map<string, string> fil;
-            // fil[selectSyn] = result;
-            // if (evalClauses(cls, fil)) results.push_back(result);
-            results.push_back(result);
+            vector<pair<string, pair<string, string>>> cls = clauses;
+            unordered_map<string, string> fil;
+            fil[selectSyn] = result;
+            if (evalClauses(cls, fil)) results.push_back(result);
         }
 
         return formatResults(results);

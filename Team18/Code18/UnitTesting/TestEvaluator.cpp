@@ -18,59 +18,59 @@ namespace UnitTesting
             /**
                SIMPLE program:
                procedure main {
-               1.  a = 1
-               2.  b = a
-               3.  if (a == b) then {
-               4.      c = 0;
-                   } else {
-               5.      c = 1;}
-                   }
-              */
+               1.  x = 1
+               2.  y = x
+               3.  if (x == y) then {
+               4.      z = 0;
+               _   } else {
+               5.      z = 1;}
+               _   }
+            */
             PKB pkb;
 
             pkb.clear();
 
             pkb.setProc("main");
             pkb.setStmt(1, Assign);
-            pkb.setAssignStmt(1, "a");
-            pkb.setVar("a");
+            pkb.setAssignStmt(1, "x");
+            pkb.setVar("x");
             pkb.setConstant("1");
-            pkb.setModifiesVarByStmt(1, "a");
+            pkb.setModifiesVarByStmt(1, "x");
 
             pkb.setStmt(2, Assign);
-            pkb.setAssignStmt(2, "b");
-            pkb.setVar("b");
-            pkb.setUsesVarByStmt(2, "a");
-            pkb.setModifiesVarByStmt(2, "b");
+            pkb.setAssignStmt(2, "y");
+            pkb.setVar("y");
+            pkb.setUsesVarByStmt(2, "x");
+            pkb.setModifiesVarByStmt(2, "y");
 
             pkb.setStmt(3, If);
             pkb.setIfStmt(3);
-            pkb.setUsesVarByStmt(3, "a");
-            pkb.setUsesVarByStmt(3, "b");
+            pkb.setUsesVarByStmt(3, "x");
+            pkb.setUsesVarByStmt(3, "y");
 
             pkb.setStmt(4, Assign);
-            pkb.setAssignStmt(4, "c");
-            pkb.setVar("c");
+            pkb.setAssignStmt(4, "z");
+            pkb.setVar("z");
             pkb.setConstant("0");
-            pkb.setModifiesVarByStmt(3, "c");
-            pkb.setModifiesVarByStmt(4, "c");
+            pkb.setModifiesVarByStmt(3, "z");
+            pkb.setModifiesVarByStmt(4, "z");
 
             pkb.setStmt(5, Assign);
-            pkb.setAssignStmt(5, "c");
-            pkb.setModifiesVarByStmt(3, "c");
-            pkb.setModifiesVarByStmt(5, "c");
+            pkb.setAssignStmt(5, "z");
+            pkb.setModifiesVarByStmt(3, "z");
+            pkb.setModifiesVarByStmt(5, "z");
 		}
         TEST_METHOD(evaluatorNoClause)
         {
             unordered_map<string, string> decl = { {"s", "stmt"},
-                                                  {"r", "read"},
-                                                  {"p", "print"},
-                                                  {"w", "while"},
-                                                  {"i", "if"},
-                                                  {"a", "assign"},
-                                                  {"v", "variable"},
-                                                  {"C", "constant"},
-                                                  {"P", "procedure"} };
+                                                   {"r", "read"},
+                                                   {"p", "print"},
+                                                   {"w", "while"},
+                                                   {"i", "if"},
+                                                   {"a", "assign"},
+                                                   {"v", "variable"},
+                                                   {"C", "constant"},
+                                                   {"P", "procedure"} };
 
 			Query q = Query(decl, "s", {});
             Assert::AreEqual((string)"1, 2, 3, 4, 5", Evaluator::evalQuery(q));
@@ -91,7 +91,7 @@ namespace UnitTesting
             Assert::AreEqual((string)"1, 2, 4, 5", Evaluator::evalQuery(q));
 
 			q = Query(decl, "v", {});
-            Assert::AreEqual((string)"a, b, c", Evaluator::evalQuery(q));
+            Assert::AreEqual((string)"x, y, z", Evaluator::evalQuery(q));
 
 			q = Query(decl, "C", {});
             Assert::AreEqual((string)"1, 0", Evaluator::evalQuery(q));
@@ -107,12 +107,48 @@ namespace UnitTesting
                2. Select r such that Modifies(r, v);
                3. Select p such that Uses(p, v);
                4. Select w such that Uses(w, v);
-               5. Select i such that Uses(i, v);
-               6. Select a such that Modifies(1, "a");
+               5. Select i such that Uses(i, "z");
+               6. Select a such that Modifies(1, "x");
                6. Select v such that Uses(2, v);
                6. Select C such that Uses(4, C);
-               6. Select P such that Modifies(P, "c");
-             */
+               6. Select P such that Modifies(P, "z");
+            */
+            unordered_map<string, string> decl = { {"s", "stmt"},
+                                                   {"r", "read"},
+                                                   {"p", "print"},
+                                                   {"w", "while"},
+                                                   {"i", "if"},
+                                                   {"a", "assign"},
+                                                   {"v", "variable"},
+                                                   {"C", "constant"},
+                                                   {"P", "procedure"} };
+
+			Query q = Query(decl, "s", {"uses", {"s", "v"}});
+            Assert::AreEqual((string)"2, 3", Evaluator::evalQuery(q));
+
+            q = Query(decl, "r", {"modifies", {"r", "v"}});
+            Assert::AreEqual((string)"", Evaluator::evalQuery(q));
+
+			q = Query(decl, "p", {"uses", {"p", "v"}});
+            Assert::AreEqual((string)"", Evaluator::evalQuery(q));
+
+			q = Query(decl, "w", {"uses", {"w", "v"}});
+            Assert::AreEqual((string)"", Evaluator::evalQuery(q));
+
+            q = Query(decl, "i", {"uses", {"i", "z"}});
+            Assert::AreEqual((string)"", Evaluator::evalQuery(q));
+
+			q = Query(decl, "a", {"modifies", {"1", "x"}});
+            Assert::AreEqual((string)"1", Evaluator::evalQuery(q));
+
+			q = Query(decl, "v", {"uses", {"2", "v"}});
+            Assert::AreEqual((string)"x", Evaluator::evalQuery(q));
+
+			q = Query(decl, "C", {"uses", {"4", "C"}});
+            Assert::AreEqual((string)"", Evaluator::evalQuery(q));
+
+			q = Query(decl, "P", {"modifies", {"P", "z"}});
+            Assert::AreEqual((string)"main", Evaluator::evalQuery(q));
         }
         TEST_METHOD(evaluatorPattern)
         {
