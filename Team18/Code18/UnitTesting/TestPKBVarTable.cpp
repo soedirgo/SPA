@@ -17,6 +17,10 @@ namespace UnitTesting
 			pkb.setStmt(2, If);
 			pkb.setStmt(3, Print);
 			pkb.setStmt(4, Read);
+			pkb.setStmt(7, Call);
+			pkb.setStmt(10, Call);
+			pkb.setStmt(11, Call);
+			pkb.setStmt(12, Call);
 
 			pkb.setVar("x");
 			pkb.setVar("y");
@@ -51,11 +55,26 @@ namespace UnitTesting
 			pkb.setIfStmt(1);
 			pkb.setIfStmt(9);
 			pkb.setIfStmt(10);
+
+			pkb.setPrintStmt(3, "x");
+			pkb.setPrintStmt(5, "x");
+
+			pkb.setReadStmt(4, "x");
+
+			pkb.setProc("Proc1");
+			pkb.setProc("Proc2");
+
+			pkb.setCallStmt(7, "Proc1");
+			pkb.setCallStmt(10, "Proc2");
+			pkb.setCallStmt(11, "Proc3");
+			pkb.setCallStmt(12, "Proc1");
+
+			
 		}
 		TEST_METHOD(GetStmt)
 		{
 			//Actual PKB Data
-			unordered_set<int> stmtNoList = { 1,2,3,4 };
+			unordered_set<int> stmtNoList = { 1,2,3,4,7,10,11,12 };
 			Assert::IsTrue(PKB().getAllStmt() == stmtNoList);
 		}
 		TEST_METHOD(GetVar)
@@ -129,6 +148,42 @@ namespace UnitTesting
 			Assert::IsTrue(PKB().getAllIfStmt() == stmtNoList);
 		};
 
+		TEST_METHOD(getAllPrintStmt) {
+			unordered_set<int> list = { 3 }; 
+			Assert::IsTrue(PKB().getAllPrintStmt() == list);
+		}
+
+		TEST_METHOD(getPrintStmtByVar) {
+			unordered_set<int> list = { 3,5 };
+			Assert::IsTrue(PKB().getPrintStmtByVar("x") == list);
+		}
+		TEST_METHOD(getAllReadStmt) {
+			unordered_set<int> list = { 4 };
+			Assert::IsTrue(PKB().getAllReadStmt() == list);
+		}
+
+		TEST_METHOD(getReadStmtByVar) {
+			unordered_set<int> list = { 4 };
+			Assert::IsTrue(PKB().getReadStmtByVar("x") == list);
+		}
+
+		TEST_METHOD(getAllProc) {
+			unordered_set<string> list = { "Proc1", "Proc2" };
+			Assert::IsTrue( PKB().getAllProc() == list);
+		
+		}
+		
+		TEST_METHOD(getAllCallStmt) {
+			unordered_set<int> list = { 7,10,11,12 };
+			Assert::IsTrue(PKB().getAllCallStmt() == list);
+
+		}
+
+		TEST_METHOD(getCallStmtByVar) {
+			unordered_set<int> list = { 7,12 };
+			Assert::IsTrue(PKB().getCallStmtByVar("Proc1") == list);
+		}
+		
 	};
 };
 		

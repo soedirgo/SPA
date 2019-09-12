@@ -72,6 +72,26 @@ public:
 	static unordered_set<int> getAllIfStmt();
 	static bool setIfStmt(int stmtNo);
 
+	//Getters and setters for print table
+	static unordered_set<int> getAllPrintStmt(); 
+	static bool setPrintStmt(int stmtNo, string varName);
+	static unordered_set<int> getPrintStmtByVar(string varName);
+	
+	//Getters and setters for Read table
+	static unordered_set<int> getAllReadStmt();
+	static bool setReadStmt(int stmtNo, string varName);
+	static unordered_set<int> getReadStmtByVar(string varName);
+
+	//Getters and setters for Procedure table
+	static unordered_set<string> getAllProc();
+	bool setProc(string procName);
+
+
+	//Getters and setters for Call table
+	static unordered_set<int> getAllCallStmt();
+	bool setCallStmt(int stmtNo, string procName);
+	unordered_set<int> getCallStmtByVar(string procName);
+
 
 	//Methods(varName) for modifies and uses SubTables
 	//static unordered_set<int> getStmtsThatModVarByAssign(string varName);
@@ -96,11 +116,16 @@ private:
 
 	static unordered_set<int> whileTable;
 	static unordered_set<int> ifTable;
+	static unordered_map<string, unordered_set<int>> printTable;
+	static unordered_map<string, unordered_set<int>> readTable;
+	static unordered_set<string> procedureTable; 
+	static unordered_map<string, unordered_set<int>> callTable;
+
 	/*
-	static unordered_set<int> printTable;
-	static unordered_set<int> readTable;
-	static unordered_set<int> callTable;
-	static unordered_set<int> procedureTable;
+	
+	
+	static unordered_set<int> callTable; //Not for iteration 1 
+	
 	*/
 	
 };
