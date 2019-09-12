@@ -134,7 +134,7 @@ namespace Evaluator {
 		string selectSynType = declarations[selectSyn];
 		unordered_set<string> resultCandidates;
 		if (selectSynType == "stmt") {
-p			for (auto stmt : PKB::getAllStmt()) {
+			for (auto stmt : PKB::getAllStmt()) {
 				resultCandidates.insert(to_string(stmt));
 			}
 		} else if (selectSynType == "variable") {
