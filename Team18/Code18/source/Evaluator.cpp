@@ -16,10 +16,10 @@ namespace Evaluator {
 		vector<pair<string, pair<string, string>>> clauses;
 		string selectSyn;
 		bool evalClauses(vector<pair<string, pair<string, string>>> cls,
-			unordered_map<string, string> fil);
+                         unordered_map<string, string> fil);
 
 		vector<string> expandStmt(string stmtRef,
-			unordered_map<string, string> fil) {
+                                  unordered_map<string, string> fil) {
 			vector<string> statements;
 			if (fil.count(stmtRef)) { // stmtRef has been filtered before
 				statements.push_back(fil[stmtRef]);
@@ -41,7 +41,7 @@ namespace Evaluator {
 		}
 
 		vector<string> expandVar(string varRef,
-			unordered_map<string, string> fil) {
+                                 unordered_map<string, string> fil) {
 			vector<string> variables;
 			if (fil.count(varRef)) { // varRef has been filtered before
 				variables.push_back(fil[varRef]);
@@ -63,8 +63,8 @@ namespace Evaluator {
 		}
 
 		bool evalUses(pair<string, pair<string, string>> clause,
-			vector<pair<string, pair<string, string>>> cls,
-			unordered_map<string, string> fil) {
+                      vector<pair<string, pair<string, string>>> cls,
+                      unordered_map<string, string> fil) {
 			vector<string> expandedStmt = expandStmt(clause.second.first, fil);
 			vector<string> expandedVar = expandVar(clause.second.second, fil);
 			for (auto s : expandedStmt) {
@@ -81,8 +81,8 @@ namespace Evaluator {
 		}
 
 		bool evalModifies(pair<string, pair<string, string>> clause,
-			vector<pair<string, pair<string, string>>> cls,
-			unordered_map<string, string> fil) {
+                          vector<pair<string, pair<string, string>>> cls,
+                          unordered_map<string, string> fil) {
 			vector<string> expandedStmt = expandStmt(clause.second.first, fil);
 			vector<string> expandedVar = expandVar(clause.second.second, fil);
 			for (auto s : expandedStmt) {
@@ -94,7 +94,7 @@ namespace Evaluator {
 		}
 
 		bool evalClauses(vector<pair<string, pair<string, string>>> cls,
-			unordered_map<string, string> fil) {
+                         unordered_map<string, string> fil) {
 			if (cls.size() == 0) {
 				return true;
 			}
@@ -137,23 +137,24 @@ namespace Evaluator {
 			for (auto stmt : PKB::getAllStmt()) {
 				resultCandidates.insert(to_string(stmt));
 			}
-		}
-		else if (selectSynType == "variable") {
+		} else if (selectSynType == "variable") {
 			resultCandidates = PKB::getAllVar();
-		}
-		else if (selectSynType == "constant") {
+		} else if (selectSynType == "constant") {
 			resultCandidates = PKB::getAllConstant();
-		}
+        } else {
+            resultCandidates = {};
+        }
 
-		vector<string> results;
-		for (auto result : resultCandidates) {
-			// vector<pair<string, pair<string, string>>> cls = clauses;
-			// unordered_map<string, string> fil;
-			// fil[selectSyn] = result;
-			// if (evalClauses(cls, fil)) results.push_back(result);
-			results.push_back(result);
-		}
 
-		return formatResults(results);
-	}
+        vector<string> results;
+        for (auto result : resultCandidates) {
+            // vector<pair<string, pair<string, string>>> cls = clauses;
+            // unordered_map<string, string> fil;
+            // fil[selectSyn] = result;
+            // if (evalClauses(cls, fil)) results.push_back(result);
+            results.push_back(result);
+        }
+
+        return formatResults(results);
+    }
 }
