@@ -33,53 +33,54 @@ int Parser::Parse (string filename) {
 			//Calls PKB API to set procedure name
 			//pkb.setProcName(header);
 		}
+		else if (line.find("while") != string::npos) {
+			pkb.setStmt(stmtNo, While);
+			stmtNo++;
+		}
+		else if (line.find("if") != string::npos) {
+			pkb.setStmt(stmtNo, If);
+			stmtNo++;
+		}
 		else if (line.find("=") != string::npos) {
 			//Initial processing of stmt
 			string assign = parseAssignInit(line);
-			//pkb.setStmt(stmtNo, "assign");
+			pkb.setStmt(stmtNo, Assign);
 
 			//Splits the assign statement by the = sign and get LHS and RHS
 			int index = assign.find("=");
 			string varMod = assign.substr(0, index);
-			//pkb.setVar(varMod);
-			//pkb.setModifies(stmtNo, varMod);
+			pkb.setVar(varMod);
+			pkb.setModifiesVarByStmt(stmtNo, varMod);
 
 			string varUse = assign.substr(index + 1);
 
 			//Condition determine if RHS is a var or const
 			if (isdigit(varUse.at(0))) {
-				int constant = stoi(varUse);
-				//pkb.setConstant(stmtNo, constant);
+				pkb.setConstant(varUse);
 			}
 			else {
-				//pkb.setVar(varUse);
-				//pkb.setUses(stmtNo, varUse);
+				pkb.setVar(varUse);
+				pkb.setUsesVarByStmt(stmtNo, varUse);
 			}
 
 			stmtNo++;
-		}
-		else if (line.find("while") != string::npos) {
-			;
-		}
-		else if (line.find("if") != string::npos) {
-			;
 		}
 		else if (line.find("read") != string::npos) {
 			//Gets the variable used in read stmt into readArg
 			string readArg = parseRead(line);
 			//Sets stmt information in PKB and then sets modifies variable for that stmt
-			//pkb.setStmt(stmtNo, , "read");
-			//pkb.setModifies(stmtNo, readArg);
-			//pkb.setVar(readArg);
+			pkb.setStmt(stmtNo, Read);
+			pkb.setModifiesVarByStmt(stmtNo, readArg);
+			pkb.setVar(readArg);
 			stmtNo++;
 		}
 		else if (line.find("print") != string::npos) {
 			//Gets the variable used in print stmt into printArg
 			string printArg = parsePrint(line);
 			//Sets stmt information in PKB and then sets modifies variable for that stmt
-			//pkb.setStmt(stmtNo, , "print");
-			//pkb.setUses(stmtNo, printArg);
-			//pkb.setVar(printArg);
+			pkb.setStmt(stmtNo, Print);
+			pkb.setUsesVarByStmt(stmtNo, printArg);
+			pkb.setVar(printArg);
 			stmtNo++;
 		}
 		else {
