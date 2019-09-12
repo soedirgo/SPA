@@ -30,26 +30,33 @@ namespace UnitTesting
 
             pkb.clear();
 
+            pkb.setProc("main");
             pkb.setStmt(1, Assign);
+            pkb.setAssignStmt(1, "a");
             pkb.setVar("a");
             pkb.setConstant("1");
             pkb.setModifiesVarByStmt(1, "a");
 
             pkb.setStmt(2, Assign);
+            pkb.setAssignStmt(2, "b");
             pkb.setVar("b");
             pkb.setUsesVarByStmt(2, "a");
             pkb.setModifiesVarByStmt(2, "b");
 
             pkb.setStmt(3, If);
+            pkb.setIfStmt(3);
             pkb.setUsesVarByStmt(3, "a");
             pkb.setUsesVarByStmt(3, "b");
 
             pkb.setStmt(4, Assign);
+            pkb.setAssignStmt(4, "c");
             pkb.setVar("c");
+            pkb.setConstant("0");
             pkb.setModifiesVarByStmt(3, "c");
             pkb.setModifiesVarByStmt(4, "c");
 
             pkb.setStmt(5, Assign);
+            pkb.setAssignStmt(5, "c");
             pkb.setModifiesVarByStmt(3, "c");
             pkb.setModifiesVarByStmt(5, "c");
 		}
@@ -77,7 +84,7 @@ namespace UnitTesting
 			q = Query(decl, "w", {});
             Assert::AreEqual((string)"", Evaluator::evalQuery(q));
 
-			q = Query(decl, "i", {});
+            q = Query(decl, "i", {});
             Assert::AreEqual((string)"3", Evaluator::evalQuery(q));
 
 			q = Query(decl, "a", {});
@@ -87,7 +94,7 @@ namespace UnitTesting
             Assert::AreEqual((string)"a, b, c", Evaluator::evalQuery(q));
 
 			q = Query(decl, "C", {});
-            Assert::AreEqual((string)"0, 1", Evaluator::evalQuery(q));
+            Assert::AreEqual((string)"1, 0", Evaluator::evalQuery(q));
 
 			q = Query(decl, "P", {});
             Assert::AreEqual((string)"main", Evaluator::evalQuery(q));
