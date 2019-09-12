@@ -23,16 +23,13 @@ namespace Evaluator {
 			vector<string> statements;
 			if (fil.count(stmtRef)) { // stmtRef has been filtered before
 				statements.push_back(fil[stmtRef]);
-			}
-			else if (declarations.count(stmtRef)) { // stmtRef is a synonym
+			} else if (declarations.count(stmtRef)) { // stmtRef is a synonym
 				for (int stmtNum : PKB::getAllStmt()) {
 					statements.push_back(to_string(stmtNum));
 				}
-			}
-			else if (PKB::getAllStmt().count(stoi(stmtRef))) { // stmtRef is a stmtNo
+			} else if (PKB::getAllStmt().count(stoi(stmtRef))) { // stmtRef is a stmtNo
 				statements.push_back(stmtRef);
-			}
-			else { // stmtRef is a ``_''
+			} else { // stmtRef is a ``_''
 				for (int stmtNum : PKB::getAllStmt()) {
 					statements.push_back(to_string(stmtNum));
 				}
@@ -45,16 +42,13 @@ namespace Evaluator {
 			vector<string> variables;
 			if (fil.count(varRef)) { // varRef has been filtered before
 				variables.push_back(fil[varRef]);
-			}
-			else if (declarations.count(varRef)) { // varRef is a synonym
+			} else if (declarations.count(varRef)) { // varRef is a synonym
 				for (string var : PKB::getAllVar()) {
 					variables.push_back(var);
 				}
-			}
-			else if (PKB::getAllVar().count(varRef)) { // varRef is an explicit name
+			} else if (PKB::getAllVar().count(varRef)) { // varRef is an explicit name
 				variables.push_back(varRef);
-			}
-			else { // varRef is a ``_''
+			} else { // varRef is a ``_''
 				for (string var : PKB::getAllVar()) {
 					variables.push_back(var);
 				}
@@ -103,8 +97,7 @@ namespace Evaluator {
 			string type = clause.first;
 			if (type == "uses") {
 				return evalUses(clause, cls, fil);
-			}
-			else {
+			} else {
 				return evalModifies(clause, cls, fil);
 			}
 		}
@@ -116,8 +109,7 @@ namespace Evaluator {
 				if (!started) {
 					started = 1;
 					result += elem;
-				}
-				else {
+				} else {
 					result += ", ";
 					result += elem;
 				}
