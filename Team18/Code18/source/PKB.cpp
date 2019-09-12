@@ -15,6 +15,10 @@ unordered_map<string, unordered_set<int>> PKB::stmtModifiesByVarTable;
 unordered_map<string, unordered_set<int>> PKB::stmtUsesByVarTable;
 unordered_map<int, unordered_set<string>> PKB::varModifiesByStmtTable;
 unordered_map<int, unordered_set<string>> PKB::varUsesByStmtTable;
+unordered_map<int, string> PKB::assignStmtTable;
+unordered_map<string, unordered_set<int>> PKB::assignVarTable;
+unordered_set<int> PKB::whileTable;
+unordered_set<int> PKB::ifTable;
 
 bool PKB::clear()
 {
@@ -231,11 +235,103 @@ bool PKB::isUsesStmtVar(int stmtNo, string varName) {
 	return false;
 }
 
+////////////////////////////////////
+// assignStmtTable APIs
+////////////////////////////////////
+
+unordered_set<int> PKB::getAllAssignStmt() {
+	unordered_set<int> stmtList;
+	for (auto keyValue : assignStmtTable) {
+		stmtList.emplace(keyValue.first);
+	}
+	return stmtList;
+}
+
+bool PKB::setAssignStmt(int stmtNo, string varModified) {
+	std::pair<int, string> entry(stmtNo, varModified);
+	try {
+		assignStmtTable.insert(entry);
+		return true;
+	}
+	catch (errc e) {
+		return false;
+	}
+};
+
+string PKB::getVarModifiedByAssignStmt(int stmtNo) {
+	return assignStmtTable[stmtNo]; 
+}
+
+////////////////////////////////////
+// assignStmtByVarTable APIs
+////////////////////////////////////
+
+unordered_set<int> PKB::getAssignStmtByVar(string varName) {
+	return assignVarTable[varName];
+}
+
+
+bool PKB::setAssignStmtByVar(int stmtNo, string varName) {
+	try {
+		//get stmtList from PKB then add variable to varList
+		unordered_set<int> stmtList = getAssignStmtByVar(varName);
+		stmtList.emplace(stmtNo);
+		//add it to varModifiesStmtTable
+		assignVarTable[varName] = stmtList;
+		return true;
+	}
+	catch (errc e) {
+		return false;
+	}
+}
+
+
+////////////////////////////////////
+// whileTable APIs
+////////////////////////////////////
+
+unordered_set<int> PKB::getAllWhileStmt() {
+	return whileTable; 
+};
+
+
+bool PKB::setWhileStmt(int stmtNo) {
+	try {
+		whileTable.insert(stmtNo);
+		return true;
+	}
+	catch (errc e) {
+		return false;
+	}
+};
+
+////////////////////////////////////
+// ifTable APIs
+////////////////////////////////////
+
+unordered_set<int> PKB::getAllIfStmt() {
+	return ifTable;
+};
+
+
+bool PKB::setIfStmt(int stmtNo) {
+	try {
+		ifTable.insert(stmtNo);
+		return true;
+	}
+	catch (errc e) {
+		return false;
+	}
+};
+
+
 
 ////////////////////////////////////
 // Higher Level APIs that use one or more tables
 ////////////////////////////////////
 
+/* 
+//Archived as of 2019-09-11 
 //Gets list of assignment statements that modifies a variable through an assignment statment
 //Modifies(a,v) holds if variable v appears on the left side of A 
 unordered_set<int> PKB::getStmtsThatModVarByAssign(string varName) {
@@ -254,6 +350,7 @@ unordered_set<int> PKB::getStmtsThatModVarByAssign(string varName) {
 	
 	return results;
 }
+*/
 
 	
 	
