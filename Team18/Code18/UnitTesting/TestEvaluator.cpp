@@ -123,32 +123,32 @@ namespace UnitTesting
                                                    {"C", "constant"},
                                                    {"P", "procedure"} };
 
-			Query q = Query(decl, "s", {"uses", {"s", "v"}});
+            Query q = Query(decl, "s", { {"uses", {"s", "v"}} });
             Assert::AreEqual((string)"2, 3", Evaluator::evalQuery(q));
 
-            q = Query(decl, "r", {"modifies", {"r", "v"}});
+            q = Query(decl, "r", { {"modifies", {"r", "v"}} });
             Assert::AreEqual((string)"", Evaluator::evalQuery(q));
 
-			q = Query(decl, "p", {"uses", {"p", "v"}});
+            q = Query(decl, "p", { {"uses", {"p", "v"}} });
             Assert::AreEqual((string)"", Evaluator::evalQuery(q));
 
-			q = Query(decl, "w", {"uses", {"w", "v"}});
+            q = Query(decl, "w", { {"uses", {"w", "v"}} });
             Assert::AreEqual((string)"", Evaluator::evalQuery(q));
 
-            q = Query(decl, "i", {"uses", {"i", "z"}});
+            q = Query(decl, "i", { {"uses", {"i", "z"}} });
             Assert::AreEqual((string)"", Evaluator::evalQuery(q));
 
-			q = Query(decl, "a", {"modifies", {"1", "x"}});
-            Assert::AreEqual((string)"1", Evaluator::evalQuery(q));
+            q = Query(decl, "a", { {"modifies", {"1", "x"}} });
+            Assert::AreEqual((string)"1, 2, 4, 5", Evaluator::evalQuery(q));
 
-			q = Query(decl, "v", {"uses", {"2", "v"}});
+            q = Query(decl, "v", { {"uses", {"2", "v"}} });
             Assert::AreEqual((string)"x", Evaluator::evalQuery(q));
 
-			q = Query(decl, "C", {"uses", {"4", "C"}});
+            q = Query(decl, "C", { {"uses", {"4", "C"}} });
             Assert::AreEqual((string)"", Evaluator::evalQuery(q));
 
-			q = Query(decl, "P", {"modifies", {"P", "z"}});
-            Assert::AreEqual((string)"main", Evaluator::evalQuery(q));
+            //q = Query(decl, "P", { {"modifies", {"P", "z"}} });
+            //Assert::AreEqual((string)"main", Evaluator::evalQuery(q));
         }
         TEST_METHOD(evaluatorPattern)
         {
