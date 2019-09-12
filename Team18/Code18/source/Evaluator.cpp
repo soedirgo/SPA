@@ -137,14 +137,33 @@ namespace Evaluator {
 			for (auto stmt : PKB::getAllStmt()) {
 				resultCandidates.insert(to_string(stmt));
 			}
+		} else if (selectSynType == "read") {
+			for (auto stmt : PKB::getAllReadStmt()) {
+				resultCandidates.insert(to_string(stmt));
+			}
+		} else if (selectSynType == "print") {
+            for (auto stmt : PKB::getAllPrintStmt()) {
+				resultCandidates.insert(to_string(stmt));
+			}
+		} else if (selectSynType == "while") {
+			for (auto stmt : PKB::getAllWhileStmt()) {
+				resultCandidates.insert(to_string(stmt));
+			}
+		} else if (selectSynType == "if") {
+			for (auto stmt : PKB::getAllIfStmt()) {
+				resultCandidates.insert(to_string(stmt));
+			}
+		} else if (selectSynType == "assign") {
+			for (auto stmt : PKB::getAllAssignStmt()) {
+				resultCandidates.insert(to_string(stmt));
+			}
 		} else if (selectSynType == "variable") {
 			resultCandidates = PKB::getAllVar();
 		} else if (selectSynType == "constant") {
 			resultCandidates = PKB::getAllConstant();
-        } else {
-            resultCandidates = {};
+		} else if (selectSynType == "procedure") {
+			resultCandidates = PKB::getAllProc();
         }
-
 
         vector<string> results;
         for (auto result : resultCandidates) {
