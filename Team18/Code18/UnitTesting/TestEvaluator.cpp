@@ -78,7 +78,6 @@ namespace UnitTesting
 		}
         TEST_METHOD(evaluatorNoClause)
         {
-            /**
             unordered_map<string, string> decl = { {"s", "stmt"},
                                                    {"r", "read"},
                                                    {"p", "print"},
@@ -90,32 +89,32 @@ namespace UnitTesting
                                                    {"P", "procedure"} };
 
 			Query q = Query(decl, "s", {});
-            Assert::AreEqual((string)"1, 2, 3, 4, 5, 6, 7, 8", Evaluator::evalQuery(q));
+            Assert::AreEqual({"1", "2", "3", "4", "5", "6", "7", "8"},
+                             Evaluator::evalQuery(q));
 
 			q = Query(decl, "r", {});
-            Assert::AreEqual((string)"7", Evaluator::evalQuery(q));
+            Assert::AreEqual({"7"}, Evaluator::evalQuery(q));
 
 			q = Query(decl, "p", {});
-            Assert::AreEqual((string)"8", Evaluator::evalQuery(q));
+            Assert::AreEqual({"8"}, Evaluator::evalQuery(q));
 
 			q = Query(decl, "w", {});
-            Assert::AreEqual((string)"6", Evaluator::evalQuery(q));
+            Assert::AreEqual({"6"}, Evaluator::evalQuery(q));
 
             q = Query(decl, "i", {});
-            Assert::AreEqual((string)"3", Evaluator::evalQuery(q));
+            Assert::AreEqual({"3"}, Evaluator::evalQuery(q));
 
 			q = Query(decl, "a", {});
-            Assert::AreEqual((string)"1, 2, 4, 5", Evaluator::evalQuery(q));
+            Assert::AreEqual({"1", "2", "4", "5"}, Evaluator::evalQuery(q));
 
 			q = Query(decl, "v", {});
-            Assert::AreEqual((string)"x, y, z", Evaluator::evalQuery(q));
+            Assert::AreEqual({"x", "y", "z"}, Evaluator::evalQuery(q));
 
 			q = Query(decl, "C", {});
-            Assert::AreEqual((string)"1, 0", Evaluator::evalQuery(q));
+            Assert::AreEqual({"1", "0"}, Evaluator::evalQuery(q));
 
 			q = Query(decl, "P", {});
-            Assert::AreEqual((string)"main", Evaluator::evalQuery(q));
-            */
+            Assert::AreEqual({"main"}, Evaluator::evalQuery(q));
         }
         TEST_METHOD(evaluatorSuchThat)
         {
@@ -127,11 +126,10 @@ namespace UnitTesting
                4. Select w such that Uses(w, v);
                5. Select i such that Uses(i, "z");
                6. Select a such that Modifies(a, "x");
-               6. Select v such that Uses(2, v);
-               6. Select C such that Uses(2, "x");
-               6. Select P such that Modifies(P, "z");
+               7. Select v such that Uses(2, v);
+               8. Select C such that Uses(2, "x");
+               9. Select P such that Modifies(P, "z");
             */
-            /**
             unordered_map<string, string> decl = { {"s", "stmt"},
                                                    {"r", "read"},
                                                    {"p", "print"},
@@ -143,32 +141,31 @@ namespace UnitTesting
                                                    {"P", "procedure"} };
 
             Query q = Query(decl, "s", { {"uses", {"s", "v"}} });
-            Assert::AreEqual((string)"2, 3, 6, 8", Evaluator::evalQuery(q));
+            Assert::AreEqual({"2", "3", "6", "8"}, Evaluator::evalQuery(q));
 
             q = Query(decl, "r", { {"modifies", {"r", "v"}} });
-            Assert::AreEqual((string)"7", Evaluator::evalQuery(q));
+            Assert::AreEqual({"7"}, Evaluator::evalQuery(q));
 
             q = Query(decl, "p", { {"uses", {"p", "v"}} });
-            Assert::AreEqual((string)"8", Evaluator::evalQuery(q));
+            Assert::AreEqual({"8"}, Evaluator::evalQuery(q));
 
             q = Query(decl, "w", { {"uses", {"w", "v"}} });
-            Assert::AreEqual((string)"6", Evaluator::evalQuery(q));
+            Assert::AreEqual({"6"}, Evaluator::evalQuery(q));
 
             q = Query(decl, "i", { {"uses", {"i", "z"}} });
-            Assert::AreEqual((string)"", Evaluator::evalQuery(q));
+            Assert::AreEqual({""}, Evaluator::evalQuery(q));
 
             q = Query(decl, "a", { {"modifies", {"a", "x"}} });
-            Assert::AreEqual((string)"1", Evaluator::evalQuery(q));
+            Assert::AreEqual({"1"}, Evaluator::evalQuery(q));
 
             q = Query(decl, "v", { {"uses", {"2", "v"}} });
-            Assert::AreEqual((string)"x", Evaluator::evalQuery(q));
+            Assert::AreEqual({"x"}, Evaluator::evalQuery(q));
 
             q = Query(decl, "C", { {"uses", {"2", "x"}} });
-            Assert::AreEqual((string)"1, 0", Evaluator::evalQuery(q));
+            Assert::AreEqual({"1", "0"}, Evaluator::evalQuery(q));
 
             //q = Query(decl, "P", { {"modifies", {"P", "z"}} });
-            //Assert::AreEqual((string)"main", Evaluator::evalQuery(q));
-            */
+            //Assert::AreEqual({"main"}, Evaluator::evalQuery(q));
         }
         TEST_METHOD(evaluatorPattern)
         {
