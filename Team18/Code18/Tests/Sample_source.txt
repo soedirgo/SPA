@@ -1,7 +1,8 @@
 procedure Example {
-  x = 2;
-  z = 3;
-  i = 5;
-  read a;
-  print a;
- }
+  x = 1;
+  y = 2;
+  read x;
+  z = 6;
+  y = z;
+  print y;
+  read i;}

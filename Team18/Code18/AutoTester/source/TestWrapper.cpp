@@ -1,5 +1,8 @@
 #include "TestWrapper.h"
 #include "Parser.h"
+#include "PKB.h"
+#include "Evaluator.h"
+#include "QueryParser.h"
 
 // implementation code of WrapperFactory - do NOT modify the next 5 lines
 AbstractWrapper* WrapperFactory::wrapper = 0;
@@ -15,34 +18,34 @@ TestWrapper::TestWrapper() {
   // create any objects here as instance variables of this class
   // as well as any initialization required for your spa program
 	
-	/*
+	
 	PKB pkb;
 	Parser ps;
 	QueryParser qps;
-	Evaluator ev;
-	*/
+	//Evaluator ev;
+	
 
 }
 
 // method for parsing the SIMPLE source
 void TestWrapper::parse(std::string filename) {
+
+	PKB pkb = PKB();
+	pkb.clear();
+
 	// call your parser to do the parsing
 	Parser parser = Parser();
 	parser.Parse(filename);
   // ...rest of your code...
-
-	/*
-	pkb.clear();
-	ps.parse(filename);
-	*/
-
 }
 
 // method to evaluating a query
 void TestWrapper::evaluate(std::string query, std::list<std::string>& results){
 // call your evaluator to evaluate the query here
   // ...code to evaluate query...
-
+	QueryParser queryParser = QueryParser();
+	std::string evResult = queryParser.parse(query);
+	//std::cout << evResult;
 	
 	//string evResult = "";
 	/*

@@ -29,7 +29,7 @@ int Parser::Parse (string filename) {
 	while (getline(programFile, line)) {
 		//Process to parse each line
 		if (line.find("procedure") != string::npos) {
-			string header = parseProc(line);
+			//string header = parseProc(line);
 			//Calls PKB API to set procedure name
 			//pkb.setProcName(header);
 		}
@@ -104,7 +104,7 @@ string Parser::parseProc(string line) {
 	//Removes the stmt line open bracket: { from header
 	int i = header.find(keyword);
 	header.erase(i, keyword.size());
-
+	std::cout << header;
 	return header;
 }
 
