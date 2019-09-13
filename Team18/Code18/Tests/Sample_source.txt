@@ -5,4 +5,5 @@ procedure Example {
   z = 6;
   y = z;
   print y;
-  read i;}
+  read i;
+}
