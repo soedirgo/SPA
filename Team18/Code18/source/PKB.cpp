@@ -243,8 +243,12 @@ bool PKB::isUsesStmtVar(int stmtNo, string varName) {
 
 unordered_set<int> PKB::getAllAssignStmt() {
 	unordered_set<int> stmtList;
-	for (auto keyValue : assignStmtTable) {
-		stmtList.emplace(keyValue.first);
+	stmtType printStmt = Assign;
+	for (auto keyValue : stmtTable) {
+		if (keyValue.second == printStmt) {
+			stmtList.emplace(keyValue.first);
+
+		}
 	}
 	return stmtList;
 }

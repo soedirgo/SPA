@@ -19,12 +19,12 @@ Select p
 6
 5000
 5 - Select all read
-Read r;
+read r;
 Select r
 3, 7
 5000
 6 - Select all constant
-Constant c;
+constant c;
 Select c
 1, 2, 6
 5000
