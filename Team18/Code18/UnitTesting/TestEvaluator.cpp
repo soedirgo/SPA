@@ -3,7 +3,7 @@
 #include "Query.h"
 #include "Clause.h"
 #include "Evaluator.h"
-#include "PKB.h"
+#include "TestEvaluatorPKB.h"
 
 using namespace std;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
@@ -12,6 +12,8 @@ namespace UnitTesting
 {
 	TEST_CLASS(TestEvaluator)
 	{
+    private:
+        unordered_map<string, string> decl;
 	public:
         TEST_METHOD_INITIALIZE(evaluatorInit)
         {
@@ -30,64 +32,19 @@ namespace UnitTesting
                8.          print x;
                _       }
             */
-            PKB pkb;
 
-            pkb.clear();
-
-            pkb.setProc("main");
-            pkb.setStmt(1, Assign);
-            pkb.setAssignStmt(1, "x");
-            pkb.setVar("x");
-            pkb.setConstant("1");
-            pkb.setModifiesVarByStmt(1, "x");
-
-            pkb.setStmt(2, Assign);
-            pkb.setAssignStmt(2, "y");
-            pkb.setVar("y");
-            pkb.setUsesVarByStmt(2, "x");
-            pkb.setModifiesVarByStmt(2, "y");
-
-            pkb.setStmt(3, If);
-            pkb.setIfStmt(3);
-            pkb.setUsesVarByStmt(3, "x");
-            pkb.setUsesVarByStmt(3, "y");
-            pkb.setModifiesVarByStmt(3, "z");
-
-            pkb.setStmt(4, Assign);
-            pkb.setAssignStmt(4, "z");
-            pkb.setVar("z");
-            pkb.setConstant("0");
-            pkb.setModifiesVarByStmt(4, "z");
-
-            pkb.setStmt(5, Assign);
-            pkb.setAssignStmt(5, "z");
-            pkb.setModifiesVarByStmt(5, "z");
-
-            pkb.setStmt(6, While);
-            pkb.setWhileStmt(6);
-            pkb.setUsesVarByStmt(6, "x");
-            pkb.setModifiesVarByStmt(6, "x");
-
-            pkb.setStmt(7, Read);
-            pkb.setReadStmt(7, "x");
-            pkb.setModifiesVarByStmt(7, "x");
-
-            pkb.setStmt(8, Print);
-            pkb.setPrintStmt(8, "x");
-            pkb.setUsesVarByStmt(8, "x");
+            decl = { {"s", "stmt"},
+                     {"r", "read"},
+                     {"p", "print"},
+                     {"w", "while"},
+                     {"i", "if"},
+                     {"a", "assign"},
+                     {"v", "variable"},
+                     {"C", "constant"},
+                     {"P", "procedure"} };
 		}
         TEST_METHOD(evaluatorNoClause)
         {
-            unordered_map<string, string> decl = { {"s", "stmt"},
-                                                   {"r", "read"},
-                                                   {"p", "print"},
-                                                   {"w", "while"},
-                                                   {"i", "if"},
-                                                   {"a", "assign"},
-                                                   {"v", "variable"},
-                                                   {"C", "constant"},
-                                                   {"P", "procedure"} };
-
 			Query q = Query(decl, "s", {});
             Assert::AreEqual({"1", "2", "3", "4", "5", "6", "7", "8"},
                              Evaluator::evalQuery(q));
