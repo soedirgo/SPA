@@ -4,6 +4,7 @@ using namespace std;
 #include <iostream>
 #include <string>
 #include <vector>
+#include <list>
 #include <unordered_set>
 
 #include "Evaluator.h"
@@ -11,7 +12,7 @@ using namespace std;
 #include "QueryParser.h"
 
 string whitespace = " \n\t";
-string QueryParser::parse(string query) {
+list<string> QueryParser::parse(string query) {
 	vector<string> statements = findInitialDecleration(query);
 
 	unordered_map<string, string> declerationVariables = splitVariablesInDeclerations(statements);
@@ -53,7 +54,7 @@ string QueryParser::parse(string query) {
 	suchThat = splitSuchThat(suchThatClauses);
 	
 	Query q = Query(declerationVariables, selectVars, suchThat);
-	string finalOutput = evalQuery(q);
+	list<string> finalOutput = evalQuery(q);
 	
 	//return "";
 	return finalOutput;
@@ -186,7 +187,7 @@ vector<pair<string, pair<string, string>>> QueryParser::splitSuchThat(vector<str
 }
 
 //Split by brackets
-string QueryParser::evalQuery(Query q) {
+list<string> QueryParser::evalQuery(Query q) {
 	return Evaluator::evalQuery(q) ;
 }
 

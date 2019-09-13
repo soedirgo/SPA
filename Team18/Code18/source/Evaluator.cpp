@@ -118,7 +118,7 @@ namespace Evaluator {
 		}
 	}
 
-	string evalQuery(Query q) {
+	list<string> evalQuery(Query q) {
 		declarations = q.getDeclarations();
 		selectSyn = q.getSelectSynonym();
 		clauses = q.getClauses();
@@ -157,14 +157,14 @@ namespace Evaluator {
 			resultCandidates = PKB::getAllProc();
         }
 
-        vector<string> results;
+        list<string> results;
         for (auto result : resultCandidates) {
             vector<pair<string, pair<string, string>>> cls = clauses;
             unordered_map<string, string> fil;
             fil[selectSyn] = result;
             if (evalClauses(cls, fil)) results.push_back(result);
         }
-
-        return formatResults(results);
+        return results;
+        //return formatResults(results);
     }
 }

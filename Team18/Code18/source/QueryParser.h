@@ -13,7 +13,7 @@ using namespace std;
 
 class QueryParser {
 public:
-	static string parse(string query);
+	static list<string> parse(string query);
 
 	static vector<string> findInitialDecleration(string query);
 
@@ -23,7 +23,7 @@ public:
 
 	static vector<pair<string, pair<string, string>>> splitSuchThat(vector<string> suchThat);
 
-	static string evalQuery(Query q);
+	static list<string> evalQuery(Query q);
 
 	static string trim(string str, string whitespace);
 
