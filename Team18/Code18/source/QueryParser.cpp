@@ -15,7 +15,7 @@ string QueryParser::parse(string query) {
 	vector<string> statements = findInitialDecleration(query);
 
 	unordered_map<string, string> declerationVariables = splitVariablesInDeclerations(statements);
-
+	
 	string select = statements[statements.size() - 1];
 
 	string selectVars;
@@ -35,24 +35,29 @@ string QueryParser::parse(string query) {
 		selectVars = splitSelect(select.substr(0, suchThatIndex));
 		select = select.substr(suchThatIndex);
 	}
-
+	
 	//Find the next occurance of such that, push it to SuchThatClauses. Continues till no more select statements
 	while (select.length() > 0) {
 		suchThatIndex = select.substr(1).find(" such that");
+		if (suchThatIndex == -1) {
+			break;
+		}
 		string currentClause = select.substr(0, suchThatIndex);
 		if (currentClause.find("such that ")) {
 			suchThatClauses.push_back(currentClause);
 		}
-
+		
 		select = select.substr(suchThatIndex);
 	}
-
+	
 	suchThat = splitSuchThat(suchThatClauses);
 	
 	Query q = Query(declerationVariables, selectVars, suchThat);
-	//string finalOutput = evalQuery(q);
-	return "";
-	// return finalOutput;
+	string finalOutput = evalQuery(q);
+	
+	//return "";
+	return finalOutput;
+	
 }
 
 //Finds delimiter ; and push initial declarations into a new vector and return the vector
