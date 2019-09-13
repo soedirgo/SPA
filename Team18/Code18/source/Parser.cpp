@@ -94,7 +94,7 @@ int Parser::Parse (string filename) {
 
 string Parser::parseProc(string line) {
 	string header = line;
-	string keyword = "Procedure";
+	string keyword = "procedure";
 	string bracket = "{";
 	//Remove all white spaces from header
 	header.erase(remove_if(header.begin(), header.end(), isspace), header.end());
