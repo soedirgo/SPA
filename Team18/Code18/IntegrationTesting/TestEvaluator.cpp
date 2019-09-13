@@ -151,32 +151,41 @@ namespace UnitTesting
                                                    {"C", "constant"},
                                                    {"P", "procedure"} };
 
-            Query q = Query(decl, "s", { {"uses", {"s", "v"}} });
-            Assert::AreEqual({"2", "3", "6", "8"}, Evaluator::evalQuery(q));
+            expected = {"2", "3", "6", "8"};
+            actual = Evaluator::evalQuery(Query(decl, "s", { {"uses", {"s", "v"}} }));
+            Assert::IsTrue(expected == actual);
 
-            q = Query(decl, "r", { {"modifies", {"r", "v"}} });
-            Assert::AreEqual({"7"}, Evaluator::evalQuery(q));
+            expected = {"7"};
+            actual = Evaluator::evalQuery(Query(decl, "r", { {"modifies", {"r", "v"}} }));
+            Assert::IsTrue(expected == actual);
 
-            q = Query(decl, "p", { {"uses", {"p", "v"}} });
-            Assert::AreEqual({"8"}, Evaluator::evalQuery(q));
+            expected = {"8"};
+            actual = Evaluator::evalQuery(Query(decl, "p", { {"uses", {"p", "v"}} }));
+            Assert::IsTrue(expected == actual);
 
-            q = Query(decl, "w", { {"uses", {"w", "v"}} });
-            Assert::AreEqual({"6"}, Evaluator::evalQuery(q));
+            expected = {"6"};
+            actual = Evaluator::evalQuery(Query(decl, "w", { {"uses", {"w", "v"}} }));
+            Assert::IsTrue(expected == actual);
 
-            q = Query(decl, "i", { {"uses", {"i", "z"}} });
-            Assert::AreEqual({""}, Evaluator::evalQuery(q));
+            expected = {""};
+            actual = Evaluator::evalQuery(Query(decl, "i", { {"uses", {"i", "z"}} }));
+            Assert::IsTrue(expected == actual);
 
-            q = Query(decl, "a", { {"modifies", {"a", "x"}} });
-            Assert::AreEqual({"1"}, Evaluator::evalQuery(q));
+            expected = {"1"};
+            actual = Evaluator::evalQuery(Query(decl, "a", { {"modifies", {"a", "x"}} }));
+            Assert::IsTrue(expected == actual);
 
-            q = Query(decl, "v", { {"uses", {"2", "v"}} });
-            Assert::AreEqual({"x"}, Evaluator::evalQuery(q));
+            expected = {"x"};
+            actual = Evaluator::evalQuery(Query(decl, "v", { {"uses", {"2", "v"}} }));
+            Assert::IsTrue(expected == actual);
 
-            q = Query(decl, "C", { {"uses", {"2", "x"}} });
-            Assert::AreEqual({"1", "0"}, Evaluator::evalQuery(q));
+            expected = {"1", "0"};
+            actual = Evaluator::evalQuery(Query(decl, "C", { {"uses", {"2", "x"}} }));
+            Assert::IsTrue(expected == actual);
             
-            //q = Query(decl, "P", { {"modifies", {"P", "z"}} });
-            //Assert::AreEqual({"main"}, Evaluator::evalQuery(q));
+            //expected = {"main"};
+            //actual = Evaluator::evalQuery(Query(decl, "P", { {"modifies", {"P", "z"}} }));
+            //Assert::IsTrue(expected == actual);
         }
         TEST_METHOD(evaluatorPattern)
         {
