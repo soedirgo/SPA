@@ -12,11 +12,42 @@ using namespace std;
 #include "QueryParser.h"
 
 string whitespace = " \n\t";
+unordered_set<string> validTypes = { "stmt", "variable", "assign", "constant", "read", "while", "if",
+"print", "procedure" };
+
 list<string> QueryParser::parse(string query) {
+
+	list<string> finalOutput;
+	
+	//Empty query
+	if (query.empty()) {
+		finalOutput.push_back("Invalid");
+		return finalOutput;
+	}
+
+	//Select is at the start of the query, no declarations
+	else if (query.find("Select") == 0) {
+		finalOutput.push_back("None");
+		return finalOutput;
+	}
+
 	vector<string> statements = findInitialDecleration(query);
 
 	unordered_map<string, string> declerationVariables = splitVariablesInDeclerations(statements);
 	
+	//Iterate through the map of declaration variables and see if there's anything invalid
+	for (auto iterator : declerationVariables) {
+		if (validTypes.find(iterator.second) == validTypes.end()) {
+			finalOutput.push_back("Invalid");
+			return finalOutput;
+		}
+
+		if (iterator.first.empty()) {
+			finalOutput.push_back("Invalid");
+			return finalOutput;
+		}
+	}
+
 	string select = statements[statements.size() - 1];
 
 	string selectVars;
@@ -85,7 +116,7 @@ list<string> QueryParser::parse(string query) {
 	pattern = splitPattern(patternClauses);
 	
 	Query q = Query(declerationVariables, selectVars, suchThat, pattern);
-	list<string> finalOutput = evalQuery(q);
+	finalOutput = evalQuery(q);
 	
 	return finalOutput;
 	
