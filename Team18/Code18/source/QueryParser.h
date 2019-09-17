@@ -1,5 +1,3 @@
-using namespace std;
-
 #pragma once
 
 #include <stdio.h>
@@ -13,19 +11,21 @@ using namespace std;
 
 class QueryParser {
 public:
-	static list<string> parse(string query);
+	static std::list<std::string> parse(std::string query);
 
-	static vector<string> findInitialDecleration(string query);
+	static std::vector<std::string> findInitialDecleration(std::string query);
 
-	static unordered_map<string, string> splitVariablesInDeclerations(vector<string> declerations);
+	static std::unordered_map<std::string, std::string> splitVariablesInDeclerations(std::vector<std::string> declerations);
 
-	static string splitSelect(string statements);
+	static std::string splitSelect(std::string statements);
 
-	static vector<pair<string, pair<string, string>>> splitSuchThat(vector<string> suchThat);
+	static std::vector<std::pair<std::string, std::pair<std::string, std::string>>> splitSuchThat(std::vector<std::string> suchThat);
 
-	static list<string> evalQuery(Query q);
+	static std::vector<std::pair<std::string, std::pair<std::string, std::string>>> splitPattern(std::vector<std::string> pattern);
 
-	static string trim(string str, string whitespace);
+	static std::list<std::string> evalQuery(Query q);
 
-	static string removeSpaces(string s, string whitespace);
+	static std::string trim(std::string str, std::string whitespace);
+
+	static std::string removeSpaces(std::string s, std::string whitespace);
 };
