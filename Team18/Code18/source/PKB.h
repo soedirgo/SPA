@@ -15,8 +15,6 @@ enum stmtType { Read, Print, Assign, While, If, Call };
 
 class PKB {
 
-	
-	
 public:
 	// Clear PKB database
 	bool clear();

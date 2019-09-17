@@ -22,6 +22,7 @@ namespace UnitTesting
 			pkb.setStmt(10, Call);
 			pkb.setStmt(11, Call);
 			pkb.setStmt(12, Call);
+			
 
 			pkb.setVar("x");
 			pkb.setVar("y");
@@ -43,6 +44,9 @@ namespace UnitTesting
 			pkb.setAssignStmt(7, "z");
 			pkb.setAssignStmt(8, "x");
 
+			pkb.setStmt(13, Assign);
+			pkb.setStmt(14, Assign);
+			pkb.setStmt(15, Assign);
 			pkb.setAssignStmtByVar(1, "x");
 			pkb.setAssignStmtByVar(3, "y");
 			pkb.setAssignStmtByVar(6, "z");
@@ -75,7 +79,7 @@ namespace UnitTesting
 		TEST_METHOD(GetStmt)
 		{
 			//Actual PKB Data
-			unordered_set<int> stmtNoList = { 1,2,3,4,7,10,11,12 };
+			unordered_set<int> stmtNoList = { 1,2,3,4,7,10,11,12,13,14,15 };
 			Assert::IsTrue(PKB().getAllStmt() == stmtNoList);
 		}
 		TEST_METHOD(GetVar)
@@ -116,7 +120,7 @@ namespace UnitTesting
 		};
 		TEST_METHOD(getAllAssignStmt)
 		{
-			unordered_set<int> stmtNoList = {1,3,6,7,8};
+			unordered_set<int> stmtNoList = {13,14,15};
 			Assert::IsTrue(PKB().getAllAssignStmt() == stmtNoList);
 		};
 
