@@ -5,6 +5,7 @@ using namespace std;
 
 unordered_map<int, int> PKBParent::parentTable;
 unordered_map<int, std::unordered_set<int>>  PKBParent::childTable;
+unordered_map<int, std::unordered_set<int>>  PKBParent::parentStarTable;
 
 
 bool PKBParent::setParent(int parent, int child) {
@@ -24,12 +25,28 @@ bool PKBParent::setChildren(int parent, int child) {
 	}
 }
 
+bool PKBParent::setParentStar(int parent, int child) {
+	try {
+		unordered_set<int> stmtList = getParentStarStmtList(child);
+		stmtList.emplace(parent);
+		parentStarTable[child] = stmtList;
+		return true;
+	}
+	catch (errc e) {
+		return false;
+	}
+}
+
 int PKBParent::getParentStmt(int child) {
 	return parentTable[child];
 }
 
 unordered_set<int> PKBParent::getChildrenStmtList(int parent) {
 	return childTable[parent];
+}
+
+unordered_set<int> PKBParent::getParentStarStmtList(int child) {
+	return parentStarTable[child];
 }
 
 bool PKBParent::isParentExist(int stmtNo) {
@@ -40,6 +57,16 @@ bool PKBParent::isParentRelationship(int parent, int child) {
 	unordered_set<int> stmtList = getChildrenStmtList(parent);
 	for (auto keyValue : stmtList) {
 		if (keyValue==child) {
+			return true;
+		}
+	}
+	return false;
+}
+
+bool PKBParent::isParentStarRelationship(int parent, int child) {
+	unordered_set<int> stmtList = getParentStarStmtList(child);
+	for (auto keyValue : stmtList) {
+		if (keyValue == parent) {
 			return true;
 		}
 	}

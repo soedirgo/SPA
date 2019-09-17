@@ -48,9 +48,10 @@ namespace UnitTesting
 
 			pkb.insertParentRelation(1, 2);
 			pkb.insertParentRelation(1, 3);
+			pkb.insertParentStarRelation(1, 3);
 
 			pkb.insertFollowRelation(1, 2);
-
+			pkb.insertFollowStarRelation(1, 2);
 		}
 		TEST_METHOD(GetModifiesStmtByVar)
 		{
@@ -125,7 +126,39 @@ namespace UnitTesting
 		{
 			//Actual PKB Data
 			int follow = 2;
-			Assert::IsTrue(PKB().getFollow(1) == follow);
+			Assert::IsTrue(PKB().getFollowStmt(1) == follow);
+		}
+		TEST_METHOD(FollowRelationship)
+		{
+			//Actual PKB Data
+			Assert::IsTrue(PKB().isFollowRelationship(1, 2));
+		}
+		TEST_METHOD(FollowStarRelationship)
+		{
+			//Actual PKB Data
+			Assert::IsTrue(PKB().isFollowStarRelationship(1, 2));
+		}
+		TEST_METHOD(ParentRelationship)
+		{
+			//Actual PKB Data
+			Assert::IsTrue(PKB().isParentRelationship(1, 2));
+		}
+		TEST_METHOD(ParentStarRelationship)
+		{
+			//Actual PKB Data
+			Assert::IsTrue(PKB().isParentStarRelationship(1, 3));
+		}
+		TEST_METHOD(GetParentStar)
+		{
+			//Actual PKB Data
+			unordered_set<int> stmtNoList = { 1 };
+			Assert::IsTrue(PKB().getParentStarStmtList(3) == stmtNoList);
+		}
+		TEST_METHOD(GetFollowStar)
+		{
+			//Actual PKB Data
+			unordered_set<int> stmtNoList = { 2 };
+			Assert::IsTrue(PKB().getFollowStarStmtList(1) == stmtNoList);
 		}
 		
 	};

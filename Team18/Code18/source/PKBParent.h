@@ -10,21 +10,24 @@ public:
 	// add parent to parentTable
 	static bool setParent(int parent, int child);
 	static bool setChildren(int parent, int child);
+	static bool setParentStar(int parent, int child);
 
 	// GETTERS
-	static int getParentStmt(int stmtNo);
-	static std::unordered_set<int> getChildrenStmtList(int stmtNo);
+	static int getParentStmt(int child);
+	static std::unordered_set<int> getParentStarStmtList(int child);
+	static std::unordered_set<int> getChildrenStmtList(int parent);
 
 	// Boolean Check
 	static bool isParentExist(int stmtNo);
 	static bool isChildrenExist(int stmtNo);
 
 	static bool isParentRelationship(int parent, int child);
-
+	static bool isParentStarRelationship(int parent, int child);
 	// Clear
 	bool clear();
 
 private:
 	static std::unordered_map<int, int> parentTable;
 	static std::unordered_map<int, std::unordered_set<int>> childTable;
+	static std::unordered_map<int, std::unordered_set<int>> parentStarTable;
 };

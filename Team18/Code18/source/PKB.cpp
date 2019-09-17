@@ -47,24 +47,48 @@ bool PKB::insertFollowRelation(int followedBy, int follow) {
 	return PKBFollow::setFollow(followedBy, follow) && PKBFollow::setFollowedBy(followedBy, follow);
 }
 
+bool PKB::insertFollowStarRelation(int followedBy, int follow) {
+	return PKBFollow::setFollowStar(followedBy, follow);
+}
+
 bool PKB::isFollowRelationship(int followedBy, int follow) {
 	return PKBFollow::isFollowRelationship(followedBy, follow);
 }
 
-int PKB::getFollow(int followedBy) {
-	return PKBFollow::getFollow(followedBy);
+bool PKB::isFollowStarRelationship(int followedBy, int follow) {
+	return PKBFollow::isFollowStarRelationship(followedBy, follow);
+}
+
+int PKB::getFollowStmt(int followedBy) {
+	return PKBFollow::getFollowStmt(followedBy);
 }
 
 unordered_set<int> PKB::getFollowedByStmtList(int follow) {
 	return PKBFollow::getFollowedByStmtList(follow);
 }
 
+unordered_set<int> PKB::getFollowStarStmtList(int follow) {
+	return PKBFollow::getFollowStarStmtList(follow);
+}
+
 bool PKB::insertParentRelation(int parent, int child) {
 	return PKBParent::setChildren(parent,child) && PKBParent::setParent(parent,child);
 }
 
+bool PKB::insertParentStarRelation(int parent, int child) {
+	return PKBParent::setParentStar(parent, child);
+}
+
 bool PKB::isParentRelationship(int parent, int child) {
 	return PKBParent::isParentRelationship(parent, child);
+}
+
+bool PKB::isParentStarRelationship(int parent, int child) {
+	return PKBParent::isParentStarRelationship(parent, child);
+}
+
+unordered_set<int> PKB::getParentStarStmtList(int child) {
+	return PKBParent::getParentStarStmtList(child);
 }
 
 unordered_set<int> PKB::getChildrenStmtList(int parent) {

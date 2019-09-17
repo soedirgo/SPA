@@ -21,14 +21,24 @@ public:
 	/////////////////////////////////
 	//Higher order wrapper functions
 	/////////////////////////////////
-	static bool insertFollowRelation(int followedBy, int follow);
-	static bool isFollowRelationship(int followedBy, int follow);
-	static int getFollow(int followedBy);
-	static std::unordered_set<int> getFollowedByStmtList(int follow);
 
+
+	//Follow Functions
+	static bool insertFollowRelation(int followedBy, int follow);
+	static bool insertFollowStarRelation(int followedBy, int follow);
+	static bool isFollowRelationship(int followedBy, int follow);
+	static bool isFollowStarRelationship(int followedBy, int follow);
+	static std::unordered_set<int> getFollowedByStmtList(int follow);
+	static std::unordered_set<int> getFollowStarStmtList(int followedBy);
+	static int getFollowStmt(int followedBy);
+	
+	//Parent Functions
 	static bool insertParentRelation(int parent, int child);
+	static bool insertParentStarRelation(int parent, int child);
 	static bool isParentRelationship(int parent, int child);
+	static bool isParentStarRelationship(int parent, int child);
 	static std::unordered_set<int> getChildrenStmtList(int parent);
+	static std::unordered_set<int> getParentStarStmtList(int child);
 	static int getParentStmt(int child);
 
 	static bool insertModifiesRelation(int stmtNo, std::string varName); 
