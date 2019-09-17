@@ -80,7 +80,7 @@ list<string> QueryParser::parse(string query) {
 		selectVars = splitSelect(select.substr(0, currentIndex));
 		select = select.substr(currentIndex);
 	}
-	
+
 	//Find the next occurance of such that, push it to SuchThatClauses/PatternClauses. Continues till no more select statements
 	while (select.length() > 0 && currentIndex != -1) {
 		suchThatIndex = select.substr(1).find(" such that");
@@ -111,10 +111,10 @@ list<string> QueryParser::parse(string query) {
 		
 		select = select.substr(suchThatIndex);
 	}
-	
+
 	suchThat = splitSuchThat(suchThatClauses);
 	pattern = splitPattern(patternClauses);
-	
+
 	Query q = Query(declerationVariables, selectVars, suchThat, pattern);
 	finalOutput = evalQuery(q);
 	
@@ -262,15 +262,16 @@ vector<pair<string, pair<string, string>>> QueryParser::splitPattern(vector<stri
 		posOfComma = pattern[i].find(",");
 
 		if (pattern[i].find("pattern") != -1) {
+			//trim out a
 			clauseType = trim(pattern[i].substr(7, posOfOpenBracket - 7), whitespace);
 		}
 		else {
 			clauseType = trim(pattern[i].substr(3, posOfOpenBracket - 3), whitespace);
 		}
 
-		string firstVar = trim(pattern[i].substr(posOfOpenBracket + 1, posOfComma - posOfOpenBracket - 1),whitespace);
-		string secondVar = removeSpaces(pattern[i].substr(posOfComma + 1, posOfCloseBracket - posOfComma - 1),whitespace);
-
+		//Don't include _
+		string firstVar = trim(pattern[i].substr(posOfOpenBracket + 1, posOfComma - posOfOpenBracket-1),whitespace);
+		string secondVar = removeSpaces(pattern[i].substr(posOfComma + 1, posOfCloseBracket - posOfComma-1),whitespace);
 		s.push_back(make_pair(clauseType, make_pair(firstVar, secondVar)));
 	}
 

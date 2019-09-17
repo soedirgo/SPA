@@ -46,9 +46,9 @@ namespace UnitTesting
 
 		TEST_METHOD(splitPatternCondition)
 		{
-			vector<string> input = { "pattern a(_, \"a+b*c\")" };
+			vector<string> input = { "pattern a(_, a+b*c)" };
 			vector<pair<string, pair<string, string>>> actual = QueryParser::splitPattern(input);
-			vector<pair<string, pair<string, string>>> expected{ {"a", {"_", "\"a+b*c\""}} };
+			vector<pair<string, pair<string, string>>> expected{ {"a", {"_", "a+b*c"}} };
 			Assert::AreEqual(actual == expected, true);
 		}
 	};
