@@ -11,8 +11,8 @@ public:
 	static bool setFollowedBy(int followedBy, int follow);
 
 	// GETTERS
-	static int getFollow(int stmtNo);
-	static std::unordered_set<int> getFollowedByStmtList(int stmtNo);
+	static int getFollow(int followedBy);
+	static std::unordered_set<int> getFollowedByStmtList(int follow);
 
 	// Boolean Check
 	static bool isFollowRelationship(int followedBy, int follow);

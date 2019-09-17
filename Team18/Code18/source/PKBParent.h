@@ -8,8 +8,8 @@ class PKBParent {
 public:
 
 	// add parent to parentTable
-	static bool setParentByChild(int parent, int child);
-	static bool setChildrenByParent(int parent, int child);
+	static bool setParent(int parent, int child);
+	static bool setChildren(int parent, int child);
 
 	// GETTERS
 	static int getParentStmt(int stmtNo);

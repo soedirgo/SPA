@@ -45,7 +45,11 @@ namespace UnitTesting
 			pkb.insertAssignRelation(6, "z");
 			pkb.insertAssignRelation(7, "z");
 			pkb.insertAssignRelation(8, "x");
-			
+
+			pkb.insertParentRelation(1, 2);
+			pkb.insertParentRelation(1, 3);
+
+			pkb.insertFollowRelation(1, 2);
 
 		}
 		TEST_METHOD(GetModifiesStmtByVar)
@@ -98,7 +102,31 @@ namespace UnitTesting
 			Assert::IsTrue(PKB().getAllStmtByType("call") == stmtNoList);
 		
 		};
-		
+
+		TEST_METHOD(GetChildren)
+		{
+			//Actual PKB Data
+			unordered_set<int> stmtNoList = { 2,3 };
+			Assert::IsTrue(PKB().getChildrenStmtList(1) == stmtNoList);
+		}
+		TEST_METHOD(GetParent)
+		{
+			//Actual PKB Data
+			int parent = 1;
+			Assert::IsTrue(PKB().getParentStmt(2) == parent);
+		}
+		TEST_METHOD(GetFollowedBy)
+		{
+			//Actual PKB Data
+			unordered_set<int> stmtNoList = { 1 };
+			Assert::IsTrue(PKB().getFollowedByStmtList(2) == stmtNoList);
+		}
+		TEST_METHOD(GetFollow)
+		{
+			//Actual PKB Data
+			int follow = 2;
+			Assert::IsTrue(PKB().getFollow(1) == follow);
+		}
 		
 	};
 };

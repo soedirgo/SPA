@@ -29,8 +29,6 @@ namespace UnitTesting
 			int follow = 2;
 			Assert::IsTrue(PKBFollow().getFollow(1) == follow);
 		}
-
-
 	};
 };
 

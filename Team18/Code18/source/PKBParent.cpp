@@ -7,12 +7,12 @@ unordered_map<int, int> PKBParent::parentTable;
 unordered_map<int, std::unordered_set<int>>  PKBParent::childTable;
 
 
-bool PKBParent::setParentByChild(int parent, int child) {
+bool PKBParent::setParent(int parent, int child) {
 	parentTable[child] = parent;
 	return true;
 }
 
-bool PKBParent::setChildrenByParent(int parent, int child) {
+bool PKBParent::setChildren(int parent, int child) {
 	try {
 		unordered_set<int> stmtList = getChildrenStmtList(parent);
 		stmtList.emplace(child);

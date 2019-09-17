@@ -18,7 +18,19 @@ class PKB {
 public:
 	// Clear PKB database
 	bool clear();
-	//Higher order wrapper functions 
+	/////////////////////////////////
+	//Higher order wrapper functions
+	/////////////////////////////////
+	static bool insertFollowRelation(int followedBy, int follow);
+	static bool isFollowRelationship(int followedBy, int follow);
+	static int getFollow(int followedBy);
+	static std::unordered_set<int> getFollowedByStmtList(int follow);
+
+	static bool insertParentRelation(int parent, int child);
+	static bool isParentRelationship(int parent, int child);
+	static std::unordered_set<int> getChildrenStmtList(int parent);
+	static int getParentStmt(int child);
+
 	static bool insertModifiesRelation(int stmtNo, std::string varName); 
 	static bool insertUsesRelation(int stmtNo, std::string varName);
 	static bool insertAssignRelation(int stmtNo, std::string varName);
@@ -92,10 +104,6 @@ public:
 	static std::unordered_set<int> getAllCallStmt();
 	bool setCallStmt(int stmtNo, std::string procName);
 	std::unordered_set<int> getCallStmtByVar(std::string procName);
-
-
-	
-
 
 	static int setProcToAST(PROC p, TNode* r);
 	static TNode* getRootAST(PROC p);

@@ -14,11 +14,11 @@ namespace UnitTesting
 		{
 			PKBParent PKBParent;
 			PKBParent.clear();
-			PKBParent.setChildrenByParent(1,2);
-			PKBParent.setChildrenByParent(1,3);
+			PKBParent.setChildren(1,2);
+			PKBParent.setChildren(1,3);
 
-			PKBParent.setParentByChild(1, 2);
-			PKBParent.setParentByChild(1, 3);
+			PKBParent.setParent(1, 2);
+			PKBParent.setParent(1, 3);
 		}
 		TEST_METHOD(GetChildren)
 		{

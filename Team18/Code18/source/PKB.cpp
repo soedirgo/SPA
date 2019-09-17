@@ -3,6 +3,9 @@
 #include <vector>
 #include "PKB.h"
 #include "TNode.h"
+#include "PKBParent.h"
+#include "PKBFollow.h"
+
 using namespace std;
 
 unordered_set<string> PKB::varTable;
@@ -39,6 +42,40 @@ TNode* PKB::getRootAST (PROC p){
 ////////////////////////////////////
 // Higher order wrapper functions APIs
 ////////////////////////////////////
+
+bool PKB::insertFollowRelation(int followedBy, int follow) {
+	return PKBFollow::setFollow(followedBy, follow) && PKBFollow::setFollowedBy(followedBy, follow);
+}
+
+bool PKB::isFollowRelationship(int followedBy, int follow) {
+	return PKBFollow::isFollowRelationship(followedBy, follow);
+}
+
+int PKB::getFollow(int followedBy) {
+	return PKBFollow::getFollow(followedBy);
+}
+
+unordered_set<int> PKB::getFollowedByStmtList(int follow) {
+	return PKBFollow::getFollowedByStmtList(follow);
+}
+
+bool PKB::insertParentRelation(int parent, int child) {
+	return PKBParent::setChildren(parent,child) && PKBParent::setParent(parent,child);
+}
+
+bool PKB::isParentRelationship(int parent, int child) {
+	return PKBParent::isParentRelationship(parent, child);
+}
+
+unordered_set<int> PKB::getChildrenStmtList(int parent) {
+	return PKBParent::getChildrenStmtList(parent);
+}
+
+int PKB::getParentStmt(int child) {
+	return PKBParent::getParentStmt(child);
+}
+
+
 
 bool PKB::insertModifiesRelation(int stmtNo, string varName) {
 	try {
