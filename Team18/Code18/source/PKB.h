@@ -18,6 +18,12 @@ class PKB {
 public:
 	// Clear PKB database
 	bool clear();
+	//Higher order wrapper functions 
+
+	static bool insertModifiesRelation(int stmtNo, std::string varName); 
+	static bool insertUsesRelation(int stmtNo, std::string varName);
+
+
 	// add a variable to varTable
 	static bool setVar(std::string varName);
 	static std::unordered_set<std::string> getAllVar();
@@ -88,8 +94,6 @@ public:
 	std::unordered_set<int> getCallStmtByVar(std::string procName);
 
 
-	//Methods(varName) for modifies and uses SubTables
-	//static unordered_set<int> getStmtsThatModVarByAssign(string varName);
 	
 
 
@@ -117,10 +121,7 @@ private:
 	static std::unordered_map<std::string, std::unordered_set<int>> callTable;
 
 	/*
-	
-	
 	static unordered_set<int> callTable; //Not for iteration 1 
-	
 	*/
 	
 };

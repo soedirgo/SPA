@@ -35,6 +35,32 @@ int PKB::setProcToAST(PROC p, TNode* r) {
 TNode* PKB::getRootAST (PROC p){
 	return nullptr;
 }
+
+////////////////////////////////////
+// Higher order wrapper functions APIs
+////////////////////////////////////
+
+bool PKB::insertModifiesRelation(int stmtNo, string varName) {
+	try {
+		return setModifiesStmtByVar(stmtNo, varName) && setModifiesVarByStmt(stmtNo, varName);
+	}
+	catch (errc) {
+		return false;
+	}
+};
+
+bool PKB::insertUsesRelation(int stmtNo, string varName) {
+	try {
+		return setUsesStmtByVar(stmtNo, varName) && setUsesVarByStmt(stmtNo, varName);
+	}
+	catch (errc) {
+		return false;
+	}
+
+};
+
+
+
 ////////////////////////////////////
 // varTable APIs
 ////////////////////////////////////
@@ -80,7 +106,7 @@ bool PKB::setStmt(int stmtNo, stmtType type) {
 		stmtTable.emplace(stmtNo, type);
 		return true;
 	}
-	catch (errc e) {
+	catch (errc) {
 		return false;
 	}
 }
@@ -110,7 +136,7 @@ bool PKB::setModifiesStmtByVar(int stmtNo, string varName) {
 		stmtModifiesByVarTable[varName] = stmtList;
 		return true;
 	}
-	catch (errc e) {
+	catch (errc) {
 		return false;
 	}
 }
@@ -140,7 +166,7 @@ bool PKB::setUsesStmtByVar(int stmtNo, string varName) {
 		stmtUsesByVarTable[varName] = stmtList;
 		return true;
 	}
-	catch (errc e) {
+	catch (errc) {
 		return false;
 	}
 }
@@ -170,7 +196,7 @@ bool PKB::setModifiesVarByStmt(int stmtNo, string varName) {
 		varModifiesByStmtTable[stmtNo] = varList;
 		return true;
 	}
-	catch (errc e) {
+	catch (errc) {
 		return false;
 	}
 }
@@ -200,7 +226,7 @@ bool PKB::setUsesVarByStmt(int stmtNo, string varName) {
 		varUsesByStmtTable[stmtNo] = varList;
 		return true;
 	}
-	catch (errc e) {
+	catch (errc) {
 		return false;
 	}
 }
@@ -259,7 +285,7 @@ bool PKB::setAssignStmt(int stmtNo, string varModified) {
 		assignStmtTable.insert(entry);
 		return true;
 	}
-	catch (errc e) {
+	catch (errc) {
 		return false;
 	}
 };
@@ -286,7 +312,7 @@ bool PKB::setAssignStmtByVar(int stmtNo, string varName) {
 		assignVarTable[varName] = stmtList;
 		return true;
 	}
-	catch (errc e) {
+	catch (errc) {
 		return false;
 	}
 }
@@ -306,7 +332,7 @@ bool PKB::setWhileStmt(int stmtNo) {
 		whileTable.insert(stmtNo);
 		return true;
 	}
-	catch (errc e) {
+	catch (errc) {
 		return false;
 	}
 };
@@ -325,7 +351,7 @@ bool PKB::setIfStmt(int stmtNo) {
 		ifTable.insert(stmtNo);
 		return true;
 	}
-	catch (errc e) {
+	catch (errc) {
 		return false;
 	}
 };
@@ -361,7 +387,7 @@ bool PKB::setPrintStmt(int stmtNo, string varName) {
 		printTable[varName] = stmtList;
 		return true;
 	}
-	catch (errc e) {
+	catch (errc) {
 		return false;
 	}
 };
@@ -400,7 +426,7 @@ bool PKB::setReadStmt(int stmtNo, string varName) {
 		readTable[varName] = stmtList;
 		return true;
 	}
-	catch (errc e) {
+	catch (errc) {
 		return false;
 	}
 };
@@ -420,7 +446,7 @@ bool PKB::setProc(string procName) {
 		procedureTable.insert(procName);
 		return true;
 	}
-	catch (errc e) {
+	catch (errc) {
 		return false;
 	}
 };
@@ -456,7 +482,7 @@ bool PKB::setCallStmt(int stmtNo, string varName) {
 		callTable[varName] = stmtList;
 		return true;
 	}
-	catch (errc e) {
+	catch (errc) {
 		return false;
 	}
 };
