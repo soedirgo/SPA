@@ -28,9 +28,9 @@ int Parser::Parse (string filename) {
 	while (getline(programFile, line)) {
 		//Process to parse each line
 		if (line.find("procedure") != string::npos) {
-			//string header = parseProc(line);
+			string header = parseProc(line);
 			//Calls PKB API to set procedure name
-			//pkb.setProcName(header);
+			pkb.setProc(header);
 		}
 		else if (line.find("while") != string::npos) {
 			pkb.setStmt(stmtNo, While);
