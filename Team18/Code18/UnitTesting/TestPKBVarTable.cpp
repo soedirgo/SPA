@@ -74,7 +74,6 @@ namespace UnitTesting
 			pkb.setCallStmt(11, "Proc3");
 			pkb.setCallStmt(12, "Proc1");
 
-			
 		}
 		TEST_METHOD(GetStmt)
 		{

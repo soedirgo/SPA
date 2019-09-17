@@ -19,10 +19,10 @@ public:
 	// Clear PKB database
 	bool clear();
 	//Higher order wrapper functions 
-
 	static bool insertModifiesRelation(int stmtNo, std::string varName); 
 	static bool insertUsesRelation(int stmtNo, std::string varName);
-
+	static bool insertAssignRelation(int stmtNo, std::string varName);
+	static std::unordered_set<int> getAllStmtByType(std::string stmtType);
 
 	// add a variable to varTable
 	static bool setVar(std::string varName);

@@ -59,6 +59,44 @@ bool PKB::insertUsesRelation(int stmtNo, string varName) {
 
 };
 
+bool PKB::insertAssignRelation(int stmtNo, string varName) {
+	try {
+		return setAssignStmt(stmtNo, varName) && setAssignStmtByVar(stmtNo, varName);
+	}
+	catch (errc) {
+		return false;
+	}
+};
+
+unordered_set<int> PKB::getAllStmtByType(string type) {
+	//stmtType typeEnum; 
+	
+	if (type.compare("read") == 0 ) {
+		//typeEnum = Read;
+		return getAllReadStmt(); 
+	}
+	else if (type.compare("print") == 0) {
+		//typeEnum = Print;
+		return getAllPrintStmt();
+	}
+	else if ( (type.compare("assign")) == 0) {
+		//typeEnum = Assign;
+		return getAllAssignStmt();
+	}
+	else if (type.compare("while") == 0 ) {
+		//typeEnum = While;
+		return getAllWhileStmt();
+	}
+	else if (type.compare("if") == 0) {
+		//typeEnum = If;
+		return getAllIfStmt();
+	}
+	else if (type.compare("call") == 0) {
+		//typeEnum = Call;
+		return getAllCallStmt();
+	}
+
+}
 
 
 ////////////////////////////////////
