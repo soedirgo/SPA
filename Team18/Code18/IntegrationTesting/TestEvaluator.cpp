@@ -92,39 +92,39 @@ namespace UnitTesting
             list<string> actual;
 
             expected = { "1", "2", "3", "4", "5", "6", "7", "8" };
-            actual = Evaluator::evalQuery(Query(decl, "s", {}));
+			actual = Evaluator::evalQuery(Query(decl, "s", {}, {}));
             Assert::IsTrue(expected == actual);
 
             expected = { "7" };
-            actual = Evaluator::evalQuery(Query(decl, "r", {}));
+            actual = Evaluator::evalQuery(Query(decl, "r", {}, {}));
             Assert::IsTrue(expected == actual);
 
             expected = { "8" };
-            actual = Evaluator::evalQuery(Query(decl, "p", {}));
+            actual = Evaluator::evalQuery(Query(decl, "p", {}, {}));
             Assert::IsTrue(expected == actual);
 
             expected = { "6" };
-            actual = Evaluator::evalQuery(Query(decl, "w", {}));
+            actual = Evaluator::evalQuery(Query(decl, "w", {}, {}));
             Assert::IsTrue(expected == actual);
 
             expected = { "3" };
-            actual = Evaluator::evalQuery(Query(decl, "i", {}));
+            actual = Evaluator::evalQuery(Query(decl, "i", {}, {}));
             Assert::IsTrue(expected == actual);
 
             expected = { "1", "2", "4", "5" };
-            actual = Evaluator::evalQuery(Query(decl, "a", {}));
+            actual = Evaluator::evalQuery(Query(decl, "a", {}, {}));
             Assert::IsTrue(expected == actual);
 
             expected = { "x", "y", "z" };
-            actual = Evaluator::evalQuery(Query(decl, "v", {}));
+            actual = Evaluator::evalQuery(Query(decl, "v", {}, {}));
             Assert::IsTrue(expected == actual);
 
             expected = { "1", "0" };
-            actual = Evaluator::evalQuery(Query(decl, "C", {}));
+            actual = Evaluator::evalQuery(Query(decl, "C", {}, {}));
             Assert::IsTrue(expected == actual);
 
             expected = { "main" };
-            actual = Evaluator::evalQuery(Query(decl, "P", {}));
+            actual = Evaluator::evalQuery(Query(decl, "P", {}, {}));
             Assert::IsTrue(expected == actual);
         }
         TEST_METHOD(evaluatorSuchThat)
@@ -154,35 +154,35 @@ namespace UnitTesting
             list<string> actual;
 
             expected = {"2", "3", "6", "8"};
-            actual = Evaluator::evalQuery(Query(decl, "s", { {"uses", {"s", "v"}} }));
+			actual = Evaluator::evalQuery(Query(decl, "s", { {"uses", {"s", "v"}} }, {}));
             Assert::IsTrue(expected == actual);
  
             expected = {"7"};
-            actual = Evaluator::evalQuery(Query(decl, "r", { {"modifies", {"r", "v"}} }));
+			actual = Evaluator::evalQuery(Query(decl, "r", { {"modifies", {"r", "v"}} }, {}));
             Assert::IsTrue(expected == actual);
 
             expected = {"8"};
-            actual = Evaluator::evalQuery(Query(decl, "p", { {"uses", {"p", "v"}} }));
+			actual = Evaluator::evalQuery(Query(decl, "p", { {"uses", {"p", "v"}} }, {}));
             Assert::IsTrue(expected == actual);
 
             expected = {"6"};
-            actual = Evaluator::evalQuery(Query(decl, "w", { {"uses", {"w", "v"}} }));
+            actual = Evaluator::evalQuery(Query(decl, "w", { {"uses", {"w", "v"}} }, {}));
             Assert::IsTrue(expected == actual);
 
             expected = {};
-            actual = Evaluator::evalQuery(Query(decl, "i", { {"uses", {"i", "z"}} }));
+            actual = Evaluator::evalQuery(Query(decl, "i", { {"uses", {"i", "z"}} }, {}));
             Assert::IsTrue(expected == actual);
  
             expected = {"1"};
-            actual = Evaluator::evalQuery(Query(decl, "a", { {"modifies", {"a", "x"}} }));
+            actual = Evaluator::evalQuery(Query(decl, "a", { {"modifies", {"a", "x"}} }, {}));
             Assert::IsTrue(expected == actual);
 
             expected = {"x"};
-            actual = Evaluator::evalQuery(Query(decl, "v", { {"uses", {"2", "v"}} }));
+            actual = Evaluator::evalQuery(Query(decl, "v", { {"uses", {"2", "v"}} }, {}));
             Assert::IsTrue(expected == actual);
 
             expected = {"1", "0"};
-            actual = Evaluator::evalQuery(Query(decl, "C", { {"uses", {"2", "x"}} }));
+            actual = Evaluator::evalQuery(Query(decl, "C", { {"uses", {"2", "x"}} }, {}));
             Assert::IsTrue(expected == actual);
 
             //expected = {"main"};
