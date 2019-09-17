@@ -30,6 +30,7 @@ namespace UnitTesting
                8.          print x;
                _       }
             */
+
             PKB pkb;
 
             pkb.clear();
@@ -78,7 +79,6 @@ namespace UnitTesting
 		}
         TEST_METHOD(evaluatorNoClause)
         {
-            /**
             unordered_map<string, string> decl = { {"s", "stmt"},
                                                    {"r", "read"},
                                                    {"p", "print"},
@@ -88,34 +88,44 @@ namespace UnitTesting
                                                    {"v", "variable"},
                                                    {"C", "constant"},
                                                    {"P", "procedure"} };
+            list<string> expected;
+            list<string> actual;
 
-			Query q = Query(decl, "s", {});
-            Assert::AreEqual((string)"1, 2, 3, 4, 5, 6, 7, 8", Evaluator::evalQuery(q));
+            expected = { "1", "2", "3", "4", "5", "6", "7", "8" };
+            actual = Evaluator::evalQuery(Query(decl, "s", {}));
+            Assert::IsTrue(expected == actual);
 
-			q = Query(decl, "r", {});
-            Assert::AreEqual((string)"7", Evaluator::evalQuery(q));
+            expected = { "7" };
+            actual = Evaluator::evalQuery(Query(decl, "r", {}));
+            Assert::IsTrue(expected == actual);
 
-			q = Query(decl, "p", {});
-            Assert::AreEqual((string)"8", Evaluator::evalQuery(q));
+            expected = { "8" };
+            actual = Evaluator::evalQuery(Query(decl, "p", {}));
+            Assert::IsTrue(expected == actual);
 
-			q = Query(decl, "w", {});
-            Assert::AreEqual((string)"6", Evaluator::evalQuery(q));
+            expected = { "6" };
+            actual = Evaluator::evalQuery(Query(decl, "w", {}));
+            Assert::IsTrue(expected == actual);
 
-            q = Query(decl, "i", {});
-            Assert::AreEqual((string)"3", Evaluator::evalQuery(q));
+            expected = { "3" };
+            actual = Evaluator::evalQuery(Query(decl, "i", {}));
+            Assert::IsTrue(expected == actual);
 
-			q = Query(decl, "a", {});
-            Assert::AreEqual((string)"1, 2, 4, 5", Evaluator::evalQuery(q));
+            expected = { "1", "2", "4", "5" };
+            actual = Evaluator::evalQuery(Query(decl, "a", {}));
+            Assert::IsTrue(expected == actual);
 
-			q = Query(decl, "v", {});
-            Assert::AreEqual((string)"x, y, z", Evaluator::evalQuery(q));
+            expected = { "x", "y", "z" };
+            actual = Evaluator::evalQuery(Query(decl, "v", {}));
+            Assert::IsTrue(expected == actual);
 
-			q = Query(decl, "C", {});
-            Assert::AreEqual((string)"1, 0", Evaluator::evalQuery(q));
+            expected = { "1", "0" };
+            actual = Evaluator::evalQuery(Query(decl, "C", {}));
+            Assert::IsTrue(expected == actual);
 
-			q = Query(decl, "P", {});
-            Assert::AreEqual((string)"main", Evaluator::evalQuery(q));
-            */
+            expected = { "main" };
+            actual = Evaluator::evalQuery(Query(decl, "P", {}));
+            Assert::IsTrue(expected == actual);
         }
         TEST_METHOD(evaluatorSuchThat)
         {
@@ -127,11 +137,10 @@ namespace UnitTesting
                4. Select w such that Uses(w, v);
                5. Select i such that Uses(i, "z");
                6. Select a such that Modifies(a, "x");
-               6. Select v such that Uses(2, v);
-               6. Select C such that Uses(2, "x");
-               6. Select P such that Modifies(P, "z");
+               7. Select v such that Uses(2, v);
+               8. Select C such that Uses(2, "x");
+               9. Select P such that Modifies(P, "z");
             */
-            /**
             unordered_map<string, string> decl = { {"s", "stmt"},
                                                    {"r", "read"},
                                                    {"p", "print"},
@@ -141,34 +150,44 @@ namespace UnitTesting
                                                    {"v", "variable"},
                                                    {"C", "constant"},
                                                    {"P", "procedure"} };
+            list<string> expected;
+            list<string> actual;
 
-            Query q = Query(decl, "s", { {"uses", {"s", "v"}} });
-            Assert::AreEqual((string)"2, 3, 6, 8", Evaluator::evalQuery(q));
+            expected = {"2", "3", "6", "8"};
+            actual = Evaluator::evalQuery(Query(decl, "s", { {"uses", {"s", "v"}} }));
+            Assert::IsTrue(expected == actual);
+ 
+            expected = {"7"};
+            actual = Evaluator::evalQuery(Query(decl, "r", { {"modifies", {"r", "v"}} }));
+            Assert::IsTrue(expected == actual);
 
-            q = Query(decl, "r", { {"modifies", {"r", "v"}} });
-            Assert::AreEqual((string)"7", Evaluator::evalQuery(q));
+            expected = {"8"};
+            actual = Evaluator::evalQuery(Query(decl, "p", { {"uses", {"p", "v"}} }));
+            Assert::IsTrue(expected == actual);
 
-            q = Query(decl, "p", { {"uses", {"p", "v"}} });
-            Assert::AreEqual((string)"8", Evaluator::evalQuery(q));
+            expected = {"6"};
+            actual = Evaluator::evalQuery(Query(decl, "w", { {"uses", {"w", "v"}} }));
+            Assert::IsTrue(expected == actual);
 
-            q = Query(decl, "w", { {"uses", {"w", "v"}} });
-            Assert::AreEqual((string)"6", Evaluator::evalQuery(q));
+            expected = {};
+            actual = Evaluator::evalQuery(Query(decl, "i", { {"uses", {"i", "z"}} }));
+            Assert::IsTrue(expected == actual);
+ 
+            expected = {"1"};
+            actual = Evaluator::evalQuery(Query(decl, "a", { {"modifies", {"a", "x"}} }));
+            Assert::IsTrue(expected == actual);
 
-            q = Query(decl, "i", { {"uses", {"i", "z"}} });
-            Assert::AreEqual((string)"", Evaluator::evalQuery(q));
+            expected = {"x"};
+            actual = Evaluator::evalQuery(Query(decl, "v", { {"uses", {"2", "v"}} }));
+            Assert::IsTrue(expected == actual);
 
-            q = Query(decl, "a", { {"modifies", {"a", "x"}} });
-            Assert::AreEqual((string)"1", Evaluator::evalQuery(q));
+            expected = {"1", "0"};
+            actual = Evaluator::evalQuery(Query(decl, "C", { {"uses", {"2", "x"}} }));
+            Assert::IsTrue(expected == actual);
 
-            q = Query(decl, "v", { {"uses", {"2", "v"}} });
-            Assert::AreEqual((string)"x", Evaluator::evalQuery(q));
-
-            q = Query(decl, "C", { {"uses", {"2", "x"}} });
-            Assert::AreEqual((string)"1, 0", Evaluator::evalQuery(q));
-
-            //q = Query(decl, "P", { {"modifies", {"P", "z"}} });
-            //Assert::AreEqual((string)"main", Evaluator::evalQuery(q));
-            */
+            //expected = {"main"};
+            //actual = Evaluator::evalQuery(Query(decl, "P", { {"modifies", {"P", "z"}} }));
+            //Assert::IsTrue(expected == actual);
         }
         TEST_METHOD(evaluatorPattern)
         {

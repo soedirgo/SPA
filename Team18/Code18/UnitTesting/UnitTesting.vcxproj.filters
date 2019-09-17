@@ -35,9 +35,6 @@
     <ClCompile Include="TestQueryParser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TestEvaluator.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="TestProgramParser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
