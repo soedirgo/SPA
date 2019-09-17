@@ -11,14 +11,13 @@ using namespace std;
 
 Parser::Parser() {
 	this ->pkb = PKB();
+	this ->stmtNo = 1;
 }
 
 int Parser::Parse (string filename) {
 
 	ifstream programFile;
 	string line;
-	int stmtNo = 1;
-	int nestingLevel =  1;
 
 	//Code to open the file from the filename.
 	programFile.open(filename);
@@ -29,9 +28,9 @@ int Parser::Parse (string filename) {
 	while (getline(programFile, line)) {
 		//Process to parse each line
 		if (line.find("procedure") != string::npos) {
-			//string header = parseProc(line);
+			string header = parseProc(line);
 			//Calls PKB API to set procedure name
-			//pkb.setProcName(header);
+			pkb.setProc(header);
 		}
 		else if (line.find("while") != string::npos) {
 			pkb.setStmt(stmtNo, While);
@@ -54,15 +53,19 @@ int Parser::Parse (string filename) {
 
 			string varUse = assign.substr(index + 1);
 
-			//Condition determine if RHS is a var or const
-			if (isdigit(varUse.at(0))) {
-				pkb.setConstant(varUse);
-			}
-			else {
-				pkb.setVar(varUse);
-				pkb.setUsesVarByStmt(stmtNo, varUse);
-			}
+			//Calls to parse RHS of assign stmt
+			vector<string> results = parseAssignRHS(varUse);
 
+			for (string var : results) {
+				if (isdigit(var.at(0))) {
+					pkb.setConstant(var);
+				}
+				else {
+					pkb.setVar(var);
+					pkb.setUsesVarByStmt(stmtNo, var);
+				}
+			}
+			
 			stmtNo++;
 		}
 		else if (line.find("read") != string::npos) {
@@ -144,5 +147,45 @@ string Parser::parseAssignInit(string line) {
 	assign.erase(assign.size() - 1);
 
 	return assign;
+}
+
+vector<string> Parser::parseAssignRHS(string varUse) {
+	string patternRHS = varUse;
+	string var = "";
+	vector<string> result;
+	while (patternRHS.size() > 0) {
+		if (patternRHS.find("+") != string::npos) {
+			int i = patternRHS.find("+");
+			var = patternRHS.substr(0, i);
+			result.push_back(var);
+			patternRHS = patternRHS.substr(i + 1);
+		} else if (patternRHS.find("-") != string::npos) {
+			int i = patternRHS.find("-");
+			var = patternRHS.substr(0, i);
+			result.push_back(var);
+			patternRHS = patternRHS.substr(i + 1);
+		} else if (patternRHS.find("*") != string::npos) {
+			int i = patternRHS.find("*");
+			var = patternRHS.substr(0, i);
+			result.push_back(var);
+			patternRHS = patternRHS.substr(i + 1);
+		} else if (patternRHS.find("/") != string::npos) {
+			int i = patternRHS.find("/");
+			var = patternRHS.substr(0, i);
+			result.push_back(var);
+			patternRHS = patternRHS.substr(i + 1);
+		} else if (patternRHS.find("%") != string::npos) {
+			int i = patternRHS.find("%");
+			var = patternRHS.substr(0, i);
+			result.push_back(var);
+			patternRHS = patternRHS.substr(i + 1);
+		}
+		else {
+			var = patternRHS;
+			result.push_back(var);
+			break;
+		}
+	}
+	return result;
 }
 

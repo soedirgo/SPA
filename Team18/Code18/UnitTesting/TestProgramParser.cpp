@@ -37,13 +37,23 @@ namespace UnitTesting
 			Assert::AreEqual(expected, actual);
 		}
 
-		TEST_METHOD(AssignTest)
+		TEST_METHOD(AssignInitiTest)
 		{
 			Parser parser = Parser();
 			string input = "x = a;";
 			string expected = "x=a";
 			string actual = parser.parseAssignInit(input);
+			cout << actual;
 			Assert::AreEqual(expected, actual);
+		}
+
+		TEST_METHOD(AssignRHSTest)
+		{
+			Parser parser = Parser();
+			string input = "a+b-c*d/e%2";
+			vector<string> expected{ "a", "b", "c", "d", "e", "2" };
+			vector<string> actual = parser.parseAssignRHS(input);
+			Assert::AreEqual(expected == actual, true);
 		}
 
 	};
