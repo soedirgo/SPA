@@ -36,8 +36,6 @@ namespace IntegrationTesting
             PKB pkb;
 
             pkb.clear();
-            pkb.clear();
-            pkb.clear();
 
             pkb.setProc("main");
             
@@ -278,7 +276,42 @@ namespace IntegrationTesting
             expected = {"4", "5"};
             actual = Evaluator::evalQuery(Query(decl, "a", { {"Parent*", {"s", "a"}} }, {}));
             Assert::IsTrue(expected == actual);
+        }
+        TEST_METHOD(evaluatorPattern)
+        {
+            /**
+               1. Select a pattern a(_, _)
+               2. Select a pattern a(x, _)
+               3. Select a pattern a(_, 1)
+               4. Select a pattern a(z, 0)
+             */
+            unordered_map<string, string> decl = { {"s", "stmt"},
+                                                   {"r", "read"},
+                                                   {"p", "print"},
+                                                   {"w", "while"},
+                                                   {"i", "if"},
+                                                   {"a", "assign"},
+                                                   {"v", "variable"},
+                                                   {"C", "constant"},
+                                                   {"P", "procedure"} };
+            list<string> expected;
+            list<string> actual;
 
+            expected = {"1", "2", "4", "5"};
+            actual = Evaluator::evalQuery(Query(decl, "a", {}, { {"a", {"_", "_"}} }));
+            Assert::IsTrue(expected == actual);
+
+            expected = {"1"};
+            actual = Evaluator::evalQuery(Query(decl, "a", {}, { {"a", {"x", "_"}} }));
+            Assert::IsTrue(expected == actual);
+
+            expected = {"1"};
+            actual = Evaluator::evalQuery(Query(decl, "a", {}, { {"a", {"_", "1"}} }));
+            Assert::IsTrue(expected == actual);
+
+            expected = {"4"};
+            actual = Evaluator::evalQuery(Query(decl, "a", {}, { {"a", {"z", "0"}} }));
+            Assert::IsTrue(expected == actual);
         }
 	};
 }

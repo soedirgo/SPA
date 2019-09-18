@@ -80,6 +80,36 @@ namespace Evaluator {
 			return variables;
 		}
 
+		vector<string> expandFactor(string factorRef,
+                                    unordered_map<string, string> fil) {
+			vector<string> factors;
+			if (fil.count(factorRef)) { // factorRef has been filtered before
+				factors.push_back(fil[factorRef]);
+			} else if (declarations.count(factorRef)) { // factorRef is a synonym
+                if (declarations[factorRef] == "variable") {
+                    for (string var : PKB::getAllVar()) {
+                        factors.push_back(var);
+                    }
+                } else if (declarations[factorRef] == "constant") {
+                    for (string cons : PKB::getAllConstant()) {
+                        factors.push_back(cons);
+                    }
+                }
+			} else if (PKB::getAllVar().count(factorRef)
+                       || PKB::getAllConstant().count(factorRef)) {
+                // factorRef is an explicit name
+				factors.push_back(factorRef);
+			} else { // factorRef is a ``_''
+				for (string var : PKB::getAllVar()) {
+					factors.push_back(var);
+				}
+                for (string cons : PKB::getAllConstant()) {
+					factors.push_back(cons);
+                }
+			}
+			return factors;
+		}
+
 		bool evalUses(pair<string, pair<string, string>> clause,
                       vector<pair<string, pair<string, string>>> cls,
                       unordered_map<string, string> fil) {
@@ -112,8 +142,8 @@ namespace Evaluator {
 		}
 
         bool evalFollows(pair<string, pair<string, string>> clause,
-            vector<pair<string, pair<string, string>>> cls,
-            unordered_map<string, string> fil) {
+                         vector<pair<string, pair<string, string>>> cls,
+                         unordered_map<string, string> fil) {
             vector<string> expandedLhs = expandStmt(clause.second.first, fil);
             vector<string> expandedRhs = expandStmt(clause.second.second, fil);
             for (auto lhs : expandedLhs) {
@@ -125,8 +155,8 @@ namespace Evaluator {
         }
 
         bool evalFollowsT(pair<string, pair<string, string>> clause,
-            vector<pair<string, pair<string, string>>> cls,
-            unordered_map<string, string> fil) {
+                          vector<pair<string, pair<string, string>>> cls,
+                          unordered_map<string, string> fil) {
             vector<string> expandedLhs = expandStmt(clause.second.first, fil);
             vector<string> expandedRhs = expandStmt(clause.second.second, fil);
             for (auto lhs : expandedLhs) {
@@ -138,8 +168,8 @@ namespace Evaluator {
         }
 
         bool evalParent(pair<string, pair<string, string>> clause,
-            vector<pair<string, pair<string, string>>> cls,
-            unordered_map<string, string> fil) {
+                        vector<pair<string, pair<string, string>>> cls,
+                        unordered_map<string, string> fil) {
             vector<string> expandedLhs = expandStmt(clause.second.first, fil);
             vector<string> expandedRhs = expandStmt(clause.second.second, fil);
             for (auto lhs : expandedLhs) {
@@ -151,13 +181,26 @@ namespace Evaluator {
         }
 
         bool evalParentT(pair<string, pair<string, string>> clause,
-            vector<pair<string, pair<string, string>>> cls,
-            unordered_map<string, string> fil) {
+                         vector<pair<string, pair<string, string>>> cls,
+                         unordered_map<string, string> fil) {
             vector<string> expandedLhs = expandStmt(clause.second.first, fil);
             vector<string> expandedRhs = expandStmt(clause.second.second, fil);
             for (auto lhs : expandedLhs) {
                 for (auto rhs : expandedRhs) {
                     if (PKB::isParentStarRelationship(stoi(lhs), stoi(rhs))) return evalClauses(cls, fil);
+                }
+            }
+            return false;
+        }
+
+        bool evalPattern(pair<string, pair<string, string>> clause,
+                         vector<pair<string, pair<string, string>>> cls,
+                         unordered_map<string, string> fil) {
+            vector<string> expandedLhs = expandVar(clause.second.first, fil);
+            vector<string> expandedRhs = expandFactor(clause.second.second, fil);
+            for (auto lhs : expandedLhs) {
+                for (auto rhs : expandedRhs) {
+                    if (PKB::isFactorAssignedToVar(lhs, rhs)) return evalClauses(cls, fil);
                 }
             }
             return false;
@@ -175,18 +218,16 @@ namespace Evaluator {
 				return evalUses(clause, cls, fil);
 			} else if (type == "Modifies") {
 				return evalModifies(clause, cls, fil);
-            }
-            else if (type == "Follows") {
+            } else if (type == "Follows") {
                 return evalFollows(clause, cls, fil);
-            }
-            else if (type == "Follows*") {
+            } else if (type == "Follows*") {
                 return evalFollowsT(clause, cls, fil);
-            }
-            else if (type == "Parent") {
+            } else if (type == "Parent") {
                 return evalParent(clause, cls, fil);
-            }
-            else if (type == "Parent*") {
+            } else if (type == "Parent*") {
                 return evalParentT(clause, cls, fil);
+            } else if (type == "pattern") {
+                return evalPattern(clause, cls, fil);
             }
         }
 
@@ -249,12 +290,9 @@ namespace Evaluator {
         list<string> results;
         for (auto result : resultCandidates) {
             vector<pair<string, pair<string, string>>> cls = clauses;
-            // for (auto pattern : patterns) {
-            //     pair<string, pair<string, string>> uses = { "uses", {pattern.first, pattern.second.second} };
-            //     pair<string, pair<string, string>> modifies = { "modifies", {pattern.first, pattern.second.first} };
-            //     cls.push_back(uses);
-            //     cls.push_back(modifies);
-            // }
+            for (auto pattern : patterns) {
+                cls.push_back({ "pattern", {pattern.second.first, pattern.second.second} });
+            }
             unordered_map<string, string> fil;
             fil[selectSyn] = result;
             if (evalClauses(cls, fil)) results.push_back(result);
