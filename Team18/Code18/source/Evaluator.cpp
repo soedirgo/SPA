@@ -27,31 +27,31 @@ namespace Evaluator {
 			} else if (declarations.count(stmtRef)) { // stmtRef is a synonym
                 string type = declarations[stmtRef];
                 if (type == "stmt") {
-                    for (int stmt : PKB::getAllStmt()) {
-                        statements.push_back(to_string(stmt));
+                    for (int stmtNum : PKB::getAllStmt()) {
+                        statements.push_back(to_string(stmtNum));
                     }
                 } else if (type == "read") {
-                    for (auto stmt : PKB::getAllReadStmt()) {
-                        statements.push_back(to_string(stmt));
+                    for (auto stmtNum : PKB::getAllReadStmt()) {
+                        statements.push_back(to_string(stmtNum));
                     }
                 } else if (type == "print") {
-                    for (auto stmt : PKB::getAllPrintStmt()) {
-                        statements.push_back(to_string(stmt));
+                    for (auto stmtNum : PKB::getAllPrintStmt()) {
+                        statements.push_back(to_string(stmtNum));
                     }
                 } else if (type == "while") {
-                    for (auto stmt : PKB::getAllWhileStmt()) {
-                        statements.push_back(to_string(stmt));
+                    for (auto stmtNum : PKB::getAllWhileStmt()) {
+                        statements.push_back(to_string(stmtNum));
                     }
                 } else if (type == "if") {
-                    for (auto stmt : PKB::getAllIfStmt()) {
-                        statements.push_back(to_string(stmt));
+                    for (auto stmtNum : PKB::getAllIfStmt()) {
+                        statements.push_back(to_string(stmtNum));
                     }
                 } else if (type == "assign") {
-                    for (auto stmt : PKB::getAllAssignStmt()) {
-                        statements.push_back(to_string(stmt));
+                    for (auto stmtNum : PKB::getAllAssignStmt()) {
+                        statements.push_back(to_string(stmtNum));
                     }
                 }
-			} else if (PKB::getAllStmt().count(stoi(stmtRef))) { // stmtRef is a stmtNo
+			} else if (PKB::getAllStmt().count(stoi(stmtRef))) { // stmtRef is a stmtNum
 				statements.push_back(stmtRef);
 			} else { // stmtRef is a ``_''
 				for (int stmtNum : PKB::getAllStmt()) {
@@ -171,39 +171,39 @@ namespace Evaluator {
 			pair<string, pair<string, string>> clause = cls.back();
 			cls.pop_back();
 			string type = clause.first;
-			if (type == "uses") {
+			if (type == "Uses") {
 				return evalUses(clause, cls, fil);
-			} else if (type == "modifies") {
+			} else if (type == "Modifies") {
 				return evalModifies(clause, cls, fil);
             }
-            else if (type == "follows") {
+            else if (type == "Follows") {
                 return evalFollows(clause, cls, fil);
             }
-            else if (type == "follows*") {
+            else if (type == "Follows*") {
                 return evalFollowsT(clause, cls, fil);
             }
-            else if (type == "parent") {
+            else if (type == "Parent") {
                 return evalParent(clause, cls, fil);
             }
-            else if (type == "parent*") {
+            else if (type == "Parent*") {
                 return evalParentT(clause, cls, fil);
             }
         }
 
-		string formatResults(vector<string> res) {
-			string result = "";
-			int started = 0;
-			for (string elem : res) {
-				if (!started) {
-					started = 1;
-					result += elem;
-				} else {
-					result += ", ";
-					result += elem;
-				}
-			}
-			return result;
-		}
+		// string formatResults(vector<string> res) {
+		// 	string result = "";
+		// 	int started = 0;
+		// 	for (string elem : res) {
+		// 		if (!started) {
+		// 			started = 1;
+		// 			result += elem;
+		// 		} else {
+		// 			result += ", ";
+		// 			result += elem;
+		// 		}
+		// 	}
+		// 	return result;
+		// }
 	}
 
 	list<string> evalQuery(Query q) {
@@ -249,12 +249,12 @@ namespace Evaluator {
         list<string> results;
         for (auto result : resultCandidates) {
             vector<pair<string, pair<string, string>>> cls = clauses;
-            for (auto pattern : patterns) {
-                pair<string, pair<string, string>> uses = { "uses", {pattern.first, pattern.second.second} };
-                pair<string, pair<string, string>> modifies = { "modifies", {pattern.first, pattern.second.first} };
-                cls.push_back(uses);
-                cls.push_back(modifies);
-            }
+            // for (auto pattern : patterns) {
+            //     pair<string, pair<string, string>> uses = { "uses", {pattern.first, pattern.second.second} };
+            //     pair<string, pair<string, string>> modifies = { "modifies", {pattern.first, pattern.second.first} };
+            //     cls.push_back(uses);
+            //     cls.push_back(modifies);
+            // }
             unordered_map<string, string> fil;
             fil[selectSyn] = result;
             if (evalClauses(cls, fil)) results.push_back(result);
