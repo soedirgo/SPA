@@ -14,6 +14,7 @@ namespace Evaluator {
 	namespace {
 		unordered_map<string, string> declarations;
 		vector<pair<string, pair<string, string>>> clauses;
+        vector<pair<string, pair<string, string>>> patterns;
 		string selectSyn;
 		bool evalClauses(vector<pair<string, pair<string, string>>> cls,
                          unordered_map<string, string> fil);
@@ -24,9 +25,32 @@ namespace Evaluator {
 			if (fil.count(stmtRef)) { // stmtRef has been filtered before
 				statements.push_back(fil[stmtRef]);
 			} else if (declarations.count(stmtRef)) { // stmtRef is a synonym
-				for (int stmtNum : PKB::getAllStmt()) {
-					statements.push_back(to_string(stmtNum));
-				}
+                string type = declarations[stmtRef];
+                if (type == "stmt") {
+                    for (int stmt : PKB::getAllStmt()) {
+                        statements.push_back(to_string(stmt));
+                    }
+                } else if (type == "read") {
+                    for (auto stmt : PKB::getAllReadStmt()) {
+                        statements.push_back(to_string(stmt));
+                    }
+                } else if (type == "print") {
+                    for (auto stmt : PKB::getAllPrintStmt()) {
+                        statements.push_back(to_string(stmt));
+                    }
+                } else if (type == "while") {
+                    for (auto stmt : PKB::getAllWhileStmt()) {
+                        statements.push_back(to_string(stmt));
+                    }
+                } else if (type == "if") {
+                    for (auto stmt : PKB::getAllIfStmt()) {
+                        statements.push_back(to_string(stmt));
+                    }
+                } else if (type == "assign") {
+                    for (auto stmt : PKB::getAllAssignStmt()) {
+                        statements.push_back(to_string(stmt));
+                    }
+                }
 			} else if (PKB::getAllStmt().count(stoi(stmtRef))) { // stmtRef is a stmtNo
 				statements.push_back(stmtRef);
 			} else { // stmtRef is a ``_''
@@ -87,7 +111,59 @@ namespace Evaluator {
 			return false;
 		}
 
-		bool evalClauses(vector<pair<string, pair<string, string>>> cls,
+        bool evalFollows(pair<string, pair<string, string>> clause,
+            vector<pair<string, pair<string, string>>> cls,
+            unordered_map<string, string> fil) {
+            vector<string> expandedLhs = expandStmt(clause.second.first, fil);
+            vector<string> expandedRhs = expandStmt(clause.second.second, fil);
+            for (auto lhs : expandedLhs) {
+                for (auto rhs : expandedRhs) {
+                    if (PKB::isFollowRelationship(stoi(lhs), stoi(rhs))) return evalClauses(cls, fil);
+                }
+            }
+            return false;
+        }
+
+        bool evalFollowsT(pair<string, pair<string, string>> clause,
+            vector<pair<string, pair<string, string>>> cls,
+            unordered_map<string, string> fil) {
+            vector<string> expandedLhs = expandStmt(clause.second.first, fil);
+            vector<string> expandedRhs = expandStmt(clause.second.second, fil);
+            for (auto lhs : expandedLhs) {
+                for (auto rhs : expandedRhs) {
+                    if (PKB::isFollowStarRelationship(stoi(lhs), stoi(rhs))) return evalClauses(cls, fil);
+                }
+            }
+            return false;
+        }
+
+        bool evalParent(pair<string, pair<string, string>> clause,
+            vector<pair<string, pair<string, string>>> cls,
+            unordered_map<string, string> fil) {
+            vector<string> expandedLhs = expandStmt(clause.second.first, fil);
+            vector<string> expandedRhs = expandStmt(clause.second.second, fil);
+            for (auto lhs : expandedLhs) {
+                for (auto rhs : expandedRhs) {
+                    if (PKB::isParentRelationship(stoi(lhs), stoi(rhs))) return evalClauses(cls, fil);
+                }
+            }
+            return false;
+        }
+
+        bool evalParentT(pair<string, pair<string, string>> clause,
+            vector<pair<string, pair<string, string>>> cls,
+            unordered_map<string, string> fil) {
+            vector<string> expandedLhs = expandStmt(clause.second.first, fil);
+            vector<string> expandedRhs = expandStmt(clause.second.second, fil);
+            for (auto lhs : expandedLhs) {
+                for (auto rhs : expandedRhs) {
+                    if (PKB::isParentStarRelationship(stoi(lhs), stoi(rhs))) return evalClauses(cls, fil);
+                }
+            }
+            return false;
+        }
+
+        bool evalClauses(vector<pair<string, pair<string, string>>> cls,
                          unordered_map<string, string> fil) {
 			if (cls.size() == 0) {
 				return true;
@@ -97,10 +173,22 @@ namespace Evaluator {
 			string type = clause.first;
 			if (type == "uses") {
 				return evalUses(clause, cls, fil);
-			} else {
+			} else if (type == "modifies") {
 				return evalModifies(clause, cls, fil);
-			}
-		}
+            }
+            else if (type == "follows") {
+                return evalFollows(clause, cls, fil);
+            }
+            else if (type == "follows*") {
+                return evalFollowsT(clause, cls, fil);
+            }
+            else if (type == "parent") {
+                return evalParent(clause, cls, fil);
+            }
+            else if (type == "parent*") {
+                return evalParentT(clause, cls, fil);
+            }
+        }
 
 		string formatResults(vector<string> res) {
 			string result = "";
@@ -122,6 +210,7 @@ namespace Evaluator {
 		declarations = q.getDeclarations();
 		selectSyn = q.getSelectSynonym();
 		clauses = q.getClauses();
+        patterns = q.getPatternClauses();
 
 		string selectSynType = declarations[selectSyn];
 		unordered_set<string> resultCandidates;
@@ -160,6 +249,12 @@ namespace Evaluator {
         list<string> results;
         for (auto result : resultCandidates) {
             vector<pair<string, pair<string, string>>> cls = clauses;
+            for (auto pattern : patterns) {
+                pair<string, pair<string, string>> uses = { "uses", {pattern.first, pattern.second.second} };
+                pair<string, pair<string, string>> modifies = { "modifies", {pattern.first, pattern.second.first} };
+                cls.push_back(uses);
+                cls.push_back(modifies);
+            }
             unordered_map<string, string> fil;
             fil[selectSyn] = result;
             if (evalClauses(cls, fil)) results.push_back(result);
