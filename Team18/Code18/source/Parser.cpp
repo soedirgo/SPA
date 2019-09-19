@@ -51,7 +51,10 @@ int Parser::Parse (string filename) {
 					//pkb.insertUsesRelation(stmtNo, var);
 				}
 			}
-
+			if (stmtNo != 1) {
+				//pkb.insertFollowRelation(prevStmtNo, stmtNo);
+			}
+			prevStmtNo = stmtNo;
 			stmtNo = results.lastStmtNo + 1;
 		}
 		else if (line.find("if") != string::npos) {
@@ -73,6 +76,10 @@ int Parser::Parse (string filename) {
 				}
 			}
 
+			if (stmtNo != 1) {
+				//pkb.insertFollowRelation(prevStmtNo, stmtNo);
+			}
+			prevStmtNo = stmtNo;
 			stmtNo = results.lastStmtNo + 1;
 		}
 		else if (line.find("=") != string::npos) {
@@ -100,7 +107,11 @@ int Parser::Parse (string filename) {
 					//pkb.insertUsesRelation(stmtNo, var);
 				}
 			}
-			
+
+			if (stmtNo != 1) {
+				//pkb.insertFollowRelation(prevStmtNo, stmtNo);
+			}
+			prevStmtNo = stmtNo;
 			stmtNo++;
 		}
 		else if (line.find("read") != string::npos) {
@@ -110,6 +121,11 @@ int Parser::Parse (string filename) {
 			pkb.setStmt(stmtNo, Read);
 			//pkb.insertModifiesRelation(stmtNo, readArg);
 			pkb.setVar(readArg);
+			
+			if (stmtNo != 1) {
+				//pkb.insertFollowRelation(prevStmtNo, stmtNo);
+			}
+			prevStmtNo = stmtNo;
 			stmtNo++;
 		}
 		else if (line.find("print") != string::npos) {
@@ -119,6 +135,11 @@ int Parser::Parse (string filename) {
 			pkb.setStmt(stmtNo, Print);
 			//pkb.insertUsesRelation(stmtNo, printArg);
 			pkb.setVar(printArg);
+			
+			if (stmtNo != 1) {
+				//pkb.insertFollowRelation(prevStmtNo, stmtNo);
+			}
+			prevStmtNo = stmtNo;
 			stmtNo++;
 		}
 		else {
@@ -227,6 +248,7 @@ vector<string> Parser::parseAssignRHS(string varUse) {
 NestedResult Parser::parseIf(string ifLine) {
 	
 	int currStmtNo = stmtNo;
+	int startStmtNo = stmtNo;
 	int prevStmtNo = stmtNo - 1;
 	bool passedElse = false;
 	NestedResult result;
@@ -240,7 +262,9 @@ NestedResult Parser::parseIf(string ifLine) {
 	while (getline(programFile, line)) {
 		//Process to parse each line
 		if (line.find("while") != string::npos) {
-			pkb.setStmt(stmtNo, While);
+			pkb.setStmt(currStmtNo, While);
+			//pkb.insertParentRelation(startStmtNo, currStmtNo);
+
 			NestedResult results = parseWhile(line);
 			vector<string> modifies = results.getModifies();
 			vector<string> uses = results.getUses();
@@ -261,10 +285,15 @@ NestedResult Parser::parseIf(string ifLine) {
 				}
 			}
 
+			if (stmtNo != startStmtNo) {
+				//pkb.insertFollowRelation(prevStmtNo, stmtNo);
+			}
+			prevStmtNo = currStmtNo;
 			currStmtNo = results.lastStmtNo + 1;
 		}
 		else if (line.find("if") != string::npos) {
-			pkb.setStmt(stmtNo, If);
+			pkb.setStmt(currStmtNo, If);
+			//pkb.insertParentRelation(startStmtNo, currStmtNo);
 			NestedResult results = parseIf(line);
 			vector<string> modifies = results.getModifies();
 			vector<string> uses = results.getUses();
@@ -285,12 +314,17 @@ NestedResult Parser::parseIf(string ifLine) {
 				}
 			}
 
+			if (stmtNo != startStmtNo) {
+				//pkb.insertFollowRelation(prevStmtNo, stmtNo);
+			}
+			prevStmtNo = currStmtNo;
 			currStmtNo = results.lastStmtNo + 1;
 		}
 		else if (line.find("=") != string::npos) {
 			//Initial processing of stmt
 			string assign = parseAssignInit(line);
-			pkb.setStmt(stmtNo, Assign);
+			pkb.setStmt(currStmtNo, Assign);
+			//pkb.insertParentRelation(startStmtNo, currStmtNo);
 
 			//Splits the assign statement by the = sign and get LHS and RHS
 			int index = assign.find("=");
@@ -316,26 +350,44 @@ NestedResult Parser::parseIf(string ifLine) {
 				}
 			}
 
+			if (stmtNo != startStmtNo) {
+				//pkb.insertFollowRelation(prevStmtNo, stmtNo);
+			}
+			prevStmtNo = currStmtNo;
 			currStmtNo++;
 		}
 		else if (line.find("read") != string::npos) {
 			//Gets the variable used in read stmt into readArg
 			string readArg = parseRead(line);
 			//Sets stmt information in PKB and then sets modifies variable for that stmt
-			pkb.setStmt(stmtNo, Read);
+			pkb.setStmt(currStmtNo, Read);
+			//pkb.insertParentRelation(startStmtNo, currStmtNo);
+
 			//pkb.insertModifiesRelation(stmtNo, readArg);
 			pkb.setVar(readArg);
 			result.addModifies(readArg);
+
+			if (stmtNo != startStmtNo) {
+				//pkb.insertFollowRelation(prevStmtNo, stmtNo);
+			}
+			prevStmtNo = currStmtNo;
 			currStmtNo++;
 		}
 		else if (line.find("print") != string::npos) {
 			//Gets the variable used in print stmt into printArg
 			string printArg = parsePrint(line);
 			//Sets stmt information in PKB and then sets modifies variable for that stmt
-			pkb.setStmt(stmtNo, Print);
+			pkb.setStmt(currStmtNo, Print);
+			//pkb.insertParentRelation(startStmtNo, currStmtNo);
+
 			//pkb.insertUsesRelation(stmtNo, printArg);
 			pkb.setVar(printArg);
 			result.addUses(printArg);
+
+			if (stmtNo != startStmtNo) {
+				//pkb.insertFollowRelation(prevStmtNo, stmtNo);
+			}
+			prevStmtNo = currStmtNo;
 			currStmtNo++;
 		}
 		else if (line.find("else") != string::npos) {
@@ -357,6 +409,7 @@ NestedResult Parser::parseIf(string ifLine) {
 
 NestedResult Parser::parseWhile(string whileLine) {
 	int currStmtNo = stmtNo;
+	int startStmtNo = stmtNo;
 	int prevStmtNo = stmtNo - 1;
 	NestedResult result;
 
@@ -369,7 +422,9 @@ NestedResult Parser::parseWhile(string whileLine) {
 	while (getline(programFile, line)) {
 		//Process to parse each line
 		if (line.find("while") != string::npos) {
-			pkb.setStmt(stmtNo, While);
+			pkb.setStmt(currStmtNo, While);
+			//pkb.insertParentRelation(startStmtNo, currStmtNo);
+
 			NestedResult results = parseWhile(line);
 			vector<string> modifies = results.getModifies();
 			vector<string> uses = results.getUses();
@@ -390,10 +445,15 @@ NestedResult Parser::parseWhile(string whileLine) {
 				}
 			}
 
+			if (stmtNo != startStmtNo) {
+				//pkb.insertFollowRelation(prevStmtNo, stmtNo);
+			}
+			prevStmtNo = currStmtNo;
 			currStmtNo = results.lastStmtNo + 1;
 		}
 		else if (line.find("if") != string::npos) {
-			pkb.setStmt(stmtNo, If);
+			pkb.setStmt(currStmtNo, If);
+			//pkb.insertParentRelation(startStmtNo, currStmtNo);
 			NestedResult results = parseIf(line);
 			vector<string> modifies = results.getModifies();
 			vector<string> uses = results.getUses();
@@ -414,12 +474,17 @@ NestedResult Parser::parseWhile(string whileLine) {
 				}
 			}
 
+			if (stmtNo != startStmtNo) {
+				//pkb.insertFollowRelation(prevStmtNo, stmtNo);
+			}
+			prevStmtNo = currStmtNo;
 			currStmtNo = results.lastStmtNo + 1;
 		}
 		else if (line.find("=") != string::npos) {
 			//Initial processing of stmt
 			string assign = parseAssignInit(line);
-			pkb.setStmt(stmtNo, Assign);
+			pkb.setStmt(currStmtNo, Assign);
+			//pkb.insertParentRelation(startStmtNo, currStmtNo);
 
 			//Splits the assign statement by the = sign and get LHS and RHS
 			int index = assign.find("=");
@@ -445,26 +510,44 @@ NestedResult Parser::parseWhile(string whileLine) {
 				}
 			}
 
+			if (stmtNo != startStmtNo) {
+				//pkb.insertFollowRelation(prevStmtNo, stmtNo);
+			}
+			prevStmtNo = currStmtNo;
 			currStmtNo++;
 		}
 		else if (line.find("read") != string::npos) {
 			//Gets the variable used in read stmt into readArg
 			string readArg = parseRead(line);
 			//Sets stmt information in PKB and then sets modifies variable for that stmt
-			pkb.setStmt(stmtNo, Read);
+			pkb.setStmt(currStmtNo, Read);
+			//pkb.insertParentRelation(startStmtNo, currStmtNo);
+
 			//pkb.insertModifiesRelation(stmtNo, readArg);
 			pkb.setVar(readArg);
 			result.addModifies(readArg);
+
+			if (stmtNo != startStmtNo) {
+				//pkb.insertFollowRelation(prevStmtNo, stmtNo);
+			}
+			prevStmtNo = currStmtNo;
 			currStmtNo++;
 		}
 		else if (line.find("print") != string::npos) {
 			//Gets the variable used in print stmt into printArg
 			string printArg = parsePrint(line);
 			//Sets stmt information in PKB and then sets modifies variable for that stmt
-			pkb.setStmt(stmtNo, Print);
+			pkb.setStmt(currStmtNo, Print);
+			//pkb.insertParentRelation(startStmtNo, currStmtNo);
+
 			//pkb.insertUsesRelation(stmtNo, printArg);
 			pkb.setVar(printArg);
 			result.addUses(printArg);
+
+			if (stmtNo != startStmtNo) {
+				//pkb.insertFollowRelation(prevStmtNo, stmtNo);
+			}
+			prevStmtNo = currStmtNo;
 			currStmtNo++;
 		}
 		else {
