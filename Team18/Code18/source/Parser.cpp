@@ -19,7 +19,7 @@ Parser::Parser() {
 int Parser::Parse (string filename) {
 
 	string line;
-
+	int prevStmtNo;
 	//Code to open the file from the filename.
 	this ->programFile.open(filename);
 	if (!programFile) {
@@ -39,14 +39,16 @@ int Parser::Parse (string filename) {
 			vector<string> modifies = results.getModifies();
 			vector<string> uses = results.getUses();
 			for (string var : modifies) {
-				pkb.setModifiesStmtByVar(stmtNo, var);
+				pkb.setVar(var);
+				//pkb.insertModifiesRelation(stmtNo, var);
 			}
 			for (string var : uses) {
 				if (isdigit(var.at(0))) {
 					pkb.setConstant(var);
 				}
 				else {
-					pkb.setUsesVarByStmt(stmtNo, var);
+					pkb.setVar(var);
+					//pkb.insertUsesRelation(stmtNo, var);
 				}
 			}
 
@@ -58,14 +60,16 @@ int Parser::Parse (string filename) {
 			vector<string> modifies = results.getModifies();
 			vector<string> uses = results.getUses();
 			for (string var : modifies) {
-				pkb.setModifiesStmtByVar(stmtNo, var);
+				pkb.setVar(var);
+				//pkb.insertModifiesRelation(stmtNo, var);
 			}
 			for (string var : uses) {
 				if (isdigit(var.at(0))) {
 					pkb.setConstant(var);
 				}
 				else {
-					pkb.setUsesVarByStmt(stmtNo, var);
+					pkb.setVar(var);
+					//pkb.insertUsesRelation(stmtNo, var);
 				}
 			}
 
@@ -80,7 +84,7 @@ int Parser::Parse (string filename) {
 			int index = assign.find("=");
 			string varMod = assign.substr(0, index);
 			pkb.setVar(varMod);
-			pkb.setModifiesVarByStmt(stmtNo, varMod);
+			//pkb.insertModifiesRelation(stmtNo, varMod);
 
 			string varUse = assign.substr(index + 1);
 
@@ -93,7 +97,7 @@ int Parser::Parse (string filename) {
 				}
 				else {
 					pkb.setVar(var);
-					pkb.setUsesVarByStmt(stmtNo, var);
+					//pkb.insertUsesRelation(stmtNo, var);
 				}
 			}
 			
@@ -104,7 +108,7 @@ int Parser::Parse (string filename) {
 			string readArg = parseRead(line);
 			//Sets stmt information in PKB and then sets modifies variable for that stmt
 			pkb.setStmt(stmtNo, Read);
-			pkb.setModifiesVarByStmt(stmtNo, readArg);
+			//pkb.insertModifiesRelation(stmtNo, readArg);
 			pkb.setVar(readArg);
 			stmtNo++;
 		}
@@ -113,7 +117,7 @@ int Parser::Parse (string filename) {
 			string printArg = parsePrint(line);
 			//Sets stmt information in PKB and then sets modifies variable for that stmt
 			pkb.setStmt(stmtNo, Print);
-			pkb.setUsesVarByStmt(stmtNo, printArg);
+			//pkb.insertUsesRelation(stmtNo, printArg);
 			pkb.setVar(printArg);
 			stmtNo++;
 		}
@@ -223,6 +227,7 @@ vector<string> Parser::parseAssignRHS(string varUse) {
 NestedResult Parser::parseIf(string ifLine) {
 	
 	int currStmtNo = stmtNo;
+	int prevStmtNo = stmtNo - 1;
 	bool passedElse = false;
 	NestedResult result;
 
@@ -240,17 +245,19 @@ NestedResult Parser::parseIf(string ifLine) {
 			vector<string> modifies = results.getModifies();
 			vector<string> uses = results.getUses();
 			for (string var : modifies) {
+				pkb.setVar(var);
+				//pkb.insertModifiesRelation(stmtNo, var);
 				result.addModifies(var);
-				pkb.setModifiesStmtByVar(stmtNo, var);
 			}
 			for (string var : uses) {
 				if (isdigit(var.at(0))) {
-					result.addUses(var);
 					pkb.setConstant(var);
+					result.addUses(var);
 				}
 				else {
+					pkb.setVar(var);
+					//pkb.insertUsesRelation(stmtNo, var);
 					result.addUses(var);
-					pkb.setUsesVarByStmt(stmtNo, var);
 				}
 			}
 
@@ -262,17 +269,19 @@ NestedResult Parser::parseIf(string ifLine) {
 			vector<string> modifies = results.getModifies();
 			vector<string> uses = results.getUses();
 			for (string var : modifies) {
+				pkb.setVar(var);
+				//pkb.insertModifiesRelation(stmtNo, var);
 				result.addModifies(var);
-				pkb.setModifiesStmtByVar(stmtNo, var);
 			}
 			for (string var : uses) {
 				if (isdigit(var.at(0))) {
-					result.addUses(var);
 					pkb.setConstant(var);
+					result.addUses(var);
 				}
 				else {
+					pkb.setVar(var);
+					//pkb.insertUsesRelation(stmtNo, var);
 					result.addUses(var);
-					pkb.setUsesVarByStmt(stmtNo, var);
 				}
 			}
 
@@ -281,13 +290,13 @@ NestedResult Parser::parseIf(string ifLine) {
 		else if (line.find("=") != string::npos) {
 			//Initial processing of stmt
 			string assign = parseAssignInit(line);
-			pkb.setStmt(currStmtNo, Assign);
+			pkb.setStmt(stmtNo, Assign);
 
 			//Splits the assign statement by the = sign and get LHS and RHS
 			int index = assign.find("=");
 			string varMod = assign.substr(0, index);
 			pkb.setVar(varMod);
-			pkb.setModifiesVarByStmt(currStmtNo, varMod);
+			//pkb.insertModifiesRelation(stmtNo, varMod);
 			result.addModifies(varMod);
 
 			string varUse = assign.substr(index + 1);
@@ -298,10 +307,11 @@ NestedResult Parser::parseIf(string ifLine) {
 			for (string var : results) {
 				if (isdigit(var.at(0))) {
 					pkb.setConstant(var);
+					result.addUses(var);
 				}
 				else {
 					pkb.setVar(var);
-					pkb.setUsesVarByStmt(currStmtNo, var);
+					//pkb.insertUsesRelation(stmtNo, var);
 					result.addUses(var);
 				}
 			}
@@ -312,8 +322,8 @@ NestedResult Parser::parseIf(string ifLine) {
 			//Gets the variable used in read stmt into readArg
 			string readArg = parseRead(line);
 			//Sets stmt information in PKB and then sets modifies variable for that stmt
-			pkb.setStmt(currStmtNo, Read);
-			pkb.setModifiesVarByStmt(currStmtNo, readArg);
+			pkb.setStmt(stmtNo, Read);
+			//pkb.insertModifiesRelation(stmtNo, readArg);
 			pkb.setVar(readArg);
 			result.addModifies(readArg);
 			currStmtNo++;
@@ -322,14 +332,15 @@ NestedResult Parser::parseIf(string ifLine) {
 			//Gets the variable used in print stmt into printArg
 			string printArg = parsePrint(line);
 			//Sets stmt information in PKB and then sets modifies variable for that stmt
-			pkb.setStmt(currStmtNo, Print);
-			pkb.setUsesVarByStmt(currStmtNo, printArg);
+			pkb.setStmt(stmtNo, Print);
+			//pkb.insertUsesRelation(stmtNo, printArg);
 			pkb.setVar(printArg);
 			result.addUses(printArg);
 			currStmtNo++;
 		}
 		else if (line.find("else") != string::npos) {
 			passedElse = true;
+			continue;
 		}
 		else {
 			;
@@ -346,6 +357,7 @@ NestedResult Parser::parseIf(string ifLine) {
 
 NestedResult Parser::parseWhile(string whileLine) {
 	int currStmtNo = stmtNo;
+	int prevStmtNo = stmtNo - 1;
 	NestedResult result;
 
 	string line;
@@ -362,17 +374,19 @@ NestedResult Parser::parseWhile(string whileLine) {
 			vector<string> modifies = results.getModifies();
 			vector<string> uses = results.getUses();
 			for (string var : modifies) {
+				pkb.setVar(var);
+				//pkb.insertModifiesRelation(stmtNo, var);
 				result.addModifies(var);
-				pkb.setModifiesStmtByVar(stmtNo, var);
 			}
 			for (string var : uses) {
 				if (isdigit(var.at(0))) {
-					result.addUses(var);
 					pkb.setConstant(var);
+					result.addUses(var);
 				}
 				else {
+					pkb.setVar(var);
+					//pkb.insertUsesRelation(stmtNo, var);
 					result.addUses(var);
-					pkb.setUsesVarByStmt(stmtNo, var);
 				}
 			}
 
@@ -384,17 +398,19 @@ NestedResult Parser::parseWhile(string whileLine) {
 			vector<string> modifies = results.getModifies();
 			vector<string> uses = results.getUses();
 			for (string var : modifies) {
+				pkb.setVar(var);
+				//pkb.insertModifiesRelation(stmtNo, var);
 				result.addModifies(var);
-				pkb.setModifiesStmtByVar(stmtNo, var);
 			}
 			for (string var : uses) {
 				if (isdigit(var.at(0))) {
-					result.addUses(var);
 					pkb.setConstant(var);
+					result.addUses(var);
 				}
 				else {
+					pkb.setVar(var);
+					//pkb.insertUsesRelation(stmtNo, var);
 					result.addUses(var);
-					pkb.setUsesVarByStmt(stmtNo, var);
 				}
 			}
 
@@ -403,13 +419,13 @@ NestedResult Parser::parseWhile(string whileLine) {
 		else if (line.find("=") != string::npos) {
 			//Initial processing of stmt
 			string assign = parseAssignInit(line);
-			pkb.setStmt(currStmtNo, Assign);
+			pkb.setStmt(stmtNo, Assign);
 
 			//Splits the assign statement by the = sign and get LHS and RHS
 			int index = assign.find("=");
 			string varMod = assign.substr(0, index);
 			pkb.setVar(varMod);
-			pkb.setModifiesVarByStmt(currStmtNo, varMod);
+			//pkb.insertModifiesRelation(stmtNo, varMod);
 			result.addModifies(varMod);
 
 			string varUse = assign.substr(index + 1);
@@ -420,10 +436,11 @@ NestedResult Parser::parseWhile(string whileLine) {
 			for (string var : results) {
 				if (isdigit(var.at(0))) {
 					pkb.setConstant(var);
+					result.addUses(var);
 				}
 				else {
 					pkb.setVar(var);
-					pkb.setUsesVarByStmt(currStmtNo, var);
+					//pkb.insertUsesRelation(stmtNo, var);
 					result.addUses(var);
 				}
 			}
@@ -434,8 +451,8 @@ NestedResult Parser::parseWhile(string whileLine) {
 			//Gets the variable used in read stmt into readArg
 			string readArg = parseRead(line);
 			//Sets stmt information in PKB and then sets modifies variable for that stmt
-			pkb.setStmt(currStmtNo, Read);
-			pkb.setModifiesVarByStmt(currStmtNo, readArg);
+			pkb.setStmt(stmtNo, Read);
+			//pkb.insertModifiesRelation(stmtNo, readArg);
 			pkb.setVar(readArg);
 			result.addModifies(readArg);
 			currStmtNo++;
@@ -444,8 +461,8 @@ NestedResult Parser::parseWhile(string whileLine) {
 			//Gets the variable used in print stmt into printArg
 			string printArg = parsePrint(line);
 			//Sets stmt information in PKB and then sets modifies variable for that stmt
-			pkb.setStmt(currStmtNo, Print);
-			pkb.setUsesVarByStmt(currStmtNo, printArg);
+			pkb.setStmt(stmtNo, Print);
+			//pkb.insertUsesRelation(stmtNo, printArg);
 			pkb.setVar(printArg);
 			result.addUses(printArg);
 			currStmtNo++;
