@@ -346,7 +346,6 @@ NestedResult Parser::parseIf(string ifLine) {
 
 NestedResult Parser::parseWhile(string whileLine) {
 	int currStmtNo = stmtNo;
-	bool passedElse = false;
 	NestedResult result;
 
 	string line;
@@ -454,10 +453,8 @@ NestedResult Parser::parseWhile(string whileLine) {
 		else {
 			;
 		}
-		if (passedElse) {
-			if (line.find("}") != string::npos) {
-				break;
-			}
+		if (line.find("}") != string::npos) {
+			break;
 		}
 	}
 	result.lastStmtNo = currStmtNo;
@@ -465,68 +462,96 @@ NestedResult Parser::parseWhile(string whileLine) {
 }
 
 vector<string> Parser::parseCondStmt(string line) {
-	
-	regex redund = regex(R"((|))");
-	regex comparitor = regex(R"(==|!=|<=|>=|<|>)");
 	vector<string> result;
+	string condStmt = line;
+	condStmt.erase(remove_if(condStmt.begin(), condStmt.end(), isspace), condStmt.end());
+	int start = condStmt.find("(");
+	int end = condStmt.find_last_of(")");
+	int condLen = end - start + 1;
+	condStmt = condStmt.substr(start, condLen);
 
-	int start = line.find("(") + 1;
-	int end = 0;
-	string temp = line;
-	while (true) {
-		int curr = temp.find(")");
-		if (curr != string::npos) {
-			end = curr;
-			temp = temp.substr(curr + 1);
-		}
-		else {
-			break;
+	if ((condStmt.find("||") == string::npos) && (condStmt.find("&&") == string::npos)) {
+		string curr = condStmt;
+		vector<string> subresult = parseCondition(curr);
+		for (string var : subresult) {
+			result.push_back(var);
 		}
 	}
-	int condLen = end - start;
-	string condStmt = line.substr(start, condLen);
-	condStmt.erase(remove_if(condStmt.begin(), condStmt.end(), isspace), condStmt.end());
-	
-	while (condStmt.size() > 0) {
-		if (condStmt.find("||") != string::npos || condStmt.find("&&") != string::npos) {
-			int i = condStmt.find("||");
-			int j = condStmt.find("&&");
-			if (j == string::npos || (i != string::npos && i < j)) {
-				int len = condStmt.find("||");
-				string curr = condStmt.substr(0, len);
-				condStmt = condStmt.substr(len + 1);
-				curr = regex_replace(curr, redund, "");
-				curr = regex_replace(curr, comparitor, " ");
-				int split = curr.find(" ");
-				string first = curr.substr(0, split);
-				string second = curr.substr(split + 1);
-				result.push_back(first);
-				result.push_back(second);
+	else {
+		condStmt = removeOuterBrackets(condStmt);
+		while (condStmt.size() > 0) {
+			if ((condStmt.find("||") != string::npos) || (condStmt.find("&&") != string::npos)) {
+				int i = condStmt.find("||");
+				int j = condStmt.find("&&");
+				if ((j == string::npos) || ((i != string::npos) && (i < j))) {
+					string curr = condStmt.substr(0, i);
+					condStmt = condStmt.substr(i + 2);
+					vector<string> subresult = parseCondition(curr);
+					for (string var : subresult) {
+						result.push_back(var);
+					}
+				}
+				else {
+					string curr = condStmt.substr(0, j);
+					condStmt = condStmt.substr(j + 2);
+					vector<string> subresult = parseCondition(curr);
+					for (string var : subresult) {
+						result.push_back(var);
+					}
+				}
 			}
 			else {
-				int len = condStmt.find("&&");
-				string curr = condStmt.substr(0, len);
-				condStmt = condStmt.substr(len + 1);
-				curr = regex_replace(curr, redund, "");
-				curr = regex_replace(curr, comparitor, " ");
-				int split = curr.find(" ");
-				string first = curr.substr(0, split);
-				string second = curr.substr(split + 1);
-				result.push_back(first);
-				result.push_back(second);
+				string curr = condStmt;
+				vector<string> subresult = parseCondition(curr);
+				for (string var : subresult) {
+					result.push_back(var);
+				}
+				break;
 			}
 		}
+	}
+	return result;
+}
+
+string Parser:: removeOuterBrackets(string line) {
+	string condStmt = line;
+	condStmt = condStmt.substr(1);
+	condStmt = condStmt.substr(0, condStmt.size() - 1);
+	return condStmt;
+}
+
+vector<string> Parser::parseCondition(string condition) {
+	vector<string> result;
+	string curr = condition;
+	string first;
+	string second;
+	curr = curr.substr(1);
+	curr = curr.substr(0, curr.size() - 1);
+	if (curr.find("=") != string::npos) {
+		if (curr.find("==") != string::npos) {
+			int i = curr.find("=");
+			first = curr.substr(0, i);
+			second = curr.substr(i + 2);
+		}
 		else {
-			string curr = condStmt;
-			curr = regex_replace(curr, redund, "");
-			curr = regex_replace(curr, comparitor, " ");
-			int split = curr.find(" ");
-			string first = curr.substr(0, split);
-			string second = curr.substr(split + 1);
-			result.push_back(first);
-			result.push_back(second);
-			break;
+			int i = curr.find("=");
+			first = curr.substr(0, i - 1);
+			second = curr.substr(i + 1);
 		}
 	}
+	else {
+		if (curr.find(">") != string::npos) {
+			int i = curr.find(">");
+			first = curr.substr(0, i);
+			second = curr.substr(i + 1);
+		}
+		else {
+			int i = curr.find("<");
+			first = curr.substr(0, i);
+			second = curr.substr(i + 1);
+		}
+	}
+	result.push_back(first);
+	result.push_back(second);
 	return result;
 }

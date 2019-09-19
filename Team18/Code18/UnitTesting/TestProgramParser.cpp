@@ -1,4 +1,6 @@
 #include <fstream>
+#include <regex>
+#include <algorithm>
 #include "stdafx.h"
 #include "CppUnitTest.h"
 #include "Parser.h"
@@ -7,6 +9,7 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace UnitTesting
 {
+
 	TEST_CLASS(TestProgramParser)
 	{
 	public:
@@ -54,6 +57,78 @@ namespace UnitTesting
 			string input = "a+b-c*d/e%2";
 			vector<string> expected{ "a", "b", "c", "d", "e", "2" };
 			vector<string> actual = parser.parseAssignRHS(input);
+			Assert::AreEqual(expected == actual, true);
+		}
+
+		TEST_METHOD(ParseConditionTest1)
+		{
+			Parser parser = Parser();
+			string input = "(x==1)";
+			vector<string> expected{ "x", "1" };
+			vector<string> actual = parser.parseCondition(input);
+			Assert::AreEqual(expected == actual, true);
+		}
+
+		TEST_METHOD(ParseConditionTest2)
+		{
+			Parser parser = Parser();
+			string input = "(x!=1)";
+			vector<string> expected{ "x", "1" };
+			vector<string> actual = parser.parseCondition(input);
+			Assert::AreEqual(expected == actual, true);
+		}
+
+		TEST_METHOD(ParseConditionTest3)
+		{
+			Parser parser = Parser();
+			string input = "(x<=1)";
+			vector<string> expected{ "x", "1" };
+			vector<string> actual = parser.parseCondition(input);
+			Assert::AreEqual(expected == actual, true);
+		}
+
+		TEST_METHOD(ParseConditionTest4)
+		{
+			Parser parser = Parser();
+			string input = "(x>=1)";
+			vector<string> expected{ "x", "1" };
+			vector<string> actual = parser.parseCondition(input);
+			Assert::AreEqual(expected == actual, true);
+		}
+
+		TEST_METHOD(ParseConditionTest5)
+		{
+			Parser parser = Parser();
+			string input = "(x<1)";
+			vector<string> expected{ "x", "1" };
+			vector<string> actual = parser.parseCondition(input);
+			Assert::AreEqual(expected == actual, true);
+		}
+
+		TEST_METHOD(ParseConditionTest6)
+		{
+			Parser parser = Parser();
+			string input = "(x>1)";
+			vector<string> expected{ "x", "1" };
+			vector<string> actual = parser.parseCondition(input);
+			Assert::AreEqual(expected == actual, true);
+		}
+
+		TEST_METHOD(RemoveOuterBracketsTest)
+		{
+			Parser parser = Parser();
+			string input = "(x>1abcdefg)))";
+			string expected = "x>1abcdefg))";
+			string actual = parser.removeOuterBrackets(input);
+			Assert::AreEqual(expected, actual);
+		}
+
+		TEST_METHOD(SimpleCondStmtTest)
+		{
+			Parser parser = Parser();
+			string input = "if (x == 1) then {";
+			vector<string> expected{ "x", "1" };
+			vector<string> actual = parser.parseCondStmt(input);
 			Assert::AreEqual(expected == actual, true);
 		}
 

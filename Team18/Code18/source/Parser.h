@@ -22,6 +22,8 @@ public:
 	NestedResult parseIf(std::string ifLine);
 	NestedResult parseWhile(std:: string whileLine);
 	vector<string> parseCondStmt(std::string line);
+	vector<string> parseCondition(std::string condition);
+	string removeOuterBrackets(std::string line);
 private:
 	PKB pkb;
 	ifstream programFile;
