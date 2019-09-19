@@ -134,8 +134,13 @@ namespace Evaluator {
 			vector<string> expandedStmt = expandStmt(clause.second.first, fil);
 			vector<string> expandedVar = expandVar(clause.second.second, fil);
 			for (auto s : expandedStmt) {
+				if (declarations.count(clause.second.first))
+					fil[clause.second.first] = s;
 				for (auto v : expandedVar) {
-					if (PKB::isModifiesStmtVar(stoi(s), v)) return evalClauses(cls, fil);
+					if (declarations.count(clause.second.second))
+						fil[clause.second.second] = v;
+					if (PKB::isModifiesStmtVar(stoi(s), v))
+                        return evalClauses(cls, fil);
 				}
 			}
 			return false;
@@ -147,8 +152,13 @@ namespace Evaluator {
             vector<string> expandedLhs = expandStmt(clause.second.first, fil);
             vector<string> expandedRhs = expandStmt(clause.second.second, fil);
             for (auto lhs : expandedLhs) {
+				if (declarations.count(clause.second.first))
+					fil[clause.second.first] = lhs;
                 for (auto rhs : expandedRhs) {
-                    if (PKB::isFollowRelationship(stoi(lhs), stoi(rhs))) return evalClauses(cls, fil);
+                    if (declarations.count(clause.second.first))
+                        fil[clause.second.first] = rhs;
+                    if (PKB::isFollowRelationship(stoi(lhs), stoi(rhs)))
+                        return evalClauses(cls, fil);
                 }
             }
             return false;
@@ -160,8 +170,13 @@ namespace Evaluator {
             vector<string> expandedLhs = expandStmt(clause.second.first, fil);
             vector<string> expandedRhs = expandStmt(clause.second.second, fil);
             for (auto lhs : expandedLhs) {
+				if (declarations.count(clause.second.first))
+					fil[clause.second.first] = lhs;
                 for (auto rhs : expandedRhs) {
-                    if (PKB::isFollowStarRelationship(stoi(lhs), stoi(rhs))) return evalClauses(cls, fil);
+                    if (declarations.count(clause.second.first))
+                        fil[clause.second.first] = rhs;
+                    if (PKB::isFollowStarRelationship(stoi(lhs), stoi(rhs)))
+                        return evalClauses(cls, fil);
                 }
             }
             return false;
@@ -173,8 +188,13 @@ namespace Evaluator {
             vector<string> expandedLhs = expandStmt(clause.second.first, fil);
             vector<string> expandedRhs = expandStmt(clause.second.second, fil);
             for (auto lhs : expandedLhs) {
+				if (declarations.count(clause.second.first))
+					fil[clause.second.first] = lhs;
                 for (auto rhs : expandedRhs) {
-                    if (PKB::isParentRelationship(stoi(lhs), stoi(rhs))) return evalClauses(cls, fil);
+                    if (declarations.count(clause.second.first))
+                        fil[clause.second.first] = rhs;
+                    if (PKB::isParentRelationship(stoi(lhs), stoi(rhs)))
+                        return evalClauses(cls, fil);
                 }
             }
             return false;
@@ -186,8 +206,13 @@ namespace Evaluator {
             vector<string> expandedLhs = expandStmt(clause.second.first, fil);
             vector<string> expandedRhs = expandStmt(clause.second.second, fil);
             for (auto lhs : expandedLhs) {
+				if (declarations.count(clause.second.first))
+					fil[clause.second.first] = lhs;
                 for (auto rhs : expandedRhs) {
-                    if (PKB::isParentStarRelationship(stoi(lhs), stoi(rhs))) return evalClauses(cls, fil);
+                    if (declarations.count(clause.second.first))
+                        fil[clause.second.first] = rhs;
+                    if (PKB::isParentStarRelationship(stoi(lhs), stoi(rhs)))
+                        return evalClauses(cls, fil);
                 }
             }
             return false;
@@ -196,11 +221,24 @@ namespace Evaluator {
         bool evalPattern(pair<string, pair<string, string>> clause,
                          vector<pair<string, pair<string, string>>> cls,
                          unordered_map<string, string> fil) {
+            vector<string> expandedStmt = expandStmt(clause.first, fil);
             vector<string> expandedLhs = expandVar(clause.second.first, fil);
             vector<string> expandedRhs = expandFactor(clause.second.second, fil);
-            for (auto lhs : expandedLhs) {
-                for (auto rhs : expandedRhs) {
-                    if (PKB::isFactorAssignedToVar(lhs, rhs)) return evalClauses(cls, fil);
+            for (auto a : expandedStmt) {
+				if (declarations.count(clause.first))
+					fil[clause.first] = a;
+                unordered_set<string> lhs = PKB::getModifiesVarByStmt(stoi(a));
+                for (auto l : lhs) {
+                    if (declarations.count(clause.second.first))
+                        fil[clause.second.first] = l;
+                    if (count(expandedLhs.begin(), expandedLhs.end(), l)) {
+                        for (auto rhs : expandedRhs) {
+                            if (declarations.count(clause.second.second))
+                                fil[clause.second.second] = rhs;
+                            if (PKB::isFactorAssignedInStmt(l, rhs))
+                                return evalClauses(cls, fil);
+                        }
+                    }
                 }
             }
             return false;
@@ -226,7 +264,7 @@ namespace Evaluator {
                 return evalParent(clause, cls, fil);
             } else if (type == "Parent*") {
                 return evalParentT(clause, cls, fil);
-            } else if (type == "pattern") {
+            } else {
                 return evalPattern(clause, cls, fil);
             }
         }
@@ -291,7 +329,7 @@ namespace Evaluator {
         for (auto result : resultCandidates) {
             vector<pair<string, pair<string, string>>> cls = clauses;
             for (auto pattern : patterns) {
-                cls.push_back({ "pattern", {pattern.second.first, pattern.second.second} });
+                cls.push_back({ pattern.first, {pattern.second.first, pattern.second.second} });
             }
             unordered_map<string, string> fil;
             fil[selectSyn] = result;
