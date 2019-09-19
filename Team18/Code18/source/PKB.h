@@ -13,6 +13,11 @@ class TNode;
 
 enum stmtType { Read, Print, Assign, While, If, Call };
 
+typedef int STMT_NO;
+typedef std::unordered_set<int> STMT_LIST;
+typedef std::unordered_set<std::string> VAR_LIST;
+typedef std::unordered_set<std::string> CONST_LIST;
+
 class PKB {
 
 public:
@@ -24,96 +29,95 @@ public:
 
 
 	//Follow Functions
-	static bool insertFollowRelation(int followedBy, int follow);
-	static bool insertFollowStarRelation(int followedBy, int follow);
-	static bool isFollowRelationship(int followedBy, int follow);
-	static bool isFollowStarRelationship(int followedBy, int follow);
-	static std::unordered_set<int> getFollowedByStmtList(int follow);
-	static std::unordered_set<int> getFollowStarStmtList(int followedBy);
-	static int getFollowStmt(int followedBy);
+	static bool insertFollowRelation(STMT_NO followedBy, STMT_NO follow);
+	static bool insertFollowStarRelation(STMT_NO followedBy, STMT_NO follow);
+	static bool isFollowRelationship(STMT_NO followedBy, STMT_NO follow);
+	static bool isFollowStarRelationship(STMT_NO followedBy, STMT_NO follow);
+	static STMT_LIST getFollowedByStmtList(STMT_NO follow);
+	static STMT_LIST getFollowStarStmtList(STMT_NO followedBy);
+	static STMT_NO getFollowStmt(STMT_NO followedBy);
 	
 	//Parent Functions
-	static bool insertParentRelation(int parent, int child);
-	static bool insertParentStarRelation(int parent, int child);
-	static bool isParentRelationship(int parent, int child);
-	static bool isParentStarRelationship(int parent, int child);
-	static std::unordered_set<int> getChildrenStmtList(int parent);
-	static std::unordered_set<int> getParentStarStmtList(int child);
-	static int getParentStmt(int child);
+	static bool insertParentRelation(STMT_NO parent, STMT_NO child);
+	static bool insertParentStarRelation(STMT_NO parent, STMT_NO child);
+	static bool isParentRelationship(STMT_NO parent, STMT_NO child);
+	static bool isParentStarRelationship(STMT_NO parent, STMT_NO child);
+	static STMT_LIST getChildrenStmtList(STMT_NO parent);
+	static STMT_LIST getParentStarStmtList(STMT_NO child);
+	static STMT_NO getParentStmt(STMT_NO child);
 
-	static bool insertModifiesRelation(int stmtNo, std::string varName); 
-	static bool insertUsesRelation(int stmtNo, std::string varName);
-	static bool insertAssignRelation(int stmtNo, std::string varName);
-	static std::unordered_set<int> getAllStmtByType(std::string stmtType);
+	static bool insertModifiesRelation(STMT_NO stmtNo, std::string varName);
+	static bool insertUsesRelation(STMT_NO stmtNo, std::string varName);
+	static bool insertAssignRelation(STMT_NO stmtNo, std::string varName);
+	static STMT_LIST getAllStmtByType(std::string stmtType);
 
 	// add a variable to varTable
 	static bool setVar(std::string varName);
-	static std::unordered_set<std::string> getAllVar();
+	static VAR_LIST getAllVar();
 	static bool isVarExist(std::string varName);
 	// add a constant to constantTable
 	static bool setConstant(std::string constantName);
-	static std::unordered_set<std::string> getAllConstant();
+	static CONST_LIST getAllConstant();
 	static bool isConstantExist(std::string constantName);
 	// add a stmt to stmtTable
-	static bool setStmt(int stmtNo, stmtType type);
-	static std::unordered_set<int> getAllStmt();
-	static bool isStmtExist(int stmtNo);
+	static bool setStmt(STMT_NO stmtNo, stmtType type);
+	static STMT_LIST getAllStmt();
+	static bool isStmtExist(STMT_NO stmtNo);
 	//add var & stmt to varModifiesStmtTable
-	static bool setModifiesStmtByVar(int stmtNo, std::string varName);
-	static std::unordered_set<int> getModifiesStmtByVar(std::string varName);
-	static std::unordered_set<std::string> getAllModifiesVar();
+	static bool setModifiesStmtByVar(STMT_NO stmtNo, std::string varName);
+	static STMT_LIST getModifiesStmtByVar(std::string varName);
+	static VAR_LIST getAllModifiesVar();
 	//add var & stmt to varModifiesStmtTable
-	static bool setUsesStmtByVar(int stmtNo, std::string varName);
-	static std::unordered_set<int> getUsesStmtByVar(std::string varName);
-	static std::unordered_set<std::string> getAllUsesVar();
+	static bool setUsesStmtByVar(STMT_NO stmtNo, std::string varName);
+	static STMT_LIST getUsesStmtByVar(std::string varName);
+	static VAR_LIST getAllUsesVar();
 	//add stmt & var to varModifiesByStmtTable
-	static bool setModifiesVarByStmt(int stmtNo, std::string varName);
-	static std::unordered_set<std::string> getModifiesVarByStmt(int stmtNo);
-	static std::unordered_set<int> getAllModifiesStmt();
+	static bool setModifiesVarByStmt(STMT_NO stmtNo, std::string varName);
+	static VAR_LIST getModifiesVarByStmt(STMT_NO stmtNo);
+	static STMT_LIST getAllModifiesStmt();
 	//add stmt & var to varUsesByStmtTable
-	static bool setUsesVarByStmt(int stmtNo, std::string varName);
-	static std::unordered_set<std::string> getUsesVarByStmt(int stmtNo);
-	static std::unordered_set<int> getAllUsesStmt();
+	static bool setUsesVarByStmt(STMT_NO stmtNo, std::string varName);
+	static VAR_LIST getUsesVarByStmt(STMT_NO stmtNo);
+	static STMT_LIST getAllUsesStmt();
 
-	static bool isModifiesStmtVar(int stmtNo, std::string varName);
-	static bool isUsesStmtVar(int stmtNo, std::string varName);
+	static bool isModifiesStmtVar(STMT_NO stmtNo, std::string varName);
+	static bool isUsesStmtVar(STMT_NO stmtNo, std::string varName);
 
 	//add var & stmt to assign table 
-	static std::unordered_set<int> getAllAssignStmt();
-	static bool setAssignStmt(int stmtNo, std::string varModified);
-	static std::string getVarModifiedByAssignStmt(int stmtNo);
+	static STMT_LIST getAllAssignStmt();
+	static bool setAssignStmt(STMT_NO stmtNo, std::string varModified);
+	static std::string getVarModifiedByAssignStmt(STMT_NO stmtNo);
 	
-	static std::unordered_set<int> getAssignStmtByVar(std::string varName);
-	static bool setAssignStmtByVar(int stmtNo, std::string varName);
+	static STMT_LIST getAssignStmtByVar(std::string varName);
+	static bool setAssignStmtByVar(STMT_NO stmtNo, std::string varName);
 
 
 	//Getters and setters for while table 
-	static std::unordered_set<int> getAllWhileStmt();
-	static bool setWhileStmt(int stmtNo);
+	static STMT_LIST getAllWhileStmt();
+	static bool setWhileStmt(STMT_NO stmtNo);
 
 	//Getters and setters for if table
-	static std::unordered_set<int> getAllIfStmt();
-	static bool setIfStmt(int stmtNo);
+	static STMT_LIST getAllIfStmt();
+	static bool setIfStmt(STMT_NO stmtNo);
 
 	//Getters and setters for print table
-	static std::unordered_set<int> getAllPrintStmt();
-	static bool setPrintStmt(int stmtNo, std::string varName);
-	static std::unordered_set<int> getPrintStmtByVar(std::string varName);
+	static STMT_LIST getAllPrintStmt();
+	static bool setPrintStmt(STMT_NO stmtNo, std::string varName);
+	static STMT_LIST getPrintStmtByVar(std::string varName);
 	
 	//Getters and setters for Read table
-	static std::unordered_set<int> getAllReadStmt();
-	static bool setReadStmt(int stmtNo, std::string varName);
-	static std::unordered_set<int> getReadStmtByVar(std::string varName);
+	static STMT_LIST getAllReadStmt();
+	static bool setReadStmt(STMT_NO stmtNo, std::string varName);
+	static STMT_LIST getReadStmtByVar(std::string varName);
 
 	//Getters and setters for Procedure table
 	static std::unordered_set<std::string> getAllProc();
 	bool setProc(std::string procName);
 
-
 	//Getters and setters for Call table
-	static std::unordered_set<int> getAllCallStmt();
-	bool setCallStmt(int stmtNo, std::string procName);
-	std::unordered_set<int> getCallStmtByVar(std::string procName);
+	static STMT_LIST getAllCallStmt();
+	bool setCallStmt(STMT_NO stmtNo, std::string procName);
+	STMT_LIST getCallStmtByVar(std::string procName);
 
 	static int setProcToAST(PROC p, TNode* r);
 	static TNode* getRootAST(PROC p);

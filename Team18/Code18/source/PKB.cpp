@@ -24,8 +24,6 @@ unordered_map<string, unordered_set<int>> PKB::readTable;
 unordered_set<string> PKB::procedureTable;
 unordered_map<string, unordered_set<int>> PKB:: callTable;
 
-typedef int STMT_NO;
-typedef unordered_set<int> STMT_LIST;
 
 
 bool PKB::clear()
@@ -190,7 +188,7 @@ bool PKB::setConstant(string constantName) {
 	return true;
 }
 
-unordered_set<string> PKB::getAllConstant() {
+CONST_LIST PKB::getAllConstant() {
 	return constantTable;
 }
 
@@ -213,7 +211,7 @@ bool PKB::setStmt(STMT_NO stmtNo, stmtType type) {
 	}
 }
 
-unordered_set<int> PKB::getAllStmt() {
+STMT_LIST PKB::getAllStmt() {
 	unordered_set<int> stmtNoList;
 	for (auto keyValue : stmtTable) {
 		stmtNoList.emplace(keyValue.first);
@@ -247,7 +245,7 @@ STMT_LIST PKB::getModifiesStmtByVar(string varName) {
 	return stmtModifiesByVarTable[varName];
 }
 
-unordered_set<string> PKB::getAllModifiesVar() {
+VAR_LIST PKB::getAllModifiesVar() {
 	unordered_set<string> varList;
 	for (auto keyValue : stmtModifiesByVarTable) {
 		varList.emplace(keyValue.first);
@@ -277,7 +275,7 @@ STMT_LIST PKB::getUsesStmtByVar(string varName) {
 	return stmtUsesByVarTable[varName];
 }
 
-unordered_set<string> PKB::getAllUsesVar() {
+VAR_LIST PKB::getAllUsesVar() {
 	unordered_set<string> varList;
 	for (auto keyValue : stmtUsesByVarTable) {
 		varList.emplace(keyValue.first);
@@ -303,7 +301,7 @@ bool PKB::setModifiesVarByStmt(STMT_NO stmtNo, string varName) {
 	}
 }
 
-unordered_set<string> PKB::getModifiesVarByStmt(STMT_NO stmtNo) {
+VAR_LIST PKB::getModifiesVarByStmt(STMT_NO stmtNo) {
 	return varModifiesByStmtTable[stmtNo];
 }
 
@@ -333,7 +331,7 @@ bool PKB::setUsesVarByStmt(STMT_NO stmtNo, string varName) {
 	}
 }
 
-unordered_set<string> PKB::getUsesVarByStmt(STMT_NO stmtNo) {
+VAR_LIST PKB::getUsesVarByStmt(STMT_NO stmtNo) {
 	return varUsesByStmtTable[stmtNo];
 }
 
