@@ -4,8 +4,10 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include <regex>
 #include "Parser.h"
 #include "PKB.h"
+#include "NestedResult.h"
 #include "TNode.h"
 using namespace std;
 
@@ -16,11 +18,10 @@ Parser::Parser() {
 
 int Parser::Parse (string filename) {
 
-	ifstream programFile;
 	string line;
 
 	//Code to open the file from the filename.
-	programFile.open(filename);
+	this ->programFile.open(filename);
 	if (!programFile) {
 		cerr << "Unable to open file!" << filename;
 	}
@@ -34,11 +35,41 @@ int Parser::Parse (string filename) {
 		}
 		else if (line.find("while") != string::npos) {
 			pkb.setStmt(stmtNo, While);
-			stmtNo++;
+			NestedResult results = parseWhile(line);
+			vector<string> modifies = results.getModifies();
+			vector<string> uses = results.getUses();
+			for (string var : modifies) {
+				pkb.setModifiesStmtByVar(stmtNo, var);
+			}
+			for (string var : uses) {
+				if (isdigit(var.at(0))) {
+					pkb.setConstant(var);
+				}
+				else {
+					pkb.setUsesVarByStmt(stmtNo, var);
+				}
+			}
+
+			stmtNo = results.lastStmtNo + 1;
 		}
 		else if (line.find("if") != string::npos) {
 			pkb.setStmt(stmtNo, If);
-			stmtNo++;
+			NestedResult results = parseIf(line);
+			vector<string> modifies = results.getModifies();
+			vector<string> uses = results.getUses();
+			for (string var : modifies) {
+				pkb.setModifiesStmtByVar(stmtNo, var);
+			}
+			for (string var : uses) {
+				if (isdigit(var.at(0))) {
+					pkb.setConstant(var);
+				}
+				else {
+					pkb.setUsesVarByStmt(stmtNo, var);
+				}
+			}
+
+			stmtNo = results.lastStmtNo + 1;
 		}
 		else if (line.find("=") != string::npos) {
 			//Initial processing of stmt
@@ -189,3 +220,313 @@ vector<string> Parser::parseAssignRHS(string varUse) {
 	return result;
 }
 
+NestedResult Parser::parseIf(string ifLine) {
+	
+	int currStmtNo = stmtNo;
+	bool passedElse = false;
+	NestedResult result;
+
+	string line;
+
+	vector<string> toAdd = parseCondStmt(ifLine);
+	for (string var : toAdd) {
+		result.addUses(var);
+	}
+	while (getline(programFile, line)) {
+		//Process to parse each line
+		if (line.find("while") != string::npos) {
+			pkb.setStmt(stmtNo, While);
+			NestedResult results = parseWhile(line);
+			vector<string> modifies = results.getModifies();
+			vector<string> uses = results.getUses();
+			for (string var : modifies) {
+				result.addModifies(var);
+				pkb.setModifiesStmtByVar(stmtNo, var);
+			}
+			for (string var : uses) {
+				if (isdigit(var.at(0))) {
+					result.addUses(var);
+					pkb.setConstant(var);
+				}
+				else {
+					result.addUses(var);
+					pkb.setUsesVarByStmt(stmtNo, var);
+				}
+			}
+
+			currStmtNo = results.lastStmtNo + 1;
+		}
+		else if (line.find("if") != string::npos) {
+			pkb.setStmt(stmtNo, If);
+			NestedResult results = parseIf(line);
+			vector<string> modifies = results.getModifies();
+			vector<string> uses = results.getUses();
+			for (string var : modifies) {
+				result.addModifies(var);
+				pkb.setModifiesStmtByVar(stmtNo, var);
+			}
+			for (string var : uses) {
+				if (isdigit(var.at(0))) {
+					result.addUses(var);
+					pkb.setConstant(var);
+				}
+				else {
+					result.addUses(var);
+					pkb.setUsesVarByStmt(stmtNo, var);
+				}
+			}
+
+			currStmtNo = results.lastStmtNo + 1;
+		}
+		else if (line.find("=") != string::npos) {
+			//Initial processing of stmt
+			string assign = parseAssignInit(line);
+			pkb.setStmt(currStmtNo, Assign);
+
+			//Splits the assign statement by the = sign and get LHS and RHS
+			int index = assign.find("=");
+			string varMod = assign.substr(0, index);
+			pkb.setVar(varMod);
+			pkb.setModifiesVarByStmt(currStmtNo, varMod);
+			result.addModifies(varMod);
+
+			string varUse = assign.substr(index + 1);
+
+			//Calls to parse RHS of assign stmt
+			vector<string> results = parseAssignRHS(varUse);
+
+			for (string var : results) {
+				if (isdigit(var.at(0))) {
+					pkb.setConstant(var);
+				}
+				else {
+					pkb.setVar(var);
+					pkb.setUsesVarByStmt(currStmtNo, var);
+					result.addUses(var);
+				}
+			}
+
+			currStmtNo++;
+		}
+		else if (line.find("read") != string::npos) {
+			//Gets the variable used in read stmt into readArg
+			string readArg = parseRead(line);
+			//Sets stmt information in PKB and then sets modifies variable for that stmt
+			pkb.setStmt(currStmtNo, Read);
+			pkb.setModifiesVarByStmt(currStmtNo, readArg);
+			pkb.setVar(readArg);
+			result.addModifies(readArg);
+			currStmtNo++;
+		}
+		else if (line.find("print") != string::npos) {
+			//Gets the variable used in print stmt into printArg
+			string printArg = parsePrint(line);
+			//Sets stmt information in PKB and then sets modifies variable for that stmt
+			pkb.setStmt(currStmtNo, Print);
+			pkb.setUsesVarByStmt(currStmtNo, printArg);
+			pkb.setVar(printArg);
+			result.addUses(printArg);
+			currStmtNo++;
+		}
+		else if (line.find("else") != string::npos) {
+			passedElse = true;
+		}
+		else {
+			;
+		}
+		if (passedElse) {
+			if (line.find("}") != string::npos) {
+				break;
+			}
+		}
+	}
+	result.lastStmtNo = currStmtNo;
+	return result;
+}
+
+NestedResult Parser::parseWhile(string whileLine) {
+	int currStmtNo = stmtNo;
+	bool passedElse = false;
+	NestedResult result;
+
+	string line;
+
+	vector<string> toAdd = parseCondStmt(whileLine);
+	for (string var : toAdd) {
+		result.addUses(var);
+	}
+	while (getline(programFile, line)) {
+		//Process to parse each line
+		if (line.find("while") != string::npos) {
+			pkb.setStmt(stmtNo, While);
+			NestedResult results = parseWhile(line);
+			vector<string> modifies = results.getModifies();
+			vector<string> uses = results.getUses();
+			for (string var : modifies) {
+				result.addModifies(var);
+				pkb.setModifiesStmtByVar(stmtNo, var);
+			}
+			for (string var : uses) {
+				if (isdigit(var.at(0))) {
+					result.addUses(var);
+					pkb.setConstant(var);
+				}
+				else {
+					result.addUses(var);
+					pkb.setUsesVarByStmt(stmtNo, var);
+				}
+			}
+
+			currStmtNo = results.lastStmtNo + 1;
+		}
+		else if (line.find("if") != string::npos) {
+			pkb.setStmt(stmtNo, If);
+			NestedResult results = parseIf(line);
+			vector<string> modifies = results.getModifies();
+			vector<string> uses = results.getUses();
+			for (string var : modifies) {
+				result.addModifies(var);
+				pkb.setModifiesStmtByVar(stmtNo, var);
+			}
+			for (string var : uses) {
+				if (isdigit(var.at(0))) {
+					result.addUses(var);
+					pkb.setConstant(var);
+				}
+				else {
+					result.addUses(var);
+					pkb.setUsesVarByStmt(stmtNo, var);
+				}
+			}
+
+			currStmtNo = results.lastStmtNo + 1;
+		}
+		else if (line.find("=") != string::npos) {
+			//Initial processing of stmt
+			string assign = parseAssignInit(line);
+			pkb.setStmt(currStmtNo, Assign);
+
+			//Splits the assign statement by the = sign and get LHS and RHS
+			int index = assign.find("=");
+			string varMod = assign.substr(0, index);
+			pkb.setVar(varMod);
+			pkb.setModifiesVarByStmt(currStmtNo, varMod);
+			result.addModifies(varMod);
+
+			string varUse = assign.substr(index + 1);
+
+			//Calls to parse RHS of assign stmt
+			vector<string> results = parseAssignRHS(varUse);
+
+			for (string var : results) {
+				if (isdigit(var.at(0))) {
+					pkb.setConstant(var);
+				}
+				else {
+					pkb.setVar(var);
+					pkb.setUsesVarByStmt(currStmtNo, var);
+					result.addUses(var);
+				}
+			}
+
+			currStmtNo++;
+		}
+		else if (line.find("read") != string::npos) {
+			//Gets the variable used in read stmt into readArg
+			string readArg = parseRead(line);
+			//Sets stmt information in PKB and then sets modifies variable for that stmt
+			pkb.setStmt(currStmtNo, Read);
+			pkb.setModifiesVarByStmt(currStmtNo, readArg);
+			pkb.setVar(readArg);
+			result.addModifies(readArg);
+			currStmtNo++;
+		}
+		else if (line.find("print") != string::npos) {
+			//Gets the variable used in print stmt into printArg
+			string printArg = parsePrint(line);
+			//Sets stmt information in PKB and then sets modifies variable for that stmt
+			pkb.setStmt(currStmtNo, Print);
+			pkb.setUsesVarByStmt(currStmtNo, printArg);
+			pkb.setVar(printArg);
+			result.addUses(printArg);
+			currStmtNo++;
+		}
+		else {
+			;
+		}
+		if (passedElse) {
+			if (line.find("}") != string::npos) {
+				break;
+			}
+		}
+	}
+	result.lastStmtNo = currStmtNo;
+	return result;
+}
+
+vector<string> Parser::parseCondStmt(string line) {
+	
+	regex redund = regex(R"((|))");
+	regex comparitor = regex(R"(==|!=|<=|>=|<|>)");
+	vector<string> result;
+
+	int start = line.find("(") + 1;
+	int end = 0;
+	string temp = line;
+	while (true) {
+		int curr = temp.find(")");
+		if (curr != string::npos) {
+			end = curr;
+			temp = temp.substr(curr + 1);
+		}
+		else {
+			break;
+		}
+	}
+	int condLen = end - start;
+	string condStmt = line.substr(start, condLen);
+	condStmt.erase(remove_if(condStmt.begin(), condStmt.end(), isspace), condStmt.end());
+	
+	while (condStmt.size() > 0) {
+		if (condStmt.find("||") != string::npos || condStmt.find("&&") != string::npos) {
+			int i = condStmt.find("||");
+			int j = condStmt.find("&&");
+			if (j == string::npos || (i != string::npos && i < j)) {
+				int len = condStmt.find("||");
+				string curr = condStmt.substr(0, len);
+				condStmt = condStmt.substr(len + 1);
+				curr = regex_replace(curr, redund, "");
+				curr = regex_replace(curr, comparitor, " ");
+				int split = curr.find(" ");
+				string first = curr.substr(0, split);
+				string second = curr.substr(split + 1);
+				result.push_back(first);
+				result.push_back(second);
+			}
+			else {
+				int len = condStmt.find("&&");
+				string curr = condStmt.substr(0, len);
+				condStmt = condStmt.substr(len + 1);
+				curr = regex_replace(curr, redund, "");
+				curr = regex_replace(curr, comparitor, " ");
+				int split = curr.find(" ");
+				string first = curr.substr(0, split);
+				string second = curr.substr(split + 1);
+				result.push_back(first);
+				result.push_back(second);
+			}
+		}
+		else {
+			string curr = condStmt;
+			curr = regex_replace(curr, redund, "");
+			curr = regex_replace(curr, comparitor, " ");
+			int split = curr.find(" ");
+			string first = curr.substr(0, split);
+			string second = curr.substr(split + 1);
+			result.push_back(first);
+			result.push_back(second);
+			break;
+		}
+	}
+	return result;
+}

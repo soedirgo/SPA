@@ -1,3 +1,4 @@
+#include <fstream>
 #include "stdafx.h"
 #include "CppUnitTest.h"
 #include "Parser.h"
@@ -56,5 +57,22 @@ namespace UnitTesting
 			Assert::AreEqual(expected == actual, true);
 		}
 
+		TEST_METHOD(IfCondStmtTest)
+		{
+			Parser parser = Parser();
+			string input = "if ((x == 1) || (a != b) && (e < f)) then {";
+			vector<string> expected{ "x", "1", "a", "b", "e", "f" };
+			vector<string> actual = parser.parseCondStmt(input);
+			Assert::AreEqual(expected == actual, true);
+		}
+
+		TEST_METHOD(WhileCondStmtTest)
+		{
+			Parser parser = Parser();
+			string input = "while ((x == 1) || (a != b) && (e < f)) {";
+			vector<string> expected{ "x", "1", "a", "b", "e", "f" };
+			vector<string> actual = parser.parseCondStmt(input);
+			Assert::AreEqual(expected == actual, true);
+		}
 	};
 }
