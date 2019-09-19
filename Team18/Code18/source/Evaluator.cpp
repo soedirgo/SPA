@@ -257,7 +257,8 @@ namespace Evaluator {
                             if (declarations.count(clause.second.second))
                                 fil[clause.second.second] = rhs;
                             // check if it is used in the assignment
-                            if (PKB::isFactorAssignedInStmt(lhs, rhs))
+                            // if (PKB::isFactorAssignedInStmt(lhs, rhs))
+                            if (false)
                                 return evalClauses(cls, fil);
                         }
                     }
