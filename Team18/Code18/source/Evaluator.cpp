@@ -83,8 +83,8 @@ namespace Evaluator {
 				for (const auto& var : PKB::getAllVar()) {
 					variables.insert(var);
 				}
-			} else if (PKB::getAllVar().count(varRef)) { // varRef is an explicit name
-				variables.insert(varRef);
+			} else if (varRef.front() == '\"' && varRef.back() == '\"') { // varRef is an explicit name
+				variables.insert(varRef.substr(1, varRef.size() - 2));
 			} else { // varRef is a ``_''
 				for (const auto& var : PKB::getAllVar()) {
 					variables.insert(var);
