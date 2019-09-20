@@ -1,0 +1,175 @@
+1 - Query 1 - ? tests Uses(a,v) definition. Tests Uses(a,v) with synonyms assign and variable
+assign a; variable v;
+Select a such that Uses(a, v)
+
+5000
+2 - Tests Uses(a,v) with synonyms assign and wildcard
+assign a;
+Select a such that Uses(a, _)
+
+5000
+3 - Tests Uses(a,v) with synonyms assign and "ident" that is used
+assign a;
+Select a such that Uses(a, "x")
+
+5000
+4 - Tests Uses(a,v) with synonyms assign and "ident" that is not used
+assign a;
+Select a such that Uses(a, "mid")
+none
+5000
+5 - Tests Uses(a,v) with stmtNo and variable
+variable v;
+Select v such that Uses(3, "mid")
+
+5000
+6 - Tests Uses(a,v) with assign stmtNo and wildcard
+constant c;
+Select c such that Uses(10, _)
+
+5000
+7 - Tests Uses(a,v) with print stmtNo and wildcard
+constant c;
+Select c such that Uses(9, _)
+none
+5000
+8 - Tests Uses(a,v) with assign stmtNo and "ident" that is used
+assign a;
+Select a such that Uses(7, "x")
+
+5000
+9 - Tests Uses(a,v) with assign stmtNo and "ident" that is not used
+assign a;
+Select a such that Uses(7, "z")
+none
+5000
+
+
+5 - Query 5 - 8 tests Uses(pn, v) definition. Tests Uses(pn, v) with synonyms print and variable
+print pn; variable v;
+Select pn such that Uses(pn, v)
+
+5000
+6 - Tests Uses(pn, v) with synonyms print and wildcard
+print pn;
+Select pn such that Uses(pn, _)
+
+5000
+7 - Tests Uses(pn, v) with synonyms print and "ident" that is used
+print pn;
+Select pn such that Uses(pn, "count")
+
+5000
+8 - Tests Uses(pn, v) with synonyms print and "ident" that is not used
+print pn;
+Select pn such that Uses(pn, "sum")
+
+5000
+
+
+
+
+
+9 - Query 9 - 13 tests Uses(ifs, v) definition. Tests Uses(ifs, v) with synonyms if and variable
+if ifs; variable v;
+Select ifs such that Uses(ifs, v)
+
+5000
+10 - Tests Uses(ifs, v) with synonyms if and wildcard
+if ifs;
+Select ifs such that Uses(ifs, _)
+
+5000
+11 - Tests Uses(ifs, v) with synonyms if and "ident" that is used in cond_expr and stmtLst
+if ifs;
+Select ifs such that Uses(ifs, "y")
+
+5000
+12 - Tests Uses(ifs, v) with synonyms if and "ident" that is not used in cond_expr but in stmtLst
+if ifs;
+Select ifs such that Uses(ifs, "inc")
+
+5000
+13 - Tests Uses(ifs, v) with synonyms if and "ident" that is not used in con_expr and stmtLst
+if ifs;
+Select ifs such that Uses(ifs, "z")
+none
+5000
+
+
+
+
+
+14 - Query 14 - 18 tests Uses(w, v) definition. Tests Uses(w, v) with synonyms while and variable
+while w; variable v;
+Select w such that Uses(w, v)
+
+5000
+15 - Tests Uses(w, v) with synonyms while and wildcard
+while w;
+Select w such that Uses(w, _)
+16 - Tests Uses(w, v) with synonyms while and "ident" that is used in cond_expr and stmtLst
+while w;
+Select w such that Uses(w, "count")
+
+5000
+17 - Tests Uses(w, v) with synonyms while and "ident" that is not used in cond_expr but in stmtLst
+while w;
+Select w such that Uses(w, "mid")
+
+5000
+18 - Tests Uses(w, v) with synonyms while and "ident" that is not used in cond_expr and stmtLst
+while w;
+Select w such that Uses(w, "dec")
+none
+5000
+
+
+
+
+
+19 - Query 19 - 22 tests Uses(proc, v) definition. Tests Uses(proc, v) with synonym procedure and variable
+procedure proc; variable v;
+Select proc such that Uses(proc, v)
+
+5000
+20 - Tests Uses(proc, v) with synonym procedure and wildcard
+procedure proc;
+Select proc such that Uses(proc, _)
+
+5000
+21 - Tests Uses(proc, v) with synonym procedure and "ident" that is used
+procedure proc;
+Select proc such that Uses(proc, "max")
+
+5000
+22 - Tests Uses(proc, v) with synonym procedure and "ident" that is not used
+procedure proc;
+Select proc such that Uses(proc, "dec")
+none
+5000
+
+
+
+
+
+23 - Query 23 - 26 tests Uses(_, v) definition. Tests Uses(_, v) with wildcard and variable
+variable v;
+Select v such that Uses(_, v)
+
+5000
+24 - Tests Uses(_, v) with wildcards
+variable v;
+Select v such that Uses(_, _)
+
+5000
+25 - Tests Uses(_, v) with wildcard and "ident" that is used
+constant c;
+Select c such that Uses(_, "z")
+
+5000
+26 - Tests Uses(_, v) with wildcard and "ident" that is not used
+constant c;
+Select c such that Uses(_, "dec")
+none
+5000

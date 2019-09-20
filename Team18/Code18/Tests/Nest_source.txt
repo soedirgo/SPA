@@ -1,0 +1,29 @@
+start	procedure nesting1 {
+1	read x;
+2	read y;
+3	z = 1;
+4	print x;
+5	print y;
+6	if (x <= y) then {
+7	  z = x; }
+//	else {
+8	  z = y; }
+9	print z;
+10	count = z * 5;
+11	while (count >= 5) {
+12	  count = count - 2;
+13	  print count; }
+14	read i;
+15	max = 0;
+16	if (i > 10) then {
+17	  read inc;
+18	  max = max + inc; }
+//	else {
+19	  print i; }
+20	mid = max / 2;
+21	sum = x + ( y + z );
+22	while (sum > 20) {
+23	  print mid;
+24	  sum = sum - 5; 
+25	  read dec;}
+end	}

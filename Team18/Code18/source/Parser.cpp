@@ -247,9 +247,9 @@ vector<string> Parser::parseAssignRHS(string varUse) {
 
 NestedResult Parser::parseIf(string ifLine) {
 	
-	int currStmtNo = stmtNo;
+	int currStmtNo = stmtNo + 1;
 	int startStmtNo = stmtNo;
-	int prevStmtNo = stmtNo - 1;
+	int prevStmtNo = stmtNo;
 	bool passedElse = false;
 	NestedResult result;
 
@@ -408,9 +408,9 @@ NestedResult Parser::parseIf(string ifLine) {
 }
 
 NestedResult Parser::parseWhile(string whileLine) {
-	int currStmtNo = stmtNo;
+	int currStmtNo = stmtNo + 1;
 	int startStmtNo = stmtNo;
-	int prevStmtNo = stmtNo - 1;
+	int prevStmtNo = stmtNo;
 	NestedResult result;
 
 	string line;
