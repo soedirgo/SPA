@@ -190,11 +190,11 @@ namespace IntegrationTesting
             Assert::IsTrue(expected == actual);
 
             expected = {};
-            actual = Evaluator::evalQuery(Query(decl, "i", { {"Uses", {"i", "z"}} }, {}));
+            actual = Evaluator::evalQuery(Query(decl, "i", { {"Uses", {"i", "\"z\""}} }, {}));
             Assert::IsTrue(expected == actual);
  
             expected = {"1"};
-            actual = Evaluator::evalQuery(Query(decl, "a", { {"Modifies", {"a", "x"}} }, {}));
+            actual = Evaluator::evalQuery(Query(decl, "a", { {"Modifies", {"a", "\"x\""}} }, {}));
             Assert::IsTrue(expected == actual);
 
             expected = {"x"};
@@ -202,7 +202,7 @@ namespace IntegrationTesting
             Assert::IsTrue(expected == actual);
 
             expected = {"1", "0"};
-            actual = Evaluator::evalQuery(Query(decl, "C", { {"Uses", {"2", "x"}} }, {}));
+            actual = Evaluator::evalQuery(Query(decl, "C", { {"Uses", {"2", "\"x\""}} }, {}));
             Assert::IsTrue(expected == actual);
 
             //expected = {"main"};
@@ -300,7 +300,7 @@ namespace IntegrationTesting
             Assert::IsTrue(expected == actual);
 
             expected = {"1"};
-            actual = Evaluator::evalQuery(Query(decl, "a", {}, { {"a", {"x", "_"}} }));
+            actual = Evaluator::evalQuery(Query(decl, "a", {}, { {"a", {"\"x\"", "_"}} }));
             Assert::IsTrue(expected == actual);
 
             expected = {"1"};
@@ -308,7 +308,7 @@ namespace IntegrationTesting
             Assert::IsTrue(expected == actual);
 
             expected = {"4"};
-            actual = Evaluator::evalQuery(Query(decl, "a", {}, { {"a", {"z", "0"}} }));
+            actual = Evaluator::evalQuery(Query(decl, "a", {}, { {"a", {"\"z\"", "0"}} }));
             Assert::IsTrue(expected == actual);
         }
 	};
