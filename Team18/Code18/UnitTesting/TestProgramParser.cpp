@@ -23,7 +23,7 @@ namespace UnitTesting
 			Assert::AreEqual(expected, actual);
 		}
 
-		TEST_METHOD(ReadTest)
+		TEST_METHOD(ReadTest1)
 		{
 			Parser parser = Parser();
 			string input = "read x;";
@@ -32,10 +32,28 @@ namespace UnitTesting
 			Assert::AreEqual(expected, actual);
 		}
 
-		TEST_METHOD(PrintTest)
+		TEST_METHOD(ReadTest2)
+		{
+			Parser parser = Parser();
+			string input = "read x;}";
+			string expected = "x";
+			string actual = parser.parseRead(input);
+			Assert::AreEqual(expected, actual);
+		}
+
+		TEST_METHOD(PrintTest1)
 		{
 			Parser parser = Parser();
 			string input = "print x;";
+			string expected = "x";
+			string actual = parser.parsePrint(input);
+			Assert::AreEqual(expected, actual);
+		}
+
+		TEST_METHOD(PrintTest2)
+		{
+			Parser parser = Parser();
+			string input = "print x;}";
 			string expected = "x";
 			string actual = parser.parsePrint(input);
 			Assert::AreEqual(expected, actual);
@@ -51,10 +69,19 @@ namespace UnitTesting
 			Assert::AreEqual(expected, actual);
 		}
 
-		TEST_METHOD(AssignRHSTest)
+		TEST_METHOD(AssignRHSTest1)
 		{
 			Parser parser = Parser();
 			string input = "a+b-c*d/e%2";
+			vector<string> expected{ "a", "b", "c", "d", "e", "2" };
+			vector<string> actual = parser.parseAssignRHS(input);
+			Assert::AreEqual(expected == actual, true);
+		}
+
+		TEST_METHOD(AssignRHSTest2)
+		{
+			Parser parser = Parser();
+			string input = "a+b-c*d/e%2;";
 			vector<string> expected{ "a", "b", "c", "d", "e", "2" };
 			vector<string> actual = parser.parseAssignRHS(input);
 			Assert::AreEqual(expected == actual, true);
