@@ -29,6 +29,21 @@ unordered_map<string, unordered_set<int>> PKB:: callTable;
 bool PKB::clear()
 {
 	varTable.clear();
+	constantTable.clear(); 
+	stmtTable.clear();
+	stmtModifiesByVarTable.clear();
+	stmtUsesByVarTable.clear();
+	varModifiesByStmtTable.clear();
+	varUsesByStmtTable.clear();
+	assignStmtTable.clear();
+	assignVarTable.clear();
+	whileTable.clear();
+	ifTable.clear();
+	printTable.clear();
+	readTable.clear();
+	procedureTable.clear();
+	callTable.clear();
+
 	return true;
 }
 
@@ -126,12 +141,21 @@ bool PKB::insertAssignRelation(int stmtNo, string varModified, unordered_set<str
 	try {
 		setAssignStmt(stmtNo, varModified);
 		setAssignStmtByVar(stmtNo, varModified);
-		for (string var : varUsed) {
-			setUsesStmtByVar(stmtNo, var);
+		
+		setModifiesStmtByVar(stmtNo, varModified);
+		setModifiesVarByStmt(stmtNo, varModified);
+		if (!varUsed.empty()) {
+			for (string var : varUsed) {
+				setUsesStmtByVar(stmtNo, var);
+				setUsesVarByStmt(stmtNo, var);
+			}
 		}
-		for (string c : constUsed) {
-			setConstant( c, stmtNo);
+		if (!varUsed.empty()) {
+			for (string c : constUsed) {
+				setConstant(c, stmtNo);
+			}
 		}
+		
 		return true; 
 	}
 	catch (errc) {
@@ -402,6 +426,7 @@ bool PKB::setAssignStmt(STMT_NO stmtNo, string varModified) {
 	std::pair<int, string> entry(stmtNo, varModified);
 	try {
 		assignStmtTable.insert(entry);
+		
 		return true;
 	}
 	catch (errc) {
