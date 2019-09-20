@@ -4,8 +4,6 @@
 #include "Clause.h"
 #include "Evaluator.h"
 #include "PKB.h"
-#include "PKBFollow.h"
-#include "PKBParent.h"
 
 using namespace std;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;

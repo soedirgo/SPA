@@ -28,4 +28,6 @@ public:
 	static std::string trim(std::string str, std::string whitespace);
 
 	static std::string removeSpaces(std::string s, std::string whitespace);
+
+	static int getMinimumIndex(std::vector<int> indexes);
 };
