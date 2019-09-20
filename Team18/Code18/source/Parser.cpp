@@ -44,7 +44,7 @@ int Parser::Parse (string filename) {
 			}
 			for (string var : uses) {
 				if (isdigit(var.at(0))) {
-					//pkb.setConstant(var, stmtNo);
+					pkb.setConstant(var, stmtNo);
 				}
 				else {
 					pkb.setVar(var);
@@ -68,7 +68,7 @@ int Parser::Parse (string filename) {
 			}
 			for (string var : uses) {
 				if (isdigit(var.at(0))) {
-					//pkb.setConstant(var, stmtNo);
+					pkb.setConstant(var, stmtNo);
 				}
 				else {
 					pkb.setVar(var);
@@ -100,7 +100,7 @@ int Parser::Parse (string filename) {
 
 			for (string var : results) {
 				if (isdigit(var.at(0))) {
-					//pkb.setConstant(var, stmtNo);
+					pkb.setConstant(var, stmtNo);
 				}
 				else {
 					pkb.setVar(var);
@@ -275,7 +275,7 @@ NestedResult Parser::parseIf(string ifLine) {
 			}
 			for (string var : uses) {
 				if (isdigit(var.at(0))) {
-					//pkb.setConstant(var, stmtNo);
+					pkb.setConstant(var, stmtNo);
 					result.addUses(var);
 				}
 				else {
@@ -304,7 +304,7 @@ NestedResult Parser::parseIf(string ifLine) {
 			}
 			for (string var : uses) {
 				if (isdigit(var.at(0))) {
-					//pkb.setConstant(var, stmtNo);
+					pkb.setConstant(var, stmtNo);
 					result.addUses(var);
 				}
 				else {
@@ -340,7 +340,7 @@ NestedResult Parser::parseIf(string ifLine) {
 
 			for (string var : results) {
 				if (isdigit(var.at(0))) {
-					//pkb.setConstant(var, stmtNo);
+					pkb.setConstant(var, stmtNo);
 					result.addUses(var);
 				}
 				else {
@@ -435,7 +435,7 @@ NestedResult Parser::parseWhile(string whileLine) {
 			}
 			for (string var : uses) {
 				if (isdigit(var.at(0))) {
-					pkb.setConstant(var);
+					pkb.setConstant(var, stmtNo);
 					result.addUses(var);
 				}
 				else {
@@ -464,7 +464,7 @@ NestedResult Parser::parseWhile(string whileLine) {
 			}
 			for (string var : uses) {
 				if (isdigit(var.at(0))) {
-					pkb.setConstant(var);
+					pkb.setConstant(var, stmtNo);
 					result.addUses(var);
 				}
 				else {
@@ -500,7 +500,7 @@ NestedResult Parser::parseWhile(string whileLine) {
 
 			for (string var : results) {
 				if (isdigit(var.at(0))) {
-					pkb.setConstant(var);
+					pkb.setConstant(var, stmtNo);
 					result.addUses(var);
 				}
 				else {

@@ -12,39 +12,50 @@ namespace UnitTesting
 	public:
 		TEST_METHOD_INITIALIZE(PKB_START)
 		{
+			/**
+			   SIMPLE program:
+			   _   procedure main {
+			   1.      x = 1
+			   2.      y = x
+			   3.      if (x == y) then {
+			   4.          z = 0;
+			   _       } else {
+			   5.          z = 1;
+			   _       }
+			   6.      while (x > 0) {
+			   7.          read x;
+			   8.          print x;
+			   _       }
+			*/
 			PKB pkb;
 			pkb.clear();
-			pkb.setStmt(1, While);
-			pkb.setStmt(2, If);
-			pkb.setStmt(3, Print);
-			pkb.setStmt(4, Read);
-			pkb.setStmt(7, Call);
-			pkb.setStmt(10, Call);
-			pkb.setStmt(11, Call);
-			pkb.setStmt(12, Call);
-			pkb.setStmt(13, Assign);
-			pkb.setStmt(14, Assign);
-			pkb.setStmt(15, Assign);
+			pkb.setStmt(1, Assign);
+			pkb.setStmt(2, Assign);
+			pkb.setStmt(3, If);
+			pkb.setIfStmt(3);
+			pkb.setStmt(4, Assign);
+			pkb.setStmt(5, Assign);
+			pkb.setStmt(6, While);
+			pkb.setWhileStmt(6); 
+			pkb.setStmt(7, Read);
+			pkb.setReadStmt(7, "x");
+			pkb.setStmt(8, Print);
+			pkb.setPrintStmt(8, "x");
+			
 
 			pkb.setVar("x");
 			pkb.setVar("y");
 			pkb.setVar("z");
 
-			pkb.setConstant("1");
-			pkb.setConstant("1");
-			pkb.setConstant("1");
-
-			pkb.insertModifiesRelation(1, "x");
-			pkb.insertModifiesRelation(1, "y");
-			pkb.insertUsesRelation(1, "x");
-			pkb.insertUsesRelation(1, "y");
-
-			pkb.insertAssignRelation(1, "x");
-			pkb.insertAssignRelation(1, "y");
-			pkb.insertAssignRelation(3, "y");
-			pkb.insertAssignRelation(6, "z");
-			pkb.insertAssignRelation(7, "z");
-			pkb.insertAssignRelation(8, "x");
+			pkb.insertAssignRelation(1, "x", {}, {"1"});
+			pkb.insertAssignRelation(2, "y", {"x"}, {} );
+			pkb.insertAssignRelation(4, "z", { }, { "0" } );
+			pkb.insertAssignRelation(5, "z", { }, { "1" });
+			
+			pkb.setModifiesStmtByVar(8, "x");
+			pkb.setModifiesVarByStmt(8, "x"); 
+			pkb.setUsesStmtByVar(9, "x");
+			pkb.setUsesVarByStmt(9, "x");
 
 			pkb.insertParentRelation(1, 2);
 			pkb.insertParentRelation(1, 3);
@@ -53,57 +64,93 @@ namespace UnitTesting
 			pkb.insertFollowRelation(1, 2);
 			pkb.insertFollowStarRelation(1, 2);
 		}
-		TEST_METHOD(GetModifiesStmtByVar)
-		{
-			//Actual PKB Data
-			unordered_set<string> varList = { "x" ,"y" };
-			Assert::IsTrue(PKB().getModifiesVarByStmt(1) == varList);
-			Assert::IsTrue(PKB().getUsesVarByStmt(1) == varList);
-		}
 		TEST_METHOD(GetModifiesVarByStmt)
 		{
-			//Actual PKB Data
-			unordered_set<int> stmtList = { 1 };
-			Assert::IsTrue(PKB().getModifiesStmtByVar("y") == stmtList);
-			Assert::IsTrue(PKB().getUsesStmtByVar("y") == stmtList);
-			Assert::IsTrue(PKB().getUsesStmtByVar("x") == stmtList);
-			Assert::IsTrue(PKB().getUsesStmtByVar("x") == stmtList);
+			//Test stmt #1 x=1
+			unordered_set<string> varList = { "x" };
+			Assert::IsTrue(PKB().getModifiesVarByStmt(1) == varList);
+			//Test stmt #2 y=x
+			varList = { "y" };
+			Assert::IsTrue(PKB().getModifiesVarByStmt(2) == varList);
+			//Test stmt #4 z=0 and #5 z=1
+			varList = { "z" };
+			Assert::IsTrue(PKB().getModifiesVarByStmt(4) == varList);
+			Assert::IsTrue(PKB().getModifiesVarByStmt(5) == varList);
+		}
+		TEST_METHOD(GetModifiesStmtByVar)
+		{
+			unordered_set<int> stmtList = {1,8};
+			unordered_set<int>  res;
+			res = PKB().getModifiesStmtByVar("x"); 
+			Assert::IsTrue(res == stmtList);
+			
+			unordered_set<int> stmtList2 = { 2 };
+			res = PKB().getModifiesStmtByVar("y");
+			Assert::IsTrue(  res == stmtList2);
+
+			stmtList = { 4, 5 };
+			res  = PKB().getModifiesStmtByVar("z");
+			
+			Assert::IsTrue(res == stmtList);	
 		}
 		
-		TEST_METHOD(getVarModifiedByAssignStmt)
-		{
-
-			Assert::IsTrue(PKB().getVarModifiedByAssignStmt(1) == "x");
-			Assert::IsTrue(PKB().getVarModifiedByAssignStmt(3) == "y");
-			Assert::IsTrue(PKB().getVarModifiedByAssignStmt(6) == "z");
-		}
 		TEST_METHOD(getAssignStmtByVar)
 		{
-			unordered_set<int> resX = { 1,8 };
-			unordered_set<int> resY = { 1,3 };
-			unordered_set<int> resZ = { 6,7 };
+			unordered_set<int> resX = { 1 };
+			unordered_set<int> resY = { 2 };
+			unordered_set<int> resZ = { 4,5 };
 
 			Assert::IsTrue(PKB().getAssignStmtByVar("x") == resX);
 			Assert::IsTrue(PKB().getAssignStmtByVar("y") == resY);
 			Assert::IsTrue(PKB().getAssignStmtByVar("z") == resZ);
 		}
-		TEST_METHOD(getAllStmtByType)
+
+		TEST_METHOD(getVarModifiedByAssignStmt)
 		{
-			unordered_set<int> stmtNoList = { 13,14,15 };
-			Assert::IsTrue(PKB().getAllStmtByType("assign") == stmtNoList);
-			stmtNoList = { 1,6,9 };
-			Assert::IsTrue(PKB().getAllStmtByType("while") == stmtNoList);
-			stmtNoList = { 1,9,10 };
-			Assert::IsTrue(PKB().getAllStmtByType("if") == stmtNoList);
-			stmtNoList = { 3 };
-			Assert::IsTrue(PKB().getAllStmtByType("print") == stmtNoList);
-			stmtNoList = { 4 };
-			Assert::IsTrue(PKB().getAllStmtByType("read") == stmtNoList);
-			stmtNoList = { 7,10,11,12 };
-			Assert::IsTrue(PKB().getAllStmtByType("call") == stmtNoList);
-		
+			//Test stmt #1 x=1
+			string var = "x" ;
+			Assert::IsTrue(PKB().getVarModifiedByAssignStmt(1) == var);
+			//Test stmt #2 y=x
+			var = "y"; 
+			Assert::IsTrue(PKB().getVarModifiedByAssignStmt(2) == var);
+			//Test stmt #4 z=0 and #5 z=1
+			var = "z";
+			Assert::IsTrue(PKB().getVarModifiedByAssignStmt(4) == var);
+			Assert::IsTrue(PKB().getVarModifiedByAssignStmt(5) == var);
+			
+			
 		};
 
+		TEST_METHOD(getAllStmtByType)
+		{
+			unordered_set<int> stmtNoList = { 1,2,4,5 };
+			Assert::IsTrue(PKB().getAllStmtByType("assign") == stmtNoList);
+			stmtNoList = { 6 };
+			Assert::IsTrue(PKB().getAllStmtByType("while") == stmtNoList);
+			stmtNoList = { 3 };
+			Assert::IsTrue(PKB().getAllStmtByType("if") == stmtNoList);
+			stmtNoList = { 8 };
+			Assert::IsTrue(PKB().getAllStmtByType("print") == stmtNoList);
+			stmtNoList = { 7 };
+			Assert::IsTrue(PKB().getAllStmtByType("read") == stmtNoList);
+
+		};
+		
+		TEST_METHOD(isConstUsedInAssign){
+			Assert::IsTrue(PKB().isConstUsedInAssign(1, "1"));
+			Assert::IsTrue(PKB().isConstUsedInAssign(4, "0"));
+			Assert::IsTrue(PKB().isConstUsedInAssign(5, "1"));
+			
+		};
+
+		TEST_METHOD(isVarUsedInAssign){
+			Assert::IsTrue(PKB().isVarUsedInAssign(2, "x"));
+		};
+
+
+		
+
+		
 		TEST_METHOD(GetChildren)
 		{
 			//Actual PKB Data
@@ -160,6 +207,7 @@ namespace UnitTesting
 			unordered_set<int> stmtNoList = { 2 };
 			Assert::IsTrue(PKB().getFollowStarStmtList(1) == stmtNoList);
 		}
+		
 		
 	};
 };

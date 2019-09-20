@@ -42,7 +42,7 @@ namespace IntegrationTesting
             pkb.setStmt(1, Assign);
             pkb.setAssignStmt(1, "x");
             pkb.setVar("x");
-            pkb.setConstant("1");
+            pkb.setConstant("1", 1);
             pkb.setModifiesVarByStmt(1, "x");
 
             pkb.setStmt(2, Assign);
@@ -65,7 +65,7 @@ namespace IntegrationTesting
             pkb.setStmt(4, Assign);
             pkb.setAssignStmt(4, "z");
             pkb.setVar("z");
-            pkb.setConstant("0");
+            pkb.setConstant("0", 4);
             pkb.setModifiesVarByStmt(4, "z");
             pkb.insertParentRelation(3, 4);
             pkb.insertParentStarRelation(3, 4);

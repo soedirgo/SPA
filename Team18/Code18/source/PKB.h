@@ -18,6 +18,7 @@ typedef std::unordered_set<int> STMT_LIST;
 typedef std::unordered_set<std::string> VAR_LIST;
 typedef std::unordered_set<std::string> CONST_LIST;
 
+
 class PKB {
 
 public:
@@ -27,7 +28,7 @@ public:
 	//Higher order wrapper functions
 	/////////////////////////////////
 
-
+	
 	//Follow Functions
 	static bool insertFollowRelation(STMT_NO followedBy, STMT_NO follow);
 	static bool insertFollowStarRelation(STMT_NO followedBy, STMT_NO follow);
@@ -38,6 +39,7 @@ public:
 	static STMT_NO getFollowStmt(STMT_NO followedBy);
 	
 	//Parent Functions
+
 	static bool insertParentRelation(STMT_NO parent, STMT_NO child);
 	static bool insertParentStarRelation(STMT_NO parent, STMT_NO child);
 	static bool isParentRelationship(STMT_NO parent, STMT_NO child);
@@ -48,17 +50,21 @@ public:
 
 	static bool insertModifiesRelation(STMT_NO stmtNo, std::string varName);
 	static bool insertUsesRelation(STMT_NO stmtNo, std::string varName);
-	static bool insertAssignRelation(STMT_NO stmtNo, std::string varName);
+	static bool insertAssignRelation(STMT_NO stmtNo, std::string varModified, VAR_LIST varUsed, CONST_LIST constUsed);
 	static STMT_LIST getAllStmtByType(std::string stmtType);
+	static bool isConstUsedInAssign(STMT_NO stmtNo, std::string c);
+	static bool isVarUsedInAssign(STMT_NO stmtNo, std::string c);
 
 	// add a variable to varTable
 	static bool setVar(std::string varName);
 	static VAR_LIST getAllVar();
 	static bool isVarExist(std::string varName);
 	// add a constant to constantTable
-	static bool setConstant(std::string constantName);
+	static bool setConstant(std::string constantName, int stmtNo );
 	static CONST_LIST getAllConstant();
+
 	static bool isConstantExist(std::string constantName);
+	static STMT_LIST getStmtByConst(std::string constantName);
 	// add a stmt to stmtTable
 	static bool setStmt(STMT_NO stmtNo, stmtType type);
 	static STMT_LIST getAllStmt();
@@ -124,7 +130,7 @@ public:
 
 private:
 	static std::unordered_set<std::string> varTable;
-	static std::unordered_set<std::string> constantTable;
+	static std::unordered_map<std::string, std::unordered_set<int>>constantTable;
 	static std::unordered_map<int, stmtType> stmtTable;
 
 	static std::unordered_map<std::string, std::unordered_set<int>> stmtModifiesByVarTable;
@@ -141,9 +147,4 @@ private:
 	static std::unordered_map<std::string, std::unordered_set<int>> readTable;
 	static std::unordered_set<std::string> procedureTable;
 	static std::unordered_map<std::string, std::unordered_set<int>> callTable;
-
-	/*
-	static unordered_set<int> callTable; //Not for iteration 1 
-	*/
-	
 };
