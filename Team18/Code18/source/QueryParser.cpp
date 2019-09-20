@@ -14,6 +14,7 @@ using namespace std;
 string whitespace = " \n\t";
 unordered_set<string> validTypes = { "stmt", "variable", "assign", "constant", "read", "while", "if",
 "print", "procedure" };
+int maxInt = numeric_limits<int>::max();
 
 list<string> QueryParser::parse(string query) {
 
@@ -60,15 +61,10 @@ list<string> QueryParser::parse(string query) {
 	//Finds the first occurance of such that and pattern in the string
 	int suchThatIndex = select.find("such that ");
 	int patternIndex = select.find("pattern ");
-	int currentIndex;
+	
 
-	if (suchThatIndex < patternIndex) {
-		currentIndex = suchThatIndex;
-	}
-
-	else {
-		currentIndex = patternIndex;
-	}
+	vector<int> indexes = { suchThatIndex, patternIndex};
+	int currentIndex = getMinimumIndex(indexes);
 
 	//Only have select variables
 	if (currentIndex == -1) {
@@ -77,7 +73,8 @@ list<string> QueryParser::parse(string query) {
 
 	//Split the word select out and remove it away from the select string
 	else {
-		selectVars = splitSelect(select.substr(0, currentIndex));
+		string str = select.substr(0, currentIndex);
+		selectVars = splitSelect(str);
 		select = select.substr(currentIndex);
 	}
 
@@ -85,13 +82,9 @@ list<string> QueryParser::parse(string query) {
 	while (select.length() > 0 && currentIndex != -1) {
 		suchThatIndex = select.substr(1).find(" such that");
 		patternIndex = select.substr(1).find(" pattern ");
-		if (suchThatIndex < patternIndex) {
-			currentIndex = suchThatIndex;
-		}
+		indexes = { suchThatIndex, patternIndex,};
+		currentIndex = getMinimumIndex(indexes) + 1;
 
-		else {
-			currentIndex = patternIndex;
-		}
 		if (currentIndex == 0) {
 			currentIndex = select.length();
 		}
@@ -101,15 +94,15 @@ list<string> QueryParser::parse(string query) {
 		}
 
 		string currentClause = select.substr(0, suchThatIndex);
-		if (currentClause.find("such that ")) {
+		if (currentClause.find("such that ") != -1) {
 			suchThatClauses.push_back(currentClause);
 		}
 
-		else if (currentClause.find("pattern ")) {
+		else if (currentClause.find("pattern ") != -1) {
 			patternClauses.push_back(currentClause);
 		}
 		
-		select = select.substr(suchThatIndex);
+		select = select.substr(currentIndex);
 	}
 
 	suchThat = splitSuchThat(suchThatClauses);
@@ -297,4 +290,21 @@ string QueryParser::removeSpaces(string s, string whitespace) {
 	s.erase(0, s.find_first_not_of(whitespace));
 	s.erase(s.find_last_not_of(whitespace) + 1);
 	return s;
+}
+
+int QueryParser::getMinimumIndex(vector<int> indexes) {
+
+	int minIndex = maxInt;
+	for (int i = 0; i < indexes.size(); i++) {
+		if (indexes[i] != -1 && indexes[i] < minIndex) {
+			minIndex = indexes[i];
+		}
+	}
+
+	if (minIndex == maxInt) {
+		return -1;
+	}
+	else {
+		return minIndex;
+	}
 }
