@@ -39,7 +39,7 @@ namespace UnitTesting
             pkb.setStmt(1, Assign);
             pkb.setAssignStmt(1, "x");
             pkb.setVar("x");
-            pkb.setConstant("1");
+            pkb.setConstant("1", 1);
             pkb.setModifiesVarByStmt(1, "x");
 
             pkb.setStmt(2, Assign);
@@ -57,7 +57,7 @@ namespace UnitTesting
             pkb.setStmt(4, Assign);
             pkb.setAssignStmt(4, "z");
             pkb.setVar("z");
-            pkb.setConstant("0");
+            pkb.setConstant("0", 4);
             pkb.setModifiesVarByStmt(4, "z");
 
             pkb.setStmt(5, Assign);

@@ -30,22 +30,24 @@ namespace UnitTesting
 			pkb.setVar("y");
 			pkb.setVar("z");
 
+			/*
 			pkb.setConstant("1");
 			pkb.setConstant("1");
 			pkb.setConstant("1");
-
+			*/
 			pkb.insertModifiesRelation(1, "x");
 			pkb.insertModifiesRelation(1, "y");
 			pkb.insertUsesRelation(1, "x");
 			pkb.insertUsesRelation(1, "y");
 
+			/*
 			pkb.insertAssignRelation(1, "x");
 			pkb.insertAssignRelation(1, "y");
 			pkb.insertAssignRelation(3, "y");
 			pkb.insertAssignRelation(6, "z");
 			pkb.insertAssignRelation(7, "z");
 			pkb.insertAssignRelation(8, "x");
-
+			*/
 			pkb.insertParentRelation(1, 2);
 			pkb.insertParentRelation(1, 3);
 			pkb.insertParentStarRelation(1, 3);

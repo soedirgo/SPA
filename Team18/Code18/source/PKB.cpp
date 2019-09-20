@@ -9,7 +9,7 @@
 using namespace std;
 
 unordered_set<string> PKB::varTable;
-unordered_set<string> PKB::constantTable;
+unordered_map<string, unordered_set<int>> PKB::constantTable;
 unordered_map<int, stmtType> PKB::stmtTable;
 unordered_map<string, unordered_set<int>> PKB::stmtModifiesByVarTable;
 unordered_map<string, unordered_set<int>> PKB::stmtUsesByVarTable;
@@ -121,43 +121,44 @@ bool PKB::insertUsesRelation(STMT_NO stmtNo, string varName) {
 
 };
 
-bool PKB::insertAssignRelation(STMT_NO stmtNo, string varName) {
+
+bool PKB::insertAssignRelation(int stmtNo, string varModified, unordered_set<string> varUsed, unordered_set<string> constUsed) {
 	try {
-		return setAssignStmt(stmtNo, varName) && setAssignStmtByVar(stmtNo, varName);
+		setAssignStmt(stmtNo, varModified);
+		setAssignStmtByVar(stmtNo, varModified);
+		for (string var : varUsed) {
+			setUsesStmtByVar(stmtNo, var);
+		}
+		for (string c : constUsed) {
+			setConstant( c, stmtNo);
+		}
+		return true; 
 	}
 	catch (errc) {
 		return false;
 	}
 };
 
-STMT_LIST PKB::getAllStmtByType(string type) {
-	//stmtType typeEnum; 
-	
-	if (type.compare("read") == 0 ) {
-		//typeEnum = Read;
+unordered_set<int> PKB::getAllStmtByType(string type) {
+	if (type.compare("read") == 0 ) {	
+
 		return getAllReadStmt(); 
 	}
-	else if (type.compare("print") == 0) {
-		//typeEnum = Print;
+	else if (type.compare("print") == 0) {		
 		return getAllPrintStmt();
 	}
 	else if ( (type.compare("assign")) == 0) {
-		//typeEnum = Assign;
 		return getAllAssignStmt();
 	}
-	else if (type.compare("while") == 0 ) {
-		//typeEnum = While;
+	else if (type.compare("while") == 0 ) {	
 		return getAllWhileStmt();
 	}
-	else if (type.compare("if") == 0) {
-		//typeEnum = If;
+	else if (type.compare("if") == 0) {	
 		return getAllIfStmt();
 	}
 	else if (type.compare("call") == 0) {
-		//typeEnum = Call;
 		return getAllCallStmt();
 	}
-
 }
 
 
@@ -183,18 +184,36 @@ bool PKB::isVarExist(string varName) {
 // constantTable APIs
 ////////////////////////////////////
 
-bool PKB::setConstant(string constantName) {
-	constantTable.emplace(constantName);
-	return true;
+bool PKB::setConstant(string constantName, int stmtNo) {
+	
+	try {
+		unordered_set<int> stmtList = getStmtByConst(constantName);
+		stmtList.emplace(stmtNo);
+		constantTable[constantName] = stmtList;
+		return true;
+	}
+	catch (errc) {
+		return false;
+	}
 }
 
-CONST_LIST PKB::getAllConstant() {
-	return constantTable;
+unordered_set<int> PKB::getStmtByConst(string constantName) {
+	return constantTable[constantName];
+}
+
+
+unordered_set<string> PKB::getAllConstant() {
+	unordered_set<string> stmtNoList;
+	for (auto keyValue : constantTable) {
+		stmtNoList.emplace(keyValue.first);
+	}
+	return stmtNoList;
 }
 
 bool PKB::isConstantExist(string constantName) {
 	//return true if element is found
-	return (constantTable.find(constantName) != constantTable.end());
+	unordered_set<string> constantList = getAllConstant();
+	return (constantList.find(constantName) != constantList.end());
 }
 
 ////////////////////////////////////
@@ -586,32 +605,6 @@ bool PKB::setCallStmt(STMT_NO stmtNo, string varName) {
 		return false;
 	}
 };
-
-////////////////////////////////////
-// Higher Level APIs that use one or more tables
-////////////////////////////////////
-
-/* 
-//Archived as of 2019-09-11 
-//Gets list of assignment statements that modifies a variable through an assignment statment
-//Modifies(a,v) holds if variable v appears on the left side of A 
-unordered_set<int> PKB::getStmtsThatModVarByAssign(string varName) {
-	unordered_set<int> varList = getModifiesStmtByVar(varName);  //{3,5,7,etc}
-	unordered_set<int> results;
-	for (auto stmtNo : varList) {
-		stmtType type = stmtTable[stmtNo];
-		stmtType assignment = Assign;
-		if (type == assignment) { //
-			results.insert(stmtNo );
-		}
-	}
-	for (auto stmNo : results) {
-		printf("%d", stmNo);
-	}
-	
-	return results;
-}
-*/
 
 	
 	
