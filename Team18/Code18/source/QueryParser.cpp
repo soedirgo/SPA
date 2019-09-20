@@ -180,7 +180,7 @@ unordered_map<string, string> QueryParser::splitVariablesInDeclerations(vector<s
 
 //Split by whitespace
 string QueryParser::splitSelect(string statements) {
-	string s;
+	string str;
 	int firstSpace = statements.find_first_of(whitespace);
 	string variableName;
 
@@ -188,13 +188,9 @@ string QueryParser::splitSelect(string statements) {
 		variableName = removeSpaces(statements.substr(firstSpace), whitespace);
 	}
 
-	if (variableName.find("<") != -1 && variableName.find(">") != -1) {
-		variableName = variableName.substr(1, variableName.length() - 2);
-	}
+	str = variableName;
 
-	s = variableName;
-
-	return s;
+	return str;
 }
 
 
