@@ -11,7 +11,7 @@ using namespace std;
 #include "Query.h"
 #include "QueryParser.h"
 
-string whitespace = " \n\t";
+string whitespace = " ";
 unordered_set<string> validTypes = { "stmt", "variable", "assign", "constant", "read", "while", "if",
 "print", "procedure" };
 int maxInt = numeric_limits<int>::max();
