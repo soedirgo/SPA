@@ -18,6 +18,7 @@ typedef std::unordered_set<int> STMT_LIST;
 typedef std::unordered_set<std::string> VAR_LIST;
 typedef std::unordered_set<std::string> CONST_LIST;
 
+
 class PKB {
 
 public:
@@ -51,7 +52,8 @@ public:
 	static bool insertUsesRelation(STMT_NO stmtNo, std::string varName);
 	static bool insertAssignRelation(STMT_NO stmtNo, std::string varModified, VAR_LIST varUsed, CONST_LIST constUsed);
 	static STMT_LIST getAllStmtByType(std::string stmtType);
-
+	static bool isConstUsedInAssign(STMT_NO stmtNo, std::string c);
+	static bool isVarUsedInAssign(STMT_NO stmtNo, std::string c);
 
 	// add a variable to varTable
 	static bool setVar(std::string varName);

@@ -115,6 +115,25 @@ STMT_NO PKB::getParentStmt(STMT_NO child) {
 	return PKBParent::getParentStmt(child);
 }
 
+bool PKB::isConstUsedInAssign(STMT_NO assignStmtNo, string c) {
+	STMT_LIST stmtList = getStmtByConst(c); 
+	for (auto stmt : stmtList) {
+		if (stmt == assignStmtNo) {
+			return true;
+		}
+	}
+	return false; 
+}
+
+bool PKB::isVarUsedInAssign(STMT_NO assignStmtNo, string varName) {
+	STMT_LIST stmtList = getUsesStmtByVar(varName);
+	for (auto stmt : stmtList) {
+		if (stmt == assignStmtNo) {
+			return true;
+		}
+	}
+	return false;
+}
 
 
 bool PKB::insertModifiesRelation(STMT_NO stmtNo, string varName) {
@@ -150,7 +169,7 @@ bool PKB::insertAssignRelation(int stmtNo, string varModified, unordered_set<str
 				setUsesVarByStmt(stmtNo, var);
 			}
 		}
-		if (!varUsed.empty()) {
+		if (!constUsed.empty()) {
 			for (string c : constUsed) {
 				setConstant(c, stmtNo);
 			}

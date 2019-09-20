@@ -136,6 +136,17 @@ namespace UnitTesting
 
 		};
 		
+		TEST_METHOD(isConstUsedInAssign){
+			Assert::IsTrue(PKB().isConstUsedInAssign(1, "1"));
+			Assert::IsTrue(PKB().isConstUsedInAssign(4, "0"));
+			Assert::IsTrue(PKB().isConstUsedInAssign(5, "1"));
+			
+		};
+
+		TEST_METHOD(isVarUsedInAssign){
+			Assert::IsTrue(PKB().isVarUsedInAssign(2, "x"));
+		};
+
 
 		
 
