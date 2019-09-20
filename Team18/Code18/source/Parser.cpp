@@ -55,7 +55,7 @@ int Parser::Parse (string filename) {
 				pkb.insertFollowRelation(prevStmtNo, stmtNo);
 			}
 			prevStmtNo = stmtNo;
-			stmtNo = results.lastStmtNo + 1;
+			stmtNo = results.lastStmtNo;
 		}
 		else if (line.find("if") != string::npos) {
 			pkb.setStmt(stmtNo, If);
@@ -80,7 +80,7 @@ int Parser::Parse (string filename) {
 				pkb.insertFollowRelation(prevStmtNo, stmtNo);
 			}
 			prevStmtNo = stmtNo;
-			stmtNo = results.lastStmtNo + 1;
+			stmtNo = results.lastStmtNo;
 		}
 		else if (line.find("=") != string::npos) {
 			//Initial processing of stmt
@@ -306,7 +306,7 @@ NestedResult Parser::parseIf(string ifLine) {
 				}
 			}
 			prevStmtNo = currStmtNo;
-			currStmtNo = results.lastStmtNo + 1;
+			currStmtNo = results.lastStmtNo;
 		}
 		else if (line.find("if") != string::npos) {
 			pkb.setStmt(currStmtNo, If);
@@ -342,7 +342,7 @@ NestedResult Parser::parseIf(string ifLine) {
 				}
 			}
 			prevStmtNo = currStmtNo;
-			currStmtNo = results.lastStmtNo + 1;
+			currStmtNo = results.lastStmtNo;
 		}
 		else if (line.find("=") != string::npos) {
 			//Initial processing of stmt
@@ -495,7 +495,7 @@ NestedResult Parser::parseWhile(string whileLine) {
 				pkb.insertFollowRelation(prevStmtNo, currStmtNo);
 			}
 			prevStmtNo = currStmtNo;
-			currStmtNo = results.lastStmtNo + 1;
+			currStmtNo = results.lastStmtNo;
 		}
 		else if (line.find("if") != string::npos) {
 			pkb.setStmt(currStmtNo, If);
@@ -524,7 +524,7 @@ NestedResult Parser::parseWhile(string whileLine) {
 				pkb.insertFollowRelation(prevStmtNo, currStmtNo);
 			}
 			prevStmtNo = currStmtNo;
-			currStmtNo = results.lastStmtNo + 1;
+			currStmtNo = results.lastStmtNo;
 		}
 		else if (line.find("=") != string::npos) {
 			//Initial processing of stmt
