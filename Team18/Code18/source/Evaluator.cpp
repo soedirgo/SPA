@@ -11,60 +11,127 @@
 using namespace std;
 
 namespace Evaluator {
-	namespace {
+  	namespace {
 		unordered_map<string, string> declarations;
 		vector<pair<string, pair<string, string>>> clauses;
+        vector<pair<string, pair<string, string>>> patterns;
 		string selectSyn;
+        // Forward declare
 		bool evalClauses(vector<pair<string, pair<string, string>>> cls,
                          unordered_map<string, string> fil);
 
-		vector<string> expandStmt(string stmtRef,
-                                  unordered_map<string, string> fil) {
-			vector<string> statements;
+        // Returns a vector of strings corresponding to possible
+        // values taken by stmtRef.
+        // 
+        // Example:
+        // 
+        // 1 -> { "1" }
+        //
+        // s -> { "1", "2", "3" } assuming there are 3 stmts 1, 2, and
+        // 3 in the PKB
+        //
+        // s -> { "2" } assuming s has taken a value by earlier clauses (say,
+        // by the Select clause
+		unordered_set<string> enumerateStmt(string stmtRef,
+                                            unordered_map<string, string> fil) {
+			unordered_set<string> statements;
 			if (fil.count(stmtRef)) { // stmtRef has been filtered before
-				statements.push_back(fil[stmtRef]);
+				statements.insert(fil[stmtRef]);
 			} else if (declarations.count(stmtRef)) { // stmtRef is a synonym
-				for (int stmtNum : PKB::getAllStmt()) {
-					statements.push_back(to_string(stmtNum));
-				}
-			} else if (PKB::getAllStmt().count(stoi(stmtRef))) { // stmtRef is a stmtNo
-				statements.push_back(stmtRef);
+                string type = declarations[stmtRef];
+                if (type == "stmt") {
+                    for (const auto& stmt : PKB::getAllStmt()) {
+                        statements.insert(to_string(stmt));
+                    }
+                } else if (type == "read") {
+                    for (const auto& stmt : PKB::getAllReadStmt()) {
+                        statements.insert(to_string(stmt));
+                    }
+                } else if (type == "print") {
+                    for (const auto& stmt : PKB::getAllPrintStmt()) {
+                        statements.insert(to_string(stmt));
+                    }
+                } else if (type == "while") {
+                    for (const auto& stmt : PKB::getAllWhileStmt()) {
+                        statements.insert(to_string(stmt));
+                    }
+                } else if (type == "if") {
+                    for (const auto& stmt : PKB::getAllIfStmt()) {
+                        statements.insert(to_string(stmt));
+                    }
+                } else if (type == "assign") {
+                    for (const auto& stmt : PKB::getAllAssignStmt()) {
+                        statements.insert(to_string(stmt));
+                    }
+                }
+			} else if (PKB::getAllStmt().count(stoi(stmtRef))) { // stmtRef is a stmtNum
+				statements.insert(stmtRef);
 			} else { // stmtRef is a ``_''
-				for (int stmtNum : PKB::getAllStmt()) {
-					statements.push_back(to_string(stmtNum));
+				for (const auto& stmt : PKB::getAllStmt()) {
+					statements.insert(to_string(stmt));
 				}
 			}
 			return statements;
 		}
 
-		vector<string> expandVar(string varRef,
-                                 unordered_map<string, string> fil) {
-			vector<string> variables;
+		unordered_set<string> enumerateVar(string varRef,
+                                           unordered_map<string, string> fil) {
+			unordered_set<string> variables;
 			if (fil.count(varRef)) { // varRef has been filtered before
-				variables.push_back(fil[varRef]);
+				variables.insert(fil[varRef]);
 			} else if (declarations.count(varRef)) { // varRef is a synonym
-				for (string var : PKB::getAllVar()) {
-					variables.push_back(var);
+				for (const auto& var : PKB::getAllVar()) {
+					variables.insert(var);
 				}
 			} else if (PKB::getAllVar().count(varRef)) { // varRef is an explicit name
-				variables.push_back(varRef);
+				variables.insert(varRef);
 			} else { // varRef is a ``_''
-				for (string var : PKB::getAllVar()) {
-					variables.push_back(var);
+				for (const auto& var : PKB::getAllVar()) {
+					variables.insert(var);
 				}
 			}
 			return variables;
 		}
 
-		bool evalUses(pair<string, pair<string, string>> clause,
+		unordered_set<string> enumerateFactor(string factorRef,
+                                              unordered_map<string, string> fil) {
+			unordered_set<string> factors;
+			if (fil.count(factorRef)) { // factorRef has been filtered before
+				factors.insert(fil[factorRef]);
+			} else if (declarations.count(factorRef)) { // factorRef is a synonym
+                if (declarations[factorRef] == "variable") {
+                    for (const auto& var : PKB::getAllVar()) {
+                        factors.insert(var);
+                    }
+                } else if (declarations[factorRef] == "constant") {
+                    for (const auto& cons : PKB::getAllConstant()) {
+                        factors.insert(cons);
+                    }
+                }
+			} else if (PKB::getAllVar().count(factorRef)
+                       || PKB::getAllConstant().count(factorRef)) {
+                // factorRef is an explicit name
+				factors.insert(factorRef);
+			} else { // factorRef is a ``_''
+				for (const auto& var : PKB::getAllVar()) {
+					factors.insert(var);
+				}
+                for (const auto& cons : PKB::getAllConstant()) {
+					factors.insert(cons);
+                }
+			}
+			return factors;
+		}
+
+		bool evalUses(pair<string, pair<string, string>>& clause,
                       vector<pair<string, pair<string, string>>> cls,
                       unordered_map<string, string> fil) {
-			vector<string> expandedStmt = expandStmt(clause.second.first, fil);
-			vector<string> expandedVar = expandVar(clause.second.second, fil);
-			for (auto s : expandedStmt) {
+			unordered_set<string> enumeratedStmt = enumerateStmt(clause.second.first, fil);
+			unordered_set<string> enumeratedVar = enumerateVar(clause.second.second, fil);
+			for (const auto& s : enumeratedStmt) {
 				if (declarations.count(clause.second.first))
 					fil[clause.second.first] = s;
-				for (auto v : expandedVar) {
+				for (const auto& v : enumeratedVar) {
 					if (declarations.count(clause.second.second))
 						fil[clause.second.second] = v;
 					if (PKB::isUsesStmtVar(stoi(s), v))
@@ -74,20 +141,133 @@ namespace Evaluator {
 			return false;
 		}
 
-		bool evalModifies(pair<string, pair<string, string>> clause,
+		bool evalModifies(pair<string, pair<string, string>>& clause,
                           vector<pair<string, pair<string, string>>> cls,
                           unordered_map<string, string> fil) {
-			vector<string> expandedStmt = expandStmt(clause.second.first, fil);
-			vector<string> expandedVar = expandVar(clause.second.second, fil);
-			for (auto s : expandedStmt) {
-				for (auto v : expandedVar) {
-					if (PKB::isModifiesStmtVar(stoi(s), v)) return evalClauses(cls, fil);
+			unordered_set<string> enumeratedStmt = enumerateStmt(clause.second.first, fil);
+			unordered_set<string> enumeratedVar = enumerateVar(clause.second.second, fil);
+			for (const auto& s : enumeratedStmt) {
+				if (declarations.count(clause.second.first))
+					fil[clause.second.first] = s;
+				for (const auto& v : enumeratedVar) {
+					if (declarations.count(clause.second.second))
+						fil[clause.second.second] = v;
+					if (PKB::isModifiesStmtVar(stoi(s), v))
+                        return evalClauses(cls, fil);
 				}
 			}
 			return false;
 		}
 
-		bool evalClauses(vector<pair<string, pair<string, string>>> cls,
+        bool evalFollows(pair<string, pair<string, string>>& clause,
+                         vector<pair<string, pair<string, string>>> cls,
+                         unordered_map<string, string> fil) {
+            unordered_set<string> enumeratedLhs = enumerateStmt(clause.second.first, fil);
+            unordered_set<string> enumeratedRhs = enumerateStmt(clause.second.second, fil);
+            for (const auto& lhs : enumeratedLhs) {
+				if (declarations.count(clause.second.first))
+					fil[clause.second.first] = lhs;
+                for (const auto& rhs : enumeratedRhs) {
+                    if (declarations.count(clause.second.first))
+                        fil[clause.second.first] = rhs;
+                    if (PKB::isFollowRelationship(stoi(lhs), stoi(rhs)))
+                        return evalClauses(cls, fil);
+                }
+            }
+            return false;
+        }
+
+        bool evalFollowsT(pair<string, pair<string, string>>& clause,
+                          vector<pair<string, pair<string, string>>> cls,
+                          unordered_map<string, string> fil) {
+            unordered_set<string> enumeratedLhs = enumerateStmt(clause.second.first, fil);
+            unordered_set<string> enumeratedRhs = enumerateStmt(clause.second.second, fil);
+            for (const auto& lhs : enumeratedLhs) {
+				if (declarations.count(clause.second.first))
+					fil[clause.second.first] = lhs;
+                for (const auto& rhs : enumeratedRhs) {
+                    if (declarations.count(clause.second.first))
+                        fil[clause.second.first] = rhs;
+                    if (PKB::isFollowStarRelationship(stoi(lhs), stoi(rhs)))
+                        return evalClauses(cls, fil);
+                }
+            }
+            return false;
+        }
+
+        bool evalParent(pair<string, pair<string, string>>& clause,
+                        vector<pair<string, pair<string, string>>> cls,
+                        unordered_map<string, string> fil) {
+            unordered_set<string> enumeratedLhs = enumerateStmt(clause.second.first, fil);
+            unordered_set<string> enumeratedRhs = enumerateStmt(clause.second.second, fil);
+            for (const auto& lhs : enumeratedLhs) {
+				if (declarations.count(clause.second.first))
+					fil[clause.second.first] = lhs;
+                for (const auto& rhs : enumeratedRhs) {
+                    if (declarations.count(clause.second.first))
+                        fil[clause.second.first] = rhs;
+                    if (PKB::isParentRelationship(stoi(lhs), stoi(rhs)))
+                        return evalClauses(cls, fil);
+                }
+            }
+            return false;
+        }
+
+        bool evalParentT(pair<string, pair<string, string>>& clause,
+                         vector<pair<string, pair<string, string>>> cls,
+                         unordered_map<string, string> fil) {
+            unordered_set<string> enumeratedLhs = enumerateStmt(clause.second.first, fil);
+            unordered_set<string> enumeratedRhs = enumerateStmt(clause.second.second, fil);
+            for (const auto& lhs : enumeratedLhs) {
+				if (declarations.count(clause.second.first))
+					fil[clause.second.first] = lhs;
+                for (const auto& rhs : enumeratedRhs) {
+                    if (declarations.count(clause.second.first))
+                        fil[clause.second.first] = rhs;
+                    if (PKB::isParentStarRelationship(stoi(lhs), stoi(rhs)))
+                        return evalClauses(cls, fil);
+                }
+            }
+            return false;
+        }
+
+        bool evalPattern(pair<string, pair<string, string>>& clause,
+                         vector<pair<string, pair<string, string>>> cls,
+                         unordered_map<string, string> fil) {
+            // possible explicit ``a''s in pattern a(v, _)
+            unordered_set<string> enumeratedStmt = enumerateStmt(clause.first, fil);
+            // possible explicit ``v''s in pattern a(v, _)
+            unordered_set<string> enumeratedLhs = enumerateVar(clause.second.first, fil);
+            // possible explicit ``_''s in pattern a(v, _)
+            unordered_set<string> enumeratedRhs = enumerateFactor(clause.second.second, fil);
+            // for each a
+            for (const auto& assign : enumeratedStmt) {
+				if (declarations.count(clause.first))
+					fil[clause.first] = assign;
+                // get the variables modified by a (only 1 since it is an assignment)
+                unordered_set<string> varsModified = PKB::getModifiesVarByStmt(stoi(assign));
+                // for each of those variables
+                for (const auto& lhs : varsModified) {
+                    if (declarations.count(clause.second.first))
+                        fil[clause.second.first] = lhs;
+                    // if it is a possible candidate for ``v'' in pattern a(v, _)
+                    if (count(enumeratedLhs.begin(), enumeratedLhs.end(), lhs)) {
+                        // for each possible explicit ``_'' in pattern a(v, _)
+                        for (const auto& rhs : enumeratedRhs) {
+                            if (declarations.count(clause.second.second))
+                                fil[clause.second.second] = rhs;
+                            // check if it is used in the assignment
+                            // if (PKB::isFactorAssignedInStmt(lhs, rhs))
+                            if (false)
+                                return evalClauses(cls, fil);
+                        }
+                    }
+                }
+            }
+            return false;
+        }
+
+        bool evalClauses(vector<pair<string, pair<string, string>>> cls,
                          unordered_map<string, string> fil) {
 			if (cls.size() == 0) {
 				return true;
@@ -95,58 +275,54 @@ namespace Evaluator {
 			pair<string, pair<string, string>> clause = cls.back();
 			cls.pop_back();
 			string type = clause.first;
-			if (type == "uses") {
+			if (type == "Uses") {
 				return evalUses(clause, cls, fil);
-			} else {
+			} else if (type == "Modifies") {
 				return evalModifies(clause, cls, fil);
-			}
-		}
-
-		string formatResults(vector<string> res) {
-			string result = "";
-			int started = 0;
-			for (string elem : res) {
-				if (!started) {
-					started = 1;
-					result += elem;
-				} else {
-					result += ", ";
-					result += elem;
-				}
-			}
-			return result;
-		}
+            } else if (type == "Follows") {
+                return evalFollows(clause, cls, fil);
+            } else if (type == "Follows*") {
+                return evalFollowsT(clause, cls, fil);
+            } else if (type == "Parent") {
+                return evalParent(clause, cls, fil);
+            } else if (type == "Parent*") {
+                return evalParentT(clause, cls, fil);
+            } else { // expected to be pattern (type == an assign synonym)
+                return evalPattern(clause, cls, fil);
+            }
+        }
 	}
 
-	list<string> evalQuery(Query q) {
+  	list<string> evalQuery(Query q) {
 		declarations = q.getDeclarations();
 		selectSyn = q.getSelectSynonym();
 		clauses = q.getClauses();
+        patterns = q.getPatternClauses();
 
 		string selectSynType = declarations[selectSyn];
 		unordered_set<string> resultCandidates;
 		if (selectSynType == "stmt") {
-			for (auto stmt : PKB::getAllStmt()) {
+			for (const auto& stmt : PKB::getAllStmt()) {
 				resultCandidates.insert(to_string(stmt));
 			}
 		} else if (selectSynType == "read") {
-			for (auto stmt : PKB::getAllReadStmt()) {
+			for (const auto& stmt : PKB::getAllReadStmt()) {
 				resultCandidates.insert(to_string(stmt));
 			}
 		} else if (selectSynType == "print") {
-            for (auto stmt : PKB::getAllPrintStmt()) {
+            for (const auto& stmt : PKB::getAllPrintStmt()) {
 				resultCandidates.insert(to_string(stmt));
 			}
 		} else if (selectSynType == "while") {
-			for (auto stmt : PKB::getAllWhileStmt()) {
+			for (const auto& stmt : PKB::getAllWhileStmt()) {
 				resultCandidates.insert(to_string(stmt));
 			}
 		} else if (selectSynType == "if") {
-			for (auto stmt : PKB::getAllIfStmt()) {
+			for (const auto& stmt : PKB::getAllIfStmt()) {
 				resultCandidates.insert(to_string(stmt));
 			}
 		} else if (selectSynType == "assign") {
-			for (auto stmt : PKB::getAllAssignStmt()) {
+			for (const auto& stmt : PKB::getAllAssignStmt()) {
 				resultCandidates.insert(to_string(stmt));
 			}
 		} else if (selectSynType == "variable") {
@@ -158,13 +334,16 @@ namespace Evaluator {
         }
 
         list<string> results;
-        for (auto result : resultCandidates) {
+        for (const auto& result : resultCandidates) {
             vector<pair<string, pair<string, string>>> cls = clauses;
+            for (const auto& pattern : patterns) {
+                cls.push_back({pattern.first,
+                               {pattern.second.first, pattern.second.second}});
+            }
             unordered_map<string, string> fil;
             fil[selectSyn] = result;
             if (evalClauses(cls, fil)) results.push_back(result);
         }
         return results;
-        //return formatResults(results);
     }
 }
