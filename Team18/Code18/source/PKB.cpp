@@ -266,6 +266,12 @@ bool PKB::isConstantExist(string constantName) {
 bool PKB::setStmt(STMT_NO stmtNo, stmtType type) {
 	try {
 		stmtTable.emplace(stmtNo, type);
+		if (type == While) {
+			setWhileStmt(stmtNo);
+		}
+		else if (type == If) {
+			setIfStmt(stmtNo);
+		}
 		return true;
 	}
 	catch (errc) {
