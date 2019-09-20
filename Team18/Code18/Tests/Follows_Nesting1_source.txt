@@ -1,0 +1,25 @@
+start	procedure followsNest1 {
+1	  x = 1;
+2	  y = 2;
+3	  read z;
+4	  if (z >= x) then {
+5	    z = x; }
+//	  else {
+6	    z = y; }
+7	  print z;
+8	  sum = x + (y + z);
+9	  count = 0;
+10	  while (count <= sum) {
+11	    read inc;
+12	    count = count + inc; }
+13	  print inc;
+14	  i = 7;
+15	  read target;
+16	  if (target == inc) then {
+17	    print target; }
+//	  else {
+18	    target = target + i; }
+19	  while (target > 10) {
+20	    target = target - 4; }
+21	  print target;
+end	}
