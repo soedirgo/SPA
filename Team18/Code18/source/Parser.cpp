@@ -258,6 +258,7 @@ NestedResult Parser::parseIf(string ifLine) {
 	
 	int currStmtNo = stmtNo + 1;
 	int startStmtNo = stmtNo;
+	int elseStmtNo = 0;
 	int prevStmtNo = stmtNo;
 	bool passedElse = false;
 	NestedResult result;
@@ -295,7 +296,14 @@ NestedResult Parser::parseIf(string ifLine) {
 			}
 
 			if (currStmtNo != (startStmtNo + 1)) {
-				pkb.insertFollowRelation(prevStmtNo, currStmtNo);
+				if (passedElse) {
+					if (currStmtNo != elseStmtNo) {
+						pkb.insertFollowRelation(prevStmtNo, currStmtNo);
+					}
+				}
+				else {
+					pkb.insertFollowRelation(prevStmtNo, currStmtNo);
+				}
 			}
 			prevStmtNo = currStmtNo;
 			currStmtNo = results.lastStmtNo + 1;
@@ -324,7 +332,14 @@ NestedResult Parser::parseIf(string ifLine) {
 			}
 
 			if (currStmtNo != (startStmtNo + 1)) {
-				pkb.insertFollowRelation(prevStmtNo, currStmtNo);
+				if (passedElse) {
+					if (currStmtNo != elseStmtNo) {
+						pkb.insertFollowRelation(prevStmtNo, currStmtNo);
+					}
+				}
+				else {
+					pkb.insertFollowRelation(prevStmtNo, currStmtNo);
+				}
 			}
 			prevStmtNo = currStmtNo;
 			currStmtNo = results.lastStmtNo + 1;
@@ -360,7 +375,14 @@ NestedResult Parser::parseIf(string ifLine) {
 			}
 
 			if (currStmtNo != (startStmtNo + 1)) {
-				pkb.insertFollowRelation(prevStmtNo, currStmtNo);
+				if (passedElse) {
+					if (currStmtNo != elseStmtNo) {
+						pkb.insertFollowRelation(prevStmtNo, currStmtNo);
+					}
+				}
+				else {
+					pkb.insertFollowRelation(prevStmtNo, currStmtNo);
+				}
 			}
 			prevStmtNo = currStmtNo;
 			currStmtNo++;
@@ -377,7 +399,14 @@ NestedResult Parser::parseIf(string ifLine) {
 			result.addModifies(readArg);
 
 			if (currStmtNo != (startStmtNo + 1)) {
-				pkb.insertFollowRelation(prevStmtNo, currStmtNo);
+				if (passedElse) {
+					if (currStmtNo != elseStmtNo) {
+						pkb.insertFollowRelation(prevStmtNo, currStmtNo);
+					}
+				}
+				else {
+					pkb.insertFollowRelation(prevStmtNo, currStmtNo);
+				}
 			}
 			prevStmtNo = currStmtNo;
 			currStmtNo++;
@@ -394,13 +423,21 @@ NestedResult Parser::parseIf(string ifLine) {
 			result.addUses(printArg);
 
 			if (currStmtNo != (startStmtNo + 1)) {
-				pkb.insertFollowRelation(prevStmtNo, currStmtNo);
+				if (passedElse) {
+					if (currStmtNo != elseStmtNo) {
+						pkb.insertFollowRelation(prevStmtNo, currStmtNo);
+					}
+				}
+				else {
+					pkb.insertFollowRelation(prevStmtNo, currStmtNo);
+				}
 			}
 			prevStmtNo = currStmtNo;
 			currStmtNo++;
 		}
 		else if (line.find("else") != string::npos) {
 			passedElse = true;
+			elseStmtNo = currStmtNo;
 			continue;
 		}
 		else {
