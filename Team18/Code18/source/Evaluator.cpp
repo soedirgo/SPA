@@ -64,12 +64,12 @@ namespace Evaluator {
                         statements.insert(to_string(stmt));
                     }
                 }
-			} else if (PKB::getAllStmt().count(stoi(stmtRef))) { // stmtRef is a stmtNum
+			} else if (stmtRef == "_") { // stmtRef is a ``_''
+                for (const auto& stmt : PKB::getAllStmt()) {
+                    statements.insert(to_string(stmt));
+                }
+            } else { // stmtRef is a stmtNum
 				statements.insert(stmtRef);
-			} else { // stmtRef is a ``_''
-				for (const auto& stmt : PKB::getAllStmt()) {
-					statements.insert(to_string(stmt));
-				}
 			}
 			return statements;
 		}
