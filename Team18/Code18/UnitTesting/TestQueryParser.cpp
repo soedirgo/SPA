@@ -121,6 +121,10 @@ namespace UnitTesting
             expected = { "1", "6", "7" };
             actual = QueryParser::parse("stmt    s;   Select  s  such that  Modifies(  s, \"x\")");
             Assert::IsTrue(expected == actual);
+
+            expected = { "1", "6", "7" };
+            actual = QueryParser::parse("stmt    s;   Select  s  such that  Modifies(  s, _\"x\"_)");
+            Assert::IsTrue(expected == actual);
         }
         TEST_METHOD(invalidQueries)
         {

@@ -70,6 +70,7 @@ namespace IntegrationTesting
 
             pkb.setStmt(5, Assign);
             pkb.setAssignStmt(5, "z");
+            pkb.setConstant("1", 5);
             pkb.setModifiesVarByStmt(5, "z");
             pkb.insertParentRelation(3, 5);
             pkb.insertParentStarRelation(3, 5);
