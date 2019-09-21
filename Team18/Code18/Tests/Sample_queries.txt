@@ -31,7 +31,7 @@ Select a
 7 - Select all variable
 variable v;
 Select v
-x, y, z, i, m, high, k, low, mid, dec, inc, j, g, h
+x, y, z, i, m, high, k, low, mid, dec, inc, j, g, h, target
 5000
 8 - Select all constant
 constant c;
