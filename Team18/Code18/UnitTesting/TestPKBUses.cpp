@@ -100,7 +100,6 @@ namespace UnitTesting
 		{
 			//Actual PKB Data
 			unordered_set<int> stmtNoList = { 2, 3, 6, 8 };
-			unordered_set<int> stmtNoList2 = PKB().getUsesStmtByVar("x");
 			Assert::IsTrue(PKB().getUsesStmtByVar("x") == stmtNoList);
 		}
 	};

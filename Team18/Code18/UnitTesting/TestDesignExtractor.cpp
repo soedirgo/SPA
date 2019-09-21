@@ -66,6 +66,9 @@ namespace UnitTesting
 			Assert::IsTrue(PKB().isFollowStarRelationship(4, 8));
 			Assert::IsTrue(PKB().isFollowStarRelationship(5, 7));
 
+			Assert::IsTrue(PKB().isFollowStarRelationship(1, 9));
+			Assert::IsTrue(PKB().isFollowStarRelationship(3, 8));
+
 		}
 		TEST_METHOD(ParentStarRelationship)
 		{
