@@ -19,9 +19,14 @@ public:
 	// Boolean Check
 	static bool isFollowRelationship(int followedBy, int follow);
 	static bool isFollowStarRelationship(int followedBy, int follow);
+	static bool isFollowExist(int stmtNo);
+	static bool isFollowedByExist(int stmtNo);
 
 	// Clear
 	bool clear();
+
+	// Internal Use
+	static std::unordered_set<int> getAllFollowedBy();
 
 private:
 	static std::unordered_map<int, int> followTable;
