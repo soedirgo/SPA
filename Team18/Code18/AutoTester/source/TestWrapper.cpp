@@ -3,6 +3,7 @@
 #include "PKB.h"
 #include "Evaluator.h"
 #include "QueryParser.h"
+#include "DesignExtractor.h"
 
 // implementation code of WrapperFactory - do NOT modify the next 5 lines
 AbstractWrapper* WrapperFactory::wrapper = 0;
@@ -20,6 +21,7 @@ TestWrapper::TestWrapper() {
 	
 	
 	PKB pkb;
+	DesignExtractor designExtractor;
 	Parser ps;
 	QueryParser qps;
 	//Evaluator ev;
@@ -36,6 +38,9 @@ void TestWrapper::parse(std::string filename) {
 	// call your parser to do the parsing
 	Parser parser = Parser();
 	parser.Parse(filename);
+
+	DesignExtractor designExtractor = DesignExtractor();
+	designExtractor.extractDesign();
   // ...rest of your code...
 }
 

@@ -26,6 +26,10 @@ public:
 	// Clear
 	bool clear();
 
+	// Internal Use
+	static std::unordered_set<int> getAllChildren();
+	static std::unordered_set<int> getAllParent();
+
 private:
 	static std::unordered_map<int, int> parentTable;
 	static std::unordered_map<int, std::unordered_set<int>> childTable;

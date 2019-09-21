@@ -37,6 +37,22 @@ bool PKBParent::setParentStar(int parent, int child) {
 	}
 }
 
+unordered_set<int> PKBParent::getAllParent() {
+	unordered_set<int> parentList;
+	for (auto keyValue : childTable) {
+		parentList.emplace(keyValue.first);
+	}
+	return parentList;
+}
+
+unordered_set<int> PKBParent::getAllChildren() {
+	unordered_set<int> childrenList;
+	for (auto keyValue : parentTable) {
+		childrenList.emplace(keyValue.first);
+	}
+	return childrenList;
+}
+
 int PKBParent::getParentStmt(int child) {
 	return parentTable[child];
 }
@@ -54,11 +70,8 @@ bool PKBParent::isParentExist(int stmtNo) {
 }
 
 bool PKBParent::isParentRelationship(int parent, int child) {
-	unordered_set<int> stmtList = getChildrenStmtList(parent);
-	for (auto keyValue : stmtList) {
-		if (keyValue==child) {
-			return true;
-		}
+	if (parent == getParentStmt(child)) {
+		return true;
 	}
 	return false;
 }
@@ -80,5 +93,7 @@ bool PKBParent::isChildrenExist(int stmtNo) {
 
 bool PKBParent::clear() {
 	parentTable.clear();
+	childTable.clear();
+	parentStarTable.clear();
 	return true;
 }

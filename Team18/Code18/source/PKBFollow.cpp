@@ -44,6 +44,14 @@ int PKBFollow::getFollowStmt(int followedBy) {
 	return followTable[followedBy];
 }
 
+unordered_set<int> PKBFollow::getAllFollowedBy() {
+	unordered_set<int> followedByList;
+	for (auto keyValue : followTable) {
+		followedByList.emplace(keyValue.first);
+	}
+	return followedByList;
+}
+
 unordered_set<int> PKBFollow::getFollowedByStmtList(int follow) {
 	return followedByTable[follow];
 }
@@ -68,8 +76,16 @@ bool PKBFollow::isFollowStarRelationship(int followedBy, int follow) {
 	return false;
 }
 
+bool PKBFollow::isFollowExist(int stmtNo) {
+	return followTable.find(stmtNo) != followTable.end();
+}
+bool PKBFollow::isFollowedByExist(int stmtNo) {
+	return followedByTable.find(stmtNo) != followedByTable.end();
+}
+
 bool PKBFollow::clear() {
 	followTable.clear();
 	followedByTable.clear();
+	followStarTable.clear();
 	return true;
 }
