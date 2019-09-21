@@ -59,7 +59,7 @@ Select s such that Follows(pn, 7)
 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44
 5000
 13 - Select all constant if a while is followed by stmt 14
-constant c, while w;
+constant c; while w;
 Select c such that Follows(w, 14)
 none
 5000
@@ -67,7 +67,6 @@ none
 assign a; if ifs;
 Select a such that Follows(15, ifs)
 1, 2, 4, 5, 9, 10, 11, 12, 18, 20, 26, 28, 30, 31, 34, 36, 39, 40
-none
 5000
 15 - Select all variable if stmt 16 is followed by an assign
 variable v; assign a;
