@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "CppUnitTest.h"
 #include "PKB.h"
+#include "PKBFollow.h"
 
 using namespace std;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
@@ -146,11 +147,6 @@ namespace UnitTesting
 		TEST_METHOD(isVarUsedInAssign){
 			Assert::IsTrue(PKB().isVarUsedInAssign(2, "x"));
 		};
-
-
-		
-
-		
 		TEST_METHOD(GetChildren)
 		{
 			//Actual PKB Data

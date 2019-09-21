@@ -64,12 +64,12 @@ namespace Evaluator {
                         statements.insert(to_string(stmt));
                     }
                 }
-			} else if (PKB::getAllStmt().count(stoi(stmtRef))) { // stmtRef is a stmtNum
+			} else if (stmtRef == "_") { // stmtRef is a ``_''
+                for (const auto& stmt : PKB::getAllStmt()) {
+                    statements.insert(to_string(stmt));
+                }
+            } else { // stmtRef is a stmtNum
 				statements.insert(stmtRef);
-			} else { // stmtRef is a ``_''
-				for (const auto& stmt : PKB::getAllStmt()) {
-					statements.insert(to_string(stmt));
-				}
 			}
 			return statements;
 		}
@@ -257,8 +257,8 @@ namespace Evaluator {
                             if (declarations.count(clause.second.second))
                                 fil[clause.second.second] = rhs;
                             // check if it is used in the assignment
-                            // if (PKB::isFactorAssignedInStmt(lhs, rhs))
-                            if (false)
+                            if (PKB::isConstUsedInAssign(stoi(assign), rhs)
+                                || PKB::isVarUsedInAssign(stoi(assign), rhs))
                                 return evalClauses(cls, fil);
                         }
                     }

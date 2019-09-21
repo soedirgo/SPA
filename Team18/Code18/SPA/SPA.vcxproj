@@ -42,6 +42,7 @@
     <!-- <ClInclude Include="..\source\QueryParser.h" /> -->
     <!-- <ClInclude Include="..\source\TNode.h" /> -->
     <ClInclude Include="..\source\Clause.h" />
+    <ClInclude Include="..\source\DesignExtractor.h" />
     <ClInclude Include="..\source\Entity.h" />
     <ClInclude Include="..\source\Evaluator.h" />
     <ClInclude Include="..\source\NestedResult.h" />

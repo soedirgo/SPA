@@ -25,9 +25,14 @@ unordered_set<string> PKB::procedureTable;
 unordered_map<string, unordered_set<int>> PKB:: callTable;
 
 
-
 bool PKB::clear()
 {
+	PKBFollow pkbFollow;
+	pkbFollow.clear();
+
+	PKBParent pkbParent;
+	pkbParent.clear();
+
 	varTable.clear();
 	constantTable.clear(); 
 	stmtTable.clear();
@@ -83,8 +88,8 @@ STMT_LIST PKB::getFollowedByStmtList(STMT_NO follow) {
 	return PKBFollow::getFollowedByStmtList(follow);
 }
 
-STMT_LIST PKB::getFollowStarStmtList(STMT_NO follow) {
-	return PKBFollow::getFollowStarStmtList(follow);
+STMT_LIST PKB::getFollowStarStmtList(STMT_NO followedBy) {
+	return PKBFollow::getFollowStarStmtList(followedBy);
 }
 
 bool PKB::insertParentRelation(STMT_NO parent, STMT_NO child) {
@@ -655,7 +660,3 @@ bool PKB::setCallStmt(STMT_NO stmtNo, string varName) {
 		return false;
 	}
 };
-
-	
-	
-	
