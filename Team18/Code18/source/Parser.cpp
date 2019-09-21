@@ -35,7 +35,7 @@ int Parser::Parse (string filename) {
 		}
 		else if (line.find("while") != string::npos) {
 			pkb.setStmt(stmtNo, While);
-			NestedResult results = parseWhile(line);
+			NestedResult results = parseWhile(line, stmtNo);
 			vector<string> modifies = results.getModifies();
 			vector<string> uses = results.getUses();
 			for (string var : modifies) {
@@ -59,7 +59,7 @@ int Parser::Parse (string filename) {
 		}
 		else if (line.find("if") != string::npos) {
 			pkb.setStmt(stmtNo, If);
-			NestedResult results = parseIf(line);
+			NestedResult results = parseIf(line, stmtNo);
 			vector<string> modifies = results.getModifies();
 			vector<string> uses = results.getUses();
 			for (string var : modifies) {
@@ -263,12 +263,12 @@ vector<string> Parser::parseAssignRHS(string varUse) {
 	return result;
 }
 
-NestedResult Parser::parseIf(string ifLine) {
+NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 	
-	int currStmtNo = stmtNo + 1;
-	int startStmtNo = stmtNo;
+	int currStmtNo = parentStmtNo + 1;
+	int startStmtNo = parentStmtNo;
 	int elseStmtNo = 0;
-	int prevStmtNo = stmtNo;
+	int prevStmtNo = parentStmtNo;
 	bool passedElse = false;
 	NestedResult result;
 
@@ -284,7 +284,7 @@ NestedResult Parser::parseIf(string ifLine) {
 			pkb.setStmt(currStmtNo, While);
 			pkb.insertParentRelation(startStmtNo, currStmtNo);
 
-			NestedResult results = parseWhile(line);
+			NestedResult results = parseWhile(line, currStmtNo);
 			vector<string> modifies = results.getModifies();
 			vector<string> uses = results.getUses();
 			for (string var : modifies) {
@@ -320,7 +320,7 @@ NestedResult Parser::parseIf(string ifLine) {
 		else if (line.find("if") != string::npos) {
 			pkb.setStmt(currStmtNo, If);
 			pkb.insertParentRelation(startStmtNo, currStmtNo);
-			NestedResult results = parseIf(line);
+			NestedResult results = parseIf(line, currStmtNo);
 			vector<string> modifies = results.getModifies();
 			vector<string> uses = results.getUses();
 			for (string var : modifies) {
@@ -462,10 +462,10 @@ NestedResult Parser::parseIf(string ifLine) {
 	return result;
 }
 
-NestedResult Parser::parseWhile(string whileLine) {
-	int currStmtNo = stmtNo + 1;
-	int startStmtNo = stmtNo;
-	int prevStmtNo = stmtNo;
+NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
+	int currStmtNo = parentStmtNo + 1;
+	int startStmtNo = parentStmtNo;
+	int prevStmtNo = parentStmtNo;
 	NestedResult result;
 
 	string line;
@@ -480,7 +480,7 @@ NestedResult Parser::parseWhile(string whileLine) {
 			pkb.setStmt(currStmtNo, While);
 			pkb.insertParentRelation(startStmtNo, currStmtNo);
 
-			NestedResult results = parseWhile(line);
+			NestedResult results = parseWhile(line, currStmtNo);
 			vector<string> modifies = results.getModifies();
 			vector<string> uses = results.getUses();
 			for (string var : modifies) {
@@ -509,7 +509,7 @@ NestedResult Parser::parseWhile(string whileLine) {
 		else if (line.find("if") != string::npos) {
 			pkb.setStmt(currStmtNo, If);
 			pkb.insertParentRelation(startStmtNo, currStmtNo);
-			NestedResult results = parseIf(line);
+			NestedResult results = parseIf(line, currStmtNo);
 			vector<string> modifies = results.getModifies();
 			vector<string> uses = results.getUses();
 			for (string var : modifies) {
