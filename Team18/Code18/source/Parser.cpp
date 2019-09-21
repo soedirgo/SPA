@@ -216,35 +216,44 @@ vector<string> Parser::parseAssignRHS(string varUse) {
 	if (patternRHS.find(";") != string::npos) {
 		patternRHS.erase(patternRHS.size() - 1);
 	}
+	patternRHS.erase(std::remove(patternRHS.begin(), patternRHS.end(), ')'), patternRHS.end());
+	patternRHS.erase(std::remove(patternRHS.begin(), patternRHS.end(), '('), patternRHS.end());
 	string var = "";
 	vector<string> result;
+	int i = 999;
 	while (patternRHS.size() > 0) {
-		if (patternRHS.find("+") != string::npos) {
-			int i = patternRHS.find("+");
+		i = 999;
+		if (patternRHS.find("+") != string::npos || patternRHS.find("-") != string::npos || patternRHS.find("*") != string::npos || 
+			patternRHS.find("/") != string::npos || patternRHS.find("%") != string::npos) {
+			if (patternRHS.find("+") != string::npos) {
+				if (patternRHS.find("+") < i) {
+					i = patternRHS.find("+");
+				}
+			}
+			if (patternRHS.find("-") != string::npos) {
+				if (patternRHS.find("-") < i) {
+					i = patternRHS.find("-");
+				}
+			}
+			if (patternRHS.find("*") != string::npos) {
+				if (patternRHS.find("*") < i) {
+					i = patternRHS.find("*");
+				}
+			}
+			if (patternRHS.find("%") != string::npos) {
+				if (patternRHS.find("%") < i) {
+					i = patternRHS.find("%");
+				}
+			}
+			if (patternRHS.find("/") != string::npos) {
+				if (patternRHS.find("/") < i) {
+					i = patternRHS.find("/");
+				}
+			}
 			var = patternRHS.substr(0, i);
 			result.push_back(var);
 			patternRHS = patternRHS.substr(i + 1);
-		} else if (patternRHS.find("-") != string::npos) {
-			int i = patternRHS.find("-");
-			var = patternRHS.substr(0, i);
-			result.push_back(var);
-			patternRHS = patternRHS.substr(i + 1);
-		} else if (patternRHS.find("*") != string::npos) {
-			int i = patternRHS.find("*");
-			var = patternRHS.substr(0, i);
-			result.push_back(var);
-			patternRHS = patternRHS.substr(i + 1);
-		} else if (patternRHS.find("/") != string::npos) {
-			int i = patternRHS.find("/");
-			var = patternRHS.substr(0, i);
-			result.push_back(var);
-			patternRHS = patternRHS.substr(i + 1);
-		} else if (patternRHS.find("%") != string::npos) {
-			int i = patternRHS.find("%");
-			var = patternRHS.substr(0, i);
-			result.push_back(var);
-			patternRHS = patternRHS.substr(i + 1);
-		}
+		} 
 		else {
 			var = patternRHS;
 			result.push_back(var);
@@ -697,7 +706,23 @@ vector<string> Parser::parseCondition(string condition) {
 			second = curr.substr(i + 1);
 		}
 	}
-	result.push_back(first);
-	result.push_back(second);
+	if (first.find("(") != string::npos) {
+		vector<string> subresult = parseAssignRHS(first);
+		for (string element : subresult) {
+			result.push_back(element);
+		}
+	}
+	else {
+		result.push_back(first);
+	}
+	if (second.find("(") != string::npos) {
+		vector<string> subresult = parseAssignRHS(second);
+		for (string element : subresult) {
+			result.push_back(element);
+		}
+	}
+	else {
+		result.push_back(second);
+	}
 	return result;
 }

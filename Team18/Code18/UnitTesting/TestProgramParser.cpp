@@ -81,8 +81,35 @@ namespace UnitTesting
 		TEST_METHOD(AssignRHSTest2)
 		{
 			Parser parser = Parser();
-			string input = "a+b-c*d/e%2;";
+			string input = "((a+b)-c)*d/e%2;";
 			vector<string> expected{ "a", "b", "c", "d", "e", "2" };
+			vector<string> actual = parser.parseAssignRHS(input);
+			Assert::AreEqual(expected == actual, true);
+		}
+
+		TEST_METHOD(AssignRHSTest3)
+		{
+			Parser parser = Parser();
+			string input = "(a+(b-((c*d)/(e%2))));";
+			vector<string> expected{ "a", "b", "c", "d", "e", "2" };
+			vector<string> actual = parser.parseAssignRHS(input);
+			Assert::AreEqual(expected == actual, true);
+		}
+
+		TEST_METHOD(AssignRHSTest4)
+		{
+			Parser parser = Parser();
+			string input = "a-(b+c);";
+			vector<string> expected{ "a", "b", "c" };
+			vector<string> actual = parser.parseAssignRHS(input);
+			Assert::AreEqual(expected == actual, true);
+		}
+
+		TEST_METHOD(AssignRHSTest5)
+		{
+			Parser parser = Parser();
+			string input = "x-b+a";
+			vector<string> expected{ "x", "b", "a" };
 			vector<string> actual = parser.parseAssignRHS(input);
 			Assert::AreEqual(expected == actual, true);
 		}
@@ -137,6 +164,33 @@ namespace UnitTesting
 			Parser parser = Parser();
 			string input = "(x>1)";
 			vector<string> expected{ "x", "1" };
+			vector<string> actual = parser.parseCondition(input);
+			Assert::AreEqual(expected == actual, true);
+		}
+
+		TEST_METHOD(ParseConditionTest7)
+		{
+			Parser parser = Parser();
+			string input = "((x+a)>1)";
+			vector<string> expected{ "x", "a", "1" };
+			vector<string> actual = parser.parseCondition(input);
+			Assert::AreEqual(expected == actual, true);
+		}
+
+		TEST_METHOD(ParseConditionTest8)
+		{
+			Parser parser = Parser();
+			string input = "(((x-b)+a)>1)";
+			vector<string> expected{ "x", "b", "a", "1" };
+			vector<string> actual = parser.parseCondition(input);
+			Assert::AreEqual(expected == actual, true);
+		}
+
+		TEST_METHOD(ParseConditionTest9)
+		{
+			Parser parser = Parser();
+			string input = "(x>(a+1))";
+			vector<string> expected{ "x", "a", "1" };
 			vector<string> actual = parser.parseCondition(input);
 			Assert::AreEqual(expected == actual, true);
 		}
