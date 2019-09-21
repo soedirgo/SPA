@@ -8,8 +8,8 @@ procedure IT11 {
   read i;
   if (i >= 10) then {
     m = y + i;
-    high = m;
-  } else {
+    high = m; } 
+  else {
     k = y - i;
     low = k; }
   print low;
@@ -19,18 +19,18 @@ procedure IT11 {
     read dec;
     low = low - dec;
     if (low >= mid) then {
-      low = low - dec - 2;
-    } else {
+      low = low - dec - 2; } 
+    else {
       print low;
-      print dec; }
-  } else {
+      print dec; }} 
+  else {
     print low;
     print mid; }
   if (high <= mid) then {
     inc = x + 3;
     while (high <= mid) {
-      high = high + inc; }
-  } else {
+      high = high + inc; }} 
+  else {
     print high; }
   j = 2 * 2;
   k = 10 / 2;
@@ -39,8 +39,8 @@ procedure IT11 {
       g = 3;
       while (j < k) {
         j = j + g;
-        print j; }
-    } else {
+        print j; }} 
+    else {
       read h;
       k = k + h; }
     i = i - 1; }
