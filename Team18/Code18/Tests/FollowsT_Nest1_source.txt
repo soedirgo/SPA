@@ -1,0 +1,28 @@
+procedure FollowsTNest1 {
+  x = 1;
+  y = 2;
+  read z;
+  if (z > x) then {
+    z = x; }
+  else {
+    z = y; }
+  read i;
+  print i;
+  if (i <= z - 2) then {
+    j = z;
+    k = j * ( 10 % (2 + 1) );
+    ijk = (i * j) + k; 
+    print ijk; }
+  else {
+    ijk = (i * j) - k; 
+    print ijk; }
+  while ( (ijk < 20) && (y != 16) ) {
+    ijk = ijk * 3;
+    y = y * y;
+    print y; }
+  mod = ijk % 4;
+  while (ijk >= y) {
+    ijk = ijk - mod; }
+  read test;
+  print test;
+}

@@ -1,0 +1,315 @@
+1 - Queries 1 - 10 - Test Follows*(s,_) relation by selecting different stmt type. Select stmt, input stmt and read
+stmt s; read r;
+Select s such that Follows*(s, r)
+1, 2, 3, 4, 7, 8, 9, 16, 20, 21
+5000
+2 - Select read, input stmt and read
+stmt s; read r;
+Select r such that Follows*(s, r)
+3, 7, 23
+5000
+3 - Select stmt, input stmt and print
+stmt s; print pn;
+Select s such that Follows*(s, pn)
+1, 2, 3, 4, 7, 8, 9, 10, 11, 12, 14, 16, 17, 18, 20, 21, 23
+5000
+4 - Select print, input stmt and print
+stmt s; print pn;
+Select pn such that Follows*(s, pn)
+8, 13, 15, 19, 24
+5000
+5 - Select stmt, input stmt and while
+stmt s; while w;
+Select s such that Follows*(s, w)
+1, 2, 3, 4, 7, 8, 9, 16, 20
+5000
+6 - Select while, input stmt and while
+stmt s; while w;
+Select w such that Follows*(s, w)
+16, 21
+5000
+7 - Select stmt, input stmt and if
+stmt s; if ifs;
+Select s such that Follows*(s, ifs)
+1, 2, 3, 4, 7, 8
+5000
+8 - Select if, input stmt and if
+stmt s; if ifs;
+Select ifs such that Follows*(s, ifs)
+4, 9
+5000
+9 - input stmt and stmt#
+stmt s;
+Select s such that Follows*(s, 16)
+1, 2, 3, 4, 7, 8, 9
+5000
+10 - input stmt and wildcard
+stmt s;
+Select s such that Follows*(s, _)
+1, 2, 3, 4, 7, 8, 9, 10, 11, 12, 14, 16, 17, 18, 20, 21, 23
+5000
+11 - Queries 11 - 20 Test Follows*(_,s) relation by selecting different stmt type. Select read, input read and stmt
+read r; stmt s;
+Select r such that Follows*(r, s)
+3, 7, 23
+5000
+12 - Select stmt, input read and stmt
+read r; stmt s;
+Select s such that Follows*(r, s)
+4, 7, 8, 9, 16, 20, 21, 23, 24
+5000
+13 - Select print, input print and stmt
+print pn; stmt s;
+Select pn such that Follows*(pn, s)
+8
+5000
+14 - Select stmt, input print and stmt
+print pn; stmt s;
+Select s such that Follows*(pn, s)
+9, 16, 20, 21, 23, 24
+5000
+15 - Select while, input while and stmt
+while w; stmt s;
+Select w such that Follows*(w, s)
+16, 21
+5000
+16 - Select stmt, input while and stmt
+while w; stmt s;
+Select s such that Follows*(w, s)
+20, 21, 23, 24
+5000
+17 - Select if, input if and stmt
+if ifs; stmt s;
+Select ifs such that Follows*(ifs, s)
+4, 9
+5000
+18 - Select stmt, input if and stmt
+if ifs; stmt s;
+Select s such that Follows*(ifs, s)
+7, 8, 9, 16, 20, 21, 23, 24
+5000
+19 - input stmt# and stmt
+stmt s;
+Select s such that Follows*(7, s)
+8, 9, 16, 20, 21, 23, 24
+5000
+20 - input wildcard and stmt
+stmt s;
+Select s such that Follows*(_, s)
+2, 3, 4, 7, 8, 9, 11, 12, 13, 15, 16, 18, 19, 20, 21, 23, 24
+5000
+21 - Queries 21 - 24 - Test Follows* with different stmt type. Select assign, input assign and while
+assign a; while w;
+Select a such that Follows*(a, w)
+1, 2, 20
+5000
+22 - Select while, input assign and while
+assign a; while w;
+Select w such that Follows*(a, w)
+16, 21
+5000
+23 - Select print, input print and read
+print pn; read r;
+Select pn such that Follows*(pn, r)
+8
+5000
+24 - Select read, input print and read
+print pn; read r;
+Select r such that Follows*(pn, r)
+23
+5000
+25 - Queries 25 - 28 - Test Follows* with different stmt# and stmt type. input stmt# and read
+read r;
+Select r such that Follows*(3, r)
+7, 23
+5000
+26 - input read and stmt#
+read r;
+Select r such that Follows*(r, 13)
+none
+5000
+27 - input stmt# and if
+if ifs;
+Select ifs such that Follows*(6, ifs)
+none
+5000
+28 - input if and stmt#
+if ifs;
+Select ifs such that Follows*(ifs, 7)
+4
+5000
+29 - Queries 29 - 36 Test sequential stmt#. Select procedure, input sequential stmt# - true
+procedure proc;
+Select proc such that Follows*(1, 2)
+FollowsTNest1
+5000
+30 - Select procedure, input sequential stmt# - false
+procedure proc;
+Select proc such that Follows*(24, 25)
+none
+5000
+31 - Select procedure, input sequential stmt# - reverse
+procedure proc;
+Select proc such that Follows*(2, 1)
+none
+5000
+32 - Select variable, input sequential stmt# - nested, true
+variable v;
+Select v such that Follows*(11, 12)
+x, y, z, i, j, k, ijk, mod, test
+5000
+33 - Select variable, input sequential stmt# - nested, false
+variable v;
+Select v such that Follows*(13, 14)
+none
+5000
+34 - Select variable, input sequential stmt# - nested, reverse
+variable v;
+Select v such that Follows*(12, 11)
+none
+5000
+35 - Select variable, input sequential stmt# - into nest
+variable v;
+Select v such that Follows*(16, 17)
+none
+5000
+36 - Select variable, input sequential stmt# - out of nest
+variable v;
+Select v such that Follows*(15, 16)
+none
+5000
+37 - Queries 37 - 44 - Test distant stmt#. Select read, input distant stmt# - true
+read r;
+Select r such that Follows*(9, 16)
+3, 7, 23
+5000
+38 - Select read, input distant stmt# - false
+read r;
+Select r such that Follows*(1, 25)
+none
+5000
+39 - Select read, input distant stmt# - reverse
+read r;
+Select r such that Follows*(16, 9)
+none
+5000
+40 - Select print, input distant stmt# - nested, true
+print pn;
+Select pn such that Follows*(17, 19)
+8, 13, 15, 19, 24
+5000
+41 - Select print, input distant stmt# - nested, false
+print pn;
+Select pn such that Follows*(17, 22)
+none
+5000
+42 - Select print, input distant stmt# - nested, reverse
+print pn;
+Select pn such that Follows*(19, 17)
+none
+5000
+43 - Select print, input distant stmt# - into nest
+print pn;
+Select pn such that Follows*(4, 11)
+none
+5000
+44 - Select print, input distant stmt# - out of nest
+print pn;
+Select pn such that Follows*(15, 21)
+none
+5000
+45 - Query 45 - Test stmt that follows itself
+Stmt s;
+Select s such that Follows*(s, s)
+none
+5000
+46 - Queries 46 - 49 - Test first stmt in if/while. input while first stmt# and stmt - true
+stmt s;
+Select s such that Follows*(17, s)
+18, 19
+5000
+47 - input while first stmt# and stmt - false
+stmt s;
+Select s such that Follows*(22, s)
+none
+5000
+48 - input if first stmt# and stmt - true
+stmt s;
+Select s such that Follows*(14, s)
+15
+5000
+49 - input if first stmt# and stmt - false
+stmt s;
+Select s such that Follows*(6, s)
+none
+5000
+50 - Queries 50 - 53 - Test last stmt in if/while. input stmt and while last stmt# - true
+stmt s;
+Select s such that Follows*(s, 19)
+17, 18
+5000
+51 - input stmt and while last stmt# - false
+stmt s;
+Select s such that Follows*(s, 22)
+none
+5000
+52 - input stmt and if last stmt# - true
+stmt s;
+Select s such that Follows*(s, 15)
+14
+5000
+53 - input stmt and if last stmt# - false
+stmt s;
+Select s such that Follows*(s, 6)
+none
+5000
+54 - Queries 54 - 57 - Test select all stmt that are nested (while/if) and followed by/follows stmt#. input stmt and stmt# nested in while
+stmt s;
+Select s such that Follows*(s, 18)
+17
+5000
+55 - input stmt# nested in while and stmt
+stmt s;
+Select s such that Follows*(18, s)
+19
+5000
+56 - input stmt and stmt# nested in if
+stmt s;
+Select s such that Follows*(s, 11)
+10
+5000
+57 - input stmt# nested in if and stmt
+stmt s;
+Select s such that Follows*(11, s)
+12, 13
+5000
+58 - Queries 58 - 59 - Test first stmt of procedure. input first stmt# and stmt
+stmt s;
+Select s such that Follows*(1, s)
+2, 3, 4, 7, 8, 9, 16, 20, 21, 23, 24
+5000
+59 - input stmt and first stmt#
+stmt s;
+Select s such that Follows*(s, 1)
+none
+5000
+60 - Queries 60 - 61 - Test last stmt of procedure. input last stmt# and stmt
+stmt s;
+Select s such that Follows*(24, s)
+none
+5000
+61 - input stmt and last stmt#
+stmt s;
+Select s such that Follows*(s, 24)
+1, 2, 3, 4, 7, 8, 9, 16, 20, 21, 23
+5000
+62 - Queries 62 - 63 Test select all stmt that are followed by/follows. Select stmt, input stmt and stmt1
+stmt s, s1;
+Select s such that Follows*(s, s1)
+1, 2, 3, 4, 7, 8, 9, 10, 11, 12, 14, 16, 17, 18, 20, 21, 23
+5000
+63 - Select stmt1, input stmt and stmt1
+stmt s, s1;
+Select s1 such that Follows*(s, s1)
+2, 3, 4, 7, 8, 9, 11, 12, 13, 15, 16, 18, 19, 20, 21, 23, 24
+5000
