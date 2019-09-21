@@ -41,21 +41,21 @@ namespace IntegrationTesting
             pkb.setAssignStmt(1, "x");
             pkb.setVar("x");
             pkb.setConstant("1", 1);
-            pkb.setModifiesVarByStmt(1, "x");
+            pkb.insertModifiesRelation(1, "x");
 
             pkb.setStmt(2, Assign);
             pkb.setAssignStmt(2, "y");
             pkb.setVar("y");
-            pkb.setUsesVarByStmt(2, "x");
-            pkb.setModifiesVarByStmt(2, "y");
+            pkb.insertUsesRelation(2, "x");
+            pkb.insertModifiesRelation(2, "y");
             pkb.insertFollowRelation(1, 2);
             pkb.insertFollowStarRelation(1, 2);
 
             pkb.setStmt(3, If);
             pkb.setIfStmt(3);
-            pkb.setUsesVarByStmt(3, "x");
-            pkb.setUsesVarByStmt(3, "y");
-            pkb.setModifiesVarByStmt(3, "z");
+            pkb.insertUsesRelation(3, "x");
+            pkb.insertUsesRelation(3, "y");
+            pkb.insertModifiesRelation(3, "z");
             pkb.insertFollowRelation(2, 3);
             pkb.insertFollowStarRelation(1, 3);
             pkb.insertFollowStarRelation(2, 3);
@@ -64,7 +64,7 @@ namespace IntegrationTesting
             pkb.setAssignStmt(4, "z");
             pkb.setVar("z");
             pkb.setConstant("0", 4);
-            pkb.setModifiesVarByStmt(4, "z");
+            pkb.insertModifiesRelation(4, "z");
             pkb.insertParentRelation(3, 4);
             pkb.insertParentStarRelation(3, 4);
 
@@ -77,8 +77,8 @@ namespace IntegrationTesting
 
             pkb.setStmt(6, While);
             pkb.setWhileStmt(6);
-            pkb.setUsesVarByStmt(6, "x");
-            pkb.setModifiesVarByStmt(6, "x");
+            pkb.insertUsesRelation(6, "x");
+            pkb.insertModifiesRelation(6, "x");
             pkb.insertFollowRelation(3, 6);
             pkb.insertFollowStarRelation(1, 6);
             pkb.insertFollowStarRelation(2, 6);
@@ -86,13 +86,13 @@ namespace IntegrationTesting
 
             pkb.setStmt(7, Read);
             pkb.setReadStmt(7, "x");
-            pkb.setModifiesVarByStmt(7, "x");
+            pkb.insertModifiesRelation(7, "x");
             pkb.insertParentRelation(6, 7);
             pkb.insertParentStarRelation(6, 7);
 
             pkb.setStmt(8, Print);
             pkb.setPrintStmt(8, "x");
-            pkb.setUsesVarByStmt(8, "x");
+            pkb.insertUsesRelation(8, "x");
             pkb.insertParentRelation(6, 8);
             pkb.insertParentStarRelation(6, 8);
             pkb.insertFollowRelation(7, 8);

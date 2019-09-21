@@ -165,6 +165,7 @@
     <ClCompile Include="TestDesignExtractor.cpp" />
     <ClCompile Include="TestPKBFollow.cpp" />
     <ClCompile Include="TestPKBParent.cpp" />
+    <ClCompile Include="TestPKBUses.cpp" />
     <ClCompile Include="TestPKBVarTable.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

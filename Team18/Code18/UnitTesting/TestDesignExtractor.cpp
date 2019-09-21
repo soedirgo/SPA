@@ -55,7 +55,7 @@ namespace UnitTesting
 			DesignExtractor designExtractor;
 			designExtractor.extractDesign();
 		}
-
+		
 		TEST_METHOD(FollowStarRelationship)
 		{
 			Assert::IsTrue(PKB().isFollowStarRelationship(1, 2));
@@ -64,11 +64,9 @@ namespace UnitTesting
 			Assert::IsTrue(PKB().isFollowStarRelationship(4, 8));
 			Assert::IsTrue(PKB().isFollowStarRelationship(5, 7));
 
+			
 			Assert::IsTrue(PKB().isFollowStarRelationship(1, 9));
 			Assert::IsTrue(PKB().isFollowStarRelationship(3, 8));
-
-			Assert::IsFalse(PKB().isFollowStarRelationship(3, 7));
-			Assert::IsFalse(PKB().isFollowStarRelationship(3, 5));
 		}
 		TEST_METHOD(ParentStarRelationship)
 		{
@@ -86,7 +84,8 @@ namespace UnitTesting
 			Assert::IsTrue(PKB().isParentStarRelationship(2, 7));
 			Assert::IsTrue(PKB().isParentStarRelationship(4, 6));
 			Assert::IsTrue(PKB().isParentStarRelationship(4, 7));
-		}	
+		}
+		
 	};
 };
 
