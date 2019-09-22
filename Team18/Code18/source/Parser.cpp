@@ -560,7 +560,7 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 				}
 				else {
 					pkb.setVar(var);
-					//pkb.insertUsesRelation(currStmtNo, var);
+					pkb.insertUsesRelation(currStmtNo, var);
 					result.addUses(var);
 				}
 			}

@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <LocalDebuggerCommandArguments> ..\Tests\Follows_Nest1_source.txt ..\Tests\Follows_Nest1_queries.txt ..\Tests\out.xml</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments> ..\Tests\Uses_Nest1_source.txt ..\Tests\Uses_Nest1_queries.txt ..\Tests\out.xml</LocalDebuggerCommandArguments>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
