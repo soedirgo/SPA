@@ -22,8 +22,7 @@ procedure IT11 {
       low = low - dec - 2; } 
     else {
       print low;
-      print dec; }
-} 
+      print dec; }} 
   else {
     print low;
     print mid; }
