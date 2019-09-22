@@ -150,7 +150,7 @@ none
 5000
 31 - Select all assign that follows an if
 assign a; if ifs;
-Select a such that Follows(if, a)
+Select a such that Follows(ifs, a)
 30, 40
 5000
 32 - Select while that follows itself
@@ -194,12 +194,12 @@ Select v such that Parent(4, 7)
 none
 5000
 40 - Select all constant if there is a while that is parent of stmt 28
-constant c;
+constant c; while w;
 Select c such that Parent(w, 28)
 1, 2, 3, 6, 7, 10
 5000
 41 - Select all stmt if there is a print that is parent of stmt 35
-stmt s;
+stmt s; print pn;
 Select s such that Parent(pn, 35)
 none
 5000
