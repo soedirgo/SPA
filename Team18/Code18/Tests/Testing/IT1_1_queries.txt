@@ -89,7 +89,7 @@ Select c such that Follows(r, a)
 1, 2, 3, 6, 7, 10
 5000
 19 - Select all constant if a while follows itself
-constant c;
+constant c; while w;
 Select c such that Follows(w, w)
 none
 5000
@@ -114,7 +114,7 @@ Select s such that Follows(_, r)
 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44
 5000
 24 - Select all variable if a print follows any stmt
-variable v; print p;
+variable v; print pn;
 Select v such that Follows(pn, _)
 x, y, z, i, m, high, k, low, mid, dec, inc, j, g, h
 5000
@@ -409,7 +409,7 @@ Select v such that Uses(22, v)
 dec
 5000
 83 - Select all stmt that uses a variable
-stmt s;
+stmt s; variable v;
 Select s such that Uses(s, v)
 5, 6, 8, 9, 10, 11, 12, 13, 14, 15, 16, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 35, 36, 37, 39, 40, 41, 42, 43
 5000
