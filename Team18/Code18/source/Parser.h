@@ -14,6 +14,7 @@ class Parser {
 public:
 	Parser();
 	int Parse(std::string filename);
+	int count(std::string s, char c);
 	string parseProc(std::string line);
 	string parseRead(std::string line);
 	string parsePrint(std::string line);
@@ -27,6 +28,7 @@ public:
 private:
 	PKB pkb;
 	ifstream programFile;
+	int numCloses;
 	int stmtNo;
 };
 

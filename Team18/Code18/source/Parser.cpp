@@ -14,6 +14,7 @@ using namespace std;
 Parser::Parser() {
 	this ->pkb = PKB();
 	this ->stmtNo = 1;
+	this->numCloses = 0;
 }
 
 int Parser::Parse (string filename) {
@@ -28,12 +29,12 @@ int Parser::Parse (string filename) {
 
 	while (getline(programFile, line)) {
 		//Process to parse each line
-		if (line.find("procedure") != string::npos) {
+		if (line.find("procedure ") != string::npos) {
 			string header = parseProc(line);
 			//Calls PKB API to set procedure name
 			pkb.setProc(header);
 		}
-		else if (line.find("while") != string::npos) {
+		else if (line.find("while ") != string::npos) {
 			pkb.setStmt(stmtNo, While);
 			NestedResult results = parseWhile(line, stmtNo);
 			vector<string> modifies = results.getModifies();
@@ -57,7 +58,7 @@ int Parser::Parse (string filename) {
 			prevStmtNo = stmtNo;
 			stmtNo = results.lastStmtNo;
 		}
-		else if (line.find("if") != string::npos) {
+		else if (line.find("if ") != string::npos) {
 			pkb.setStmt(stmtNo, If);
 			NestedResult results = parseIf(line, stmtNo);
 			vector<string> modifies = results.getModifies();
@@ -94,7 +95,6 @@ int Parser::Parse (string filename) {
 			pkb.insertModifiesRelation(stmtNo, varMod);
 
 			string varUse = assign.substr(index + 1);
-
 			//Calls to parse RHS of assign stmt
 			vector<string> results = parseAssignRHS(varUse);
 
@@ -114,7 +114,7 @@ int Parser::Parse (string filename) {
 			prevStmtNo = stmtNo;
 			stmtNo++;
 		}
-		else if (line.find("read") != string::npos) {
+		else if (line.find("read ") != string::npos) {
 			//Gets the variable used in read stmt into readArg
 			string readArg = parseRead(line);
 			//Sets stmt information in PKB and then sets modifies variable for that stmt
@@ -128,7 +128,7 @@ int Parser::Parse (string filename) {
 			prevStmtNo = stmtNo;
 			stmtNo++;
 		}
-		else if (line.find("print") != string::npos) {
+		else if (line.find("print ") != string::npos) {
 			//Gets the variable used in print stmt into printArg
 			string printArg = parsePrint(line);
 			//Sets stmt information in PKB and then sets modifies variable for that stmt
@@ -175,9 +175,6 @@ string Parser::parseRead(string line) {
 	//Removes read keyword from readStmt
 	int i = readStmt.find(keyword);
 	readStmt.erase(i, keyword.size());
-	if (readStmt.find("}") != string::npos) {
-		readStmt.erase(readStmt.size() - 1);
-	}
 	//Removes ; from readStmt
 	readStmt.erase(readStmt.size() - 1);
 
@@ -192,9 +189,6 @@ string Parser::parsePrint(string line) {
 	//Removes print keyword from printStmt
 	int i = printStmt.find(keyword);
 	printStmt.erase(i, keyword.size());
-	if (printStmt.find("}") != string::npos) {
-		printStmt.erase(printStmt.size() - 1);
-	}
 	//Removes ; from print statement
 	printStmt.erase(printStmt.size() - 1);
 
@@ -213,9 +207,6 @@ string Parser::parseAssignInit(string line) {
 
 vector<string> Parser::parseAssignRHS(string varUse) {
 	string patternRHS = varUse;
-	if (patternRHS.find(";") != string::npos) {
-		patternRHS.erase(patternRHS.size() - 1);
-	}
 	patternRHS.erase(std::remove(patternRHS.begin(), patternRHS.end(), ')'), patternRHS.end());
 	patternRHS.erase(std::remove(patternRHS.begin(), patternRHS.end(), '('), patternRHS.end());
 	string var = "";
@@ -270,6 +261,7 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 	int elseStmtNo = 0;
 	int prevStmtNo = parentStmtNo;
 	bool passedElse = false;
+	int currNumCloses = numCloses;
 	NestedResult result;
 
 	string line;
@@ -280,7 +272,7 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 	}
 	while (getline(programFile, line)) {
 		//Process to parse each line
-		if (line.find("while") != string::npos) {
+		if (line.find("while ") != string::npos) {
 			pkb.setStmt(currStmtNo, While);
 			pkb.insertParentRelation(startStmtNo, currStmtNo);
 
@@ -316,8 +308,12 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 			}
 			prevStmtNo = currStmtNo;
 			currStmtNo = results.lastStmtNo;
+			if (numCloses != currNumCloses) {
+				numCloses--;
+				break;
+			}
 		}
-		else if (line.find("if") != string::npos) {
+		else if (line.find("if ") != string::npos) {
 			pkb.setStmt(currStmtNo, If);
 			pkb.insertParentRelation(startStmtNo, currStmtNo);
 			NestedResult results = parseIf(line, currStmtNo);
@@ -352,6 +348,10 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 			}
 			prevStmtNo = currStmtNo;
 			currStmtNo = results.lastStmtNo;
+			if (numCloses != currNumCloses) {
+				numCloses--;
+				break;
+			}
 		}
 		else if (line.find("=") != string::npos) {
 			//Initial processing of stmt
@@ -367,6 +367,10 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 			result.addModifies(varMod);
 
 			string varUse = assign.substr(index + 1);
+			if (varUse.find("}") != string::npos && passedElse) {
+				numCloses = numCloses + count(varUse, '}');
+				varUse.erase(std::remove(varUse.begin(), varUse.end(), '}'), varUse.end());
+			}
 
 			//Calls to parse RHS of assign stmt
 			vector<string> results = parseAssignRHS(varUse);
@@ -395,10 +399,19 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 			}
 			prevStmtNo = currStmtNo;
 			currStmtNo++;
+			if (numCloses != currNumCloses) {
+				numCloses--;
+				break;
+			}
 		}
-		else if (line.find("read") != string::npos) {
+		else if (line.find("read ") != string::npos) {
 			//Gets the variable used in read stmt into readArg
-			string readArg = parseRead(line);
+			string readArg = line;
+			if (readArg.find("}") != string::npos && passedElse) {
+				numCloses = numCloses + count(readArg, '}');
+				readArg.erase(std::remove(readArg.begin(), readArg.end(), '}'), readArg.end());
+			}
+			readArg = parseRead(readArg);
 			//Sets stmt information in PKB and then sets modifies variable for that stmt
 			pkb.setStmt(currStmtNo, Read);
 			pkb.insertParentRelation(startStmtNo, currStmtNo);
@@ -419,10 +432,19 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 			}
 			prevStmtNo = currStmtNo;
 			currStmtNo++;
+			if (numCloses != currNumCloses) {
+				numCloses--;
+				break;
+			}
 		}
-		else if (line.find("print") != string::npos) {
+		else if (line.find("print ") != string::npos) {
 			//Gets the variable used in print stmt into printArg
-			string printArg = parsePrint(line);
+			string printArg = line;
+			if (printArg.find("}") != string::npos && passedElse) {
+				numCloses = numCloses + count(printArg, '}');
+				printArg.erase(std::remove(printArg.begin(), printArg.end(), '}'), printArg.end());
+			}
+			printArg = parsePrint(line);
 			//Sets stmt information in PKB and then sets modifies variable for that stmt
 			pkb.setStmt(currStmtNo, Print);
 			pkb.insertParentRelation(startStmtNo, currStmtNo);
@@ -443,6 +465,10 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 			}
 			prevStmtNo = currStmtNo;
 			currStmtNo++;
+			if (numCloses != currNumCloses) {
+				numCloses--;
+				break;
+			}
 		}
 		else if (line.find("else") != string::npos) {
 			passedElse = true;
@@ -451,11 +477,6 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 		}
 		else {
 			;
-		}
-		if (passedElse) {
-			if (line.find("}") != string::npos) {
-				break;
-			}
 		}
 	}
 	result.lastStmtNo = currStmtNo;
@@ -466,6 +487,7 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 	int currStmtNo = parentStmtNo + 1;
 	int startStmtNo = parentStmtNo;
 	int prevStmtNo = parentStmtNo;
+	int currNumCloses = numCloses;
 	NestedResult result;
 
 	string line;
@@ -476,7 +498,7 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 	}
 	while (getline(programFile, line)) {
 		//Process to parse each line
-		if (line.find("while") != string::npos) {
+		if (line.find("while ") != string::npos) {
 			pkb.setStmt(currStmtNo, While);
 			pkb.insertParentRelation(startStmtNo, currStmtNo);
 
@@ -505,8 +527,12 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 			}
 			prevStmtNo = currStmtNo;
 			currStmtNo = results.lastStmtNo;
+			if (numCloses != currNumCloses) {
+				numCloses--;
+				break;
+			}
 		}
-		else if (line.find("if") != string::npos) {
+		else if (line.find("if ") != string::npos) {
 			pkb.setStmt(currStmtNo, If);
 			pkb.insertParentRelation(startStmtNo, currStmtNo);
 			NestedResult results = parseIf(line, currStmtNo);
@@ -534,6 +560,10 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 			}
 			prevStmtNo = currStmtNo;
 			currStmtNo = results.lastStmtNo;
+			if (numCloses != currNumCloses) {
+				numCloses--;
+				break;
+			}
 		}
 		else if (line.find("=") != string::npos) {
 			//Initial processing of stmt
@@ -549,6 +579,10 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 			result.addModifies(varMod);
 
 			string varUse = assign.substr(index + 1);
+			if (varUse.find("}") != string::npos) {
+				numCloses = numCloses + count(varUse, '}');
+				varUse.erase(std::remove(varUse.begin(), varUse.end(), '}'), varUse.end());
+			}
 
 			//Calls to parse RHS of assign stmt
 			vector<string> results = parseAssignRHS(varUse);
@@ -570,10 +604,19 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 			}
 			prevStmtNo = currStmtNo;
 			currStmtNo++;
+			if (numCloses != currNumCloses) {
+				numCloses--;
+				break;
+			}
 		}
-		else if (line.find("read") != string::npos) {
+		else if (line.find("read ") != string::npos) {
 			//Gets the variable used in read stmt into readArg
-			string readArg = parseRead(line);
+			string readArg = line;
+			if (readArg.find("}") != string::npos) {
+				numCloses = numCloses + count(readArg, '}');
+				readArg.erase(std::remove(readArg.begin(), readArg.end(), '}'), readArg.end());
+			}
+			readArg = parseRead(readArg);
 			//Sets stmt information in PKB and then sets modifies variable for that stmt
 			pkb.setStmt(currStmtNo, Read);
 			pkb.insertParentRelation(startStmtNo, currStmtNo);
@@ -587,10 +630,19 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 			}
 			prevStmtNo = currStmtNo;
 			currStmtNo++;
+			if (numCloses != currNumCloses) {
+				numCloses--;
+				break;
+			}
 		}
-		else if (line.find("print") != string::npos) {
+		else if (line.find("print ") != string::npos) {
 			//Gets the variable used in print stmt into printArg
-			string printArg = parsePrint(line);
+			string printArg = line;
+			if (printArg.find("}") != string::npos) {
+				numCloses = numCloses + count(printArg, '}');
+				printArg.erase(std::remove(printArg.begin(), printArg.end(), '}'), printArg.end());
+			}
+			printArg = parsePrint(line);
 			//Sets stmt information in PKB and then sets modifies variable for that stmt
 			pkb.setStmt(currStmtNo, Print);
 			pkb.insertParentRelation(startStmtNo, currStmtNo);
@@ -604,12 +656,13 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 			}
 			prevStmtNo = currStmtNo;
 			currStmtNo++;
+			if (numCloses != currNumCloses) {
+				numCloses--;
+				break;
+			}
 		}
 		else {
 			;
-		}
-		if (line.find("}") != string::npos) {
-			break;
 		}
 	}
 	result.lastStmtNo = currStmtNo;
@@ -717,4 +770,17 @@ vector<string> Parser::parseCondition(string condition) {
 		result.push_back(element);
 	}
 	return result;
+}
+
+int Parser::count(string s, char c) {
+	// Count variable 
+	int res = 0;
+
+	for (int i = 0; i < s.length(); i++)
+
+		// checking character in string 
+		if (s[i] == c)
+			res++;
+
+	return res;
 }

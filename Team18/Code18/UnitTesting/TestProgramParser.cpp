@@ -23,7 +23,7 @@ namespace UnitTesting
 			Assert::AreEqual(expected, actual);
 		}
 
-		TEST_METHOD(ReadTest1)
+		TEST_METHOD(ReadTest)
 		{
 			Parser parser = Parser();
 			string input = "read x;";
@@ -32,28 +32,10 @@ namespace UnitTesting
 			Assert::AreEqual(expected, actual);
 		}
 
-		TEST_METHOD(ReadTest2)
-		{
-			Parser parser = Parser();
-			string input = "read x;}";
-			string expected = "x";
-			string actual = parser.parseRead(input);
-			Assert::AreEqual(expected, actual);
-		}
-
-		TEST_METHOD(PrintTest1)
+		TEST_METHOD(PrintTest)
 		{
 			Parser parser = Parser();
 			string input = "print x;";
-			string expected = "x";
-			string actual = parser.parsePrint(input);
-			Assert::AreEqual(expected, actual);
-		}
-
-		TEST_METHOD(PrintTest2)
-		{
-			Parser parser = Parser();
-			string input = "print x;}";
 			string expected = "x";
 			string actual = parser.parsePrint(input);
 			Assert::AreEqual(expected, actual);
@@ -81,7 +63,7 @@ namespace UnitTesting
 		TEST_METHOD(AssignRHSTest2)
 		{
 			Parser parser = Parser();
-			string input = "((a+b)-c)*d/e%2;";
+			string input = "((a+b)-c)*d/e%2";
 			vector<string> expected{ "a", "b", "c", "d", "e", "2" };
 			vector<string> actual = parser.parseAssignRHS(input);
 			Assert::AreEqual(expected == actual, true);
@@ -90,7 +72,7 @@ namespace UnitTesting
 		TEST_METHOD(AssignRHSTest3)
 		{
 			Parser parser = Parser();
-			string input = "(a+(b-((c*d)/(e%2))));";
+			string input = "(a+(b-((c*d)/(e%2))))";
 			vector<string> expected{ "a", "b", "c", "d", "e", "2" };
 			vector<string> actual = parser.parseAssignRHS(input);
 			Assert::AreEqual(expected == actual, true);
@@ -99,7 +81,7 @@ namespace UnitTesting
 		TEST_METHOD(AssignRHSTest4)
 		{
 			Parser parser = Parser();
-			string input = "a-(b+c);";
+			string input = "a-(b+c)";
 			vector<string> expected{ "a", "b", "c" };
 			vector<string> actual = parser.parseAssignRHS(input);
 			Assert::AreEqual(expected == actual, true);
@@ -256,6 +238,15 @@ namespace UnitTesting
 			vector<string> expected{ "x", "1", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j" };
 			vector<string> actual = parser.parseCondStmt(input);
 			Assert::AreEqual(expected == actual, true);
+		}
+
+		TEST_METHOD(count)
+		{
+			Parser parser = Parser();
+			string input = "read x;}}}}}}}}}";
+			int expected = 9;
+			int actual = parser.count(input, '}');
+			Assert::AreEqual(expected, actual);
 		}
 	};
 }
