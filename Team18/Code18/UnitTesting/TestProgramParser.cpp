@@ -195,6 +195,15 @@ namespace UnitTesting
 			Assert::AreEqual(expected == actual, true);
 		}
 
+		TEST_METHOD(ParseConditionTest10)
+		{
+			Parser parser = Parser();
+			string input = "(x>a+1)";
+			vector<string> expected{ "x", "a", "1" };
+			vector<string> actual = parser.parseCondition(input);
+			Assert::AreEqual(expected == actual, true);
+		}
+
 		TEST_METHOD(RemoveOuterBracketsTest)
 		{
 			Parser parser = Parser();

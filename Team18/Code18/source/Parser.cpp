@@ -560,7 +560,7 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 				}
 				else {
 					pkb.setVar(var);
-					//pkb.insertUsesRelation(currStmtNo, var);
+					pkb.insertUsesRelation(currStmtNo, var);
 					result.addUses(var);
 				}
 			}
@@ -706,23 +706,15 @@ vector<string> Parser::parseCondition(string condition) {
 			second = curr.substr(i + 1);
 		}
 	}
-	if (first.find("(") != string::npos) {
-		vector<string> subresult = parseAssignRHS(first);
-		for (string element : subresult) {
-			result.push_back(element);
-		}
+	
+	vector<string> subresultFirst = parseAssignRHS(first);
+	for (string element : subresultFirst) {
+		result.push_back(element);
 	}
-	else {
-		result.push_back(first);
-	}
-	if (second.find("(") != string::npos) {
-		vector<string> subresult = parseAssignRHS(second);
-		for (string element : subresult) {
-			result.push_back(element);
-		}
-	}
-	else {
-		result.push_back(second);
+	
+	vector<string> subresultSecond = parseAssignRHS(second);
+	for (string element : subresultSecond) {
+		result.push_back(element);
 	}
 	return result;
 }
