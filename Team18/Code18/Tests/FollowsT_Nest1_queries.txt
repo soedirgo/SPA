@@ -219,7 +219,7 @@ Select pn such that Follows*(15, 21)
 none
 5000
 45 - Query 45 - Test stmt that follows itself
-Stmt s;
+stmt s;
 Select s such that Follows*(s, s)
 none
 5000
