@@ -291,7 +291,7 @@ none
 59 - Select all assign that is child of an if
 assign a; if ifs;
 Select a such that Parent(ifs, a)
-9, 10, 11, 12, 18, 20, 26, 34
+9, 10, 11, 12, 18, 20, 26, 34, 39
 5000
 60 - Select while that is parent of itself
 while w;
@@ -401,11 +401,11 @@ Select s such that Uses(s, "x")
 81 - Select all assign that uses high
 assign a;
 Select a such that Uses(a, "high")
-14, 25, 27, 28, 29
+28
 5000
 82 - Select all variables used by stmt 22
 variable v;
-Select v such that Uses(1, v)
+Select v such that Uses(22, v)
 dec
 5000
 83 - Select all stmt that uses a variable
@@ -450,7 +450,7 @@ none
 5000
 91 - Select all assign if stmt 15 modifies mid
 assign a;
-Select a such that Modifies(15, "y")
+Select a such that Modifies(15, "mid")
 1, 2, 4, 5, 9, 10, 11, 12, 18, 20, 26, 28, 30, 31, 34, 36, 39, 40
 5000
 92 - Select all stmt if an assign modifies x
@@ -516,12 +516,12 @@ Select pn such that Modifies(_, _)
 104 - Select all stmt that modifies x
 stmt s;
 Select s such that Modifies(s, "x")
-3
+1, 3
 5000
 105 - Select all assign that modifies h
 assign a;
 Select a such that Modifies(a, "h")
-38
+none
 5000
 106 - Select all variable that is modified by stmt 16
 variable v;
@@ -531,7 +531,7 @@ dec, low
 107 - Select all stmt that modifies a variable
 stmt s; variable v;
 Select s such that Modifies(s, v)
-1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 12, 16, 17, 18, 19, 20, 25, 26, 27, 28, 30, 31, 32, 33, 34, 35, 36, 38, 39, 40, 44
+1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 12, 15, 16, 17, 18, 19, 20, 25, 26, 27, 28, 30, 31, 32, 33, 34, 35, 36, 38, 39, 40, 44
 5000
 108 - Select all read that modifies a variable
 read r; variable v;
