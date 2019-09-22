@@ -1,0 +1,295 @@
+1 Queries 1 - 11 - Test selecting Parent* of different stmt type. Select parent* of read
+stmt s; read r;
+Select s such that Parent*(s, r)
+2, 5, 31
+5000
+2 - Select parent* of print
+stmt s; print pn;
+Select s such that Parent*(s, pn)
+2, 13, 15, 25, 27, 31
+5000
+3 - Select parent* of while
+stmt s; while w;
+Select s such that Parent*(s, w)
+25, 31
+5000
+4 - Select parent* of if
+stmt s; if ifs;
+Select s such that Parent*(s, ifs)
+2, 13
+5000
+5 - Select parent* of assign
+stmt s; assign a;
+Select s such that Parent*(s, a)
+2, 5, 13, 15, 25, 27, 31, 34
+5000
+6 - Select parent* of stmt#
+stmt s;
+Select s such that Parent*(s, 18)
+13, 15
+5000
+7 - Select parent* of wildcard
+stmt s;
+Select s such that Parent*(s, _)
+2, 5, 13, 15, 25, 27, 31, 34
+5000
+8 - Select while parent* of if
+while w; if ifs;
+Select w such that Parent*(s, ifs)
+13
+5000
+9 - Select if parent* of while
+if ifs; while w;
+Select ifs such that Parent*(ifs, w)
+31
+5000
+10 - Select read parent* of stmt
+read r; stmt s;
+Select r such that Parent*(r, s)
+none
+5000
+11 - Select assign parent* of stmt
+assign a; stmt s;
+Select a such that Parent*(a, s)
+none
+5000
+12 - Queries 12 - 17 - Test selecting if/while Parent* with different child* type. Select while parent* of stmt
+while w; stmt s;
+Select w such that Parent*(w, s)
+13, 25, 27, 34
+5000
+13 - Select while parent* of print
+while w; print pn;
+Select w such that Parent*(w, pn)
+13, 25, 27
+5000
+14 - Select while parent* of if
+while w; if ifs;
+Select w such that Parent*(w, ifs)
+13
+5000
+15 - Select if parent* of stmt
+if ifs; stmt s;
+Select ifs such that Parent*(ifs, s)
+2, 5, 15, 31
+5000
+16 - Select if parent* of assign
+if ifs; assign a;
+Select ifs such that Parent*(ifs, a)
+2, 5, 15, 31
+5000
+17 - Select if parent* of while
+if ifs; while w;
+Select ifs such that Parent*(ifs, w)
+31
+5000
+18 - Queries 18 - 23 Test selecting child* of different stmt type with while/if Parent*. Select stmt child* of while
+stmt s; while w; 
+Select s such that Parent*(w, s)
+14, 15, 16, 17, 18, 19, 20, 26, 27, 28, 29, 30, 35
+5000
+19 - Select print child* of while
+print pn; while w;
+Select pn such that Parent*(w, pn)
+18, 20, 29, 30
+5000
+20 - Select if child* of while
+if ifs; while w;
+Select ifs such that Parent*(w, ifs)
+15
+5000
+21 - Select stmt child* of if
+stmt s; if ifs;
+Select s such that Parent*(ifs, s)
+3, 4, 5, 6, 7, 8, 9, 10, 11, 16, 17, 18, 19, 32, 33, 34, 35, 36, 37
+5000
+22 - Select assign child* of if
+assign a; if ifs;
+Select a such that Parent*(ifs, a)
+4, 6, 8, 16, 17, 19, 32, 35
+5000
+23 - Select while child* of if
+while w; if ifs;
+Select w such that Parent*(ifs, w)
+34
+5000
+24 - Queries 24 - 27 - Test selecting child* of different Parent* type using integer/wildcard. Select child* of while
+stmt s;
+Select s such that Parent*(25, s)
+26, 27, 28, 29, 30
+5000
+25 - Select child* of if
+stmt s;
+Select s scuh that Parent*(31, s)
+32, 33, 34, 35, 36, 37
+5000
+26 - Select child* of assign
+stmt s;
+Select s such that Parent*(14, s)
+none
+5000
+27 - Select child* of wildcard
+stmt s;
+Select s such that Parent*(_, s)
+3, 4, 5, 6, 7, 8, 9, 10, 11, 14, 15, 16, 17, 18, 19, 20, 26, 27, 28, 29, 30, 32, 33, 34, 35, 36, 37
+5000
+28 - Queries 28 - 33 - Test sequential stmt# for while/if. Test sequential stmt# for while - true
+procedure proc;
+Select proc such that Parent*(13, 14)
+ParentTNest2
+5000
+29 - Test sequential stmt# for while - false
+procedure proc;
+Select proc such that Parent*(30, 31)
+none
+5000
+30 - Test sequential stmt# for while - reverse
+procedure proc;
+Select proc such that Parent*(14, 13)
+none
+5000
+31 - Test sequential stmt# for if - true
+procedure proc;
+Select proc such that Parent*(5, 6)
+ParentTNest2
+5000
+32 - Test sequential stmt# for if - false
+procedure proc;
+Select proc such that Parent*(19, 20)
+none
+5000
+33 - Test sequential stmt# for if - reverse
+procedure proc;
+Select proc such that Parent*(6, 5)
+none
+5000
+34 - Queries 34 - 39 - Test distant stmt# for while/if. Test distant stmt# for while - true
+print pn;
+Select pn such that Parent*(13, 20)
+10, 18, 20, 22, 29, 30, 36
+5000
+35 - Test distant stmt# for while - false
+print pn;
+Select pn such that Parent*(13, 24)
+none
+5000
+36 - Test distant stmt# for while - different while
+print pn;
+Select pn such that Parent*(25, 35)
+none
+5000
+37 - Test distant stmt# for if - true
+read r;
+Select r such that Parent*(31, 36)
+3, 7, 9, 11, 12, 21, 33
+5000
+38 - Test distant stmt# for if - false
+read r;
+Select r such that Parent*(11, 21)
+none
+5000
+39 - Test distant stmt# for if - reverse
+read r;
+Select r such that Parent*(36, 31)
+none
+5000
+40 - Query 40 - Test last stmt of procedure
+stmt s;
+Select s such that Parent*(37, s)
+none
+5000
+41 - Query 41 - Test stmt that is Parent* of itself
+stmt s;
+Select s such that Parent*(s, s)
+none
+5000
+42 - Query 42 - Test select all Parent* stmt
+stmt s, s1;
+Select s such that Parent*(s, s1)
+2, 5, 13, 15, 25, 27, 31, 34
+5000
+43 - Query 43 - Test select all child* stmt
+stmt s, s1;
+Select s1 such that Parent*(s, s1)
+3, 4, 5, 6, 7, 8, 9, 10, 11, 14, 15, 16, 17, 18, 19, 20, 26, 27, 28, 29, 30, 32, 33, 34, 35, 36, 37
+5000
+44 - Queries 44 - 51 - Test Parent* for while/if at different nesting level. Test nest0 while and nest1 stmt
+constant c;
+Select c such that Parent*(25, 27)
+1, 2, 4, 5, 20, 30, 100, 5000
+5000
+45 - Test nest0 while and nest2 stmt
+constant c;
+Select c such that Parent*(13, 18)
+1, 2, 4, 5, 20, 30, 100, 5000
+5000
+46 - Test nest1 while and nest1 stmt
+constant c;
+Select c such that Parent*(27, 30)
+none
+5000
+47 - Test nest1 while and nest2 stmt
+constant c;
+Select c such that Parent*(34, 35)
+1, 2, 4, 5, 20, 30, 100, 5000
+5000
+48 - Test nest0 if and nest1 stmt
+variable v;
+Select v such that Parent*(2, 4)
+x, y, z, i, j, k, t3st, apple, orange, pear, circle, square, factor, diff, target, why
+5000
+49 - Test nest0 if and nest2 stmt
+variable v;
+Select v such that Parent*(2, 7)
+x, y, z, i, j, k, t3st, apple, orange, pear, circle, square, factor, diff, target, why
+5000
+50 - Test nest1 if and nest1 stmt
+variable v;
+Select v such that Parent*(15, 20)
+none
+5000
+51 - Test nest1 if and nest2 stmt
+variable v;
+Select v such that Parent*(15, 19)
+x, y, z, i, j, k, t3st, apple, orange, pear, circle, square, factor, diff, target, why
+5000
+52 - Queries 52 - 59 - Test select different child* stmt type for while/if at different nesting level. Test nest0 while and assign child*
+assign a;
+Select a such that Parent*(13, a)
+14, 16, 17, 19
+5000
+53 - Test nest1 while and assign child*
+assign a;
+Select a such that Parent*(27, a)
+28
+5000
+54 - Test nest0 while and print child*
+print pn;
+Select pn such that Parent*(25, pn)
+29, 30
+5000
+55 - Test nest1 while and print child*
+print pn;
+Select pn such that Parent*(27, pn)
+29
+5000
+56 - Test nest0 if and assign child*
+assign a;
+Select a such that Parent*(31, a)
+32, 35
+5000
+57 - Test nest1 if and assign child*
+assign a;
+Select a such that Parent*(15, a)
+16, 17, 19
+5000
+58 - Test nest0 if and read child*
+read r;
+Select r such that Parent*(2, r)
+3, 7, 9, 11
+5000
+59 - Test nest1 if and read child*
+read r;
+Select r such that Parent*(5, r)
+7, 9
+5000

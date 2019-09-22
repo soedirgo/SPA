@@ -28,9 +28,9 @@ namespace UnitTesting
 			pkb.setVar("y");
 			pkb.setVar("z");
 
-			pkb.setConstant("1");
-			pkb.setConstant("1");
-			pkb.setConstant("1");
+			pkb.setConstant("1", 3);
+			pkb.setConstant("1", 4);
+			pkb.setConstant("1", 5);
 
 			pkb.setModifiesVarByStmt(1, "x");
 			pkb.setUsesVarByStmt(1, "x");
@@ -148,7 +148,7 @@ namespace UnitTesting
 		};
 		TEST_METHOD(getAllIfStmt)
 		{
-			unordered_set<int> stmtNoList = { 1,9,10 };
+			unordered_set<int> stmtNoList = { 1, 2,9,10 };
 			Assert::IsTrue(PKB().getAllIfStmt() == stmtNoList);
 		};
 

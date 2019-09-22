@@ -1,0 +1,150 @@
+1 - Query 1 - 8 test the RHS input types. Test RHS input synonym stmt
+stmt s, s1;
+Select s such that Follows(s, s1)
+1, 2, 3, 4, 7, 8, 9, 10, 11, 13, 14, 15, 16, 19
+5000
+2 - Test RHS input synonym read
+stmt s; read r;
+Select s such that Follows(s, r)
+2, 14
+5000
+3 - Test RHS input synonym print
+stmt s; print pn;
+Select s such that Follows(s, pn)
+4, 10, 19
+5000
+4 - Test RHS input synonym while
+stmt s; while w;
+Select s such that Follows(s, w)
+9, 16
+5000
+5 - Test RHS input synonym if
+stmt s; if ifs;
+Select s such that Follows(s, ifs)
+3, 15
+5000
+6 - Test RHS input synonym assign
+stmt s; assign a;
+Select s such that Follows(s, a)
+1, 7, 8, 11, 13
+5000
+7 - Test RHS input integer
+stmt s;
+Select s such that Follows(s, 7)
+4
+5000
+8 - Test RHS input wildcard
+stmt s;
+Select s such that Follows(s, _)
+1, 2, 3, 4, 7, 8, 9, 10, 11, 13, 14, 15, 16, 19
+5000
+9 - Queries 9 - 15 tests the LHS input types. Tests LHS input synonym read
+read r; stmt s;
+Select r such that Follows(r, s)
+3, 11, 15
+5000
+10 - Tests LHS input synonym print
+print pn; stmt s;
+Select pn such that Follows(pn, s)
+7, 13
+5000
+11 - Test LHS input synonym while
+while w; stmt s;
+Select w such that Follows(w, s)
+10, 19
+5000
+12 - Test LHS input synonym if
+if ifs; stmt s;
+Select ifs such that Follows(ifs, s)
+4, 16
+5000
+13 - Test LHS input synonym assign
+assign a; stmt s;
+Select a such that Follows(a, s)
+1, 2, 8, 9, 14
+5000
+14 - Test LHS input stmt#
+stmt s;
+Select s such that Follows(13, s)
+14
+5000
+15 - Test LHS input wildcard
+stmt s;
+Select s such that Follows(_, s)
+2, 3, 4, 7, 8, 9, 10, 12, 13, 14, 15, 16, 19, 21
+5000
+16 - Queries 16 - 18 test sequential stmt#. Test sequential stmt# - true
+constant c;
+Select c such that Follows(3, 4)
+0, 1, 2, 4, 7, 10
+5000
+17 - Test sequential stmt# - false
+constant c;
+Select c such that Follows(4, 5)
+none
+5000
+18 - Test reversed sequential stmt# - false 
+constant c;
+Select c such that Follows(2, 1)
+none
+5000
+19 - Queries 19 - 20 test distant stmt#. Test distant stmt# - true
+variable v;
+Select v such that Follows(4, 7)
+x, y, z, sum, count, inc, i, target
+5000
+20 - Test distant stmt# - false
+variable v;
+Select v such that Follows(9, 15)
+none
+5000
+21 - Queries 21 - 22 test first stmt in if/while. Test first stmt in if - false
+stmt s;
+Select s such that Follows(s, 5)
+none
+5000
+22 - Test first stmt in while - false
+stmt s;
+Select s such that Follows(s, 11)
+none
+5000
+23 - Queries 23 - 24 test last stmt in if/while. Test last stmt in if - false
+stmt s;
+Select s such that Follows(17, s)
+none
+5000
+24 - Test last stmt in while - false
+stmt s;
+Select s such that Follows(20, s)
+none
+5000
+25 - Query 25 test the last stmt of the procedure
+stmt s;
+Select s such that Follows(21, s)
+none
+5000
+26 - Query 26 test stmt that follows itself - false
+stmt s;
+Select s such that Follows(s, s)
+none
+5000
+27 - Queries 27 - 30 test stmt# at different nesting for it/while. Test stmt# into if
+read r;
+Select r such that Follows(16, 18)
+none
+5000
+28 - Test stmt# out of if
+read r;
+Select r such that Follows(18, 19)
+none
+5000
+29 - Test stmt# into while
+print pn;
+Select pn such that Follows(10, 11)
+none
+5000
+30 - Test stmt# out of while
+print pn;
+Select pn such that Follows(12, 13)
+none
+5000

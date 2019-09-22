@@ -2,7 +2,9 @@
 
 #include<stdio.h>
 #include <iostream>
+#include <fstream>
 #include <string>
+#include "NestedResult.h"
 
 using namespace std;
 
@@ -17,10 +19,14 @@ public:
 	string parsePrint(std::string line);
 	string parseAssignInit(std::string line);
 	vector<string> parseAssignRHS(std::string varUse);
-	vector<string> parseIf(int stmtNo);
-	vector<string> parseWhile(int stmtNo);
+	NestedResult parseIf(std::string ifLine, int parentStmtNo);
+	NestedResult parseWhile(std:: string whileLine, int parentStmtNo);
+	vector<string> parseCondStmt(std::string line);
+	vector<string> parseCondition(std::string condition);
+	string removeOuterBrackets(std::string line);
 private:
 	PKB pkb;
+	ifstream programFile;
 	int stmtNo;
 };
 
