@@ -411,7 +411,7 @@ dec
 83 - Select all stmt that uses a variable
 stmt s;
 Select s such that Uses(s, v)
-5, 6, 8, 9, 10, 11, 12, 13, 14, 15, 16, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 35, 36, 37, 39, 40, 41, 42, 43
+5, 6, 8, 9, 10, 11, 12, 13, 14, 16, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 32, 33, 35, 36, 37, 39, 40, 41, 42, 43
 5000
 84 - Select all print that uses a variable
 print pn;
