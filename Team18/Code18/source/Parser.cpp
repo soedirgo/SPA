@@ -29,12 +29,12 @@ int Parser::Parse (string filename) {
 
 	while (getline(programFile, line)) {
 		//Process to parse each line
-		if (line.find("procedure ") != string::npos) {
+		if (line.find("procedure") != string::npos) {
 			string header = parseProc(line);
 			//Calls PKB API to set procedure name
 			pkb.setProc(header);
 		}
-		else if (line.find("while ") != string::npos) {
+		else if (line.find("while") != string::npos && line.find('{') != string::npos) {
 			pkb.setStmt(stmtNo, While);
 			nestingLevel++;
 			NestedResult results = parseWhile(line, stmtNo);
@@ -59,7 +59,7 @@ int Parser::Parse (string filename) {
 			prevStmtNo = stmtNo;
 			stmtNo = results.lastStmtNo;
 		}
-		else if (line.find("if ") != string::npos) {
+		else if (line.find("if") != string::npos && line.find('{') != string::npos) {
 			pkb.setStmt(stmtNo, If);
 			nestingLevel++;
 			NestedResult results = parseIf(line, stmtNo);
@@ -116,7 +116,7 @@ int Parser::Parse (string filename) {
 			prevStmtNo = stmtNo;
 			stmtNo++;
 		}
-		else if (line.find("read ") != string::npos) {
+		else if (line.find("read") != string::npos) {
 			//Gets the variable used in read stmt into readArg
 			string readArg = parseRead(line);
 			//Sets stmt information in PKB and then sets modifies variable for that stmt
@@ -130,7 +130,7 @@ int Parser::Parse (string filename) {
 			prevStmtNo = stmtNo;
 			stmtNo++;
 		}
-		else if (line.find("print ") != string::npos) {
+		else if (line.find("print") != string::npos) {
 			//Gets the variable used in print stmt into printArg
 			string printArg = parsePrint(line);
 			//Sets stmt information in PKB and then sets modifies variable for that stmt
@@ -276,7 +276,7 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 	}
 	while (getline(programFile, line)) {
 		//Process to parse each line
-		if (line.find("while ") != string::npos) {
+		if (line.find("while") != string::npos && line.find('{') != string::npos) {
 			pkb.setStmt(currStmtNo, While);
 			pkb.insertParentRelation(startStmtNo, currStmtNo);
 			nestingLevel++;
@@ -322,7 +322,7 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 				break;
 			}
 		}
-		else if (line.find("if ") != string::npos) {
+		else if (line.find("if") != string::npos && line.find('{') != string::npos) {
 			pkb.setStmt(currStmtNo, If);
 			pkb.insertParentRelation(startStmtNo, currStmtNo);
 			nestingLevel++;
@@ -419,7 +419,7 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 				break;
 			}
 		}
-		else if (line.find("read ") != string::npos) {
+		else if (line.find("read") != string::npos) {
 			//Gets the variable used in read stmt into readArg
 			string readArg = line;
 			if (readArg.find("}") != string::npos && passedElse) {
@@ -451,7 +451,7 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 				break;
 			}
 		}
-		else if (line.find("print ") != string::npos) {
+		else if (line.find("print") != string::npos) {
 			//Gets the variable used in print stmt into printArg
 			string printArg = line;
 			if (printArg.find("}") != string::npos && passedElse) {
@@ -514,7 +514,7 @@ NestedResult Parser::parseIfNestedInThen(string ifLine, int parentStmtNo) {
 	}
 	while (getline(programFile, line)) {
 		//Process to parse each line
-		if (line.find("while ") != string::npos) {
+		if (line.find("while") != string::npos && line.find('{') != string::npos) {
 			pkb.setStmt(currStmtNo, While);
 			pkb.insertParentRelation(startStmtNo, currStmtNo);
 			nestingLevel++;
@@ -560,7 +560,7 @@ NestedResult Parser::parseIfNestedInThen(string ifLine, int parentStmtNo) {
 				break;
 			}
 		}
-		else if (line.find("if ") != string::npos) {
+		else if (line.find("if") != string::npos && line.find('{') != string::npos) {
 			pkb.setStmt(currStmtNo, If);
 			pkb.insertParentRelation(startStmtNo, currStmtNo);
 			nestingLevel++;
@@ -657,7 +657,7 @@ NestedResult Parser::parseIfNestedInThen(string ifLine, int parentStmtNo) {
 				break;
 			}
 		}
-		else if (line.find("read ") != string::npos) {
+		else if (line.find("read") != string::npos) {
 			//Gets the variable used in read stmt into readArg
 			string readArg = line;
 			if (readArg.find("}") != string::npos && passedElse) {
@@ -689,7 +689,7 @@ NestedResult Parser::parseIfNestedInThen(string ifLine, int parentStmtNo) {
 				break;
 			}
 		}
-		else if (line.find("print ") != string::npos) {
+		else if (line.find("print") != string::npos) {
 			//Gets the variable used in print stmt into printArg
 			string printArg = line;
 			if (printArg.find("}") != string::npos && passedElse) {
@@ -750,7 +750,7 @@ NestedResult Parser::parseWhileNestedInThen(string whileLine, int parentStmtNo) 
 	}
 	while (getline(programFile, line)) {
 		//Process to parse each line
-		if (line.find("while ") != string::npos) {
+		if (line.find("while") != string::npos && line.find('{') != string::npos) {
 			pkb.setStmt(currStmtNo, While);
 			pkb.insertParentRelation(startStmtNo, currStmtNo);
 			nestingLevel++;
@@ -783,7 +783,7 @@ NestedResult Parser::parseWhileNestedInThen(string whileLine, int parentStmtNo) 
 				break;
 			}
 		}
-		else if (line.find("if ") != string::npos) {
+		else if (line.find("if") != string::npos && line.find('{') != string::npos) {
 			pkb.setStmt(currStmtNo, If);
 			pkb.insertParentRelation(startStmtNo, currStmtNo);
 			nestingLevel++;
@@ -860,7 +860,7 @@ NestedResult Parser::parseWhileNestedInThen(string whileLine, int parentStmtNo) 
 				break;
 			}
 		}
-		else if (line.find("read ") != string::npos) {
+		else if (line.find("read") != string::npos) {
 			//Gets the variable used in read stmt into readArg
 			string readArg = line;
 			if (readArg.find("}") != string::npos) {
@@ -885,7 +885,7 @@ NestedResult Parser::parseWhileNestedInThen(string whileLine, int parentStmtNo) 
 				break;
 			}
 		}
-		else if (line.find("print ") != string::npos) {
+		else if (line.find("print") != string::npos) {
 			//Gets the variable used in print stmt into printArg
 			string printArg = line;
 			if (printArg.find("}") != string::npos) {
@@ -933,7 +933,7 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 	}
 	while (getline(programFile, line)) {
 		//Process to parse each line
-		if (line.find("while ") != string::npos) {
+		if (line.find("while") != string::npos && line.find('{') != string::npos) {
 			pkb.setStmt(currStmtNo, While);
 			pkb.insertParentRelation(startStmtNo, currStmtNo);
 			nestingLevel++;
@@ -966,7 +966,7 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 				break;
 			}
 		}
-		else if (line.find("if ") != string::npos) {
+		else if (line.find("if") != string::npos && line.find('{') != string::npos) {
 			pkb.setStmt(currStmtNo, If);
 			pkb.insertParentRelation(startStmtNo, currStmtNo);
 			nestingLevel++;
@@ -1043,7 +1043,7 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 				break;
 			}
 		}
-		else if (line.find("read ") != string::npos) {
+		else if (line.find("read") != string::npos) {
 			//Gets the variable used in read stmt into readArg
 			string readArg = line;
 			if (readArg.find("}") != string::npos) {
@@ -1068,7 +1068,7 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 				break;
 			}
 		}
-		else if (line.find("print ") != string::npos) {
+		else if (line.find("print") != string::npos) {
 			//Gets the variable used in print stmt into printArg
 			string printArg = line;
 			if (printArg.find("}") != string::npos) {
