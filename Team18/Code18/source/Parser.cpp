@@ -431,7 +431,7 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 			pkb.setStmt(currStmtNo, Read);
 			pkb.insertParentRelation(startStmtNo, currStmtNo);
 
-			//pkb.insertModifiesRelation(currStmtNo, readArg);
+			pkb.insertModifiesRelation(currStmtNo, readArg);
 			pkb.setVar(readArg);
 			result.addModifies(readArg);
 
@@ -669,7 +669,7 @@ NestedResult Parser::parseIfNestedInThen(string ifLine, int parentStmtNo) {
 			pkb.setStmt(currStmtNo, Read);
 			pkb.insertParentRelation(startStmtNo, currStmtNo);
 
-			//pkb.insertModifiesRelation(currStmtNo, readArg);
+			pkb.insertModifiesRelation(currStmtNo, readArg);
 			pkb.setVar(readArg);
 			result.addModifies(readArg);
 
