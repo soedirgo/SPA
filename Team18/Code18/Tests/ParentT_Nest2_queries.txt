@@ -35,7 +35,7 @@ Select s such that Parent*(s, _)
 5000
 8 - Select while parent* of if
 while w; if ifs;
-Select w such that Parent*(s, ifs)
+Select w such that Parent*(w, ifs)
 13
 5000
 9 - Select if parent* of while
@@ -120,7 +120,7 @@ Select s such that Parent*(25, s)
 5000
 25 - Select child* of if
 stmt s;
-Select s scuh that Parent*(31, s)
+Select s such that Parent*(31, s)
 32, 33, 34, 35, 36, 37
 5000
 26 - Select child* of assign
@@ -181,7 +181,7 @@ none
 37 - Test distant stmt# for if - true
 read r;
 Select r such that Parent*(31, 36)
-3, 7, 9, 11, 12, 21, 33
+3, 7, 9, 11, 12, 21, 33, 37
 5000
 38 - Test distant stmt# for if - false
 read r;
