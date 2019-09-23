@@ -84,6 +84,10 @@ list<string> QueryParser::parse(string query) {
 	}
 
 	resultString = selectVariablesValidation(declerationVariables, selectVars);
+	if (resultString == "Invalid") {
+		finalOutput.push_back("");
+		return finalOutput;
+	}
 
 	//Find the next occurance of such that, push it to SuchThatClauses/PatternClauses. Continues till no more select statements
 	while (select.length() > 0 && currentIndex != -1) {
@@ -348,12 +352,18 @@ string QueryParser::initialValidation(string query) {
 		resultString = "Invalid";
 		return resultString;
 	}
+
+	return resultString;
 }
 
 string QueryParser::declarationsValidation(unordered_map<string, string> declerationVariables) {
 	//unordered_set<string> validTypes = { "stmt", "variable", "assign", "constant", "read", "while", "if", "print", "procedure" };
 
 	string resultString = "Okay";
+	if (declerationVariables.empty()) {
+		resultString = "Invalid";
+		return resultString;
+	}
 	//Iterate through the map of declaration variables and see if there's anything invalid
 	for (auto iterator : declerationVariables) {
 		//Not a valid type/Typos in declaration Type
@@ -383,6 +393,8 @@ string QueryParser::declarationsValidation(unordered_map<string, string> declera
 		}
 
 	}
+
+	return resultString;
 }
 
 string QueryParser::selectVariablesValidation(unordered_map<string, string> declerationVariables, string selectVars) {
@@ -524,8 +536,12 @@ string QueryParser::suchThatValidation(unordered_map<string, string> decleration
 		else if (suchThat[i].first == "Uses") {
 
 			// Validating first args
-			if (stoi(suchThat[i].second.first) > 0) {
+			string fl = suchThat[i].second.first;
+			int flag = std::stoi(fl);
+			if (std::stoi(suchThat[i].second.first) > 0) {
+				int flag2 = suchThat[i].second.first.length();
 				for (size_t i = 0; i < suchThat[i].second.first.length(); i++) {
+					int flag3 = !isdigit(suchThat[i].second.first[i]);
 					if (!isdigit(suchThat[i].second.first[i])) {
 						resultString = "Invalid";
 						return resultString;
@@ -571,7 +587,7 @@ string QueryParser::suchThatValidation(unordered_map<string, string> decleration
 			}
 
 			// Validating second args
-			if (stoi(suchThat[i].second.second) > 0) {
+			if (std::stoi(suchThat[i].second.second) > 0) {
 				for (size_t i = 0; i < suchThat[i].second.second.length(); i++) {
 					if (!isdigit(suchThat[i].second.second[i])) {
 						resultString = "Invalid";
@@ -620,7 +636,7 @@ string QueryParser::suchThatValidation(unordered_map<string, string> decleration
 		else if (suchThat[i].first == "Modifies") {
 
 			// Validating first args
-			if (stoi(suchThat[i].second.first) > 0) {
+			if (std::stoi(suchThat[i].second.first) > 0) {
 				for (size_t i = 0; i < suchThat[i].second.first.length(); i++) {
 					if (!isdigit(suchThat[i].second.first[i])) {
 						resultString = "Invalid";
@@ -665,7 +681,7 @@ string QueryParser::suchThatValidation(unordered_map<string, string> decleration
 			}
 
 			// Validating second args
-			if (stoi(suchThat[i].second.second) > 0) {
+			if (std::stoi(suchThat[i].second.second) > 0) {
 				for (size_t i = 0; i < suchThat[i].second.second.length(); i++) {
 					if (!isdigit(suchThat[i].second.second[i])) {
 						resultString = "Invalid";
