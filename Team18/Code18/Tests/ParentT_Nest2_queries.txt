@@ -34,8 +34,8 @@ Select s such that Parent*(s, _)
 2, 5, 13, 15, 25, 27, 31, 34
 5000
 8 - Select while parent* of if
-stmt s; while w; if ifs;
-Select w such that Parent*(s, ifs)
+while w; if ifs;
+Select w such that Parent*(w, ifs)
 13
 5000
 9 - Select if parent* of while
