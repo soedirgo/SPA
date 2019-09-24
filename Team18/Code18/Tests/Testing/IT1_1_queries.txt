@@ -414,7 +414,7 @@ Select s such that Uses(s, v)
 5, 6, 8, 9, 10, 11, 12, 13, 14, 16, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 32, 33, 35, 36, 37, 39, 40, 41, 42, 43
 5000
 84 - Select all print that uses a variable
-print pn;
+print pn; variable v;
 Select pn such that Uses(pn, v)
 6, 13, 14, 21, 22, 23, 24, 29, 37, 41, 42, 43
 5000

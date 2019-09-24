@@ -19,7 +19,7 @@ unordered_set<string> validClauseType = { "Parent", "Parent*", "Follows",
 		"Follows*", "Uses", "Modifies" };
 unordered_set<string> validArgs = { "stmt", "read", "print", "while", "if",
 	"assign" };
-unordered_set<string> validFirstArgsParent = { "stmt", "while", "if" };
+unordered_set<string> validFirstArgsParent = { "stmt", "while", "if","assign","print","read","if"};
 unordered_set<string> validFirstArgsUses = { "stmt", "print", "while", "if",
 	"assign", "procedure"};
 unordered_set<string> validFirstArgsModifies = { "stmt", "read", "while", "if",
@@ -518,7 +518,7 @@ string QueryParser::suchThatValidation(unordered_map<string, string> decleration
 		else if (suchThat[i].first == "Follows" || suchThat[i].first == "Follows*") {
 
 			// Validating first args
-			if (suchThat[i].first == "_" || validArgs.find(firstArgsType) != validArgs.end()) {
+			if (suchThat[i].second.first == "_" || validArgs.find(firstArgsType) != validArgs.end()) {
 				// valid first args
 			}
 
@@ -568,7 +568,11 @@ string QueryParser::suchThatValidation(unordered_map<string, string> decleration
 		else if (suchThat[i].first == "Uses") {
 
 			// Validating first args
-			if (isdigit(suchThat[0].second.first[0])) {
+			if (suchThat[i].second.first == "_") {
+				//valid
+			}
+			
+			else if (suchThat[i].second.first == "_" || isdigit(suchThat[0].second.first[0])) {
 				for (size_t j = 0; j < suchThat[i].second.first.length(); j++) {
 					if (!isdigit(suchThat[i].second.first[j])) {
 						resultString = "Invalid";
@@ -620,7 +624,11 @@ string QueryParser::suchThatValidation(unordered_map<string, string> decleration
 			}
 
 			// Validating second args
-			if (isdigit(suchThat[0].second.second[0])) {
+			if(suchThat[i].second.second == "_") {
+				//valid
+			}
+
+			else if (isdigit(suchThat[0].second.second[0])) {
 				for (size_t j = 0; j < suchThat[i].second.second.length(); j++) {
 					if (!isdigit(suchThat[i].second.second[j])) {
 						resultString = "Invalid";
@@ -674,7 +682,11 @@ string QueryParser::suchThatValidation(unordered_map<string, string> decleration
 		else if (suchThat[i].first == "Modifies") {
 
 			// Validating first args
-			if (isdigit(suchThat[0].second.first[0])) {
+			if (suchThat[i].second.first == "_") {
+				//valid
+			}
+
+			else if (isdigit(suchThat[0].second.first[0])) {
 				for (size_t j = 0; j < suchThat[i].second.first.length(); j++) {
 					if (!isdigit(suchThat[i].second.first[j])) {
 						resultString = "Invalid";
@@ -724,7 +736,11 @@ string QueryParser::suchThatValidation(unordered_map<string, string> decleration
 			}
 
 			// Validating second args
-			if (isdigit(suchThat[0].second.second[0])) {
+			if (suchThat[i].second.second == "_") {
+				//valid
+			}
+
+			else if (isdigit(suchThat[0].second.second[0])) {
 				for (size_t j = 0; j < suchThat[i].second.second.length(); j++) {
 					if (!isdigit(suchThat[i].second.second[j])) {
 						resultString = "Invalid";

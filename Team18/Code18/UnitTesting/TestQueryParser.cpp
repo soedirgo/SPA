@@ -217,10 +217,6 @@ namespace UnitTesting
             //Assert::IsTrue(expected == actual);
 
             expected = { "" };
-            actual = QueryParser::parse("stmt s; variable v; Select s such that Uses(_, v)");
-            Assert::IsTrue(expected == actual);
-
-            expected = { "" };
             actual = QueryParser::parse("stmt s; variable v; Select s such that Uses(v, s)");
             Assert::IsTrue(expected == actual);
 
