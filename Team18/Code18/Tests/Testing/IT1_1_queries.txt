@@ -661,7 +661,7 @@ Select a pattern a(_, _"3"_)
 133 - Select all assign that has pattern some variable and RHS i
 assign a;
 Select a pattern a(_, _"i"_)
-11, 40
+9, 11, 40
 5000
 134 - Select all assign that has pattern some variable and RHS inc
 assign a;
@@ -670,6 +670,6 @@ Select a pattern a(_, _"inc"_)
 5000
 135 - Select all variable in assign pattern LHS variable and RHS some variable
 variable v; assign a;
-Select v pattern a(v, _)
+Select a pattern a(v, _)
 1, 2, 4, 5, 9, 10, 11, 12, 18, 20, 26, 28, 30, 31, 34, 36, 39, 40
 5000
