@@ -246,7 +246,13 @@ bool PKB::setConstant(string constantName, int stmtNo) {
 }
 
 unordered_set<int> PKB::getStmtByConst(string constantName) {
-	return constantTable[constantName];
+	unordered_set<int> empty;
+	if (PKB::isConstantExist(constantName)) {
+		return constantTable[constantName];
+	}
+	else {
+		return empty;
+	}
 }
 
 
