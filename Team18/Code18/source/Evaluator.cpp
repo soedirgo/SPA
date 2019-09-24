@@ -242,21 +242,19 @@ namespace Evaluator {
             // possible explicit ``a''s in pattern a(v, _)
             unordered_set<string> enumeratedStmt = enumerateStmt(clause.first, fil);
             // possible explicit ``v''s in pattern a(v, _)
-            unordered_set<string> enumeratedLhs;
+            unordered_set<string> enumeratedLhs = enumerateVar(clause.second.first, fil);
             // possible explicit ``_''s in pattern a(v, _)
-            unordered_set<string> enumeratedRhs;
+            unordered_set<string> enumeratedRhs = enumerateFactor(clause.second.second, fil);
             // for each a
             for (const auto& assign : enumeratedStmt) {
 				if (declarations.count(clause.first))
 					fil[clause.first] = assign;
-                enumeratedLhs = enumerateVar(clause.second.first, fil);
                 // for each of the modified variables
                 for (const auto& lhs : enumeratedLhs) {
                     if (!PKB::isModifiesStmtVar(stoi(assign), lhs))
                         continue;
                     if (declarations.count(clause.second.first))
                         fil[clause.second.first] = lhs;
-                    enumeratedRhs = enumerateFactor(clause.second.second, fil);
                     // for each possible explicit ``_'' in pattern a(v, _)
                     for (const auto& rhs : enumeratedRhs) {
                         if (declarations.count(clause.second.second))

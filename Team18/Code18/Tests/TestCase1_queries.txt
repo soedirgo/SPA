@@ -115,7 +115,7 @@ Select pn such that Follows(pn, _) pattern a("x", _)
 5000
 24 - Select result related to both, Follows and pattern assign
 assign a; stmt s;
-Select a such that Follows(a, s) pattern(_, _"y"_)
+Select a such that Follows(a, s) pattern a(_, _"y"_)
 6
 5000
 25 - Select result not related, Follows* and pattern assign

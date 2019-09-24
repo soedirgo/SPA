@@ -521,7 +521,7 @@ none
 105 - Uses and pattern assign merge result - result
 assign a; variable v;
 Select v such that Uses(a, v) pattern a("z", v)
-x, y
+none
 5000
 106 - Uses and pattern assign merge result - none
 assign a; variable v;
@@ -581,7 +581,7 @@ none
 117 - Reverse clause order of query 105
 assign a; variable v;
 Select v pattern a("z", v) such that Uses(a, v)
-x, y
+none
 5000
 118 - Reverse clause order of query 106
 assign a; variable v;
