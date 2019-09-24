@@ -351,7 +351,15 @@ bool PKB::setUsesStmtByVar(STMT_NO stmtNo, string varName) {
 }
 
 STMT_LIST PKB::getUsesStmtByVar(string varName) {
-	return stmtUsesByVarTable[varName];
+	unordered_set<int> empty;
+	unordered_set<string> varList = getAllUsesVar();
+	if (varList.find(varName) != varList.end()) {
+		return stmtUsesByVarTable[varName];
+	}
+	else {
+		return empty;
+	}
+	
 }
 
 VAR_LIST PKB::getAllUsesVar() {
