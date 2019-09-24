@@ -201,7 +201,7 @@ none
 41 - Select result related to s.t., Uses and pattern assign - TT
 assign a, ares;
 Select ares such that Uses(ares, _) pattern a(_, _)
-1, 2, 7, 11, 17, 19
+7, 11, 19
 5000
 42 - Select result related to s.t., Uses and pattern assign - TF
 assign a, ares; variable v;

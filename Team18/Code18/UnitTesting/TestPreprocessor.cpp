@@ -29,28 +29,6 @@ namespace UnitTesting
 
             input = "stmt    s;   Select  s  such that  Modifies(  s, \"x\")";
             Assert::IsTrue(Preprocessor::isValid(input));
-            //list<string> expected;
-            //list<string> actual;
-
-            //expected = { "1", "2", "3", "4", "5", "6", "7", "8" };
-            //actual = QueryParser::parse("stmt s; Select s");
-            //Assert::IsTrue(expected == actual);
-
-            //expected = { "1", "2", "3", "4", "5", "6", "7", "8" };
-            //actual = QueryParser::parse("stmt s123; Select s123");
-            //Assert::IsTrue(expected == actual);
-
-            //expected = {};
-            //actual = QueryParser::parse("variable v; Select v such that Uses(1, v)");
-            //Assert::IsTrue(expected == actual);
-
-            //expected = { "1", "2", "3", "7" };
-            //actual = QueryParser::parse("stmt s1,   s2; Select     s1 such that Follows  (s1   ,   s2)");
-            //Assert::IsTrue(expected == actual);
-
-            //expected = { "1", "6", "7" };
-            //actual = QueryParser::parse("stmt    s;   Select  s  such that  Modifies(  s, _\"x\"_)");
-            //Assert::IsTrue(expected == actual);
         }
         TEST_METHOD(invalidQueries)
         {
