@@ -4,6 +4,7 @@
 #include "Evaluator.h"
 #include "QueryParser.h"
 #include "DesignExtractor.h"
+#include "Preprocessor.h"
 
 // implementation code of WrapperFactory - do NOT modify the next 5 lines
 AbstractWrapper* WrapperFactory::wrapper = 0;
@@ -37,7 +38,12 @@ void TestWrapper::parse(std::string filename) {
 
 	// call your parser to do the parsing
 	Parser parser = Parser();
-	parser.Parse(filename);
+	try {
+		parser.Parse(filename);
+	}
+	catch (int e) {
+		cout << "line contains more than 1 ; at line: " << e;
+	}
 
 	DesignExtractor designExtractor = DesignExtractor();
 	designExtractor.extractDesign();
@@ -48,6 +54,10 @@ void TestWrapper::parse(std::string filename) {
 void TestWrapper::evaluate(std::string query, std::list<std::string>& results){
 // call your evaluator to evaluate the query here
   // ...code to evaluate query...
+    if (!Preprocessor::isValid(query)) {
+        results = {};
+        return;
+    }
 	QueryParser queryParser = QueryParser();
 	list<string> evResult = queryParser.parse(query);
 

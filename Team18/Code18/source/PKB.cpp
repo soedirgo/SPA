@@ -246,7 +246,13 @@ bool PKB::setConstant(string constantName, int stmtNo) {
 }
 
 unordered_set<int> PKB::getStmtByConst(string constantName) {
-	return constantTable[constantName];
+	unordered_set<int> empty;
+	if (PKB::isConstantExist(constantName)) {
+		return constantTable[constantName];
+	}
+	else {
+		return empty;
+	}
 }
 
 
@@ -345,7 +351,15 @@ bool PKB::setUsesStmtByVar(STMT_NO stmtNo, string varName) {
 }
 
 STMT_LIST PKB::getUsesStmtByVar(string varName) {
-	return stmtUsesByVarTable[varName];
+	unordered_set<int> empty;
+	unordered_set<string> varList = getAllUsesVar();
+	if (varList.find(varName) != varList.end()) {
+		return stmtUsesByVarTable[varName];
+	}
+	else {
+		return empty;
+	}
+	
 }
 
 VAR_LIST PKB::getAllUsesVar() {

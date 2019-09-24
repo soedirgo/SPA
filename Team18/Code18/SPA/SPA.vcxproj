@@ -14,46 +14,31 @@
     <!-- <ClCompile Include="..\source\Clause.cpp" /> -->
     <!-- <ClCompile Include="..\source\DesignExtractor.cpp" /> -->
     <!-- <ClCompile Include="..\source\Evaluator.cpp" /> -->
+    <!-- <ClCompile Include="..\source\NestedResult.cpp" /> -->
     <!-- <ClCompile Include="..\source\Parser.cpp" /> -->
     <!-- <ClCompile Include="..\source\PKB.cpp" /> -->
+    <!-- <ClCompile Include="..\source\PKBFollow.cpp" /> -->
+    <!-- <ClCompile Include="..\source\PKBParent.cpp" /> -->
     <!-- <ClCompile Include="..\source\Query.cpp" /> -->
     <!-- <ClCompile Include="..\source\QueryParser.cpp" /> -->
     <!-- <ClCompile Include="..\source\TNode.cpp" /> -->
-    <ClCompile Include="..\source\Clause.cpp" />
-    <ClCompile Include="..\source\DesignExtractor.cpp" />
-    <ClCompile Include="..\source\Evaluator.cpp" />
-    <ClCompile Include="..\source\NestedResult.cpp" />
-    <ClCompile Include="..\source\Parser.cpp" />
-    <ClCompile Include="..\source\PKB.cpp" />
-    <ClCompile Include="..\source\PKBFollow.cpp" />
-    <ClCompile Include="..\source\PKBParent.cpp" />
-    <ClCompile Include="..\source\Query.cpp" />
-    <ClCompile Include="..\source\QueryParser.cpp" />
-    <ClCompile Include="..\source\TNode.cpp" />
+    <ClCompile Include="..\source\*.cpp" />
   </ItemGroup>
   <ItemGroup>
     <!-- <ClInclude Include="..\source\Clause.h" /> -->
+    <!-- <ClInclude Include="..\source\DesignExtractor.h" /> -->
     <!-- <ClInclude Include="..\source\Entity.h" /> -->
+    <!-- <ClInclude Include="..\source\Evaluator.h" /> -->
+    <!-- <ClInclude Include="..\source\NestedResult.h" /> -->
     <!-- <ClInclude Include="..\source\Parser.h" /> -->
     <!-- <ClInclude Include="..\source\PKB.h" /> -->
-    <!-- <ClInclude Include="..\source\Relationship.h" /> -->
-    <!-- <ClInclude Include="..\source\Evaluator.h" /> -->
+    <!-- <ClInclude Include="..\source\PKBFollow.h" /> -->
+    <!-- <ClInclude Include="..\source\PKBParent.h" /> -->
     <!-- <ClInclude Include="..\source\Query.h" /> -->
     <!-- <ClInclude Include="..\source\QueryParser.h" /> -->
+    <!-- <ClInclude Include="..\source\Relationship.h" /> -->
     <!-- <ClInclude Include="..\source\TNode.h" /> -->
-    <ClInclude Include="..\source\Clause.h" />
-    <ClInclude Include="..\source\DesignExtractor.h" />
-    <ClInclude Include="..\source\Entity.h" />
-    <ClInclude Include="..\source\Evaluator.h" />
-    <ClInclude Include="..\source\NestedResult.h" />
-    <ClInclude Include="..\source\Parser.h" />
-    <ClInclude Include="..\source\PKB.h" />
-    <ClInclude Include="..\source\PKBFollow.h" />
-    <ClInclude Include="..\source\PKBParent.h" />
-    <ClInclude Include="..\source\Query.h" />
-    <ClInclude Include="..\source\QueryParser.h" />
-    <ClInclude Include="..\source\Relationship.h" />
-    <ClInclude Include="..\source\TNode.h" />
+    <ClInclude Include="..\source\*.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{DC21A1EA-D2C6-4D14-A2B4-E025B64BDE81}</ProjectGuid>
