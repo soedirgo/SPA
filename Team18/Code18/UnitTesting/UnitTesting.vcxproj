@@ -175,6 +175,7 @@
     </ClCompile>
     <ClCompile Include="TestAST.cpp" />
     <ClCompile Include="TestPKBWrappers.cpp" />
+    <ClCompile Include="TestPreprocessor.cpp" />
     <ClCompile Include="TestProgramParser.cpp" />
     <ClCompile Include="TestQueryParser.cpp" />
   </ItemGroup>
