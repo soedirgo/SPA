@@ -140,91 +140,69 @@ namespace UnitTesting
             list<string> expected;
             list<string> actual;
 
-            expected = { "" };
             actual = QueryParser::parse("");
             Assert::IsTrue(expected == actual);
 
-            expected = { "" };
             actual = QueryParser::parse("foo");
             Assert::IsTrue(expected == actual);
 
-            expected = { "" };
             actual = QueryParser::parse("Select");
             Assert::IsTrue(expected == actual);
 
-            expected = { "" };
             actual = QueryParser::parse("Select 1");
             Assert::IsTrue(expected == actual);
 
-            expected = { "" };
             actual = QueryParser::parse("Select s");
             Assert::IsTrue(expected == actual);
 
-            expected = { "" };
             actual = QueryParser::parse("stmt s; Selct s");
             Assert::IsTrue(expected == actual);
 
-            expected = { "" };
             actual = QueryParser::parse("stmt s; select s");
             Assert::IsTrue(expected == actual);
 
-            expected = { "" };
             actual = QueryParser::parse("stmt s Select s");
             Assert::IsTrue(expected == actual);
 
-            expected = { "" };
             actual = QueryParser::parse("foo s; Select s");
             Assert::IsTrue(expected == actual);
 
-            expected = { "" };
             actual = QueryParser::parse("stmt s 1; Select s");
             Assert::IsTrue(expected == actual);
 
-            expected = { "" };
             actual = QueryParser::parse("stmt s*; Select s*");
             Assert::IsTrue(expected == actual);
 
-            expected = { "" };
             actual = QueryParser::parse("stmt s, Select s");
             Assert::IsTrue(expected == actual);
 
-            expected = { "" };
             actual = QueryParser::parse("assign a; Select a such that Uses(a)");
             Assert::IsTrue(expected == actual);
 
-            expected = { "" };
             actual = QueryParser::parse("stmt s; Select s suchthat Uses(s, \"x\")");
             Assert::IsTrue(expected == actual);
 
-            expected = { "" };
             actual = QueryParser::parse("stmt s; variable v; Select s Uses(s, v)");
             Assert::IsTrue(expected == actual);
 
-            expected = { "" };
             actual = QueryParser::parse("stmt s1, s2; Select s such that Foo(s1, s2)");
             Assert::IsTrue(expected == actual);
 
-			expected = { "" };
 			actual = QueryParser::parse("stmt    s;   Select  s  such that  Modifies(  s, _\"x\"_)");
 			Assert::IsTrue(expected == actual);
 
-            expected = { "" };
             //actual = QueryParser::parse("stmt s; variable v; Select s such that Uses(s, v) pattern (v, _)");
             Assert::IsTrue(expected == actual);
 
-            expected = { "" };
             //actual = QueryParser::parse("assign a; variable v; Select a such that Uses(a, v) and pattern a(v, _)");
             //Assert::IsTrue(expected == actual);
 
-            expected = { "" };
             actual = QueryParser::parse("stmt s; variable v; Select s such that Uses(v, s)");
             Assert::IsTrue(expected == actual);
 
-			expected = { "" };
 			actual = QueryParser::parse("stmt v; variable s; Select s such that Uses(s, v)");
 			Assert::IsTrue(expected == actual);
 
-			expected = { "" };
 			actual = QueryParser::parse("stmt s; variable v; Select s such that Modifies(v, v)");
 			Assert::IsTrue(expected == actual);
         }
