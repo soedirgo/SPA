@@ -177,6 +177,7 @@
     <ClCompile Include="TestPKBWrappers.cpp" />
     <ClCompile Include="TestProgramParser.cpp" />
     <ClCompile Include="TestQueryParser.cpp" />
+    <ClCompile Include="TestPreprocessor.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
