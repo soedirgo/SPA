@@ -120,7 +120,7 @@ Select a such that Follows(a, s) pattern(_, "y")
 5000
 25 - Select result not related, Follows* and pattern assign
 assign a; if ifs; constant c;
-Select pattern a("z", _"z"_) such that Follows*(ifs, 15)
+Select c pattern a("z", _"z"_) such that Follows*(ifs, 15)
 1, 2, 4
 5000
 26 - Select result related to 1 clause, Follows* and pattern assign
