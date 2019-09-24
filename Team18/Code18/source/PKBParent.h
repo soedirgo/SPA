@@ -31,7 +31,7 @@ public:
 	static std::unordered_set<int> getAllParent();
 
 private:
-	static std::unordered_map<int, int> parentTable;
-	static std::unordered_map<int, std::unordered_set<int>> childTable;
+	static std::unordered_map<int, int> childTable;
+	static std::unordered_map<int, std::unordered_set<int>> parentTable;
 	static std::unordered_map<int, std::unordered_set<int>> parentStarTable;
 };
