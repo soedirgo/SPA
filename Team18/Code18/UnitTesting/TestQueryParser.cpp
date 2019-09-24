@@ -41,8 +41,7 @@ namespace UnitTesting
             pkb.setStmt(1, Assign);
             pkb.setAssignStmt(1, "x");
             pkb.setVar("x");
-            pkb.
-				("1", 1);
+            pkb.setConstant("1", 1);
             pkb.setModifiesVarByStmt(1, "x");
 
             pkb.setStmt(2, Assign);
@@ -195,8 +194,8 @@ namespace UnitTesting
             //actual = QueryParser::parse("stmt s; variable v; Select s such that Uses(s, v) pattern (v, _)");
             Assert::IsTrue(expected == actual);
 
-            //actual = QueryParser::parse("assign a; variable v; Select a such that Uses(a, v) and pattern a(v, _)");
-            //Assert::IsTrue(expected == actual);
+            actual = QueryParser::parse("assign a; variable v; Select a such that Uses(a, v) and pattern a(v, _)");
+            Assert::IsTrue(expected == actual);
 
             actual = QueryParser::parse("stmt s; variable v; Select s such that Uses(v, s)");
             Assert::IsTrue(expected == actual);
