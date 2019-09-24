@@ -108,11 +108,10 @@ namespace Evaluator {
                         factors.insert(cons);
                     }
                 }
-			} else if (PKB::getAllVar().count(factorRef)
-                       || PKB::getAllConstant().count(factorRef)) {
+            } else if (factorRef.front() == '\"' && factorRef.back() == '\"') {
                 // factorRef is an explicit name
-				factors.insert(factorRef);
-			} else { // factorRef is a ``_''
+                factors.insert(factorRef.substr(1, factorRef.length() - 2));
+            } else { // factorRef is a ``_''
 				for (const auto& var : PKB::getAllVar()) {
 					factors.insert(var);
 				}
@@ -127,10 +126,11 @@ namespace Evaluator {
                       vector<pair<string, pair<string, string>>> cls,
                       unordered_map<string, string> fil) {
 			unordered_set<string> enumeratedStmt = enumerateStmt(clause.second.first, fil);
-			unordered_set<string> enumeratedVar = enumerateVar(clause.second.second, fil);
+            unordered_set<string> enumeratedVar;
 			for (const auto& s : enumeratedStmt) {
 				if (declarations.count(clause.second.first))
 					fil[clause.second.first] = s;
+                enumeratedVar = enumerateVar(clause.second.second, fil);
 				for (const auto& v : enumeratedVar) {
 					if (declarations.count(clause.second.second))
 						fil[clause.second.second] = v;
@@ -145,10 +145,11 @@ namespace Evaluator {
                           vector<pair<string, pair<string, string>>> cls,
                           unordered_map<string, string> fil) {
 			unordered_set<string> enumeratedStmt = enumerateStmt(clause.second.first, fil);
-			unordered_set<string> enumeratedVar = enumerateVar(clause.second.second, fil);
+			unordered_set<string> enumeratedVar;
 			for (const auto& s : enumeratedStmt) {
 				if (declarations.count(clause.second.first))
 					fil[clause.second.first] = s;
+                enumeratedVar = enumerateVar(clause.second.second, fil);
 				for (const auto& v : enumeratedVar) {
 					if (declarations.count(clause.second.second))
 						fil[clause.second.second] = v;
@@ -163,10 +164,11 @@ namespace Evaluator {
                          vector<pair<string, pair<string, string>>> cls,
                          unordered_map<string, string> fil) {
             unordered_set<string> enumeratedLhs = enumerateStmt(clause.second.first, fil);
-            unordered_set<string> enumeratedRhs = enumerateStmt(clause.second.second, fil);
+            unordered_set<string> enumeratedRhs;
             for (const auto& lhs : enumeratedLhs) {
 				if (declarations.count(clause.second.first))
 					fil[clause.second.first] = lhs;
+                enumeratedRhs = enumerateStmt(clause.second.second, fil);
                 for (const auto& rhs : enumeratedRhs) {
                     if (declarations.count(clause.second.first))
                         fil[clause.second.first] = rhs;
@@ -181,10 +183,11 @@ namespace Evaluator {
                           vector<pair<string, pair<string, string>>> cls,
                           unordered_map<string, string> fil) {
             unordered_set<string> enumeratedLhs = enumerateStmt(clause.second.first, fil);
-            unordered_set<string> enumeratedRhs = enumerateStmt(clause.second.second, fil);
+            unordered_set<string> enumeratedRhs;
             for (const auto& lhs : enumeratedLhs) {
 				if (declarations.count(clause.second.first))
 					fil[clause.second.first] = lhs;
+                enumeratedRhs = enumerateStmt(clause.second.second, fil);
                 for (const auto& rhs : enumeratedRhs) {
                     if (declarations.count(clause.second.first))
                         fil[clause.second.first] = rhs;
@@ -199,10 +202,11 @@ namespace Evaluator {
                         vector<pair<string, pair<string, string>>> cls,
                         unordered_map<string, string> fil) {
             unordered_set<string> enumeratedLhs = enumerateStmt(clause.second.first, fil);
-            unordered_set<string> enumeratedRhs = enumerateStmt(clause.second.second, fil);
+            unordered_set<string> enumeratedRhs;
             for (const auto& lhs : enumeratedLhs) {
 				if (declarations.count(clause.second.first))
 					fil[clause.second.first] = lhs;
+                enumeratedRhs = enumerateStmt(clause.second.second, fil);
                 for (const auto& rhs : enumeratedRhs) {
                     if (declarations.count(clause.second.first))
                         fil[clause.second.first] = rhs;
@@ -217,10 +221,11 @@ namespace Evaluator {
                          vector<pair<string, pair<string, string>>> cls,
                          unordered_map<string, string> fil) {
             unordered_set<string> enumeratedLhs = enumerateStmt(clause.second.first, fil);
-            unordered_set<string> enumeratedRhs = enumerateStmt(clause.second.second, fil);
+            unordered_set<string> enumeratedRhs;
             for (const auto& lhs : enumeratedLhs) {
 				if (declarations.count(clause.second.first))
 					fil[clause.second.first] = lhs;
+                enumeratedRhs = enumerateStmt(clause.second.second, fil);
                 for (const auto& rhs : enumeratedRhs) {
                     if (declarations.count(clause.second.first))
                         fil[clause.second.first] = rhs;
@@ -244,24 +249,21 @@ namespace Evaluator {
             for (const auto& assign : enumeratedStmt) {
 				if (declarations.count(clause.first))
 					fil[clause.first] = assign;
-                // get the variables modified by a (only 1 since it is an assignment)
-                unordered_set<string> varsModified = PKB::getModifiesVarByStmt(stoi(assign));
-                // for each of those variables
-                for (const auto& lhs : varsModified) {
+                // for each of the modified variables
+                for (const auto& lhs : enumeratedLhs) {
+                    if (!PKB::isModifiesStmtVar(stoi(assign), lhs))
+                        continue;
                     if (declarations.count(clause.second.first))
                         fil[clause.second.first] = lhs;
-                    // if it is a possible candidate for ``v'' in pattern a(v, _)
-                    if (count(enumeratedLhs.begin(), enumeratedLhs.end(), lhs)) {
-                        // for each possible explicit ``_'' in pattern a(v, _)
-                        for (const auto& rhs : enumeratedRhs) {
-                            if (declarations.count(clause.second.second))
-                                fil[clause.second.second] = rhs;
-                            // check if it is used in the assignment
-                            if (PKB::isConstUsedInAssign(stoi(assign), rhs)
-                                || PKB::isVarUsedInAssign(stoi(assign), rhs))
-                                return evalClauses(cls, fil);
+                    // for each possible explicit ``_'' in pattern a(v, _)
+                    for (const auto& rhs : enumeratedRhs) {
+                        if (declarations.count(clause.second.second))
+                            fil[clause.second.second] = rhs;
+                        // check if it is used in the assignment
+                        if (PKB::isConstUsedInAssign(stoi(assign), rhs)
+                            || PKB::isVarUsedInAssign(stoi(assign), rhs))
+                            return evalClauses(cls, fil);
                         }
-                    }
                 }
             }
             return false;

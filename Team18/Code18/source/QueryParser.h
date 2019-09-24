@@ -30,4 +30,12 @@ public:
 	static std::string removeSpaces(std::string s, std::string whitespace);
 
 	static int getMinimumIndex(std::vector<int> indexes);
+
+	static std::string initialValidation(std::string query);
+
+	static std::string declarationsValidation(std::unordered_map<std::string, std::string> declerationVariables);
+
+	static std::string selectVariablesValidation(std::unordered_map<std::string, std::string> declerationVariables, std::string selectVars);
+
+	static std::string suchThatValidation(std::unordered_map<std::string, std::string> declerationVariables, std::vector<std::pair<std::string, std::pair<std::string, std::string>>> suchThat);
 };

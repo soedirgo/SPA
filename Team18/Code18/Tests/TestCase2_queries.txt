@@ -1,0 +1,195 @@
+1 - Queries 1 - 3 - Test Follows relation. First stmt Follows - false
+stmt s;
+Select s such that Follows(s, 1)
+none
+5000
+2 - Lasst stmt Followed by - false
+stmt s;
+Select s such that Follows(23, s)
+none
+5000
+3 - Reverse stmt# - false
+stmt s;
+Select s such that Follows(2, 1)
+none
+5000
+4 - Queries 4 - 6 - Test Follows* relation. First stmt Follows* - false
+stmt s;
+Select s such that Follows*(s, 1)
+none
+5000
+5 - Last stmt Followed* by - false
+stmt s;
+Select s such that Follows*(23, s)
+none
+5000
+6 - Reverse stmt# - false
+stmt s;
+Select s such that Follows*(18, 2)
+none
+5000
+7 - Queries 7 - 9 - Test Parent relation. Reverse stmt# - false
+print pn;
+Select pn such that Parent(10, 4)
+none
+5000
+8 - Stmt in different container - false
+print pn;
+Select pn such that Parent(6, 14)
+none
+5000
+9 - Last stmt is parent - false
+print pn;
+Select pn such that Parent(23, _)
+none
+5000
+10 - Queries 10 - 12 - Test Parent* relation. Reverse stmt# - false
+read r;
+Select r such that Parent*(15, 12)
+none
+5000
+11 - Stmt in different container - false
+read r;
+Select r such that Parent*(4, 15)
+none
+5000
+12 - Last stmt is parent - false
+stmt s;
+Select s such that Parent*(23, s)
+none
+5000
+13 - Queries 13 - 15 - Test Uses relation. assign modified but not used - false
+assign a; variable v;
+Select a such that Uses(2, v)
+none
+5000
+14 - Uses read stmt - false
+read r; variable v;
+Select r such that Uses(r, v)
+none
+5000
+15 - Container variable modified but not used - false
+procedure proc;
+Select proc such that Uses(22, glass)
+none
+5000
+16 - Queries 16 - 18 - Test Modifies relation. assign used but not modified  - false
+assign a;
+Select a such that Modifies(a, "z")
+none
+5000
+17 - Modifies print stmt - false
+print pn; variable v;
+Select pn such that Modifies(pn, v)
+none
+5000
+18 - Container variable used but not modified - false
+stmt s;
+Select s such that Modifies(20, stat)
+none
+5000
+19 - Queries 19 - 21 - Test pattern assign relation. Select result not related - false
+assign a; while w;
+Select w pattern a("glass", _)
+none
+5000
+20 - Select assign related - false
+assign a;
+Select a pattern a(_, _"basket"_)
+none
+5000
+21 - Select variable related - false
+assign a; variable v;
+Select v pattern a(v, _"x"_)
+none
+5000
+22 - Queries 22 - 39 - Test s.t. and p.a. combinations for each s.t. clause. Select result not related, Follows and pattern assign, 1 clause fail
+assign a; stmt s; while w;
+Select s such that Follows(s, w) pattern a(_, _"rock"_)
+none
+5000
+23 - Select result related to 1 clause, Follows and pattern assign, 1 clause fail
+assign a;
+Select a such that Follows(4, 5) pattern a(_, _"toe"_)
+none
+5000
+24 - Select result related to both, Follows and pattern assign, 1 clause fail
+assign a;
+Select a such that Follows(a, _) pattern a("stat", _)
+none
+5000
+25 - Select result not related, Follows* and pattern assign, 1 clause fail
+assign a; variable v;
+Select v pattern a(v, _"tac"_) such that Follows*(0, 24)
+none
+5000
+26 - Select result related to 1 clause, Follows* and pattern assign, 1 clause fail
+assign a; variable v;
+Select v such that Follows*(3, 19) pattern a(v, _"glass"_)
+none
+5000
+27 - Select result related to both, Follows* and pattern assign, 1 clause fail
+assign a;
+Select a such that Follows*(a, 30) pattern a("y", _)
+none
+5000
+28 - Select result not related, Parent and pattern assign, 1 clause fail
+assign a; while w; read r;
+Select r pattern a("stat", _"toe"_) such that Parent(w, _)
+none
+5000
+29 - Select result related to 1 clause, Parent and pattern assign, 1 clause fail
+assign a; read r;
+Select a pattern a(_, _) such that Parent(r, _)
+none
+5000
+30 - Select result related to both, Parent and pattern assign, 1 clause fail
+assign a; variable v;
+Select a such that Parent(a, _) pattern a(v, _"sub"_)
+none
+5000
+31 - Select result not related, Parent* and pattern assign, 1 clause fail
+assign a; variable v; if ifs;
+Select v pattern a("y", _) such that Parent*(4, ifs)
+none
+5000
+32 - Select result related to 1 clause, Parent* and pattern assign, 1 clause fail
+assign a;
+Select a such that Parent*(_, a) pattern a("paper", _)
+none
+5000
+33 - Select result related to both, Parent* and pattern assign, 1 clause fail
+assign a;
+Select a such that Parent*(a, _) pattern a(_, _)
+none
+5000
+34 - Select result not related, Uses and pattern assign, 1 clause fail
+assign a, a1; variable v; stmt s;
+Select a1 such that Uses(s, v) pattern a(_, _"glass"_)
+none
+5000
+35 - Select result related to 1 clause, Uses and pattern assign, 1 clause fail
+assign a; variable v; stmt s;
+Select v pattern a(v, _) such that Uses(s, "glass")
+none
+5000
+36 - Select result related to both, Uses and pattern assign, 1 clause fail
+assign a; variable v;
+Select v such that Uses(1, v) pattern a(v, _)
+none
+5000
+37 - Select result not related, Modifies and pattern assign, 1 clause fail
+assign a; procedure proc; read r;
+Select proc such that Modifies(r, "x") pattern a(_, _)
+none
+5000
+38 - Select result related to 1 clause, Modifies and pattern assign, 1 clause fail
+assign a; stmt s;
+Select s such that Modifies(s, _) pattern a("stat", _)
+none
+5000
+39 - Select result related to both, Modifies and pattern assign, 1 clause fail
+assign a; variable v;
+Select v pattern a(v, _"x"_) such that Modifies(a, v)
+none
+5000
