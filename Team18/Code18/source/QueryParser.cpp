@@ -34,13 +34,11 @@ list<string> QueryParser::parse(string query) {
 
 	resultString = initialValidation(query);
 	if (resultString == "Invalid" || resultString == "None") {
-		finalOutput.push_back("");
 		return finalOutput;
 	}
 
 	vector<string> statements = findInitialDecleration(query);
 	if (statements.empty()) {
-		finalOutput.push_back("");
 		return finalOutput;
 	}
 
@@ -48,7 +46,6 @@ list<string> QueryParser::parse(string query) {
 	
 	resultString = declarationsValidation(declerationVariables);
 	if (resultString == "Invalid" || resultString == "None") {
-		finalOutput.push_back("");
 		return finalOutput;
 	}
 	
@@ -83,7 +80,6 @@ list<string> QueryParser::parse(string query) {
 
 	resultString = selectVariablesValidation(declerationVariables, selectVars);
 	if (resultString == "Invalid") {
-		finalOutput.push_back("");
 		return finalOutput;
 	}
 
@@ -119,7 +115,6 @@ list<string> QueryParser::parse(string query) {
 
 	resultString = suchThatValidation(declerationVariables, suchThat);
 	if (resultString == "Invalid") {
-		finalOutput.push_back("");
 		return finalOutput;
 	}
 
