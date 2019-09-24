@@ -15,253 +15,253 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\source\DesignExtractor.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\Evaluator.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\NestedResult.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\Parser.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\PKB.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\PKBFollow.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\PKBParent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\Query.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\QueryParser.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\TNode.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\DesignExtractor.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\Evaluator.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\NestedResult.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\Parser.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\PKB.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\PKBFollow.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\PKBParent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\Query.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\QueryParser.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\TNode.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
+    <!-- <ClCompile Include="..\source\DesignExtractor.cpp"> -->
+    <!--   <Filter>Source Files</Filter> -->
+    <!-- </ClCompile> -->
+    <!-- <ClCompile Include="..\source\Evaluator.cpp"> -->
+    <!--   <Filter>Source Files</Filter> -->
+    <!-- </ClCompile> -->
+    <!-- <ClCompile Include="..\source\NestedResult.cpp"> -->
+    <!--   <Filter>Source Files</Filter> -->
+    <!-- </ClCompile> -->
+    <!-- <ClCompile Include="..\source\Parser.cpp"> -->
+    <!--   <Filter>Source Files</Filter> -->
+    <!-- </ClCompile> -->
+    <!-- <ClCompile Include="..\source\PKB.cpp"> -->
+    <!--   <Filter>Source Files</Filter> -->
+    <!-- </ClCompile> -->
+    <!-- <ClCompile Include="..\source\PKBFollow.cpp"> -->
+    <!--   <Filter>Source Files</Filter> -->
+    <!-- </ClCompile> -->
+    <!-- <ClCompile Include="..\source\PKBParent.cpp"> -->
+    <!--   <Filter>Source Files</Filter> -->
+    <!-- </ClCompile> -->
+    <!-- <ClCompile Include="..\source\Query.cpp"> -->
+    <!--   <Filter>Source Files</Filter> -->
+    <!-- </ClCompile> -->
+    <!-- <ClCompile Include="..\source\QueryParser.cpp"> -->
+    <!--   <Filter>Source Files</Filter> -->
+    <!-- </ClCompile> -->
+    <!-- <ClCompile Include="..\source\TNode.cpp"> -->
+    <!--   <Filter>Source Files</Filter> -->
+    <!-- </ClCompile> -->
+    <!-- <ClCompile Include="..\source\DesignExtractor.cpp"> -->
+    <!--   <Filter>Source Files</Filter> -->
+    <!-- </ClCompile> -->
+    <!-- <ClCompile Include="..\source\Evaluator.cpp"> -->
+    <!--   <Filter>Source Files</Filter> -->
+    <!-- </ClCompile> -->
+    <!-- <ClCompile Include="..\source\NestedResult.cpp"> -->
+    <!--   <Filter>Source Files</Filter> -->
+    <!-- </ClCompile> -->
+    <!-- <ClCompile Include="..\source\Parser.cpp"> -->
+    <!--   <Filter>Source Files</Filter> -->
+    <!-- </ClCompile> -->
+    <!-- <ClCompile Include="..\source\PKB.cpp"> -->
+    <!--   <Filter>Source Files</Filter> -->
+    <!-- </ClCompile> -->
+    <!-- <ClCompile Include="..\source\PKBFollow.cpp"> -->
+    <!--   <Filter>Source Files</Filter> -->
+    <!-- </ClCompile> -->
+    <!-- <ClCompile Include="..\source\PKBParent.cpp"> -->
+    <!--   <Filter>Source Files</Filter> -->
+    <!-- </ClCompile> -->
+    <!-- <ClCompile Include="..\source\Query.cpp"> -->
+    <!--   <Filter>Source Files</Filter> -->
+    <!-- </ClCompile> -->
+    <!-- <ClCompile Include="..\source\QueryParser.cpp"> -->
+    <!--   <Filter>Source Files</Filter> -->
+    <!-- </ClCompile> -->
+    <!-- <ClCompile Include="..\source\TNode.cpp"> -->
+    <!--   <Filter>Source Files</Filter> -->
+    <!-- </ClCompile> -->
+    <!-- <ClCompile Include="..\source\*.cpp"> -->
+    <!--   <Filter>Source Files</Filter> -->
+    <!-- </ClCompile> -->
+    <!-- <ClCompile Include="..\source\*.cpp"> -->
+    <!--   <Filter>Source Files</Filter> -->
+    <!-- </ClCompile> -->
     <ClCompile Include="..\source\*.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\source\*.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\*.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\DesignExtractor.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\Evaluator.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\Parser.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\PKB.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\PKBParent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\Query.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\QueryParser.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\TNode.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\*.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\*.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\*.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\PKBParent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\PKBFollow.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\Clause.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\NestedResult.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
+    <!-- <ClCompile Include="..\source\DesignExtractor.cpp"> -->
+    <!--   <Filter>Source Files</Filter> -->
+    <!-- </ClCompile> -->
+    <!-- <ClCompile Include="..\source\Evaluator.cpp"> -->
+    <!--   <Filter>Source Files</Filter> -->
+    <!-- </ClCompile> -->
+    <!-- <ClCompile Include="..\source\Parser.cpp"> -->
+    <!--   <Filter>Source Files</Filter> -->
+    <!-- </ClCompile> -->
+    <!-- <ClCompile Include="..\source\PKB.cpp"> -->
+    <!--   <Filter>Source Files</Filter> -->
+    <!-- </ClCompile> -->
+    <!-- <ClCompile Include="..\source\PKBParent.cpp"> -->
+    <!--   <Filter>Source Files</Filter> -->
+    <!-- </ClCompile> -->
+    <!-- <ClCompile Include="..\source\Query.cpp"> -->
+    <!--   <Filter>Source Files</Filter> -->
+    <!-- </ClCompile> -->
+    <!-- <ClCompile Include="..\source\QueryParser.cpp"> -->
+    <!--   <Filter>Source Files</Filter> -->
+    <!-- </ClCompile> -->
+    <!-- <ClCompile Include="..\source\TNode.cpp"> -->
+    <!--   <Filter>Source Files</Filter> -->
+    <!-- </ClCompile> -->
+    <!-- <ClCompile Include="..\source\*.cpp"> -->
+    <!--   <Filter>Source Files</Filter> -->
+    <!-- </ClCompile> -->
+    <!-- <ClCompile Include="..\source\*.cpp"> -->
+    <!--   <Filter>Source Files</Filter> -->
+    <!-- </ClCompile> -->
+    <!-- <ClCompile Include="..\source\*.cpp"> -->
+    <!--   <Filter>Source Files</Filter> -->
+    <!-- </ClCompile> -->
+    <!-- <ClCompile Include="..\source\PKBParent.cpp"> -->
+    <!--   <Filter>Source Files</Filter> -->
+    <!-- </ClCompile> -->
+    <!-- <ClCompile Include="..\source\PKBFollow.cpp"> -->
+    <!--   <Filter>Source Files</Filter> -->
+    <!-- </ClCompile> -->
+    <!-- <ClCompile Include="..\source\Clause.cpp"> -->
+    <!--   <Filter>Source Files</Filter> -->
+    <!-- </ClCompile> -->
+    <!-- <ClCompile Include="..\source\NestedResult.cpp"> -->
+    <!--   <Filter>Source Files</Filter> -->
+    <!-- </ClCompile> -->
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\source\Entity.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\Evaluator.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\NestedResult.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\Parser.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\PKB.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\PKBFollow.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\PKBParent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\Query.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\QueryParser.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\Relationship.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\TNode.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\DesignExtractor.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\Entity.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\Evaluator.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\NestedResult.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\Parser.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\PKB.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\PKBFollow.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\PKBParent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\Query.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\QueryParser.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\Relationship.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\TNode.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
+    <!-- <ClInclude Include="..\source\Entity.h"> -->
+    <!--   <Filter>Header Files</Filter> -->
+    <!-- </ClInclude> -->
+    <!-- <ClInclude Include="..\source\Evaluator.h"> -->
+    <!--   <Filter>Header Files</Filter> -->
+    <!-- </ClInclude> -->
+    <!-- <ClInclude Include="..\source\NestedResult.h"> -->
+    <!--   <Filter>Header Files</Filter> -->
+    <!-- </ClInclude> -->
+    <!-- <ClInclude Include="..\source\Parser.h"> -->
+    <!--   <Filter>Header Files</Filter> -->
+    <!-- </ClInclude> -->
+    <!-- <ClInclude Include="..\source\PKB.h"> -->
+    <!--   <Filter>Header Files</Filter> -->
+    <!-- </ClInclude> -->
+    <!-- <ClInclude Include="..\source\PKBFollow.h"> -->
+    <!--   <Filter>Header Files</Filter> -->
+    <!-- </ClInclude> -->
+    <!-- <ClInclude Include="..\source\PKBParent.h"> -->
+    <!--   <Filter>Header Files</Filter> -->
+    <!-- </ClInclude> -->
+    <!-- <ClInclude Include="..\source\Query.h"> -->
+    <!--   <Filter>Header Files</Filter> -->
+    <!-- </ClInclude> -->
+    <!-- <ClInclude Include="..\source\QueryParser.h"> -->
+    <!--   <Filter>Header Files</Filter> -->
+    <!-- </ClInclude> -->
+    <!-- <ClInclude Include="..\source\Relationship.h"> -->
+    <!--   <Filter>Header Files</Filter> -->
+    <!-- </ClInclude> -->
+    <!-- <ClInclude Include="..\source\TNode.h"> -->
+    <!--   <Filter>Header Files</Filter> -->
+    <!-- </ClInclude> -->
+    <!-- <ClInclude Include="..\source\DesignExtractor.h"> -->
+    <!--   <Filter>Header Files</Filter> -->
+    <!-- </ClInclude> -->
+    <!-- <ClInclude Include="..\source\Entity.h"> -->
+    <!--   <Filter>Header Files</Filter> -->
+    <!-- </ClInclude> -->
+    <!-- <ClInclude Include="..\source\Evaluator.h"> -->
+    <!--   <Filter>Header Files</Filter> -->
+    <!-- </ClInclude> -->
+    <!-- <ClInclude Include="..\source\NestedResult.h"> -->
+    <!--   <Filter>Header Files</Filter> -->
+    <!-- </ClInclude> -->
+    <!-- <ClInclude Include="..\source\Parser.h"> -->
+    <!--   <Filter>Header Files</Filter> -->
+    <!-- </ClInclude> -->
+    <!-- <ClInclude Include="..\source\PKB.h"> -->
+    <!--   <Filter>Header Files</Filter> -->
+    <!-- </ClInclude> -->
+    <!-- <ClInclude Include="..\source\PKBFollow.h"> -->
+    <!--   <Filter>Header Files</Filter> -->
+    <!-- </ClInclude> -->
+    <!-- <ClInclude Include="..\source\PKBParent.h"> -->
+    <!--   <Filter>Header Files</Filter> -->
+    <!-- </ClInclude> -->
+    <!-- <ClInclude Include="..\source\Query.h"> -->
+    <!--   <Filter>Header Files</Filter> -->
+    <!-- </ClInclude> -->
+    <!-- <ClInclude Include="..\source\QueryParser.h"> -->
+    <!--   <Filter>Header Files</Filter> -->
+    <!-- </ClInclude> -->
+    <!-- <ClInclude Include="..\source\Relationship.h"> -->
+    <!--   <Filter>Header Files</Filter> -->
+    <!-- </ClInclude> -->
+    <!-- <ClInclude Include="..\source\TNode.h"> -->
+    <!--   <Filter>Header Files</Filter> -->
+    <!-- </ClInclude> -->
+    <!-- <ClInclude Include="..\source\*.h"> -->
+    <!--   <Filter>Header Files</Filter> -->
+    <!-- </ClInclude> -->
+    <!-- <ClInclude Include="..\source\*.h"> -->
+    <!--   <Filter>Header Files</Filter> -->
+    <!-- </ClInclude> -->
     <ClInclude Include="..\source\*.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\source\*.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\*.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\Entity.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\Evaluator.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\Parser.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\PKB.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\PKBParent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\Query.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\QueryParser.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\Relationship.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\TNode.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\*.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\*.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\*.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\*.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\PKBParent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\PKBFollow.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\Clause.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\NestedResult.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\DesignExtractor.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
+    <!-- <ClInclude Include="..\source\Entity.h"> -->
+    <!--   <Filter>Header Files</Filter> -->
+    <!-- </ClInclude> -->
+    <!-- <ClInclude Include="..\source\Evaluator.h"> -->
+    <!--   <Filter>Header Files</Filter> -->
+    <!-- </ClInclude> -->
+    <!-- <ClInclude Include="..\source\Parser.h"> -->
+    <!--   <Filter>Header Files</Filter> -->
+    <!-- </ClInclude> -->
+    <!-- <ClInclude Include="..\source\PKB.h"> -->
+    <!--   <Filter>Header Files</Filter> -->
+    <!-- </ClInclude> -->
+    <!-- <ClInclude Include="..\source\PKBParent.h"> -->
+    <!--   <Filter>Header Files</Filter> -->
+    <!-- </ClInclude> -->
+    <!-- <ClInclude Include="..\source\Query.h"> -->
+    <!--   <Filter>Header Files</Filter> -->
+    <!-- </ClInclude> -->
+    <!-- <ClInclude Include="..\source\QueryParser.h"> -->
+    <!--   <Filter>Header Files</Filter> -->
+    <!-- </ClInclude> -->
+    <!-- <ClInclude Include="..\source\Relationship.h"> -->
+    <!--   <Filter>Header Files</Filter> -->
+    <!-- </ClInclude> -->
+    <!-- <ClInclude Include="..\source\TNode.h"> -->
+    <!--   <Filter>Header Files</Filter> -->
+    <!-- </ClInclude> -->
+    <!-- <ClInclude Include="..\source\*.h"> -->
+    <!--   <Filter>Header Files</Filter> -->
+    <!-- </ClInclude> -->
+    <!-- <ClInclude Include="..\source\*.h"> -->
+    <!--   <Filter>Header Files</Filter> -->
+    <!-- </ClInclude> -->
+    <!-- <ClInclude Include="..\source\*.h"> -->
+    <!--   <Filter>Header Files</Filter> -->
+    <!-- </ClInclude> -->
+    <!-- <ClInclude Include="..\source\*.h"> -->
+    <!--   <Filter>Header Files</Filter> -->
+    <!-- </ClInclude> -->
+    <!-- <ClInclude Include="..\source\PKBParent.h"> -->
+    <!--   <Filter>Header Files</Filter> -->
+    <!-- </ClInclude> -->
+    <!-- <ClInclude Include="..\source\PKBFollow.h"> -->
+    <!--   <Filter>Header Files</Filter> -->
+    <!-- </ClInclude> -->
+    <!-- <ClInclude Include="..\source\Clause.h"> -->
+    <!--   <Filter>Header Files</Filter> -->
+    <!-- </ClInclude> -->
+    <!-- <ClInclude Include="..\source\NestedResult.h"> -->
+    <!--   <Filter>Header Files</Filter> -->
+    <!-- </ClInclude> -->
+    <!-- <ClInclude Include="..\source\DesignExtractor.h"> -->
+    <!--   <Filter>Header Files</Filter> -->
+    <!-- </ClInclude> -->
   </ItemGroup>
 </Project>
