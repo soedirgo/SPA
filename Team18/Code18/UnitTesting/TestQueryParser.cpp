@@ -28,6 +28,7 @@ namespace UnitTesting
                6.      while (x > 0) {
                7.          read x;
                8.          print x;
+			   9.		   x = x + 1;
                _       }
             */
 
@@ -96,17 +97,25 @@ namespace UnitTesting
             pkb.insertParentStarRelation(6, 8);
             pkb.insertFollowRelation(7, 8);
             pkb.insertFollowStarRelation(7, 8);
+
+			pkb.setStmt(9, Assign);
+			pkb.setAssignStmt(9, "x");
+			pkb.setVar("x");
+			pkb.insertUsesRelation(9, "x");
+			pkb.insertModifiesRelation(9, "x");
+			pkb.insertFollowRelation(8, 9);
+			pkb.insertFollowStarRelation(8, 9);
 		}
         TEST_METHOD(validQueries)
         {
             list<string> expected;
             list<string> actual;
 
-            expected = { "1", "2", "3", "4", "5", "6", "7", "8" };
+            expected = { "1", "2", "3", "4", "5", "6", "7", "8" , "9"};
             actual = QueryParser::parse("stmt s; Select s");
             Assert::IsTrue(expected == actual);
             
-            expected = { "1", "2", "3", "4", "5", "6", "7", "8" };
+            expected = { "1", "2", "3", "4", "5", "6", "7", "8" ,"9"};
             actual = QueryParser::parse("stmt s123; Select s123");
             Assert::IsTrue(expected == actual);
             
@@ -114,13 +123,16 @@ namespace UnitTesting
             actual = QueryParser::parse("variable v; Select v such that Uses(1, v)");
             Assert::IsTrue(expected == actual);
             
-            expected = { "1", "2", "3", "7" };
+            expected = { "1", "2", "3", "7" ,"8"};
             actual = QueryParser::parse("stmt s1,   s2; Select     s1 such that Follows  (s1   ,   s2)");
             Assert::IsTrue(expected == actual);
 
-            expected = { "1", "6", "7" };
-            //actual = QueryParser::parse("stmt    s;   Select  s  such that  Modifies(  s, _\"x\"_)");
+            expected = { "1", "6", "7","9" };
 			actual = QueryParser::parse("stmt    s;   Select  s  such that  Modifies(  s, \"x\")");
+			Assert::IsTrue(expected == actual);
+
+			expected = {"2","9"};
+			actual = QueryParser::parse("stmt s; assign a; Select s pattern a(_, _\"x\"_)");
 			Assert::IsTrue(expected == actual);
         }
         TEST_METHOD(invalidQueries)
@@ -192,21 +204,33 @@ namespace UnitTesting
             actual = QueryParser::parse("stmt s1, s2; Select s such that Foo(s1, s2)");
             Assert::IsTrue(expected == actual);
 
+			expected = { "" };
+			actual = QueryParser::parse("stmt    s;   Select  s  such that  Modifies(  s, _\"x\"_)");
+			Assert::IsTrue(expected == actual);
+
             expected = { "" };
             //actual = QueryParser::parse("stmt s; variable v; Select s such that Uses(s, v) pattern (v, _)");
-            //Assert::IsTrue(expected == actual);
+            Assert::IsTrue(expected == actual);
 
             expected = { "" };
             //actual = QueryParser::parse("assign a; variable v; Select a such that Uses(a, v) and pattern a(v, _)");
             //Assert::IsTrue(expected == actual);
 
             expected = { "" };
-            //actual = QueryParser::parse("stmt s; variable v; Select s such that Uses(_, v)");
-            //Assert::IsTrue(expected == actual);
+            actual = QueryParser::parse("stmt s; variable v; Select s such that Uses(_, v)");
+            Assert::IsTrue(expected == actual);
 
             expected = { "" };
-            //actual = QueryParser::parse("stmt s; variable v; Select s such that Uses(v, s)");
-            //Assert::IsTrue(expected == actual);
+            actual = QueryParser::parse("stmt s; variable v; Select s such that Uses(v, s)");
+            Assert::IsTrue(expected == actual);
+
+			expected = { "" };
+			actual = QueryParser::parse("stmt v; variable s; Select s such that Uses(s, v)");
+			Assert::IsTrue(expected == actual);
+
+			expected = { "" };
+			actual = QueryParser::parse("stmt s; variable v; Select s such that Modifies(v, v)");
+			Assert::IsTrue(expected == actual);
         }
 
 		TEST_METHOD(findInitialDecleration)
@@ -247,14 +271,14 @@ namespace UnitTesting
 
 		TEST_METHOD(splitPatternCondition)
 		{
-			vector<string> input = { "pattern a(_, a+b*c)" };
+			vector<string> input = { "pattern a(_, _)" };
 			vector<pair<string, pair<string, string>>> actual = QueryParser::splitPattern(input);
-			vector<pair<string, pair<string, string>>> expected{ {"a", {"_", "a+b*c"}} };
+			vector<pair<string, pair<string, string>>> expected{ {"a", {"_", "_"}} };
 			Assert::AreEqual(actual == expected, true);
-
-			vector<string> input2 = { "pattern a(_, \"a+b*c\")" };
+			
+			vector<string> input2 = { "pattern a(_, _\"a+b*c\"_)" };
 			vector<pair<string, pair<string, string>>> actual2 = QueryParser::splitPattern(input2);
-			vector<pair<string, pair<string, string>>> expected2{ {"a", {"_", "\"x*y+z\""}} };
+			vector<pair<string, pair<string, string>>> expected2{ {"a", {"_", "\"a+b*c\""}} };
 			Assert::AreEqual(actual2 == expected2, true);
 		}
 

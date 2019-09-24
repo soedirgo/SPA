@@ -16,17 +16,15 @@ int maxInt = numeric_limits<int>::max();
 unordered_set<string> validTypes = { "stmt", "variable", "assign", "constant", "read", "while", "if",
 "print", "procedure" };
 unordered_set<string> validClauseType = { "Parent", "Parent*", "Follows",
-		"Follows*", "Uses", "Modifies", "Calls", "Calls*", "Next", "Next*", "Affects", "Affects*" };
+		"Follows*", "Uses", "Modifies" };
 unordered_set<string> validArgs = { "stmt", "read", "print", "while", "if",
-	"assign", "call", "prog_line" };
-unordered_set<string> validFirstArgsParent = { "stmt", "while", "if", "prog_line" };
+	"assign" };
+unordered_set<string> validFirstArgsParent = { "stmt", "while", "if" };
 unordered_set<string> validFirstArgsUses = { "stmt", "print", "while", "if",
-	"assign", "call", "procedure", "prog_line" };
+	"assign", "procedure"};
 unordered_set<string> validFirstArgsModifies = { "stmt", "read", "while", "if",
-"assign", "call", "procedure", "prog_line" };
+"assign", "procedure"};
 unordered_set<string> validSecondArgsUsesModifies = { "variable" };
-unordered_set<string> validArgsCalls = { "procedure" };
-unordered_set<string> validArgsAffects = { "stmt", "assign", "prog_line" };
 
 list<string> QueryParser::parse(string query) {
 
@@ -125,6 +123,12 @@ list<string> QueryParser::parse(string query) {
 		return finalOutput;
 	}
 
+	/*resultString = patternValidation(declerationVariables, pattern);
+	if (resultString == "Invalid") {
+		finalOutput.push_back("");
+		return finalOutput;
+	}
+	*/
 	Query q = Query(declerationVariables, selectVars, suchThat, pattern);
 	finalOutput = evalQuery(q);
 	
@@ -284,6 +288,14 @@ vector<pair<string, pair<string, string>>> QueryParser::splitPattern(vector<stri
 		//Don't include _
 		string firstVar = trim(pattern[i].substr(posOfOpenBracket + 1, posOfComma - posOfOpenBracket-1),whitespace);
 		string secondVar = removeSpaces(pattern[i].substr(posOfComma + 1, posOfCloseBracket - posOfComma-1),whitespace);
+		int flag = (secondVar.find("_") != -1);
+		int flag2 = (secondVar.length() > 1);
+		if (flag && flag2) {
+			while (secondVar.find("_") != -1) {
+				int index = secondVar.find("_");
+				secondVar = secondVar.erase(index,index+1);
+			}
+		}
 		s.push_back(make_pair(clauseType, make_pair(firstVar, secondVar)));
 	}
 
@@ -435,6 +447,7 @@ string QueryParser::suchThatValidation(unordered_map<string, string> decleration
 	string firstArgsType;
 	string secondArgsType;
 	int i;
+	int j;
 	for (i = 0; i < suchThat.size(); i++) {
 		//Empty variable or clause
 		if ((suchThat[i].first == "") || (suchThat[i].second.first == "") || (suchThat[i].second.second == "")) {
@@ -462,12 +475,16 @@ string QueryParser::suchThatValidation(unordered_map<string, string> decleration
 				// valid first args
 			}
 
-			else if (std::stoi(suchThat[i].second.first) > 0) {
-				for (size_t i = 0; i < suchThat[i].second.first.length(); i++) {
-					if (!isdigit(suchThat[i].second.first[i])) {
+			else if (isdigit(suchThat[0].second.first[0])) {
+				for (size_t j = 0; j < suchThat[i].second.first.length(); j++) {
+					if (!isdigit(suchThat[i].second.first[j])) {
 						resultString = "Invalid";
 						return resultString;
 					}
+				}
+				if (!(std::stoi(suchThat[i].second.first) > 0)) {
+					resultString = "Invalid";
+					return resultString;
 				}
 			}
 			else {
@@ -480,12 +497,17 @@ string QueryParser::suchThatValidation(unordered_map<string, string> decleration
 				// valid second args
 			}
 
-			else if (std::stoi(suchThat[i].second.second) > 0) {
-				for (size_t i = 0; i < suchThat[i].second.second.length(); i++) {
-					if (!isdigit(suchThat[i].second.second[i])) {
+			else if (isdigit(suchThat[0].second.second[0])) {
+				for (size_t j = 0; j < suchThat[i].second.second.length(); j++) {
+					if (!isdigit(suchThat[i].second.second[j])) {
 						resultString = "Invalid";
 						return resultString;
 					}
+				}
+
+				if (!(std::stoi(suchThat[i].second.second) > 0)) {
+					resultString = "Invalid";
+					return resultString;
 				}
 			}
 			else {
@@ -500,12 +522,17 @@ string QueryParser::suchThatValidation(unordered_map<string, string> decleration
 				// valid first args
 			}
 
-			else if (std::stoi(suchThat[i].second.first) > 0) {
-				for (size_t i = 0; i < suchThat[i].second.first.length(); i++) {
-					if (!isdigit(suchThat[i].second.first[i])) {
+			else if (isdigit(suchThat[0].second.first[0])) {
+				for (size_t j = 0; j < suchThat[i].second.first.length(); j++) {
+					if (!isdigit(suchThat[i].second.first[j])) {
 						resultString = "Invalid";
 						return resultString;
 					}
+				}
+
+				if (!(std::stoi(suchThat[i].second.first) > 0)) {
+					resultString = "Invalid";
+					return resultString;
 				}
 			}
 
@@ -519,12 +546,17 @@ string QueryParser::suchThatValidation(unordered_map<string, string> decleration
 				// valid second args
 			}
 
-			else if (std::stoi(suchThat[i].second.second) > 0) {
-				for (size_t i = 0; i < suchThat[i].second.second.length(); i++) {
-					if (!isdigit(suchThat[i].second.second[i])) {
+			else if (isdigit(suchThat[0].second.second[0])) {
+				for (size_t j = 0; j < suchThat[i].second.second.length(); j++) {
+					if (!isdigit(suchThat[i].second.second[j])) {
 						resultString = "Invalid";
 						return resultString;
 					}
+				}
+
+				if (!(std::stoi(suchThat[i].second.second) > 0)) {
+					resultString = "Invalid";
+					return resultString;
 				}
 			}
 
@@ -536,16 +568,17 @@ string QueryParser::suchThatValidation(unordered_map<string, string> decleration
 		else if (suchThat[i].first == "Uses") {
 
 			// Validating first args
-			string fl = suchThat[i].second.first;
-			int flag = std::stoi(fl);
-			if (std::stoi(suchThat[i].second.first) > 0) {
-				int flag2 = suchThat[i].second.first.length();
-				for (size_t i = 0; i < suchThat[i].second.first.length(); i++) {
-					int flag3 = !isdigit(suchThat[i].second.first[i]);
-					if (!isdigit(suchThat[i].second.first[i])) {
+			if (isdigit(suchThat[0].second.first[0])) {
+				for (size_t j = 0; j < suchThat[i].second.first.length(); j++) {
+					if (!isdigit(suchThat[i].second.first[j])) {
 						resultString = "Invalid";
 						return resultString;
 					}
+				}
+
+				if (!(std::stoi(suchThat[i].second.first) > 0)) {
+					resultString = "Invalid";
+					return resultString;
 				}
 			}
 
@@ -558,8 +591,8 @@ string QueryParser::suchThatValidation(unordered_map<string, string> decleration
 				}
 
 				//Rest must be alphabets or numbers
-				for (int i = 1; i < name.length(); i++) {
-					if (!isalnum(name[i])) {
+				for (int j = 1; j < name.length(); j++) {
+					if (!isalnum(name[j])) {
 						resultString = "Invalid";
 						return resultString;
 					}
@@ -574,8 +607,8 @@ string QueryParser::suchThatValidation(unordered_map<string, string> decleration
 				}
 
 				//Rest must be alphabets or numbers
-				for (int i = 1; i < suchThat[i].second.first.length(); i++) {
-					if (!isalnum(suchThat[i].second.first[i])) {
+				for (int j = 1; j < suchThat[i].second.first.length(); j++) {
+					if (!isalnum(suchThat[i].second.first[j])) {
 						resultString = "Invalid";
 						return resultString;
 					}
@@ -587,12 +620,17 @@ string QueryParser::suchThatValidation(unordered_map<string, string> decleration
 			}
 
 			// Validating second args
-			if (std::stoi(suchThat[i].second.second) > 0) {
-				for (size_t i = 0; i < suchThat[i].second.second.length(); i++) {
-					if (!isdigit(suchThat[i].second.second[i])) {
+			if (isdigit(suchThat[0].second.second[0])) {
+				for (size_t j = 0; j < suchThat[i].second.second.length(); j++) {
+					if (!isdigit(suchThat[i].second.second[j])) {
 						resultString = "Invalid";
 						return resultString;
 					}
+				}
+
+				if (!(std::stoi(suchThat[i].second.second) > 0)) {
+					resultString = "Invalid";
+					return resultString;
 				}
 			}
 
@@ -605,8 +643,8 @@ string QueryParser::suchThatValidation(unordered_map<string, string> decleration
 				}
 
 				//Rest must be alphabets or numbers
-				for (int i = 1; i < name.length(); i++) {
-					if (!isalnum(name[i])) {
+				for (int j = 1; j < name.length(); j++) {
+					if (!isalnum(name[j])) {
 						resultString = "Invalid";
 						return resultString;
 					}
@@ -621,8 +659,8 @@ string QueryParser::suchThatValidation(unordered_map<string, string> decleration
 				}
 
 				//Rest must be alphabets or numbers
-				for (int i = 1; i < suchThat[i].second.second.length(); i++) {
-					if (!isalnum(suchThat[i].second.second[i])) {
+				for (int j = 1; j < suchThat[i].second.second.length(); j++) {
+					if (!isalnum(suchThat[i].second.second[j])) {
 						resultString = "Invalid";
 						return resultString;
 					}
@@ -636,12 +674,17 @@ string QueryParser::suchThatValidation(unordered_map<string, string> decleration
 		else if (suchThat[i].first == "Modifies") {
 
 			// Validating first args
-			if (std::stoi(suchThat[i].second.first) > 0) {
-				for (size_t i = 0; i < suchThat[i].second.first.length(); i++) {
-					if (!isdigit(suchThat[i].second.first[i])) {
+			if (isdigit(suchThat[0].second.first[0])) {
+				for (size_t j = 0; j < suchThat[i].second.first.length(); j++) {
+					if (!isdigit(suchThat[i].second.first[j])) {
 						resultString = "Invalid";
 						return resultString;
 					}
+				}
+
+				if (!(std::stoi(suchThat[i].second.first) > 0)) {
+					resultString = "Invalid";
+					return resultString;
 				}
 			}
 
@@ -654,8 +697,8 @@ string QueryParser::suchThatValidation(unordered_map<string, string> decleration
 				}
 
 				//Rest must be alphabets or numbers
-				for (int i = 1; i < name.length(); i++) {
-					if (!isalnum(name[i])) {
+				for (int j = 1; j < name.length(); j++) {
+					if (!isalnum(name[j])) {
 						resultString = "Invalid";
 						return resultString;
 					}
@@ -668,8 +711,8 @@ string QueryParser::suchThatValidation(unordered_map<string, string> decleration
 				}
 
 				//Rest must be alphabets or numbers
-				for (int i = 1; i < suchThat[i].second.first.length(); i++) {
-					if (!isalnum(suchThat[i].second.first[i])) {
+				for (int j = 1; j < suchThat[i].second.first.length(); j++) {
+					if (!isalnum(suchThat[i].second.first[j])) {
 						resultString = "Invalid";
 						return resultString;
 					}
@@ -681,12 +724,17 @@ string QueryParser::suchThatValidation(unordered_map<string, string> decleration
 			}
 
 			// Validating second args
-			if (std::stoi(suchThat[i].second.second) > 0) {
-				for (size_t i = 0; i < suchThat[i].second.second.length(); i++) {
-					if (!isdigit(suchThat[i].second.second[i])) {
+			if (isdigit(suchThat[0].second.second[0])) {
+				for (size_t j = 0; j < suchThat[i].second.second.length(); j++) {
+					if (!isdigit(suchThat[i].second.second[j])) {
 						resultString = "Invalid";
 						return resultString;
 					}
+				}
+
+				if (!(std::stoi(suchThat[i].second.second) > 0)) {
+					resultString = "Invalid";
+					return resultString;
 				}
 			}
 
@@ -699,8 +747,8 @@ string QueryParser::suchThatValidation(unordered_map<string, string> decleration
 				}
 
 				//Rest must be alphabets or numbers
-				for (int i = 1; i < name.length(); i++) {
-					if (!isalnum(name[i])) {
+				for (int j = 1; j < name.length(); j++) {
+					if (!isalnum(name[j])) {
 						resultString = "Invalid";
 						return resultString;
 					}
@@ -715,8 +763,8 @@ string QueryParser::suchThatValidation(unordered_map<string, string> decleration
 				}
 
 				//Rest must be alphabets or numbers
-				for (int i = 1; i < suchThat[i].second.second.length(); i++) {
-					if (!isalnum(suchThat[i].second.second[i])) {
+				for (int j = 1; j < suchThat[i].second.second.length(); j++) {
+					if (!isalnum(suchThat[i].second.second[j])) {
 						resultString = "Invalid";
 						return resultString;
 					}
