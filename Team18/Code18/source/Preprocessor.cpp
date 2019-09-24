@@ -34,6 +34,8 @@ namespace Preprocessor {
                 results.push_back(token);
                 s.erase(0, pos + delim.length());
             }
+            trim(s, '_');
+            results.push_back(s);
         }
         bool isSuchThatValid(string relRef, string lhs, string rhs, unordered_map<string, string>& synMap) {
             if (relRef == "Uses" || relRef == "Modifies") {
@@ -70,7 +72,7 @@ namespace Preprocessor {
         smatch selectClMatch;
         regex selectClRe("\\s*(.*;)"
                          "\\s*Select\\s+([[:alpha:]][[:alnum:]]*)"
-                         "\\s+(.*?)\\s*");
+                         "(\\s+(.*?))?\\s*");
         if (!regex_match(input, selectClMatch, selectClRe))
             return false;
 
@@ -88,11 +90,11 @@ namespace Preprocessor {
                             "\\s+([[:alpha:]][[:alnum:]]*"
                             "(\\s*,\\s*[[:alpha:]][[:alnum:]]*)*"
                             ")\\s*");
-        vector<string> synonyms;
         while ((pos = declarations.find(';')) != string::npos) {
             declaration = declarations.substr(0, pos);
             if (!regex_match(declaration, declarationMatch, declarationRe))
                 return false;
+            vector<string> synonyms;
             Preprocessor::split(declarationMatch[2], ",", synonyms);
             for (auto synonym : synonyms) {
                 Preprocessor::trim(synonym, ' ');
@@ -118,7 +120,7 @@ namespace Preprocessor {
                          "\\s*\\(\\s*"
                          "([[:alpha:]][[:alnum:]]*|_|[[:digit:]]*)"
                          "\\s*,\\s*"
-                         "([[:alpha:]][[:alnum:]]*|_|\\\"[[:alpha:]][[:alnum:]]*\\\")"
+                         "([[:alpha:]][[:alnum:]]*|_|[[:digit:]]*|\\\"[[:alpha:]][[:alnum:]]*\\\")"
                          "\\s*\\)\\s*");
         regex patternRe("\\s*pattern\\s+"
                         "([[:alpha:]][[:alnum:]]*)"
@@ -133,7 +135,7 @@ namespace Preprocessor {
         size_t suchThatPos;
         size_t patternPos;
         size_t currentClausePos;
-        string clauses = selectClMatch[3];
+        string clauses = selectClMatch[4];
         string clause;
         smatch clauseMatch;
         while (clauses.length() > 0) {

@@ -13,6 +13,22 @@ namespace UnitTesting
     public:
         TEST_METHOD(validQueries)
         {
+            string input;
+
+            input = "stmt s; Select s";
+            Assert::IsTrue(Preprocessor::isValid(input));
+
+            input = "stmt s123; Select s123";
+            Assert::IsTrue(Preprocessor::isValid(input));
+
+            input = "variable v; Select v such that Uses(1, v)";
+            Assert::IsTrue(Preprocessor::isValid(input));
+
+            input = "stmt s1,   s2; Select     s1 such that Follows  (s1   ,   s2)";
+            Assert::IsTrue(Preprocessor::isValid(input));
+
+            input = "stmt    s;   Select  s  such that  Modifies(  s, \"x\")";
+            Assert::IsTrue(Preprocessor::isValid(input));
             //list<string> expected;
             //list<string> actual;
 
