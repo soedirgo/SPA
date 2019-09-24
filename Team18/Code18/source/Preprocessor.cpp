@@ -75,8 +75,6 @@ namespace Preprocessor {
                          "\\s+(.*?)\\s*");
         if (!regex_match(input, selectClMatch, selectClRe))
             return false;
-        string declarations = selectClMatch[1];
-        string clauses = selectClMatch[3];
 
         // smatch declarationsMatch;
         // regex declarationsRe("^(\\s*(stmt|read|print|while|if|assign|variable|constant|procedure)\\s+[[:alpha:]][[:alnum:]]*\\s*;)*$");
@@ -85,6 +83,7 @@ namespace Preprocessor {
 
         unordered_map<string, string> synonymMap;
         size_t pos;
+        string declarations = selectClMatch[1];
         string declaration;
         smatch declarationMatch;
         regex declarationRe("\\s*(stmt|read|print|while|if|assign|variable|constant|procedure)"
@@ -109,7 +108,6 @@ namespace Preprocessor {
         // pattern a(v, _"x"_)
         // pattern a ( v , _"x"_ )
         // pattern [[:alpha:]][[:alnum:]]* \\( [[:alpha:]][[:alnum:]]* , [[:w:]\\"]* \\)
-        smatch clauseMatch;
         regex suchThatRe("\\s*such\\s+that\\s+"
                          "(Uses|Modifies|Follows|Follows\\*|Parent|Parent\\*)"
                          "\\s*\\(\\s*"
@@ -130,9 +128,10 @@ namespace Preprocessor {
         size_t suchThatPos;
         size_t patternPos;
         size_t currentClausePos;
+        string clauses = selectClMatch[3];
         string clause;
-        while ((currentClausePos = min(clauses.find("such"),
-                                       clauses.find("pattern"))) != string::npos) {
+        smatch clauseMatch;
+        while (clauses.length() > 0) {
             // declaration = declarations.substr(0, pos);
             // if (!regex_match(declaration, declarationMatch, declarationRe))
             //     return false;
@@ -143,6 +142,7 @@ namespace Preprocessor {
             // declarations.erase(0, pos + 1);
             suchThatPos = clauses.find("such");
             patternPos = clauses.find("pattern");
+            currentClausePos = min(suchThatPos, patternPos);
             if (currentClausePos == suchThatPos) {
                 clause = clauses.substr(0, patternPos);
                 if (!regex_match(clause, clauseMatch, suchThatRe))
@@ -150,13 +150,15 @@ namespace Preprocessor {
                 if (!isSuchThatValid(clauseMatch[1], clauseMatch[2], clauseMatch[3], synonymMap))
                     return false;
                 clauses.erase(0, patternPos);
-            } else {
+            } else if (currentClausePos == patternPos) {
                 clause = clauses.substr(0, suchThatPos);
                 if (!regex_match(clause, clauseMatch, patternRe))
                     return false;
                 if (!isPatternValid(clauseMatch[1], clauseMatch[2], clauseMatch[3], synonymMap))
                     return false;
                 clauses.erase(0, suchThatPos);
+            } else {
+                return false;
             }
         }
         return true;
