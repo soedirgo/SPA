@@ -108,9 +108,11 @@ namespace Evaluator {
                         factors.insert(cons);
                     }
                 }
-			} else if (PKB::getAllVar().count(factorRef)
-                       || PKB::getAllConstant().count(factorRef)) {
-                // factorRef is an explicit name
+            } else if (factorRef.front() == '\"' && factorRef.back() == '\"') {
+                // factorRef is an explicit variable
+                factors.insert(factorRef.substr(1, factorRef.length() - 2));
+            } else if (PKB::getAllConstant().count(factorRef)) {
+                // factorRef is an explicit constant
 				factors.insert(factorRef);
 			} else { // factorRef is a ``_''
 				for (const auto& var : PKB::getAllVar()) {
