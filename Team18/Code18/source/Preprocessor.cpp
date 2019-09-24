@@ -123,7 +123,7 @@ namespace Preprocessor {
                         "([[:alpha:]][[:alnum:]]*|_|\\\"[[:alpha:]][[:alnum:]]*\\\")"
                         "\\s*,\\s*"
                         "(_\\\"([[:alpha:]][[:alnum:]]*|[[:digit:]]*)\\\"_|_)"
-                        "\\s*\\s)\\s*");
+                        "\\s*\\)\\s*");
         // regex clausesRe("(\\s*such\\s+that\\s+.+\\(\\s+([[:alpha:]][[:alnum:]]*|_|\\\"\\d+\\\")\\s+,\\s+[[:alpha:"
         //                 "|pattern"
         //                 "|with)");
