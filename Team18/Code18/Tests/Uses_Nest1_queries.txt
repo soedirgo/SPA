@@ -259,27 +259,27 @@ Select proc such that Uses(26, _)
 none
 5000
 53 - Queries 53 - 57 - Test wildcard and different RHS input. input wildcard and variable
-variable v;
-Select v such that Uses(_, v)
+variable v; stmt s;
+Select v such that Uses(s, v)
 x, y, z, count, i, max, inc, sum, mid
 5000
-54 - Select assign, input wildcard and ident that is used
-assign a;
-Select a such that Uses(_, "sum")
+54 - Select assign, input stmt and ident that is used
+assign a; stmt s;
+Select a such that Uses(s, "sum")
 3, 7, 8, 10, 12, 15, 18, 20, 21, 24, 27, 28, 30
 5000
-55 - Select assign, input wildcard and ident that is not used
-assign a;
-Select a such that Uses(_, "avg")
+55 - Select assign, input stmt and ident that is not used
+assign a; stmt s;
+Select a such that Uses(s, "avg")
 none
 5000
-56 - Select assign, input wildcard and ident that does not exist
+56 - Select assign, input stmt and ident that does not exist
 assign a;
-Select a such that Uses(_, "correct")
+Select a such that Uses(stmt, "correct")
 none
 5000
-57 - Select assign, input wildcards
-assign a;
-Select a such that Uses(_, _)
+57 - Select assign, input stmt and wildcard
+assign a; stmt s;
+Select a such that Uses(s, _)
 3, 7, 8, 10, 12, 15, 18, 20, 21, 24, 27, 28, 30
 5000

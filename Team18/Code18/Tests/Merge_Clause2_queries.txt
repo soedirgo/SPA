@@ -99,8 +99,8 @@ Select a1 such that Uses(15, v) pattern a("x", _"z"_)
 none
 5000
 21 - Select result not related, Modifies and pattern assign - TT
-assign assign; variable v;
-Select v such that Modifies(_, _) pattern assign(_, _)
+assign assign; variable v; stmt s;
+Select v such that Modifies(s, _) pattern assign(_, _)
 x, y, z, i, first, second, add
 5000
 22 - Select result not related, Modifies and pattern assign - TF
@@ -349,8 +349,8 @@ Select a such that Modifies(a1, _) pattern a(v, _"z"_)
 none
 5000
 71 - Select result related to p.a., Modifies and pattern assign - FT
-assign a; variable v;
-Select a such that Modifies(_, "fifth") pattern a(v, _"i"_)
+assign a; variable v; stmt s;
+Select a such that Modifies(s, "fifth") pattern a(v, _"i"_)
 none
 5000
 72 - Select result related to p.a., Modifies and pattern assign - FF
@@ -464,8 +464,8 @@ Select v such that Modifies(s, v) pattern a(v, _)
 x, y, i, z, add, first
 5000
 94 - Select result related to both, Modifies and pattern assign - TF
-assign a; variable v;
-Select v such that Modifies(_, v) pattern a(v, _"fact"_)
+assign a; variable v; stmt s;
+Select v such that Modifies(s, v) pattern a(v, _"fact"_)
 none
 5000
 95 - Select result related to both, Modifies and pattern assign - FT

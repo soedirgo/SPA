@@ -496,7 +496,12 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 			continue;
 		}
 		else {
-			;
+			if (passedElse) {
+				if (line.find("}") != string::npos) {
+					nestingLevel--;
+					break;
+				}
+			}
 		}
 	}
 	result.lastStmtNo = currStmtNo;
@@ -737,7 +742,12 @@ NestedResult Parser::parseIfNestedInThen(string ifLine, int parentStmtNo) {
 			continue;
 		}
 		else {
-			;
+			if (passedElse) {
+				if (line.find("}") != string::npos) {
+					nestingLevel--;
+					break;
+				}
+			}
 		}
 	}
 	result.lastStmtNo = currStmtNo;
@@ -924,7 +934,10 @@ NestedResult Parser::parseWhileNestedInThen(string whileLine, int parentStmtNo) 
 			}
 		}
 		else {
-			;
+			if (line.find("}") != string::npos) {
+				nestingLevel--;
+				break;
+			}
 		}
 	}
 	result.lastStmtNo = currStmtNo;
@@ -1110,7 +1123,10 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 			}
 		}
 		else {
-			;
+			if (line.find("}") != string::npos) {
+				nestingLevel--;
+				break;
+			}
 		}
 	}
 	result.lastStmtNo = currStmtNo;
