@@ -636,7 +636,7 @@ none
 128 - Select all assign that has pattern LHS low and RHS dec
 assign a;
 Select a pattern a("low", _"dec"_)
-18
+18, 20
 5000
 129 - Select all variable in assign pattern LHS variable and RHS 1
 variable v; assign a;

@@ -28,6 +28,10 @@ int Parser::Parse (string filename) {
 	}
 
 	while (getline(programFile, line)) {
+
+		if (count(line, ';') > 1) {
+			throw stmtNo;
+		}
 		//Process to parse each line
 		if (line.find("procedure") != string::npos) {
 			string header = parseProc(line);
@@ -275,6 +279,9 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 		result.addUses(var);
 	}
 	while (getline(programFile, line)) {
+		if (count(line, ';') > 1) {
+			throw currStmtNo;
+		}
 		//Process to parse each line
 		if (line.find("while") != string::npos && line.find('{') != string::npos) {
 			pkb.setStmt(currStmtNo, While);
@@ -489,7 +496,12 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 			continue;
 		}
 		else {
-			;
+			if (passedElse) {
+				if (line.find("}") != string::npos) {
+					nestingLevel--;
+					break;
+				}
+			}
 		}
 	}
 	result.lastStmtNo = currStmtNo;
@@ -513,6 +525,9 @@ NestedResult Parser::parseIfNestedInThen(string ifLine, int parentStmtNo) {
 		result.addUses(var);
 	}
 	while (getline(programFile, line)) {
+		if (count(line, ';') > 1) {
+			throw currStmtNo;
+		}
 		//Process to parse each line
 		if (line.find("while") != string::npos && line.find('{') != string::npos) {
 			pkb.setStmt(currStmtNo, While);
@@ -727,7 +742,12 @@ NestedResult Parser::parseIfNestedInThen(string ifLine, int parentStmtNo) {
 			continue;
 		}
 		else {
-			;
+			if (passedElse) {
+				if (line.find("}") != string::npos) {
+					nestingLevel--;
+					break;
+				}
+			}
 		}
 	}
 	result.lastStmtNo = currStmtNo;
@@ -749,6 +769,9 @@ NestedResult Parser::parseWhileNestedInThen(string whileLine, int parentStmtNo) 
 		result.addUses(var);
 	}
 	while (getline(programFile, line)) {
+		if (count(line, ';') > 1) {
+			throw currStmtNo;
+		}
 		//Process to parse each line
 		if (line.find("while") != string::npos && line.find('{') != string::npos) {
 			pkb.setStmt(currStmtNo, While);
@@ -911,7 +934,10 @@ NestedResult Parser::parseWhileNestedInThen(string whileLine, int parentStmtNo) 
 			}
 		}
 		else {
-			;
+			if (line.find("}") != string::npos) {
+				nestingLevel--;
+				break;
+			}
 		}
 	}
 	result.lastStmtNo = currStmtNo;
@@ -932,6 +958,9 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 		result.addUses(var);
 	}
 	while (getline(programFile, line)) {
+		if (count(line, ';') > 1) {
+			throw currStmtNo;
+		}
 		//Process to parse each line
 		if (line.find("while") != string::npos && line.find('{') != string::npos) {
 			pkb.setStmt(currStmtNo, While);
@@ -1094,7 +1123,10 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 			}
 		}
 		else {
-			;
+			if (line.find("}") != string::npos) {
+				nestingLevel--;
+				break;
+			}
 		}
 	}
 	result.lastStmtNo = currStmtNo;
