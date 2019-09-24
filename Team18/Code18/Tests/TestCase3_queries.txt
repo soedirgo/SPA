@@ -69,8 +69,8 @@ Select s such that Uses(s, v)
 3, 5, 6, 8, 10, 12, 14, 15, 16, 17, 18
 5000
 15 - Select all variable that is used - true
-variable v;
-Select v such that Uses(_, v)
+variable v; stmt s;
+Select v such that Uses(s, v)
 x, y, z, i, k, max, start, mid
 5000
 16 - Queries 16 - 18 - Test Modifies relation. assign used and modified  - true

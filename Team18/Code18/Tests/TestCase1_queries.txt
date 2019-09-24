@@ -174,8 +174,8 @@ Select pn such that Uses(pn, v) pattern a(_, _)
 3, 12, 13, 14, 15
 5000
 36 - Select result related to 2 clause, Uses and pattern assign
-assign a; variable v;
-Select v pattern a(v, _) such that Uses(_, v)
+assign a; variable v; stmt s;
+Select v pattern a(v, _) such that Uses(s, v)
 x, z
 5000
 37 - Select result not related, Modifies and pattern assign

@@ -369,13 +369,13 @@ Select a such that Uses(pn, v)
 1, 2, 4, 5, 9, 10, 11, 12, 18, 20, 26, 28, 30, 31, 34, 36, 39, 40
 5000
 75 - Select all stmt if some stmt uses x
-stmt s;
-Select s such that Uses(_, "x")
+stmt s, s1;
+Select s such that Uses(s1, "x")
 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44
 5000
 76 - Select all assign if some stmt uses a variable
-assign a; variable v;
-Select a such that Uses(_, v)
+assign a; variable v; stmt s;
+Select a such that Uses(s, v)
 1, 2, 4, 5, 9, 10, 11, 12, 18, 20, 26, 28, 30, 31, 34, 36, 39, 40
 5000
 77 - Select all variable if stmt 23 uses some variable
@@ -389,8 +389,8 @@ Select c such that Uses(ifs, _)
 1, 2, 3, 6, 7, 10
 5000
 79 - Select all read if some stmt uses some variable
-read r;
-Select r such that Uses(_, _)
+read r; stmt s;
+Select r such that Uses(s, _)
 3, 7, 15, 17, 38, 44
 5000
 80 - Select all stmt that uses x
@@ -424,8 +424,8 @@ Select v such that Uses(v, v)
 none
 5000
 86 - Select all variable used by some stmt
-variable v;
-Select v such that Uses(_, v)
+variable v; stmt s;
+Select v such that Uses(s, v)
 x, y, z, i, m, high, k, low, mid, dec, inc, j, g, h
 5000
 87 - Select all assign that uses some variable
@@ -489,13 +489,13 @@ Select a such that Modifies(r, v)
 1, 2, 4, 5, 9, 10, 11, 12, 18, 20, 26, 28, 30, 31, 34, 36, 39, 40
 5000
 99 - Select all stmt if some stmt modifies x
-stmt s;
-Select s such that Modifies(_, "x")
+stmt s, s1;
+Select s such that Modifies(s1, "x")
 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44
 5000
 100 - Select all assign if some stmt modifies a variable
-assign a; variable v;
-Select a such that Modifies(_, v)
+assign a; variable v; stmt s;
+Select a such that Modifies(s, v)
 1, 2, 4, 5, 9, 10, 11, 12, 18, 20, 26, 28, 30, 31, 34, 36, 39, 40
 5000
 101 - Select all variable if stmt 16 modifies some variable
@@ -509,8 +509,8 @@ Select c such that Modifies(ifs, _)
 1, 2, 3, 6, 7, 10
 5000
 103 - Select all print if some stmt modifies some variable
-print pn;
-Select pn such that Modifies(_, _)
+print pn; stmt s;
+Select pn such that Modifies(s, _)
 6, 13, 14, 21, 22, 23, 24, 29, 37, 41, 42, 43
 5000
 104 - Select all stmt that modifies x
@@ -544,8 +544,8 @@ Select v such that Modifies(v, v)
 none
 5000
 110 - Select variables that are modified by some stmt
-variable v;
-Select v such that Modifies(_, v)
+variable v; stmt s;
+Select v such that Modifies(s, v)
 x, y, z, i, m, high, k, low, mid, dec, inc, j, g, h, target
 5000
 111 - Select all assign that modifies some variable

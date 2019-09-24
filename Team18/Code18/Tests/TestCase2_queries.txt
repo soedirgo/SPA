@@ -169,8 +169,8 @@ Select a1 such that Uses(s, v) pattern a(_, _"glass"_)
 none
 5000
 35 - Select result related to 1 clause, Uses and pattern assign, 1 clause fail
-assign a; variable v;
-Select v pattern a(v, _) such that Uses(_, "glass")
+assign a; variable v; stmt s;
+Select v pattern a(v, _) such that Uses(s, "glass")
 none
 5000
 36 - Select result related to both, Uses and pattern assign, 1 clause fail
@@ -185,7 +185,7 @@ none
 5000
 38 - Select result related to 1 clause, Modifies and pattern assign, 1 clause fail
 assign a; stmt s;
-Select s such that Modifies(_, _) pattern a("stat", _)
+Select s such that Modifies(s, _) pattern a("stat", _)
 none
 5000
 39 - Select result related to both, Modifies and pattern assign, 1 clause fail
