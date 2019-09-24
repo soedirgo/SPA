@@ -37,6 +37,35 @@ namespace Preprocessor {
         //     }
         //     return results;
         // }
+        bool isSuchThatValid(string relRef, string lhs, string rhs, unordered_map<string, string>& synMap) {
+            if (relRef == "Uses" || relRef == "Modifies") {
+                if (lhs == "_")
+                    return false;
+                if (synMap.count(rhs)
+                    && synMap[rhs] != "variable"
+                    && synMap[rhs] != "constant")
+                    return false;
+            } else {
+                if (synMap.count(lhs)
+                    && (synMap[lhs] == "variable" || synMap[lhs] == "constant"))
+                    return false;
+            }
+            if (synMap.count(lhs)
+                && (synMap[lhs] == "variable" || synMap[lhs] == "constant"))
+                return false;
+            return true;
+        }
+
+        bool isPatternValid(string syn, string lhs, string rhs, unordered_map<string, string>& synMap) {
+            if (!synMap.count(syn)
+                || synMap[syn] != "assign")
+                return false;
+            if (synMap.count(lhs)
+                && synMap[lhs] != "variable"
+                && synMap[lhs] != "constant")
+                return false;
+            return true;
+        }
     }
 
     bool isValid(string& input) {
@@ -54,7 +83,7 @@ namespace Preprocessor {
         // if (!regex_match(declarations, declarationsMatch, declarationsRe))
         //     return false;
 
-        unordered_set<string> synonyms;
+        unordered_map<string, string> synonymMap;
         size_t pos;
         string declaration;
         smatch declarationMatch;
@@ -64,13 +93,13 @@ namespace Preprocessor {
             declaration = declarations.substr(0, pos);
             if (!regex_match(declaration, declarationMatch, declarationRe))
                 return false;
-            if (synonyms.count(declarationMatch[2]))
+            if (synonymMap.count(declarationMatch[2]))
                 return false;
             else
-                synonyms.insert(declarationMatch[2]);
+                synonymMap[declarationMatch[2]] = declarationMatch[1];
             declarations.erase(0, pos + 1);
         }
-        if (!synonyms.count(selectClMatch[2])) {
+        if (!synonymMap.count(selectClMatch[2])) {
             return false;
         }
         // such that Uses(s, v)
@@ -84,7 +113,7 @@ namespace Preprocessor {
         regex suchThatRe("\\s*such\\s+that\\s+"
                          "(Uses|Modifies|Follows|Follows\\*|Parent|Parent\\*)"
                          "\\s*\\(\\s*"
-                         "([[:alpha:]][[:alnum:]]*|[[:digit:]]*)"
+                         "([[:alpha:]][[:alnum:]]*|_|[[:digit:]]*)"
                          "\\s*,\\s*"
                          "([[:alpha:]][[:alnum:]]*|_|\\\"[[:alpha:]][[:alnum:]]*\\\")"
                          "\\s*\\)\\s*");
@@ -118,10 +147,16 @@ namespace Preprocessor {
                 clause = clauses.substr(0, patternPos);
                 if (!regex_match(clause, clauseMatch, suchThatRe))
                     return false;
+                if (!isSuchThatValid(clauseMatch[1], clauseMatch[2], clauseMatch[3], synonymMap))
+                    return false;
+                clauses.erase(0, patternPos);
             } else {
                 clause = clauses.substr(0, suchThatPos);
                 if (!regex_match(clause, clauseMatch, patternRe))
                     return false;
+                if (!isPatternValid(clauseMatch[1], clauseMatch[2], clauseMatch[3], synonymMap))
+                    return false;
+                clauses.erase(0, suchThatPos);
             }
         }
         return true;
