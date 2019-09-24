@@ -95,7 +95,8 @@ namespace UnitTesting
 			Assert::IsTrue(res == stmtList);	
 		}
 		
-		TEST_METHOD(getAssignStmtByVar)
+		TEST_METHOD(
+			StmtByVar)
 		{
 			unordered_set<int> resX = { 1 };
 			unordered_set<int> resY = { 2 };

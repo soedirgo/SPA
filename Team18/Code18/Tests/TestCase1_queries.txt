@@ -46,7 +46,7 @@ none
 10 - Queries 10 - 12 - Test Parent* relation. Direct Parent* - true
 if ifs; assign a;
 Select ifs such that Parent*(ifs, a)
-11
+10
 5000
 11 - 2nd nested child to 1st nested Parent* - true
 assign a;
@@ -120,7 +120,7 @@ Select a such that Follows(a, s) pattern(_, "y")
 5000
 25 - Select result not related, Follows* and pattern assign
 assign a; if ifs; constant c;
-Select pattern a("z", _"z"_) such that Follows*(ifs, 15)
+Select c pattern a("z", _"z"_) such that Follows*(ifs, 15)
 1, 2, 4
 5000
 26 - Select result related to 1 clause, Follows* and pattern assign
@@ -192,4 +192,44 @@ Select a pattern a(_, _"x"_) such that Modifies(r, "target")
 assign a; variable v;
 Select a such that Modifies(a, "z") pattern a("z", _"y"_)
 6, 8
+5000
+40 - Select all constant
+constant c;
+Select c
+1, 2, 4
+5000
+41 - Select all read statements
+read rd;
+Select rd
+2, 9
+5000
+42 - Select all print statements
+print pr;
+Select pr
+3,12,13,14,15
+5000
+43 - Select all statements
+stmt s;
+Select s
+1,2,3,4,5,6,7,8,9,10,11,12,13,14,15
+5000
+44 - Select all variable
+variable v;
+Select v
+x,y,z,target
+5000
+45 - Select all procedure
+procedure proc;
+Select proc
+TestCase1
+5000
+46 - Select all if statements
+if ifs;
+Select ifs
+10
+5000
+47 - Select all while statements
+while w;
+Select w
+4,7
 5000

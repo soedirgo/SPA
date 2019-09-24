@@ -40,7 +40,8 @@ namespace IntegrationTesting
             pkb.setStmt(1, Assign);
             pkb.setAssignStmt(1, "x");
             pkb.setVar("x");
-            pkb.setConstant("1", 1);
+            pkb.
+				("1", 1);
             pkb.insertModifiesRelation(1, "x");
 
             pkb.setStmt(2, Assign);

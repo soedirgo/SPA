@@ -135,8 +135,8 @@ none
 5000
 28 - Parent* and pattern assign - merge true
 assign a; while w;
-Select  pattern a(_, _) such that Parent*(w, a)
-6
+Select a pattern a(_, _) such that Parent*(w, a)
+6, 15, 17
 5000
 29 - Parent* and pattern assign - merge fail
 assign a; if ifs;
