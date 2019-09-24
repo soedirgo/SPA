@@ -37,7 +37,12 @@ void TestWrapper::parse(std::string filename) {
 
 	// call your parser to do the parsing
 	Parser parser = Parser();
-	parser.Parse(filename);
+	try {
+		parser.Parse(filename);
+	}
+	catch (int e) {
+		cout << "line contains more than 1 ; at line: " << e;
+	}
 
 	DesignExtractor designExtractor = DesignExtractor();
 	designExtractor.extractDesign();
