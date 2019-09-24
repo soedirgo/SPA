@@ -11,32 +11,30 @@ using namespace std;
 
 namespace Preprocessor {
     namespace {
-        // inline void trim(string& s, char c) {
-        //     s.erase(s.begin(),
-        //             find_if_not(s.begin(),
-        //                         s.end(),
-        //                         [&c](int ch) {
-        //                             return ch == c;
-        //                         }));
-        //     s.erase(find_if_not(s.rbegin(),
-        //                         s.rend(),
-        //                         [&c](int ch) {
-        //                             return ch == c;
-        //                         }).base(),
-        //             s.end());
-        // }
+        inline void trim(string& s, char c) {
+            s.erase(s.begin(),
+                    find_if_not(s.begin(),
+                                s.end(),
+                                [&c](int ch) {
+                                    return ch == c;
+                                }));
+            s.erase(find_if_not(s.rbegin(),
+                                s.rend(),
+                                [&c](int ch) {
+                                    return ch == c;
+                                }).base(),
+                    s.end());
+        }
 
-        // inline vector<string> split(string s, string delim) {
-        //     vector<string> results;
-        //     size_t pos = 0;
-        //     string token;
-        //     while ((pos = s.find(delim)) != string::npos) {
-        //         token = s.substr(0, pos);
-        //         results.push_back(token);
-        //         s.erase(0, pos + delim.length());
-        //     }
-        //     return results;
-        // }
+        inline void split(string s, string delim, vector<string>& results) {
+            size_t pos = 0;
+            string token;
+            while ((pos = s.find(delim)) != string::npos) {
+                token = s.substr(0, pos);
+                results.push_back(token);
+                s.erase(0, pos + delim.length());
+            }
+        }
         bool isSuchThatValid(string relRef, string lhs, string rhs, unordered_map<string, string>& synMap) {
             if (relRef == "Uses" || relRef == "Modifies") {
                 if (lhs == "_")
@@ -88,15 +86,22 @@ namespace Preprocessor {
         string declaration;
         smatch declarationMatch;
         regex declarationRe("\\s*(stmt|read|print|while|if|assign|variable|constant|procedure)"
-                            "\\s+([[:alpha:]][[:alnum:]]*)\\s*");
+                            "\\s+([[:alpha:]][[:alnum:]]*"
+                            "(\\s*,\\s*[[:alpha:]][[:alnum:]]*)*"
+                            ")\\s*");
+        vector<string> synonyms;
         while ((pos = declarations.find(';')) != string::npos) {
             declaration = declarations.substr(0, pos);
             if (!regex_match(declaration, declarationMatch, declarationRe))
                 return false;
-            if (synonymMap.count(declarationMatch[2]))
-                return false;
-            else
-                synonymMap[declarationMatch[2]] = declarationMatch[1];
+            Preprocessor::split(declarationMatch[2], ",", synonyms);
+            for (auto synonym : synonyms) {
+                Preprocessor::trim(synonym, ' ');
+                if (synonymMap.count(synonym))
+                    return false;
+                else
+                    synonymMap[synonym] = declarationMatch[1];
+            }
             declarations.erase(0, pos + 1);
         }
         if (!synonymMap.count(selectClMatch[2])) {
@@ -161,7 +166,7 @@ namespace Preprocessor {
         }
         return true;
     }
-    
+
     Query preprocess(string input) {
         return Query({}, "", {}, {});
     }
