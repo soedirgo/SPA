@@ -123,17 +123,10 @@ list<string> QueryParser::parse(string query) {
 		return finalOutput;
 	}
 
-	/*resultString = patternValidation(declerationVariables, pattern);
-	if (resultString == "Invalid") {
-		finalOutput.push_back("");
-		return finalOutput;
-	}
-	*/
 	Query q = Query(declerationVariables, selectVars, suchThat, pattern);
 	finalOutput = evalQuery(q);
 	
 	return finalOutput;
-	
 }
 
 //Finds delimiter ; and push initial declarations into a new vector and return the vector
