@@ -132,9 +132,15 @@ bool PKB::isConstUsedInAssign(STMT_NO assignStmtNo, string c) {
 
 bool PKB::isVarUsedInAssign(STMT_NO assignStmtNo, string varName) {
 	STMT_LIST stmtList = getUsesStmtByVar(varName);
+	STMT_LIST assignStmtList = getAllAssignStmt();
 	for (auto stmt : stmtList) {
 		if (stmt == assignStmtNo) {
-			return true;
+			for (auto assignStmt : assignStmtList) {
+				if (stmt == assignStmt) {
+					return true;
+				}
+			}
+			
 		}
 	}
 	return false;
