@@ -21,4 +21,6 @@ procedure PatternAssign {
   sea = blue;
   read tree;
   tree = green;
+  tree = apple;
+  orange = apple;
 }
