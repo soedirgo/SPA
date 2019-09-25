@@ -193,3 +193,33 @@ assign a; variable v;
 Select v pattern a(v, _"x"_) such that Modifies(a, v)
 none
 5000
+40 - Select result related to both, Modifies and pattern assign
+assign a; variable v; stmt s;
+Select v pattern a(v, _"tac"_) such that Modifies(s, v)
+tic, tac
+5000
+41 - Select result related to both, 
+assign a; variable v; stmt s;
+Select s pattern a(v, _"tac"_) such that Modifies(s, v)
+4,9,10,12,13,14,16
+5000
+42 - Select result related to both, Uses and pattern assign
+assign a; variable v; stmt s;
+Select s pattern a(v, _"tac"_) such that Uses(s, v)
+12,13,14,15,16,17
+5000
+43 - Select result not related to both, Uses and pattern assign
+assign a; variable v; stmt s;
+Select s pattern a(v, _"tac"_) such that Uses(s, "tac")
+12,13,14,15,16
+5000
+44 - Select result related to both, Uses and pattern assign
+assign a; variable v; stmt s;
+Select a pattern a(v, _"tac"_) such that Uses(a, "tac")
+14,16
+5000
+45 - Select result related to both, Uses and pattern assign
+assign a; variable v; stmt s;
+Select v pattern a(v, _"tac"_) such that Uses(s, v)
+tic,tac
+5000
