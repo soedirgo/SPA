@@ -376,7 +376,7 @@ none
 76 - Ident that is in if only
 assign a;
 Select a pattern a(_, _"apple"_)
-21
+21, 22
 5000
 77 - Ident that is in while only
 assign a;
