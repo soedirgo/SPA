@@ -33,12 +33,12 @@ int Parser::Parse (string filename) {
 			throw stmtNo;
 		}
 		//Process to parse each line
-		if (line.find("procedure") != string::npos) {
+		if (line.find("procedure") != string::npos && line.find(';') == string::npos) {
 			string header = parseProc(line);
 			//Calls PKB API to set procedure name
 			pkb.setProc(header);
 		}
-		else if (line.find("while") != string::npos && line.find('{') != string::npos) {
+		else if (line.find("while") != string::npos && line.find(';') == string::npos) {
 			pkb.setStmt(stmtNo, While);
 			nestingLevel++;
 			NestedResult results = parseWhile(line, stmtNo);
@@ -63,7 +63,7 @@ int Parser::Parse (string filename) {
 			prevStmtNo = stmtNo;
 			stmtNo = results.lastStmtNo;
 		}
-		else if (line.find("if") != string::npos && line.find('{') != string::npos) {
+		else if (line.find("if") != string::npos && line.find(';') == string::npos) {
 			pkb.setStmt(stmtNo, If);
 			nestingLevel++;
 			NestedResult results = parseIf(line, stmtNo);
@@ -283,7 +283,7 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 			throw currStmtNo;
 		}
 		//Process to parse each line
-		if (line.find("while") != string::npos && line.find('{') != string::npos) {
+		if (line.find("while") != string::npos && line.find(';') == string::npos) {
 			pkb.setStmt(currStmtNo, While);
 			pkb.insertParentRelation(startStmtNo, currStmtNo);
 			nestingLevel++;
@@ -304,7 +304,6 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 			for (string var : uses) {
 				if (isdigit(var.at(0))) {
 					pkb.setConstant(var, currStmtNo);
-					result.addUses(var);
 				}
 				else {
 					pkb.setVar(var);
@@ -329,7 +328,7 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 				break;
 			}
 		}
-		else if (line.find("if") != string::npos && line.find('{') != string::npos) {
+		else if (line.find("if") != string::npos && line.find(';') == string::npos) {
 			pkb.setStmt(currStmtNo, If);
 			pkb.insertParentRelation(startStmtNo, currStmtNo);
 			nestingLevel++;
@@ -350,7 +349,6 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 			for (string var : uses) {
 				if (isdigit(var.at(0))) {
 					pkb.setConstant(var, currStmtNo);
-					result.addUses(var);
 				}
 				else {
 					pkb.setVar(var);
@@ -401,7 +399,6 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 			for (string var : results) {
 				if (isdigit(var.at(0))) {
 					pkb.setConstant(var, currStmtNo);
-					result.addUses(var);
 				}
 				else {
 					pkb.setVar(var);
@@ -529,7 +526,7 @@ NestedResult Parser::parseIfNestedInThen(string ifLine, int parentStmtNo) {
 			throw currStmtNo;
 		}
 		//Process to parse each line
-		if (line.find("while") != string::npos && line.find('{') != string::npos) {
+		if (line.find("while") != string::npos && line.find(';') == string::npos) {
 			pkb.setStmt(currStmtNo, While);
 			pkb.insertParentRelation(startStmtNo, currStmtNo);
 			nestingLevel++;
@@ -550,7 +547,6 @@ NestedResult Parser::parseIfNestedInThen(string ifLine, int parentStmtNo) {
 			for (string var : uses) {
 				if (isdigit(var.at(0))) {
 					pkb.setConstant(var, currStmtNo);
-					result.addUses(var);
 				}
 				else {
 					pkb.setVar(var);
@@ -575,7 +571,7 @@ NestedResult Parser::parseIfNestedInThen(string ifLine, int parentStmtNo) {
 				break;
 			}
 		}
-		else if (line.find("if") != string::npos && line.find('{') != string::npos) {
+		else if (line.find("if") != string::npos && line.find(';') == string::npos) {
 			pkb.setStmt(currStmtNo, If);
 			pkb.insertParentRelation(startStmtNo, currStmtNo);
 			nestingLevel++;
@@ -596,7 +592,6 @@ NestedResult Parser::parseIfNestedInThen(string ifLine, int parentStmtNo) {
 			for (string var : uses) {
 				if (isdigit(var.at(0))) {
 					pkb.setConstant(var, currStmtNo);
-					result.addUses(var);
 				}
 				else {
 					pkb.setVar(var);
@@ -647,7 +642,6 @@ NestedResult Parser::parseIfNestedInThen(string ifLine, int parentStmtNo) {
 			for (string var : results) {
 				if (isdigit(var.at(0))) {
 					pkb.setConstant(var, currStmtNo);
-					result.addUses(var);
 				}
 				else {
 					pkb.setVar(var);
@@ -773,7 +767,7 @@ NestedResult Parser::parseWhileNestedInThen(string whileLine, int parentStmtNo) 
 			throw currStmtNo;
 		}
 		//Process to parse each line
-		if (line.find("while") != string::npos && line.find('{') != string::npos) {
+		if (line.find("while") != string::npos && line.find(';') == string::npos) {
 			pkb.setStmt(currStmtNo, While);
 			pkb.insertParentRelation(startStmtNo, currStmtNo);
 			nestingLevel++;
@@ -788,7 +782,6 @@ NestedResult Parser::parseWhileNestedInThen(string whileLine, int parentStmtNo) 
 			for (string var : uses) {
 				if (isdigit(var.at(0))) {
 					pkb.setConstant(var, currStmtNo);
-					result.addUses(var);
 				}
 				else {
 					pkb.setVar(var);
@@ -806,7 +799,7 @@ NestedResult Parser::parseWhileNestedInThen(string whileLine, int parentStmtNo) 
 				break;
 			}
 		}
-		else if (line.find("if") != string::npos && line.find('{') != string::npos) {
+		else if (line.find("if") != string::npos && line.find(';') == string::npos) {
 			pkb.setStmt(currStmtNo, If);
 			pkb.insertParentRelation(startStmtNo, currStmtNo);
 			nestingLevel++;
@@ -821,7 +814,6 @@ NestedResult Parser::parseWhileNestedInThen(string whileLine, int parentStmtNo) 
 			for (string var : uses) {
 				if (isdigit(var.at(0))) {
 					pkb.setConstant(var, currStmtNo);
-					result.addUses(var);
 				}
 				else {
 					pkb.setVar(var);
@@ -865,7 +857,6 @@ NestedResult Parser::parseWhileNestedInThen(string whileLine, int parentStmtNo) 
 			for (string var : results) {
 				if (isdigit(var.at(0))) {
 					pkb.setConstant(var, currStmtNo);
-					result.addUses(var);
 				}
 				else {
 					pkb.setVar(var);
@@ -962,7 +953,7 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 			throw currStmtNo;
 		}
 		//Process to parse each line
-		if (line.find("while") != string::npos && line.find('{') != string::npos) {
+		if (line.find("while") != string::npos && line.find(';') == string::npos) {
 			pkb.setStmt(currStmtNo, While);
 			pkb.insertParentRelation(startStmtNo, currStmtNo);
 			nestingLevel++;
@@ -977,7 +968,6 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 			for (string var : uses) {
 				if (isdigit(var.at(0))) {
 					pkb.setConstant(var, currStmtNo);
-					result.addUses(var);
 				}
 				else {
 					pkb.setVar(var);
@@ -995,7 +985,7 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 				break;
 			}
 		}
-		else if (line.find("if") != string::npos && line.find('{') != string::npos) {
+		else if (line.find("if") != string::npos && line.find(';') == string::npos) {
 			pkb.setStmt(currStmtNo, If);
 			pkb.insertParentRelation(startStmtNo, currStmtNo);
 			nestingLevel++;
@@ -1010,7 +1000,6 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 			for (string var : uses) {
 				if (isdigit(var.at(0))) {
 					pkb.setConstant(var, currStmtNo);
-					result.addUses(var);
 				}
 				else {
 					pkb.setVar(var);
@@ -1054,7 +1043,6 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 			for (string var : results) {
 				if (isdigit(var.at(0))) {
 					pkb.setConstant(var, currStmtNo);
-					result.addUses(var);
 				}
 				else {
 					pkb.setVar(var);
