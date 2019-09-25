@@ -1,0 +1,24 @@
+procedure PatternAssign {
+  x = 1;
+  read y;
+  print z;
+  if (i < 2) then {
+    j = k;
+    m = f; }
+  else {
+    f = m; }
+  while (gum < fish) {
+    gum = gum + 1; }
+  while (ham > jam) {
+    jam = jam + 2; 
+    read sky; }
+  print fall;
+  mango = 4;
+  if (apple <= orange) then {
+    print orange; }
+  else {
+    print apple; }
+  sea = blue;
+  read tree;
+  tree = green;
+}

@@ -1,0 +1,150 @@
+1 - Queries 1 - 2 - Test Select assign/variable that is on the LHS with RHS wildcard. Select all assign that has variable on LHS
+assign a; variable v;
+Select a pattern a(v, _)
+5, 6, 7, 9, 11, 18, 20
+5000
+2 - Select all variable that is on LHS of assign
+assign a; variable v;
+Select v pattern a(v, _)
+j, m, f, gum, jam, sea
+5000
+3 - Queries 3 - 30 - Test RHS ident combination and LHS variable. Ident that is read only
+assign a; variable v;
+Select a pattern a(v, _"y"_)
+none
+5000
+4 - Ident that is read only
+assign a; variable v;
+Select a pattern a(v, _"sky"_)
+none
+5000
+5 - Ident that is read only
+assign a; variable v;
+Select v pattern a(v, _"sky"_)
+none
+5000
+6 - Ident that is read only
+assign a; variable v;
+Select v pattern a(v, _"tree"_)
+none
+5000
+7 - Ident that is print only
+assign a; variable v;
+Select a pattern a(v, _"z"_)
+none
+5000
+8 - Ident that is print only
+assign a; variable v;
+Select a pattern a(v, _"fall"_)
+none
+5000
+9 - Ident that is print only
+assign a; variable v;
+Select v pattern a(v, _"orange"_)
+none
+5000
+10 - Ident that is print only
+assign a; variable v;
+Select v pattern a(v, _"apple"_)
+none
+5000
+11 - Ident that is in if only
+assign a; variable v;
+Select a pattern a(v, _"i"_)
+none
+5000
+12 - Ident that is in if only
+assign a; variable v;
+Select a pattern a(v, _"apple"_)
+none
+5000
+13 - Ident that is in if only
+assign a; variable v;
+Select v pattern a(v, _"orange"_)
+none
+5000
+14 - Ident that is in if only
+assign a; variable v;
+Select v pattern a(v, _"i"_)
+none
+5000
+15 - Ident that is in while only
+assign a; variable v;
+Select a pattern a(v, _"fish"_)
+none
+5000
+16 - Ident that is in while only
+assign a; variable v;
+Select a pattern a(v, _"ham"_)
+none
+5000
+17 - Ident that is in while only
+assign a; variable v;
+Select v pattern a(v, _"fish"_)
+none
+5000
+18 - Ident that is in while only
+assign a; variable v;
+Select v pattern a(v, _"ham"_)
+none
+5000
+19 - Ident that is LHS only
+assign a; variable v;
+Select a pattern a(v, _"j"_)
+none
+5000
+20 - Ident that is LHS only
+assign a; variable v;
+Select a pattern a(v, _"mango"_)
+none
+5000
+21 - Ident that is LHS only
+assign a; variable v;
+Select v pattern a(v, _"sea"_)
+none
+5000
+22 - Ident that is LHS only
+assign a; variable v;
+Select v pattern a(v, _"tree"_)
+none
+5000
+23 - Ident that is RHS only
+assign a; variable v;
+Select a pattern a(v, _"k"_)
+5
+5000
+24 - Ident that is RHS only
+assign a; variable v;
+Select a pattern a(v, _"blue"_)
+18
+5000
+25 - Ident that is RHS only
+assign a; variable v;
+Select v pattern a(v, _"green"_)
+tree
+5000
+26 - Ident that is RHS only
+assign a; variable v;
+Select v pattern a(v, _"blue"_)
+sea
+5000
+27 - Ident that is LHS and RHS
+assign a; variable v;
+Select a pattern a(v, _"f"_)
+6
+5000
+28 - Ident that is LHS and RHS
+assign a; variable v;
+Select a pattern a(v, _"gum"_)
+9
+5000
+29 - Ident that is LHS and RHS
+assign a; variable v;
+Select v pattern a(v, _"jam"_)
+jam
+5000
+30 - Ident that is LHS and RHS
+assign a; variable v;
+Select v pattern a(v, _"f"_)
+m
+5000
