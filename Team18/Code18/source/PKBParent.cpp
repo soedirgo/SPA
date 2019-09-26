@@ -77,7 +77,7 @@ bool PKBParent::isParentRelationship(int parent, int child) {
 }
 
 bool PKBParent::isParentStarRelationship(int parent, int child) {
-	unordered_set<int> stmtList = getParentStarStmtList(child);
+	unordered_set<int> stmtList = getParentStarStmtList  (child);
 	for (auto keyValue : stmtList) {
 		if (keyValue == parent) {
 			return true;
