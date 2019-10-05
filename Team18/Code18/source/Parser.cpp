@@ -1146,6 +1146,9 @@ vector<string> Parser::parseCondStmt(string line) {
 		string curr = condStmt;
 		vector<string> subresult = parseCondition(curr);
 		for (string var : subresult) {
+			if (var.find('!') != string::npos) {
+				var = var.substr(1);
+			}
 			result.push_back(var);
 		}
 	}
@@ -1160,6 +1163,9 @@ vector<string> Parser::parseCondStmt(string line) {
 					condStmt = condStmt.substr(i + 2);
 					vector<string> subresult = parseCondition(curr);
 					for (string var : subresult) {
+						if (var.find('!') != string::npos) {
+							var = var.substr(1);
+						}
 						result.push_back(var);
 					}
 				}
@@ -1168,6 +1174,9 @@ vector<string> Parser::parseCondStmt(string line) {
 					condStmt = condStmt.substr(j + 2);
 					vector<string> subresult = parseCondition(curr);
 					for (string var : subresult) {
+						if (var.find('!') != string::npos) {
+							var = var.substr(1);
+						}
 						result.push_back(var);
 					}
 				}
@@ -1176,6 +1185,9 @@ vector<string> Parser::parseCondStmt(string line) {
 				string curr = condStmt;
 				vector<string> subresult = parseCondition(curr);
 				for (string var : subresult) {
+					if (var.find('!') != string::npos) {
+						var = var.substr(1);
+					}
 					result.push_back(var);
 				}
 				break;
