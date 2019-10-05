@@ -23,6 +23,24 @@ namespace UnitTesting
 			Assert::AreEqual(expected, actual);
 		}
 
+		TEST_METHOD(CallTest1)
+		{
+			Parser parser = Parser();
+			string input = "call parse;";
+			string expected = "parse";
+			string actual = parser.parseCall(input);
+			Assert::AreEqual(expected, actual);
+		}
+
+		TEST_METHOD(CallTest2)
+		{
+			Parser parser = Parser();
+			string input = "call parse;}";
+			string expected = "parse";
+			string actual = parser.parseCall(input);
+			Assert::AreEqual(expected, actual);
+		}
+
 		TEST_METHOD(ReadTest)
 		{
 			Parser parser = Parser();

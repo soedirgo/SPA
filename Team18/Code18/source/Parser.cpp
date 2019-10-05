@@ -15,6 +15,7 @@ Parser::Parser() {
 	this ->pkb = PKB();
 	this ->stmtNo = 1;
 	this->nestingLevel = 0;
+	this->currProc = NestedResult();
 }
 
 int Parser::Parse (string filename) {
@@ -34,8 +35,13 @@ int Parser::Parse (string filename) {
 		}
 		//Process to parse each line
 		if (line.find("procedure") != string::npos) {
+			if (stmtNo != 1) {
+				procedures.push_back(currProc);
+				currProc = NestedResult();
+			}
 			string header = parseProc(line);
 			//Calls PKB API to set procedure name
+			currProc.setProcName(header);
 			pkb.setProc(header);
 		}
 		else if (line.find("while") != string::npos && line.find('{') != string::npos) {
@@ -46,6 +52,7 @@ int Parser::Parse (string filename) {
 			vector<string> uses = results.getUses();
 			for (string var : modifies) {
 				pkb.setVar(var);
+				currProc.addModifies(var);
 				pkb.insertModifiesRelation(stmtNo, var);
 			}
 			for (string var : uses) {
@@ -54,6 +61,7 @@ int Parser::Parse (string filename) {
 				}
 				else {
 					pkb.setVar(var);
+					currProc.addModifies(var);
 					pkb.insertUsesRelation(stmtNo, var);
 				}
 			}
@@ -71,6 +79,7 @@ int Parser::Parse (string filename) {
 			vector<string> uses = results.getUses();
 			for (string var : modifies) {
 				pkb.setVar(var);
+				currProc.addModifies(var);
 				pkb.insertModifiesRelation(stmtNo, var);
 			}
 			for (string var : uses) {
@@ -79,6 +88,7 @@ int Parser::Parse (string filename) {
 				}
 				else {
 					pkb.setVar(var);
+					currProc.addUses(var);
 					pkb.insertUsesRelation(stmtNo, var);
 				}
 			}
@@ -99,6 +109,7 @@ int Parser::Parse (string filename) {
 			string varMod = assign.substr(0, index);
 			pkb.setVar(varMod);
 			pkb.insertModifiesRelation(stmtNo, varMod);
+			currProc.addModifies(varMod);
 
 			string varUse = assign.substr(index + 1);
 			//Calls to parse RHS of assign stmt
@@ -110,6 +121,7 @@ int Parser::Parse (string filename) {
 				}
 				else {
 					pkb.setVar(var);
+					currProc.addUses(var);
 					pkb.insertUsesRelation(stmtNo, var);
 				}
 			}
@@ -127,6 +139,7 @@ int Parser::Parse (string filename) {
 			pkb.setStmt(stmtNo, Read);
 			pkb.insertModifiesRelation(stmtNo, readArg);
 			pkb.setVar(readArg);
+			currProc.addModifies(readArg);
 			
 			if (stmtNo != 1) {
 				pkb.insertFollowRelation(prevStmtNo, stmtNo);
@@ -141,7 +154,18 @@ int Parser::Parse (string filename) {
 			pkb.setStmt(stmtNo, Print);
 			pkb.insertUsesRelation(stmtNo, printArg);
 			pkb.setVar(printArg);
+			currProc.addUses(printArg);
 			
+			if (stmtNo != 1) {
+				pkb.insertFollowRelation(prevStmtNo, stmtNo);
+			}
+			prevStmtNo = stmtNo;
+			stmtNo++;
+		}
+		else if (line.find("call") != string::npos) {
+			string proc = parseCall(line);
+			//pkb.setStmt(stmtNo, Call);
+			callStmts.push_back(make_pair(stmtNo, proc));
 			if (stmtNo != 1) {
 				pkb.insertFollowRelation(prevStmtNo, stmtNo);
 			}
@@ -150,6 +174,31 @@ int Parser::Parse (string filename) {
 		}
 		else {
 			;
+		}
+
+		for (NestedResult proc : procedures) {
+			string procName = proc.getProcName();
+			for (string var : proc.getModifies()) {
+				//pkb.insertProcModifiesRelation(procName, var);
+			}
+			for (string var : proc.getUses()) {
+				//pkb.insertProcUsesRelation(procName, var);
+			}
+		}
+
+		for (pair<int, std::string> call : callStmts) {
+			int stmtNo = call.first;
+			string procName = call.second;
+			for (NestedResult proc : procedures) {
+				if (proc.getProcName() == procName) {
+					for (string var : proc.getModifies()) {
+						pkb.insertModifiesRelation(stmtNo, var);
+					}
+					for (string var : proc.getUses()) {
+						pkb.insertUsesRelation(stmtNo, var);
+					}
+				}
+			}
 		}
 	}
 
@@ -167,6 +216,17 @@ string Parser::parseProc(string line) {
 	int k = header.find(bracket);
 	header.erase(k, bracket.size());
 	//Removes the stmt line open bracket: { from header
+	int i = header.find(keyword);
+	header.erase(i, keyword.size());
+	return header;
+}
+
+string Parser::parseCall(string line) {
+	string header = line;
+	string keyword = "call";
+	header.erase(remove_if(header.begin(), header.end(), isspace), header.end());
+	header.erase(std::remove(header.begin(), header.end(), '}'), header.end());
+	header.erase(std::remove(header.begin(), header.end(), ';'), header.end());
 	int i = header.find(keyword);
 	header.erase(i, keyword.size());
 	return header;
@@ -300,6 +360,7 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 				pkb.setVar(var);
 				pkb.insertModifiesRelation(currStmtNo, var);
 				result.addModifies(var);
+				currProc.addModifies(var);
 			}
 			for (string var : uses) {
 				if (isdigit(var.at(0))) {
@@ -310,6 +371,7 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 					pkb.setVar(var);
 					pkb.insertUsesRelation(currStmtNo, var);
 					result.addUses(var);
+					currProc.addUses(var);
 				}
 			}
 
@@ -346,6 +408,7 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 				pkb.setVar(var);
 				pkb.insertModifiesRelation(currStmtNo, var);
 				result.addModifies(var);
+				currProc.addModifies(var);
 			}
 			for (string var : uses) {
 				if (isdigit(var.at(0))) {
@@ -356,6 +419,7 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 					pkb.setVar(var);
 					pkb.insertUsesRelation(currStmtNo, var);
 					result.addUses(var);
+					currProc.addUses(var);
 				}
 			}
 
@@ -392,6 +456,7 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 			pkb.setVar(varMod);
 			pkb.insertModifiesRelation(currStmtNo, varMod);
 			result.addModifies(varMod);
+			currProc.addModifies(varMod);
 
 			string varUse = assign.substr(index + 1);
 
@@ -407,6 +472,7 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 					pkb.setVar(var);
 					pkb.insertUsesRelation(currStmtNo, var);
 					result.addUses(var);
+					currProc.addUses(var);
 				}
 			}
 
@@ -441,6 +507,7 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 			pkb.insertModifiesRelation(currStmtNo, readArg);
 			pkb.setVar(readArg);
 			result.addModifies(readArg);
+			currProc.addModifies(readArg);
 
 			if (currStmtNo != (startStmtNo + 1)) {
 				if (passedElse) {
@@ -473,6 +540,7 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 			pkb.insertUsesRelation(currStmtNo, printArg);
 			pkb.setVar(printArg);
 			result.addUses(printArg);
+			currProc.addUses(printArg);
 
 			if (currStmtNo != (startStmtNo + 1)) {
 				if (passedElse) {
@@ -489,6 +557,16 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 			if (nestingLevel != currNestingLevel) {
 				break;
 			}
+		}
+		else if (line.find("call") != string::npos) {
+		string proc = parseCall(line);
+		//pkb.setStmt(stmtNo, Call);
+		callStmts.push_back(make_pair(stmtNo, proc));
+		if (stmtNo != 1) {
+			pkb.insertFollowRelation(prevStmtNo, stmtNo);
+		}
+		prevStmtNo = currStmtNo;
+		currStmtNo++;
 		}
 		else if (line.find("else") != string::npos) {
 			passedElse = true;
@@ -546,6 +624,7 @@ NestedResult Parser::parseIfNestedInThen(string ifLine, int parentStmtNo) {
 				pkb.setVar(var);
 				pkb.insertModifiesRelation(currStmtNo, var);
 				result.addModifies(var);
+				currProc.addModifies(var);
 			}
 			for (string var : uses) {
 				if (isdigit(var.at(0))) {
@@ -556,6 +635,7 @@ NestedResult Parser::parseIfNestedInThen(string ifLine, int parentStmtNo) {
 					pkb.setVar(var);
 					pkb.insertUsesRelation(currStmtNo, var);
 					result.addUses(var);
+					currProc.addUses(var);
 				}
 			}
 
@@ -592,6 +672,7 @@ NestedResult Parser::parseIfNestedInThen(string ifLine, int parentStmtNo) {
 				pkb.setVar(var);
 				pkb.insertModifiesRelation(currStmtNo, var);
 				result.addModifies(var);
+				currProc.addModifies(var);
 			}
 			for (string var : uses) {
 				if (isdigit(var.at(0))) {
@@ -602,6 +683,7 @@ NestedResult Parser::parseIfNestedInThen(string ifLine, int parentStmtNo) {
 					pkb.setVar(var);
 					pkb.insertUsesRelation(currStmtNo, var);
 					result.addUses(var);
+					currProc.addUses(var);
 				}
 			}
 
@@ -638,6 +720,7 @@ NestedResult Parser::parseIfNestedInThen(string ifLine, int parentStmtNo) {
 			pkb.setVar(varMod);
 			pkb.insertModifiesRelation(currStmtNo, varMod);
 			result.addModifies(varMod);
+			currProc.addModifies(varMod);
 
 			string varUse = assign.substr(index + 1);
 
@@ -653,6 +736,7 @@ NestedResult Parser::parseIfNestedInThen(string ifLine, int parentStmtNo) {
 					pkb.setVar(var);
 					pkb.insertUsesRelation(currStmtNo, var);
 					result.addUses(var);
+					currProc.addUses(var);
 				}
 			}
 
@@ -687,6 +771,7 @@ NestedResult Parser::parseIfNestedInThen(string ifLine, int parentStmtNo) {
 			pkb.insertModifiesRelation(currStmtNo, readArg);
 			pkb.setVar(readArg);
 			result.addModifies(readArg);
+			currProc.addModifies(readArg);
 
 			if (currStmtNo != (startStmtNo + 1)) {
 				if (passedElse) {
@@ -719,6 +804,7 @@ NestedResult Parser::parseIfNestedInThen(string ifLine, int parentStmtNo) {
 			pkb.insertUsesRelation(currStmtNo, printArg);
 			pkb.setVar(printArg);
 			result.addUses(printArg);
+			currProc.addUses(printArg);
 
 			if (currStmtNo != (startStmtNo + 1)) {
 				if (passedElse) {
@@ -735,6 +821,16 @@ NestedResult Parser::parseIfNestedInThen(string ifLine, int parentStmtNo) {
 			if (nestingLevel != currNestingLevel) {
 				break;
 			}
+		}
+		else if (line.find("call") != string::npos) {
+		string proc = parseCall(line);
+		//pkb.setStmt(stmtNo, Call);
+		callStmts.push_back(make_pair(stmtNo, proc));
+		if (stmtNo != 1) {
+			pkb.insertFollowRelation(prevStmtNo, stmtNo);
+		}
+		prevStmtNo = currStmtNo;
+		currStmtNo++;
 		}
 		else if (line.find("else") != string::npos) {
 			passedElse = true;
@@ -784,6 +880,7 @@ NestedResult Parser::parseWhileNestedInThen(string whileLine, int parentStmtNo) 
 				pkb.setVar(var);
 				pkb.insertModifiesRelation(currStmtNo, var);
 				result.addModifies(var);
+				currProc.addModifies(var);
 			}
 			for (string var : uses) {
 				if (isdigit(var.at(0))) {
@@ -794,6 +891,7 @@ NestedResult Parser::parseWhileNestedInThen(string whileLine, int parentStmtNo) 
 					pkb.setVar(var);
 					pkb.insertUsesRelation(currStmtNo, var);
 					result.addUses(var);
+					currProc.addUses(var);
 				}
 			}
 
@@ -817,6 +915,7 @@ NestedResult Parser::parseWhileNestedInThen(string whileLine, int parentStmtNo) 
 				pkb.setVar(var);
 				pkb.insertModifiesRelation(currStmtNo, var);
 				result.addModifies(var);
+				currProc.addModifies(var);
 			}
 			for (string var : uses) {
 				if (isdigit(var.at(0))) {
@@ -827,6 +926,7 @@ NestedResult Parser::parseWhileNestedInThen(string whileLine, int parentStmtNo) 
 					pkb.setVar(var);
 					pkb.insertUsesRelation(currStmtNo, var);
 					result.addUses(var);
+					currProc.addUses(var);
 				}
 			}
 
@@ -856,6 +956,7 @@ NestedResult Parser::parseWhileNestedInThen(string whileLine, int parentStmtNo) 
 			pkb.setVar(varMod);
 			pkb.insertModifiesRelation(currStmtNo, varMod);
 			result.addModifies(varMod);
+			currProc.addModifies(varMod);
 
 			string varUse = assign.substr(index + 1);
 			
@@ -871,6 +972,7 @@ NestedResult Parser::parseWhileNestedInThen(string whileLine, int parentStmtNo) 
 					pkb.setVar(var);
 					pkb.insertUsesRelation(currStmtNo, var);
 					result.addUses(var);
+					currProc.addUses(var);
 				}
 			}
 
@@ -898,6 +1000,7 @@ NestedResult Parser::parseWhileNestedInThen(string whileLine, int parentStmtNo) 
 			pkb.insertModifiesRelation(currStmtNo, readArg);
 			pkb.setVar(readArg);
 			result.addModifies(readArg);
+			currProc.addModifies(readArg);
 
 			if (currStmtNo != (startStmtNo + 1)) {
 				pkb.insertFollowRelation(prevStmtNo, currStmtNo);
@@ -923,6 +1026,7 @@ NestedResult Parser::parseWhileNestedInThen(string whileLine, int parentStmtNo) 
 			pkb.insertUsesRelation(currStmtNo, printArg);
 			pkb.setVar(printArg);
 			result.addUses(printArg);
+			currProc.addUses(printArg);
 
 			if (currStmtNo != (startStmtNo + 1)) {
 				pkb.insertFollowRelation(prevStmtNo, currStmtNo);
@@ -932,6 +1036,16 @@ NestedResult Parser::parseWhileNestedInThen(string whileLine, int parentStmtNo) 
 			if (nestingLevel != currNestingLevel) {
 				break;
 			}
+		}
+		else if (line.find("call") != string::npos) {
+		string proc = parseCall(line);
+		//pkb.setStmt(stmtNo, Call);
+		callStmts.push_back(make_pair(stmtNo, proc));
+		if (stmtNo != 1) {
+			pkb.insertFollowRelation(prevStmtNo, stmtNo);
+		}
+		prevStmtNo = currStmtNo;
+		currStmtNo++;
 		}
 		else {
 			if (line.find("}") != string::npos) {
@@ -973,6 +1087,7 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 				pkb.setVar(var);
 				pkb.insertModifiesRelation(currStmtNo, var);
 				result.addModifies(var);
+				currProc.addModifies(var);
 			}
 			for (string var : uses) {
 				if (isdigit(var.at(0))) {
@@ -983,6 +1098,7 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 					pkb.setVar(var);
 					pkb.insertUsesRelation(currStmtNo, var);
 					result.addUses(var);
+					currProc.addUses(var);
 				}
 			}
 
@@ -1006,6 +1122,7 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 				pkb.setVar(var);
 				pkb.insertModifiesRelation(currStmtNo, var);
 				result.addModifies(var);
+				currProc.addModifies(var);
 			}
 			for (string var : uses) {
 				if (isdigit(var.at(0))) {
@@ -1016,6 +1133,7 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 					pkb.setVar(var);
 					pkb.insertUsesRelation(currStmtNo, var);
 					result.addUses(var);
+					currProc.addUses(var);
 				}
 			}
 
@@ -1045,6 +1163,7 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 			pkb.setVar(varMod);
 			pkb.insertModifiesRelation(currStmtNo, varMod);
 			result.addModifies(varMod);
+			currProc.addModifies(varMod);
 
 			string varUse = assign.substr(index + 1);
 			
@@ -1060,6 +1179,7 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 					pkb.setVar(var);
 					pkb.insertUsesRelation(currStmtNo, var);
 					result.addUses(var);
+					currProc.addUses(var);
 				}
 			}
 
@@ -1087,6 +1207,7 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 			pkb.insertModifiesRelation(currStmtNo, readArg);
 			pkb.setVar(readArg);
 			result.addModifies(readArg);
+			currProc.addModifies(readArg);
 
 			if (currStmtNo != (startStmtNo + 1)) {
 				pkb.insertFollowRelation(prevStmtNo, currStmtNo);
@@ -1112,6 +1233,7 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 			pkb.insertUsesRelation(currStmtNo, printArg);
 			pkb.setVar(printArg);
 			result.addUses(printArg);
+			currProc.addUses(printArg);
 
 			if (currStmtNo != (startStmtNo + 1)) {
 				pkb.insertFollowRelation(prevStmtNo, currStmtNo);
@@ -1121,6 +1243,16 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 			if (nestingLevel != currNestingLevel) {
 				break;
 			}
+		}
+		else if (line.find("call") != string::npos) {
+		string proc = parseCall(line);
+		//pkb.setStmt(stmtNo, Call);
+		callStmts.push_back(make_pair(stmtNo, proc));
+		if (stmtNo != 1) {
+			pkb.insertFollowRelation(prevStmtNo, stmtNo);
+		}
+		prevStmtNo = currStmtNo;
+		currStmtNo++;
 		}
 		else {
 			if (line.find("}") != string::npos) {

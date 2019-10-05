@@ -16,6 +16,7 @@ public:
 	int Parse(std::string filename);
 	int count(std::string s, char c);
 	string parseProc(std::string line);
+	string parseCall(std::string line);
 	string parseRead(std::string line);
 	string parsePrint(std::string line);
 	string parseAssignInit(std::string line);
@@ -30,6 +31,9 @@ public:
 private:
 	PKB pkb;
 	ifstream programFile;
+	vector<NestedResult> procedures;
+	NestedResult currProc;
+	vector<pair<int, std::string>> callStmts;
 	int nestingLevel;
 	int stmtNo;
 };
