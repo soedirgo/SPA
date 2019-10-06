@@ -6,23 +6,22 @@
 #include "PKBParent.h"
 #include "PKBFollow.h"
 #include "PKBUses.h"
+#include "PKBModifies.h"
+#include "PKBStmt.h"
+#include "PKBProcedure.h"
+
 
 using namespace std;
 
 unordered_set<string> PKB::varTable;
 unordered_map<string, unordered_set<int>> PKB::constantTable;
-unordered_map<int, stmtType> PKB::stmtTable;
+unordered_map<int, STMT_TYPE> PKB::stmtTable;
 unordered_map<string, unordered_set<int>> PKB::stmtModifiesByVarTable;
 unordered_map<string, unordered_set<int>> PKB::stmtUsesByVarTable;
-unordered_map<int, unordered_set<string>> PKB::varModifiesByStmtTable;
-unordered_map<int, unordered_set<string>> PKB::varUsesByStmtTable;
 unordered_map<int, string> PKB::assignStmtTable;
 unordered_map<string, unordered_set<int>> PKB::assignVarTable;
-unordered_set<int> PKB::whileTable;
-unordered_set<int> PKB::ifTable;
 unordered_map<string, unordered_set<int>> PKB::printTable;
 unordered_map<string, unordered_set<int>> PKB::readTable;
-unordered_set<string> PKB::procedureTable;
 unordered_map<string, unordered_set<int>> PKB:: callTable;
 
 
@@ -34,20 +33,21 @@ bool PKB::clear()
 	PKBParent pkbParent;
 	pkbParent.clear();
 
+	PKBStmt pkbStmt;
+	pkbStmt.clear();
+
+	PKBUses pkbUses;
+	pkbUses.clear();
+
 	varTable.clear();
 	constantTable.clear(); 
 	stmtTable.clear();
 	stmtModifiesByVarTable.clear();
 	stmtUsesByVarTable.clear();
-	varModifiesByStmtTable.clear();
-	varUsesByStmtTable.clear();
 	assignStmtTable.clear();
 	assignVarTable.clear();
-	whileTable.clear();
-	ifTable.clear();
 	printTable.clear();
 	readTable.clear();
-	procedureTable.clear();
 	callTable.clear();
 
 	return true;
@@ -194,29 +194,6 @@ bool PKB::insertAssignRelation(int stmtNo, string varModified, unordered_set<str
 	}
 };
 
-unordered_set<int> PKB::getAllStmtByType(string type) {
-	if (type.compare("read") == 0 ) {	
-
-		return getAllReadStmt(); 
-	}
-	else if (type.compare("print") == 0) {		
-		return getAllPrintStmt();
-	}
-	else if ( (type.compare("assign")) == 0) {
-		return getAllAssignStmt();
-	}
-	else if (type.compare("while") == 0 ) {	
-		return getAllWhileStmt();
-	}
-	else if (type.compare("if") == 0) {	
-		return getAllIfStmt();
-	}
-	else if (type.compare("call") == 0) {
-		return getAllCallStmt();
-	}
-}
-
-
 ////////////////////////////////////
 // varTable APIs
 ////////////////////////////////////
@@ -281,28 +258,12 @@ bool PKB::isConstantExist(string constantName) {
 // stmtTable APIs
 ////////////////////////////////////
 
-bool PKB::setStmt(STMT_NO stmtNo, stmtType type) {
-	try {
-		stmtTable.emplace(stmtNo, type);
-		if (type == While) {
-			setWhileStmt(stmtNo);
-		}
-		else if (type == If) {
-			setIfStmt(stmtNo);
-		}
-		return true;
-	}
-	catch (errc) {
-		return false;
-	}
+bool PKB::setStmt(STMT_NO stmtNo, STMT_TYPE type) {
+	return PKBStmt::setStmt(stmtNo, type);
 }
 
 STMT_LIST PKB::getAllStmt() {
-	unordered_set<int> stmtNoList;
-	for (auto keyValue : stmtTable) {
-		stmtNoList.emplace(keyValue.first);
-	}
-	return stmtNoList;
+	return PKBStmt::getAllStmt();
 }
 
 bool PKB::isStmtExist(STMT_NO stmtNo) {
@@ -382,20 +343,9 @@ VAR_LIST PKB::getAllUsesVar() {
 // varModifiesByStmtTable APIs
 ////////////////////////////////////
 bool PKB::setModifiesVarByStmt(STMT_NO stmtNo, string varName) {
-
-	try {
-		//get varList from PKB then add variable to varList
-		unordered_set<string> varList = getModifiesVarByStmt(stmtNo);
-		varList.emplace(varName);
-		//add it to varModifiesStmtTable
-		varModifiesByStmtTable[stmtNo] = varList;
-		return true;
-	}
-	catch (errc) {
-		return false;
-	}
+	return PKBModifies::setModifiesVarByStmt(stmtNo, varName);
 }
-
+/*
 VAR_LIST PKB::getModifiesVarByStmt(STMT_NO stmtNo) {
 	return varModifiesByStmtTable[stmtNo];
 }
@@ -407,27 +357,16 @@ STMT_LIST PKB::getAllModifiesStmt() {
 	}
 	return stmtList;
 }
+*/
 
 ////////////////////////////////////
 // varUsesByStmtTable APIs
 ////////////////////////////////////
 bool PKB::setUsesVarByStmt(STMT_NO stmtNo, string varName) {
 	return PKBUses::setUsesVarByStmt(stmtNo, varName);
-	/*
-	try {
-		//get varList from PKB then add variable to varList
-		unordered_set<string> varList = getUsesVarByStmt(stmtNo);
-		varList.emplace(varName);
-		//add it to varModifiesStmtTable
-		varUsesByStmtTable[stmtNo] = varList;
-		return true;
-	}
-	catch (errc) {
-		return false;
-	}
-	*/
 }
 
+/*
 VAR_LIST PKB::getUsesVarByStmt(STMT_NO stmtNo) {
 	return varUsesByStmtTable[stmtNo];
 }
@@ -439,28 +378,14 @@ STMT_LIST PKB::getAllUsesStmt() {
 	}
 	return stmtList;
 }
+*/
 
 bool PKB::isModifiesStmtVar(STMT_NO stmtNo, string varName){
-	unordered_set<string> varList = getModifiesVarByStmt(stmtNo);
-	for (auto keyValue : varList) {
-		if (keyValue._Equal(varName)) {
-			return true;
-		}
-	}
-	return false;
+	return PKBModifies::isModifiesStmtVar(stmtNo, varName);
 }
 
 bool PKB::isUsesStmtVar(STMT_NO stmtNo, string varName) {
 	return PKBUses::isUsesStmtVar(stmtNo, varName);
-	/*
-	unordered_set<string> varList = getUsesVarByStmt(stmtNo);
-	for (auto keyValue : varList) {
-		if (keyValue._Equal(varName)) {
-			return true;
-		}
-	}
-	return false;
-	*/
 }
 
 ////////////////////////////////////
@@ -468,15 +393,7 @@ bool PKB::isUsesStmtVar(STMT_NO stmtNo, string varName) {
 ////////////////////////////////////
 
 STMT_LIST PKB::getAllAssignStmt() {
-	unordered_set<int> stmtList;
-	stmtType printStmt = Assign;
-	for (auto keyValue : stmtTable) {
-		if (keyValue.second == printStmt) {
-			stmtList.emplace(keyValue.first);
-
-		}
-	}
-	return stmtList;
+	return PKBStmt::getAllStmtByType(Assign);
 }
 
 bool PKB::setAssignStmt(STMT_NO stmtNo, string varModified) {
@@ -524,37 +441,16 @@ bool PKB::setAssignStmtByVar(STMT_NO stmtNo, string varName) {
 ////////////////////////////////////
 
 STMT_LIST PKB::getAllWhileStmt() {
-	return whileTable; 
+	return PKBStmt::getAllStmtByType(While);
 };
 
-
-bool PKB::setWhileStmt(STMT_NO stmtNo) {
-	try {
-		whileTable.insert(stmtNo);
-		return true;
-	}
-	catch (errc) {
-		return false;
-	}
-};
 
 ////////////////////////////////////
 // ifTable APIs
 ////////////////////////////////////
 
 STMT_LIST PKB::getAllIfStmt() {
-	return ifTable;
-};
-
-
-bool PKB::setIfStmt(STMT_NO stmtNo) {
-	try {
-		ifTable.insert(stmtNo);
-		return true;
-	}
-	catch (errc) {
-		return false;
-	}
+	return PKBStmt::getAllStmtByType(If);
 };
 
 ////////////////////////////////////
@@ -562,15 +458,7 @@ bool PKB::setIfStmt(STMT_NO stmtNo) {
 ////////////////////////////////////
 
 STMT_LIST PKB::getAllPrintStmt() {
-	unordered_set<int> stmtList;
-	stmtType printStmt = Print;
-	for (auto keyValue : stmtTable) {
-		if (keyValue.second == printStmt) {
-			stmtList.emplace(keyValue.first);
-
-		}
-	}
-	return stmtList;
+	return PKBStmt::getAllStmtByType(Print);
 };
 
 
@@ -601,15 +489,7 @@ bool PKB::setPrintStmt(STMT_NO stmtNo, string varName) {
 ////////////////////////////////////
 
 STMT_LIST PKB::getAllReadStmt() {
-	unordered_set<int> stmtList;
-	stmtType readStmt = Read;
-	for (auto keyValue : stmtTable) {
-		if (keyValue.second == readStmt) {
-			stmtList.emplace(keyValue.first);
-
-		}
-	}
-	return stmtList;
+	return PKBStmt::getAllStmtByType(Read);
 };
 
 
@@ -638,18 +518,12 @@ bool PKB::setReadStmt(STMT_NO stmtNo, string varName) {
 ////////////////////////////////////
 
 unordered_set<string> PKB::getAllProc() {
-	return procedureTable;
+	return PKBProcedure::getAllProc();
 };
 
 
 bool PKB::setProc(string procName) {
-	try {
-		procedureTable.insert(procName);
-		return true;
-	}
-	catch (errc) {
-		return false;
-	}
+	return PKBProcedure::setProc(procName);
 };
 
 
@@ -658,14 +532,7 @@ bool PKB::setProc(string procName) {
 ////////////////////////////////////
 
 STMT_LIST PKB::getAllCallStmt() {
-	unordered_set<int> stmtList;
-	stmtType callStmt = Call;
-	for (auto keyValue : stmtTable) {
-		if (keyValue.second == callStmt) {
-			stmtList.emplace(keyValue.first);
-		}
-	}
-	return stmtList;
+	return PKBStmt::getAllStmtByType(Call);
 };
 
 

@@ -4,20 +4,13 @@
 #include <vector>
 #include <unordered_set>
 #include <unordered_map>
+#include "AbstractType.h"
 
 typedef short PROC;
 
 class TNode;
 
 //class VarTable;  // no need to #include "VarTable.h" as all I need is pointer
-
-enum stmtType { Read, Print, Assign, While, If, Call };
-
-typedef int STMT_NO;
-typedef std::unordered_set<int> STMT_LIST;
-typedef std::unordered_set<std::string> VAR_LIST;
-typedef std::unordered_set<std::string> CONST_LIST;
-
 
 class PKB {
 
@@ -51,7 +44,9 @@ public:
 	static bool insertModifiesRelation(STMT_NO stmtNo, std::string varName);
 	static bool insertUsesRelation(STMT_NO stmtNo, std::string varName);
 	static bool insertAssignRelation(STMT_NO stmtNo, std::string varModified, VAR_LIST varUsed, CONST_LIST constUsed);
-	static STMT_LIST getAllStmtByType(std::string stmtType);
+
+	//static STMT_LIST getAllStmtByType(std::string stmtType);
+
 	static bool isConstUsedInAssign(STMT_NO stmtNo, std::string c);
 	static bool isVarUsedInAssign(STMT_NO stmtNo, std::string c);
 
@@ -66,7 +61,7 @@ public:
 	static bool isConstantExist(std::string constantName);
 	static STMT_LIST getStmtByConst(std::string constantName);
 	// add a stmt to stmtTable
-	static bool setStmt(STMT_NO stmtNo, stmtType type);
+	static bool setStmt(STMT_NO stmtNo, STMT_TYPE type);
 	static STMT_LIST getAllStmt();
 	static bool isStmtExist(STMT_NO stmtNo);
 	//add var & stmt to varModifiesStmtTable
@@ -90,29 +85,25 @@ public:
 	static bool isUsesStmtVar(STMT_NO stmtNo, std::string varName);
 
 	//add var & stmt to assign table 
-	static STMT_LIST getAllAssignStmt();
+	
 	static bool setAssignStmt(STMT_NO stmtNo, std::string varModified);
 	static std::string getVarModifiedByAssignStmt(STMT_NO stmtNo);
 	
 	static STMT_LIST getAssignStmtByVar(std::string varName);
 	static bool setAssignStmtByVar(STMT_NO stmtNo, std::string varName);
 
-
-	//Getters and setters for while table 
+	static STMT_LIST getAllPrintStmt();
+	static STMT_LIST getAllReadStmt();
+	static STMT_LIST getAllAssignStmt();
 	static STMT_LIST getAllWhileStmt();
-	static bool setWhileStmt(STMT_NO stmtNo);
-
-	//Getters and setters for if table
 	static STMT_LIST getAllIfStmt();
-	static bool setIfStmt(STMT_NO stmtNo);
+	static STMT_LIST getAllCallStmt();
 
 	//Getters and setters for print table
-	static STMT_LIST getAllPrintStmt();
 	static bool setPrintStmt(STMT_NO stmtNo, std::string varName);
 	static STMT_LIST getPrintStmtByVar(std::string varName);
 	
 	//Getters and setters for Read table
-	static STMT_LIST getAllReadStmt();
 	static bool setReadStmt(STMT_NO stmtNo, std::string varName);
 	static STMT_LIST getReadStmtByVar(std::string varName);
 
@@ -120,8 +111,6 @@ public:
 	static std::unordered_set<std::string> getAllProc();
 	bool setProc(std::string procName);
 
-	//Getters and setters for Call table
-	static STMT_LIST getAllCallStmt();
 	bool setCallStmt(STMT_NO stmtNo, std::string procName);
 	STMT_LIST getCallStmtByVar(std::string procName);
 
@@ -131,20 +120,14 @@ public:
 private:
 	static std::unordered_set<std::string> varTable;
 	static std::unordered_map<std::string, std::unordered_set<int>>constantTable;
-	static std::unordered_map<int, stmtType> stmtTable;
+	static std::unordered_map<int, STMT_TYPE> stmtTable;
 
 	static std::unordered_map<std::string, std::unordered_set<int>> stmtModifiesByVarTable;
 	static std::unordered_map<std::string, std::unordered_set<int>> stmtUsesByVarTable;
-	static std::unordered_map<int, std::unordered_set<std::string>> varModifiesByStmtTable;
-	static std::unordered_map<int, std::unordered_set<std::string>> varUsesByStmtTable;
 
 	static std::unordered_map<int, std::string> assignStmtTable;
 	static std::unordered_map<std::string, std::unordered_set<int>> assignVarTable;
-
-	static std::unordered_set<int> whileTable;
-	static std::unordered_set<int> ifTable;
 	static std::unordered_map<std::string, std::unordered_set<int>> printTable;
 	static std::unordered_map<std::string, std::unordered_set<int>> readTable;
-	static std::unordered_set<std::string> procedureTable;
 	static std::unordered_map<std::string, std::unordered_set<int>> callTable;
 };
