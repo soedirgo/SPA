@@ -15,6 +15,10 @@ void NestedResult::addUses(string var) {
 	usesList.push_back(var);
 }
 
+void NestedResult::addCalls(string proc) {
+	callList.push_back(proc);
+}
+
 void NestedResult::setProcName(string name) {
 	procName = name;
 }
@@ -25,6 +29,10 @@ vector<string> NestedResult::getModifies() {
 
 vector<string> NestedResult::getUses() {
 	return usesList;
+}
+
+vector<string> NestedResult::getCallList() {
+	return callList;
 }
 
 string NestedResult::getProcName() {

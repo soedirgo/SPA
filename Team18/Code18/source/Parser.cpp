@@ -167,6 +167,7 @@ int Parser::Parse (string filename) {
 			string proc = parseCall(line);
 			//pkb.setStmt(stmtNo, Call);
 			callStmts.push_back(make_pair(stmtNo, proc));
+			currProc.addCalls(proc);
 			if (stmtNo != 1) {
 				pkb.insertFollowRelation(prevStmtNo, stmtNo);
 			}
@@ -179,11 +180,20 @@ int Parser::Parse (string filename) {
 
 		for (NestedResult proc : procedures) {
 			string procName = proc.getProcName();
-			for (string var : proc.getModifies()) {
-				//pkb.insertProcModifiesRelation(procName, var);
-			}
-			for (string var : proc.getUses()) {
-				//pkb.insertProcUsesRelation(procName, var);
+			vector<string> calls = proc.getCallList();  
+			for (int i = 0; i < 3; i++) {
+				for (string call : calls) {
+					for (NestedResult procedure : procedures) {
+						if (procedure.getProcName() == call) {
+							for (string var : procedure.getModifies()) {
+								proc.addModifies(var);
+							}
+							for (string var : procedure.getUses()) {
+								proc.addUses(var);
+							}
+						}
+					}
+				}
 			}
 		}
 
@@ -209,6 +219,16 @@ int Parser::Parse (string filename) {
 						}
 					}
 				}
+			}
+		}
+
+		for (NestedResult proc : procedures) {
+			string procName = proc.getProcName();
+			for (string var : proc.getModifies()) {
+				//pkb.insertProcModifiesRelation(procName, var);
+			}
+			for (string var : proc.getUses()) {
+				//pkb.insertProcUsesRelation(procName, var);
 			}
 		}
 	}
@@ -574,6 +594,7 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 		//pkb.setStmt(stmtNo, Call);
 		pkb.insertParentRelation(startStmtNo, currStmtNo);
 		callStmts.push_back(make_pair(stmtNo, proc));
+		currProc.addCalls(proc);
 		if (stmtNo != 1) {
 			pkb.insertFollowRelation(prevStmtNo, stmtNo);
 		}
@@ -839,6 +860,7 @@ NestedResult Parser::parseIfNestedInThen(string ifLine, int parentStmtNo) {
 		//pkb.setStmt(stmtNo, Call);
 		pkb.insertParentRelation(startStmtNo, currStmtNo);
 		callStmts.push_back(make_pair(stmtNo, proc));
+		currProc.addCalls(proc);
 		if (stmtNo != 1) {
 			pkb.insertFollowRelation(prevStmtNo, stmtNo);
 		}
@@ -1055,6 +1077,7 @@ NestedResult Parser::parseWhileNestedInThen(string whileLine, int parentStmtNo) 
 		//pkb.setStmt(stmtNo, Call);
 		pkb.insertParentRelation(startStmtNo, currStmtNo);
 		callStmts.push_back(make_pair(stmtNo, proc));
+		currProc.addCalls(proc);
 		if (stmtNo != 1) {
 			pkb.insertFollowRelation(prevStmtNo, stmtNo);
 		}
@@ -1263,6 +1286,7 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 		//pkb.setStmt(stmtNo, Call);
 		pkb.insertParentRelation(startStmtNo, currStmtNo);
 		callStmts.push_back(make_pair(stmtNo, proc));
+		currProc.addCalls(proc);
 		if (stmtNo != 1) {
 			pkb.insertFollowRelation(prevStmtNo, stmtNo);
 		}
