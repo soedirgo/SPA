@@ -7,6 +7,7 @@
 #include <regex>
 #include "Parser.h"
 #include "PKB.h"
+#include "PKBParent.h"
 #include "NestedResult.h"
 #include "TNode.h"
 using namespace std;
@@ -192,10 +193,20 @@ int Parser::Parse (string filename) {
 			for (NestedResult proc : procedures) {
 				if (proc.getProcName() == procName) {
 					for (string var : proc.getModifies()) {
+						int currStmtNo = stmtNo;
 						pkb.insertModifiesRelation(stmtNo, var);
+						while (PKBParent::isParentExist(currStmtNo)) {
+							currStmtNo = PKB::getParentStmt(currStmtNo);
+							pkb.insertModifiesRelation(currStmtNo, var);
+						}
 					}
 					for (string var : proc.getUses()) {
+						int currStmtNo = stmtNo;
 						pkb.insertUsesRelation(stmtNo, var);
+						while (PKBParent::isParentExist(currStmtNo)) {
+							currStmtNo = PKB::getParentStmt(currStmtNo);
+							pkb.insertUsesRelation(currStmtNo, var);
+						}
 					}
 				}
 			}
