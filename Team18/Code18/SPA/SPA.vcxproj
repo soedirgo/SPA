@@ -19,12 +19,14 @@
     <ClCompile Include="..\source\PKB.cpp" />
     <ClCompile Include="..\source\PKBFollow.cpp" />
     <ClCompile Include="..\source\PKBParent.cpp" />
+    <ClCompile Include="..\source\PKBUses.cpp" />
     <ClCompile Include="..\source\Preprocessor.cpp" />
     <ClCompile Include="..\source\Query.cpp" />
     <ClCompile Include="..\source\QueryParser.cpp" />
     <ClCompile Include="..\source\TNode.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\source\AbstractType.h" />
     <ClInclude Include="..\source\Clause.h" />
     <ClInclude Include="..\source\DesignExtractor.h" />
     <ClInclude Include="..\source\Entity.h" />
@@ -33,7 +35,9 @@
     <ClInclude Include="..\source\Parser.h" />
     <ClInclude Include="..\source\PKB.h" />
     <ClInclude Include="..\source\PKBFollow.h" />
+    <ClInclude Include="..\source\PKBHash.h" />
     <ClInclude Include="..\source\PKBParent.h" />
+    <ClInclude Include="..\source\PKBUses.h" />
     <ClInclude Include="..\source\Preprocessor.h" />
     <ClInclude Include="..\source\Query.h" />
     <ClInclude Include="..\source\QueryParser.h" />

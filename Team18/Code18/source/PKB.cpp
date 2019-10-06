@@ -5,6 +5,7 @@
 #include "TNode.h"
 #include "PKBParent.h"
 #include "PKBFollow.h"
+#include "PKBUses.h"
 
 using namespace std;
 
@@ -342,6 +343,7 @@ VAR_LIST PKB::getAllModifiesVar() {
 // varUsesStmtTable APIs
 ////////////////////////////////////
 bool PKB::setUsesStmtByVar(STMT_NO stmtNo, string varName) {
+	
 
 	try {
 		//get varList from PKB then add variable to varList
@@ -410,7 +412,8 @@ STMT_LIST PKB::getAllModifiesStmt() {
 // varUsesByStmtTable APIs
 ////////////////////////////////////
 bool PKB::setUsesVarByStmt(STMT_NO stmtNo, string varName) {
-
+	return PKBUses::setUsesVarByStmt(stmtNo, varName);
+	/*
 	try {
 		//get varList from PKB then add variable to varList
 		unordered_set<string> varList = getUsesVarByStmt(stmtNo);
@@ -422,6 +425,7 @@ bool PKB::setUsesVarByStmt(STMT_NO stmtNo, string varName) {
 	catch (errc) {
 		return false;
 	}
+	*/
 }
 
 VAR_LIST PKB::getUsesVarByStmt(STMT_NO stmtNo) {
@@ -447,6 +451,8 @@ bool PKB::isModifiesStmtVar(STMT_NO stmtNo, string varName){
 }
 
 bool PKB::isUsesStmtVar(STMT_NO stmtNo, string varName) {
+	return PKBUses::isUsesStmtVar(stmtNo, varName);
+	/*
 	unordered_set<string> varList = getUsesVarByStmt(stmtNo);
 	for (auto keyValue : varList) {
 		if (keyValue._Equal(varName)) {
@@ -454,6 +460,7 @@ bool PKB::isUsesStmtVar(STMT_NO stmtNo, string varName) {
 		}
 	}
 	return false;
+	*/
 }
 
 ////////////////////////////////////
