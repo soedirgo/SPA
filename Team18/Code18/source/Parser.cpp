@@ -561,6 +561,7 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 		else if (line.find("call") != string::npos) {
 		string proc = parseCall(line);
 		//pkb.setStmt(stmtNo, Call);
+		pkb.insertParentRelation(startStmtNo, currStmtNo);
 		callStmts.push_back(make_pair(stmtNo, proc));
 		if (stmtNo != 1) {
 			pkb.insertFollowRelation(prevStmtNo, stmtNo);
@@ -825,6 +826,7 @@ NestedResult Parser::parseIfNestedInThen(string ifLine, int parentStmtNo) {
 		else if (line.find("call") != string::npos) {
 		string proc = parseCall(line);
 		//pkb.setStmt(stmtNo, Call);
+		pkb.insertParentRelation(startStmtNo, currStmtNo);
 		callStmts.push_back(make_pair(stmtNo, proc));
 		if (stmtNo != 1) {
 			pkb.insertFollowRelation(prevStmtNo, stmtNo);
@@ -1040,6 +1042,7 @@ NestedResult Parser::parseWhileNestedInThen(string whileLine, int parentStmtNo) 
 		else if (line.find("call") != string::npos) {
 		string proc = parseCall(line);
 		//pkb.setStmt(stmtNo, Call);
+		pkb.insertParentRelation(startStmtNo, currStmtNo);
 		callStmts.push_back(make_pair(stmtNo, proc));
 		if (stmtNo != 1) {
 			pkb.insertFollowRelation(prevStmtNo, stmtNo);
@@ -1247,6 +1250,7 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 		else if (line.find("call") != string::npos) {
 		string proc = parseCall(line);
 		//pkb.setStmt(stmtNo, Call);
+		pkb.insertParentRelation(startStmtNo, currStmtNo);
 		callStmts.push_back(make_pair(stmtNo, proc));
 		if (stmtNo != 1) {
 			pkb.insertFollowRelation(prevStmtNo, stmtNo);
