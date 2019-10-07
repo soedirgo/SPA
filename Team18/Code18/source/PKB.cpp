@@ -12,19 +12,16 @@
 #include "PKBVariable.h"
 #include "PKBCall.h"
 #include "PKBNext.h"
+#include "PKBPrint.h"
+#include "PKBRead.h"
 
 
 using namespace std;
 
-unordered_set<string> PKB::varTable;
 unordered_map<string, unordered_set<int>> PKB::constantTable;
-unordered_map<string, unordered_set<int>> PKB::stmtModifiesByVarTable;
 unordered_map<string, unordered_set<int>> PKB::stmtUsesByVarTable;
 unordered_map<int, string> PKB::assignStmtTable;
 unordered_map<string, unordered_set<int>> PKB::assignVarTable;
-unordered_map<string, unordered_set<int>> PKB::printTable;
-unordered_map<string, unordered_set<int>> PKB::readTable;
-unordered_map<string, unordered_set<int>> PKB:: callTable;
 
 
 bool PKB::clear()
@@ -41,15 +38,10 @@ bool PKB::clear()
 	PKBUses pkbUses;
 	pkbUses.clear();
 
-	varTable.clear();
 	constantTable.clear(); 
-	stmtModifiesByVarTable.clear();
 	stmtUsesByVarTable.clear();
 	assignStmtTable.clear();
 	assignVarTable.clear();
-	printTable.clear();
-	readTable.clear();
-	callTable.clear();
 
 	return true;
 }
@@ -66,11 +58,11 @@ TNode* PKB::getRootAST (PROC p){
 // Higher order wrapper functions APIs
 ////////////////////////////////////
 
-bool PKB::insertFollowsRelation(STMT_NO followedBy, STMT_NO follow) {
-	return PKBFollows::setFollows(followedBy, follow);// && PKBFollow::setFollowedBy(followedBy, follow);
+bool PKB::setFollowsRelation(STMT_NO followedBy, STMT_NO follow) {
+	return PKBFollows::setFollows(followedBy, follow);
 }
 
-bool PKB::insertFollowsStarRelation(STMT_NO followedBy, STMT_NO follow) {
+bool PKB::setFollowsStarRelation(STMT_NO followedBy, STMT_NO follow) {
 	return PKBFollows::setFollowsStar(followedBy, follow);
 }
 
@@ -82,26 +74,11 @@ bool PKB::isFollowsStarRelationship(STMT_NO followedBy, STMT_NO follow) {
 	return PKBFollows::isFollowsStarRelationship(followedBy, follow);
 }
 
-/*
-STMT_NO PKB::getFollowStmt(STMT_NO followedBy) {
-	return PKBFollow::getFollowStmt(followedBy);
-}
-
-STMT_LIST PKB::getFollowedByStmtList(STMT_NO follow) {
-	return PKBFollow::getFollowedByStmtList(follow);
-}
-
-STMT_LIST PKB::getFollowStarStmtList(STMT_NO followedBy) {
-	return PKBFollow::getFollowStarStmtList(followedBy);
-}
-*/
-
-bool PKB::insertParentRelation(STMT_NO parent, STMT_NO child) {
-	//return PKBParent::setChildren(parent,child) && PKBParent::setParent(parent, child);
+bool PKB::setParentRelation(STMT_NO parent, STMT_NO child) {
 	return PKBParent::setParent(parent, child);
 }
 
-bool PKB::insertParentStarRelation(STMT_NO parent, STMT_NO child) {
+bool PKB::setParentStarRelation(STMT_NO parent, STMT_NO child) {
 	return PKBParent::setParentStar(parent, child);
 }
 
@@ -112,20 +89,6 @@ bool PKB::isParentRelationship(STMT_NO parent, STMT_NO child) {
 bool PKB::isParentStarRelationship(STMT_NO parent, STMT_NO child) {
 	return PKBParent::isParentStarRelationship(parent, child);
 }
-
-/*
-STMT_LIST PKB::getParentStarStmtList(STMT_NO child) {
-	return PKBParent::getParentStarStmtList(child);
-}
-
-STMT_LIST PKB::getChildrenStmtList(STMT_NO parent) {
-	return PKBParent::getChildrenStmtList(parent);
-}
-
-STMT_NO PKB::getParentStmt(STMT_NO child) {
-	return PKBParent::getParentStmt(child);
-}
-*/
 
 bool PKB::isConstUsedInAssign(STMT_NO assignStmtNo, string c) {
 	STMT_LIST stmtList = getStmtByConst(c); 
@@ -154,13 +117,8 @@ bool PKB::isVarUsedInAssign(STMT_NO assignStmtNo, string varName) {
 }
 
 
-bool PKB::insertModifiesRelation(STMT_NO stmtNo, string varName) {
-	try {
-		return setModifiesStmt(stmtNo, varName) && setModifiesVarByStmt(stmtNo, varName);
-	}
-	catch (errc) {
-		return false;
-	}
+bool PKB::setModifiesRelation(STMT_NO stmtNo, string varName) {
+	return PKBModifies::setModifiesStmt(stmtNo, varName);
 };
 
 bool PKB::insertUsesRelation(STMT_NO stmtNo, string varName) {
@@ -178,9 +136,7 @@ bool PKB::insertAssignRelation(int stmtNo, string varModified, unordered_set<str
 	try {
 		setAssignStmt(stmtNo, varModified);
 		setAssignStmtByVar(stmtNo, varModified);
-		
-		setModifiesStmt(stmtNo, varModified);
-		setModifiesVarByStmt(stmtNo, varModified);
+		PKBModifies::setModifiesStmt(stmtNo, varModified);
 		if (!varUsed.empty()) {
 			for (string var : varUsed) {
 				setUsesStmt(stmtNo, var);
@@ -210,11 +166,6 @@ bool PKB::setVar(VAR_NAME varName) {
 
 VAR_LIST PKB::getAllVar() {
 	return PKBVariable::getAllVar();
-}
-
-bool PKB::isVarExist(string varName) {
-	//return true if element is found
-	return (varTable.find(varName) != varTable.end());
 }
 
 ////////////////////////////////////
@@ -277,36 +228,6 @@ bool PKB::isStmtExist(STMT_NO stmtNo) {
 }
 
 ////////////////////////////////////
-// varModifiesStmtTable APIs
-////////////////////////////////////
-bool PKB::setModifiesStmt(STMT_NO stmtNo, VAR_NAME varName) {
-	
-	try {
-		//get stmtList from PKB then add variable to varList
-		unordered_set<int> stmtList = getModifiesStmtByVar(varName);
-		stmtList.emplace(stmtNo);
-		//add it to varModifiesStmtTable
-		stmtModifiesByVarTable[varName] = stmtList;
-		return true;
-	}
-	catch (errc) {
-		return false;
-	}
-}
-
-STMT_LIST PKB::getModifiesStmtByVar(string varName) {
-	return stmtModifiesByVarTable[varName];
-}
-
-VAR_LIST PKB::getAllModifiesVar() {
-	unordered_set<string> varList;
-	for (auto keyValue : stmtModifiesByVarTable) {
-		varList.emplace(keyValue.first);
-	}
-	return varList;
-}
-
-////////////////////////////////////
 // varUsesStmtTable APIs
 ////////////////////////////////////
 bool PKB::setUsesStmt(STMT_NO stmtNo, VAR_NAME varName) {
@@ -346,45 +267,11 @@ VAR_LIST PKB::getAllUsesVar() {
 }
 
 ////////////////////////////////////
-// varModifiesByStmtTable APIs
-////////////////////////////////////
-bool PKB::setModifiesVarByStmt(STMT_NO stmtNo, string varName) {
-	return PKBModifies::setModifiesStmt(stmtNo, varName);
-}
-/*
-VAR_LIST PKB::getModifiesVarByStmt(STMT_NO stmtNo) {
-	return varModifiesByStmtTable[stmtNo];
-}
-
-STMT_LIST PKB::getAllModifiesStmt() {
-	unordered_set<int> stmtList;
-	for (auto keyValue : varModifiesByStmtTable) {
-		stmtList.emplace(keyValue.first);
-	}
-	return stmtList;
-}
-*/
-
-////////////////////////////////////
 // varUsesByStmtTable APIs
 ////////////////////////////////////
 bool PKB::setUsesVarByStmt(STMT_NO stmtNo, string varName) {
 	return PKBUses::setUsesStmt(stmtNo, varName);
 }
-
-/*
-VAR_LIST PKB::getUsesVarByStmt(STMT_NO stmtNo) {
-	return varUsesByStmtTable[stmtNo];
-}
-
-STMT_LIST PKB::getAllUsesStmt() {
-	unordered_set<int> stmtList;
-	for (auto keyValue : varUsesByStmtTable) {
-		stmtList.emplace(keyValue.first);
-	}
-	return stmtList;
-}
-*/
 
 bool PKB::isModifiesStmtRelationship(STMT_NO stmtNo, VAR_NAME varName){
 	return PKBModifies::isModifiesStmtRelationship(stmtNo, varName);
@@ -467,28 +354,9 @@ STMT_LIST PKB::getAllPrintStmt() {
 	return PKBStmt::getAllStmtByType(Print);
 };
 
-
-STMT_LIST PKB::getPrintStmtByVar(string varName) {
-	return printTable[varName];
-}
-
-
 bool PKB::setPrintStmt(STMT_NO stmtNo, string varName) {
-	try {
-		//get stmtList from PKB then add variable to varList
-		unordered_set<int> stmtList = getPrintStmtByVar(varName);
-		stmtList.emplace(stmtNo);
-		//add it to varModifiesStmtTable
-		printTable[varName] = stmtList;
-		return true;
-	}
-	catch (errc) {
-		return false;
-	}
+	return PKBPrint::setPrint(stmtNo, varName);
 };
-
-
-
 
 ////////////////////////////////////
 // ReadTable APIs
@@ -498,24 +366,8 @@ STMT_LIST PKB::getAllReadStmt() {
 	return PKBStmt::getAllStmtByType(Read);
 };
 
-
-STMT_LIST PKB::getReadStmtByVar(string varName) {
-	return readTable[varName];
-}
-
-
 bool PKB::setReadStmt(STMT_NO stmtNo, string varName) {
-	try {
-		//get stmtList from PKB then add variable to varList
-		unordered_set<int> stmtList = getReadStmtByVar(varName);
-		stmtList.emplace(stmtNo);
-		//add it to varModifiesStmtTable
-		readTable[varName] = stmtList;
-		return true;
-	}
-	catch (errc) {
-		return false;
-	}
+	return PKBRead::setRead(stmtNo, varName);
 };
 
 
@@ -541,12 +393,7 @@ STMT_LIST PKB::getAllCallStmt() {
 	return PKBStmt::getAllStmtByType(Call);
 };
 
-
-STMT_LIST PKB::getCallStmtByVar(string varName) {
-	return callTable[varName];
-}
-
-bool PKB::setCallProc(PROC_NAME caller, PROC_NAME callee) {
+bool PKB::setCallProcRelation(PROC_NAME caller, PROC_NAME callee) {
 	return PKBCall::setCallProc(caller, callee);
 }
 
@@ -565,7 +412,7 @@ bool PKB::isCallStarRelationship(PROC_NAME caller, PROC_NAME callee) {
 ////////////////////////////////////
 // NextTable APIs
 ////////////////////////////////////
-bool PKB::setNext(PROG_LINE n1, PROG_LINE n2) {
+bool PKB::setNextRelation(PROG_LINE n1, PROG_LINE n2) {
 	return PKBNext::setNext(n1, n2);
 };
 

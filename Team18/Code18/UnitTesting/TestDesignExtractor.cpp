@@ -38,20 +38,20 @@ namespace UnitTesting
 
 			
 			
-			pkb.insertParentRelation(2, 3);
-			pkb.insertParentRelation(2, 4);
-			pkb.insertParentRelation(2, 9);
-			pkb.insertParentRelation(4, 5);
-			pkb.insertParentRelation(4, 8);
-			pkb.insertParentRelation(5, 6);
-			pkb.insertParentRelation(5, 7);
+			pkb.setParentRelation(2, 3);
+			pkb.setParentRelation(2, 4);
+			pkb.setParentRelation(2, 9);
+			pkb.setParentRelation(4, 5);
+			pkb.setParentRelation(4, 8);
+			pkb.setParentRelation(5, 6);
+			pkb.setParentRelation(5, 7);
 
 			
-			pkb.insertFollowsRelation(1, 2);
-			pkb.insertFollowsRelation(2, 9);
-			pkb.insertFollowsRelation(3, 4);
-			pkb.insertFollowsRelation(4, 8);
-			pkb.insertFollowsRelation(5, 7);
+			pkb.setFollowsRelation(1, 2);
+			pkb.setFollowsRelation(2, 9);
+			pkb.setFollowsRelation(3, 4);
+			pkb.setFollowsRelation(4, 8);
+			pkb.setFollowsRelation(5, 7);
 
 			DesignExtractor designExtractor;
 			designExtractor.extractDesign();

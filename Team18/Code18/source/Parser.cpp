@@ -46,7 +46,7 @@ int Parser::Parse (string filename) {
 			vector<string> uses = results.getUses();
 			for (string var : modifies) {
 				pkb.setVar(var);
-				pkb.insertModifiesRelation(stmtNo, var);
+				pkb.setModifiesRelation(stmtNo, var);
 			}
 			for (string var : uses) {
 				if (isdigit(var.at(0))) {
@@ -58,7 +58,7 @@ int Parser::Parse (string filename) {
 				}
 			}
 			if (stmtNo != 1) {
-				pkb.insertFollowsRelation(prevStmtNo, stmtNo);
+				pkb.setFollowsRelation(prevStmtNo, stmtNo);
 			}
 			prevStmtNo = stmtNo;
 			stmtNo = results.lastStmtNo;
@@ -71,7 +71,7 @@ int Parser::Parse (string filename) {
 			vector<string> uses = results.getUses();
 			for (string var : modifies) {
 				pkb.setVar(var);
-				pkb.insertModifiesRelation(stmtNo, var);
+				pkb.setModifiesRelation(stmtNo, var);
 			}
 			for (string var : uses) {
 				if (isdigit(var.at(0))) {
@@ -84,7 +84,7 @@ int Parser::Parse (string filename) {
 			}
 
 			if (stmtNo != 1) {
-				pkb.insertFollowsRelation(prevStmtNo, stmtNo);
+				pkb.setFollowsRelation(prevStmtNo, stmtNo);
 			}
 			prevStmtNo = stmtNo;
 			stmtNo = results.lastStmtNo;
@@ -98,7 +98,7 @@ int Parser::Parse (string filename) {
 			int index = assign.find("=");
 			string varMod = assign.substr(0, index);
 			pkb.setVar(varMod);
-			pkb.insertModifiesRelation(stmtNo, varMod);
+			pkb.setModifiesRelation(stmtNo, varMod);
 
 			string varUse = assign.substr(index + 1);
 			//Calls to parse RHS of assign stmt
@@ -115,7 +115,7 @@ int Parser::Parse (string filename) {
 			}
 
 			if (stmtNo != 1) {
-				pkb.insertFollowsRelation(prevStmtNo, stmtNo);
+				pkb.setFollowsRelation(prevStmtNo, stmtNo);
 			}
 			prevStmtNo = stmtNo;
 			stmtNo++;
@@ -125,11 +125,11 @@ int Parser::Parse (string filename) {
 			string readArg = parseRead(line);
 			//Sets stmt information in PKB and then sets modifies variable for that stmt
 			pkb.setStmt(stmtNo, Read);
-			pkb.insertModifiesRelation(stmtNo, readArg);
+			pkb.setModifiesRelation(stmtNo, readArg);
 			pkb.setVar(readArg);
 			
 			if (stmtNo != 1) {
-				pkb.insertFollowsRelation(prevStmtNo, stmtNo);
+				pkb.setFollowsRelation(prevStmtNo, stmtNo);
 			}
 			prevStmtNo = stmtNo;
 			stmtNo++;
@@ -143,7 +143,7 @@ int Parser::Parse (string filename) {
 			pkb.setVar(printArg);
 			
 			if (stmtNo != 1) {
-				pkb.insertFollowsRelation(prevStmtNo, stmtNo);
+				pkb.setFollowsRelation(prevStmtNo, stmtNo);
 			}
 			prevStmtNo = stmtNo;
 			stmtNo++;
@@ -285,7 +285,7 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 		//Process to parse each line
 		if (line.find("while") != string::npos && line.find('{') != string::npos) {
 			pkb.setStmt(currStmtNo, While);
-			pkb.insertParentRelation(startStmtNo, currStmtNo);
+			pkb.setParentRelation(startStmtNo, currStmtNo);
 			nestingLevel++;
 			NestedResult results;
 			if (passedElse) {
@@ -298,7 +298,7 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 			vector<string> uses = results.getUses();
 			for (string var : modifies) {
 				pkb.setVar(var);
-				pkb.insertModifiesRelation(currStmtNo, var);
+				pkb.setModifiesRelation(currStmtNo, var);
 				result.addModifies(var);
 			}
 			for (string var : uses) {
@@ -316,11 +316,11 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 			if (currStmtNo != (startStmtNo + 1)) {
 				if (passedElse) {
 					if (currStmtNo != elseStmtNo) {
-						pkb.insertFollowsRelation(prevStmtNo, currStmtNo);
+						pkb.setFollowsRelation(prevStmtNo, currStmtNo);
 					}
 				}
 				else {
-					pkb.insertFollowsRelation(prevStmtNo, currStmtNo);
+					pkb.setFollowsRelation(prevStmtNo, currStmtNo);
 				}
 			}
 			prevStmtNo = currStmtNo;
@@ -331,7 +331,7 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 		}
 		else if (line.find("if") != string::npos && line.find('{') != string::npos) {
 			pkb.setStmt(currStmtNo, If);
-			pkb.insertParentRelation(startStmtNo, currStmtNo);
+			pkb.setParentRelation(startStmtNo, currStmtNo);
 			nestingLevel++;
 			NestedResult results;
 			if (passedElse) {
@@ -344,7 +344,7 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 			vector<string> uses = results.getUses();
 			for (string var : modifies) {
 				pkb.setVar(var);
-				pkb.insertModifiesRelation(currStmtNo, var);
+				pkb.setModifiesRelation(currStmtNo, var);
 				result.addModifies(var);
 			}
 			for (string var : uses) {
@@ -362,11 +362,11 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 			if (currStmtNo != (startStmtNo + 1)) {
 				if (passedElse) {
 					if (currStmtNo != elseStmtNo) {
-						pkb.insertFollowsRelation(prevStmtNo, currStmtNo);
+						pkb.setFollowsRelation(prevStmtNo, currStmtNo);
 					}
 				}
 				else {
-					pkb.insertFollowsRelation(prevStmtNo, currStmtNo);
+					pkb.setFollowsRelation(prevStmtNo, currStmtNo);
 				}
 			}
 			prevStmtNo = currStmtNo;
@@ -384,13 +384,13 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 			}
 			assign = parseAssignInit(line);
 			pkb.setStmt(currStmtNo, Assign);
-			pkb.insertParentRelation(startStmtNo, currStmtNo);
+			pkb.setParentRelation(startStmtNo, currStmtNo);
 
 			//Splits the assign statement by the = sign and get LHS and RHS
 			int index = assign.find("=");
 			string varMod = assign.substr(0, index);
 			pkb.setVar(varMod);
-			pkb.insertModifiesRelation(currStmtNo, varMod);
+			pkb.setModifiesRelation(currStmtNo, varMod);
 			result.addModifies(varMod);
 
 			string varUse = assign.substr(index + 1);
@@ -413,11 +413,11 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 			if (currStmtNo != (startStmtNo + 1)) {
 				if (passedElse) {
 					if (currStmtNo != elseStmtNo) {
-						pkb.insertFollowsRelation(prevStmtNo, currStmtNo);
+						pkb.setFollowsRelation(prevStmtNo, currStmtNo);
 					}
 				}
 				else {
-					pkb.insertFollowsRelation(prevStmtNo, currStmtNo);
+					pkb.setFollowsRelation(prevStmtNo, currStmtNo);
 				}
 			}
 			prevStmtNo = currStmtNo;
@@ -436,20 +436,20 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 			readArg = parseRead(readArg);
 			//Sets stmt information in PKB and then sets modifies variable for that stmt
 			pkb.setStmt(currStmtNo, Read);
-			pkb.insertParentRelation(startStmtNo, currStmtNo);
+			pkb.setParentRelation(startStmtNo, currStmtNo);
 
-			pkb.insertModifiesRelation(currStmtNo, readArg);
+			pkb.setModifiesRelation(currStmtNo, readArg);
 			pkb.setVar(readArg);
 			result.addModifies(readArg);
 
 			if (currStmtNo != (startStmtNo + 1)) {
 				if (passedElse) {
 					if (currStmtNo != elseStmtNo) {
-						pkb.insertFollowsRelation(prevStmtNo, currStmtNo);
+						pkb.setFollowsRelation(prevStmtNo, currStmtNo);
 					}
 				}
 				else {
-					pkb.insertFollowsRelation(prevStmtNo, currStmtNo);
+					pkb.setFollowsRelation(prevStmtNo, currStmtNo);
 				}
 			}
 			prevStmtNo = currStmtNo;
@@ -468,7 +468,7 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 			printArg = parsePrint(line);
 			//Sets stmt information in PKB and then sets modifies variable for that stmt
 			pkb.setStmt(currStmtNo, Print);
-			pkb.insertParentRelation(startStmtNo, currStmtNo);
+			pkb.setParentRelation(startStmtNo, currStmtNo);
 
 			pkb.insertUsesRelation(currStmtNo, printArg);
 			pkb.setVar(printArg);
@@ -477,11 +477,11 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 			if (currStmtNo != (startStmtNo + 1)) {
 				if (passedElse) {
 					if (currStmtNo != elseStmtNo) {
-						pkb.insertFollowsRelation(prevStmtNo, currStmtNo);
+						pkb.setFollowsRelation(prevStmtNo, currStmtNo);
 					}
 				}
 				else {
-					pkb.insertFollowsRelation(prevStmtNo, currStmtNo);
+					pkb.setFollowsRelation(prevStmtNo, currStmtNo);
 				}
 			}
 			prevStmtNo = currStmtNo;
@@ -531,7 +531,7 @@ NestedResult Parser::parseIfNestedInThen(string ifLine, int parentStmtNo) {
 		//Process to parse each line
 		if (line.find("while") != string::npos && line.find('{') != string::npos) {
 			pkb.setStmt(currStmtNo, While);
-			pkb.insertParentRelation(startStmtNo, currStmtNo);
+			pkb.setParentRelation(startStmtNo, currStmtNo);
 			nestingLevel++;
 			NestedResult results;
 			if (passedElse) {
@@ -544,7 +544,7 @@ NestedResult Parser::parseIfNestedInThen(string ifLine, int parentStmtNo) {
 			vector<string> uses = results.getUses();
 			for (string var : modifies) {
 				pkb.setVar(var);
-				pkb.insertModifiesRelation(currStmtNo, var);
+				pkb.setModifiesRelation(currStmtNo, var);
 				result.addModifies(var);
 			}
 			for (string var : uses) {
@@ -562,11 +562,11 @@ NestedResult Parser::parseIfNestedInThen(string ifLine, int parentStmtNo) {
 			if (currStmtNo != (startStmtNo + 1)) {
 				if (passedElse) {
 					if (currStmtNo != elseStmtNo) {
-						pkb.insertFollowsRelation(prevStmtNo, currStmtNo);
+						pkb.setFollowsRelation(prevStmtNo, currStmtNo);
 					}
 				}
 				else {
-					pkb.insertFollowsRelation(prevStmtNo, currStmtNo);
+					pkb.setFollowsRelation(prevStmtNo, currStmtNo);
 				}
 			}
 			prevStmtNo = currStmtNo;
@@ -577,7 +577,7 @@ NestedResult Parser::parseIfNestedInThen(string ifLine, int parentStmtNo) {
 		}
 		else if (line.find("if") != string::npos && line.find('{') != string::npos) {
 			pkb.setStmt(currStmtNo, If);
-			pkb.insertParentRelation(startStmtNo, currStmtNo);
+			pkb.setParentRelation(startStmtNo, currStmtNo);
 			nestingLevel++;
 			NestedResult results;
 			if (passedElse) {
@@ -590,7 +590,7 @@ NestedResult Parser::parseIfNestedInThen(string ifLine, int parentStmtNo) {
 			vector<string> uses = results.getUses();
 			for (string var : modifies) {
 				pkb.setVar(var);
-				pkb.insertModifiesRelation(currStmtNo, var);
+				pkb.setModifiesRelation(currStmtNo, var);
 				result.addModifies(var);
 			}
 			for (string var : uses) {
@@ -608,11 +608,11 @@ NestedResult Parser::parseIfNestedInThen(string ifLine, int parentStmtNo) {
 			if (currStmtNo != (startStmtNo + 1)) {
 				if (passedElse) {
 					if (currStmtNo != elseStmtNo) {
-						pkb.insertFollowsRelation(prevStmtNo, currStmtNo);
+						pkb.setFollowsRelation(prevStmtNo, currStmtNo);
 					}
 				}
 				else {
-					pkb.insertFollowsRelation(prevStmtNo, currStmtNo);
+					pkb.setFollowsRelation(prevStmtNo, currStmtNo);
 				}
 			}
 			prevStmtNo = currStmtNo;
@@ -630,13 +630,13 @@ NestedResult Parser::parseIfNestedInThen(string ifLine, int parentStmtNo) {
 			}
 			assign = parseAssignInit(line);
 			pkb.setStmt(currStmtNo, Assign);
-			pkb.insertParentRelation(startStmtNo, currStmtNo);
+			pkb.setParentRelation(startStmtNo, currStmtNo);
 
 			//Splits the assign statement by the = sign and get LHS and RHS
 			int index = assign.find("=");
 			string varMod = assign.substr(0, index);
 			pkb.setVar(varMod);
-			pkb.insertModifiesRelation(currStmtNo, varMod);
+			pkb.setModifiesRelation(currStmtNo, varMod);
 			result.addModifies(varMod);
 
 			string varUse = assign.substr(index + 1);
@@ -659,11 +659,11 @@ NestedResult Parser::parseIfNestedInThen(string ifLine, int parentStmtNo) {
 			if (currStmtNo != (startStmtNo + 1)) {
 				if (passedElse) {
 					if (currStmtNo != elseStmtNo) {
-						pkb.insertFollowsRelation(prevStmtNo, currStmtNo);
+						pkb.setFollowsRelation(prevStmtNo, currStmtNo);
 					}
 				}
 				else {
-					pkb.insertFollowsRelation(prevStmtNo, currStmtNo);
+					pkb.setFollowsRelation(prevStmtNo, currStmtNo);
 				}
 			}
 			prevStmtNo = currStmtNo;
@@ -682,20 +682,20 @@ NestedResult Parser::parseIfNestedInThen(string ifLine, int parentStmtNo) {
 			readArg = parseRead(readArg);
 			//Sets stmt information in PKB and then sets modifies variable for that stmt
 			pkb.setStmt(currStmtNo, Read);
-			pkb.insertParentRelation(startStmtNo, currStmtNo);
+			pkb.setParentRelation(startStmtNo, currStmtNo);
 
-			pkb.insertModifiesRelation(currStmtNo, readArg);
+			pkb.setModifiesRelation(currStmtNo, readArg);
 			pkb.setVar(readArg);
 			result.addModifies(readArg);
 
 			if (currStmtNo != (startStmtNo + 1)) {
 				if (passedElse) {
 					if (currStmtNo != elseStmtNo) {
-						pkb.insertFollowsRelation(prevStmtNo, currStmtNo);
+						pkb.setFollowsRelation(prevStmtNo, currStmtNo);
 					}
 				}
 				else {
-					pkb.insertFollowsRelation(prevStmtNo, currStmtNo);
+					pkb.setFollowsRelation(prevStmtNo, currStmtNo);
 				}
 			}
 			prevStmtNo = currStmtNo;
@@ -714,7 +714,7 @@ NestedResult Parser::parseIfNestedInThen(string ifLine, int parentStmtNo) {
 			printArg = parsePrint(line);
 			//Sets stmt information in PKB and then sets modifies variable for that stmt
 			pkb.setStmt(currStmtNo, Print);
-			pkb.insertParentRelation(startStmtNo, currStmtNo);
+			pkb.setParentRelation(startStmtNo, currStmtNo);
 
 			pkb.insertUsesRelation(currStmtNo, printArg);
 			pkb.setVar(printArg);
@@ -723,11 +723,11 @@ NestedResult Parser::parseIfNestedInThen(string ifLine, int parentStmtNo) {
 			if (currStmtNo != (startStmtNo + 1)) {
 				if (passedElse) {
 					if (currStmtNo != elseStmtNo) {
-						pkb.insertFollowsRelation(prevStmtNo, currStmtNo);
+						pkb.setFollowsRelation(prevStmtNo, currStmtNo);
 					}
 				}
 				else {
-					pkb.insertFollowsRelation(prevStmtNo, currStmtNo);
+					pkb.setFollowsRelation(prevStmtNo, currStmtNo);
 				}
 			}
 			prevStmtNo = currStmtNo;
@@ -775,14 +775,14 @@ NestedResult Parser::parseWhileNestedInThen(string whileLine, int parentStmtNo) 
 		//Process to parse each line
 		if (line.find("while") != string::npos && line.find('{') != string::npos) {
 			pkb.setStmt(currStmtNo, While);
-			pkb.insertParentRelation(startStmtNo, currStmtNo);
+			pkb.setParentRelation(startStmtNo, currStmtNo);
 			nestingLevel++;
 			NestedResult results = parseWhile(line, currStmtNo);
 			vector<string> modifies = results.getModifies();
 			vector<string> uses = results.getUses();
 			for (string var : modifies) {
 				pkb.setVar(var);
-				pkb.insertModifiesRelation(currStmtNo, var);
+				pkb.setModifiesRelation(currStmtNo, var);
 				result.addModifies(var);
 			}
 			for (string var : uses) {
@@ -798,7 +798,7 @@ NestedResult Parser::parseWhileNestedInThen(string whileLine, int parentStmtNo) 
 			}
 
 			if (currStmtNo != (startStmtNo + 1)) {
-				pkb.insertFollowsRelation(prevStmtNo, currStmtNo);
+				pkb.setFollowsRelation(prevStmtNo, currStmtNo);
 			}
 			prevStmtNo = currStmtNo;
 			currStmtNo = results.lastStmtNo;
@@ -808,14 +808,14 @@ NestedResult Parser::parseWhileNestedInThen(string whileLine, int parentStmtNo) 
 		}
 		else if (line.find("if") != string::npos && line.find('{') != string::npos) {
 			pkb.setStmt(currStmtNo, If);
-			pkb.insertParentRelation(startStmtNo, currStmtNo);
+			pkb.setParentRelation(startStmtNo, currStmtNo);
 			nestingLevel++;
 			NestedResult results = parseIf(line, currStmtNo);
 			vector<string> modifies = results.getModifies();
 			vector<string> uses = results.getUses();
 			for (string var : modifies) {
 				pkb.setVar(var);
-				pkb.insertModifiesRelation(currStmtNo, var);
+				pkb.setModifiesRelation(currStmtNo, var);
 				result.addModifies(var);
 			}
 			for (string var : uses) {
@@ -831,7 +831,7 @@ NestedResult Parser::parseWhileNestedInThen(string whileLine, int parentStmtNo) 
 			}
 
 			if (currStmtNo != (startStmtNo + 1)) {
-				pkb.insertFollowsRelation(prevStmtNo, currStmtNo);
+				pkb.setFollowsRelation(prevStmtNo, currStmtNo);
 			}
 			prevStmtNo = currStmtNo;
 			currStmtNo = results.lastStmtNo;
@@ -848,13 +848,13 @@ NestedResult Parser::parseWhileNestedInThen(string whileLine, int parentStmtNo) 
 			}
 			assign = parseAssignInit(line);
 			pkb.setStmt(currStmtNo, Assign);
-			pkb.insertParentRelation(startStmtNo, currStmtNo);
+			pkb.setParentRelation(startStmtNo, currStmtNo);
 
 			//Splits the assign statement by the = sign and get LHS and RHS
 			int index = assign.find("=");
 			string varMod = assign.substr(0, index);
 			pkb.setVar(varMod);
-			pkb.insertModifiesRelation(currStmtNo, varMod);
+			pkb.setModifiesRelation(currStmtNo, varMod);
 			result.addModifies(varMod);
 
 			string varUse = assign.substr(index + 1);
@@ -875,7 +875,7 @@ NestedResult Parser::parseWhileNestedInThen(string whileLine, int parentStmtNo) 
 			}
 
 			if (currStmtNo != (startStmtNo + 1)) {
-				pkb.insertFollowsRelation(prevStmtNo, currStmtNo);
+				pkb.setFollowsRelation(prevStmtNo, currStmtNo);
 			}
 			prevStmtNo = currStmtNo;
 			currStmtNo++;
@@ -893,14 +893,14 @@ NestedResult Parser::parseWhileNestedInThen(string whileLine, int parentStmtNo) 
 			readArg = parseRead(readArg);
 			//Sets stmt information in PKB and then sets modifies variable for that stmt
 			pkb.setStmt(currStmtNo, Read);
-			pkb.insertParentRelation(startStmtNo, currStmtNo);
+			pkb.setParentRelation(startStmtNo, currStmtNo);
 
-			pkb.insertModifiesRelation(currStmtNo, readArg);
+			pkb.setModifiesRelation(currStmtNo, readArg);
 			pkb.setVar(readArg);
 			result.addModifies(readArg);
 
 			if (currStmtNo != (startStmtNo + 1)) {
-				pkb.insertFollowsRelation(prevStmtNo, currStmtNo);
+				pkb.setFollowsRelation(prevStmtNo, currStmtNo);
 			}
 			prevStmtNo = currStmtNo;
 			currStmtNo++;
@@ -918,14 +918,14 @@ NestedResult Parser::parseWhileNestedInThen(string whileLine, int parentStmtNo) 
 			printArg = parsePrint(line);
 			//Sets stmt information in PKB and then sets modifies variable for that stmt
 			pkb.setStmt(currStmtNo, Print);
-			pkb.insertParentRelation(startStmtNo, currStmtNo);
+			pkb.setParentRelation(startStmtNo, currStmtNo);
 
 			pkb.insertUsesRelation(currStmtNo, printArg);
 			pkb.setVar(printArg);
 			result.addUses(printArg);
 
 			if (currStmtNo != (startStmtNo + 1)) {
-				pkb.insertFollowsRelation(prevStmtNo, currStmtNo);
+				pkb.setFollowsRelation(prevStmtNo, currStmtNo);
 			}
 			prevStmtNo = currStmtNo;
 			currStmtNo++;
@@ -964,14 +964,14 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 		//Process to parse each line
 		if (line.find("while") != string::npos && line.find('{') != string::npos) {
 			pkb.setStmt(currStmtNo, While);
-			pkb.insertParentRelation(startStmtNo, currStmtNo);
+			pkb.setParentRelation(startStmtNo, currStmtNo);
 			nestingLevel++;
 			NestedResult results = parseWhile(line, currStmtNo);
 			vector<string> modifies = results.getModifies();
 			vector<string> uses = results.getUses();
 			for (string var : modifies) {
 				pkb.setVar(var);
-				pkb.insertModifiesRelation(currStmtNo, var);
+				pkb.setModifiesRelation(currStmtNo, var);
 				result.addModifies(var);
 			}
 			for (string var : uses) {
@@ -987,7 +987,7 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 			}
 
 			if (currStmtNo != (startStmtNo + 1)) {
-				pkb.insertFollowsRelation(prevStmtNo, currStmtNo);
+				pkb.setFollowsRelation(prevStmtNo, currStmtNo);
 			}
 			prevStmtNo = currStmtNo;
 			currStmtNo = results.lastStmtNo;
@@ -997,14 +997,14 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 		}
 		else if (line.find("if") != string::npos && line.find('{') != string::npos) {
 			pkb.setStmt(currStmtNo, If);
-			pkb.insertParentRelation(startStmtNo, currStmtNo);
+			pkb.setParentRelation(startStmtNo, currStmtNo);
 			nestingLevel++;
 			NestedResult results = parseIf(line, currStmtNo);
 			vector<string> modifies = results.getModifies();
 			vector<string> uses = results.getUses();
 			for (string var : modifies) {
 				pkb.setVar(var);
-				pkb.insertModifiesRelation(currStmtNo, var);
+				pkb.setModifiesRelation(currStmtNo, var);
 				result.addModifies(var);
 			}
 			for (string var : uses) {
@@ -1020,7 +1020,7 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 			}
 
 			if (currStmtNo != (startStmtNo + 1)) {
-				pkb.insertFollowsRelation(prevStmtNo, currStmtNo);
+				pkb.setFollowsRelation(prevStmtNo, currStmtNo);
 			}
 			prevStmtNo = currStmtNo;
 			currStmtNo = results.lastStmtNo;
@@ -1037,13 +1037,13 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 			}
 			assign = parseAssignInit(line);
 			pkb.setStmt(currStmtNo, Assign);
-			pkb.insertParentRelation(startStmtNo, currStmtNo);
+			pkb.setParentRelation(startStmtNo, currStmtNo);
 
 			//Splits the assign statement by the = sign and get LHS and RHS
 			int index = assign.find("=");
 			string varMod = assign.substr(0, index);
 			pkb.setVar(varMod);
-			pkb.insertModifiesRelation(currStmtNo, varMod);
+			pkb.setModifiesRelation(currStmtNo, varMod);
 			result.addModifies(varMod);
 
 			string varUse = assign.substr(index + 1);
@@ -1064,7 +1064,7 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 			}
 
 			if (currStmtNo != (startStmtNo + 1)) {
-				pkb.insertFollowsRelation(prevStmtNo, currStmtNo);
+				pkb.setFollowsRelation(prevStmtNo, currStmtNo);
 			}
 			prevStmtNo = currStmtNo;
 			currStmtNo++;
@@ -1082,14 +1082,14 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 			readArg = parseRead(readArg);
 			//Sets stmt information in PKB and then sets modifies variable for that stmt
 			pkb.setStmt(currStmtNo, Read);
-			pkb.insertParentRelation(startStmtNo, currStmtNo);
+			pkb.setParentRelation(startStmtNo, currStmtNo);
 
-			pkb.insertModifiesRelation(currStmtNo, readArg);
+			pkb.setModifiesRelation(currStmtNo, readArg);
 			pkb.setVar(readArg);
 			result.addModifies(readArg);
 
 			if (currStmtNo != (startStmtNo + 1)) {
-				pkb.insertFollowsRelation(prevStmtNo, currStmtNo);
+				pkb.setFollowsRelation(prevStmtNo, currStmtNo);
 			}
 			prevStmtNo = currStmtNo;
 			currStmtNo++;
@@ -1107,14 +1107,14 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 			printArg = parsePrint(line);
 			//Sets stmt information in PKB and then sets modifies variable for that stmt
 			pkb.setStmt(currStmtNo, Print);
-			pkb.insertParentRelation(startStmtNo, currStmtNo);
+			pkb.setParentRelation(startStmtNo, currStmtNo);
 
 			pkb.insertUsesRelation(currStmtNo, printArg);
 			pkb.setVar(printArg);
 			result.addUses(printArg);
 
 			if (currStmtNo != (startStmtNo + 1)) {
-				pkb.insertFollowsRelation(prevStmtNo, currStmtNo);
+				pkb.setFollowsRelation(prevStmtNo, currStmtNo);
 			}
 			prevStmtNo = currStmtNo;
 			currStmtNo++;

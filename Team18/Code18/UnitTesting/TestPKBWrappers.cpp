@@ -53,17 +53,15 @@ namespace UnitTesting
 			pkb.insertAssignRelation(4, "z", { }, { "0" } );
 			pkb.insertAssignRelation(5, "z", { }, { "1" });
 			
-			pkb.setModifiesStmt(8, "x");
-			pkb.setModifiesVarByStmt(8, "x"); 
 			pkb.setUsesStmt(9, "x");
 			pkb.setUsesVarByStmt(9, "x");
 
-			pkb.insertParentRelation(1, 2);
-			pkb.insertParentRelation(1, 3);
-			pkb.insertParentStarRelation(1, 3);
+			pkb.setParentRelation(1, 2);
+			pkb.setParentRelation(1, 3);
+			pkb.setParentStarRelation(1, 3);
 
-			pkb.insertFollowsRelation(1, 2);
-			pkb.insertFollowsStarRelation(1, 2);
+			pkb.setFollowsRelation(1, 2);
+			pkb.setFollowsStarRelation(1, 2);
 		}
 		/*
 		TEST_METHOD(GetModifiesVarByStmt)

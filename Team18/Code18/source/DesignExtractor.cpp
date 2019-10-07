@@ -10,6 +10,7 @@ void DesignExtractor::extractDesign()
 {
 	extractFollowsStar();
 	extractParentStar();
+	extractCallStar();
 }
 
 /*

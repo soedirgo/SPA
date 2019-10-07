@@ -38,62 +38,62 @@ namespace UnitTesting
 			pkb.setAssignStmt(1, "x");
 			pkb.setVar("x");
 			pkb.setConstant("1", 1);
-			pkb.insertModifiesRelation(1, "x");
+			pkb.setModifiesRelation(1, "x");
 
 			pkb.setStmt(2, Assign);
 			pkb.setAssignStmt(2, "y");
 			pkb.setVar("y");
 			pkb.insertUsesRelation(2, "x");
-			pkb.insertModifiesRelation(2, "y");
-			pkb.insertFollowsRelation(1, 2);
-			pkb.insertFollowsStarRelation(1, 2);
+			pkb.setModifiesRelation(2, "y");
+			pkb.setFollowsRelation(1, 2);
+			pkb.setFollowsStarRelation(1, 2);
 
 			pkb.setStmt(3, If);
 			//pkb.setIfStmt(3);
 			pkb.insertUsesRelation(3, "x");
 			pkb.insertUsesRelation(3, "y");
-			pkb.insertModifiesRelation(3, "z");
-			pkb.insertFollowsRelation(2, 3);
-			pkb.insertFollowsStarRelation(1, 3);
-			pkb.insertFollowsStarRelation(2, 3);
+			pkb.setModifiesRelation(3, "z");
+			pkb.setFollowsRelation(2, 3);
+			pkb.setFollowsStarRelation(1, 3);
+			pkb.setFollowsStarRelation(2, 3);
 
 			pkb.setStmt(4, Assign);
 			pkb.setAssignStmt(4, "z");
 			pkb.setVar("z");
 			pkb.setConstant("0", 4);
-			pkb.insertModifiesRelation(4, "z");
-			pkb.insertParentRelation(3, 4);
-			pkb.insertParentStarRelation(3, 4);
+			pkb.setModifiesRelation(4, "z");
+			pkb.setParentRelation(3, 4);
+			pkb.setParentStarRelation(3, 4);
 
 			pkb.setStmt(5, Assign);
 			pkb.setAssignStmt(5, "z");
-			pkb.insertModifiesRelation(5, "z");
+			pkb.setModifiesRelation(5, "z");
 			pkb.setConstant("1", 5);
-			pkb.insertParentRelation(3, 5);
-			pkb.insertParentStarRelation(3, 5);
+			pkb.setParentRelation(3, 5);
+			pkb.setParentStarRelation(3, 5);
 
 			pkb.setStmt(6, While);
 			//pkb.setWhileStmt(6);
 			pkb.insertUsesRelation(6, "x");
-			pkb.insertModifiesRelation(6, "x");
-			pkb.insertFollowsRelation(3, 6);
-			pkb.insertFollowsStarRelation(1, 6);
-			pkb.insertFollowsStarRelation(2, 6);
-			pkb.insertFollowsStarRelation(3, 6);
+			pkb.setModifiesRelation(6, "x");
+			pkb.setFollowsRelation(3, 6);
+			pkb.setFollowsStarRelation(1, 6);
+			pkb.setFollowsStarRelation(2, 6);
+			pkb.setFollowsStarRelation(3, 6);
 
 			pkb.setStmt(7, Read);
 			pkb.setReadStmt(7, "x");
-			pkb.insertModifiesRelation(7, "x");
-			pkb.insertParentRelation(6, 7);
-			pkb.insertParentStarRelation(6, 7);
+			pkb.setModifiesRelation(7, "x");
+			pkb.setParentRelation(6, 7);
+			pkb.setParentStarRelation(6, 7);
 
 			pkb.setStmt(8, Print);
 			pkb.setPrintStmt(8, "x");
 			pkb.insertUsesRelation(8, "x");
-			pkb.insertParentRelation(6, 8);
-			pkb.insertParentStarRelation(6, 8);
-			pkb.insertFollowsRelation(7, 8);
-			pkb.insertFollowsStarRelation(7, 8);
+			pkb.setParentRelation(6, 8);
+			pkb.setParentStarRelation(6, 8);
+			pkb.setFollowsRelation(7, 8);
+			pkb.setFollowsStarRelation(7, 8);
 
 		}
 		TEST_METHOD(GetUsesStmtByVariable)
