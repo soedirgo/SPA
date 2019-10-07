@@ -47,11 +47,11 @@ namespace UnitTesting
 			pkb.insertParentRelation(5, 7);
 
 			
-			pkb.insertFollowRelation(1, 2);
-			pkb.insertFollowRelation(2, 9);
-			pkb.insertFollowRelation(3, 4);
-			pkb.insertFollowRelation(4, 8);
-			pkb.insertFollowRelation(5, 7);
+			pkb.insertFollowsRelation(1, 2);
+			pkb.insertFollowsRelation(2, 9);
+			pkb.insertFollowsRelation(3, 4);
+			pkb.insertFollowsRelation(4, 8);
+			pkb.insertFollowsRelation(5, 7);
 
 			DesignExtractor designExtractor;
 			designExtractor.extractDesign();
@@ -60,14 +60,13 @@ namespace UnitTesting
 		
 		TEST_METHOD(FollowStarRelationship)
 		{
-			Assert::IsTrue(PKB().isFollowStarRelationship(1, 2));
-			Assert::IsTrue(PKB().isFollowStarRelationship(2, 9));
-			Assert::IsTrue(PKB().isFollowStarRelationship(3, 4));
-			Assert::IsTrue(PKB().isFollowStarRelationship(4, 8));
-			Assert::IsTrue(PKB().isFollowStarRelationship(5, 7));
-
-			Assert::IsTrue(PKB().isFollowStarRelationship(1, 9));
-			Assert::IsTrue(PKB().isFollowStarRelationship(3, 8));
+			Assert::IsTrue(PKB().isFollowsStarRelationship(1, 2));
+			Assert::IsTrue(PKB().isFollowsStarRelationship(2, 9));
+			Assert::IsTrue(PKB().isFollowsStarRelationship(3, 4));
+			Assert::IsTrue(PKB().isFollowsStarRelationship(4, 8));
+			Assert::IsTrue(PKB().isFollowsStarRelationship(5, 7));
+			Assert::IsTrue(PKB().isFollowsStarRelationship(1, 9));
+			Assert::IsTrue(PKB().isFollowsStarRelationship(3, 8));
 
 		}
 		TEST_METHOD(ParentStarRelationship)
@@ -79,13 +78,13 @@ namespace UnitTesting
 			Assert::IsTrue(PKB().isParentStarRelationship(4, 8));
 			Assert::IsTrue(PKB().isParentStarRelationship(5, 6));
 			Assert::IsTrue(PKB().isParentStarRelationship(5, 7));
-
 			Assert::IsTrue(PKB().isParentStarRelationship(2, 5));
 			Assert::IsTrue(PKB().isParentStarRelationship(2, 8));
 			Assert::IsTrue(PKB().isParentStarRelationship(2, 6));
 			Assert::IsTrue(PKB().isParentStarRelationship(2, 7));
 			Assert::IsTrue(PKB().isParentStarRelationship(4, 6));
 			Assert::IsTrue(PKB().isParentStarRelationship(4, 7));
+			
 		}
 		
 	};

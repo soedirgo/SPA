@@ -37,12 +37,12 @@ public:
 	bool clear();
 
 	// Internal Use
-	static std::unordered_set<int> getAllFollowedBy();
+	//static std::unordered_set<int> getAllFollowedBy();
 
 private:
-	static std::unordered_map<int, int> followTable;
-	static std::unordered_map<int, std::unordered_set<int>> followedByTable;
-	static std::unordered_map<int, std::unordered_set<int>> followStarTable;
+	//static std::unordered_map<int, int> followTable;
+	//static std::unordered_map<int, std::unordered_set<int>> followedByTable;
+	//static std::unordered_map<int, std::unordered_set<int>> followStarTable;
 
 	static std::unordered_set<std::vector<std::string>, VectorHash> followsTable;
 	static std::unordered_set<std::vector<std::string>, VectorHash> followsStarTable;

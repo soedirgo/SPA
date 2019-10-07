@@ -23,10 +23,10 @@ public:
 
 	
 	//Follow Functions
-	static bool insertFollowRelation(STMT_NO followedBy, STMT_NO follow);
-	static bool insertFollowStarRelation(STMT_NO followedBy, STMT_NO follow);
-	static bool isFollowRelationship(STMT_NO followedBy, STMT_NO follow);
-	static bool isFollowStarRelationship(STMT_NO followedBy, STMT_NO follow);
+	static bool insertFollowsRelation(STMT_NO followedBy, STMT_NO follow);
+	static bool insertFollowsStarRelation(STMT_NO followedBy, STMT_NO follow);
+	static bool isFollowsRelationship(STMT_NO followedBy, STMT_NO follow);
+	static bool isFollowsStarRelationship(STMT_NO followedBy, STMT_NO follow);
 	static STMT_LIST getFollowedByStmtList(STMT_NO follow);
 	static STMT_LIST getFollowStarStmtList(STMT_NO followedBy);
 	static STMT_NO getFollowStmt(STMT_NO followedBy);

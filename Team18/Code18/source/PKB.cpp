@@ -66,19 +66,19 @@ TNode* PKB::getRootAST (PROC p){
 // Higher order wrapper functions APIs
 ////////////////////////////////////
 
-bool PKB::insertFollowRelation(STMT_NO followedBy, STMT_NO follow) {
+bool PKB::insertFollowsRelation(STMT_NO followedBy, STMT_NO follow) {
 	return PKBFollows::setFollows(followedBy, follow);// && PKBFollow::setFollowedBy(followedBy, follow);
 }
 
-bool PKB::insertFollowStarRelation(STMT_NO followedBy, STMT_NO follow) {
+bool PKB::insertFollowsStarRelation(STMT_NO followedBy, STMT_NO follow) {
 	return PKBFollows::setFollowsStar(followedBy, follow);
 }
 
-bool PKB::isFollowRelationship(STMT_NO followedBy, STMT_NO follow) {
+bool PKB::isFollowsRelationship(STMT_NO followedBy, STMT_NO follow) {
 	return PKBFollows::isFollowsRelationship(followedBy, follow);
 }
 
-bool PKB::isFollowStarRelationship(STMT_NO followedBy, STMT_NO follow) {
+bool PKB::isFollowsStarRelationship(STMT_NO followedBy, STMT_NO follow) {
 	return PKBFollows::isFollowsStarRelationship(followedBy, follow);
 }
 
@@ -97,7 +97,8 @@ STMT_LIST PKB::getFollowStarStmtList(STMT_NO followedBy) {
 */
 
 bool PKB::insertParentRelation(STMT_NO parent, STMT_NO child) {
-	return PKBParent::setChildren(parent,child) && PKBParent::setParent(parent,child);
+	//return PKBParent::setChildren(parent,child) && PKBParent::setParent(parent, child);
+	return PKBParent::setParent(parent, child);
 }
 
 bool PKB::insertParentStarRelation(STMT_NO parent, STMT_NO child) {
@@ -112,6 +113,7 @@ bool PKB::isParentStarRelationship(STMT_NO parent, STMT_NO child) {
 	return PKBParent::isParentStarRelationship(parent, child);
 }
 
+/*
 STMT_LIST PKB::getParentStarStmtList(STMT_NO child) {
 	return PKBParent::getParentStarStmtList(child);
 }
@@ -123,6 +125,7 @@ STMT_LIST PKB::getChildrenStmtList(STMT_NO parent) {
 STMT_NO PKB::getParentStmt(STMT_NO child) {
 	return PKBParent::getParentStmt(child);
 }
+*/
 
 bool PKB::isConstUsedInAssign(STMT_NO assignStmtNo, string c) {
 	STMT_LIST stmtList = getStmtByConst(c); 

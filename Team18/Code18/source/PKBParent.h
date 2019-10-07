@@ -1,12 +1,14 @@
 #pragma once
 
-#include <unordered_set>
 #include <unordered_map>
-#include <string>
+#include "AbstractType.h"
+#include "PKBHash.h"
+#include <unordered_set>
 
 class PKBParent {
 public:
 
+	/*
 	// add parent to parentTable
 	static bool setParent(int parent, int child);
 	static bool setChildren(int parent, int child);
@@ -29,9 +31,25 @@ public:
 	// Internal Use
 	static std::unordered_set<int> getAllChildren();
 	static std::unordered_set<int> getAllParent();
+	*/
+
+	static bool setParent(STMT_NO parent, STMT_NO child);
+	static bool setParentStar(STMT_NO parent, STMT_NO child);
+	static std::unordered_set<std::string> getChild(STMT_NO parent);
+	static std::unordered_set<std::vector<std::string>, VectorHash> getParentTable();
+	static bool isParentRelationship(STMT_NO parent, STMT_NO child);
+	static bool isParentStarRelationship(STMT_NO parent, STMT_NO child);
+
+	// Clear
+	bool clear();
 
 private:
+	/*
 	static std::unordered_map<int, int> childTable;
 	static std::unordered_map<int, std::unordered_set<int>> parentTable;
 	static std::unordered_map<int, std::unordered_set<int>> parentStarTable;
+	*/
+
+	static std::unordered_set<std::vector<std::string>, VectorHash> parentTable;
+	static std::unordered_set<std::vector<std::string>, VectorHash> parentStarTable;
 };

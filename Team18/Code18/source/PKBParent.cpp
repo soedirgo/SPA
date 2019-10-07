@@ -3,6 +3,70 @@
 
 using namespace std;
 
+unordered_set<vector<string>, VectorHash> PKBParent::parentTable;
+unordered_set<vector<string>, VectorHash> PKBParent::parentStarTable;
+
+bool PKBParent::setParent(STMT_NO parent, STMT_NO child) {
+	vector<string> tuple = vector<string>();
+	tuple.push_back(to_string(parent));
+	tuple.push_back(to_string(child));
+	parentTable.emplace(tuple);
+	return true;
+}
+
+bool PKBParent::setParentStar(STMT_NO parent, STMT_NO child) {
+	vector<string> tuple = vector<string>();
+	tuple.push_back(to_string(parent));
+	tuple.push_back(to_string(child));
+	parentStarTable.emplace(tuple);
+	return true;
+}
+
+unordered_set<string> PKBParent::getChild(STMT_NO parent) {
+	unordered_set<string> childList;
+	for (auto vectorIter : parentTable) {
+		if (vectorIter.front() == to_string(parent)) {
+			childList.emplace(vectorIter.back());
+		}
+	}
+	return childList;
+}
+
+bool PKBParent::isParentRelationship(STMT_NO parent, STMT_NO child) {
+
+	for (auto vectorIter : parentTable) {
+		if (vectorIter.front() == to_string(parent)) {
+			if (vectorIter.back() == to_string(child)) {
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+bool PKBParent::isParentStarRelationship(STMT_NO parent, STMT_NO child) {
+
+	for (auto vectorIter : parentStarTable) {
+		if (vectorIter.front() == to_string(parent)) {
+			if (vectorIter.back() == to_string(child)) {
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+unordered_set<vector<string>, VectorHash> PKBParent::getParentTable() {
+	return parentTable;
+}
+
+bool PKBParent::clear() {
+	parentTable.clear();
+	parentStarTable.clear();
+	return true;
+}
+
+/*
 unordered_map<int, int> PKBParent::childTable;
 unordered_map<int, std::unordered_set<int>>  PKBParent::parentTable;
 unordered_map<int, std::unordered_set<int>>  PKBParent::parentStarTable;
@@ -97,3 +161,4 @@ bool PKBParent::clear() {
 	parentStarTable.clear();
 	return true;
 }
+*/

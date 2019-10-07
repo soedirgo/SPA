@@ -179,7 +179,7 @@ namespace Evaluator {
                 for (const auto& rhs : enumeratedRhs) {
                     if (declarations.count(clause.second.first))
                         fil[clause.second.first] = rhs;
-                    if (PKB::isFollowRelationship(stoi(lhs), stoi(rhs)))
+                    if (PKB::isFollowsRelationship(stoi(lhs), stoi(rhs)))
                         if (evalClauses(cls, fil))
                             return true;
                         else
@@ -201,7 +201,7 @@ namespace Evaluator {
                 for (const auto& rhs : enumeratedRhs) {
                     if (declarations.count(clause.second.first))
                         fil[clause.second.first] = rhs;
-                    if (PKB::isFollowStarRelationship(stoi(lhs), stoi(rhs)))
+                    if (PKB::isFollowsStarRelationship(stoi(lhs), stoi(rhs)))
                         if (evalClauses(cls, fil))
                             return true;
                         else

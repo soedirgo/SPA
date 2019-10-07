@@ -49,17 +49,17 @@ namespace UnitTesting
             pkb.setVar("y");
             pkb.setUsesVarByStmt(2, "x");
             pkb.setModifiesVarByStmt(2, "y");
-            pkb.insertFollowRelation(1, 2);
-            pkb.insertFollowStarRelation(1, 2);
+            pkb.insertFollowsRelation(1, 2);
+            pkb.insertFollowsStarRelation(1, 2);
 
             pkb.setStmt(3, If);
             //pkb.setIfStmt(3);
             pkb.setUsesVarByStmt(3, "x");
             pkb.setUsesVarByStmt(3, "y");
             pkb.setModifiesVarByStmt(3, "z");
-            pkb.insertFollowRelation(2, 3);
-            pkb.insertFollowStarRelation(1, 3);
-            pkb.insertFollowStarRelation(2, 3);
+            pkb.insertFollowsRelation(2, 3);
+            pkb.insertFollowsStarRelation(1, 3);
+            pkb.insertFollowsStarRelation(2, 3);
 
             pkb.setStmt(4, Assign);
             pkb.setAssignStmt(4, "z");
@@ -79,10 +79,10 @@ namespace UnitTesting
             //pkb.setWhileStmt(6);
             pkb.setUsesVarByStmt(6, "x");
             pkb.setModifiesVarByStmt(6, "x");
-            pkb.insertFollowRelation(3, 6);
-            pkb.insertFollowStarRelation(1, 6);
-            pkb.insertFollowStarRelation(2, 6);
-            pkb.insertFollowStarRelation(3, 6);
+            pkb.insertFollowsRelation(3, 6);
+            pkb.insertFollowsStarRelation(1, 6);
+            pkb.insertFollowsStarRelation(2, 6);
+            pkb.insertFollowsStarRelation(3, 6);
 
             pkb.setStmt(7, Read);
             pkb.setReadStmt(7, "x");
@@ -95,16 +95,16 @@ namespace UnitTesting
             pkb.setUsesVarByStmt(8, "x");
             pkb.insertParentRelation(6, 8);
             pkb.insertParentStarRelation(6, 8);
-            pkb.insertFollowRelation(7, 8);
-            pkb.insertFollowStarRelation(7, 8);
+            pkb.insertFollowsRelation(7, 8);
+            pkb.insertFollowsStarRelation(7, 8);
 
 			pkb.setStmt(9, Assign);
 			pkb.setAssignStmt(9, "x");
 			pkb.setVar("x");
 			pkb.insertUsesRelation(9, "x");
 			pkb.insertModifiesRelation(9, "x");
-			pkb.insertFollowRelation(8, 9);
-			pkb.insertFollowStarRelation(8, 9);
+			pkb.insertFollowsRelation(8, 9);
+			pkb.insertFollowsStarRelation(8, 9);
 		}
         TEST_METHOD(validQueries)
         {

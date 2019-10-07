@@ -21,13 +21,14 @@ bool PKBCall::setCallStmt(STMT_NO stmtNo, PROC_NAME caller) {
 	return true;
 }
 
-PROC_NAME PKBCall::getCalleeProc(PROC_NAME caller) {
+PROC_LIST PKBCall::getCalleeProc(PROC_NAME caller) {
+	PROC_LIST calleeList;
 	for (auto vectorIter : callProcTable) {
 		if (vectorIter.front() == caller) {
-			return vectorIter.back();
+			calleeList.emplace(vectorIter.back());
 		}
 	}
-	return "";
+	return calleeList;
 }
 
 bool PKBCall::isCallRelationship(PROC_NAME caller, PROC_NAME callee) {

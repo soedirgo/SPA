@@ -13,7 +13,7 @@ public:
 	static bool isCallStarRelationship(PROC_NAME caller, PROC_NAME callee);
 
 	static std::unordered_set<std::vector<std::string>, VectorHash> getCallProcTable();
-	static PROC_NAME getCalleeProc(PROC_NAME caller);
+	static PROC_LIST getCalleeProc(PROC_NAME caller);
 	// Clear
 	bool clear();
 

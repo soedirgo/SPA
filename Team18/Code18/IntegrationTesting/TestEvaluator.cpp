@@ -48,17 +48,17 @@ namespace IntegrationTesting
             pkb.setVar("y");
             pkb.insertUsesRelation(2, "x");
             pkb.insertModifiesRelation(2, "y");
-            pkb.insertFollowRelation(1, 2);
-            pkb.insertFollowStarRelation(1, 2);
+            pkb.insertFollowsRelation(1, 2);
+            pkb.insertFollowsStarRelation(1, 2);
 
             pkb.setStmt(3, If);
             //pkb.setIfStmt(3);
             pkb.insertUsesRelation(3, "x");
             pkb.insertUsesRelation(3, "y");
             pkb.insertModifiesRelation(3, "z");
-            pkb.insertFollowRelation(2, 3);
-            pkb.insertFollowStarRelation(1, 3);
-            pkb.insertFollowStarRelation(2, 3);
+            pkb.insertFollowsRelation(2, 3);
+            pkb.insertFollowsStarRelation(1, 3);
+            pkb.insertFollowsStarRelation(2, 3);
 
             pkb.setStmt(4, Assign);
             pkb.setAssignStmt(4, "z");
@@ -79,10 +79,10 @@ namespace IntegrationTesting
             //pkb.setWhileStmt(6);
             pkb.insertUsesRelation(6, "x");
             pkb.insertModifiesRelation(6, "x");
-            pkb.insertFollowRelation(3, 6);
-            pkb.insertFollowStarRelation(1, 6);
-            pkb.insertFollowStarRelation(2, 6);
-            pkb.insertFollowStarRelation(3, 6);
+            pkb.insertFollowsRelation(3, 6);
+            pkb.insertFollowsStarRelation(1, 6);
+            pkb.insertFollowsStarRelation(2, 6);
+            pkb.insertFollowsStarRelation(3, 6);
 
             pkb.setStmt(7, Read);
             pkb.setReadStmt(7, "x");
@@ -95,8 +95,8 @@ namespace IntegrationTesting
             pkb.insertUsesRelation(8, "x");
             pkb.insertParentRelation(6, 8);
             pkb.insertParentStarRelation(6, 8);
-            pkb.insertFollowRelation(7, 8);
-            pkb.insertFollowStarRelation(7, 8);
+            pkb.insertFollowsRelation(7, 8);
+            pkb.insertFollowsStarRelation(7, 8);
 		}
         TEST_METHOD(evaluatorNoClause)
         {

@@ -58,7 +58,7 @@ int Parser::Parse (string filename) {
 				}
 			}
 			if (stmtNo != 1) {
-				pkb.insertFollowRelation(prevStmtNo, stmtNo);
+				pkb.insertFollowsRelation(prevStmtNo, stmtNo);
 			}
 			prevStmtNo = stmtNo;
 			stmtNo = results.lastStmtNo;
@@ -84,7 +84,7 @@ int Parser::Parse (string filename) {
 			}
 
 			if (stmtNo != 1) {
-				pkb.insertFollowRelation(prevStmtNo, stmtNo);
+				pkb.insertFollowsRelation(prevStmtNo, stmtNo);
 			}
 			prevStmtNo = stmtNo;
 			stmtNo = results.lastStmtNo;
@@ -115,7 +115,7 @@ int Parser::Parse (string filename) {
 			}
 
 			if (stmtNo != 1) {
-				pkb.insertFollowRelation(prevStmtNo, stmtNo);
+				pkb.insertFollowsRelation(prevStmtNo, stmtNo);
 			}
 			prevStmtNo = stmtNo;
 			stmtNo++;
@@ -129,7 +129,7 @@ int Parser::Parse (string filename) {
 			pkb.setVar(readArg);
 			
 			if (stmtNo != 1) {
-				pkb.insertFollowRelation(prevStmtNo, stmtNo);
+				pkb.insertFollowsRelation(prevStmtNo, stmtNo);
 			}
 			prevStmtNo = stmtNo;
 			stmtNo++;
@@ -143,7 +143,7 @@ int Parser::Parse (string filename) {
 			pkb.setVar(printArg);
 			
 			if (stmtNo != 1) {
-				pkb.insertFollowRelation(prevStmtNo, stmtNo);
+				pkb.insertFollowsRelation(prevStmtNo, stmtNo);
 			}
 			prevStmtNo = stmtNo;
 			stmtNo++;
@@ -316,11 +316,11 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 			if (currStmtNo != (startStmtNo + 1)) {
 				if (passedElse) {
 					if (currStmtNo != elseStmtNo) {
-						pkb.insertFollowRelation(prevStmtNo, currStmtNo);
+						pkb.insertFollowsRelation(prevStmtNo, currStmtNo);
 					}
 				}
 				else {
-					pkb.insertFollowRelation(prevStmtNo, currStmtNo);
+					pkb.insertFollowsRelation(prevStmtNo, currStmtNo);
 				}
 			}
 			prevStmtNo = currStmtNo;
@@ -362,11 +362,11 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 			if (currStmtNo != (startStmtNo + 1)) {
 				if (passedElse) {
 					if (currStmtNo != elseStmtNo) {
-						pkb.insertFollowRelation(prevStmtNo, currStmtNo);
+						pkb.insertFollowsRelation(prevStmtNo, currStmtNo);
 					}
 				}
 				else {
-					pkb.insertFollowRelation(prevStmtNo, currStmtNo);
+					pkb.insertFollowsRelation(prevStmtNo, currStmtNo);
 				}
 			}
 			prevStmtNo = currStmtNo;
@@ -413,11 +413,11 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 			if (currStmtNo != (startStmtNo + 1)) {
 				if (passedElse) {
 					if (currStmtNo != elseStmtNo) {
-						pkb.insertFollowRelation(prevStmtNo, currStmtNo);
+						pkb.insertFollowsRelation(prevStmtNo, currStmtNo);
 					}
 				}
 				else {
-					pkb.insertFollowRelation(prevStmtNo, currStmtNo);
+					pkb.insertFollowsRelation(prevStmtNo, currStmtNo);
 				}
 			}
 			prevStmtNo = currStmtNo;
@@ -445,11 +445,11 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 			if (currStmtNo != (startStmtNo + 1)) {
 				if (passedElse) {
 					if (currStmtNo != elseStmtNo) {
-						pkb.insertFollowRelation(prevStmtNo, currStmtNo);
+						pkb.insertFollowsRelation(prevStmtNo, currStmtNo);
 					}
 				}
 				else {
-					pkb.insertFollowRelation(prevStmtNo, currStmtNo);
+					pkb.insertFollowsRelation(prevStmtNo, currStmtNo);
 				}
 			}
 			prevStmtNo = currStmtNo;
@@ -477,11 +477,11 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 			if (currStmtNo != (startStmtNo + 1)) {
 				if (passedElse) {
 					if (currStmtNo != elseStmtNo) {
-						pkb.insertFollowRelation(prevStmtNo, currStmtNo);
+						pkb.insertFollowsRelation(prevStmtNo, currStmtNo);
 					}
 				}
 				else {
-					pkb.insertFollowRelation(prevStmtNo, currStmtNo);
+					pkb.insertFollowsRelation(prevStmtNo, currStmtNo);
 				}
 			}
 			prevStmtNo = currStmtNo;
@@ -562,11 +562,11 @@ NestedResult Parser::parseIfNestedInThen(string ifLine, int parentStmtNo) {
 			if (currStmtNo != (startStmtNo + 1)) {
 				if (passedElse) {
 					if (currStmtNo != elseStmtNo) {
-						pkb.insertFollowRelation(prevStmtNo, currStmtNo);
+						pkb.insertFollowsRelation(prevStmtNo, currStmtNo);
 					}
 				}
 				else {
-					pkb.insertFollowRelation(prevStmtNo, currStmtNo);
+					pkb.insertFollowsRelation(prevStmtNo, currStmtNo);
 				}
 			}
 			prevStmtNo = currStmtNo;
@@ -608,11 +608,11 @@ NestedResult Parser::parseIfNestedInThen(string ifLine, int parentStmtNo) {
 			if (currStmtNo != (startStmtNo + 1)) {
 				if (passedElse) {
 					if (currStmtNo != elseStmtNo) {
-						pkb.insertFollowRelation(prevStmtNo, currStmtNo);
+						pkb.insertFollowsRelation(prevStmtNo, currStmtNo);
 					}
 				}
 				else {
-					pkb.insertFollowRelation(prevStmtNo, currStmtNo);
+					pkb.insertFollowsRelation(prevStmtNo, currStmtNo);
 				}
 			}
 			prevStmtNo = currStmtNo;
@@ -659,11 +659,11 @@ NestedResult Parser::parseIfNestedInThen(string ifLine, int parentStmtNo) {
 			if (currStmtNo != (startStmtNo + 1)) {
 				if (passedElse) {
 					if (currStmtNo != elseStmtNo) {
-						pkb.insertFollowRelation(prevStmtNo, currStmtNo);
+						pkb.insertFollowsRelation(prevStmtNo, currStmtNo);
 					}
 				}
 				else {
-					pkb.insertFollowRelation(prevStmtNo, currStmtNo);
+					pkb.insertFollowsRelation(prevStmtNo, currStmtNo);
 				}
 			}
 			prevStmtNo = currStmtNo;
@@ -691,11 +691,11 @@ NestedResult Parser::parseIfNestedInThen(string ifLine, int parentStmtNo) {
 			if (currStmtNo != (startStmtNo + 1)) {
 				if (passedElse) {
 					if (currStmtNo != elseStmtNo) {
-						pkb.insertFollowRelation(prevStmtNo, currStmtNo);
+						pkb.insertFollowsRelation(prevStmtNo, currStmtNo);
 					}
 				}
 				else {
-					pkb.insertFollowRelation(prevStmtNo, currStmtNo);
+					pkb.insertFollowsRelation(prevStmtNo, currStmtNo);
 				}
 			}
 			prevStmtNo = currStmtNo;
@@ -723,11 +723,11 @@ NestedResult Parser::parseIfNestedInThen(string ifLine, int parentStmtNo) {
 			if (currStmtNo != (startStmtNo + 1)) {
 				if (passedElse) {
 					if (currStmtNo != elseStmtNo) {
-						pkb.insertFollowRelation(prevStmtNo, currStmtNo);
+						pkb.insertFollowsRelation(prevStmtNo, currStmtNo);
 					}
 				}
 				else {
-					pkb.insertFollowRelation(prevStmtNo, currStmtNo);
+					pkb.insertFollowsRelation(prevStmtNo, currStmtNo);
 				}
 			}
 			prevStmtNo = currStmtNo;
@@ -798,7 +798,7 @@ NestedResult Parser::parseWhileNestedInThen(string whileLine, int parentStmtNo) 
 			}
 
 			if (currStmtNo != (startStmtNo + 1)) {
-				pkb.insertFollowRelation(prevStmtNo, currStmtNo);
+				pkb.insertFollowsRelation(prevStmtNo, currStmtNo);
 			}
 			prevStmtNo = currStmtNo;
 			currStmtNo = results.lastStmtNo;
@@ -831,7 +831,7 @@ NestedResult Parser::parseWhileNestedInThen(string whileLine, int parentStmtNo) 
 			}
 
 			if (currStmtNo != (startStmtNo + 1)) {
-				pkb.insertFollowRelation(prevStmtNo, currStmtNo);
+				pkb.insertFollowsRelation(prevStmtNo, currStmtNo);
 			}
 			prevStmtNo = currStmtNo;
 			currStmtNo = results.lastStmtNo;
@@ -875,7 +875,7 @@ NestedResult Parser::parseWhileNestedInThen(string whileLine, int parentStmtNo) 
 			}
 
 			if (currStmtNo != (startStmtNo + 1)) {
-				pkb.insertFollowRelation(prevStmtNo, currStmtNo);
+				pkb.insertFollowsRelation(prevStmtNo, currStmtNo);
 			}
 			prevStmtNo = currStmtNo;
 			currStmtNo++;
@@ -900,7 +900,7 @@ NestedResult Parser::parseWhileNestedInThen(string whileLine, int parentStmtNo) 
 			result.addModifies(readArg);
 
 			if (currStmtNo != (startStmtNo + 1)) {
-				pkb.insertFollowRelation(prevStmtNo, currStmtNo);
+				pkb.insertFollowsRelation(prevStmtNo, currStmtNo);
 			}
 			prevStmtNo = currStmtNo;
 			currStmtNo++;
@@ -925,7 +925,7 @@ NestedResult Parser::parseWhileNestedInThen(string whileLine, int parentStmtNo) 
 			result.addUses(printArg);
 
 			if (currStmtNo != (startStmtNo + 1)) {
-				pkb.insertFollowRelation(prevStmtNo, currStmtNo);
+				pkb.insertFollowsRelation(prevStmtNo, currStmtNo);
 			}
 			prevStmtNo = currStmtNo;
 			currStmtNo++;
@@ -987,7 +987,7 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 			}
 
 			if (currStmtNo != (startStmtNo + 1)) {
-				pkb.insertFollowRelation(prevStmtNo, currStmtNo);
+				pkb.insertFollowsRelation(prevStmtNo, currStmtNo);
 			}
 			prevStmtNo = currStmtNo;
 			currStmtNo = results.lastStmtNo;
@@ -1020,7 +1020,7 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 			}
 
 			if (currStmtNo != (startStmtNo + 1)) {
-				pkb.insertFollowRelation(prevStmtNo, currStmtNo);
+				pkb.insertFollowsRelation(prevStmtNo, currStmtNo);
 			}
 			prevStmtNo = currStmtNo;
 			currStmtNo = results.lastStmtNo;
@@ -1064,7 +1064,7 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 			}
 
 			if (currStmtNo != (startStmtNo + 1)) {
-				pkb.insertFollowRelation(prevStmtNo, currStmtNo);
+				pkb.insertFollowsRelation(prevStmtNo, currStmtNo);
 			}
 			prevStmtNo = currStmtNo;
 			currStmtNo++;
@@ -1089,7 +1089,7 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 			result.addModifies(readArg);
 
 			if (currStmtNo != (startStmtNo + 1)) {
-				pkb.insertFollowRelation(prevStmtNo, currStmtNo);
+				pkb.insertFollowsRelation(prevStmtNo, currStmtNo);
 			}
 			prevStmtNo = currStmtNo;
 			currStmtNo++;
@@ -1114,7 +1114,7 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 			result.addUses(printArg);
 
 			if (currStmtNo != (startStmtNo + 1)) {
-				pkb.insertFollowRelation(prevStmtNo, currStmtNo);
+				pkb.insertFollowsRelation(prevStmtNo, currStmtNo);
 			}
 			prevStmtNo = currStmtNo;
 			currStmtNo++;
