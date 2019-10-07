@@ -29,7 +29,7 @@ unordered_map<string, unordered_set<int>> PKB:: callTable;
 
 bool PKB::clear()
 {
-	PKBFollow pkbFollow;
+	PKBFollows pkbFollow;
 	pkbFollow.clear();
 
 	PKBParent pkbParent;
@@ -67,21 +67,22 @@ TNode* PKB::getRootAST (PROC p){
 ////////////////////////////////////
 
 bool PKB::insertFollowRelation(STMT_NO followedBy, STMT_NO follow) {
-	return PKBFollow::setFollow(followedBy, follow) && PKBFollow::setFollowedBy(followedBy, follow);
+	return PKBFollows::setFollows(followedBy, follow);// && PKBFollow::setFollowedBy(followedBy, follow);
 }
 
 bool PKB::insertFollowStarRelation(STMT_NO followedBy, STMT_NO follow) {
-	return PKBFollow::setFollowStar(followedBy, follow);
+	return PKBFollows::setFollowsStar(followedBy, follow);
 }
 
 bool PKB::isFollowRelationship(STMT_NO followedBy, STMT_NO follow) {
-	return PKBFollow::isFollowRelationship(followedBy, follow);
+	return PKBFollows::isFollowsRelationship(followedBy, follow);
 }
 
 bool PKB::isFollowStarRelationship(STMT_NO followedBy, STMT_NO follow) {
-	return PKBFollow::isFollowStarRelationship(followedBy, follow);
+	return PKBFollows::isFollowsStarRelationship(followedBy, follow);
 }
 
+/*
 STMT_NO PKB::getFollowStmt(STMT_NO followedBy) {
 	return PKBFollow::getFollowStmt(followedBy);
 }
@@ -93,6 +94,7 @@ STMT_LIST PKB::getFollowedByStmtList(STMT_NO follow) {
 STMT_LIST PKB::getFollowStarStmtList(STMT_NO followedBy) {
 	return PKBFollow::getFollowStarStmtList(followedBy);
 }
+*/
 
 bool PKB::insertParentRelation(STMT_NO parent, STMT_NO child) {
 	return PKBParent::setChildren(parent,child) && PKBParent::setParent(parent,child);
@@ -541,16 +543,20 @@ STMT_LIST PKB::getCallStmtByVar(string varName) {
 	return callTable[varName];
 }
 
-bool PKB::setCallProc(PROC_NAME p, PROC_NAME q) {
-	return PKBCall::setCallProc(p, q);
+bool PKB::setCallProc(PROC_NAME caller, PROC_NAME callee) {
+	return PKBCall::setCallProc(caller, callee);
 }
 
 bool PKB::setCallStmt(STMT_NO stmtNo, PROC_NAME procName) {
 	return PKBCall::setCallStmt(stmtNo, procName);
 };
 
-bool PKB::isCallRelationship(PROC_NAME p, PROC_NAME q) {
-	return PKBCall::isCallRelationship(p, q);
+bool PKB::isCallRelationship(PROC_NAME caller, PROC_NAME callee) {
+	return PKBCall::isCallRelationship(caller, callee);
+}
+
+bool PKB::isCallStarRelationship(PROC_NAME caller, PROC_NAME callee) {
+	return PKBCall::isCallStarRelationship(caller, callee);
 }
 
 ////////////////////////////////////
@@ -562,4 +568,8 @@ bool PKB::setNext(PROG_LINE n1, PROG_LINE n2) {
 
 bool PKB::isNextRelationship(PROG_LINE n1, PROG_LINE n2) {
 	return PKBNext::isNextRelationship(n1, n2);
+}
+
+bool PKB::isNextStarRelationship(PROG_LINE n1, PROG_LINE n2) {
+	return PKBNext::isNextStarRelationship(n1, n2);
 }

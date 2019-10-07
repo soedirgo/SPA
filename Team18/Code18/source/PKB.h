@@ -122,16 +122,14 @@ public:
 	static bool setUsesStmt(STMT_NO stmtNo, VAR_NAME varName);
 	static bool isUsesStmtRelationship(STMT_NO stmtNo, VAR_NAME varName);
 
-
 	bool setCallStmt(STMT_NO stmtNo, PROC_NAME procName);
-	bool setCallProc(PROC_NAME p, PROC_NAME q);
-	bool isCallRelationship(PROC_NAME p, PROC_NAME q);
+	bool setCallProc(PROC_NAME caller, PROC_NAME callee);
+	bool isCallRelationship(PROC_NAME caller, PROC_NAME callee);
+	bool isCallStarRelationship(PROC_NAME caller, PROC_NAME callee);
 
 	bool setNext(PROG_LINE n1, PROG_LINE n2);
 	bool isNextRelationship(PROG_LINE n1, PROG_LINE n2);
-
-
-
+	bool isNextStarRelationship(PROG_LINE n1, PROG_LINE n2);
 
 private:
 	static std::unordered_set<std::string> varTable;

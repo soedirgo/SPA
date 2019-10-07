@@ -1,8 +1,70 @@
 #include "PKBFollow.h"
-#include <system_error>
 
 using namespace std;
 
+unordered_set<vector<string>, VectorHash> PKBFollows::followsTable;
+unordered_set<vector<string>, VectorHash> PKBFollows::followsStarTable;
+
+bool PKBFollows::setFollows(STMT_NO followedBy, STMT_NO follows) {
+	vector<string> tuple = vector<string>();
+	tuple.push_back(to_string(followedBy));
+	tuple.push_back(to_string(follows));
+	followsTable.emplace(tuple);
+	return true;
+}
+
+bool PKBFollows::setFollowsStar(STMT_NO followedBy, STMT_NO follows) {
+	vector<string> tuple = vector<string>();
+	tuple.push_back(to_string(followedBy));
+	tuple.push_back(to_string(follows));
+	followsStarTable.emplace(tuple);
+	return true;
+}
+
+string PKBFollows::getFollows(STMT_NO followedBy) {
+	for (auto vectorIter : followsTable) {
+		if (vectorIter.front() == to_string(followedBy)) {
+			return vectorIter.back();
+		}
+	}
+	return "";
+}
+
+bool PKBFollows::isFollowsRelationship(STMT_NO followedBy, STMT_NO follows) {
+
+	for (auto vectorIter : followsTable) {
+		if (vectorIter.front() == to_string(followedBy)) {
+			if (vectorIter.back() == to_string(follows)) {
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+bool PKBFollows::isFollowsStarRelationship(STMT_NO followedBy, STMT_NO follows) {
+
+	for (auto vectorIter : followsStarTable) {
+		if (vectorIter.front() == to_string(followedBy)) {
+			if (vectorIter.back() == to_string(follows)) {
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+unordered_set<vector<string>, VectorHash> PKBFollows::getFollowsTable() {
+	return followsTable;
+}
+
+bool PKBFollows::clear() {
+	followsTable.clear();
+	followsStarTable.clear();
+	return true;
+}
+
+/*
 unordered_map<int, int> PKBFollow::followTable;
 unordered_map<int, unordered_set<int>> PKBFollow::followedByTable;
 unordered_map<int, unordered_set<int>> PKBFollow::followStarTable;
@@ -90,3 +152,5 @@ bool PKBFollow::clear() {
 	followStarTable.clear();
 	return true;
 }
+
+*/
