@@ -181,7 +181,7 @@ int Parser::Parse (string filename) {
 		for (NestedResult proc : procedures) {
 			string procName = proc.getProcName();
 			vector<string> calls = proc.getCallList();  
-			for (int i = 0; i < 3; i++) {
+			for (int i = 0; i < procedures.size(); i++) {
 				for (string call : calls) {
 					for (NestedResult procedure : procedures) {
 						if (procedure.getProcName() == call) {
