@@ -53,7 +53,7 @@ namespace UnitTesting
             pkb.insertFollowStarRelation(1, 2);
 
             pkb.setStmt(3, If);
-            pkb.setIfStmt(3);
+            //pkb.setIfStmt(3);
             pkb.setUsesVarByStmt(3, "x");
             pkb.setUsesVarByStmt(3, "y");
             pkb.setModifiesVarByStmt(3, "z");
@@ -76,7 +76,7 @@ namespace UnitTesting
             pkb.insertParentStarRelation(3, 5);
 
             pkb.setStmt(6, While);
-            pkb.setWhileStmt(6);
+            //pkb.setWhileStmt(6);
             pkb.setUsesVarByStmt(6, "x");
             pkb.setModifiesVarByStmt(6, "x");
             pkb.insertFollowRelation(3, 6);

@@ -9,13 +9,14 @@
 #include "PKBModifies.h"
 #include "PKBStmt.h"
 #include "PKBProcedure.h"
+#include "PKBVariable.h"
+#include "PKBCall.h"
 
 
 using namespace std;
 
 unordered_set<string> PKB::varTable;
 unordered_map<string, unordered_set<int>> PKB::constantTable;
-unordered_map<int, STMT_TYPE> PKB::stmtTable;
 unordered_map<string, unordered_set<int>> PKB::stmtModifiesByVarTable;
 unordered_map<string, unordered_set<int>> PKB::stmtUsesByVarTable;
 unordered_map<int, string> PKB::assignStmtTable;
@@ -41,7 +42,6 @@ bool PKB::clear()
 
 	varTable.clear();
 	constantTable.clear(); 
-	stmtTable.clear();
 	stmtModifiesByVarTable.clear();
 	stmtUsesByVarTable.clear();
 	assignStmtTable.clear();
@@ -198,13 +198,12 @@ bool PKB::insertAssignRelation(int stmtNo, string varModified, unordered_set<str
 // varTable APIs
 ////////////////////////////////////
 
-bool PKB::setVar(string varName) {
-	varTable.emplace(varName);
-	return true;
+bool PKB::setVar(VAR_NAME varName) {
+	return PKBVariable::setVar(varName);
 }
 
-unordered_set<string> PKB::getAllVar() {
-	return varTable;
+VAR_LIST PKB::getAllVar() {
+	return PKBVariable::getAllVar();
 }
 
 bool PKB::isVarExist(string varName) {
@@ -267,7 +266,8 @@ STMT_LIST PKB::getAllStmt() {
 }
 
 bool PKB::isStmtExist(STMT_NO stmtNo) {
-	return (stmtTable.find(stmtNo) != stmtTable.end());
+	//return (stmtTable.find(stmtNo) != stmtTable.end());
+	return false;
 }
 
 ////////////////////////////////////
@@ -540,17 +540,14 @@ STMT_LIST PKB::getCallStmtByVar(string varName) {
 	return callTable[varName];
 }
 
+bool PKB::setCallProc(PROC_NAME p, PROC_NAME q) {
+	return PKBCall::setCallProc(p, q);
+}
 
-bool PKB::setCallStmt(STMT_NO stmtNo, string varName) {
-	try {
-		//get stmtList from PKB then add variable to varList
-		unordered_set<int> stmtList = getCallStmtByVar(varName);
-		stmtList.emplace(stmtNo);
-		//add it to varModifiesStmtTable
-		callTable[varName] = stmtList;
-		return true;
-	}
-	catch (errc) {
-		return false;
-	}
+bool PKB::setCallStmt(STMT_NO stmtNo, PROC_NAME procName) {
+	return PKBCall::setCallStmt(stmtNo, procName);
 };
+
+bool PKB::isCallRelationship(PROC_NAME p, PROC_NAME q) {
+	return PKBCall::isCallRelationship(p, q);
+}

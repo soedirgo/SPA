@@ -37,7 +37,7 @@ void DesignExtractor::extractFollowStar()
 
 void DesignExtractor::recurseFollow(int followedBy, int follow) {
 	follow = PKBFollow::getFollowStmt(follow);
-	if (!PKBFollow::isFollowedByExist(follow)) {
+	if (!PKBFollow::isFollowExist(follow)) {
 		return;
 	}
 	PKBFollow::setFollowStar(followedBy, follow);

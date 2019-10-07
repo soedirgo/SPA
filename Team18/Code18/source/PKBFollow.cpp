@@ -57,10 +57,11 @@ unordered_set<int> PKBFollow::getFollowedByStmtList(int follow) {
 }
 
 bool PKBFollow::isFollowRelationship(int followedBy, int follow) {
-	unordered_set<int> stmtList = getFollowedByStmtList(follow);
-	for (auto keyValue : stmtList) {
-		if (keyValue == followedBy) {
-			return true;
+	for (auto keyValue : followTable) {
+		if (keyValue.first == followedBy) {
+			if (keyValue.second == follow) {
+				return true;
+			}
 		}
 	}
 	return false;
@@ -77,10 +78,10 @@ bool PKBFollow::isFollowStarRelationship(int followedBy, int follow) {
 }
 
 bool PKBFollow::isFollowExist(int stmtNo) {
-	return followTable.find(stmtNo) != followTable.end();
+	return followedByTable.find(stmtNo) != followedByTable.end();
 }
 bool PKBFollow::isFollowedByExist(int stmtNo) {
-	return followedByTable.find(stmtNo) != followedByTable.end();
+	return followTable.find(stmtNo) != followTable.end();
 }
 
 bool PKBFollow::clear() {

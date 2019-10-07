@@ -51,7 +51,7 @@ public:
 	static bool isVarUsedInAssign(STMT_NO stmtNo, std::string c);
 
 	// add a variable to varTable
-	static bool setVar(std::string varName);
+	static bool setVar(VAR_NAME varName);
 	static VAR_LIST getAllVar();
 	static bool isVarExist(std::string varName);
 	// add a constant to constantTable
@@ -111,7 +111,12 @@ public:
 	static std::unordered_set<std::string> getAllProc();
 	bool setProc(std::string procName);
 
-	bool setCallStmt(STMT_NO stmtNo, std::string procName);
+	bool setCallStmt(STMT_NO stmtNo, PROC_NAME procName);
+	bool setCallProc(PROC_NAME p, PROC_NAME q);
+	bool isCallRelationship(PROC_NAME p, PROC_NAME q);
+
+
+
 	STMT_LIST getCallStmtByVar(std::string procName);
 
 	static int setProcToAST(PROC p, TNode* r);
@@ -120,11 +125,8 @@ public:
 private:
 	static std::unordered_set<std::string> varTable;
 	static std::unordered_map<std::string, std::unordered_set<int>>constantTable;
-	static std::unordered_map<int, STMT_TYPE> stmtTable;
-
 	static std::unordered_map<std::string, std::unordered_set<int>> stmtModifiesByVarTable;
 	static std::unordered_map<std::string, std::unordered_set<int>> stmtUsesByVarTable;
-
 	static std::unordered_map<int, std::string> assignStmtTable;
 	static std::unordered_map<std::string, std::unordered_set<int>> assignVarTable;
 	static std::unordered_map<std::string, std::unordered_set<int>> printTable;

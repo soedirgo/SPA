@@ -33,11 +33,11 @@ namespace UnitTesting
 			pkb.setStmt(1, Assign);
 			pkb.setStmt(2, Assign);
 			pkb.setStmt(3, If);
-			pkb.setIfStmt(3);
+			//pkb.setIfStmt(3);
 			pkb.setStmt(4, Assign);
 			pkb.setStmt(5, Assign);
 			pkb.setStmt(6, While);
-			pkb.setWhileStmt(6); 
+			//pkb.setWhileStmt(6); 
 			pkb.setStmt(7, Read);
 			pkb.setReadStmt(7, "x");
 			pkb.setStmt(8, Print);
@@ -65,6 +65,7 @@ namespace UnitTesting
 			pkb.insertFollowRelation(1, 2);
 			pkb.insertFollowStarRelation(1, 2);
 		}
+		/*
 		TEST_METHOD(GetModifiesVarByStmt)
 		{
 			//Test stmt #1 x=1
@@ -94,7 +95,7 @@ namespace UnitTesting
 			
 			Assert::IsTrue(res == stmtList);	
 		}
-		
+		*/
 		TEST_METHOD(StmtByVar)
 		{
 			unordered_set<int> resX = { 1 };
@@ -120,21 +121,6 @@ namespace UnitTesting
 			Assert::IsTrue(PKB().getVarModifiedByAssignStmt(5) == var);
 			
 			
-		};
-
-		TEST_METHOD(getAllStmtByType)
-		{
-			unordered_set<int> stmtNoList = { 1,2,4,5 };
-			Assert::IsTrue(PKB().getAllStmtByType("assign") == stmtNoList);
-			stmtNoList = { 6 };
-			Assert::IsTrue(PKB().getAllStmtByType("while") == stmtNoList);
-			stmtNoList = { 3 };
-			Assert::IsTrue(PKB().getAllStmtByType("if") == stmtNoList);
-			stmtNoList = { 8 };
-			Assert::IsTrue(PKB().getAllStmtByType("print") == stmtNoList);
-			stmtNoList = { 7 };
-			Assert::IsTrue(PKB().getAllStmtByType("read") == stmtNoList);
-
 		};
 		
 		TEST_METHOD(isConstUsedInAssign){
