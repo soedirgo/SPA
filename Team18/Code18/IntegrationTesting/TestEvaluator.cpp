@@ -46,15 +46,15 @@ namespace IntegrationTesting
             pkb.setStmt(2, Assign);
             pkb.setAssignStmt(2, "y");
             pkb.setVar("y");
-            pkb.insertUsesRelation(2, "x");
+            pkb.setUsesRelation(2, "x");
             pkb.setModifiesRelation(2, "y");
             pkb.setFollowsRelation(1, 2);
             pkb.setFollowsStarRelation(1, 2);
 
             pkb.setStmt(3, If);
             //pkb.setIfStmt(3);
-            pkb.insertUsesRelation(3, "x");
-            pkb.insertUsesRelation(3, "y");
+            pkb.setUsesRelation(3, "x");
+            pkb.setUsesRelation(3, "y");
             pkb.setModifiesRelation(3, "z");
             pkb.setFollowsRelation(2, 3);
             pkb.setFollowsStarRelation(1, 3);
@@ -77,7 +77,7 @@ namespace IntegrationTesting
 
             pkb.setStmt(6, While);
             //pkb.setWhileStmt(6);
-            pkb.insertUsesRelation(6, "x");
+            pkb.setUsesRelation(6, "x");
             pkb.setModifiesRelation(6, "x");
             pkb.setFollowsRelation(3, 6);
             pkb.setFollowsStarRelation(1, 6);
@@ -92,7 +92,7 @@ namespace IntegrationTesting
 
             pkb.setStmt(8, Print);
             pkb.setPrintStmt(8, "x");
-            pkb.insertUsesRelation(8, "x");
+            pkb.setUsesRelation(8, "x");
             pkb.setParentRelation(6, 8);
             pkb.setParentStarRelation(6, 8);
             pkb.setFollowsRelation(7, 8);

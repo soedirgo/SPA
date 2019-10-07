@@ -101,7 +101,7 @@ namespace UnitTesting
 			pkb.setStmt(9, Assign);
 			pkb.setAssignStmt(9, "x");
 			pkb.setVar("x");
-			pkb.insertUsesRelation(9, "x");
+			pkb.setUsesRelation(9, "x");
 			pkb.setModifiesRelation(9, "x");
 			pkb.setFollowsRelation(8, 9);
 			pkb.setFollowsStarRelation(8, 9);

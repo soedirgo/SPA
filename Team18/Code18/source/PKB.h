@@ -21,8 +21,6 @@ public:
 	//Higher order wrapper functions
 	/////////////////////////////////
 
-	static bool setModifiesRelation(STMT_NO stmtNo, std::string varName);
-	static bool insertUsesRelation(STMT_NO stmtNo, std::string varName);
 	static bool insertAssignRelation(STMT_NO stmtNo, std::string varModified, VAR_LIST varUsed, CONST_LIST constUsed);
 
 	static bool isConstUsedInAssign(STMT_NO stmtNo, std::string c);
@@ -31,17 +29,6 @@ public:
 	// add a variable to varTable
 	static bool setVar(VAR_NAME varName);
 	static VAR_LIST getAllVar();
-	
-	static bool setConstant(std::string constantName, int stmtNo );
-	static CONST_LIST getAllConstant();
-
-	static bool isConstantExist(std::string constantName);
-	static STMT_LIST getStmtByConst(std::string constantName);
-	
-	static bool isStmtExist(STMT_NO stmtNo);
-
-	static STMT_LIST getUsesStmtByVar(std::string varName);
-	static VAR_LIST getAllUsesVar();
 
 	//add stmt & var to varUsesByStmtTable
 	static bool setUsesVarByStmt(STMT_NO stmtNo, std::string varName);
@@ -72,6 +59,10 @@ public:
 	static bool setPrintStmt(STMT_NO stmtNo, std::string varName);
 	static bool setReadStmt(STMT_NO stmtNo, std::string varName);
 
+	//Constant Functions
+	static bool setConstant(CONST_VALUE constantVal, STMT_NO stmtNo);
+	static CONST_LIST getAllConstant();
+
 	//Follow Functions
 	static bool setFollowsRelation(STMT_NO followedBy, STMT_NO follow);
 	static bool setFollowsStarRelation(STMT_NO followedBy, STMT_NO follow);
@@ -85,11 +76,11 @@ public:
 	static bool isParentStarRelationship(STMT_NO parent, STMT_NO child);
 
 	//Modifies Function
+	static bool setModifiesRelation(STMT_NO stmtNo, std::string varName);
 	static bool isModifiesStmtRelationship(STMT_NO stmtNo, VAR_NAME varName);
 
-
 	//Uses Function
-	static bool setUsesStmt(STMT_NO stmtNo, VAR_NAME varName);
+	static bool setUsesRelation(STMT_NO stmtNo, std::string varName);
 	static bool isUsesStmtRelationship(STMT_NO stmtNo, VAR_NAME varName);
 
 	//Call Function
@@ -104,8 +95,6 @@ public:
 	static bool isNextStarRelationship(PROG_LINE n1, PROG_LINE n2);
 
 private:
-	static std::unordered_map<std::string, std::unordered_set<int>>constantTable;
-	static std::unordered_map<std::string, std::unordered_set<int>> stmtUsesByVarTable;
 	static std::unordered_map<int, std::string> assignStmtTable;
 	static std::unordered_map<std::string, std::unordered_set<int>> assignVarTable;
 };

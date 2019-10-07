@@ -41,13 +41,7 @@
     <ClCompile Include="TestPKBFollow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TestPKBWrappers.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="TestDesignExtractor.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TestPKBUses.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="TestPreprocessor.cpp">

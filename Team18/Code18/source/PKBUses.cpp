@@ -23,6 +23,15 @@ bool PKBUses::isUsesStmtRelationship(STMT_NO stmtNo, VAR_NAME varName) {
 	return false;
 }
 
+STMT_LIST PKBUses::getUsesStmt(VAR_NAME varName) {
+	unordered_set<int> stmtList;
+	for (auto vectorIter : usesStmtTable) {
+		if (vectorIter.back() == varName) {
+			stmtList.emplace(stoi(vectorIter.front()));
+		}
+	}
+	return stmtList;
+}
 //Uses(s1,__)
 /*
 unordered_set<string> PKBUses::getAllS1() {

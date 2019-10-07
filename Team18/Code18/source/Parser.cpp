@@ -54,7 +54,7 @@ int Parser::Parse (string filename) {
 				}
 				else {
 					pkb.setVar(var);
-					pkb.insertUsesRelation(stmtNo, var);
+					pkb.setUsesRelation(stmtNo, var);
 				}
 			}
 			if (stmtNo != 1) {
@@ -79,7 +79,7 @@ int Parser::Parse (string filename) {
 				}
 				else {
 					pkb.setVar(var);
-					pkb.insertUsesRelation(stmtNo, var);
+					pkb.setUsesRelation(stmtNo, var);
 				}
 			}
 
@@ -110,7 +110,7 @@ int Parser::Parse (string filename) {
 				}
 				else {
 					pkb.setVar(var);
-					pkb.insertUsesRelation(stmtNo, var);
+					pkb.setUsesRelation(stmtNo, var);
 				}
 			}
 
@@ -139,7 +139,7 @@ int Parser::Parse (string filename) {
 			string printArg = parsePrint(line);
 			//Sets stmt information in PKB and then sets modifies variable for that stmt
 			pkb.setStmt(stmtNo, Print);
-			pkb.insertUsesRelation(stmtNo, printArg);
+			pkb.setUsesRelation(stmtNo, printArg);
 			pkb.setVar(printArg);
 			
 			if (stmtNo != 1) {
@@ -308,7 +308,7 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 				}
 				else {
 					pkb.setVar(var);
-					pkb.insertUsesRelation(currStmtNo, var);
+					pkb.setUsesRelation(currStmtNo, var);
 					result.addUses(var);
 				}
 			}
@@ -354,7 +354,7 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 				}
 				else {
 					pkb.setVar(var);
-					pkb.insertUsesRelation(currStmtNo, var);
+					pkb.setUsesRelation(currStmtNo, var);
 					result.addUses(var);
 				}
 			}
@@ -405,7 +405,7 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 				}
 				else {
 					pkb.setVar(var);
-					pkb.insertUsesRelation(currStmtNo, var);
+					pkb.setUsesRelation(currStmtNo, var);
 					result.addUses(var);
 				}
 			}
@@ -470,7 +470,7 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 			pkb.setStmt(currStmtNo, Print);
 			pkb.setParentRelation(startStmtNo, currStmtNo);
 
-			pkb.insertUsesRelation(currStmtNo, printArg);
+			pkb.setUsesRelation(currStmtNo, printArg);
 			pkb.setVar(printArg);
 			result.addUses(printArg);
 
@@ -554,7 +554,7 @@ NestedResult Parser::parseIfNestedInThen(string ifLine, int parentStmtNo) {
 				}
 				else {
 					pkb.setVar(var);
-					pkb.insertUsesRelation(currStmtNo, var);
+					pkb.setUsesRelation(currStmtNo, var);
 					result.addUses(var);
 				}
 			}
@@ -600,7 +600,7 @@ NestedResult Parser::parseIfNestedInThen(string ifLine, int parentStmtNo) {
 				}
 				else {
 					pkb.setVar(var);
-					pkb.insertUsesRelation(currStmtNo, var);
+					pkb.setUsesRelation(currStmtNo, var);
 					result.addUses(var);
 				}
 			}
@@ -651,7 +651,7 @@ NestedResult Parser::parseIfNestedInThen(string ifLine, int parentStmtNo) {
 				}
 				else {
 					pkb.setVar(var);
-					pkb.insertUsesRelation(currStmtNo, var);
+					pkb.setUsesRelation(currStmtNo, var);
 					result.addUses(var);
 				}
 			}
@@ -716,7 +716,7 @@ NestedResult Parser::parseIfNestedInThen(string ifLine, int parentStmtNo) {
 			pkb.setStmt(currStmtNo, Print);
 			pkb.setParentRelation(startStmtNo, currStmtNo);
 
-			pkb.insertUsesRelation(currStmtNo, printArg);
+			pkb.setUsesRelation(currStmtNo, printArg);
 			pkb.setVar(printArg);
 			result.addUses(printArg);
 
@@ -792,7 +792,7 @@ NestedResult Parser::parseWhileNestedInThen(string whileLine, int parentStmtNo) 
 				}
 				else {
 					pkb.setVar(var);
-					pkb.insertUsesRelation(currStmtNo, var);
+					pkb.setUsesRelation(currStmtNo, var);
 					result.addUses(var);
 				}
 			}
@@ -825,7 +825,7 @@ NestedResult Parser::parseWhileNestedInThen(string whileLine, int parentStmtNo) 
 				}
 				else {
 					pkb.setVar(var);
-					pkb.insertUsesRelation(currStmtNo, var);
+					pkb.setUsesRelation(currStmtNo, var);
 					result.addUses(var);
 				}
 			}
@@ -869,7 +869,7 @@ NestedResult Parser::parseWhileNestedInThen(string whileLine, int parentStmtNo) 
 				}
 				else {
 					pkb.setVar(var);
-					pkb.insertUsesRelation(currStmtNo, var);
+					pkb.setUsesRelation(currStmtNo, var);
 					result.addUses(var);
 				}
 			}
@@ -920,7 +920,7 @@ NestedResult Parser::parseWhileNestedInThen(string whileLine, int parentStmtNo) 
 			pkb.setStmt(currStmtNo, Print);
 			pkb.setParentRelation(startStmtNo, currStmtNo);
 
-			pkb.insertUsesRelation(currStmtNo, printArg);
+			pkb.setUsesRelation(currStmtNo, printArg);
 			pkb.setVar(printArg);
 			result.addUses(printArg);
 
@@ -981,7 +981,7 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 				}
 				else {
 					pkb.setVar(var);
-					pkb.insertUsesRelation(currStmtNo, var);
+					pkb.setUsesRelation(currStmtNo, var);
 					result.addUses(var);
 				}
 			}
@@ -1014,7 +1014,7 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 				}
 				else {
 					pkb.setVar(var);
-					pkb.insertUsesRelation(currStmtNo, var);
+					pkb.setUsesRelation(currStmtNo, var);
 					result.addUses(var);
 				}
 			}
@@ -1058,7 +1058,7 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 				}
 				else {
 					pkb.setVar(var);
-					pkb.insertUsesRelation(currStmtNo, var);
+					pkb.setUsesRelation(currStmtNo, var);
 					result.addUses(var);
 				}
 			}
@@ -1109,7 +1109,7 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 			pkb.setStmt(currStmtNo, Print);
 			pkb.setParentRelation(startStmtNo, currStmtNo);
 
-			pkb.insertUsesRelation(currStmtNo, printArg);
+			pkb.setUsesRelation(currStmtNo, printArg);
 			pkb.setVar(printArg);
 			result.addUses(printArg);
 

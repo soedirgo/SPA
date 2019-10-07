@@ -14,12 +14,9 @@
 #include "PKBNext.h"
 #include "PKBPrint.h"
 #include "PKBRead.h"
-
-
+#include "PKBConstant.h"
 using namespace std;
 
-unordered_map<string, unordered_set<int>> PKB::constantTable;
-unordered_map<string, unordered_set<int>> PKB::stmtUsesByVarTable;
 unordered_map<int, string> PKB::assignStmtTable;
 unordered_map<string, unordered_set<int>> PKB::assignVarTable;
 
@@ -38,8 +35,6 @@ bool PKB::clear()
 	PKBUses pkbUses;
 	pkbUses.clear();
 
-	constantTable.clear(); 
-	stmtUsesByVarTable.clear();
 	assignStmtTable.clear();
 	assignVarTable.clear();
 
@@ -90,8 +85,18 @@ bool PKB::isParentStarRelationship(STMT_NO parent, STMT_NO child) {
 	return PKBParent::isParentStarRelationship(parent, child);
 }
 
+bool PKB::setModifiesRelation(STMT_NO stmtNo, string varName) {
+	return PKBModifies::setModifiesStmt(stmtNo, varName);
+};
+
+bool PKB::setUsesRelation(STMT_NO stmtNo, string varName) {
+	return PKBUses::setUsesStmt(stmtNo, varName);
+
+};
+
 bool PKB::isConstUsedInAssign(STMT_NO assignStmtNo, string c) {
-	STMT_LIST stmtList = getStmtByConst(c); 
+	//STMT_LIST stmtList = getStmtByConst(c); 
+	STMT_LIST stmtList = PKBConstant::getAllConstantStmtByVal(c);
 	for (auto stmt : stmtList) {
 		if (stmt == assignStmtNo) {
 			return true;
@@ -101,7 +106,7 @@ bool PKB::isConstUsedInAssign(STMT_NO assignStmtNo, string c) {
 }
 
 bool PKB::isVarUsedInAssign(STMT_NO assignStmtNo, string varName) {
-	STMT_LIST stmtList = getUsesStmtByVar(varName);
+	STMT_LIST stmtList = PKBUses::getUsesStmt(varName);
 	STMT_LIST assignStmtList = getAllAssignStmt();
 	for (auto stmt : stmtList) {
 		if (stmt == assignStmtNo) {
@@ -117,21 +122,9 @@ bool PKB::isVarUsedInAssign(STMT_NO assignStmtNo, string varName) {
 }
 
 
-bool PKB::setModifiesRelation(STMT_NO stmtNo, string varName) {
-	return PKBModifies::setModifiesStmt(stmtNo, varName);
-};
-
-bool PKB::insertUsesRelation(STMT_NO stmtNo, string varName) {
-	try {
-		return setUsesStmt(stmtNo, varName) && setUsesVarByStmt(stmtNo, varName);
-	}
-	catch (errc) {
-		return false;
-	}
-
-};
 
 
+/*
 bool PKB::insertAssignRelation(int stmtNo, string varModified, unordered_set<string> varUsed, unordered_set<string> constUsed) {
 	try {
 		setAssignStmt(stmtNo, varModified);
@@ -155,6 +148,7 @@ bool PKB::insertAssignRelation(int stmtNo, string varModified, unordered_set<str
 		return false;
 	}
 };
+*/
 
 ////////////////////////////////////
 // varTable APIs
@@ -172,42 +166,12 @@ VAR_LIST PKB::getAllVar() {
 // constantTable APIs
 ////////////////////////////////////
 
-bool PKB::setConstant(string constantName, int stmtNo) {
-	
-	try {
-		unordered_set<int> stmtList = getStmtByConst(constantName);
-		stmtList.emplace(stmtNo);
-		constantTable[constantName] = stmtList;
-		return true;
-	}
-	catch (errc) {
-		return false;
-	}
+bool PKB::setConstant(CONST_VALUE constantVal, STMT_NO stmtNo) {
+	return PKBConstant::setConstant(constantVal, stmtNo);
 }
-
-unordered_set<int> PKB::getStmtByConst(string constantName) {
-	unordered_set<int> empty;
-	if (PKB::isConstantExist(constantName)) {
-		return constantTable[constantName];
-	}
-	else {
-		return empty;
-	}
-}
-
 
 unordered_set<string> PKB::getAllConstant() {
-	unordered_set<string> stmtNoList;
-	for (auto keyValue : constantTable) {
-		stmtNoList.emplace(keyValue.first);
-	}
-	return stmtNoList;
-}
-
-bool PKB::isConstantExist(string constantName) {
-	//return true if element is found
-	unordered_set<string> constantList = getAllConstant();
-	return (constantList.find(constantName) != constantList.end());
+	return PKBConstant::getAllConstantVal();
 }
 
 ////////////////////////////////////
@@ -220,50 +184,6 @@ bool PKB::setStmt(STMT_NO stmtNo, STMT_TYPE type) {
 
 STMT_LIST PKB::getAllStmt() {
 	return PKBStmt::getAllStmt();
-}
-
-bool PKB::isStmtExist(STMT_NO stmtNo) {
-	//return (stmtTable.find(stmtNo) != stmtTable.end());
-	return false;
-}
-
-////////////////////////////////////
-// varUsesStmtTable APIs
-////////////////////////////////////
-bool PKB::setUsesStmt(STMT_NO stmtNo, VAR_NAME varName) {
-	
-
-	try {
-		//get varList from PKB then add variable to varList
-		unordered_set<int> stmtList = getUsesStmtByVar(varName);
-		stmtList.emplace(stmtNo);
-		//add it to varModifiesStmtTable
-		stmtUsesByVarTable[varName] = stmtList;
-		return true;
-	}
-	catch (errc) {
-		return false;
-	}
-}
-
-STMT_LIST PKB::getUsesStmtByVar(string varName) {
-	unordered_set<int> empty;
-	unordered_set<string> varList = getAllUsesVar();
-	if (varList.find(varName) != varList.end()) {
-		return stmtUsesByVarTable[varName];
-	}
-	else {
-		return empty;
-	}
-	
-}
-
-VAR_LIST PKB::getAllUsesVar() {
-	unordered_set<string> varList;
-	for (auto keyValue : stmtUsesByVarTable) {
-		varList.emplace(keyValue.first);
-	}
-	return varList;
 }
 
 ////////////////////////////////////
