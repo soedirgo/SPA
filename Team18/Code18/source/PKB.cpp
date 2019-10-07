@@ -343,7 +343,7 @@ VAR_LIST PKB::getAllUsesVar() {
 // varModifiesByStmtTable APIs
 ////////////////////////////////////
 bool PKB::setModifiesVarByStmt(STMT_NO stmtNo, string varName) {
-	return PKBModifies::setModifiesVarByStmt(stmtNo, varName);
+	return PKBModifies::setModifiesStmt(stmtNo, varName);
 }
 /*
 VAR_LIST PKB::getModifiesVarByStmt(STMT_NO stmtNo) {
@@ -363,7 +363,7 @@ STMT_LIST PKB::getAllModifiesStmt() {
 // varUsesByStmtTable APIs
 ////////////////////////////////////
 bool PKB::setUsesVarByStmt(STMT_NO stmtNo, string varName) {
-	return PKBUses::setUsesVarByStmt(stmtNo, varName);
+	return PKBUses::setUsesStmt(stmtNo, varName);
 }
 
 /*
@@ -381,11 +381,11 @@ STMT_LIST PKB::getAllUsesStmt() {
 */
 
 bool PKB::isModifiesStmtVar(STMT_NO stmtNo, string varName){
-	return PKBModifies::isModifiesStmtVar(stmtNo, varName);
+	return PKBModifies::isModifiesStmtRelationship(stmtNo, varName);
 }
 
 bool PKB::isUsesStmtVar(STMT_NO stmtNo, string varName) {
-	return PKBUses::isUsesStmtVar(stmtNo, varName);
+	return PKBUses::isUsesStmtRelationship(stmtNo, varName);
 }
 
 ////////////////////////////////////

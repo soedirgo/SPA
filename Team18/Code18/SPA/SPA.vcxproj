@@ -43,6 +43,7 @@
     <ClInclude Include="..\source\PKBFollow.h" />
     <ClInclude Include="..\source\PKBHash.h" />
     <ClInclude Include="..\source\PKBModifies.h" />
+    <ClInclude Include="..\source\PKBNext.h" />
     <ClInclude Include="..\source\PKBParent.h" />
     <ClInclude Include="..\source\PKBProcedure.h" />
     <ClInclude Include="..\source\PKBStmt.h" />

@@ -1,19 +1,19 @@
 #include "PKBUses.h"
 
 using namespace std;
-unordered_set<vector<string>, VectorHash> PKBUses::varUsesByStmtTable;
+unordered_set<vector<string>, VectorHash> PKBUses::usesStmtTable;
 
-bool PKBUses::setUsesVarByStmt(STMT_NO stmtNo, VAR_NAME varName) {
+bool PKBUses::setUsesStmt(STMT_NO stmtNo, VAR_NAME varName) {
 	vector<string> tuple = vector<string>();
 	tuple.push_back(to_string(stmtNo));
 	tuple.push_back(varName);
-	varUsesByStmtTable.emplace(tuple);
+	usesStmtTable.emplace(tuple);
 	return true;
 }
 
-bool PKBUses::isUsesStmtVar(STMT_NO stmtNo, VAR_NAME varName) {
+bool PKBUses::isUsesStmtRelationship(STMT_NO stmtNo, VAR_NAME varName) {
 
-	for (auto vectorIter : varUsesByStmtTable) {
+	for (auto vectorIter : usesStmtTable) {
 		if (vectorIter.front() == to_string(stmtNo)) {
 			if (vectorIter.back() == varName) {
 				return true;

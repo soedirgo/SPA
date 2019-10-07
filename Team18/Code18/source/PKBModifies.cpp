@@ -1,19 +1,28 @@
 #include "PKBModifies.h"
 
 using namespace std;
-unordered_set<vector<string>, VectorHash> PKBModifies::varModifiesByStmtTable;
+unordered_set<vector<string>, VectorHash> PKBModifies::modifiesStmtTable;
+unordered_set<vector<string>, VectorHash> PKBModifies::modifiesProcTable;
 
-bool PKBModifies::setModifiesVarByStmt(STMT_NO stmtNo, VAR_NAME varName) {
+bool PKBModifies::setModifiesStmt(STMT_NO stmtNo, VAR_NAME varName) {
 	vector<string> tuple = vector<string>();
 	tuple.push_back(to_string(stmtNo));
 	tuple.push_back(varName);
-	varModifiesByStmtTable.emplace(tuple);
+	modifiesStmtTable.emplace(tuple);
 	return true;
 }
 
-bool PKBModifies::isModifiesStmtVar(STMT_NO stmtNo, VAR_NAME varName) {
+bool PKBModifies::setModifiesProc(PROC_NAME procName, VAR_NAME varName) {
+	vector<string> tuple = vector<string>();
+	tuple.push_back(procName);
+	tuple.push_back(varName);
+	modifiesStmtTable.emplace(tuple);
+	return true;
+}
 
-	for (auto vectorIter : varModifiesByStmtTable) {
+bool PKBModifies::isModifiesStmtRelationship(STMT_NO stmtNo, VAR_NAME varName) {
+
+	for (auto vectorIter : modifiesStmtTable) {
 		if (vectorIter.front() == to_string(stmtNo)) {
 			if (vectorIter.back() == varName) {
 				return true;
@@ -24,6 +33,6 @@ bool PKBModifies::isModifiesStmtVar(STMT_NO stmtNo, VAR_NAME varName) {
 }
 
 bool PKBModifies::clear() {
-	varModifiesByStmtTable.clear();
+	modifiesStmtTable.clear();
 	return true;
 }
