@@ -20,6 +20,7 @@
     <ClCompile Include="..\source\PKBCall.cpp" />
     <ClCompile Include="..\source\PKBFollow.cpp" />
     <ClCompile Include="..\source\PKBModifies.cpp" />
+    <ClCompile Include="..\source\PKBNext.cpp" />
     <ClCompile Include="..\source\PKBParent.cpp" />
     <ClCompile Include="..\source\PKBProcedure.cpp" />
     <ClCompile Include="..\source\PKBStmt.cpp" />

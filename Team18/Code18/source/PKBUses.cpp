@@ -77,6 +77,6 @@ unordered_set<string> PKBUses::getAllS1() {
 
 
 bool PKBUses::clear() {
-	varUsesByStmtTable.clear();
+	usesStmtTable.clear();
 	return true;
 }

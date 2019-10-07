@@ -65,11 +65,11 @@ public:
 	static STMT_LIST getAllStmt();
 	static bool isStmtExist(STMT_NO stmtNo);
 	//add var & stmt to varModifiesStmtTable
-	static bool setModifiesStmtByVar(STMT_NO stmtNo, std::string varName);
+
 	static STMT_LIST getModifiesStmtByVar(std::string varName);
 	static VAR_LIST getAllModifiesVar();
 	//add var & stmt to varModifiesStmtTable
-	static bool setUsesStmtByVar(STMT_NO stmtNo, std::string varName);
+
 	static STMT_LIST getUsesStmtByVar(std::string varName);
 	static VAR_LIST getAllUsesVar();
 	//add stmt & var to varModifiesByStmtTable
@@ -81,8 +81,7 @@ public:
 	static VAR_LIST getUsesVarByStmt(STMT_NO stmtNo);
 	static STMT_LIST getAllUsesStmt();
 
-	static bool isModifiesStmtVar(STMT_NO stmtNo, std::string varName);
-	static bool isUsesStmtVar(STMT_NO stmtNo, std::string varName);
+
 
 	//add var & stmt to assign table 
 	
@@ -92,13 +91,6 @@ public:
 	static STMT_LIST getAssignStmtByVar(std::string varName);
 	static bool setAssignStmtByVar(STMT_NO stmtNo, std::string varName);
 
-	static STMT_LIST getAllPrintStmt();
-	static STMT_LIST getAllReadStmt();
-	static STMT_LIST getAllAssignStmt();
-	static STMT_LIST getAllWhileStmt();
-	static STMT_LIST getAllIfStmt();
-	static STMT_LIST getAllCallStmt();
-
 	//Getters and setters for print table
 	static bool setPrintStmt(STMT_NO stmtNo, std::string varName);
 	static STMT_LIST getPrintStmtByVar(std::string varName);
@@ -107,20 +99,39 @@ public:
 	static bool setReadStmt(STMT_NO stmtNo, std::string varName);
 	static STMT_LIST getReadStmtByVar(std::string varName);
 
-	//Getters and setters for Procedure table
+	STMT_LIST getCallStmtByVar(std::string procName);
+
+	static int setProcToAST(PROC p, TNode* r);
+	static TNode* getRootAST(PROC p);
+
+
+	//UPDATED APIS
+	static STMT_LIST getAllPrintStmt();
+	static STMT_LIST getAllReadStmt();
+	static STMT_LIST getAllAssignStmt();
+	static STMT_LIST getAllWhileStmt();
+	static STMT_LIST getAllIfStmt();
+	static STMT_LIST getAllCallStmt();
+
 	static std::unordered_set<std::string> getAllProc();
 	bool setProc(std::string procName);
+
+	static bool setModifiesStmt(STMT_NO stmtNo, VAR_NAME varName);
+	static bool isModifiesStmtRelationship(STMT_NO stmtNo, VAR_NAME varName);
+
+	static bool setUsesStmt(STMT_NO stmtNo, VAR_NAME varName);
+	static bool isUsesStmtRelationship(STMT_NO stmtNo, VAR_NAME varName);
+
 
 	bool setCallStmt(STMT_NO stmtNo, PROC_NAME procName);
 	bool setCallProc(PROC_NAME p, PROC_NAME q);
 	bool isCallRelationship(PROC_NAME p, PROC_NAME q);
 
+	bool setNext(PROG_LINE n1, PROG_LINE n2);
+	bool isNextRelationship(PROG_LINE n1, PROG_LINE n2);
 
 
-	STMT_LIST getCallStmtByVar(std::string procName);
 
-	static int setProcToAST(PROC p, TNode* r);
-	static TNode* getRootAST(PROC p);
 
 private:
 	static std::unordered_set<std::string> varTable;

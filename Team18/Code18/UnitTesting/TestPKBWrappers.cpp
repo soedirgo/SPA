@@ -53,9 +53,9 @@ namespace UnitTesting
 			pkb.insertAssignRelation(4, "z", { }, { "0" } );
 			pkb.insertAssignRelation(5, "z", { }, { "1" });
 			
-			pkb.setModifiesStmtByVar(8, "x");
+			pkb.setModifiesStmt(8, "x");
 			pkb.setModifiesVarByStmt(8, "x"); 
-			pkb.setUsesStmtByVar(9, "x");
+			pkb.setUsesStmt(9, "x");
 			pkb.setUsesVarByStmt(9, "x");
 
 			pkb.insertParentRelation(1, 2);

@@ -11,6 +11,7 @@
 #include "PKBProcedure.h"
 #include "PKBVariable.h"
 #include "PKBCall.h"
+#include "PKBNext.h"
 
 
 using namespace std;
@@ -150,7 +151,7 @@ bool PKB::isVarUsedInAssign(STMT_NO assignStmtNo, string varName) {
 
 bool PKB::insertModifiesRelation(STMT_NO stmtNo, string varName) {
 	try {
-		return setModifiesStmtByVar(stmtNo, varName) && setModifiesVarByStmt(stmtNo, varName);
+		return setModifiesStmt(stmtNo, varName) && setModifiesVarByStmt(stmtNo, varName);
 	}
 	catch (errc) {
 		return false;
@@ -159,7 +160,7 @@ bool PKB::insertModifiesRelation(STMT_NO stmtNo, string varName) {
 
 bool PKB::insertUsesRelation(STMT_NO stmtNo, string varName) {
 	try {
-		return setUsesStmtByVar(stmtNo, varName) && setUsesVarByStmt(stmtNo, varName);
+		return setUsesStmt(stmtNo, varName) && setUsesVarByStmt(stmtNo, varName);
 	}
 	catch (errc) {
 		return false;
@@ -173,11 +174,11 @@ bool PKB::insertAssignRelation(int stmtNo, string varModified, unordered_set<str
 		setAssignStmt(stmtNo, varModified);
 		setAssignStmtByVar(stmtNo, varModified);
 		
-		setModifiesStmtByVar(stmtNo, varModified);
+		setModifiesStmt(stmtNo, varModified);
 		setModifiesVarByStmt(stmtNo, varModified);
 		if (!varUsed.empty()) {
 			for (string var : varUsed) {
-				setUsesStmtByVar(stmtNo, var);
+				setUsesStmt(stmtNo, var);
 				setUsesVarByStmt(stmtNo, var);
 			}
 		}
@@ -273,7 +274,7 @@ bool PKB::isStmtExist(STMT_NO stmtNo) {
 ////////////////////////////////////
 // varModifiesStmtTable APIs
 ////////////////////////////////////
-bool PKB::setModifiesStmtByVar(STMT_NO stmtNo, string varName) {
+bool PKB::setModifiesStmt(STMT_NO stmtNo, VAR_NAME varName) {
 	
 	try {
 		//get stmtList from PKB then add variable to varList
@@ -303,7 +304,7 @@ VAR_LIST PKB::getAllModifiesVar() {
 ////////////////////////////////////
 // varUsesStmtTable APIs
 ////////////////////////////////////
-bool PKB::setUsesStmtByVar(STMT_NO stmtNo, string varName) {
+bool PKB::setUsesStmt(STMT_NO stmtNo, VAR_NAME varName) {
 	
 
 	try {
@@ -380,11 +381,11 @@ STMT_LIST PKB::getAllUsesStmt() {
 }
 */
 
-bool PKB::isModifiesStmtVar(STMT_NO stmtNo, string varName){
+bool PKB::isModifiesStmtRelationship(STMT_NO stmtNo, VAR_NAME varName){
 	return PKBModifies::isModifiesStmtRelationship(stmtNo, varName);
 }
 
-bool PKB::isUsesStmtVar(STMT_NO stmtNo, string varName) {
+bool PKB::isUsesStmtRelationship(STMT_NO stmtNo, VAR_NAME varName) {
 	return PKBUses::isUsesStmtRelationship(stmtNo, varName);
 }
 
@@ -550,4 +551,15 @@ bool PKB::setCallStmt(STMT_NO stmtNo, PROC_NAME procName) {
 
 bool PKB::isCallRelationship(PROC_NAME p, PROC_NAME q) {
 	return PKBCall::isCallRelationship(p, q);
+}
+
+////////////////////////////////////
+// NextTable APIs
+////////////////////////////////////
+bool PKB::setNext(PROG_LINE n1, PROG_LINE n2) {
+	return PKBNext::setNext(n1, n2);
+};
+
+bool PKB::isNextRelationship(PROG_LINE n1, PROG_LINE n2) {
+	return PKBNext::isNextRelationship(n1, n2);
 }
