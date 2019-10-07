@@ -41,21 +41,21 @@ namespace IntegrationTesting
             pkb.setAssignStmt(1, "x");
             pkb.setVar("x");
             pkb.setConstant("1", 1);
-            pkb.setModifiesRelation(1, "x");
+            pkb.setModifiesStmtRelation(1, "x");
 
             pkb.setStmt(2, Assign);
             pkb.setAssignStmt(2, "y");
             pkb.setVar("y");
-            pkb.setUsesRelation(2, "x");
-            pkb.setModifiesRelation(2, "y");
+            pkb.setUsesStmtRelation(2, "x");
+            pkb.setModifiesStmtRelation(2, "y");
             pkb.setFollowsRelation(1, 2);
             pkb.setFollowsStarRelation(1, 2);
 
             pkb.setStmt(3, If);
             //pkb.setIfStmt(3);
-            pkb.setUsesRelation(3, "x");
-            pkb.setUsesRelation(3, "y");
-            pkb.setModifiesRelation(3, "z");
+            pkb.setUsesStmtRelation(3, "x");
+            pkb.setUsesStmtRelation(3, "y");
+            pkb.setModifiesStmtRelation(3, "z");
             pkb.setFollowsRelation(2, 3);
             pkb.setFollowsStarRelation(1, 3);
             pkb.setFollowsStarRelation(2, 3);
@@ -64,21 +64,21 @@ namespace IntegrationTesting
             pkb.setAssignStmt(4, "z");
             pkb.setVar("z");
             pkb.setConstant("0", 4);
-            pkb.setModifiesRelation(4, "z");
+            pkb.setModifiesStmtRelation(4, "z");
             pkb.setParentRelation(3, 4);
             pkb.setParentStarRelation(3, 4);
 
             pkb.setStmt(5, Assign);
             pkb.setAssignStmt(5, "z");
             pkb.setConstant("1", 5);
-            pkb.setModifiesRelation(5, "z");
+            pkb.setModifiesStmtRelation(5, "z");
             pkb.setParentRelation(3, 5);
             pkb.setParentStarRelation(3, 5);
 
             pkb.setStmt(6, While);
             //pkb.setWhileStmt(6);
-            pkb.setUsesRelation(6, "x");
-            pkb.setModifiesRelation(6, "x");
+            pkb.setUsesStmtRelation(6, "x");
+            pkb.setModifiesStmtRelation(6, "x");
             pkb.setFollowsRelation(3, 6);
             pkb.setFollowsStarRelation(1, 6);
             pkb.setFollowsStarRelation(2, 6);
@@ -86,13 +86,13 @@ namespace IntegrationTesting
 
             pkb.setStmt(7, Read);
             pkb.setReadStmt(7, "x");
-            pkb.setModifiesRelation(7, "x");
+            pkb.setModifiesStmtRelation(7, "x");
             pkb.setParentRelation(6, 7);
             pkb.setParentStarRelation(6, 7);
 
             pkb.setStmt(8, Print);
             pkb.setPrintStmt(8, "x");
-            pkb.setUsesRelation(8, "x");
+            pkb.setUsesStmtRelation(8, "x");
             pkb.setParentRelation(6, 8);
             pkb.setParentStarRelation(6, 8);
             pkb.setFollowsRelation(7, 8);

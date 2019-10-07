@@ -85,14 +85,30 @@ bool PKB::isParentStarRelationship(STMT_NO parent, STMT_NO child) {
 	return PKBParent::isParentStarRelationship(parent, child);
 }
 
-bool PKB::setModifiesRelation(STMT_NO stmtNo, string varName) {
+bool PKB::setModifiesStmtRelation(STMT_NO stmtNo, VAR_NAME varName) {
 	return PKBModifies::setModifiesStmt(stmtNo, varName);
 };
 
-bool PKB::setUsesRelation(STMT_NO stmtNo, string varName) {
+bool PKB::setModifiesProcRelation(PROC_NAME procName, VAR_NAME varName) {
+	return PKBModifies::setModifiesProc(procName, varName);
+};
+
+bool PKB::setUsesStmtRelation(STMT_NO stmtNo, VAR_NAME varName) {
 	return PKBUses::setUsesStmt(stmtNo, varName);
 
 };
+
+bool PKB::setUsesProcRelation(PROC_NAME procName, VAR_NAME varName) {
+	return PKBUses::setUsesProc(procName, varName);
+};
+
+bool PKB::isModifiesStmtRelationship(STMT_NO stmtNo, VAR_NAME varName) {
+	return PKBModifies::isModifiesStmtRelationship(stmtNo, varName);
+}
+
+bool PKB::isUsesStmtRelationship(STMT_NO stmtNo, VAR_NAME varName) {
+	return PKBUses::isUsesStmtRelationship(stmtNo, varName);
+}
 
 bool PKB::isConstUsedInAssign(STMT_NO assignStmtNo, string c) {
 	//STMT_LIST stmtList = getStmtByConst(c); 
@@ -184,21 +200,6 @@ bool PKB::setStmt(STMT_NO stmtNo, STMT_TYPE type) {
 
 STMT_LIST PKB::getAllStmt() {
 	return PKBStmt::getAllStmt();
-}
-
-////////////////////////////////////
-// varUsesByStmtTable APIs
-////////////////////////////////////
-bool PKB::setUsesVarByStmt(STMT_NO stmtNo, string varName) {
-	return PKBUses::setUsesStmt(stmtNo, varName);
-}
-
-bool PKB::isModifiesStmtRelationship(STMT_NO stmtNo, VAR_NAME varName){
-	return PKBModifies::isModifiesStmtRelationship(stmtNo, varName);
-}
-
-bool PKB::isUsesStmtRelationship(STMT_NO stmtNo, VAR_NAME varName) {
-	return PKBUses::isUsesStmtRelationship(stmtNo, varName);
 }
 
 ////////////////////////////////////

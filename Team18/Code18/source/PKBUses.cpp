@@ -2,6 +2,7 @@
 
 using namespace std;
 unordered_set<vector<string>, VectorHash> PKBUses::usesStmtTable;
+unordered_set<vector<string>, VectorHash> PKBUses::usesProcTable;
 
 bool PKBUses::setUsesStmt(STMT_NO stmtNo, VAR_NAME varName) {
 	vector<string> tuple = vector<string>();
@@ -10,6 +11,15 @@ bool PKBUses::setUsesStmt(STMT_NO stmtNo, VAR_NAME varName) {
 	usesStmtTable.emplace(tuple);
 	return true;
 }
+
+bool PKBUses::setUsesProc(PROC_NAME procName, VAR_NAME varName) {
+	vector<string> tuple = vector<string>();
+	tuple.push_back(procName);
+	tuple.push_back(varName);
+	usesProcTable.emplace(tuple);
+	return true;
+}
+
 
 bool PKBUses::isUsesStmtRelationship(STMT_NO stmtNo, VAR_NAME varName) {
 

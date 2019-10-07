@@ -26,13 +26,6 @@ public:
 	static bool isConstUsedInAssign(STMT_NO stmtNo, std::string c);
 	static bool isVarUsedInAssign(STMT_NO stmtNo, std::string c);
 
-	// add a variable to varTable
-	static bool setVar(VAR_NAME varName);
-	static VAR_LIST getAllVar();
-
-	//add stmt & var to varUsesByStmtTable
-	static bool setUsesVarByStmt(STMT_NO stmtNo, std::string varName);
-
 	static bool setAssignStmt(STMT_NO stmtNo, std::string varModified);
 	static std::string getVarModifiedByAssignStmt(STMT_NO stmtNo);
 	
@@ -43,10 +36,15 @@ public:
 	static TNode* getRootAST(PROC p);
 
 
-	//UPDATED APIS
+	//UPDATED APIS//
+
+	//Variable Functions
+	static bool setVar(VAR_NAME varName);
+	static VAR_LIST getAllVar();
+
+	//Stmt Functions
 	static bool setStmt(STMT_NO stmtNo, STMT_TYPE type);
 	static STMT_LIST getAllStmt();
-
 	static STMT_LIST getAllPrintStmt();
 	static STMT_LIST getAllReadStmt();
 	static STMT_LIST getAllAssignStmt();
@@ -54,9 +52,14 @@ public:
 	static STMT_LIST getAllIfStmt();
 	static STMT_LIST getAllCallStmt();
 
+	//Procedure Functions
 	static std::unordered_set<std::string> getAllProc();
 	static bool setProc(std::string procName);
+
+	//Print Functions
 	static bool setPrintStmt(STMT_NO stmtNo, std::string varName);
+
+	//Read Functions
 	static bool setReadStmt(STMT_NO stmtNo, std::string varName);
 
 	//Constant Functions
@@ -76,11 +79,13 @@ public:
 	static bool isParentStarRelationship(STMT_NO parent, STMT_NO child);
 
 	//Modifies Function
-	static bool setModifiesRelation(STMT_NO stmtNo, std::string varName);
+	static bool setModifiesStmtRelation(STMT_NO stmtNo, VAR_NAME varName);
+	static bool setModifiesProcRelation(PROC_NAME procName, VAR_NAME varName);
 	static bool isModifiesStmtRelationship(STMT_NO stmtNo, VAR_NAME varName);
 
 	//Uses Function
-	static bool setUsesRelation(STMT_NO stmtNo, std::string varName);
+	static bool setUsesStmtRelation(STMT_NO stmtNo, VAR_NAME varName);
+	static bool setUsesProcRelation(PROC_NAME procName, VAR_NAME varName);
 	static bool isUsesStmtRelationship(STMT_NO stmtNo, VAR_NAME varName);
 
 	//Call Function
