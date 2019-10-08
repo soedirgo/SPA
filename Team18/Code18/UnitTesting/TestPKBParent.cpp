@@ -73,6 +73,16 @@ namespace UnitTesting
 			Assert::IsTrue(PKB.isParentStarRelationship("10", "11"));
 			Assert::IsTrue(PKB.isParentStarRelationship("10", "12"));
 		}
+
+		TEST_METHOD(isParentExist)
+		{
+			PKBParent PKB;
+			Assert::IsTrue(PKB.isParentExist("7"));
+			Assert::IsTrue(PKB.isParentExist("8"));
+			Assert::IsTrue(PKB.isParentExist("9"));
+			Assert::IsTrue(PKB.isParentExist("11"));
+			Assert::IsTrue(PKB.isParentExist("12"));
+		}
 	};
 };
 

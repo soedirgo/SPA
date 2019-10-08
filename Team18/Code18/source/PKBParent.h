@@ -10,7 +10,9 @@ public:
 	static bool setParent(STMT_NO parent, STMT_NO child);
 	static bool setParentStar(STMT_NO parent, STMT_NO child);
 	static STMT_LIST getChild(STMT_NO parent);
-	
+	static STMT_NO getParent(STMT_NO parent);
+
+	static bool isParentExist(STMT_NO child);
 	static bool isParentRelationship(STMT_NO parent, STMT_NO child);
 	static bool isParentStarRelationship(STMT_NO parent, STMT_NO child);
 

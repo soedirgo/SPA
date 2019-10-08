@@ -63,8 +63,9 @@ public:
 	static bool setReadStmt(STMT_NO stmtNo, std::string varName);
 
 	//Constant Functions
-	static bool setConstant(STMT_NO stmtNo, CONST_VALUE constantVal);
+	static bool setConstant(STMT_NO stmtNo, CONST_VAL constantVal);
 	static CONST_LIST getAllConstant();
+	//static CONST_VAL getConstantValByStmt(STMT_NO stmtNo); 
 
 	//While Functions
 	static bool setWhileUsesRelation(STMT_NO stmtNo, VAR_NAME varName);
@@ -83,6 +84,7 @@ public:
 	static bool setParentStarRelation(STMT_NO parent, STMT_NO child);
 	static bool isParentRelationship(STMT_NO parent, STMT_NO child);
 	static bool isParentStarRelationship(STMT_NO parent, STMT_NO child);
+	static bool isParentExist(STMT_NO child);
 
 	//Modifies Function
 	static bool setModifiesStmtRelation(STMT_NO stmtNo, VAR_NAME varName);

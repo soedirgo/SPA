@@ -55,6 +55,8 @@ TNode* PKB::getRootAST (PROC p){
 // Higher order wrapper functions APIs
 ////////////////////////////////////
 
+
+//Follows 
 bool PKB::setFollowsRelation(STMT_NO followedBy, STMT_NO follow) {
 	return PKBFollows::setFollows(followedBy, follow);
 }
@@ -71,6 +73,7 @@ bool PKB::isFollowsStarRelationship(STMT_NO followedBy, STMT_NO follow) {
 	return PKBFollows::isFollowsStarRelationship(followedBy, follow);
 }
 
+//Parents
 bool PKB::setParentRelation(STMT_NO parent, STMT_NO child) {
 	return PKBParent::setParent(parent, child);
 }
@@ -87,21 +90,17 @@ bool PKB::isParentStarRelationship(STMT_NO parent, STMT_NO child) {
 	return PKBParent::isParentStarRelationship(parent, child);
 }
 
+bool PKB::isParentExist(STMT_NO child) {
+	return PKBParent::isParentExist(child);
+}
+
+//Modifies
 bool PKB::setModifiesStmtRelation(STMT_NO stmtNo, VAR_NAME varName) {
 	return PKBModifies::setModifiesStmt(stmtNo, varName);
 };
 
 bool PKB::setModifiesProcRelation(PROC_NAME procName, VAR_NAME varName) {
 	return PKBModifies::setModifiesProc(procName, varName);
-};
-
-bool PKB::setUsesStmtRelation(STMT_NO stmtNo, VAR_NAME varName) {
-	return PKBUses::setUsesStmt(stmtNo, varName);
-
-};
-
-bool PKB::setUsesProcRelation(PROC_NAME procName, VAR_NAME varName) {
-	return PKBUses::setUsesProc(procName, varName);
 };
 
 bool PKB::isModifiesStmtRelationship(STMT_NO stmtNo, VAR_NAME varName) {
@@ -111,6 +110,17 @@ bool PKB::isModifiesStmtRelationship(STMT_NO stmtNo, VAR_NAME varName) {
 bool PKB::isModifiesProcRelationship(PROC_NAME procName, VAR_NAME varName) {
 	return PKBModifies::isModifiesProcRelationship(procName, varName);
 }
+
+
+//Uses
+bool PKB::setUsesStmtRelation(STMT_NO stmtNo, VAR_NAME varName) {
+	return PKBUses::setUsesStmt(stmtNo, varName);
+
+};
+
+bool PKB::setUsesProcRelation(PROC_NAME procName, VAR_NAME varName) {
+	return PKBUses::setUsesProc(procName, varName);
+};
 
 bool PKB::isUsesStmtRelationship(STMT_NO stmtNo, VAR_NAME varName) {
 	return PKBUses::isUsesStmtRelationship(stmtNo, varName);
@@ -176,9 +186,7 @@ bool PKB::insertAssignRelation(int stmtNo, string varModified, unordered_set<str
 };
 */
 
-////////////////////////////////////
-// varTable APIs
-////////////////////////////////////
+//Variable
 
 bool PKB::setVar(VAR_NAME varName) {
 	return PKBVariable::setVar(varName);
@@ -188,21 +196,23 @@ VAR_LIST PKB::getAllVar() {
 	return PKBVariable::getAllVar();
 }
 
-////////////////////////////////////
 // constantTable APIs
-////////////////////////////////////
 
-bool PKB::setConstant(STMT_NO stmtNo, CONST_VALUE constantVal) {
+bool PKB::setConstant(STMT_NO stmtNo, CONST_VAL constantVal) {
 	return PKBConstant::setConstant(stmtNo, constantVal);
 }
+
+/*
+CONST_VAL PKB::getConstantValByStmt(STMT_NO stmtNo) {
+	return PKBConstant::getConstantValByStmt(stmtNo);
+}
+*/
 
 CONST_LIST PKB::getAllConstant() {
 	return PKBConstant::getAllConstantVal();
 }
 
-////////////////////////////////////
 // stmtTable APIs
-////////////////////////////////////
 
 bool PKB::setStmt(STMT_NO stmtNo, STMT_TYPE type) {
 	return PKBStmt::setStmt(stmtNo, type);
@@ -212,9 +222,7 @@ STMT_LIST PKB::getAllStmt() {
 	return PKBStmt::getAllStmt();
 }
 
-////////////////////////////////////
 // assignStmtTable APIs
-////////////////////////////////////
 
 STMT_LIST PKB::getAllAssignStmt() {
 	return PKBStmt::getAllStmtByType("ASSIGN");
