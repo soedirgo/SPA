@@ -16,24 +16,62 @@ namespace Evaluator {
         public:
             Result() : synonyms({}), results({}) {}
 
-            Result(unordered_map<string, int> syn, vector<vector<string>> res)
+            Result(unordered_map<string, int> syn, unordered_set<vector<string>> res)
                 : synonyms(syn),
                   results(res) {}
 
-            static Result merge(Result r1, Result r2) {
-                //TODO: implement merge
+            static Result merge(Result& r1, Result& r2) {
+                unordered_map<string, int> r1Synonyms = r1.getSynonyms();
+                unordered_map<string, int> r2Synonyms = r2.getSynonyms();
+                unordered_map<string, int> synonyms = r1Synonyms;
+                vector<string> overlappingSynonyms;
+                vector<string> newSynonyms;
+                for (const auto& it : r2Synonyms) {
+                    if (r1Synonyms.count(it.first)) {
+                        overlappingSynonyms.push_back(it.first);
+                    } else {
+                        newSynonyms.push_back(it.first);
+                        synonyms[it.first] = synonyms.size();
+                    }
+                }
+
+                unordered_set<vector<string>> results;
+                for (auto r1e : r1.getResults()) {
+                    for (auto r2e : r2.getResults()) {
+                        // if overlaps don't match, continue
+                        bool overlapMatches = true;
+                        for (const auto& syn : overlappingSynonyms) {
+                            if (r1e[r1Synonyms[syn]] != r2e[r2Synonyms[syn]]) {
+                                overlapMatches = false;
+                                break;
+                            }
+                        }
+                        if (!overlapMatches) {
+                            continue;
+                        }
+
+                        // cross-product new synonyms
+                        vector<string>& mergedResult = r1e;
+                        for (const auto& syn : newSynonyms) {
+                            mergedResult.push_back(r2e[r2Synonyms[syn]]);
+                        }
+                        results.insert(mergedResult);
+                    }
+                }
+
+                return Result(synonyms, results);
             }
 
-            unordered_map<string, int> getSynonyms() {
+            unordered_map<string, int> getSynonyms() const {
                 return this->synonyms;
             }
 
-            vector<vector<string>> getResults() {
+            unordered_set<vector<string>> getResults() const {
                 return this->results;
             }
         private:
             unordered_map<string, int> synonyms;
-            vector<vector<string>> results;
+            unordered_set<vector<string>> results;
         };
 
         unordered_map<string, string> declarations;
@@ -44,15 +82,15 @@ namespace Evaluator {
 
         Result evalUses(string lhs, string rhs) {
             unordered_map<string, int> synonyms;
-            vector<vector<string>> results;
+            unordered_set<vector<string>> results;
             /**
              * Cases:
-             * - ("1", _)
-             * - ("1", "x")
-             * - ("1", v)
-             * - (s, _)
-             * - (s, "x")
-             * - (s, v)
+             * - Uses("1", _)
+             * - Uses("1", "x")
+             * - Uses("1", v)
+             * - Uses(s, _)
+             * - Uses(s, "x")
+             * - Uses(s, v)
              */
             if (lhs.front() == '\"' && lhs.back() == '\"') {
                 if (rhs == "_") {
@@ -60,7 +98,7 @@ namespace Evaluator {
                 } else if (rhs.front() == '\"' && rhs.back() == '\"') {
                     //TODO
                 } else {
-                    synonyms[rhs] = 1;
+                    synonyms[rhs] = 0;
                     //TODO
                 }
             } else {
@@ -78,7 +116,233 @@ namespace Evaluator {
             return Result(synonyms, results);
         }
 
-        //TODO: all but Uses
+        Result evalModifies(string lhs, string rhs) {
+            unordered_map<string, int> synonyms;
+            unordered_set<vector<string>> results;
+            /**
+             * Cases:
+             * - Modifies("1", _)
+             * - Modifies("1", "x")
+             * - Modifies("1", v)
+             * - Modifies(s, _)
+             * - Modifies(s, "x")
+             * - Modifies(s, v)
+             */
+            if (lhs.front() == '\"' && lhs.back() == '\"') {
+                if (rhs == "_") {
+                    //TODO
+                } else if (rhs.front() == '\"' && rhs.back() == '\"') {
+                    //TODO
+                } else {
+                    synonyms[rhs] = 0;
+                    //TODO
+                }
+            } else {
+                synonyms[lhs] = 0;
+                if (rhs == "_") {
+                    //TODO
+                } else if (rhs.front() == '\"' && rhs.back() == '\"') {
+                    //TODO
+                } else {
+                    synonyms[rhs] = 1;
+                    //TODO
+                }
+            }
+
+            return Result(synonyms, results);
+        }
+
+        Result evalFollows(string lhs, string rhs) {
+            unordered_map<string, int> synonyms;
+            unordered_set<vector<string>> results;
+            /**
+             * Cases:
+             * - Follows(_, _)
+             * - Follows(_, "1")
+             * - Follows(_, s)
+             * - Follows("1", _)
+             * - Follows("1", "1")
+             * - Follows("1", s)
+             * - Follows(s, _)
+             * - Follows(s, "1")
+             * - Follows(s, s)
+             */
+            if (lhs == "_") {
+                if (rhs == "_") {
+                    //TODO
+                } else if (rhs.front() == '\"' && rhs.back() == '\"') {
+                    //TODO
+                } else {
+                    synonyms[rhs] = 0;
+                    //TODO
+                }
+            } else if (lhs.front() == '\"' && lhs.back() == '\"') {
+                if (rhs == "_") {
+                    //TODO
+                } else if (rhs.front() == '\"' && rhs.back() == '\"') {
+                    //TODO
+                } else {
+                    synonyms[rhs] = 0;
+                    //TODO
+                }
+            } else {
+                synonyms[lhs] = 0;
+                if (rhs == "_") {
+                    //TODO
+                } else if (rhs.front() == '\"' && rhs.back() == '\"') {
+                    //TODO
+                } else {
+                    synonyms[rhs] = 1;
+                    //TODO
+                }
+            }
+
+            return Result(synonyms, results);
+        }
+
+        Result evalFollowsT(string lhs, string rhs) {
+            unordered_map<string, int> synonyms;
+            unordered_set<vector<string>> results;
+            /**
+             * Cases:
+             * - FollowsT(_, _)
+             * - FollowsT(_, "1")
+             * - FollowsT(_, s)
+             * - FollowsT("1", _)
+             * - FollowsT("1", "1")
+             * - FollowsT("1", s)
+             * - FollowsT(s, _)
+             * - FollowsT(s, "1")
+             * - FollowsT(s, s)
+             */
+            if (lhs == "_") {
+                if (rhs == "_") {
+                    //TODO
+                } else if (rhs.front() == '\"' && rhs.back() == '\"') {
+                    //TODO
+                } else {
+                    synonyms[rhs] = 0;
+                    //TODO
+                }
+            } else if (lhs.front() == '\"' && lhs.back() == '\"') {
+                if (rhs == "_") {
+                    //TODO
+                } else if (rhs.front() == '\"' && rhs.back() == '\"') {
+                    //TODO
+                } else {
+                    synonyms[rhs] = 0;
+                    //TODO
+                }
+            } else {
+                synonyms[lhs] = 0;
+                if (rhs == "_") {
+                    //TODO
+                } else if (rhs.front() == '\"' && rhs.back() == '\"') {
+                    //TODO
+                } else {
+                    synonyms[rhs] = 1;
+                    //TODO
+                }
+            }
+
+            return Result(synonyms, results);
+        }
+
+        Result evalParent(string lhs, string rhs) {
+            unordered_map<string, int> synonyms;
+            unordered_set<vector<string>> results;
+            /**
+             * Cases:
+             * - Parent(_, _)
+             * - Parent(_, "1")
+             * - Parent(_, s)
+             * - Parent("1", _)
+             * - Parent("1", "1")
+             * - Parent("1", s)
+             * - Parent(s, _)
+             * - Parent(s, "1")
+             * - Parent(s, s)
+             */
+            if (lhs == "_") {
+                if (rhs == "_") {
+                    //TODO
+                } else if (rhs.front() == '\"' && rhs.back() == '\"') {
+                    //TODO
+                } else {
+                    synonyms[rhs] = 0;
+                    //TODO
+                }
+            } else if (lhs.front() == '\"' && lhs.back() == '\"') {
+                if (rhs == "_") {
+                    //TODO
+                } else if (rhs.front() == '\"' && rhs.back() == '\"') {
+                    //TODO
+                } else {
+                    synonyms[rhs] = 0;
+                    //TODO
+                }
+            } else {
+                synonyms[lhs] = 0;
+                if (rhs == "_") {
+                    //TODO
+                } else if (rhs.front() == '\"' && rhs.back() == '\"') {
+                    //TODO
+                } else {
+                    synonyms[rhs] = 1;
+                    //TODO
+                }
+            }
+
+            return Result(synonyms, results);
+        }
+
+        Result evalParentT(string lhs, string rhs) {
+            unordered_map<string, int> synonyms;
+            unordered_set<vector<string>> results;
+            /**
+             * Cases:
+             * - ParentT(_, _)
+             * - ParentT(_, "1")
+             * - ParentT(_, s)
+             * - ParentT("1", _)
+             * - ParentT("1", "1")
+             * - ParentT("1", s)
+             * - ParentT(s, _)
+             * - ParentT(s, "1")
+             * - ParentT(s, s)
+             */
+            if (lhs == "_") {
+                if (rhs == "_") {
+                    //TODO
+                } else if (rhs.front() == '\"' && rhs.back() == '\"') {
+                    //TODO
+                } else {
+                    synonyms[rhs] = 0;
+                    //TODO
+                }
+            } else if (lhs.front() == '\"' && lhs.back() == '\"') {
+                if (rhs == "_") {
+                    //TODO
+                } else if (rhs.front() == '\"' && rhs.back() == '\"') {
+                    //TODO
+                } else {
+                    synonyms[rhs] = 0;
+                    //TODO
+                }
+            } else {
+                synonyms[lhs] = 0;
+                if (rhs == "_") {
+                    //TODO
+                } else if (rhs.front() == '\"' && rhs.back() == '\"') {
+                    //TODO
+                } else {
+                    synonyms[rhs] = 1;
+                    //TODO
+                }
+            }
+
+            return Result(synonyms, results);
+        }
 
         Result evalSuchThatClause(pair<string, pair<string, string>> clause) {
             string rel = clause.first;
@@ -109,7 +373,7 @@ namespace Evaluator {
             string rhs = clause.second.second;
 
             unordered_map<string, int> synonyms;
-            vector<vector<string>> results;
+            unordered_set<vector<string>> results;
             /**
              * Cases:
              * - pattern a(_, _)
@@ -165,12 +429,12 @@ namespace Evaluator {
 
         // merge everything in intermediateResults
         Result finalResult = Result();
-        for (const auto& result : intermediateResults) {
+        for (auto& result : intermediateResults) {
             finalResult = Result::merge(finalResult, result);
         }
 
         // return results (projection)
-        vector<vector<string>> results = finalResult.getResults();
+        unordered_set<vector<string>> results = finalResult.getResults();
         list<string> selectResults = {};
         int selectSynIdx = finalResult.getSynonyms()[selectSyn];
         for (const auto& result : results) {
