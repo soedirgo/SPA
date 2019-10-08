@@ -15,6 +15,10 @@ void NestedResult::addUses(string var) {
 	usesList.push_back(var);
 }
 
+void NestedResult::addCondExpr(string var) {
+	condExprList.push_back(var);
+}
+
 void NestedResult::addCalls(string proc) {
 	callList.push_back(proc);
 }
@@ -29,6 +33,10 @@ vector<string> NestedResult::getModifies() {
 
 vector<string> NestedResult::getUses() {
 	return usesList;
+}
+
+vector<string> NestedResult::getCondExpr() {
+	return condExprList;
 }
 
 vector<string> NestedResult::getCallList() {

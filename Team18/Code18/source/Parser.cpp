@@ -51,6 +51,7 @@ int Parser::Parse (string filename) {
 			NestedResult results = parseWhile(line, stmtNo);
 			vector<string> modifies = results.getModifies();
 			vector<string> uses = results.getUses();
+
 			for (string var : modifies) {
 				pkb.setVar(var);
 				currProc.addModifies(var);
@@ -65,6 +66,11 @@ int Parser::Parse (string filename) {
 					currProc.addModifies(var);
 					pkb.insertUsesRelation(stmtNo, var);
 				}
+			}
+
+			vector<string> condExpr = results.getCondExpr();
+			for (string var : condExpr) {
+				//pkb.setIfCond(stmtNo, var);
 			}
 			if (stmtNo != 1) {
 				pkb.insertFollowRelation(prevStmtNo, stmtNo);
@@ -94,6 +100,10 @@ int Parser::Parse (string filename) {
 				}
 			}
 
+			vector<string> condExpr = results.getCondExpr();
+			for (string var : condExpr) {
+				//pkb.setIfCond(stmtNo, var);
+			}
 			if (stmtNo != 1) {
 				pkb.insertFollowRelation(prevStmtNo, stmtNo);
 			}
@@ -368,6 +378,9 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 	vector<string> toAdd = parseCondStmt(ifLine);
 	for (string var : toAdd) {
 		result.addUses(var);
+		if (!isdigit(var.at(0))) {
+			result.addCondExpr(var);
+		}
 	}
 	while (getline(programFile, line)) {
 		if (count(line, ';') > 1) {
@@ -406,6 +419,10 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 				}
 			}
 
+			vector<string> condExpr = results.getCondExpr();
+			for (string var : condExpr) {
+				//pkb.setIfCond(stmtNo, var);
+			}
 			if (currStmtNo != (startStmtNo + 1)) {
 				if (passedElse) {
 					if (currStmtNo != elseStmtNo) {
@@ -454,6 +471,10 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 				}
 			}
 
+			vector<string> condExpr = results.getCondExpr();
+			for (string var : condExpr) {
+				//pkb.setIfCond(stmtNo, var);
+			}
 			if (currStmtNo != (startStmtNo + 1)) {
 				if (passedElse) {
 					if (currStmtNo != elseStmtNo) {
@@ -634,6 +655,9 @@ NestedResult Parser::parseIfNestedInThen(string ifLine, int parentStmtNo) {
 	vector<string> toAdd = parseCondStmt(ifLine);
 	for (string var : toAdd) {
 		result.addUses(var);
+		if (!isdigit(var.at(0))) {
+			result.addCondExpr(var);
+		}
 	}
 	while (getline(programFile, line)) {
 		if (count(line, ';') > 1) {
@@ -672,6 +696,10 @@ NestedResult Parser::parseIfNestedInThen(string ifLine, int parentStmtNo) {
 				}
 			}
 
+			vector<string> condExpr = results.getCondExpr();
+			for (string var : condExpr) {
+				//pkb.setIfCond(stmtNo, var);
+			}
 			if (currStmtNo != (startStmtNo + 1)) {
 				if (passedElse) {
 					if (currStmtNo != elseStmtNo) {
@@ -720,6 +748,10 @@ NestedResult Parser::parseIfNestedInThen(string ifLine, int parentStmtNo) {
 				}
 			}
 
+			vector<string> condExpr = results.getCondExpr();
+			for (string var : condExpr) {
+				//pkb.setIfCond(stmtNo, var);
+			}
 			if (currStmtNo != (startStmtNo + 1)) {
 				if (passedElse) {
 					if (currStmtNo != elseStmtNo) {
@@ -898,6 +930,9 @@ NestedResult Parser::parseWhileNestedInThen(string whileLine, int parentStmtNo) 
 	vector<string> toAdd = parseCondStmt(whileLine);
 	for (string var : toAdd) {
 		result.addUses(var);
+		if (!isdigit(var.at(0))) {
+			result.addCondExpr(var);
+		}
 	}
 	while (getline(programFile, line)) {
 		if (count(line, ';') > 1) {
@@ -930,6 +965,10 @@ NestedResult Parser::parseWhileNestedInThen(string whileLine, int parentStmtNo) 
 				}
 			}
 
+			vector<string> condExpr = results.getCondExpr();
+			for (string var : condExpr) {
+				//pkb.setIfCond(stmtNo, var);
+			}
 			if (currStmtNo != (startStmtNo + 1)) {
 				pkb.insertFollowRelation(prevStmtNo, currStmtNo);
 			}
@@ -965,6 +1004,10 @@ NestedResult Parser::parseWhileNestedInThen(string whileLine, int parentStmtNo) 
 				}
 			}
 
+			vector<string> condExpr = results.getCondExpr();
+			for (string var : condExpr) {
+				//pkb.setIfCond(stmtNo, var);
+			}
 			if (currStmtNo != (startStmtNo + 1)) {
 				pkb.insertFollowRelation(prevStmtNo, currStmtNo);
 			}
@@ -1107,6 +1150,9 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 	vector<string> toAdd = parseCondStmt(whileLine);
 	for (string var : toAdd) {
 		result.addUses(var);
+		if (!isdigit(var.at(0))) {
+			result.addCondExpr(var);
+		}
 	}
 	while (getline(programFile, line)) {
 		if (count(line, ';') > 1) {
@@ -1139,6 +1185,10 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 				}
 			}
 
+			vector<string> condExpr = results.getCondExpr();
+			for (string var : condExpr) {
+				//pkb.setIfCond(stmtNo, var);
+			}
 			if (currStmtNo != (startStmtNo + 1)) {
 				pkb.insertFollowRelation(prevStmtNo, currStmtNo);
 			}
@@ -1174,6 +1224,10 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 				}
 			}
 
+			vector<string> condExpr = results.getCondExpr();
+			for (string var : condExpr) {
+				//pkb.setIfCond(stmtNo, var);
+			}
 			if (currStmtNo != (startStmtNo + 1)) {
 				pkb.insertFollowRelation(prevStmtNo, currStmtNo);
 			}
