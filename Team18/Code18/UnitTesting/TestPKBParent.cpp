@@ -12,48 +12,37 @@ namespace UnitTesting
 	public:
 		TEST_METHOD_INITIALIZE(PKB_START)
 		{
+			/**	SIMPLE program:
+
+				procedure First {
+				1.	read x;
+				2.	read z;
+				3.	call Second; }
+
+				procedure Second {
+				4.		x = 0;
+				5.		i = 5;
+				6.		while (i!=0) {
+				7.			x = x + 2*y;
+				8.			call Third;
+				9.			i = i - 1; }
+				10.		if (x==1) then {
+				11.			x = x+1; }
+						else {
+				12.			z = 1; }
+				13.		z = z + x + i;
+				14.		y = z + 2;
+				15.		x = x * y + z; }
+
+					procedure Third {
+				16.		z = 5;
+				17.		v = z;
+				18.		print v; }
+		   */
+
 			PKBParent PKBParent;
 			PKBParent.clear();
-			//PKBParent.setChildren(1,2);
-			//PKBParent.setChildren(1,3);
-
-			PKBParent.setParent(1, 2);
-			PKBParent.setParent(1, 3);
-
-			PKBParent.setParentStar(1, 3);
 		}
-		/*
-		TEST_METHOD(GetChildren)
-		{
-			//Actual PKB Data
-			unordered_set<int> stmtNoList = { 2,3 };
-			Assert::IsTrue(PKBParent().getChildrenStmtList(1) == stmtNoList);
-		}
-		TEST_METHOD(GetParent)
-		{
-			//Actual PKB Data
-			int parent = 1;
-			Assert::IsTrue(PKBParent().getParentStmt(2) == parent);
-		}
-
-		TEST_METHOD(GetParentStar)
-		{
-			//Actual PKB Data
-			unordered_set<int> stmtNoList = { 1 };
-			Assert::IsTrue(PKBParent().getParentStarStmtList(3) == stmtNoList);
-		}
-		
-		TEST_METHOD(ParentRelationship)
-		{
-			//Actual PKB Data
-			Assert::IsTrue(PKBParent().isParentRelationship(1, 2));
-		}
-		TEST_METHOD(ParentStarRelationship)
-		{
-			//Actual PKB Data
-			Assert::IsTrue(PKBParent().isParentStarRelationship(1, 3));
-		}
-		*/
 	};
 };
 

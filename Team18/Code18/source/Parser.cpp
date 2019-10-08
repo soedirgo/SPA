@@ -18,7 +18,7 @@ Parser::Parser() {
 }
 
 int Parser::Parse (string filename) {
-
+	/*
 	string line;
 	int prevStmtNo = 0;
 	//Code to open the file from the filename.
@@ -153,10 +153,10 @@ int Parser::Parse (string filename) {
 		}
 	}
 
-
+	*/
 	return 0;
 }
-
+/*
 string Parser::parseProc(string line) {
 	string header = line;
 	string keyword = "procedure";
@@ -1248,3 +1248,5 @@ int Parser::count(string s, char c) {
 
 	return res;
 }
+*/
+

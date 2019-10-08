@@ -20,6 +20,7 @@
     <ClCompile Include="..\source\PKBCall.cpp" />
     <ClCompile Include="..\source\PKBConstant.cpp" />
     <ClCompile Include="..\source\PKBFollows.cpp" />
+    <ClCompile Include="..\source\PKBIf.cpp" />
     <ClCompile Include="..\source\PKBModifies.cpp" />
     <ClCompile Include="..\source\PKBNext.cpp" />
     <ClCompile Include="..\source\PKBParent.cpp" />
@@ -29,6 +30,7 @@
     <ClCompile Include="..\source\PKBStmt.cpp" />
     <ClCompile Include="..\source\PKBUses.cpp" />
     <ClCompile Include="..\source\PKBVariable.cpp" />
+    <ClCompile Include="..\source\PKBWhile.cpp" />
     <ClCompile Include="..\source\Preprocessor.cpp" />
     <ClCompile Include="..\source\Query.cpp" />
     <ClCompile Include="..\source\QueryParser.cpp" />
@@ -47,6 +49,7 @@
     <ClInclude Include="..\source\PKBConstant.h" />
     <ClInclude Include="..\source\PKBFollows.h" />
     <ClInclude Include="..\source\PKBHash.h" />
+    <ClInclude Include="..\source\PKBIf.h" />
     <ClInclude Include="..\source\PKBModifies.h" />
     <ClInclude Include="..\source\PKBNext.h" />
     <ClInclude Include="..\source\PKBParent.h" />
@@ -56,6 +59,7 @@
     <ClInclude Include="..\source\PKBStmt.h" />
     <ClInclude Include="..\source\PKBUses.h" />
     <ClInclude Include="..\source\PKBVariable.h" />
+    <ClInclude Include="..\source\PKBWhile.h" />
     <ClInclude Include="..\source\Preprocessor.h" />
     <ClInclude Include="..\source\Query.h" />
     <ClInclude Include="..\source\QueryParser.h" />

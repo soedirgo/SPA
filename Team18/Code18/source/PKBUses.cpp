@@ -99,5 +99,6 @@ unordered_set<string> PKBUses::getAllS1() {
 
 bool PKBUses::clear() {
 	usesStmtTable.clear();
+	usesProcTable.clear();
 	return true;
 }

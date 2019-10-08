@@ -12,6 +12,7 @@ using namespace std;
 
 namespace Evaluator {
   	namespace {
+		/*
 		unordered_map<string, string> declarations;
 		vector<pair<string, pair<string, string>>> clauses;
         vector<pair<string, pair<string, string>>> patterns;
@@ -358,8 +359,8 @@ namespace Evaluator {
 		} else if (selectSynType == "procedure") {
 			resultCandidates = PKB::getAllProc();
         }
-		*/
-
+		
+		
         list<string> results;
         for (const auto& result : resultCandidates) {
             vector<pair<string, pair<string, string>>> cls = clauses;
@@ -372,5 +373,7 @@ namespace Evaluator {
             if (evalClauses(cls, fil)) results.push_back(result);
         }
         return results;
+		*/
     }
+	
 }

@@ -34,5 +34,6 @@ bool PKBModifies::isModifiesStmtRelationship(STMT_NO stmtNo, VAR_NAME varName) {
 
 bool PKBModifies::clear() {
 	modifiesStmtTable.clear();
+	modifiesProcTable.clear();
 	return true;
 }

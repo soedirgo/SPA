@@ -42,6 +42,18 @@ bool PKBNext::isNextStarRelationship(PROG_LINE n1, PROG_LINE n2) {
 	return false;
 }
 
+STMT_LIST PKBNext::getNext(PROG_LINE n1) {
+	STMT_LIST list;
+	for (auto vectorIter : nextTable) {
+		vector<string> tuple = vector<string>();
+		if (vectorIter.front() == n1) {
+			tuple.push_back(vectorIter.back());
+			list.emplace(tuple);
+		}
+	}
+	return list;
+}
+
 unordered_set<vector<string>, VectorDoubleStringHash> PKBNext::getNextTable() {
 	return nextTable;
 }
