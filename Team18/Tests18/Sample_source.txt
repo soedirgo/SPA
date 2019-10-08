@@ -1,7 +1,0 @@
-procedure Example {
-  x = 2;
-  z = 3;
-  i = 5;
-  read a;
-  print a;
- }

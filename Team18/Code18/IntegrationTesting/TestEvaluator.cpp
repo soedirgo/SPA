@@ -305,11 +305,11 @@ namespace IntegrationTesting
             Assert::IsTrue(expected == actual);
 
             expected = {"1", "5"};
-            actual = Evaluator::evalQuery(Query(decl, "a", {}, { {"a", {"_", "1"}} }));
+            actual = Evaluator::evalQuery(Query(decl, "a", {}, { {"a", {"_", "\"1\""}} }));
             Assert::IsTrue(expected == actual);
 
             expected = {"4"};
-            actual = Evaluator::evalQuery(Query(decl, "a", {}, { {"a", {"\"z\"", "0"}} }));
+            actual = Evaluator::evalQuery(Query(decl, "a", {}, { {"a", {"\"z\"", "\"0\""}} }));
             Assert::IsTrue(expected == actual);
         }
 	};

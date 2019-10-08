@@ -134,8 +134,12 @@ namespace Evaluator {
 				for (const auto& v : enumeratedVar) {
 					if (declarations.count(clause.second.second))
 						fil[clause.second.second] = v;
-					if (PKB::isUsesStmtVar(stoi(s), v))
-						return evalClauses(cls, fil);
+                    if (PKB::isUsesStmtVar(stoi(s), v)) {
+                        if (evalClauses(cls, fil))
+                            return true;
+                        else
+                            continue;
+                    }
 				}
 			}
 			return false;
@@ -154,7 +158,10 @@ namespace Evaluator {
 					if (declarations.count(clause.second.second))
 						fil[clause.second.second] = v;
 					if (PKB::isModifiesStmtVar(stoi(s), v))
-                        return evalClauses(cls, fil);
+                        if (evalClauses(cls, fil))
+                            return true;
+                        else
+                            continue;
 				}
 			}
 			return false;
@@ -173,7 +180,10 @@ namespace Evaluator {
                     if (declarations.count(clause.second.first))
                         fil[clause.second.first] = rhs;
                     if (PKB::isFollowRelationship(stoi(lhs), stoi(rhs)))
-                        return evalClauses(cls, fil);
+                        if (evalClauses(cls, fil))
+                            return true;
+                        else
+                            continue;
                 }
             }
             return false;
@@ -192,7 +202,10 @@ namespace Evaluator {
                     if (declarations.count(clause.second.first))
                         fil[clause.second.first] = rhs;
                     if (PKB::isFollowStarRelationship(stoi(lhs), stoi(rhs)))
-                        return evalClauses(cls, fil);
+                        if (evalClauses(cls, fil))
+                            return true;
+                        else
+                            continue;
                 }
             }
             return false;
@@ -211,7 +224,10 @@ namespace Evaluator {
                     if (declarations.count(clause.second.first))
                         fil[clause.second.first] = rhs;
                     if (PKB::isParentRelationship(stoi(lhs), stoi(rhs)))
-                        return evalClauses(cls, fil);
+                        if (evalClauses(cls, fil))
+                            return true;
+                        else
+                            continue;
                 }
             }
             return false;
@@ -230,7 +246,10 @@ namespace Evaluator {
                     if (declarations.count(clause.second.first))
                         fil[clause.second.first] = rhs;
                     if (PKB::isParentStarRelationship(stoi(lhs), stoi(rhs)))
-                        return evalClauses(cls, fil);
+                        if (evalClauses(cls, fil))
+                            return true;
+                        else
+                            continue;
                 }
             }
             return false;
@@ -249,7 +268,7 @@ namespace Evaluator {
             for (const auto& assign : enumeratedStmt) {
 				if (declarations.count(clause.first))
 					fil[clause.first] = assign;
-                // for each of the modified variables
+                // for each v
                 for (const auto& lhs : enumeratedLhs) {
                     if (!PKB::isModifiesStmtVar(stoi(assign), lhs))
                         continue;
@@ -262,8 +281,11 @@ namespace Evaluator {
                         // check if it is used in the assignment
                         if (PKB::isConstUsedInAssign(stoi(assign), rhs)
                             || PKB::isVarUsedInAssign(stoi(assign), rhs))
-                            return evalClauses(cls, fil);
-                        }
+                            if (evalClauses(cls, fil))
+                                return true;
+                            else
+                                continue;
+                    }
                 }
             }
             return false;
