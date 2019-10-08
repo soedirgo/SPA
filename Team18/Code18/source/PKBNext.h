@@ -17,6 +17,6 @@ public:
 	bool clear();
 
 private:
-	static std::unordered_set<std::vector<std::string>, VectorHash> nextTable;
-	static std::unordered_set<std::vector<std::string>, VectorHash> nextStarTable;
+	static std::unordered_set<std::vector<std::string>, VectorDoubleStringHash> nextTable;
+	static std::unordered_set<std::vector<std::string>, VectorDoubleStringHash> nextStarTable;
 };

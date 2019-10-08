@@ -2,28 +2,28 @@
 
 using namespace std;
 
-unordered_set<vector<string>, VectorHash> PKBFollows::followsTable;
-unordered_set<vector<string>, VectorHash> PKBFollows::followsStarTable;
+unordered_set<vector<string>, VectorDoubleStringHash> PKBFollows::followsTable;
+unordered_set<vector<string>, VectorDoubleStringHash> PKBFollows::followsStarTable;
 
 bool PKBFollows::setFollows(STMT_NO followedBy, STMT_NO follows) {
 	vector<string> tuple = vector<string>();
-	tuple.push_back(to_string(followedBy));
-	tuple.push_back(to_string(follows));
+	tuple.push_back(followedBy);
+	tuple.push_back(follows);
 	followsTable.emplace(tuple);
 	return true;
 }
 
 bool PKBFollows::setFollowsStar(STMT_NO followedBy, STMT_NO follows) {
 	vector<string> tuple = vector<string>();
-	tuple.push_back(to_string(followedBy));
-	tuple.push_back(to_string(follows));
+	tuple.push_back(followedBy);
+	tuple.push_back(follows);
 	followsStarTable.emplace(tuple);
 	return true;
 }
 
 string PKBFollows::getFollows(STMT_NO followedBy) {
 	for (auto vectorIter : followsTable) {
-		if (vectorIter.front() == to_string(followedBy)) {
+		if (vectorIter.front() == followedBy) {
 			return vectorIter.back();
 		}
 	}
@@ -33,8 +33,8 @@ string PKBFollows::getFollows(STMT_NO followedBy) {
 bool PKBFollows::isFollowsRelationship(STMT_NO followedBy, STMT_NO follows) {
 
 	for (auto vectorIter : followsTable) {
-		if (vectorIter.front() == to_string(followedBy)) {
-			if (vectorIter.back() == to_string(follows)) {
+		if (vectorIter.front() == followedBy) {
+			if (vectorIter.back() == follows) {
 				return true;
 			}
 		}
@@ -45,8 +45,8 @@ bool PKBFollows::isFollowsRelationship(STMT_NO followedBy, STMT_NO follows) {
 bool PKBFollows::isFollowsStarRelationship(STMT_NO followedBy, STMT_NO follows) {
 
 	for (auto vectorIter : followsStarTable) {
-		if (vectorIter.front() == to_string(followedBy)) {
-			if (vectorIter.back() == to_string(follows)) {
+		if (vectorIter.front() == followedBy) {
+			if (vectorIter.back() == follows) {
 				return true;
 			}
 		}
@@ -54,7 +54,7 @@ bool PKBFollows::isFollowsStarRelationship(STMT_NO followedBy, STMT_NO follows) 
 	return false;
 }
 
-unordered_set<vector<string>, VectorHash> PKBFollows::getFollowsTable() {
+unordered_set<vector<string>, VectorDoubleStringHash> PKBFollows::getFollowsTable() {
 	return followsTable;
 }
 

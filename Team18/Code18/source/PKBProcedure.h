@@ -1,17 +1,17 @@
 #pragma once
 
 #include "AbstractType.h"
+#include "PKBHash.h"
 #include <unordered_set>
 
 class PKBProcedure {
 public:
-
-	static std::unordered_set<std::string> getAllProc();
-	static bool setProc(std::string procName);
+	static PROC_LIST getAllProc();
+	static bool setProc(PROC_NAME procName);
 
 	// Clear
 	bool clear();
 
 private:
-	static std::unordered_set<std::string> procedureTable;
+	static std::unordered_set<std::vector<std::string>, VectorSingleStringHash> procedureTable;
 };

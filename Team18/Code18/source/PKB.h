@@ -21,16 +21,16 @@ public:
 	//Higher order wrapper functions
 	/////////////////////////////////
 
-	static bool insertAssignRelation(STMT_NO stmtNo, std::string varModified, VAR_LIST varUsed, CONST_LIST constUsed);
+	//static bool insertAssignRelation(STMT_NO stmtNo, std::string varModified, VAR_LIST varUsed, CONST_LIST constUsed);
 
 	static bool isConstUsedInAssign(STMT_NO stmtNo, std::string c);
 	static bool isVarUsedInAssign(STMT_NO stmtNo, std::string c);
 
-	static bool setAssignStmt(STMT_NO stmtNo, std::string varModified);
-	static std::string getVarModifiedByAssignStmt(STMT_NO stmtNo);
+	//static bool setAssignStmt(STMT_NO stmtNo, std::string varModified);
+	//static std::string getVarModifiedByAssignStmt(STMT_NO stmtNo);
 	
-	static STMT_LIST getAssignStmtByVar(std::string varName);
-	static bool setAssignStmtByVar(STMT_NO stmtNo, std::string varName);
+	//static STMT_LIST getAssignStmtByVar(std::string varName);
+	//static bool setAssignStmtByVar(STMT_NO stmtNo, std::string varName);
 
 	static int setProcToAST(PROC p, TNode* r);
 	static TNode* getRootAST(PROC p);
@@ -53,7 +53,7 @@ public:
 	static STMT_LIST getAllCallStmt();
 
 	//Procedure Functions
-	static std::unordered_set<std::string> getAllProc();
+	static PROC_LIST getAllProc();
 	static bool setProc(std::string procName);
 
 	//Print Functions

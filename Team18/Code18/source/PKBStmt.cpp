@@ -1,30 +1,36 @@
 #include "PKBStmt.h"
-
 using namespace std;
-unordered_map<STMT_NO, STMT_TYPE> PKBStmt::stmtTable;
+
+unordered_set<vector<string>, VectorDoubleStringHash> PKBStmt::stmtTable;
 
 bool PKBStmt::setStmt(STMT_NO stmtNo, STMT_TYPE type) {
-	stmtTable.emplace(stmtNo, type);
+	vector<string> tuple = vector<string>();
+	tuple.push_back(stmtNo);
+	tuple.push_back(type);
+	stmtTable.emplace(tuple);
 	return true;
 }
 
 STMT_LIST PKBStmt::getAllStmt() {
-	unordered_set<STMT_NO> List;
-	for (auto keyValue : stmtTable) {
-		List.emplace(keyValue.first);
+	STMT_LIST list;
+	vector<string> tuple = vector<string>();
+	for (auto vectorIter : stmtTable) {
+		tuple.push_back(vectorIter.front());
+		list.emplace(tuple);
 	}
-	return List;
+	return list;
 }
 
 STMT_LIST PKBStmt::getAllStmtByType(STMT_TYPE type) {
-	unordered_set<STMT_NO> List;
-	for (auto keyValue : stmtTable) {
-		if (keyValue.second == type) {
-			List.emplace(keyValue.first);
-
+	STMT_LIST list;
+	vector<string> tuple = vector<string>();
+	for (auto vectorIter : stmtTable) {
+		if (vectorIter.back() == type) {
+			tuple.push_back(vectorIter.front());
+			list.emplace(tuple);
 		}
 	}
-	return List;
+	return list;
 };
 
 bool PKBStmt::clear() {

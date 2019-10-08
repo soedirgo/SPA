@@ -1,9 +1,9 @@
 #include "PKBCall.h"
 
 using namespace std;
-unordered_set<vector<string>, VectorHash> PKBCall::callProcTable;
-unordered_set<vector<string>, VectorHash> PKBCall::callStarProcTable;
-unordered_set<vector<string>, VectorHash> PKBCall::callStmtTable;
+unordered_set<vector<string>, VectorDoubleStringHash> PKBCall::callProcTable;
+unordered_set<vector<string>, VectorDoubleStringHash> PKBCall::callStarProcTable;
+unordered_set<vector<string>, VectorDoubleStringHash> PKBCall::callStmtTable;
 
 bool PKBCall::setCallProc(PROC_NAME caller, PROC_NAME callee) {
 	vector<string> tuple = vector<string>();
@@ -15,20 +15,22 @@ bool PKBCall::setCallProc(PROC_NAME caller, PROC_NAME callee) {
 
 bool PKBCall::setCallStmt(STMT_NO stmtNo, PROC_NAME caller) {
 	vector<string> tuple = vector<string>();
-	tuple.push_back(to_string(stmtNo));
+	tuple.push_back(stmtNo);
 	tuple.push_back(caller);
 	callStmtTable.emplace(tuple);
 	return true;
 }
 
 PROC_LIST PKBCall::getCalleeProc(PROC_NAME caller) {
-	PROC_LIST calleeList;
+	PROC_LIST list;
+	vector<string> tuple = vector<string>();
 	for (auto vectorIter : callProcTable) {
 		if (vectorIter.front() == caller) {
-			calleeList.emplace(vectorIter.back());
+			tuple.push_back(vectorIter.back());
+			list.emplace(tuple);
 		}
 	}
-	return calleeList;
+	return list;
 }
 
 bool PKBCall::isCallRelationship(PROC_NAME caller, PROC_NAME callee) {
@@ -63,7 +65,7 @@ bool PKBCall::setCallStarProc(PROC_NAME caller, PROC_NAME callee) {
 	return true;
 }
 
-unordered_set<vector<string>, VectorHash> PKBCall::getCallProcTable() {
+unordered_set<vector<string>, VectorDoubleStringHash> PKBCall::getCallProcTable() {
 	return callProcTable;
 }
 

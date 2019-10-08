@@ -29,7 +29,7 @@ public:
 	static bool setFollows(STMT_NO followedBy, STMT_NO follows);
 	static bool setFollowsStar(STMT_NO followedBy, STMT_NO follows);
 	static std::string getFollows(STMT_NO followedBy);
-	static std::unordered_set<std::vector<std::string>, VectorHash> getFollowsTable();
+	static std::unordered_set<std::vector<std::string>, VectorDoubleStringHash> getFollowsTable();
 	static bool isFollowsRelationship(STMT_NO followedBy, STMT_NO follows);
 	static bool isFollowsStarRelationship(STMT_NO followedBy, STMT_NO follows);
 
@@ -44,6 +44,6 @@ private:
 	//static std::unordered_map<int, std::unordered_set<int>> followedByTable;
 	//static std::unordered_map<int, std::unordered_set<int>> followStarTable;
 
-	static std::unordered_set<std::vector<std::string>, VectorHash> followsTable;
-	static std::unordered_set<std::vector<std::string>, VectorHash> followsStarTable;
+	static std::unordered_set<std::vector<std::string>, VectorDoubleStringHash> followsTable;
+	static std::unordered_set<std::vector<std::string>, VectorDoubleStringHash> followsStarTable;
 };

@@ -1,24 +1,26 @@
 #include "PKBConstant.h"
 using namespace std;
 
-unordered_set<vector<string>, VectorHash> PKBConstant::constantTable;
+unordered_set<vector<string>, VectorDoubleStringHash> PKBConstant::constantTable;
 
 bool PKBConstant::setConstant(CONST_VALUE constValue, STMT_NO stmtNo) {
 	vector<string> tuple = vector<string>();
 	tuple.push_back(constValue);
-	tuple.push_back(to_string(stmtNo));
+	tuple.push_back(stmtNo);
 	constantTable.emplace(tuple);
 	return true;
 }
 
 STMT_LIST PKBConstant::getAllConstantStmtByVal(CONST_VALUE constValue) {
-	unordered_set<int> stmtList;
+	STMT_LIST list;
+	vector<string> tuple = vector<string>();
 	for (auto vectorIter : constantTable) {
 		if (vectorIter.front() == constValue) {
-			stmtList.emplace(stoi(vectorIter.back()));
+			tuple.push_back(vectorIter.back());
+			list.emplace(tuple);
 		}
 	}
-	return stmtList;
+	return list;
 }
 
 CONST_LIST PKBConstant::getAllConstantVal() {

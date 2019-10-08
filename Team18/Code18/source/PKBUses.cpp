@@ -1,12 +1,12 @@
 #include "PKBUses.h"
 
 using namespace std;
-unordered_set<vector<string>, VectorHash> PKBUses::usesStmtTable;
-unordered_set<vector<string>, VectorHash> PKBUses::usesProcTable;
+unordered_set<vector<string>, VectorDoubleStringHash> PKBUses::usesStmtTable;
+unordered_set<vector<string>, VectorDoubleStringHash> PKBUses::usesProcTable;
 
 bool PKBUses::setUsesStmt(STMT_NO stmtNo, VAR_NAME varName) {
 	vector<string> tuple = vector<string>();
-	tuple.push_back(to_string(stmtNo));
+	tuple.push_back(stmtNo);
 	tuple.push_back(varName);
 	usesStmtTable.emplace(tuple);
 	return true;
@@ -24,7 +24,7 @@ bool PKBUses::setUsesProc(PROC_NAME procName, VAR_NAME varName) {
 bool PKBUses::isUsesStmtRelationship(STMT_NO stmtNo, VAR_NAME varName) {
 
 	for (auto vectorIter : usesStmtTable) {
-		if (vectorIter.front() == to_string(stmtNo)) {
+		if (vectorIter.front() == stmtNo) {
 			if (vectorIter.back() == varName) {
 				return true;
 			}
@@ -34,13 +34,15 @@ bool PKBUses::isUsesStmtRelationship(STMT_NO stmtNo, VAR_NAME varName) {
 }
 
 STMT_LIST PKBUses::getUsesStmt(VAR_NAME varName) {
-	unordered_set<int> stmtList;
+	STMT_LIST list;
+	vector<string> tuple = vector<string>();
 	for (auto vectorIter : usesStmtTable) {
 		if (vectorIter.back() == varName) {
-			stmtList.emplace(stoi(vectorIter.front()));
+			tuple.push_back(vectorIter.front());
+			list.emplace(tuple);
 		}
 	}
-	return stmtList;
+	return list;
 }
 //Uses(s1,__)
 /*

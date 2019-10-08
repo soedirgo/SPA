@@ -3,40 +3,42 @@
 
 using namespace std;
 
-unordered_set<vector<string>, VectorHash> PKBParent::parentTable;
-unordered_set<vector<string>, VectorHash> PKBParent::parentStarTable;
+unordered_set<vector<string>, VectorDoubleStringHash> PKBParent::parentTable;
+unordered_set<vector<string>, VectorDoubleStringHash> PKBParent::parentStarTable;
 
 bool PKBParent::setParent(STMT_NO parent, STMT_NO child) {
 	vector<string> tuple = vector<string>();
-	tuple.push_back(to_string(parent));
-	tuple.push_back(to_string(child));
+	tuple.push_back(parent);
+	tuple.push_back(child);
 	parentTable.emplace(tuple);
 	return true;
 }
 
 bool PKBParent::setParentStar(STMT_NO parent, STMT_NO child) {
 	vector<string> tuple = vector<string>();
-	tuple.push_back(to_string(parent));
-	tuple.push_back(to_string(child));
+	tuple.push_back(parent);
+	tuple.push_back(child);
 	parentStarTable.emplace(tuple);
 	return true;
 }
 
-unordered_set<string> PKBParent::getChild(STMT_NO parent) {
-	unordered_set<string> childList;
+STMT_LIST PKBParent::getChild(STMT_NO parent) {
+	STMT_LIST list;
+	vector<string> tuple = vector<string>();
 	for (auto vectorIter : parentTable) {
-		if (vectorIter.front() == to_string(parent)) {
-			childList.emplace(vectorIter.back());
+		if (vectorIter.front() == parent) {
+			tuple.push_back(vectorIter.back());
+			list.emplace(tuple);
 		}
 	}
-	return childList;
+	return list;
 }
 
 bool PKBParent::isParentRelationship(STMT_NO parent, STMT_NO child) {
 
 	for (auto vectorIter : parentTable) {
-		if (vectorIter.front() == to_string(parent)) {
-			if (vectorIter.back() == to_string(child)) {
+		if (vectorIter.front() == parent) {
+			if (vectorIter.back() == child) {
 				return true;
 			}
 		}
@@ -47,8 +49,8 @@ bool PKBParent::isParentRelationship(STMT_NO parent, STMT_NO child) {
 bool PKBParent::isParentStarRelationship(STMT_NO parent, STMT_NO child) {
 
 	for (auto vectorIter : parentStarTable) {
-		if (vectorIter.front() == to_string(parent)) {
-			if (vectorIter.back() == to_string(child)) {
+		if (vectorIter.front() == parent) {
+			if (vectorIter.back() == child) {
 				return true;
 			}
 		}
@@ -56,7 +58,7 @@ bool PKBParent::isParentStarRelationship(STMT_NO parent, STMT_NO child) {
 	return false;
 }
 
-unordered_set<vector<string>, VectorHash> PKBParent::getParentTable() {
+unordered_set<vector<string>, VectorDoubleStringHash> PKBParent::getParentTable() {
 	return parentTable;
 }
 
