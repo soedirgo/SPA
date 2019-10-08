@@ -15,6 +15,8 @@
 #include "PKBPrint.h"
 #include "PKBRead.h"
 #include "PKBConstant.h"
+#include "PKBWhile.h"
+#include "PKBIf.h"
 using namespace std;
 
 unordered_map<int, string> PKB::assignStmtTable;
@@ -211,7 +213,7 @@ STMT_LIST PKB::getAllStmt() {
 ////////////////////////////////////
 
 STMT_LIST PKB::getAllAssignStmt() {
-	return PKBStmt::getAllStmtByType("Assign");
+	return PKBStmt::getAllStmtByType("ASSIGN");
 }
 
 /*
@@ -263,7 +265,7 @@ bool PKB::setAssignStmtByVar(STMT_NO stmtNo, string varName) {
 ////////////////////////////////////
 
 STMT_LIST PKB::getAllWhileStmt() {
-	return PKBStmt::getAllStmtByType("While");
+	return PKBStmt::getAllStmtByType("WHILE");
 };
 
 
@@ -272,7 +274,7 @@ STMT_LIST PKB::getAllWhileStmt() {
 ////////////////////////////////////
 
 STMT_LIST PKB::getAllIfStmt() {
-	return PKBStmt::getAllStmtByType("If");
+	return PKBStmt::getAllStmtByType("IF");
 };
 
 ////////////////////////////////////
@@ -280,7 +282,7 @@ STMT_LIST PKB::getAllIfStmt() {
 ////////////////////////////////////
 
 STMT_LIST PKB::getAllPrintStmt() {
-	return PKBStmt::getAllStmtByType("Print");
+	return PKBStmt::getAllStmtByType("PRINT");
 };
 
 bool PKB::setPrintStmt(STMT_NO stmtNo, string varName) {
@@ -292,7 +294,7 @@ bool PKB::setPrintStmt(STMT_NO stmtNo, string varName) {
 ////////////////////////////////////
 
 STMT_LIST PKB::getAllReadStmt() {
-	return PKBStmt::getAllStmtByType("Read");
+	return PKBStmt::getAllStmtByType("READ");
 };
 
 bool PKB::setReadStmt(STMT_NO stmtNo, string varName) {
@@ -309,7 +311,7 @@ PROC_LIST PKB::getAllProc() {
 };
 
 
-bool PKB::setProc(string procName) {
+bool PKB::setProc(PROC_NAME procName) {
 	return PKBProcedure::setProc(procName);
 };
 
@@ -319,7 +321,7 @@ bool PKB::setProc(string procName) {
 ////////////////////////////////////
 
 STMT_LIST PKB::getAllCallStmt() {
-	return PKBStmt::getAllStmtByType("Call");
+	return PKBStmt::getAllStmtByType("CALL");
 };
 
 bool PKB::setCallProcRelation(PROC_NAME caller, PROC_NAME callee) {
@@ -352,3 +354,14 @@ bool PKB::isNextRelationship(PROG_LINE n1, PROG_LINE n2) {
 bool PKB::isNextStarRelationship(PROG_LINE n1, PROG_LINE n2) {
 	return PKBNext::isNextStarRelationship(n1, n2);
 }
+
+// New While Uses
+bool PKB::setWhileUsesRelation(STMT_NO stmtNo, VAR_NAME varName) {
+	return PKBWhile::setWhileUses(stmtNo, varName);
+}
+
+// New If Uses
+bool PKB::setIfUsesRelation(STMT_NO stmtNo, VAR_NAME varName) {
+	return PKBIf::setIfUses(stmtNo, varName);
+}
+

@@ -42,6 +42,10 @@ bool PKBNext::isNextStarRelationship(PROG_LINE n1, PROG_LINE n2) {
 	return false;
 }
 
+unordered_set<vector<string>, VectorDoubleStringHash> PKBNext::getNextTable() {
+	return nextTable;
+}
+
 bool PKBNext::clear() {
 	nextTable.clear();
 	nextStarTable.clear();

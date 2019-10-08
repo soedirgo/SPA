@@ -3,6 +3,7 @@
 #include "PKBParent.h"
 #include "PKBFollow.h"
 #include "PKBCall.h"
+#include "PKBNext.h"
 
 using namespace std;
 
@@ -11,6 +12,18 @@ void DesignExtractor::extractDesign()
 	extractFollowsStar();
 	extractParentStar();
 	extractCallStar();
+	extractNextStar();
+}
+
+void DesignExtractor::extractNextStar()
+{
+	unordered_set<vector<string>, VectorDoubleStringHash> nextTable = PKBNext::getNextTable();
+	for (auto vectorIter : nextTable) {
+		string n1 = vectorIter.front();
+		string n2 = vectorIter.back();
+		PKBNext::setNextStar(n1, n2);
+		recurseNext(n1, n2);
+	}
 }
 
 void DesignExtractor::extractParentStar()
@@ -76,5 +89,17 @@ void DesignExtractor::recurseParent(STMT_NO parent, STMT_NO child) {
 		PROC_NAME newChild = vectorIter.back();
 		PKBParent::setParentStar(parent, newChild);
 		recurseParent(parent, newChild);
+	}
+}
+
+void DesignExtractor::recurseNext(PROG_LINE n1, PROG_LINE n2) {
+	PROC_LIST nextList = PKBNext::getNext(n1);
+	if (nextList.size() == 0) {
+		return;
+	}
+	for (auto vectorIter : nextList) {
+		PROC_NAME newNext = vectorIter.back();
+		PKBNext::setNextStar(n1, newNext);
+		recurseNext(n1, newNext);
 	}
 }

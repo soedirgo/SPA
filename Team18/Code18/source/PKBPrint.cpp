@@ -13,8 +13,8 @@ bool PKBPrint::setPrint(STMT_NO stmtNo, VAR_NAME varName) {
 
 VAR_LIST PKBPrint::getPrintVar(STMT_NO stmtNo) {
 	VAR_LIST list;
-	vector<string> tuple = vector<string>();
 	for (auto vectorIter : printTable) {
+		vector<string> tuple = vector<string>();
 		if (vectorIter.front() == stmtNo) {
 			tuple.push_back(vectorIter.back());
 			list.emplace(tuple);

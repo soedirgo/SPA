@@ -13,8 +13,8 @@ bool PKBConstant::setConstant(CONST_VALUE constValue, STMT_NO stmtNo) {
 
 STMT_LIST PKBConstant::getAllConstantStmtByVal(CONST_VALUE constValue) {
 	STMT_LIST list;
-	vector<string> tuple = vector<string>();
 	for (auto vectorIter : constantTable) {
+		vector<string> tuple = vector<string>();
 		if (vectorIter.front() == constValue) {
 			tuple.push_back(vectorIter.back());
 			list.emplace(tuple);

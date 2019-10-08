@@ -54,7 +54,7 @@ public:
 
 	//Procedure Functions
 	static PROC_LIST getAllProc();
-	static bool setProc(std::string procName);
+	static bool setProc(PROC_NAME procName);
 
 	//Print Functions
 	static bool setPrintStmt(STMT_NO stmtNo, std::string varName);
@@ -65,6 +65,12 @@ public:
 	//Constant Functions
 	static bool setConstant(CONST_VALUE constantVal, STMT_NO stmtNo);
 	static CONST_LIST getAllConstant();
+
+	//While Functions
+	static bool setWhileUsesRelation(STMT_NO stmtNo, VAR_NAME varName);
+
+	//If Functions
+	static bool setIfUsesRelation(STMT_NO stmtNo, VAR_NAME varName);
 
 	//Follow Functions
 	static bool setFollowsRelation(STMT_NO followedBy, STMT_NO follow);

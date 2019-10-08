@@ -13,6 +13,8 @@ public:
 	static bool isNextRelationship(PROG_LINE n1, PROG_LINE n2);
 	static bool isNextStarRelationship(PROG_LINE n1, PROG_LINE n2);
 
+	static STMT_LIST getNext(PROG_LINE n1);
+	static std::unordered_set<std::vector<std::string>, VectorDoubleStringHash> getNextTable();
 	// Clear
 	bool clear();
 

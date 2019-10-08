@@ -13,8 +13,8 @@ bool PKBRead::setRead(STMT_NO stmtNo, VAR_NAME varName) {
 
 VAR_LIST PKBRead::getReadVar(STMT_NO stmtNo) {
 	VAR_LIST list;
-	vector<string> tuple = vector<string>();
 	for (auto vectorIter : readTable) {
+		vector<string> tuple = vector<string>();
 		if (vectorIter.front() == stmtNo) {
 			tuple.push_back(vectorIter.back());
 			list.emplace(tuple);

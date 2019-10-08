@@ -13,8 +13,8 @@ bool PKBStmt::setStmt(STMT_NO stmtNo, STMT_TYPE type) {
 
 STMT_LIST PKBStmt::getAllStmt() {
 	STMT_LIST list;
-	vector<string> tuple = vector<string>();
 	for (auto vectorIter : stmtTable) {
+		vector<string> tuple = vector<string>();
 		tuple.push_back(vectorIter.front());
 		list.emplace(tuple);
 	}
@@ -23,8 +23,8 @@ STMT_LIST PKBStmt::getAllStmt() {
 
 STMT_LIST PKBStmt::getAllStmtByType(STMT_TYPE type) {
 	STMT_LIST list;
-	vector<string> tuple = vector<string>();
 	for (auto vectorIter : stmtTable) {
+		vector<string> tuple = vector<string>();
 		if (vectorIter.back() == type) {
 			tuple.push_back(vectorIter.front());
 			list.emplace(tuple);

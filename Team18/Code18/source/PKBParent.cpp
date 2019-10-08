@@ -24,8 +24,8 @@ bool PKBParent::setParentStar(STMT_NO parent, STMT_NO child) {
 
 STMT_LIST PKBParent::getChild(STMT_NO parent) {
 	STMT_LIST list;
-	vector<string> tuple = vector<string>();
 	for (auto vectorIter : parentTable) {
+		vector<string> tuple = vector<string>();
 		if (vectorIter.front() == parent) {
 			tuple.push_back(vectorIter.back());
 			list.emplace(tuple);
