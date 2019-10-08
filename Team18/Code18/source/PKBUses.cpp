@@ -22,7 +22,6 @@ bool PKBUses::setUsesProc(PROC_NAME procName, VAR_NAME varName) {
 
 
 bool PKBUses::isUsesStmtRelationship(STMT_NO stmtNo, VAR_NAME varName) {
-
 	for (auto vectorIter : usesStmtTable) {
 		if (vectorIter.front() == to_string(stmtNo)) {
 			if (vectorIter.back() == varName) {
@@ -32,9 +31,21 @@ bool PKBUses::isUsesStmtRelationship(STMT_NO stmtNo, VAR_NAME varName) {
 	}
 	return false;
 }
+	
 
-STMT_LIST PKBUses::getUsesStmt(VAR_NAME varName) {
-	unordered_set<int> stmtList;
+//Stmt s1 ; Select Uses(s1,__) 
+STMT_LIST PKBUses::getAllUsesStmt() {
+	STMT_LIST result = STMT_LIST();
+
+	for (auto iter : usesStmtTable) {
+		result.emplace(iter.front());
+	}
+	return result;
+}
+
+//Var v ; select s such that uses(s,v) 
+STMT_LIST PKBUses::getUsesStmtByVar(VAR_NAME varName) {
+	STMT_LIST stmtList;
 	for (auto vectorIter : usesStmtTable) {
 		if (vectorIter.back() == varName) {
 			stmtList.emplace(stoi(vectorIter.front()));
@@ -42,60 +53,48 @@ STMT_LIST PKBUses::getUsesStmt(VAR_NAME varName) {
 	}
 	return stmtList;
 }
-//Uses(s1,__)
-/*
-unordered_set<string> PKBUses::getAllS1() {
 
-	// container for results
-	unordered_set<string> result = unordered_set<string>();
-	/*
-	if (isStmtType(firstArgType)) {
-		// stmt set to check
-		unordered_set<string> stmts;
-
-		// check through the arg types
-		if (firstArgType == ARG_ASSIGN) {
-			stmts = stmtTable->getAssgStmts();
-		}
-		else if (firstArgType == ARG_WHILE) {
-			stmts = stmtTable->getWhileStmts();
-		}
-		else if (firstArgType == ARG_IF) {
-			stmts = stmtTable->getIfStmts();
-		}
-		else if (firstArgType == ARG_CALL) {
-			stmts = stmtTable->getCallStmts();
-		}
-		else {
-			stmts = stmtTable->getAllStmts();
-		}
-
-		BOOST_FOREACH(auto s, stmts) {
-			if (!s->getUses().empty()) {
-				result.insert(lexical_cast<string>(s->getStmtNum()));
-			}
-		}
-
-		// dealing with set of proc
-	}
-	else {
-		// get all procs
-		unordered_set<Procedure*> allProcs = procTable->getAllProcs();
-
-		BOOST_FOREACH(auto p, allProcs) {
-			if (!p->getUses().empty()) {
-				result.insert(p->getProcName());
-			}
+// Uses(1, v)
+//LHS is fixed as stmt 
+VAR_LIST PKBUses::getUsesVarByStmt(STMT_NO stmtNo) {
+	VAR_LIST stmtList;
+	for (auto vectorIter : usesStmtTable) {
+		if (vectorIter.front() == stmtNo) {
+			stmtList.emplace(stoi(vectorIter.back()));
 		}
 	}
-	
+	return stmtList;
+}
 
+
+//Procedure p1 ; Select Uses(p1,__) 
+PROC_LIST PKBUses::getAllUsesProc() {
+	PROC_LIST result = PROC_LIST();
+
+	for (auto iter : usesProcTable) {
+		result.emplace(iter.front());
+	}
 	return result;
 }
-*/
+
+//Var v Proc p ; 
+//select p such that uses(p,v) 
+PROC_LIST PKBUses::getUsesProcByVar(VAR_NAME varName) {
+	unordered_set<int> stmtList;
+	for (auto vectorIter : usesProcTable) {
+		if (vectorIter.back() == varName) {
+			stmtList.emplace(stoi(vectorIter.front()));
+		}
+	}
+	return stmtList;
+}
+
+
+
 
 
 bool PKBUses::clear() {
 	usesStmtTable.clear();
+	usesProcTable.clear(); 
 	return true;
 }

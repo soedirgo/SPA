@@ -12,7 +12,7 @@ bool PKBModifies::setModifiesStmt(STMT_NO stmtNo, VAR_NAME varName) {
 	return true;
 }
 
-bool PKBModifies::setModifiesProc(PROC_NAME procName, VAR_NAME varName) {
+bool PKBModifies::setModifiesoc(PROC_NAME procName, VAR_NAME varName) {
 	vector<string> tuple = vector<string>();
 	tuple.push_back(procName);
 	tuple.push_back(varName);
