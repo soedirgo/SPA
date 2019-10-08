@@ -7,7 +7,8 @@
 class PKBRead {
 public:
 	static bool setRead(STMT_NO stmtNo, VAR_NAME varName);
-	static VAR_LIST getReadVar(STMT_NO stmtNo);
+	static STMT_LIST getReadStmt(VAR_NAME varName);
+	static VAR_NAME getReadVar(STMT_NO stmtNo);
 	// Clear
 	bool clear();
 

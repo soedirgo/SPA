@@ -63,7 +63,7 @@ public:
 	static bool setReadStmt(STMT_NO stmtNo, std::string varName);
 
 	//Constant Functions
-	static bool setConstant(CONST_VALUE constantVal, STMT_NO stmtNo);
+	static bool setConstant(STMT_NO stmtNo, CONST_VALUE constantVal);
 	static CONST_LIST getAllConstant();
 
 	//While Functions
@@ -88,6 +88,7 @@ public:
 	static bool setModifiesStmtRelation(STMT_NO stmtNo, VAR_NAME varName);
 	static bool setModifiesProcRelation(PROC_NAME procName, VAR_NAME varName);
 	static bool isModifiesStmtRelationship(STMT_NO stmtNo, VAR_NAME varName);
+	static bool isModifiesProcRelationship(PROC_NAME procName, VAR_NAME varName);
 
 	//Uses Function
 	static bool setUsesStmtRelation(STMT_NO stmtNo, VAR_NAME varName);

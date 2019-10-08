@@ -6,7 +6,7 @@
 class PKBConstant {
 public:
 
-	static bool setConstant(CONST_VALUE constVal, STMT_NO stmtNo);
+	static bool setConstant(STMT_NO stmtNo, CONST_VALUE constVal);
 	static STMT_LIST getAllConstantStmtByVal(CONST_VALUE constVal);
 	static CONST_LIST getAllConstantVal();
 	// Clear

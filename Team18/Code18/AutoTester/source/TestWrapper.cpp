@@ -58,8 +58,9 @@ void TestWrapper::evaluate(std::string query, std::list<std::string>& results){
         results = {};
         return;
     }
+
 	QueryParser queryParser = QueryParser();
-	list<string> evResult = queryParser.parse(query);
+	//list<string> evResult = queryParser.parse(query);
 
 	//std::cout << evResult;
 
@@ -67,6 +68,6 @@ void TestWrapper::evaluate(std::string query, std::list<std::string>& results){
   // store the answers to the query in the results list (it is initially empty)
   // each result must be a string.
 
-	results = evResult;	
+	//results = evResult;	
 
 }

@@ -9,11 +9,12 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace UnitTesting
 {
-
+	/*
 	TEST_CLASS(TestProgramParser)
+
 	{
 	public:
-
+		
 		TEST_METHOD(ProcTest)
 		{
 			Parser parser = Parser();
@@ -249,4 +250,5 @@ namespace UnitTesting
 			Assert::AreEqual(expected, actual);
 		}
 	};
+	*/
 }

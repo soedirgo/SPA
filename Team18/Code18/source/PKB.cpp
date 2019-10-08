@@ -108,6 +108,10 @@ bool PKB::isModifiesStmtRelationship(STMT_NO stmtNo, VAR_NAME varName) {
 	return PKBModifies::isModifiesStmtRelationship(stmtNo, varName);
 }
 
+bool PKB::isModifiesProcRelationship(PROC_NAME procName, VAR_NAME varName) {
+	return PKBModifies::isModifiesProcRelationship(procName, varName);
+}
+
 bool PKB::isUsesStmtRelationship(STMT_NO stmtNo, VAR_NAME varName) {
 	return PKBUses::isUsesStmtRelationship(stmtNo, varName);
 }
@@ -188,8 +192,8 @@ VAR_LIST PKB::getAllVar() {
 // constantTable APIs
 ////////////////////////////////////
 
-bool PKB::setConstant(CONST_VALUE constantVal, STMT_NO stmtNo) {
-	return PKBConstant::setConstant(constantVal, stmtNo);
+bool PKB::setConstant(STMT_NO stmtNo, CONST_VALUE constantVal) {
+	return PKBConstant::setConstant(stmtNo, constantVal);
 }
 
 CONST_LIST PKB::getAllConstant() {

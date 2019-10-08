@@ -7,18 +7,20 @@
 class PKBNext {
 public:
 
-	static bool setNext(PROG_LINE n1, PROG_LINE n2);
-	static bool setNextStar(PROG_LINE n1, PROG_LINE n2);
+	static bool setNext(PROG_LINE nextByLine, PROG_LINE nextLine);
+	static bool setNextStar(PROG_LINE nextByLine, PROG_LINE nextLine);
+	static LINE_LIST getNext(PROG_LINE nextByLine);
 
-	static bool isNextRelationship(PROG_LINE n1, PROG_LINE n2);
-	static bool isNextStarRelationship(PROG_LINE n1, PROG_LINE n2);
+	static bool isNextRelationship(PROG_LINE nextByLine, PROG_LINE nextLine);
+	static bool isNextStarRelationship(PROG_LINE nextByLine, PROG_LINE nextLine);
 
-	static STMT_LIST getNext(PROG_LINE n1);
 	static std::unordered_set<std::vector<std::string>, VectorDoubleStringHash> getNextTable();
+
 	// Clear
 	bool clear();
 
 private:
+
 	static std::unordered_set<std::vector<std::string>, VectorDoubleStringHash> nextTable;
 	static std::unordered_set<std::vector<std::string>, VectorDoubleStringHash> nextStarTable;
 };

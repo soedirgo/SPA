@@ -10,11 +10,13 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace IntegrationTesting
 {
+	/*
 	TEST_CLASS(TestEvaluator)
 	{
 	public:
         TEST_METHOD_INITIALIZE(evaluatorInit)
         {
+			
             /**
                SIMPLE program:
                _   procedure main {
@@ -30,7 +32,7 @@ namespace IntegrationTesting
                8.          print x;
                _       }
             */
-
+			/*
             PKB pkb;
 
             pkb.clear();
@@ -97,7 +99,9 @@ namespace IntegrationTesting
             pkb.setParentStarRelation(6, 8);
             pkb.setFollowsRelation(7, 8);
             pkb.setFollowsStarRelation(7, 8);
+			*/
 		}
+		/*
         TEST_METHOD(evaluatorNoClause)
         {
             unordered_map<string, string> decl = { {"s", "stmt"},
@@ -162,6 +166,7 @@ namespace IntegrationTesting
                8. Select C such that Uses(2, "x");
                9. Select P such that Modifies(P, "z");
             */
+		/*
             unordered_map<string, string> decl = { {"s", "stmt"},
                                                    {"r", "read"},
                                                    {"p", "print"},
@@ -224,6 +229,7 @@ namespace IntegrationTesting
                9. Select p such that Parent*(w, p);
                10.Select a such that Parent*(s, a);
              */
+			 /**
             unordered_map<string, string> decl = { {"s", "stmt"},
                                                    {"r", "read"},
                                                    {"p", "print"},
@@ -284,6 +290,7 @@ namespace IntegrationTesting
                3. Select a pattern a(_, 1)
                4. Select a pattern a(z, 0)
              */
+			 /**
             unordered_map<string, string> decl = { {"s", "stmt"},
                                                    {"r", "read"},
                                                    {"p", "print"},
@@ -312,5 +319,8 @@ namespace IntegrationTesting
             actual = Evaluator::evalQuery(Query(decl, "a", {}, { {"a", {"\"z\"", "\"0\""}} }));
             Assert::IsTrue(expected == actual);
         }
+		
 	};
+
 }
+	*/

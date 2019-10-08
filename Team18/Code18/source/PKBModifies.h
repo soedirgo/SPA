@@ -10,6 +10,7 @@ public:
 	static bool setModifiesStmt(STMT_NO stmtNo, VAR_NAME varName);
 	static bool setModifiesProc(PROC_NAME procName, VAR_NAME varName);
 	static bool isModifiesStmtRelationship(STMT_NO stmtNo, VAR_NAME varName);
+	static bool isModifiesProcRelationship(PROC_NAME procName, VAR_NAME varName);
 
 	// Clear
 	bool clear();

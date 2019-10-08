@@ -10,6 +10,7 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace UnitTesting
 {
+	/*
 	TEST_CLASS(TestQueryParser)
 	{
 	public:
@@ -31,7 +32,7 @@ namespace UnitTesting
 			   9.		   x = x + 1;
                _       }
             */
-
+			/*
             PKB pkb;
 
             pkb.clear();
@@ -105,7 +106,9 @@ namespace UnitTesting
 			pkb.setModifiesStmtRelation(9, "x");
 			pkb.setFollowsRelation(8, 9);
 			pkb.setFollowsStarRelation(8, 9);
+			*/
 		}
+		/*
         TEST_METHOD(validQueries)
         {
             list<string> expected;
@@ -294,5 +297,7 @@ namespace UnitTesting
 			Assert::AreEqual(actual4 == expected4, true);
 		
 		}
+		
 	};
-}
+	
+}*/

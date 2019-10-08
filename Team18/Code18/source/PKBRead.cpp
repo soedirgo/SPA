@@ -11,16 +11,25 @@ bool PKBRead::setRead(STMT_NO stmtNo, VAR_NAME varName) {
 	return true;
 }
 
-VAR_LIST PKBRead::getReadVar(STMT_NO stmtNo) {
+VAR_LIST PKBRead::getReadStmt(VAR_NAME varName) {
 	VAR_LIST list;
 	for (auto vectorIter : readTable) {
 		vector<string> tuple = vector<string>();
-		if (vectorIter.front() == stmtNo) {
-			tuple.push_back(vectorIter.back());
+		if (vectorIter.back() == varName) {
+			tuple.push_back(vectorIter.front());
 			list.emplace(tuple);
 		}
 	}
 	return list;
+}
+
+VAR_NAME PKBRead::getReadVar(STMT_NO stmtNo) {
+	for (auto vectorIter : readTable) {
+		if (vectorIter.front() == stmtNo) {
+			return vectorIter.back();
+		}
+	}
+	return "";
 }
 
 bool PKBRead::clear() {

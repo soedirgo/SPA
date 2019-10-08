@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "CppUnitTest.h"
 #include "PKBParent.h"
+#include "DesignExtractor.h"
 
 using namespace std;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
@@ -40,8 +41,37 @@ namespace UnitTesting
 				18.		print v; }
 		   */
 
-			PKBParent PKBParent;
-			PKBParent.clear();
+			PKBParent PKB;
+			PKB.clear();
+
+			PKB.setParent("6", "7");
+			PKB.setParent("6", "8");
+			PKB.setParent("6", "9");
+			PKB.setParent("10", "11");
+			PKB.setParent("10", "12");
+
+			DesignExtractor DesignExtractor;
+			DesignExtractor.extractDesign();
+		}
+
+		TEST_METHOD(ParentRelationship)
+		{
+			PKBParent PKB;
+			Assert::IsTrue(PKB.isParentRelationship("6","7"));
+			Assert::IsTrue(PKB.isParentRelationship("6", "8"));
+			Assert::IsTrue(PKB.isParentRelationship("6", "9"));
+			Assert::IsTrue(PKB.isParentRelationship("10", "11"));
+			Assert::IsTrue(PKB.isParentRelationship("10", "12"));
+		}
+
+		TEST_METHOD(ParentStarRelationship)
+		{
+			PKBParent PKB;
+			Assert::IsTrue(PKB.isParentStarRelationship("6", "7"));
+			Assert::IsTrue(PKB.isParentStarRelationship("6", "8"));
+			Assert::IsTrue(PKB.isParentStarRelationship("6", "9"));
+			Assert::IsTrue(PKB.isParentStarRelationship("10", "11"));
+			Assert::IsTrue(PKB.isParentStarRelationship("10", "12"));
 		}
 	};
 };

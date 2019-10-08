@@ -12,7 +12,7 @@ void DesignExtractor::extractDesign()
 	extractFollowsStar();
 	extractParentStar();
 	extractCallStar();
-	extractNextStar();
+	//extractNextStar();
 }
 
 void DesignExtractor::extractNextStar()
@@ -92,14 +92,14 @@ void DesignExtractor::recurseParent(STMT_NO parent, STMT_NO child) {
 	}
 }
 
-void DesignExtractor::recurseNext(PROG_LINE n1, PROG_LINE n2) {
-	PROC_LIST nextList = PKBNext::getNext(n1);
-	if (nextList.size() == 0) {
+void DesignExtractor::recurseNext(PROG_LINE nextByLine, PROG_LINE nextLine) {
+	LINE_LIST lineList = PKBNext::getNext(nextLine);
+	if (lineList.size() == 0) {
 		return;
 	}
-	for (auto vectorIter : nextList) {
-		PROC_NAME newNext = vectorIter.back();
-		PKBNext::setNextStar(n1, newNext);
-		recurseNext(n1, newNext);
+	for (auto vectorIter : lineList) {
+		PROG_LINE newNextLine = vectorIter.back();
+		PKBNext::setNextStar(nextByLine, newNextLine);
+		recurseNext(nextByLine, newNextLine);
 	}
 }

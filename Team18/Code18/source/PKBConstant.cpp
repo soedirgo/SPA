@@ -3,7 +3,7 @@ using namespace std;
 
 unordered_set<vector<string>, VectorDoubleStringHash> PKBConstant::constantTable;
 
-bool PKBConstant::setConstant(CONST_VALUE constValue, STMT_NO stmtNo) {
+bool PKBConstant::setConstant(STMT_NO stmtNo, CONST_VALUE constValue) {
 	vector<string> tuple = vector<string>();
 	tuple.push_back(stmtNo);
 	tuple.push_back(constValue);
