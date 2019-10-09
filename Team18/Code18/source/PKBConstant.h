@@ -13,5 +13,5 @@ public:
 	bool clear();
 
 private:
-	static std::unordered_set<std::vector<std::string>, VectorHash> constantTable;
+	static std::unordered_set<std::vector<std::string>, VectorDoubleStringHash> constantTable;
 };

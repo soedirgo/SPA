@@ -110,6 +110,7 @@ bool PKB::isUsesStmtRelationship(STMT_NO stmtNo, VAR_NAME varName) {
 	return PKBUses::isUsesStmtRelationship(stmtNo, varName);
 }
 
+/*
 bool PKB::isConstUsedInAssign(STMT_NO assignStmtNo, string c) {
 	//STMT_LIST stmtList = getStmtByConst(c); 
 	STMT_LIST stmtList = PKBConstant::getAllConstantStmtByVal(c);
@@ -120,7 +121,9 @@ bool PKB::isConstUsedInAssign(STMT_NO assignStmtNo, string c) {
 	}
 	return false; 
 }
+*/
 
+/*
 bool PKB::isVarUsedInAssign(STMT_NO assignStmtNo, string varName) {
 	STMT_LIST stmtList = PKBUses::getUsesStmt(varName);
 	STMT_LIST assignStmtList = getAllAssignStmt();
@@ -136,6 +139,7 @@ bool PKB::isVarUsedInAssign(STMT_NO assignStmtNo, string varName) {
 	}
 	return false;
 }
+*/
 
 
 
@@ -186,7 +190,7 @@ bool PKB::setConstant(CONST_VALUE constantVal, STMT_NO stmtNo) {
 	return PKBConstant::setConstant(constantVal, stmtNo);
 }
 
-unordered_set<string> PKB::getAllConstant() {
+CONST_LIST PKB::getAllConstant() {
 	return PKBConstant::getAllConstantVal();
 }
 
@@ -207,9 +211,10 @@ STMT_LIST PKB::getAllStmt() {
 ////////////////////////////////////
 
 STMT_LIST PKB::getAllAssignStmt() {
-	return PKBStmt::getAllStmtByType(Assign);
+	return PKBStmt::getAllStmtByType("Assign");
 }
 
+/*
 bool PKB::setAssignStmt(STMT_NO stmtNo, string varModified) {
 	std::pair<int, string> entry(stmtNo, varModified);
 	try {
@@ -225,11 +230,13 @@ bool PKB::setAssignStmt(STMT_NO stmtNo, string varModified) {
 string PKB::getVarModifiedByAssignStmt(STMT_NO stmtNo) {
 	return assignStmtTable[stmtNo]; 
 }
+*/
 
 ////////////////////////////////////
 // assignStmtByVarTable APIs
 ////////////////////////////////////
 
+/*
 STMT_LIST PKB::getAssignStmtByVar(string varName) {
 	return assignVarTable[varName];
 }
@@ -248,6 +255,7 @@ bool PKB::setAssignStmtByVar(STMT_NO stmtNo, string varName) {
 		return false;
 	}
 }
+*/
 
 
 ////////////////////////////////////
@@ -255,7 +263,7 @@ bool PKB::setAssignStmtByVar(STMT_NO stmtNo, string varName) {
 ////////////////////////////////////
 
 STMT_LIST PKB::getAllWhileStmt() {
-	return PKBStmt::getAllStmtByType(While);
+	return PKBStmt::getAllStmtByType("While");
 };
 
 
@@ -264,7 +272,7 @@ STMT_LIST PKB::getAllWhileStmt() {
 ////////////////////////////////////
 
 STMT_LIST PKB::getAllIfStmt() {
-	return PKBStmt::getAllStmtByType(If);
+	return PKBStmt::getAllStmtByType("If");
 };
 
 ////////////////////////////////////
@@ -272,7 +280,7 @@ STMT_LIST PKB::getAllIfStmt() {
 ////////////////////////////////////
 
 STMT_LIST PKB::getAllPrintStmt() {
-	return PKBStmt::getAllStmtByType(Print);
+	return PKBStmt::getAllStmtByType("Print");
 };
 
 bool PKB::setPrintStmt(STMT_NO stmtNo, string varName) {
@@ -284,7 +292,7 @@ bool PKB::setPrintStmt(STMT_NO stmtNo, string varName) {
 ////////////////////////////////////
 
 STMT_LIST PKB::getAllReadStmt() {
-	return PKBStmt::getAllStmtByType(Read);
+	return PKBStmt::getAllStmtByType("Read");
 };
 
 bool PKB::setReadStmt(STMT_NO stmtNo, string varName) {
@@ -296,7 +304,7 @@ bool PKB::setReadStmt(STMT_NO stmtNo, string varName) {
 // ProecedureTable APIs
 ////////////////////////////////////
 
-unordered_set<string> PKB::getAllProc() {
+PROC_LIST PKB::getAllProc() {
 	return PKBProcedure::getAllProc();
 };
 
@@ -311,7 +319,7 @@ bool PKB::setProc(string procName) {
 ////////////////////////////////////
 
 STMT_LIST PKB::getAllCallStmt() {
-	return PKBStmt::getAllStmtByType(Call);
+	return PKBStmt::getAllStmtByType("Call");
 };
 
 bool PKB::setCallProcRelation(PROC_NAME caller, PROC_NAME callee) {

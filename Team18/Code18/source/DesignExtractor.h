@@ -13,6 +13,8 @@ private:
 	static void extractFollowsStar();
 	static void extractParentStar();
 	static void extractCallStar();
+	static void extractModifiesProc();
+	static void extractUsesProc();
 
 	static void recurseCall(PROC_NAME p, PROC_NAME q);
 	static void recurseParent(STMT_NO parent, STMT_NO child);

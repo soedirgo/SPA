@@ -1,5 +1,6 @@
 #pragma once
 #include "AbstractType.h"
+#include "PKBHash.h"
 #include <unordered_set>
 
 class PKBVariable {
@@ -12,5 +13,5 @@ public:
 	bool clear();
 
 private:
-	static std::unordered_set<VAR_NAME> varTable;
+	static std::unordered_set<std::vector<std::string>, VectorSingleStringHash> varTable;
 };

@@ -1,10 +1,12 @@
 #include "PKBVariable.h"
 using namespace std;
 
-unordered_set<string> PKBVariable::varTable;
+unordered_set<vector<string>, VectorSingleStringHash> PKBVariable::varTable;
 
 bool PKBVariable::setVar(VAR_NAME varName) {
-	varTable.emplace(varName);
+	vector<string> tuple = vector<string>();
+	tuple.push_back(varName);
+	varTable.emplace(tuple);
 	return true;
 }
 
@@ -16,10 +18,3 @@ bool PKBVariable::clear() {
 	varTable.clear();
 	return true;
 }
-
-/*
-bool PKBVariable::isVarExist(string varName) {
-	//return true if element is found
-	return (varTable.find(varName) != varTable.end());
-}
-*/
