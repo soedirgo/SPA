@@ -180,6 +180,7 @@
     <ClCompile Include="TestPKBProcedure.cpp" />
     <ClCompile Include="TestPKBRead.cpp" />
     <ClCompile Include="TestPKBStmt.cpp" />
+    <ClCompile Include="TestPKBUses.cpp" />
     <ClCompile Include="TestPKBVariable.cpp" />
     <ClCompile Include="TestPKBWhile.cpp" />
     <ClCompile Include="TestProgramParser.cpp" />

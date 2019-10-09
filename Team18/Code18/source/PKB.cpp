@@ -126,6 +126,10 @@ bool PKB::isUsesStmtRelationship(STMT_NO stmtNo, VAR_NAME varName) {
 	return PKBUses::isUsesStmtRelationship(stmtNo, varName);
 }
 
+bool PKB::isUsesProcRelationship(PROC_NAME procName, VAR_NAME varName) {
+	return PKBUses::isUsesProcRelationship(procName, varName);
+}
+
 /*
 bool PKB::isConstUsedInAssign(STMT_NO assignStmtNo, string c) {
 	//STMT_LIST stmtList = getStmtByConst(c); 

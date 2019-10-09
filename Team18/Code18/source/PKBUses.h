@@ -14,7 +14,6 @@ public:
 	static bool isUsesProcRelationship(PROC_NAME procName, VAR_NAME varName);
 	
 	static STMT_LIST getAllUsesStmt(); 
-
 	static STMT_LIST getAllUsesStmtByType(STMT_TYPE type);
 
 	static STMT_LIST getUsesStmtByVar(VAR_NAME varName);

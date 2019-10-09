@@ -96,6 +96,7 @@ public:
 	static bool setUsesStmtRelation(STMT_NO stmtNo, VAR_NAME varName);
 	static bool setUsesProcRelation(PROC_NAME procName, VAR_NAME varName);
 	static bool isUsesStmtRelationship(STMT_NO stmtNo, VAR_NAME varName);
+	static bool isUsesProcRelationship(PROC_NAME procName, VAR_NAME varName);
 
 	//Call Function
 	static bool setCallStmt(STMT_NO stmtNo, PROC_NAME procName);
