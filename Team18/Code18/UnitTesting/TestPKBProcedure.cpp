@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "CppUnitTest.h"
 #include "PKBProcedure.h"
+#include "PKB.h"
 #include "DesignExtractor.h"
 
 using namespace std;
@@ -41,7 +42,7 @@ namespace UnitTesting
 				18.		print v; }
 		   */
 
-			PKBProcedure PKB;
+			PKB PKB;
 			PKB.clear();
 
 			PKB.setProc("First");

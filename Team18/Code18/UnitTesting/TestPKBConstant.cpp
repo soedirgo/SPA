@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "CppUnitTest.h"
+#include "PKB.h"
 #include "PKBConstant.h"
 #include "DesignExtractor.h"
 
@@ -41,7 +42,7 @@ namespace UnitTesting
 				18.		print v; }
 		   */
 
-			PKBConstant PKB;
+			PKB PKB;
 			PKB.clear();
 
 			PKB.setConstant("4", "0");

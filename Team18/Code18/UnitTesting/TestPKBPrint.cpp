@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "CppUnitTest.h"
+#include "PKB.h"
 #include "PKBPrint.h"
 #include "DesignExtractor.h"
 
@@ -41,10 +42,10 @@ namespace UnitTesting
 				18.		print v; }
 		   */
 
-			PKBPrint PKB;
+			PKB PKB;
 			PKB.clear();
 
-			PKB.setPrint("18", "v");
+			PKB.setPrintStmt("18", "v");
 
 		}
 

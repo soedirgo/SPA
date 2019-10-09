@@ -11,7 +11,7 @@ public:
 	static CONST_VAL getConstantValByStmt(STMT_NO stmtNo);
 	static CONST_LIST getAllConstantVal();
 	// Clear
-	bool clear();
+	static bool clear();
 
 private:
 	static std::unordered_set<std::vector<std::string>, VectorDoubleStringHash> constantTable;

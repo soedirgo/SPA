@@ -13,7 +13,7 @@ public:
 	static bool isModifiesProcRelationship(PROC_NAME procName, VAR_NAME varName);
 
 	// Clear
-	bool clear();
+	static bool clear();
 
 private:
 	static std::unordered_set<std::vector<std::string>, VectorDoubleStringHash> modifiesStmtTable;

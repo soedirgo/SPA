@@ -10,7 +10,7 @@ public:
 	static STMT_LIST getReadStmt(VAR_NAME varName);
 	static VAR_NAME getReadVar(STMT_NO stmtNo);
 	// Clear
-	bool clear();
+	static bool clear();
 
 private:
 	static std::unordered_set<std::vector<std::string>, VectorDoubleStringHash> readTable;

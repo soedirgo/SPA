@@ -1,7 +1,7 @@
 #include "DesignExtractor.h"
 #include "PKB.h"
 #include "PKBParent.h"
-#include "PKBFollow.h"
+#include "PKBFollows.h"
 #include "PKBCall.h"
 #include "PKBNext.h"
 

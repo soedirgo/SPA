@@ -15,8 +15,7 @@ class TNode;
 class PKB {
 
 public:
-	// Clear PKB database
-	bool clear();
+	
 	/////////////////////////////////
 	//Higher order wrapper functions
 	/////////////////////////////////
@@ -38,6 +37,9 @@ public:
 
 	//UPDATED APIS//
 
+	// Clear PKB database
+	static bool clear();
+
 	//Variable Functions
 	static bool setVar(VAR_NAME varName);
 	static VAR_LIST getAllVar();
@@ -57,10 +59,10 @@ public:
 	static bool setProc(PROC_NAME procName);
 
 	//Print Functions
-	static bool setPrintStmt(STMT_NO stmtNo, std::string varName);
+	static bool setPrintStmt(STMT_NO stmtNo, VAR_NAME varName);
 
 	//Read Functions
-	static bool setReadStmt(STMT_NO stmtNo, std::string varName);
+	static bool setReadStmt(STMT_NO stmtNo, VAR_NAME varName);
 
 	//Constant Functions
 	static bool setConstant(STMT_NO stmtNo, CONST_VAL constantVal);

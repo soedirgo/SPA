@@ -10,7 +10,7 @@ public:
 	static STMT_LIST getAllStmt();
 	static STMT_LIST getAllStmtByType(STMT_TYPE type);
 	// Clear
-	bool clear();
+	static bool clear();
 
 private:
 	static std::unordered_set<std::vector<std::string>, VectorDoubleStringHash> stmtTable;

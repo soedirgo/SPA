@@ -10,7 +10,7 @@ public:
 	static bool setProc(PROC_NAME procName);
 
 	// Clear
-	bool clear();
+	static bool clear();
 
 private:
 	static std::unordered_set<std::vector<std::string>, VectorSingleStringHash> procedureTable;

@@ -10,7 +10,7 @@ public:
 	static VAR_LIST getAllVar();
 
 	// Clear
-	bool clear();
+	static bool clear();
 
 private:
 	static std::unordered_set<std::vector<std::string>, VectorSingleStringHash> varTable;

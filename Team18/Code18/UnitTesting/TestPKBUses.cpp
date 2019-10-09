@@ -2,6 +2,7 @@
 #include "CppUnitTest.h"
 #include "PKBUses.h"
 #include "DesignExtractor.h"
+#include "PKBStmt.h"
 
 using namespace std;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
@@ -74,6 +75,26 @@ namespace UnitTesting
 			PKB.setUsesProc("First", "y");
 			PKB.setUsesProc("First", "z");
 			PKB.setUsesProc("First", "v");
+
+			PKBStmt pkbStmt;
+			pkbStmt.setStmt("1", "READ");
+			pkbStmt.setStmt("2", "READ");
+			pkbStmt.setStmt("3", "CALL");
+			pkbStmt.setStmt("4", "ASSIGN");
+			pkbStmt.setStmt("5", "ASSIGN");
+			pkbStmt.setStmt("6", "WHILE");
+			pkbStmt.setStmt("7", "ASSIGN");
+			pkbStmt.setStmt("8", "CALL");
+			pkbStmt.setStmt("9", "ASSIGN");
+			pkbStmt.setStmt("10", "IF");
+			pkbStmt.setStmt("11", "ASSIGN");
+			pkbStmt.setStmt("12", "ASSIGN");
+			pkbStmt.setStmt("13", "ASSIGN");
+			pkbStmt.setStmt("14", "ASSIGN");
+			pkbStmt.setStmt("15", "ASSIGN");
+			pkbStmt.setStmt("16", "ASSIGN");
+			pkbStmt.setStmt("17", "ASSIGN");
+			pkbStmt.setStmt("18", "PRINT");
 		}
 
 		TEST_METHOD(UsesStmtRelationship)
@@ -102,6 +123,14 @@ namespace UnitTesting
 			Assert::IsTrue(PKB.isUsesProcRelationship("Second", "x"));
 			Assert::IsTrue(PKB.isUsesProcRelationship("Second", "y"));
 			Assert::IsTrue(PKB.isUsesProcRelationship("Second", "z"));
+		}
+
+		TEST_METHOD(getAllStmt)
+		{
+			PKBStmt PKB;
+			STMT_LIST actual = PKB.getAllStmt();
+			STMT_LIST expected = { {"10"},{"11"},{"12"},{"13"},{"14"},{"15"},{"16"},{"17"},{"18"},{"1"},{"2"},{"3"},{"4"},{"5"},{"6"},{"7"},{"8"},{"9"}};
+			Assert::IsTrue(actual == expected);
 		}
 	};
 };

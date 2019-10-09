@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "CppUnitTest.h"
+#include "PKB.h"
 #include "PKBCall.h"
 #include "DesignExtractor.h"
 
@@ -41,11 +42,11 @@ namespace UnitTesting
 				18.		print v; }
 		   */
 
-			PKBCall PKB;
+			PKB PKB;
 			PKB.clear();
 
-			PKB.setCallProc("First", "Second");
-			PKB.setCallProc("Second", "Third");
+			PKB.setCallProcRelation("First", "Second");
+			PKB.setCallProcRelation("Second", "Third");
 
 			PKB.setCallStmt("3", "Second");
 			PKB.setCallStmt("8", "Third");
@@ -56,14 +57,14 @@ namespace UnitTesting
 
 		TEST_METHOD(CallRelationship)
 		{
-			PKBCall PKB;
+			PKB PKB;
 			Assert::IsTrue(PKB.isCallRelationship("First", "Second"));
 			Assert::IsTrue(PKB.isCallRelationship("Second", "Third"));
 		}
 
 		TEST_METHOD(CallStarRelationship)
 		{
-			PKBCall PKB;
+			PKB PKB;
 			Assert::IsTrue(PKB.isCallStarRelationship("First", "Second"));
 			Assert::IsTrue(PKB.isCallStarRelationship("Second", "Third"));
 			Assert::IsTrue(PKB.isCallStarRelationship("First", "Third"));

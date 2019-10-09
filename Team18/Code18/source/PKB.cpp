@@ -4,7 +4,7 @@
 #include "PKB.h"
 #include "TNode.h"
 #include "PKBParent.h"
-#include "PKBFollow.h"
+#include "PKBFollows.h"
 #include "PKBUses.h"
 #include "PKBModifies.h"
 #include "PKBStmt.h"
@@ -25,20 +25,21 @@ unordered_map<string, unordered_set<int>> PKB::assignVarTable;
 
 bool PKB::clear()
 {
-	PKBFollows pkbFollow;
-	pkbFollow.clear();
-
-	PKBParent pkbParent;
-	pkbParent.clear();
-
-	PKBStmt pkbStmt;
-	pkbStmt.clear();
-
-	PKBUses pkbUses;
-	pkbUses.clear();
-
-	assignStmtTable.clear();
-	assignVarTable.clear();
+	
+	PKBCall::clear();
+	PKBConstant::clear();
+	PKBFollows::clear();
+	PKBIf::clear();
+	PKBModifies::clear();
+	PKBNext::clear();
+	PKBParent::clear();
+	PKBPrint::clear();
+	PKBProcedure::clear();
+	PKBRead::clear();
+	PKBStmt::clear();
+	PKBUses::clear();
+	PKBVariable::clear();
+	PKBWhile::clear();
 
 	return true;
 }
@@ -301,7 +302,7 @@ STMT_LIST PKB::getAllPrintStmt() {
 	return PKBStmt::getAllStmtByType("PRINT");
 };
 
-bool PKB::setPrintStmt(STMT_NO stmtNo, string varName) {
+bool PKB::setPrintStmt(STMT_NO stmtNo, VAR_NAME varName) {
 	return PKBPrint::setPrint(stmtNo, varName);
 };
 
@@ -313,7 +314,7 @@ STMT_LIST PKB::getAllReadStmt() {
 	return PKBStmt::getAllStmtByType("READ");
 };
 
-bool PKB::setReadStmt(STMT_NO stmtNo, string varName) {
+bool PKB::setReadStmt(STMT_NO stmtNo, VAR_NAME varName) {
 	return PKBRead::setRead(stmtNo, varName);
 };
 

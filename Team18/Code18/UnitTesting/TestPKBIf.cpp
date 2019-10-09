@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "CppUnitTest.h"
+#include "PKB.h"
 #include "PKBIf.h"
 #include "DesignExtractor.h"
 
@@ -41,10 +42,10 @@ namespace UnitTesting
 				18.		print v; }
 		   */
 
-			PKBIf PKB;
+			PKB PKB;
 			PKB.clear();
 
-			PKB.setIfUses("10", "x");
+			PKB.setIfUsesRelation("10", "x");
 		}
 
 		TEST_METHOD(IfUsesRelationship)

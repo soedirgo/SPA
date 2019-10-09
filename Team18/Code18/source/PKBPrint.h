@@ -10,7 +10,7 @@ public:
 	static STMT_LIST getPrintStmt(VAR_NAME varName);
 	static VAR_NAME getPrintVar(STMT_NO stmtNo);
 	// Clear
-	bool clear();
+	static bool clear();
 
 private:
 	static std::unordered_set<std::vector<std::string>, VectorDoubleStringHash> printTable;

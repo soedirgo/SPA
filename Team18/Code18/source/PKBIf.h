@@ -11,7 +11,7 @@ public:
 	static bool isIfUsesRelationship(STMT_NO stmtNo, VAR_NAME varName);
 
 	// Clear
-	bool clear();
+	static bool clear();
 
 private:
 	static std::unordered_set<std::vector<std::string>, VectorDoubleStringHash> ifUsesTable;

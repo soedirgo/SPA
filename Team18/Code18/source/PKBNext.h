@@ -17,7 +17,7 @@ public:
 	static std::unordered_set<std::vector<std::string>, VectorDoubleStringHash> getNextTable();
 
 	// Clear
-	bool clear();
+	static bool clear();
 
 private:
 

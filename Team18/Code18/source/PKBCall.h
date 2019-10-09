@@ -15,7 +15,7 @@ public:
 	static std::unordered_set<std::vector<std::string>, VectorDoubleStringHash> getCallProcTable();
 	static PROC_LIST getCalleeProc(PROC_NAME caller);
 	// Clear
-	bool clear();
+	static bool clear();
 
 private:
 	static std::unordered_set<std::vector<std::string>, VectorDoubleStringHash> callProcTable;

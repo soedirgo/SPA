@@ -1,4 +1,5 @@
-#include "PKBFollow.h"
+#include "PKBFollows.h"
+#include "PKBStmt.h"
 
 using namespace std;
 
@@ -54,103 +55,122 @@ bool PKBFollows::isFollowsStarRelationship(STMT_NO followedBy, STMT_NO follows) 
 	return false;
 }
 
-unordered_set<vector<string>, VectorDoubleStringHash> PKBFollows::getFollowsTable() {
+TABLE PKBFollows::getFollowsTable() {
 	return followsTable;
 }
+
+TABLE PKBFollows::getAllFollowedByFollowsStmt(STMT_TYPE type1, STMT_TYPE type2) {
+	return PKBFollows::getResultTableGenericBoth(type1, type2, followsTable);
+}
+TABLE PKBFollows::getAllFollowedByStmt(STMT_TYPE type1, STMT_NO follows) {
+	return PKBFollows::getResultTableGenericLeft(type1, follows, followsTable);
+}
+TABLE PKBFollows::getAllFollowsStmt(STMT_NO followedBy, STMT_TYPE type) {
+	return PKBFollows::getResultTableGenericRight(followedBy, type, followsTable);
+}
+TABLE PKBFollows::getAllFollowedByFollowsStarStmt(STMT_TYPE type1, STMT_TYPE type2) {
+	return PKBFollows::getResultTableGenericBoth(type1, type2, followsStarTable);
+}
+TABLE PKBFollows::getAllFollowedByStarStmt(STMT_TYPE type, STMT_NO follows) {
+	return PKBFollows::getResultTableGenericLeft(type, follows, followsStarTable);
+}
+TABLE PKBFollows::getAllFollowsStarStmt(STMT_NO followedBy, STMT_TYPE type) {
+	return PKBFollows::getResultTableGenericRight(followedBy, type, followsStarTable);
+}
+
+TABLE PKBFollows::getResultTableGenericBoth(STMT_TYPE type1, STMT_TYPE type2, TABLE tableName) {
+	TABLE resultTable;
+	if (type1 != "_" && type2 != "_" && type1 == type2) {
+		return resultTable;
+	}
+	if (type1 == "_" && type2 == "_") {
+		return tableName;
+	}
+	STMT_LIST list1, list2;
+	if (type1 == "_" || type1 == "STATEMENT") {
+		list1 = PKBStmt::getAllStmt();
+	}
+	else {
+		list1 = PKBStmt::getAllStmtByType(type1);
+	}
+	if (type2 == "_" || type2 == "STATEMENT") {
+		list2 = PKBStmt::getAllStmt();
+	}
+	else {
+		list2 = PKBStmt::getAllStmtByType(type2);
+	}
+
+	STMT_NO s1;
+	STMT_NO s2;
+	for (auto iter1 : list1) {
+		s1 = iter1.front();
+		for (auto iter2 : list2) {
+			s2 = iter2.front();
+			for (auto vectorIter : tableName) {
+				vector<string> tuple = vector<string>();
+				if (vectorIter.front() == s1 && vectorIter.back() == s2) {
+					tuple.push_back(vectorIter.front());
+					tuple.push_back(vectorIter.back());
+					resultTable.emplace(tuple);
+				}
+			}
+		}
+	}
+
+	return resultTable;
+}
+
+TABLE PKBFollows::getResultTableGenericLeft(STMT_TYPE type, STMT_NO stmtNo, TABLE tableName) {
+	TABLE resultTable;
+	STMT_LIST list;
+	STMT_NO s;
+	if (type == "_" || type == "STATEMENT") {
+		list = PKBStmt::getAllStmt();
+	}
+	else {
+		list = PKBStmt::getAllStmtByType(type);
+	}
+	for (auto iter : list) {
+		s = iter.front();
+		for (auto vectorIter : tableName) {
+			vector<string> tuple = vector<string>();
+			if (vectorIter.front() == s && vectorIter.back() == stmtNo) {
+				tuple.push_back(vectorIter.front());
+				tuple.push_back(vectorIter.back());
+				resultTable.emplace(tuple);
+			}
+		}
+	}
+	return resultTable;
+}
+
+TABLE PKBFollows::getResultTableGenericRight(STMT_NO stmtNo, STMT_TYPE type, TABLE tableName) {
+	TABLE resultTable;
+	STMT_LIST list;
+	STMT_NO s;
+	if (type == "_" || type == "STATEMENT") {
+		list = PKBStmt::getAllStmt();
+	}
+	else {
+		list = PKBStmt::getAllStmtByType(type);
+	}
+	for (auto iter : list) {
+		s = iter.front();
+		for (auto vectorIter : tableName) {
+			vector<string> tuple = vector<string>();
+			if (vectorIter.front() == stmtNo && vectorIter.back() == s) {
+				tuple.push_back(vectorIter.front());
+				tuple.push_back(vectorIter.back());
+				resultTable.emplace(tuple);
+			}
+		}
+	}
+	return resultTable;
+}
+
 
 bool PKBFollows::clear() {
 	followsTable.clear();
 	followsStarTable.clear();
 	return true;
 }
-
-/*
-unordered_map<int, int> PKBFollow::followTable;
-unordered_map<int, unordered_set<int>> PKBFollow::followedByTable;
-unordered_map<int, unordered_set<int>> PKBFollow::followStarTable;
-
-bool PKBFollow::setFollow(int followedBy, int follow) {
-	followTable[followedBy] = follow;
-	return true;
-}
-
-bool PKBFollow::setFollowedBy(int followedBy, int follow) {
-	try {
-		unordered_set<int> stmtList = getFollowedByStmtList(follow);
-		stmtList.emplace(followedBy);
-		followedByTable[follow] = stmtList;
-		return true;
-	}
-	catch (errc e) {
-		return false;
-	}
-}
-
-bool PKBFollow::setFollowStar(int followedBy, int follow) {
-	try {
-		unordered_set<int> stmtList = getFollowStarStmtList(followedBy);
-		stmtList.emplace(follow);
-		followStarTable[followedBy] = stmtList;
-		return true;
-	}
-	catch (errc e) {
-		return false;
-	}
-}
-
-unordered_set<int> PKBFollow::getFollowStarStmtList(int followedBy) {
-	return followStarTable[followedBy];
-}
-
-int PKBFollow::getFollowStmt(int followedBy) {
-	return followTable[followedBy];
-}
-
-unordered_set<int> PKBFollow::getAllFollowedBy() {
-	unordered_set<int> followedByList;
-	for (auto keyValue : followTable) {
-		followedByList.emplace(keyValue.first);
-	}
-	return followedByList;
-}
-
-unordered_set<int> PKBFollow::getFollowedByStmtList(int follow) {
-	return followedByTable[follow];
-}
-
-bool PKBFollow::isFollowRelationship(int followedBy, int follow) {
-	for (auto keyValue : followTable) {
-		if (keyValue.first == followedBy) {
-			if (keyValue.second == follow) {
-				return true;
-			}
-		}
-	}
-	return false;
-}
-
-bool PKBFollow::isFollowStarRelationship(int followedBy, int follow) {
-	unordered_set<int> stmtList = getFollowStarStmtList(followedBy);
-	for (auto keyValue : stmtList) {
-		if (keyValue == follow) {
-			return true;
-		}
-	}
-	return false;
-}
-
-bool PKBFollow::isFollowExist(int stmtNo) {
-	return followedByTable.find(stmtNo) != followedByTable.end();
-}
-bool PKBFollow::isFollowedByExist(int stmtNo) {
-	return followTable.find(stmtNo) != followTable.end();
-}
-
-bool PKBFollow::clear() {
-	followTable.clear();
-	followedByTable.clear();
-	followStarTable.clear();
-	return true;
-}
-
-*/
