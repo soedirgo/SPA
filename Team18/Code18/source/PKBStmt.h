@@ -3,7 +3,6 @@
 #include "AbstractType.h"
 #include "PKBHash.h"
 #include <unordered_set>
-#include <unordered_map>
 
 class PKBStmt {
 public:

@@ -1,6 +1,5 @@
 #pragma once
 
-#include <unordered_map>
 #include "AbstractType.h"
 #include "PKBHash.h"
 #include <unordered_set>

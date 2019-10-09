@@ -55,7 +55,7 @@ namespace UnitTesting
 			PKB.setNext("10", "11");
 			PKB.setNext("10", "12");
 			PKB.setNext("11", "13");
-			PKB.setNext("10", "13");
+			PKB.setNext("12", "13");
 			PKB.setNext("13", "14");
 			PKB.setNext("14", "15");
 			PKB.setNext("16", "17");

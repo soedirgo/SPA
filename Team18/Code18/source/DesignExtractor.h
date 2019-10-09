@@ -2,7 +2,6 @@
 
 #include "AbstractType.h"
 #include <unordered_set>
-#include <unordered_map>
 #include <string>
 
 class DesignExtractor {
