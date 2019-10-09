@@ -76,7 +76,6 @@ namespace UnitTesting
 			DesignExtractor DesignExtractor;
 			DesignExtractor.extractDesign();
 		}
-
 		TEST_METHOD(FollowsRelationship)
 		{
 			PKB PKB;
@@ -91,7 +90,6 @@ namespace UnitTesting
 			Assert::IsTrue(PKB.isFollowsRelationship("16", "17"));
 			Assert::IsTrue(PKB.isFollowsRelationship("17", "18"));
 		}
-
 		TEST_METHOD(FollowsStarRelationship)
 		{
 			PKB PKB;
@@ -112,7 +110,6 @@ namespace UnitTesting
 			Assert::IsTrue(PKB.isFollowsStarRelationship("13", "15"));
 			Assert::IsTrue(PKB.isFollowsStarRelationship("16", "18"));
 		}
-
 		TEST_METHOD(FollowsGenericBoth)
 		{
 			PKBFollows PKB;
@@ -136,7 +133,6 @@ namespace UnitTesting
 			actual = PKB.getAllFollowedByFollowsStmt("STATEMENT", "STATEMENT");
 			Assert::IsTrue(actual.size() == 0);
 		}
-
 		TEST_METHOD(FollowsGenericLeft)
 		{
 			PKBFollows PKB;
@@ -157,7 +153,6 @@ namespace UnitTesting
 			expected = { {"1","2"}};
 			Assert::IsTrue(actual == expected);
 		}
-
 		TEST_METHOD(FollowsGenericRight)
 		{
 			PKBFollows PKB;
@@ -178,7 +173,6 @@ namespace UnitTesting
 			expected = { {"2","3"} };
 			Assert::IsTrue(actual == expected);
 		}
-
 		TEST_METHOD(FollowsStarGenericBoth)
 		{
 			PKBFollows PKB;
@@ -202,7 +196,6 @@ namespace UnitTesting
 			actual = PKB.getAllFollowedByFollowsStarStmt("STATEMENT", "STATEMENT");
 			Assert::IsTrue(actual.size() == 0);
 		}
-
 		TEST_METHOD(FollowsStarGenericLeft)
 		{
 			PKBFollows PKB;
@@ -244,8 +237,6 @@ namespace UnitTesting
 			expected = { {"1","3"}, {"1","2"} };
 			Assert::IsTrue(actual == expected);
 		}
-
-		
 	};
 };
 
