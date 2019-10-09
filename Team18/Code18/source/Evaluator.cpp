@@ -116,6 +116,42 @@ namespace Evaluator {
             return Result(synonyms, results);
         }
 
+        Result evalUsesP(string lhs, string rhs) {
+            unordered_map<string, int> synonyms;
+            unordered_set<vector<string>> results;
+            /**
+             * Cases:
+             * - UsesP("main", _)
+             * - UsesP("main", "x")
+             * - UsesP("main", v)
+             * - UsesP(p, _)
+             * - UsesP(p, "x")
+             * - UsesP(p, v)
+             */
+            if (lhs.front() == '\"' && lhs.back() == '\"') {
+                if (rhs == "_") {
+                    //TODO
+                } else if (rhs.front() == '\"' && rhs.back() == '\"') {
+                    //TODO
+                } else {
+                    synonyms[rhs] = 0;
+                    //TODO
+                }
+            } else {
+                synonyms[lhs] = 0;
+                if (rhs == "_") {
+                    //TODO
+                } else if (rhs.front() == '\"' && rhs.back() == '\"') {
+                    //TODO
+                } else {
+                    synonyms[rhs] = 1;
+                    //TODO
+                }
+            }
+
+            return Result(synonyms, results);
+        }
+
         Result evalModifies(string lhs, string rhs) {
             unordered_map<string, int> synonyms;
             unordered_set<vector<string>> results;
@@ -129,6 +165,138 @@ namespace Evaluator {
              * - Modifies(s, v)
              */
             if (lhs.front() == '\"' && lhs.back() == '\"') {
+                if (rhs == "_") {
+                    //TODO
+                } else if (rhs.front() == '\"' && rhs.back() == '\"') {
+                    //TODO
+                } else {
+                    synonyms[rhs] = 0;
+                    //TODO
+                }
+            } else {
+                synonyms[lhs] = 0;
+                if (rhs == "_") {
+                    //TODO
+                } else if (rhs.front() == '\"' && rhs.back() == '\"') {
+                    //TODO
+                } else {
+                    synonyms[rhs] = 1;
+                    //TODO
+                }
+            }
+
+            return Result(synonyms, results);
+        }
+
+        Result evalModifiesP(string lhs, string rhs) {
+            unordered_map<string, int> synonyms;
+            unordered_set<vector<string>> results;
+            /**
+             * Cases:
+             * - ModifiesP("1", _)
+             * - ModifiesP("1", "x")
+             * - ModifiesP("1", v)
+             * - ModifiesP(p, _)
+             * - ModifiesP(p, "x")
+             * - ModifiesP(p, v)
+             */
+            if (lhs.front() == '\"' && lhs.back() == '\"') {
+                if (rhs == "_") {
+                    //TODO
+                } else if (rhs.front() == '\"' && rhs.back() == '\"') {
+                    //TODO
+                } else {
+                    synonyms[rhs] = 0;
+                    //TODO
+                }
+            } else {
+                synonyms[lhs] = 0;
+                if (rhs == "_") {
+                    //TODO
+                } else if (rhs.front() == '\"' && rhs.back() == '\"') {
+                    //TODO
+                } else {
+                    synonyms[rhs] = 1;
+                    //TODO
+                }
+            }
+
+            return Result(synonyms, results);
+        }
+
+        Result evalCalls(string lhs, string rhs) {
+            unordered_map<string, int> synonyms;
+            unordered_set<vector<string>> results;
+            /**
+             * Cases:
+             * - Calls(_, _)
+             * - Calls(_, "main")
+             * - Calls(_, p)
+             * - Calls("main", _)
+             * - Calls("main", "main")
+             * - Calls("main", p)
+             * - Calls(p, _)
+             * - Calls(p, "main")
+             * - Calls(p, p)
+             */
+            if (lhs == "_") {
+                if (rhs == "_") {
+                    //TODO
+                } else if (rhs.front() == '\"' && rhs.back() == '\"') {
+                    //TODO
+                } else {
+                    synonyms[rhs] = 0;
+                    //TODO
+                }
+            } else if (lhs.front() == '\"' && lhs.back() == '\"') {
+                if (rhs == "_") {
+                    //TODO
+                } else if (rhs.front() == '\"' && rhs.back() == '\"') {
+                    //TODO
+                } else {
+                    synonyms[rhs] = 0;
+                    //TODO
+                }
+            } else {
+                synonyms[lhs] = 0;
+                if (rhs == "_") {
+                    //TODO
+                } else if (rhs.front() == '\"' && rhs.back() == '\"') {
+                    //TODO
+                } else {
+                    synonyms[rhs] = 1;
+                    //TODO
+                }
+            }
+
+            return Result(synonyms, results);
+        }
+
+        Result evalCallsT(string lhs, string rhs) {
+            unordered_map<string, int> synonyms;
+            unordered_set<vector<string>> results;
+            /**
+             * Cases:
+             * - CallsT(_, _)
+             * - CallsT(_, "main")
+             * - CallsT(_, p)
+             * - CallsT("main", _)
+             * - CallsT("main", "main")
+             * - CallsT("main", p)
+             * - CallsT(p, _)
+             * - CallsT(p, "main")
+             * - CallsT(p, p)
+             */
+            if (lhs == "_") {
+                if (rhs == "_") {
+                    //TODO
+                } else if (rhs.front() == '\"' && rhs.back() == '\"') {
+                    //TODO
+                } else {
+                    synonyms[rhs] = 0;
+                    //TODO
+                }
+            } else if (lhs.front() == '\"' && lhs.back() == '\"') {
                 if (rhs == "_") {
                     //TODO
                 } else if (rhs.front() == '\"' && rhs.back() == '\"') {
@@ -344,6 +512,102 @@ namespace Evaluator {
             return Result(synonyms, results);
         }
 
+        Result evalNext(string lhs, string rhs) {
+            unordered_map<string, int> synonyms;
+            unordered_set<vector<string>> results;
+            /**
+             * Cases:
+             * - Next(_, _)
+             * - Next(_, "1")
+             * - Next(_, s)
+             * - Next("1", _)
+             * - Next("1", "1")
+             * - Next("1", s)
+             * - Next(s, _)
+             * - Next(s, "1")
+             * - Next(s, s)
+             */
+            if (lhs == "_") {
+                if (rhs == "_") {
+                    //TODO
+                } else if (rhs.front() == '\"' && rhs.back() == '\"') {
+                    //TODO
+                } else {
+                    synonyms[rhs] = 0;
+                    //TODO
+                }
+            } else if (lhs.front() == '\"' && lhs.back() == '\"') {
+                if (rhs == "_") {
+                    //TODO
+                } else if (rhs.front() == '\"' && rhs.back() == '\"') {
+                    //TODO
+                } else {
+                    synonyms[rhs] = 0;
+                    //TODO
+                }
+            } else {
+                synonyms[lhs] = 0;
+                if (rhs == "_") {
+                    //TODO
+                } else if (rhs.front() == '\"' && rhs.back() == '\"') {
+                    //TODO
+                } else {
+                    synonyms[rhs] = 1;
+                    //TODO
+                }
+            }
+
+            return Result(synonyms, results);
+        }
+
+        Result evalNextT(string lhs, string rhs) {
+            unordered_map<string, int> synonyms;
+            unordered_set<vector<string>> results;
+            /**
+             * Cases:
+             * - NextT(_, _)
+             * - NextT(_, "1")
+             * - NextT(_, s)
+             * - NextT("1", _)
+             * - NextT("1", "1")
+             * - NextT("1", s)
+             * - NextT(s, _)
+             * - NextT(s, "1")
+             * - NextT(s, s)
+             */
+            if (lhs == "_") {
+                if (rhs == "_") {
+                    //TODO
+                } else if (rhs.front() == '\"' && rhs.back() == '\"') {
+                    //TODO
+                } else {
+                    synonyms[rhs] = 0;
+                    //TODO
+                }
+            } else if (lhs.front() == '\"' && lhs.back() == '\"') {
+                if (rhs == "_") {
+                    //TODO
+                } else if (rhs.front() == '\"' && rhs.back() == '\"') {
+                    //TODO
+                } else {
+                    synonyms[rhs] = 0;
+                    //TODO
+                }
+            } else {
+                synonyms[lhs] = 0;
+                if (rhs == "_") {
+                    //TODO
+                } else if (rhs.front() == '\"' && rhs.back() == '\"') {
+                    //TODO
+                } else {
+                    synonyms[rhs] = 1;
+                    //TODO
+                }
+            }
+
+            return Result(synonyms, results);
+        }
+
         Result evalSuchThatClause(pair<string, pair<string, string>> clause) {
             string rel = clause.first;
             string lhs = clause.second.first;
@@ -353,6 +617,8 @@ namespace Evaluator {
                 return evalUses(lhs, rhs);
             } else if (rel == "Modifies") {
                 return evalModifies(lhs, rhs);
+            } else if (rel == "Calls") {
+                return evalModifies(lhs, rhs);
             } else if (rel == "Follows") {
                 return evalFollows(lhs, rhs);
             } else if (rel == "FollowsT") {
@@ -360,6 +626,10 @@ namespace Evaluator {
             } else if (rel == "Parent") {
                 return evalParent(lhs, rhs);
             } else if (rel == "ParentT") {
+                return evalParentT(lhs, rhs);
+            } else if (rel == "Next") {
+                return evalParent(lhs, rhs);
+            } else if (rel == "NextT") {
                 return evalParentT(lhs, rhs);
             } else {
                 throw "Unrecognized such-that relationship";
