@@ -15,6 +15,7 @@ public:
 	
 	static STMT_LIST getAllUsesStmt(); 
 	static STMT_LIST getAllUsesStmtByType(STMT_TYPE type);
+	static STMT_LIST getUsesStmtByTypeAndVar(STMT_TYPE type, VAR_NAME varName);
 
 	static STMT_LIST getUsesStmtByVar(VAR_NAME varName);
 	static VAR_LIST getUsesVarByStmt(STMT_NO stmtNo); 
