@@ -27,6 +27,14 @@ void NestedResult::setProcName(string name) {
 	procName = name;
 }
 
+void NestedResult::addPrevIfStmt(int stmtNo) {
+	prevIfStmtNo.push_back(stmtNo);
+}
+
+void NestedResult::setPrevWhileStmt(int stmtNo) {
+	prevWhileStmtNo = stmtNo;
+}
+
 vector<string> NestedResult::getModifies() {
 	return modifiesList;
 }
@@ -45,4 +53,12 @@ vector<string> NestedResult::getCallList() {
 
 string NestedResult::getProcName() {
 	return procName;
+}
+
+vector<int> NestedResult::getPrevIfStmt() {
+	return prevIfStmtNo;
+}
+
+int NestedResult::getPrevWhileStmt() {
+	return prevWhileStmtNo;
 }

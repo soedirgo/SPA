@@ -23,6 +23,12 @@ int Parser::Parse (string filename) {
 
 	string line;
 	int prevStmtNo = 0;
+
+	bool prevIf = false;
+	bool prevWhile = false;
+	vector<int> prevIfStmtNo;
+	int prevWhileStmtNo = 0;
+
 	//Code to open the file from the filename.
 	this ->programFile.open(filename);
 	if (!programFile) {
@@ -51,6 +57,7 @@ int Parser::Parse (string filename) {
 			NestedResult results = parseWhile(line, stmtNo);
 			vector<string> modifies = results.getModifies();
 			vector<string> uses = results.getUses();
+			int prevStmt = results.getPrevWhileStmt();
 
 			for (string var : modifies) {
 				pkb.setVar(var);
@@ -74,7 +81,22 @@ int Parser::Parse (string filename) {
 			}
 			if (stmtNo != 1) {
 				pkb.insertFollowRelation(to_string(prevStmtNo), to_string(stmtNo));
+				if (prevIf) {
+					for (int stmt : prevIfStmtNo) {
+						pkb.setNext(to_string(stmt), to_string(stmtNo));
+					}
+					prevIf = false;
+				}
+				else if (prevWhile) {
+					pkb.setNext(to_string(prevWhileStmtNo), to_string(stmtNo));
+					prevWhile = false;
+				}
+				else {
+					pkb.setNext(to_string(prevStmtNo), to_string(stmtNo));
+				}
 			}
+			prevWhile = true;
+			prevWhileStmtNo = prevStmt;
 			prevStmtNo = stmtNo;
 			stmtNo = results.lastStmtNo;
 		}
@@ -84,6 +106,8 @@ int Parser::Parse (string filename) {
 			NestedResult results = parseIf(line, stmtNo);
 			vector<string> modifies = results.getModifies();
 			vector<string> uses = results.getUses();
+			vector<int> prevStmts = results.getPrevIfStmt();
+
 			for (string var : modifies) {
 				pkb.setVar(var);
 				currProc.addModifies(var);
@@ -106,7 +130,22 @@ int Parser::Parse (string filename) {
 			}
 			if (stmtNo != 1) {
 				pkb.insertFollowRelation(to_string(prevStmtNo), to_string(stmtNo));
+				if (prevIf) {
+					for (int stmt : prevIfStmtNo) {
+						pkb.setNext(to_string(stmt), to_string(stmtNo));
+					}
+					prevIf = false;
+				}
+				else if (prevWhile) {
+					pkb.setNext(to_string(prevWhileStmtNo), to_string(stmtNo));
+					prevWhile = false;
+				}
+				else {
+					pkb.setNext(to_string(prevStmtNo), to_string(stmtNo));
+				}
 			}
+			prevIf = true;
+			prevIfStmtNo = prevStmts;
 			prevStmtNo = stmtNo;
 			stmtNo = results.lastStmtNo;
 		}
@@ -139,6 +178,19 @@ int Parser::Parse (string filename) {
 
 			if (stmtNo != 1) {
 				pkb.insertFollowRelation(to_string(to_string(prevStmtNo), to_string(stmtNo));
+				if (prevIf) {
+					for (int stmt : prevIfStmtNo) {
+						pkb.setNext(to_string(stmt), to_string(stmtNo));
+					}
+					prevIf = false;
+				}
+				else if (prevWhile) {
+					pkb.setNext(to_string(prevWhileStmtNo), to_string(stmtNo));
+					prevWhile = false;
+				}
+				else {
+					pkb.setNext(to_string(prevStmtNo), to_string(stmtNo));
+				}
 			}
 			prevStmtNo = stmtNo;
 			stmtNo++;
@@ -154,6 +206,19 @@ int Parser::Parse (string filename) {
 			
 			if (stmtNo != 1) {
 				pkb.insertFollowRelation(to_string(prevStmtNo), to_string(stmtNo));
+				if (prevIf) {
+					for (int stmt : prevIfStmtNo) {
+						pkb.setNext(to_string(stmt), to_string(stmtNo));
+					}
+					prevIf = false;
+				}
+				else if (prevWhile) {
+					pkb.setNext(to_string(prevWhileStmtNo), to_string(stmtNo));
+					prevWhile = false;
+				}
+				else {
+					pkb.setNext(to_string(prevStmtNo), to_string(stmtNo));
+				}
 			}
 			prevStmtNo = stmtNo;
 			stmtNo++;
@@ -169,6 +234,19 @@ int Parser::Parse (string filename) {
 			
 			if (stmtNo != 1) {
 				pkb.insertFollowRelation(to_string(prevStmtNo), to_string(stmtNo));
+				if (prevIf) {
+					for (int stmt : prevIfStmtNo) {
+						pkb.setNext(to_string(stmt), to_string(stmtNo));
+					}
+					prevIf = false;
+				}
+				else if (prevWhile) {
+					pkb.setNext(to_string(prevWhileStmtNo), to_string(stmtNo));
+					prevWhile = false;
+				}
+				else {
+					pkb.setNext(to_string(prevStmtNo), to_string(stmtNo));
+				}
 			}
 			prevStmtNo = stmtNo;
 			stmtNo++;
@@ -180,6 +258,19 @@ int Parser::Parse (string filename) {
 			currProc.addCalls(proc);
 			if (stmtNo != 1) {
 				pkb.insertFollowRelation(to_string(prevStmtNo), to_string(stmtNo));
+				if (prevIf) {
+					for (int stmt : prevIfStmtNo) {
+						pkb.setNext(to_string(stmt), to_string(stmtNo));
+					}
+					prevIf = false;
+				}
+				else if (prevWhile) {
+					pkb.setNext(to_string(prevWhileStmtNo), to_string(stmtNo));
+					prevWhile = false;
+				}
+				else {
+					pkb.setNext(to_string(prevStmtNo), to_string(stmtNo));
+				}
 			}
 			prevStmtNo = stmtNo;
 			stmtNo++;
@@ -372,6 +463,11 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 	bool passedElse = false;
 	int currNestingLevel = nestingLevel;
 	NestedResult result;
+
+	bool prevIf = false;
+	bool prevWhile = false;
+	vector<int> prevIfStmtNo;
+	int prevWhileStmtNo = 0;
 
 	string line;
 
@@ -660,6 +756,11 @@ NestedResult Parser::parseIfNestedInThen(string ifLine, int parentStmtNo) {
 	int currNestingLevel = nestingLevel;
 	NestedResult result;
 
+	bool prevIf = false;
+	bool prevWhile = false;
+	vector<int> prevIfStmtNo;
+	int prevWhileStmtNo = 0;
+
 	string line;
 
 	vector<string> toAdd = parseCondStmt(ifLine);
@@ -944,6 +1045,11 @@ NestedResult Parser::parseWhileNestedInThen(string whileLine, int parentStmtNo) 
 	int currNestingLevel = nestingLevel;
 	NestedResult result;
 
+	bool prevIf = false;
+	bool prevWhile = false;
+	vector<int> prevIfStmtNo;
+	int prevWhileStmtNo = 0;
+
 	string line;
 
 	vector<string> toAdd = parseCondStmt(whileLine);
@@ -1166,6 +1272,11 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 	int prevStmtNo = parentStmtNo;
 	int currNestingLevel = nestingLevel;
 	NestedResult result;
+
+	bool prevIf = false;
+	bool prevWhile = false;
+	vector<int> prevIfStmtNo;
+	int prevWhileStmtNo = 0;
 
 	string line;
 
