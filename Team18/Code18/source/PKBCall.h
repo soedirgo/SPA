@@ -12,12 +12,22 @@ public:
 	static bool isCallRelationship(PROC_NAME caller, PROC_NAME callee);
 	static bool isCallStarRelationship(PROC_NAME caller, PROC_NAME callee);
 
-	static std::unordered_set<std::vector<std::string>, VectorDoubleStringHash> getCallProcTable();
+	static TABLE getCallProcTable();
 	static PROC_LIST getCalleeProc(PROC_NAME caller);
+
+	static TABLE getAllCallerCalleeProc();
+	static TABLE getAllCallerProc(PROC_NAME procName);
+	static TABLE getAllCalleProc(PROC_NAME procName);
+	static TABLE getAllCallerCalleeStarProc();
+	static TABLE getAllCallerStarProc(PROC_NAME procName);
+	static TABLE getAllCalleStarProc(PROC_NAME procName);
 	// Clear
 	static bool clear();
 
 private:
+	static TABLE getResultTableGenericBoth(TABLE tableName);
+	static TABLE getResultTableGenericLeft(PROC_NAME procName, TABLE tableName);
+	static TABLE getResultTableGenericRight(PROC_NAME procName, TABLE tableName);
 	static std::unordered_set<std::vector<std::string>, VectorDoubleStringHash> callProcTable;
 	static std::unordered_set<std::vector<std::string>, VectorDoubleStringHash> callStarProcTable;
 	static std::unordered_set<std::vector<std::string>, VectorDoubleStringHash> callStmtTable;

@@ -1,4 +1,5 @@
 #include "PKBCall.h"
+#include "PKBProcedure.h"
 
 using namespace std;
 unordered_set<vector<string>, VectorDoubleStringHash> PKBCall::callProcTable;
@@ -65,8 +66,28 @@ bool PKBCall::setCallStarProc(PROC_NAME caller, PROC_NAME callee) {
 	return true;
 }
 
-unordered_set<vector<string>, VectorDoubleStringHash> PKBCall::getCallProcTable() {
+TABLE PKBCall::getCallProcTable() {
 	return callProcTable;
+}
+
+TABLE PKBCall::getAllCallerCalleeProc() {
+	return PKBCall::getResultTableGenericBoth(callProcTable);
+}
+TABLE PKBCall::getAllCallerProc(PROC_NAME procName) {
+	return PKBCall::getResultTableGenericLeft( procName, callProcTable);
+}
+TABLE PKBCall::getAllCalleProc(PROC_NAME procName) {
+	return PKBCall::getResultTableGenericRight(procName, callProcTable);
+}
+
+TABLE PKBCall::getAllCallerCalleeStarProc() {
+	return PKBCall::getResultTableGenericBoth(callStarProcTable);
+}
+TABLE PKBCall::getAllCallerStarProc(PROC_NAME procName) {
+	return PKBCall::getResultTableGenericLeft(procName, callStarProcTable);
+}
+TABLE PKBCall::getAllCalleStarProc(PROC_NAME procName) {
+	return PKBCall::getResultTableGenericRight(procName, callStarProcTable);
 }
 
 bool PKBCall::clear() {
@@ -74,4 +95,46 @@ bool PKBCall::clear() {
 	callStarProcTable.clear();
 	callStmtTable.clear();
 	return true;
+}
+
+TABLE PKBCall::getResultTableGenericBoth(TABLE tableName) {
+	return tableName;
+}
+
+TABLE PKBCall::getResultTableGenericLeft(PROC_NAME procName, TABLE tableName) {
+	TABLE resultTable;
+	PROC_LIST list;
+	PROC_NAME p;
+	list = PKBProcedure::getAllProc();
+	for (auto iter : list) {
+		p = iter.front();
+		for (auto vectorIter : tableName) {
+			vector<string> tuple = vector<string>();
+			if (vectorIter.front() == p && vectorIter.back() == procName) {
+				tuple.push_back(vectorIter.front());
+				tuple.push_back(vectorIter.back());
+				resultTable.emplace(tuple);
+			}
+		}
+	}
+	return resultTable;
+}
+
+TABLE PKBCall::getResultTableGenericRight(PROC_NAME procName, TABLE tableName) {
+	TABLE resultTable;
+	PROC_LIST list;
+	PROC_NAME p;
+	list = PKBProcedure::getAllProc();
+	for (auto iter : list) {
+		p = iter.front();
+		for (auto vectorIter : tableName) {
+			vector<string> tuple = vector<string>();
+			if (vectorIter.front() == procName && vectorIter.back() == p) {
+				tuple.push_back(vectorIter.front());
+				tuple.push_back(vectorIter.back());
+				resultTable.emplace(tuple);
+			}
+		}
+	}
+	return resultTable;
 }

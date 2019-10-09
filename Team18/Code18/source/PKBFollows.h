@@ -14,11 +14,11 @@ public:
 	static bool isFollowsRelationship(STMT_NO followedBy, STMT_NO follows);
 	static bool isFollowsStarRelationship(STMT_NO followedBy, STMT_NO follows);
 	static TABLE getAllFollowedByFollowsStmt(STMT_TYPE type1, STMT_TYPE type2);
-	static TABLE getAllFollowedByStmt(STMT_TYPE type1, STMT_NO follows);
+	static TABLE getAllFollowedByStmt(STMT_TYPE type, STMT_NO follows);
 	static TABLE getAllFollowsStmt(STMT_NO followedBy, STMT_TYPE type1);
 	static TABLE getAllFollowedByFollowsStarStmt(STMT_TYPE type1, STMT_TYPE type2);
-	static TABLE getAllFollowedByStarStmt(STMT_TYPE type1, STMT_NO follows);
-	static TABLE getAllFollowsStarStmt(STMT_NO followedBy, STMT_TYPE type1);
+	static TABLE getAllFollowedByStarStmt(STMT_TYPE type, STMT_NO follows);
+	static TABLE getAllFollowsStarStmt(STMT_NO followedBy, STMT_TYPE type);
 	// Clear
 	static bool clear();
 

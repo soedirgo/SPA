@@ -44,6 +44,9 @@ namespace UnitTesting
 
 			PKB PKB;
 			PKB.clear();
+			PKB.setProc("First");
+			PKB.setProc("Second");
+			PKB.setProc("Third");
 
 			PKB.setCallProcRelation("First", "Second");
 			PKB.setCallProcRelation("Second", "Third");
@@ -68,6 +71,76 @@ namespace UnitTesting
 			Assert::IsTrue(PKB.isCallStarRelationship("First", "Second"));
 			Assert::IsTrue(PKB.isCallStarRelationship("Second", "Third"));
 			Assert::IsTrue(PKB.isCallStarRelationship("First", "Third"));
+		}
+
+		TEST_METHOD(CallGenericBoth)
+		{
+			PKBCall PKB;
+			TABLE actual, expected;
+
+			actual = PKB.getAllCallerCalleeProc();
+			expected = { {"First","Second"} ,{"Second","Third"} };
+			Assert::IsTrue(actual == expected);
+		}
+
+		TEST_METHOD(CallGenericLeft)
+		{
+			PKBCall PKB;
+			TABLE actual, expected;
+
+			actual = PKB.getAllCallerProc("First");
+			Assert::IsTrue(actual.size() == 0);
+
+			actual = PKB.getAllCallerProc("Second");
+			expected = { {"First","Second"} };
+			Assert::IsTrue(actual == expected);
+		}
+		TEST_METHOD(CallGenericRight)
+		{
+			PKBCall PKB;
+			TABLE actual, expected;
+
+			actual = PKB.getAllCalleProc("Third");
+			Assert::IsTrue(actual.size() == 0);
+
+			actual = PKB.getAllCalleProc("First");
+			expected = { {"First","Second"} };
+			Assert::IsTrue(actual == expected);
+		}
+
+		TEST_METHOD(CallStarGenericBoth)
+		{
+			PKBCall PKB;
+			TABLE actual, expected;
+
+			actual = PKB.getAllCallerCalleeStarProc();
+			expected = { {"First","Second"} ,{"Second","Third"}, {"First","Third"} };
+			Assert::IsTrue(actual == expected);
+		}
+
+		TEST_METHOD(CallStarGenericLeft)
+		{
+			PKBCall PKB;
+			TABLE actual, expected;
+
+			actual = PKB.getAllCallerStarProc("First");
+			Assert::IsTrue(actual.size() == 0);
+
+			actual = PKB.getAllCallerStarProc("Third");
+			expected = { {"First","Third"}, {"Second","Third"} };
+			Assert::IsTrue(actual == expected);
+		}
+		TEST_METHOD(CallStarGenericRight)
+		{
+			PKBCall PKB;
+			TABLE actual, expected;
+
+			actual = PKB.getAllCalleStarProc("Third");
+			Assert::IsTrue(actual.size() == 0);
+
+			actual = PKB.getAllCalleStarProc("First");
+			expected = { {"First","Second"},{"First","Third"} };
+			Assert::IsTrue(actual == expected);
 		}
 	};
 };
