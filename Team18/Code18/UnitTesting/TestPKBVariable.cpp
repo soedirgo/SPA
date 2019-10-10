@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "CppUnitTest.h"
-#include "PKB.h"
 #include "PKBVariable.h"
 #include "DesignExtractor.h"
 
@@ -42,7 +41,7 @@ namespace UnitTesting
 				18.		print v; }
 		   */
 
-			PKB PKB;
+			PKBVariable PKB;
 			PKB.clear();
 
 			PKB.setVar("x");

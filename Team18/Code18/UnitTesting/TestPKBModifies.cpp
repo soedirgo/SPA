@@ -45,44 +45,44 @@ namespace UnitTesting
 			PKB PKB;
 			PKB.clear();
 
-			PKB.setModifiesStmtRelation("1", "x");
-			PKB.setModifiesStmtRelation("2", "z");
-			PKB.setModifiesStmtRelation("4", "x");
-			PKB.setModifiesStmtRelation("5", "i");
-			PKB.setModifiesStmtRelation("7", "x");
-			PKB.setModifiesStmtRelation("9", "i");
-			PKB.setModifiesStmtRelation("11", "x");
-			PKB.setModifiesStmtRelation("12", "z");
-			PKB.setModifiesStmtRelation("13", "z");
-			PKB.setModifiesStmtRelation("14", "y");
-			PKB.setModifiesStmtRelation("15", "x");
-			PKB.setModifiesStmtRelation("16", "z");
-			PKB.setModifiesStmtRelation("17", "v");
-			PKB.setModifiesStmtRelation("6", "x");
-			PKB.setModifiesStmtRelation("6", "z");
-			PKB.setModifiesStmtRelation("10", "x");
-			PKB.setModifiesStmtRelation("10", "z");
+			PKB.setModifiesStmt("1", "x");
+			PKB.setModifiesStmt("2", "z");
+			PKB.setModifiesStmt("4", "x");
+			PKB.setModifiesStmt("5", "i");
+			PKB.setModifiesStmt("7", "x");
+			PKB.setModifiesStmt("9", "i");
+			PKB.setModifiesStmt("11", "x");
+			PKB.setModifiesStmt("12", "z");
+			PKB.setModifiesStmt("13", "z");
+			PKB.setModifiesStmt("14", "y");
+			PKB.setModifiesStmt("15", "x");
+			PKB.setModifiesStmt("16", "z");
+			PKB.setModifiesStmt("17", "v");
+			PKB.setModifiesStmt("6", "x");
+			PKB.setModifiesStmt("6", "z");
+			PKB.setModifiesStmt("10", "x");
+			PKB.setModifiesStmt("10", "z");
 			
-			PKB.setModifiesProcRelation("First", "x");
-			PKB.setModifiesProcRelation("First", "z");
+			PKB.setModifiesProc("First", "x");
+			PKB.setModifiesProc("First", "z");
 
-			PKB.setModifiesProcRelation("Second", "x");
-			PKB.setModifiesProcRelation("Second", "i");
-			PKB.setModifiesProcRelation("Second", "y");
-			PKB.setModifiesProcRelation("Second", "z");
+			PKB.setModifiesProc("Second", "x");
+			PKB.setModifiesProc("Second", "i");
+			PKB.setModifiesProc("Second", "y");
+			PKB.setModifiesProc("Second", "z");
 
-			PKB.setModifiesProcRelation("Third", "z");
-			PKB.setModifiesProcRelation("Third", "v");
+			PKB.setModifiesProc("Third", "z");
+			PKB.setModifiesProc("Third", "v");
 
-			PKB.setModifiesProcRelation("Second", "z");
-			PKB.setModifiesProcRelation("Second", "v");
+			PKB.setModifiesProc("Second", "z");
+			PKB.setModifiesProc("Second", "v");
 
-			PKB.setModifiesProcRelation("First", "z");
-			PKB.setModifiesProcRelation("First", "v");
-			PKB.setModifiesProcRelation("First", "x");
-			PKB.setModifiesProcRelation("First", "i");
-			PKB.setModifiesProcRelation("First", "y");
-			PKB.setModifiesProcRelation("First", "z");
+			PKB.setModifiesProc("First", "z");
+			PKB.setModifiesProc("First", "v");
+			PKB.setModifiesProc("First", "x");
+			PKB.setModifiesProc("First", "i");
+			PKB.setModifiesProc("First", "y");
+			PKB.setModifiesProc("First", "z");
 
 		}
 

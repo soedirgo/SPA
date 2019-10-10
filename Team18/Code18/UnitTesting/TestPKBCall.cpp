@@ -48,8 +48,8 @@ namespace UnitTesting
 			PKB.setProc("Second");
 			PKB.setProc("Third");
 
-			PKB.setCallProcRelation("First", "Second");
-			PKB.setCallProcRelation("Second", "Third");
+			PKB.setCallProc("First", "Second");
+			PKB.setCallProc("Second", "Third");
 
 			PKB.setCallStmt("3", "Second");
 			PKB.setCallStmt("8", "Third");

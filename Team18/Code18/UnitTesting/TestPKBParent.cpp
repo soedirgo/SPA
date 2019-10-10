@@ -71,14 +71,14 @@ namespace UnitTesting
 			PKB.setStmt("21", "ASSIGN");
 			PKB.setStmt("22", "PRINT");
 
-			PKB.setParentRelation("6", "7");
-			PKB.setParentRelation("6", "8");
-			PKB.setParentRelation("6", "9");
-			PKB.setParentRelation("6", "10");
-			PKB.setParentRelation("10", "11");
-			PKB.setParentRelation("10", "12");
-			PKB.setParentRelation("14", "15");
-			PKB.setParentRelation("14", "16");
+			PKB.setParent("6", "7");
+			PKB.setParent("6", "8");
+			PKB.setParent("6", "9");
+			PKB.setParent("6", "10");
+			PKB.setParent("10", "11");
+			PKB.setParent("10", "12");
+			PKB.setParent("14", "15");
+			PKB.setParent("14", "16");
 
 			DesignExtractor DesignExtractor;
 			DesignExtractor.extractDesign();

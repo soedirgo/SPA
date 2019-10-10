@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "CppUnitTest.h"
 #include "PKBStmt.h"
-#include "PKB.h"
 #include "DesignExtractor.h"
 
 using namespace std;
@@ -42,7 +41,7 @@ namespace UnitTesting
 				18.		print v; }
 		   */
 
-			PKB PKB;
+			PKBStmt PKB;
 			PKB.clear();
 
 			PKB.setStmt("1", "READ");
