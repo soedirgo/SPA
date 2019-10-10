@@ -1,37 +1,34 @@
 #pragma once
 
+#include "AbstractType.h"
+#include "PKBHash.h"
 #include <unordered_set>
-#include <unordered_map>
-#include <string>
 
 class PKBParent {
 public:
 
-	// add parent to parentTable
-	static bool setParent(int parent, int child);
-	static bool setChildren(int parent, int child);
-	static bool setParentStar(int parent, int child);
+	static bool setParent(STMT_NO parent, STMT_NO child);
+	static bool setParentStar(STMT_NO parent, STMT_NO child);
+	static STMT_LIST getChild(STMT_NO parent);
+	static STMT_NO getParent(STMT_NO parent);
+	static bool isParentExist(STMT_NO child);
+	static bool isParentRelationship(STMT_NO parent, STMT_NO child);
+	static bool isParentStarRelationship(STMT_NO parent, STMT_NO child);
+	static TABLE getParentTable();
 
-	// GETTERS
-	static int getParentStmt(int child);
-	static std::unordered_set<int> getParentStarStmtList(int child);
-	static std::unordered_set<int> getChildrenStmtList(int parent);
-
-	// Boolean Check
-	static bool isParentExist(int stmtNo);
-	static bool isChildrenExist(int stmtNo);
-
-	static bool isParentRelationship(int parent, int child);
-	static bool isParentStarRelationship(int parent, int child);
+	static TABLE getAllParentChildStmt(STMT_TYPE type1, STMT_TYPE type2);
+	static TABLE getAllParentStmt(STMT_TYPE type1, STMT_NO follows);
+	static TABLE getAllChildStmt(STMT_NO followedBy, STMT_TYPE type1);
+	static TABLE getAllParentChildStarStmt(STMT_TYPE type1, STMT_TYPE type2);
+	static TABLE getAllParentStarStmt(STMT_TYPE type1, STMT_NO follows);
+	static TABLE getAllChildStarStmt(STMT_NO followedBy, STMT_TYPE type1);
 	// Clear
-	bool clear();
-
-	// Internal Use
-	static std::unordered_set<int> getAllChildren();
-	static std::unordered_set<int> getAllParent();
+	static bool clear();
 
 private:
-	static std::unordered_map<int, int> childTable;
-	static std::unordered_map<int, std::unordered_set<int>> parentTable;
-	static std::unordered_map<int, std::unordered_set<int>> parentStarTable;
+	static TABLE getResultTableGenericBoth(STMT_TYPE type1, STMT_TYPE type2, TABLE tableName);
+	static TABLE getResultTableGenericLeft(STMT_TYPE type, STMT_NO child, TABLE tableName);
+	static TABLE getResultTableGenericRight(STMT_NO parent, STMT_TYPE type, TABLE tableName);
+	static std::unordered_set<std::vector<std::string>, VectorDoubleStringHash> parentTable;
+	static std::unordered_set<std::vector<std::string>, VectorDoubleStringHash> parentStarTable;
 };

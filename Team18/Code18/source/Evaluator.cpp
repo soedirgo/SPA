@@ -11,7 +11,9 @@
 using namespace std;
 
 namespace Evaluator {
+	/*
   	namespace {
+		
 		unordered_map<string, string> declarations;
 		vector<pair<string, pair<string, string>>> clauses;
         vector<pair<string, pair<string, string>>> patterns;
@@ -41,32 +43,32 @@ namespace Evaluator {
                 string type = declarations[stmtRef];
                 if (type == "stmt") {
                     for (const auto& stmt : PKB::getAllStmt()) {
-                        statements.insert(to_string(stmt));
+                        statements.insert(stmt.back());
                     }
                 } else if (type == "read") {
                     for (const auto& stmt : PKB::getAllReadStmt()) {
-                        statements.insert(to_string(stmt));
+                        statements.insert(stmt.back());
                     }
                 } else if (type == "print") {
                     for (const auto& stmt : PKB::getAllPrintStmt()) {
-                        statements.insert(to_string(stmt));
+                        statements.insert(stmt.back());
                     }
                 } else if (type == "while") {
                     for (const auto& stmt : PKB::getAllWhileStmt()) {
-                        statements.insert(to_string(stmt));
+                        statements.insert(stmt.back());
                     }
                 } else if (type == "if") {
                     for (const auto& stmt : PKB::getAllIfStmt()) {
-                        statements.insert(to_string(stmt));
+                        statements.insert(stmt.back());
                     }
                 } else if (type == "assign") {
                     for (const auto& stmt : PKB::getAllAssignStmt()) {
-                        statements.insert(to_string(stmt));
+                        statements.insert(stmt.back());
                     }
                 }
 			} else if (stmtRef == "_") { // stmtRef is a ``_''
                 for (const auto& stmt : PKB::getAllStmt()) {
-                    statements.insert(to_string(stmt));
+                    statements.insert(stmt.back());
                 }
             } else { // stmtRef is a stmtNum
 				statements.insert(stmtRef);
@@ -81,13 +83,13 @@ namespace Evaluator {
 				variables.insert(fil[varRef]);
 			} else if (declarations.count(varRef)) { // varRef is a synonym
 				for (const auto& var : PKB::getAllVar()) {
-					variables.insert(var);
+					variables.insert(var.back());
 				}
 			} else if (varRef.front() == '\"' && varRef.back() == '\"') { // varRef is an explicit name
 				variables.insert(varRef.substr(1, varRef.size() - 2));
 			} else { // varRef is a ``_''
 				for (const auto& var : PKB::getAllVar()) {
-					variables.insert(var);
+					variables.insert(var.back());
 				}
 			}
 			return variables;
@@ -101,11 +103,11 @@ namespace Evaluator {
 			} else if (declarations.count(factorRef)) { // factorRef is a synonym
                 if (declarations[factorRef] == "variable") {
                     for (const auto& var : PKB::getAllVar()) {
-                        factors.insert(var);
+                        factors.insert(var.back());
                     }
                 } else if (declarations[factorRef] == "constant") {
                     for (const auto& cons : PKB::getAllConstant()) {
-                        factors.insert(cons);
+                        factors.insert(cons.back());
                     }
                 }
             } else if (factorRef.front() == '\"' && factorRef.back() == '\"') {
@@ -113,10 +115,10 @@ namespace Evaluator {
                 factors.insert(factorRef.substr(1, factorRef.length() - 2));
             } else { // factorRef is a ``_''
 				for (const auto& var : PKB::getAllVar()) {
-					factors.insert(var);
+					factors.insert(var.back());
 				}
                 for (const auto& cons : PKB::getAllConstant()) {
-					factors.insert(cons);
+					factors.insert(cons.back());
                 }
 			}
 			return factors;
@@ -134,7 +136,7 @@ namespace Evaluator {
 				for (const auto& v : enumeratedVar) {
 					if (declarations.count(clause.second.second))
 						fil[clause.second.second] = v;
-                    if (PKB::isUsesStmtVar(stoi(s), v)) {
+                    if (PKB::isUsesStmtRelationship(s, v)) {
                         if (evalClauses(cls, fil))
                             return true;
                         else
@@ -157,7 +159,7 @@ namespace Evaluator {
 				for (const auto& v : enumeratedVar) {
 					if (declarations.count(clause.second.second))
 						fil[clause.second.second] = v;
-					if (PKB::isModifiesStmtVar(stoi(s), v))
+					if (PKB::isModifiesStmtRelationship(s, v))
                         if (evalClauses(cls, fil))
                             return true;
                         else
@@ -179,7 +181,7 @@ namespace Evaluator {
                 for (const auto& rhs : enumeratedRhs) {
                     if (declarations.count(clause.second.first))
                         fil[clause.second.first] = rhs;
-                    if (PKB::isFollowRelationship(stoi(lhs), stoi(rhs)))
+                    if (PKB::isFollowsRelationship(lhs, rhs))
                         if (evalClauses(cls, fil))
                             return true;
                         else
@@ -201,7 +203,7 @@ namespace Evaluator {
                 for (const auto& rhs : enumeratedRhs) {
                     if (declarations.count(clause.second.first))
                         fil[clause.second.first] = rhs;
-                    if (PKB::isFollowStarRelationship(stoi(lhs), stoi(rhs)))
+                    if (PKB::isFollowsStarRelationship(lhs, rhs))
                         if (evalClauses(cls, fil))
                             return true;
                         else
@@ -223,7 +225,7 @@ namespace Evaluator {
                 for (const auto& rhs : enumeratedRhs) {
                     if (declarations.count(clause.second.first))
                         fil[clause.second.first] = rhs;
-                    if (PKB::isParentRelationship(stoi(lhs), stoi(rhs)))
+                    if (PKB::isParentRelationship(lhs, rhs))
                         if (evalClauses(cls, fil))
                             return true;
                         else
@@ -245,7 +247,7 @@ namespace Evaluator {
                 for (const auto& rhs : enumeratedRhs) {
                     if (declarations.count(clause.second.first))
                         fil[clause.second.first] = rhs;
-                    if (PKB::isParentStarRelationship(stoi(lhs), stoi(rhs)))
+                    if (PKB::isParentStarRelationship(lhs, rhs))
                         if (evalClauses(cls, fil))
                             return true;
                         else
@@ -270,7 +272,7 @@ namespace Evaluator {
 					fil[clause.first] = assign;
                 // for each v
                 for (const auto& lhs : enumeratedLhs) {
-                    if (!PKB::isModifiesStmtVar(stoi(assign), lhs))
+                    if (!PKB::isModifiesStmtRelationship(assign, lhs))
                         continue;
                     if (declarations.count(clause.second.first))
                         fil[clause.second.first] = lhs;
@@ -279,8 +281,8 @@ namespace Evaluator {
                         if (declarations.count(clause.second.second))
                             fil[clause.second.second] = rhs;
                         // check if it is used in the assignment
-                        if (PKB::isConstUsedInAssign(stoi(assign), rhs)
-                            || PKB::isVarUsedInAssign(stoi(assign), rhs))
+                        if (PKB::isConstUsedInAssign(assign, rhs)
+                            || PKB::isVarUsedInAssign(assign, rhs))
                             if (evalClauses(cls, fil))
                                 return true;
                             else
@@ -327,36 +329,39 @@ namespace Evaluator {
 		unordered_set<string> resultCandidates;
 		if (selectSynType == "stmt") {
 			for (const auto& stmt : PKB::getAllStmt()) {
-				resultCandidates.insert(to_string(stmt));
+				resultCandidates.insert(stmt.back());
 			}
 		} else if (selectSynType == "read") {
 			for (const auto& stmt : PKB::getAllReadStmt()) {
-				resultCandidates.insert(to_string(stmt));
+				resultCandidates.insert(stmt.back());
 			}
 		} else if (selectSynType == "print") {
             for (const auto& stmt : PKB::getAllPrintStmt()) {
-				resultCandidates.insert(to_string(stmt));
+				resultCandidates.insert(stmt.back());
 			}
 		} else if (selectSynType == "while") {
 			for (const auto& stmt : PKB::getAllWhileStmt()) {
-				resultCandidates.insert(to_string(stmt));
+				resultCandidates.insert(stmt.back());
 			}
 		} else if (selectSynType == "if") {
 			for (const auto& stmt : PKB::getAllIfStmt()) {
-				resultCandidates.insert(to_string(stmt));
+				resultCandidates.insert(stmt.back());
 			}
 		} else if (selectSynType == "assign") {
 			for (const auto& stmt : PKB::getAllAssignStmt()) {
-				resultCandidates.insert(to_string(stmt));
+				resultCandidates.insert(stmt.back());
 			}
-		} else if (selectSynType == "variable") {
+		}
+		/*
+		else if (selectSynType == "variable") {
 			resultCandidates = PKB::getAllVar();
 		} else if (selectSynType == "constant") {
 			resultCandidates = PKB::getAllConstant();
 		} else if (selectSynType == "procedure") {
 			resultCandidates = PKB::getAllProc();
         }
-
+		*
+		
         list<string> results;
         for (const auto& result : resultCandidates) {
             vector<pair<string, pair<string, string>>> cls = clauses;
@@ -370,4 +375,5 @@ namespace Evaluator {
         }
         return results;
     }
+	*/
 }

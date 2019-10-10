@@ -1,60 +1,125 @@
 #include "DesignExtractor.h"
 #include "PKB.h"
 #include "PKBParent.h"
-#include "PKBFollow.h"
+#include "PKBFollows.h"
+#include "PKBCall.h"
+#include "PKBNext.h"
+#include "PKBStmt.h"
 
 using namespace std;
 
 void DesignExtractor::extractDesign()
 {
-	extractFollowStar();
+	extractFollowsStar();
 	extractParentStar();
+	extractCallStar();
+	extractNextStar();
 }
 
-void DesignExtractor::extractParentStar()
+void DesignExtractor::extractNextStar()
 {
-	unordered_set<int> parentList = PKBParent::getAllParent();
-	unordered_set<int> childList;
-	unordered_set<int> tempChildList;
-	for (auto parent : parentList) {
-		for (auto child : childList = PKBParent::getChildrenStmtList(parent)) {
-			PKBParent::setParentStar(parent,child);		
-			recurseParent(parent, child);
+	unordered_set<vector<string>, VectorDoubleStringHash> nextTable = PKBNext::getNextTable();
+	STMT_LIST whileList = PKBStmt::getAllStmtByType("WHILE");
+	for (auto vectorIter : nextTable) {
+		string n1 = vectorIter.front();
+		string n2 = vectorIter.back();
+		PKBNext::setNextStar(n1, n2);
+		if (stoi(n2) > stoi(n1)) {
+			recurseNext(n1, n2, whileList);
 		}
 	}
 }
 
-void DesignExtractor::extractFollowStar()
+void DesignExtractor::extractParentStar()
 {
-	unordered_set<int> followedByList = PKBFollow::getAllFollowedBy();
-	bool statusCheck;
-	for (auto followedBy : followedByList) {
-		int follow = PKBFollow::getFollowStmt(followedBy);
-		PKBFollow::setFollowStar(followedBy, follow);
-		recurseFollow(followedBy, follow);
+	unordered_set<vector<string>, VectorDoubleStringHash> parentTable = PKBParent::getParentTable();
+	for (auto vectorIter : parentTable) {
+		string followedBy = vectorIter.front();
+		string follows = vectorIter.back();
+		PKBParent::setParentStar(followedBy, follows);
+		recurseParent(followedBy, follows);
 	}
 }
 
-void DesignExtractor::recurseFollow(int followedBy, int follow) {
-	follow = PKBFollow::getFollowStmt(follow);
-	if (!PKBFollow::isFollowedByExist(follow)) {
+void DesignExtractor::extractFollowsStar()
+{
+	unordered_set<vector<string>, VectorDoubleStringHash> followsTable = PKBFollows::getFollowsTable();
+	for (auto vectorIter : followsTable) {
+		string followedBy = vectorIter.front();
+		string follows = vectorIter.back();
+		PKBFollows::setFollowsStar(followedBy, follows);
+		recurseFollows(followedBy, follows);
+	}
+}
+
+void DesignExtractor::extractCallStar()
+{
+	unordered_set<vector<string>, VectorDoubleStringHash> callProcTable = PKBCall::getCallProcTable();
+	for (auto vectorIter : callProcTable) {
+		PROC_NAME caller = vectorIter.front();
+		PROC_NAME callee = vectorIter.back();
+		PKBCall::setCallStarProc(caller, callee);
+		recurseCall(caller, callee);
+	}
+}
+
+void DesignExtractor::recurseCall(PROC_NAME caller, PROC_NAME callee) {
+	PROC_LIST calleeList = PKBCall::getCalleeProc(callee);
+	if (calleeList.size() == 0) {
 		return;
 	}
-	PKBFollow::setFollowStar(followedBy, follow);
-	recurseFollow(followedBy, follow);
+	for (auto vectorIter : calleeList) {
+		PROC_NAME newCallee = vectorIter.back();
+		PKBCall::setCallStarProc(caller, newCallee);
+		recurseCall(caller, newCallee);
+	}
 }
 
-
-void DesignExtractor::recurseParent(int parent, int child ) {
-	unordered_set<int> childList = PKBParent::getChildrenStmtList(child);
-	if (childList.empty()) {
+void DesignExtractor::recurseFollows(STMT_NO followedBy, STMT_NO follows) {
+	string newFollows = PKBFollows::getFollows(follows);
+	if (newFollows == "") {
 		return;
 	}
-	for (auto tempChild : childList) {
-		PKBParent::setParentStar(parent, tempChild);
-		recurseParent(parent, tempChild);
+	PKBFollows::setFollowsStar(followedBy, newFollows);
+	recurseFollows(followedBy, newFollows);
+}
+
+void DesignExtractor::recurseParent(STMT_NO parent, STMT_NO child) {
+	PROC_LIST childList = PKBParent::getChild(child);
+	if (childList.size() == 0) {
+		return;
+	}
+	for (auto vectorIter : childList) {
+		PROC_NAME newChild = vectorIter.back();
+		PKBParent::setParentStar(parent, newChild);
+		recurseParent(parent, newChild);
 	}
 }
 
+void DesignExtractor::recurseNext(PROG_LINE nextByLine, PROG_LINE nextLine, STMT_LIST whileList) {
+	LINE_LIST lineList = PKBNext::getNext(nextLine);
+	if (lineList.size() == 0 ) {
+		return;
+	}
+	
+	for (auto vectorIter : lineList) {
+		PROG_LINE newNextLine = vectorIter.back();
+		if (PKBNext::isNextStarRelationship(nextByLine, newNextLine)) {
 
-
+			/*
+			for (auto vectorIter2 : whileList) {
+				if (vectorIter2.front() == nextByLine) {
+					return;
+				}
+			}
+			*/
+			return;
+		}
+		if (stoi(nextByLine) >= stoi(newNextLine)) {
+			return;
+		}
+		PKBNext::setNextStar(nextByLine, newNextLine);
+		recurseNext(nextByLine, newNextLine, whileList);
+		
+	}
+}
