@@ -24,6 +24,24 @@ namespace UnitTesting
 			Assert::AreEqual(expected, actual);
 		}
 
+		TEST_METHOD(CallTest1)
+		{
+			Parser parser = Parser();
+			string input = "call parse;";
+			string expected = "parse";
+			string actual = parser.parseCall(input);
+			Assert::AreEqual(expected, actual);
+		}
+
+		TEST_METHOD(CallTest2)
+		{
+			Parser parser = Parser();
+			string input = "call parse;}";
+			string expected = "parse";
+			string actual = parser.parseCall(input);
+			Assert::AreEqual(expected, actual);
+		}
+
 		TEST_METHOD(ReadTest)
 		{
 			Parser parser = Parser();
@@ -218,6 +236,15 @@ namespace UnitTesting
 		{
 			Parser parser = Parser();
 			string input = "if ((x == 1) || (a != b) && (c <= d) || (e >= f) || (g < h) && (i > j)) then {";
+			vector<string> expected{ "x", "1", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j" };
+			vector<string> actual = parser.parseCondStmt(input);
+			Assert::AreEqual(expected == actual, true);
+		}
+
+		TEST_METHOD(IfCondStmtTest3)
+		{
+			Parser parser = Parser();
+			string input = "if !((x == 1) || (a != b) && (c <= d) || (e >= f) || !(g < h) && (i > j)) then {";
 			vector<string> expected{ "x", "1", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j" };
 			vector<string> actual = parser.parseCondStmt(input);
 			Assert::AreEqual(expected == actual, true);
