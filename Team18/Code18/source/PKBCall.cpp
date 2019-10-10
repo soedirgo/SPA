@@ -86,20 +86,20 @@ TABLE PKBCall::getCallProcTable() {
 TABLE PKBCall::getAllCallerCalleeProc() {
 	return PKBCall::getResultTableGenericBoth(callProcTable);
 }
-TABLE PKBCall::getAllCallerProc(PROC_NAME procName) {
+PROC_LIST PKBCall::getAllCallerProc(PROC_NAME procName) {
 	return PKBCall::getResultTableGenericLeft( procName, callProcTable);
 }
-TABLE PKBCall::getAllCalleProc(PROC_NAME procName) {
+PROC_LIST PKBCall::getAllCalleProc(PROC_NAME procName) {
 	return PKBCall::getResultTableGenericRight(procName, callProcTable);
 }
 
 TABLE PKBCall::getAllCallerCalleeStarProc() {
 	return PKBCall::getResultTableGenericBoth(callStarProcTable);
 }
-TABLE PKBCall::getAllCallerStarProc(PROC_NAME procName) {
+PROC_LIST PKBCall::getAllCallerStarProc(PROC_NAME procName) {
 	return PKBCall::getResultTableGenericLeft(procName, callStarProcTable);
 }
-TABLE PKBCall::getAllCalleStarProc(PROC_NAME procName) {
+PROC_LIST PKBCall::getAllCalleStarProc(PROC_NAME procName) {
 	return PKBCall::getResultTableGenericRight(procName, callStarProcTable);
 }
 
@@ -114,8 +114,8 @@ TABLE PKBCall::getResultTableGenericBoth(TABLE tableName) {
 	return tableName;
 }
 
-TABLE PKBCall::getResultTableGenericLeft(PROC_NAME procName, TABLE tableName) {
-	TABLE resultTable;
+PROC_LIST PKBCall::getResultTableGenericLeft(PROC_NAME procName, TABLE tableName) {
+	PROC_LIST resultTable;
 	PROC_LIST list;
 	PROC_NAME p;
 	list = PKBProcedure::getAllProc();
@@ -125,7 +125,7 @@ TABLE PKBCall::getResultTableGenericLeft(PROC_NAME procName, TABLE tableName) {
 			vector<string> tuple = vector<string>();
 			if (vectorIter.front() == p && vectorIter.back() == procName) {
 				tuple.push_back(vectorIter.front());
-				tuple.push_back(vectorIter.back());
+				//tuple.push_back(vectorIter.back());
 				resultTable.emplace(tuple);
 			}
 		}
@@ -133,8 +133,8 @@ TABLE PKBCall::getResultTableGenericLeft(PROC_NAME procName, TABLE tableName) {
 	return resultTable;
 }
 
-TABLE PKBCall::getResultTableGenericRight(PROC_NAME procName, TABLE tableName) {
-	TABLE resultTable;
+PROC_LIST PKBCall::getResultTableGenericRight(PROC_NAME procName, TABLE tableName) {
+	PROC_LIST resultTable;
 	PROC_LIST list;
 	PROC_NAME p;
 	list = PKBProcedure::getAllProc();
@@ -143,7 +143,7 @@ TABLE PKBCall::getResultTableGenericRight(PROC_NAME procName, TABLE tableName) {
 		for (auto vectorIter : tableName) {
 			vector<string> tuple = vector<string>();
 			if (vectorIter.front() == procName && vectorIter.back() == p) {
-				tuple.push_back(vectorIter.front());
+				//tuple.push_back(vectorIter.front());
 				tuple.push_back(vectorIter.back());
 				resultTable.emplace(tuple);
 			}

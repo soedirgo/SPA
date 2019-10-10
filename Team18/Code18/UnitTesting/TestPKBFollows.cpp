@@ -142,41 +142,41 @@ namespace UnitTesting
 		TEST_METHOD(FollowsGenericLeft)
 		{
 			PKBFollows PKB;
-			TABLE actual, expected;
+			STMT_LIST actual, expected;
 
 			actual = PKB.getAllFollowedByStmt("ASSIGN", "18");
-			expected = { {"17","18"} };
+			expected = { {"17"} };
 			Assert::IsTrue(actual == expected);
 
 			actual = PKB.getAllFollowedByStmt("ASSIGN", "2");
 			Assert::IsTrue(actual.size() == 0);
 
 			actual = PKB.getAllFollowedByStmt("ASSIGN", "5");
-			expected = { {"4","5"} };
+			expected = { {"4"} };
 			Assert::IsTrue(actual == expected);
 
 			actual = PKB.getAllFollowedByStmt("_", "2");
-			expected = { {"1","2"}};
+			expected = { {"1"}};
 			Assert::IsTrue(actual == expected);
 		}
 		TEST_METHOD(FollowsGenericRight)
 		{
 			PKBFollows PKB;
-			TABLE actual, expected;
+			STMT_LIST actual, expected;
 
 			actual = PKB.getAllFollowsStmt("13", "ASSIGN");
-			expected = { {"13","14"} };
+			expected = { {"14"} };
 			Assert::IsTrue(actual == expected);
 
 			actual = PKB.getAllFollowsStmt("2", "ASSIGN");
 			Assert::IsTrue(actual.size() == 0);
 
 			actual = PKB.getAllFollowsStmt("5", "WHILE");
-			expected = { {"5","6"} };
+			expected = { {"6"} };
 			Assert::IsTrue(actual == expected);
 
 			actual = PKB.getAllFollowsStmt("2", "_");
-			expected = { {"2","3"} };
+			expected = { {"3"} };
 			Assert::IsTrue(actual == expected);
 		}
 		TEST_METHOD(FollowsStarGenericBoth)
@@ -211,42 +211,42 @@ namespace UnitTesting
 		TEST_METHOD(FollowsStarGenericLeft)
 		{
 			PKBFollows PKB;
-			TABLE actual, expected;
+			STMT_LIST actual, expected;
 
 			actual = PKB.getAllFollowedByStarStmt("ASSIGN", "18");
-			expected = { {"16","18"}, {"17","18"} };
+			expected = { {"16"}, {"17"} };
 			Assert::IsTrue(actual == expected);
 
 			actual = PKB.getAllFollowedByStarStmt("ASSIGN", "2");
 			Assert::IsTrue(actual.size() == 0);
 
 			actual = PKB.getAllFollowedByStarStmt("READ", "3");
-			expected = { {"1","3"}, {"2","3"} };
+			expected = { {"1"}, {"2"} };
 			Assert::IsTrue(actual == expected);
 
 			actual = PKB.getAllFollowedByStarStmt("_", "3");
-			expected = { {"1","3"}, {"2","3"} };
+			expected = { {"1"}, {"2"} };
 			Assert::IsTrue(actual == expected);
 		}
 
 		TEST_METHOD(FollowsStarGenericRight)
 		{
 			PKBFollows PKB;
-			TABLE actual, expected;
+			STMT_LIST actual, expected;
 
 			actual = PKB.getAllFollowsStarStmt("13", "ASSIGN");
-			expected = { {"13","14"},{"13","15"} };
+			expected = { {"14"},{"15"} };
 			Assert::IsTrue(actual == expected);
 
 			actual = PKB.getAllFollowsStarStmt("2", "ASSIGN");
 			Assert::IsTrue(actual.size() == 0);
 
 			actual = PKB.getAllFollowsStarStmt("5", "WHILE");
-			expected = { {"5","6"} };
+			expected = { {"6"} };
 			Assert::IsTrue(actual == expected);
 
 			actual = PKB.getAllFollowsStarStmt("1", "_");
-			expected = { {"1","3"}, {"1","2"} };
+			expected = { {"3"}, {"2"} };
 			Assert::IsTrue(actual == expected);
 		}
 	};

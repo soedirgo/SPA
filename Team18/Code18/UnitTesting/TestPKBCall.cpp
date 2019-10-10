@@ -86,25 +86,25 @@ namespace UnitTesting
 		TEST_METHOD(CallGenericLeft)
 		{
 			PKBCall PKB;
-			TABLE actual, expected;
+			PROC_LIST actual, expected;
 
 			actual = PKB.getAllCallerProc("First");
 			Assert::IsTrue(actual.size() == 0);
 
 			actual = PKB.getAllCallerProc("Second");
-			expected = { {"First","Second"} };
+			expected = { {"First"} };
 			Assert::IsTrue(actual == expected);
 		}
 		TEST_METHOD(CallGenericRight)
 		{
 			PKBCall PKB;
-			TABLE actual, expected;
+			PROC_LIST actual, expected;
 
 			actual = PKB.getAllCalleProc("Third");
 			Assert::IsTrue(actual.size() == 0);
 
 			actual = PKB.getAllCalleProc("First");
-			expected = { {"First","Second"} };
+			expected = { {"Second"} };
 			Assert::IsTrue(actual == expected);
 		}
 
@@ -121,25 +121,25 @@ namespace UnitTesting
 		TEST_METHOD(CallStarGenericLeft)
 		{
 			PKBCall PKB;
-			TABLE actual, expected;
+			PROC_LIST actual, expected;
 
 			actual = PKB.getAllCallerStarProc("First");
 			Assert::IsTrue(actual.size() == 0);
 
 			actual = PKB.getAllCallerStarProc("Third");
-			expected = { {"First","Third"}, {"Second","Third"} };
+			expected = { {"First"}, {"Second"} };
 			Assert::IsTrue(actual == expected);
 		}
 		TEST_METHOD(CallStarGenericRight)
 		{
 			PKBCall PKB;
-			TABLE actual, expected;
+			PROC_LIST actual, expected;
 
 			actual = PKB.getAllCalleStarProc("Third");
 			Assert::IsTrue(actual.size() == 0);
 
 			actual = PKB.getAllCalleStarProc("First");
-			expected = { {"First","Second"},{"First","Third"} };
+			expected = { {"Second"},{"Third"} };
 			Assert::IsTrue(actual == expected);
 		}
 	};

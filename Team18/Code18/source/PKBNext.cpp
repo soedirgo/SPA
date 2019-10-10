@@ -66,19 +66,19 @@ unordered_set<vector<string>, VectorDoubleStringHash> PKBNext::getNextTable() {
 TABLE PKBNext::getAllNextByLineNextLineStmt() {
 	return PKBNext::getResultTableGenericBoth(nextTable);
 }
-TABLE PKBNext::getAllNextByLineStmt(PROG_LINE progLine) {
+LINE_LIST PKBNext::getAllNextByLineStmt(PROG_LINE progLine) {
 	return PKBNext::getResultTableGenericLeft(progLine, nextTable);
 }
-TABLE PKBNext::getAllNextLineStmt(PROG_LINE progLine) {
+LINE_LIST PKBNext::getAllNextLineStmt(PROG_LINE progLine) {
 	return PKBNext::getResultTableGenericRight(progLine, nextTable);
 }
 TABLE PKBNext::getAllNextByLineNextLineStarStmt() {
 	return PKBNext::getResultTableGenericBoth(nextStarTable);
 }
-TABLE PKBNext::getAllNextByLineStarStmt(PROG_LINE progLine) {
+LINE_LIST PKBNext::getAllNextByLineStarStmt(PROG_LINE progLine) {
 	return PKBNext::getResultTableGenericLeft(progLine, nextStarTable);
 }
-TABLE PKBNext::getAllNextLineStarStmt(PROG_LINE progLine) {
+LINE_LIST PKBNext::getAllNextLineStarStmt(PROG_LINE progLine) {
 	return PKBNext::getResultTableGenericRight(progLine, nextStarTable);
 }
 
@@ -92,8 +92,8 @@ TABLE PKBNext::getResultTableGenericBoth(TABLE tableName) {
 	return tableName;
 }
 
-TABLE PKBNext::getResultTableGenericLeft(PROG_LINE progLine, TABLE tableName) {
-	TABLE resultTable;
+LINE_LIST PKBNext::getResultTableGenericLeft(PROG_LINE progLine, TABLE tableName) {
+	LINE_LIST resultTable;
 	LINE_LIST list;
 	PROG_LINE n;
 	list = PKBStmt::getAllStmt();
@@ -103,7 +103,7 @@ TABLE PKBNext::getResultTableGenericLeft(PROG_LINE progLine, TABLE tableName) {
 			vector<string> tuple = vector<string>();
 			if (vectorIter.front() == n && vectorIter.back() == progLine) {
 				tuple.push_back(vectorIter.front());
-				tuple.push_back(vectorIter.back());
+				//tuple.push_back(vectorIter.back());
 				resultTable.emplace(tuple);
 			}
 		}
@@ -111,8 +111,8 @@ TABLE PKBNext::getResultTableGenericLeft(PROG_LINE progLine, TABLE tableName) {
 	return resultTable;
 }
 
-TABLE PKBNext::getResultTableGenericRight(PROG_LINE progLine, TABLE tableName) {
-	TABLE resultTable;
+LINE_LIST PKBNext::getResultTableGenericRight(PROG_LINE progLine, TABLE tableName) {
+	LINE_LIST resultTable;
 	LINE_LIST list;
 	PROG_LINE n;
 	list = PKBStmt::getAllStmt();
@@ -121,7 +121,7 @@ TABLE PKBNext::getResultTableGenericRight(PROG_LINE progLine, TABLE tableName) {
 		for (auto vectorIter : tableName) {
 			vector<string> tuple = vector<string>();
 			if (vectorIter.front() == progLine && vectorIter.back() == n) {
-				tuple.push_back(vectorIter.front());
+				//tuple.push_back(vectorIter.front());
 				tuple.push_back(vectorIter.back());
 				resultTable.emplace(tuple);
 			}
