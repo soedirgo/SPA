@@ -58,11 +58,11 @@ TNode* PKB::getRootAST (PROC p){
 
 
 //Follows 
-bool PKB::setFollowsRelation(STMT_NO followedBy, STMT_NO follow) {
+bool PKB::setFollows(STMT_NO followedBy, STMT_NO follow) {
 	return PKBFollows::setFollows(followedBy, follow);
 }
 
-bool PKB::setFollowsStarRelation(STMT_NO followedBy, STMT_NO follow) {
+bool PKB::setFollowsT(STMT_NO followedBy, STMT_NO follow) {
 	return PKBFollows::setFollowsStar(followedBy, follow);
 }
 
@@ -74,31 +74,12 @@ bool PKB::isFollowsStarRelationship(STMT_NO followedBy, STMT_NO follow) {
 	return PKBFollows::isFollowsStarRelationship(followedBy, follow);
 }
 
-TABLE PKB::getAllFollowedByFollowsStmt(STMT_TYPE type1, STMT_TYPE type2) {
-	return PKBFollows::getAllFollowedByFollowsStmt(type1, type2);
-}
-STMT_LIST PKB::getAllFollowedByStmt(STMT_TYPE type1, STMT_NO follows) {
-	return PKBFollows::getAllFollowedByStmt(type1, follows);
-}
-STMT_LIST PKB::getAllFollowsStmt(STMT_NO followedBy, STMT_TYPE type) {
-	return PKBFollows::getAllFollowsStmt(followedBy, type);
-}
-TABLE PKB::getAllFollowedByFollowsStarStmt(STMT_TYPE type1, STMT_TYPE type2) {
-	return PKBFollows::getAllFollowedByFollowsStarStmt(type1, type2);
-}
-STMT_LIST PKB::getAllFollowedByStarStmt(STMT_TYPE type, STMT_NO follows) {
-	return PKBFollows::getAllFollowedByStarStmt(type, follows);
-}
-STMT_LIST PKB::getAllFollowsStarStmt(STMT_NO followedBy, STMT_TYPE type) {
-	return PKBFollows::getAllFollowsStarStmt(followedBy, type);
-}
-
 //Parents
-bool PKB::setParentRelation(STMT_NO parent, STMT_NO child) {
+bool PKB::setParent(STMT_NO parent, STMT_NO child) {
 	return PKBParent::setParent(parent, child);
 }
 
-bool PKB::setParentStarRelation(STMT_NO parent, STMT_NO child) {
+bool PKB::setParentT(STMT_NO parent, STMT_NO child) {
 	return PKBParent::setParentStar(parent, child);
 }
 
@@ -118,31 +99,13 @@ STMT_NO PKB::getParentStmt(STMT_NO child) {
 	return PKBParent::getParent(child);
 }
 
-TABLE PKB::getAllParentChildStmt(STMT_TYPE type1, STMT_TYPE type2) {
-	return PKBParent::getAllParentChildStmt(type1, type2);
-}
-STMT_LIST PKB::getAllParentStmt(STMT_TYPE type1, STMT_NO follows) {
-	return PKBParent::getAllParentStmt(type1, follows);
-}
-STMT_LIST PKB::getAllChildStmt(STMT_NO followedBy, STMT_TYPE type) {
-	return PKBParent::getAllChildStmt(followedBy, type);
-}
-TABLE PKB::getAllParentChildStarStmt(STMT_TYPE type1, STMT_TYPE type2) {
-	return PKBParent::getAllParentChildStarStmt(type1, type2);
-}
-STMT_LIST PKB::getAllParentStarStmt(STMT_TYPE type, STMT_NO follows) {
-	return PKBParent::getAllParentStarStmt(type, follows);
-}
-STMT_LIST PKB::getAllChildStarStmt(STMT_NO followedBy, STMT_TYPE type) {
-	return PKBParent::getAllChildStarStmt(followedBy, type);
-}
 
 //Modifies
-bool PKB::setModifiesStmtRelation(STMT_NO stmtNo, VAR_NAME varName) {
+bool PKB::setModifiesStmt(STMT_NO stmtNo, VAR_NAME varName) {
 	return PKBModifies::setModifiesStmt(stmtNo, varName);
 };
 
-bool PKB::setModifiesProcRelation(PROC_NAME procName, VAR_NAME varName) {
+bool PKB::setModifiesProc(PROC_NAME procName, VAR_NAME varName) {
 	return PKBModifies::setModifiesProc(procName, varName);
 };
 
@@ -344,7 +307,7 @@ STMT_LIST PKB::getPrints() {
 	return PKBStmt::getAllStmtByType("PRINT");
 };
 
-bool PKB::setPrintStmt(STMT_NO stmtNo, VAR_NAME varName) {
+bool PKB::setPrint(STMT_NO stmtNo, VAR_NAME varName) {
 	return PKBPrint::setPrint(stmtNo, varName);
 };
 
@@ -356,7 +319,7 @@ STMT_LIST PKB::getReads() {
 	return PKBStmt::getAllStmtByType("READ");
 };
 
-bool PKB::setReadStmt(STMT_NO stmtNo, VAR_NAME varName) {
+bool PKB::setRead(STMT_NO stmtNo, VAR_NAME varName) {
 	return PKBRead::setRead(stmtNo, varName);
 };
 
@@ -383,7 +346,7 @@ STMT_LIST PKB::getCalls() {
 	return PKBStmt::getAllStmtByType("CALL");
 };
 
-bool PKB::setCallProcRelation(PROC_NAME caller, PROC_NAME callee) {
+bool PKB::setCallProc(PROC_NAME caller, PROC_NAME callee) {
 	return PKBCall::setCallProc(caller, callee);
 }
 
@@ -399,30 +362,10 @@ bool PKB::isCallStarRelationship(PROC_NAME caller, PROC_NAME callee) {
 	return PKBCall::isCallStarRelationship(caller, callee);
 }
 
-TABLE PKB::getAllCallerCalleeProc() {
-	return PKBCall::getAllCallerCalleeProc();
-}
-PROC_LIST PKB::getAllCallerProc(PROC_NAME procName) {
-	return PKBCall::getAllCallerProc(procName);
-}
-PROC_LIST PKB::getAllCalleProc(PROC_NAME procName) {
-	return PKBCall::getAllCalleProc(procName);
-}
-
-TABLE PKB::getAllCallerCalleeStarProc() {
-	return PKBCall::getAllCallerCalleeStarProc();
-}
-PROC_LIST PKB::getAllCallerStarProc(PROC_NAME procName) {
-	return PKBCall::getAllCallerStarProc(procName);
-}
-PROC_LIST PKB::getAllCalleStarProc(PROC_NAME procName) {
-	return PKBCall::getAllCalleStarProc(procName);
-}
-
 ////////////////////////////////////
 // NextTable APIs
 ////////////////////////////////////
-bool PKB::setNextRelation(PROG_LINE n1, PROG_LINE n2) {
+bool PKB::setNext(PROG_LINE n1, PROG_LINE n2) {
 	return PKBNext::setNext(n1, n2);
 };
 
@@ -434,24 +377,6 @@ bool PKB::isNextStarRelationship(PROG_LINE n1, PROG_LINE n2) {
 	return PKBNext::isNextStarRelationship(n1, n2);
 }
 
-TABLE PKB::getAllNextByLineNextLineStmt() {
-	return PKBNext::getAllNextByLineNextLineStmt();
-}
-LINE_LIST PKB::getAllNextByLineStmt(PROG_LINE progLine) {
-	return PKBNext::getAllNextByLineStmt(progLine);
-}
-LINE_LIST PKB::getAllNextLineStmt(PROG_LINE progLine) {
-	return PKBNext::getAllNextLineStmt(progLine);
-}
-TABLE PKB::getAllNextByLineNextLineStarStmt() {
-	return PKBNext::getAllNextByLineNextLineStarStmt();
-}
-LINE_LIST PKB::getAllNextByLineStarStmt(PROG_LINE progLine) {
-	return PKBNext::getAllNextByLineStarStmt(progLine);
-}
-LINE_LIST PKB::getAllNextLineStarStmt(PROG_LINE progLine) {
-	return PKBNext::getAllNextLineStarStmt(progLine);
-}
 
 // New While Uses
 bool PKB::setWhileUsesRelation(STMT_NO stmtNo, VAR_NAME varName) {

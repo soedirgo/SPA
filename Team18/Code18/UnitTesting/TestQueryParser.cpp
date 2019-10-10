@@ -50,62 +50,62 @@ namespace UnitTesting
             pkb.setVar("y");
             pkb.setUsesVarByStmt(2, "x");
             //pkb.setModifiesVarByStmt(2, "y");
-            pkb.setFollowsRelation(1, 2);
-            pkb.setFollowsStarRelation(1, 2);
+            pkb.setFollows(1, 2);
+            pkb.setFollowsT(1, 2);
 
             pkb.setStmt(3, If);
             //pkb.setIfStmt(3);
             pkb.setUsesVarByStmt(3, "x");
             pkb.setUsesVarByStmt(3, "y");
             //pkb.setModifiesVarByStmt(3, "z");
-            pkb.setFollowsRelation(2, 3);
-            pkb.setFollowsStarRelation(1, 3);
-            pkb.setFollowsStarRelation(2, 3);
+            pkb.setFollows(2, 3);
+            pkb.setFollowsT(1, 3);
+            pkb.setFollowsT(2, 3);
 
             pkb.setStmt(4, Assign);
             pkb.setAssignStmt(4, "z");
             pkb.setVar("z");
             pkb.setConstant("0", 4);
             //pkb.setModifiesVarByStmt(4, "z");
-            pkb.setParentRelation(3, 4);
-            pkb.setParentStarRelation(3, 4);
+            pkb.setParent(3, 4);
+            pkb.setParentT(3, 4);
 
             pkb.setStmt(5, Assign);
             pkb.setAssignStmt(5, "z");
             //pkb.setModifiesVarByStmt(5, "z");
-            pkb.setParentRelation(3, 5);
-            pkb.setParentStarRelation(3, 5);
+            pkb.setParent(3, 5);
+            pkb.setParentT(3, 5);
 
             pkb.setStmt(6, While);
             //pkb.setWhileStmt(6);
             pkb.setUsesVarByStmt(6, "x");
             //pkb.setModifiesVarByStmt(6, "x");
-            pkb.setFollowsRelation(3, 6);
-            pkb.setFollowsStarRelation(1, 6);
-            pkb.setFollowsStarRelation(2, 6);
-            pkb.setFollowsStarRelation(3, 6);
+            pkb.setFollows(3, 6);
+            pkb.setFollowsT(1, 6);
+            pkb.setFollowsT(2, 6);
+            pkb.setFollowsT(3, 6);
 
             pkb.setStmt(7, Read);
-            pkb.setReadStmt(7, "x");
+            pkb.setRead(7, "x");
             //pkb.setModifiesVarByStmt(7, "x");
-            pkb.setParentRelation(6, 7);
-            pkb.setParentStarRelation(6, 7);
+            pkb.setParent(6, 7);
+            pkb.setParentT(6, 7);
 
             pkb.setStmt(8, Print);
-            pkb.setPrintStmt(8, "x");
+            pkb.setPrint(8, "x");
             pkb.setUsesVarByStmt(8, "x");
-            pkb.setParentRelation(6, 8);
-            pkb.setParentStarRelation(6, 8);
-            pkb.setFollowsRelation(7, 8);
-            pkb.setFollowsStarRelation(7, 8);
+            pkb.setParent(6, 8);
+            pkb.setParentT(6, 8);
+            pkb.setFollows(7, 8);
+            pkb.setFollowsT(7, 8);
 
 			pkb.setStmt(9, Assign);
 			pkb.setAssignStmt(9, "x");
 			pkb.setVar("x");
 			pkb.setUsesStmtRelation(9, "x");
-			pkb.setModifiesStmtRelation(9, "x");
-			pkb.setFollowsRelation(8, 9);
-			pkb.setFollowsStarRelation(8, 9);
+			pkb.setModifiesStmt(9, "x");
+			pkb.setFollows(8, 9);
+			pkb.setFollowsT(8, 9);
 			*/
 		}
 		/*

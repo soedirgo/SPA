@@ -59,10 +59,10 @@ public:
 	static bool setProc(PROC_NAME procName);
 
 	//Print Functions
-	static bool setPrintStmt(STMT_NO stmtNo, VAR_NAME varName);
+	static bool setPrint(STMT_NO stmtNo, VAR_NAME varName);
 
 	//Read Functions
-	static bool setReadStmt(STMT_NO stmtNo, VAR_NAME varName);
+	static bool setRead(STMT_NO stmtNo, VAR_NAME varName);
 
 	//Constant Functions
 	static bool setConstant(STMT_NO stmtNo, CONST_VAL constantVal);
@@ -76,8 +76,8 @@ public:
 	static bool setIfUsesRelation(STMT_NO stmtNo, VAR_NAME varName);
 
 	//Follow Functions
-	static bool setFollowsRelation(STMT_NO followedBy, STMT_NO follow);
-	static bool setFollowsStarRelation(STMT_NO followedBy, STMT_NO follow);
+	static bool setFollows(STMT_NO followedBy, STMT_NO follow);
+	static bool setFollowsT(STMT_NO followedBy, STMT_NO follow);
 	static bool isFollowsRelationship(STMT_NO followedBy, STMT_NO follow);
 	static bool isFollowsStarRelationship(STMT_NO followedBy, STMT_NO follow);
 
@@ -89,8 +89,8 @@ public:
 	static STMT_LIST getAllFollowsStarStmt(STMT_NO followedBy, STMT_TYPE type);
 
 	//Parent Functions
-	static bool setParentRelation(STMT_NO parent, STMT_NO child);
-	static bool setParentStarRelation(STMT_NO parent, STMT_NO child);
+	static bool setParent(STMT_NO parent, STMT_NO child);
+	static bool setParentT(STMT_NO parent, STMT_NO child);
 	static bool isParentRelationship(STMT_NO parent, STMT_NO child);
 	static bool isParentStarRelationship(STMT_NO parent, STMT_NO child);
 	static bool isParentExist(STMT_NO child);
@@ -104,8 +104,8 @@ public:
 	static STMT_LIST getAllChildStarStmt(STMT_NO followedBy, STMT_TYPE type1);
 
 	//Modifies Function
-	static bool setModifiesStmtRelation(STMT_NO stmtNo, VAR_NAME varName);
-	static bool setModifiesProcRelation(PROC_NAME procName, VAR_NAME varName);
+	static bool setModifiesStmt(STMT_NO stmtNo, VAR_NAME varName);
+	static bool setModifiesProc(PROC_NAME procName, VAR_NAME varName);
 	static bool isModifiesStmtRelationship(STMT_NO stmtNo, VAR_NAME varName);
 	static bool isModifiesProcRelationship(PROC_NAME procName, VAR_NAME varName);
 
@@ -117,7 +117,7 @@ public:
 
 	//Call Function
 	static bool setCallStmt(STMT_NO stmtNo, PROC_NAME procName);
-	static bool setCallProcRelation(PROC_NAME caller, PROC_NAME callee);
+	static bool setCallProc(PROC_NAME caller, PROC_NAME callee);
 	static bool isCallRelationship(PROC_NAME caller, PROC_NAME callee);
 	static bool isCallStarRelationship(PROC_NAME caller, PROC_NAME callee);
 
@@ -129,7 +129,7 @@ public:
 	static PROC_LIST getAllCalleStarProc(PROC_NAME procName);
 
 	//Next Function
-	static bool setNextRelation(PROG_LINE n1, PROG_LINE n2);
+	static bool setNext(PROG_LINE n1, PROG_LINE n2);
 	static bool isNextRelationship(PROG_LINE n1, PROG_LINE n2);
 	static bool isNextStarRelationship(PROG_LINE n1, PROG_LINE n2);
 

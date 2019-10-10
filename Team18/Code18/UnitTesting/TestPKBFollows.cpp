@@ -62,41 +62,41 @@ namespace UnitTesting
 			PKB.setStmt("17", "ASSIGN");
 			PKB.setStmt("18", "PRINT");
 
-			PKB.setFollowsRelation("1", "2");
-			PKB.setFollowsRelation("2", "3");
-			PKB.setFollowsRelation("4", "5");
-			PKB.setFollowsRelation("5", "6");
-			PKB.setFollowsRelation("6", "10");
-			PKB.setFollowsRelation("10", "13");
-			PKB.setFollowsRelation("7", "8");
-			PKB.setFollowsRelation("8", "9");
-			PKB.setFollowsRelation("13", "14");
-			PKB.setFollowsRelation("14", "15");
-			PKB.setFollowsRelation("16", "17");
-			PKB.setFollowsRelation("17", "18");
+			PKB.setFollows("1", "2");
+			PKB.setFollows("2", "3");
+			PKB.setFollows("4", "5");
+			PKB.setFollows("5", "6");
+			PKB.setFollows("6", "10");
+			PKB.setFollows("10", "13");
+			PKB.setFollows("7", "8");
+			PKB.setFollows("8", "9");
+			PKB.setFollows("13", "14");
+			PKB.setFollows("14", "15");
+			PKB.setFollows("16", "17");
+			PKB.setFollows("17", "18");
 
 			DesignExtractor DesignExtractor;
 			DesignExtractor.extractDesign();
 		}
 		TEST_METHOD(FollowsRelationship)
 		{
-			PKB PKB;
-			Assert::IsTrue(PKB.isFollowsRelationship("1", "2"));
-			Assert::IsTrue(PKB.isFollowsRelationship("2", "3"));
-			Assert::IsTrue(PKB.isFollowsRelationship("4", "5"));
-			Assert::IsTrue(PKB.isFollowsRelationship("5", "6"));
-			Assert::IsTrue(PKB.isFollowsRelationship("6", "10"));
-			Assert::IsTrue(PKB.isFollowsRelationship("7", "8"));
-			Assert::IsTrue(PKB.isFollowsRelationship("8", "9"));
-			Assert::IsTrue(PKB.isFollowsRelationship("10", "13"));
-			Assert::IsTrue(PKB.isFollowsRelationship("13", "14"));
-			Assert::IsTrue(PKB.isFollowsRelationship("14", "15"));
-			Assert::IsTrue(PKB.isFollowsRelationship("16", "17"));
-			Assert::IsTrue(PKB.isFollowsRelationship("17", "18"));
+			PKBFollows PKB;
+			Assert::IsTrue(PKB.isFollowsS1StmtNoS2StmtNo("1", "2"));
+			Assert::IsTrue(PKB.isFollowsS1StmtNoS2StmtNo("2", "3"));
+			Assert::IsTrue(PKB.isFollowsS1StmtNoS2StmtNo("4", "5"));
+			Assert::IsTrue(PKB.isFollowsS1StmtNoS2StmtNo("5", "6"));
+			Assert::IsTrue(PKB.isFollowsS1StmtNoS2StmtNo("6", "10"));
+			Assert::IsTrue(PKB.isFollowsS1StmtNoS2StmtNo("7", "8"));
+			Assert::IsTrue(PKB.isFollowsS1StmtNoS2StmtNo("8", "9"));
+			Assert::IsTrue(PKB.isFollowsS1StmtNoS2StmtNo("10", "13"));
+			Assert::IsTrue(PKB.isFollowsS1StmtNoS2StmtNo("13", "14"));
+			Assert::IsTrue(PKB.isFollowsS1StmtNoS2StmtNo("14", "15"));
+			Assert::IsTrue(PKB.isFollowsS1StmtNoS2StmtNo("16", "17"));
+			Assert::IsTrue(PKB.isFollowsS1StmtNoS2StmtNo("17", "18"));
 		}
 		TEST_METHOD(FollowsStarRelationship)
 		{
-			PKB PKB;
+			PKBFollows PKB;
 			Assert::IsTrue(PKB.isFollowsStarRelationship("1", "2"));
 			Assert::IsTrue(PKB.isFollowsStarRelationship("2", "3"));
 			Assert::IsTrue(PKB.isFollowsStarRelationship("4", "5"));
@@ -121,22 +121,22 @@ namespace UnitTesting
 			PKBFollows PKB;
 			TABLE actual, expected;
 			
-			actual = PKB.getAllFollowedByFollowsStmt("ASSIGN", "PRINT");
+			actual = PKB.getFollowsS1S2("ASSIGN", "PRINT");
 			expected = { {"17","18"} };
 			Assert::IsTrue(actual == expected);
 
-			actual = PKB.getAllFollowedByFollowsStmt("ASSIGN", "READ");
+			actual = PKB.getFollowsS1S2("ASSIGN", "READ");
 			Assert::IsTrue(actual.size() == 0);
 			
-			actual = PKB.getAllFollowedByFollowsStmt("ASSIGN", "STATEMENT");
+			actual = PKB.getFollowsS1S2("ASSIGN", "STATEMENT");
 			expected = { {"4","5"},{"5","6"},{"7","8"} ,{"13","14"},{"14","15"},{"16","17"},{"17","18"} };
 			Assert::IsTrue(actual == expected);
 			
-			actual = PKB.getAllFollowedByFollowsStmt("_", "_");
+			actual = PKB.getFollowsS1S2("_", "_");
 			expected = { {"1","2"},{"2","3"} ,{"4","5"} ,{"5","6"},{"6","10"},{"7","8"},{"8","9"},{"10","13"},{"13","14"},{"14","15"},{"16","17"},{"17","18"} };
 			Assert::IsTrue(actual == expected);
 
-			actual = PKB.getAllFollowedByFollowsStmt("STATEMENT", "STATEMENT");
+			actual = PKB.getFollowsS1S2("STATEMENT", "STATEMENT");
 			Assert::IsTrue(actual.size() == 0);
 		}
 		TEST_METHOD(FollowsGenericLeft)
@@ -144,19 +144,15 @@ namespace UnitTesting
 			PKBFollows PKB;
 			STMT_LIST actual, expected;
 
-			actual = PKB.getAllFollowedByStmt("ASSIGN", "18");
+			actual = PKB.getFollowsS1WithS2StmtNo("ASSIGN", "18");
 			expected = { {"17"} };
 			Assert::IsTrue(actual == expected);
 
-			actual = PKB.getAllFollowedByStmt("ASSIGN", "2");
+			actual = PKB.getFollowsS1WithS2StmtNo("ASSIGN", "2");
 			Assert::IsTrue(actual.size() == 0);
 
-			actual = PKB.getAllFollowedByStmt("ASSIGN", "5");
+			actual = PKB.getFollowsS1WithS2StmtNo("ASSIGN", "5");
 			expected = { {"4"} };
-			Assert::IsTrue(actual == expected);
-
-			actual = PKB.getAllFollowedByStmt("_", "2");
-			expected = { {"1"}};
 			Assert::IsTrue(actual == expected);
 		}
 		TEST_METHOD(FollowsGenericRight)
@@ -164,20 +160,27 @@ namespace UnitTesting
 			PKBFollows PKB;
 			STMT_LIST actual, expected;
 
-			actual = PKB.getAllFollowsStmt("13", "ASSIGN");
+			actual = PKB.getFollowsS2WithS1StmtNo("13", "ASSIGN");
 			expected = { {"14"} };
 			Assert::IsTrue(actual == expected);
 
-			actual = PKB.getAllFollowsStmt("2", "ASSIGN");
+			actual = PKB.getFollowsS2WithS1StmtNo("2", "ASSIGN");
 			Assert::IsTrue(actual.size() == 0);
 
-			actual = PKB.getAllFollowsStmt("5", "WHILE");
+			actual = PKB.getFollowsS2WithS1StmtNo("5", "WHILE");
 			expected = { {"6"} };
 			Assert::IsTrue(actual == expected);
+		}
+		TEST_METHOD(FollowsSame)
+		{
+			PKBFollows PKB;
+			TABLE actual, expected;
 
-			actual = PKB.getAllFollowsStmt("2", "_");
-			expected = { {"3"} };
-			Assert::IsTrue(actual == expected);
+			actual = PKB.getFollowsS1S2Same("ASSIGN", "ASSIGN");
+			Assert::IsTrue(actual.size() == 0);
+
+			actual = PKB.getFollowsS1S2Same("STATEMENT", "STATEMENT");
+			Assert::IsTrue(actual.size() == 0);
 		}
 		TEST_METHOD(FollowsStarGenericBoth)
 		{
