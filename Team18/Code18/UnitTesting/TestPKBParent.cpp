@@ -149,42 +149,42 @@ namespace UnitTesting
 		TEST_METHOD(ParentGenericLeft)
 		{
 			PKBParent PKB;
-			TABLE actual, expected;
+			STMT_LIST actual, expected;
 
 			actual = PKB.getAllParentStmt("IF", "15");
-			expected = { {"14","15"} };
+			expected = { {"14"} };
 			Assert::IsTrue(actual == expected);
 
 			actual = PKB.getAllParentStmt("ASSIGN", "2");
 			Assert::IsTrue(actual.size() == 0);
 
 			actual = PKB.getAllParentStmt("WHILE", "9");
-			expected = { {"6","9"} };
+			expected = { {"6"} };
 			Assert::IsTrue(actual == expected);
 
 			actual = PKB.getAllParentStmt("_", "9");
-			expected = { {"6","9"} };
+			expected = { {"6"} };
 			Assert::IsTrue(actual == expected);
 		}
 
 		TEST_METHOD(ParentGenericRight)
 		{
 			PKBParent PKB;
-			TABLE actual, expected;
+			STMT_LIST actual, expected;
 
 			actual = PKB.getAllChildStmt("14", "ASSIGN");
-			expected = { {"14","15"}, {"14","16"} };
+			expected = { {"15"}, {"16"} };
 			Assert::IsTrue(actual == expected);
 
 			actual = PKB.getAllChildStmt("2", "ASSIGN");
 			Assert::IsTrue(actual.size() == 0);
 
 			actual = PKB.getAllChildStmt("6", "IF");
-			expected = { {"6","10"} };
+			expected = { {"10"} };
 			Assert::IsTrue(actual == expected);
 
 			actual = PKB.getAllChildStmt("6", "_");
-			expected = { {"6","7"}, {"6","8"}, {"6","9"}, {"6","10"} };
+			expected = { {"7"}, {"8"}, {"9"}, {"10"} };
 			Assert::IsTrue(actual == expected);
 		}
 
@@ -215,42 +215,42 @@ namespace UnitTesting
 		TEST_METHOD(ParentStarGenericLeft)
 		{
 			PKBParent PKB;
-			TABLE actual, expected;
+			STMT_LIST actual, expected;
 
 			actual = PKB.getAllParentStarStmt("IF", "15");
-			expected = { {"14","15"} };
+			expected = { {"14"} };
 			Assert::IsTrue(actual == expected);
 
 			actual = PKB.getAllParentStarStmt("ASSIGN", "2");
 			Assert::IsTrue(actual.size() == 0);
 
 			actual = PKB.getAllParentStarStmt("WHILE", "9");
-			expected = { {"6","9"} };
+			expected = { {"6"} };
 			Assert::IsTrue(actual == expected);
 
 			actual = PKB.getAllParentStarStmt("_", "9");
-			expected = { {"6","9"} };
+			expected = { {"6"} };
 			Assert::IsTrue(actual == expected);
 		}
 
 		TEST_METHOD(ParentStarGenericRight)
 		{
 			PKBParent PKB;
-			TABLE actual, expected;
+			STMT_LIST actual, expected;
 
 			actual = PKB.getAllChildStarStmt("14", "ASSIGN");
-			expected = { {"14","15"}, {"14","16"} };
+			expected = { {"15"}, {"16"} };
 			Assert::IsTrue(actual == expected);
 
 			actual = PKB.getAllChildStarStmt("2", "ASSIGN");
 			Assert::IsTrue(actual.size() == 0);
 			
 			actual = PKB.getAllChildStarStmt("6", "ASSIGN");
-			expected = { {"6","7"},{"6","9"},{"6","11"},{"6","12"} };
+			expected = { {"7"},{"9"},{"11"},{"12"} };
 			Assert::IsTrue(actual == expected);
 			
 			actual = PKB.getAllChildStarStmt("6", "_");
-			expected = { {"6","7"}, {"6","8"}, {"6","9"}, {"6","10"},  {"6","11"}, {"6","12"} };
+			expected = { {"7"}, {"8"}, {"9"}, {"10"},  {"11"}, {"12"} };
 			Assert::IsTrue(actual == expected);
 			
 		}

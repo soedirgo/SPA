@@ -203,20 +203,20 @@ namespace UnitTesting
 		TEST_METHOD(NextGenericRight)
 		{
 			PKBNext PKB;
-			TABLE actual, expected;
+			LINE_LIST actual, expected;
 
 			actual = PKB.getAllNextByLineStmt("6");
-			expected = { {"5","6"},{"9","6"} };
+			expected = { {"5"},{"9"} };
 			Assert::IsTrue(actual == expected);
 		}
 
 		TEST_METHOD(NextGenericLeft)
 		{
 			PKBNext PKB;
-			TABLE actual, expected;
+			LINE_LIST actual, expected;
 
 			actual = PKB.getAllNextLineStmt("6");
-			expected = { {"6","7"},{"6","10"} };
+			expected = { {"7"},{"10"} };
 			Assert::IsTrue(actual == expected);
 		}
 	};

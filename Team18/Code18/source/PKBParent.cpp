@@ -84,19 +84,19 @@ TABLE PKBParent::getParentTable() {
 TABLE PKBParent::getAllParentChildStmt(STMT_TYPE type1, STMT_TYPE type2) {
 	return PKBParent::getResultTableGenericBoth(type1, type2, parentTable);
 }
-TABLE PKBParent::getAllParentStmt(STMT_TYPE type1, STMT_NO follows) {
+STMT_LIST PKBParent::getAllParentStmt(STMT_TYPE type1, STMT_NO follows) {
 	return PKBParent::getResultTableGenericLeft(type1, follows, parentTable);
 }
-TABLE PKBParent::getAllChildStmt(STMT_NO followedBy, STMT_TYPE type) {
+STMT_LIST PKBParent::getAllChildStmt(STMT_NO followedBy, STMT_TYPE type) {
 	return PKBParent::getResultTableGenericRight(followedBy, type, parentTable);
 }
 TABLE PKBParent::getAllParentChildStarStmt(STMT_TYPE type1, STMT_TYPE type2) {
 	return PKBParent::getResultTableGenericBoth(type1, type2, parentStarTable);
 }
-TABLE PKBParent::getAllParentStarStmt(STMT_TYPE type, STMT_NO follows) {
+STMT_LIST PKBParent::getAllParentStarStmt(STMT_TYPE type, STMT_NO follows) {
 	return PKBParent::getResultTableGenericLeft(type, follows, parentStarTable);
 }
-TABLE PKBParent::getAllChildStarStmt(STMT_NO followedBy, STMT_TYPE type) {
+STMT_LIST PKBParent::getAllChildStarStmt(STMT_NO followedBy, STMT_TYPE type) {
 	return PKBParent::getResultTableGenericRight(followedBy, type, parentStarTable);
 }
 
@@ -142,8 +142,8 @@ TABLE PKBParent::getResultTableGenericBoth(STMT_TYPE type1, STMT_TYPE type2, TAB
 	return resultTable;
 }
 
-TABLE PKBParent::getResultTableGenericLeft(STMT_TYPE type, STMT_NO stmtNo, TABLE tableName) {
-	TABLE resultTable;
+STMT_LIST PKBParent::getResultTableGenericLeft(STMT_TYPE type, STMT_NO stmtNo, TABLE tableName) {
+	STMT_LIST resultTable;
 	STMT_LIST list;
 	STMT_NO s;
 	if (type == "_" || type == "STATEMENT") {
@@ -158,7 +158,7 @@ TABLE PKBParent::getResultTableGenericLeft(STMT_TYPE type, STMT_NO stmtNo, TABLE
 			vector<string> tuple = vector<string>();
 			if (vectorIter.front() == s && vectorIter.back() == stmtNo) {
 				tuple.push_back(vectorIter.front());
-				tuple.push_back(vectorIter.back());
+				//tuple.push_back(vectorIter.back());
 				resultTable.emplace(tuple);
 			}
 		}
@@ -166,8 +166,8 @@ TABLE PKBParent::getResultTableGenericLeft(STMT_TYPE type, STMT_NO stmtNo, TABLE
 	return resultTable;
 }
 
-TABLE PKBParent::getResultTableGenericRight(STMT_NO stmtNo, STMT_TYPE type, TABLE tableName) {
-	TABLE resultTable;
+STMT_LIST PKBParent::getResultTableGenericRight(STMT_NO stmtNo, STMT_TYPE type, TABLE tableName) {
+	STMT_LIST resultTable;
 	STMT_LIST list;
 	STMT_NO s;
 	if (type == "_" || type == "STATEMENT") {
@@ -181,7 +181,7 @@ TABLE PKBParent::getResultTableGenericRight(STMT_NO stmtNo, STMT_TYPE type, TABL
 		for (auto vectorIter : tableName) {
 			vector<string> tuple = vector<string>();
 			if (vectorIter.front() == stmtNo && vectorIter.back() == s) {
-				tuple.push_back(vectorIter.front());
+				//tuple.push_back(vectorIter.front());
 				tuple.push_back(vectorIter.back());
 				resultTable.emplace(tuple);
 			}

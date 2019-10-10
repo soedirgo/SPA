@@ -81,6 +81,13 @@ public:
 	static bool isFollowsRelationship(STMT_NO followedBy, STMT_NO follow);
 	static bool isFollowsStarRelationship(STMT_NO followedBy, STMT_NO follow);
 
+	static TABLE getAllFollowedByFollowsStmt(STMT_TYPE type1, STMT_TYPE type2);
+	static STMT_LIST getAllFollowedByStmt(STMT_TYPE type, STMT_NO follows);
+	static STMT_LIST getAllFollowsStmt(STMT_NO followedBy, STMT_TYPE type1);
+	static TABLE getAllFollowedByFollowsStarStmt(STMT_TYPE type1, STMT_TYPE type2);
+	static STMT_LIST getAllFollowedByStarStmt(STMT_TYPE type, STMT_NO follows);
+	static STMT_LIST getAllFollowsStarStmt(STMT_NO followedBy, STMT_TYPE type);
+
 	//Parent Functions
 	static bool setParentRelation(STMT_NO parent, STMT_NO child);
 	static bool setParentStarRelation(STMT_NO parent, STMT_NO child);
@@ -88,6 +95,13 @@ public:
 	static bool isParentStarRelationship(STMT_NO parent, STMT_NO child);
 	static bool isParentExist(STMT_NO child);
 	static STMT_NO getParentStmt(STMT_NO child);
+
+	static TABLE getAllParentChildStmt(STMT_TYPE type1, STMT_TYPE type2);
+	static STMT_LIST getAllParentStmt(STMT_TYPE type1, STMT_NO follows);
+	static STMT_LIST getAllChildStmt(STMT_NO followedBy, STMT_TYPE type1);
+	static TABLE getAllParentChildStarStmt(STMT_TYPE type1, STMT_TYPE type2);
+	static STMT_LIST getAllParentStarStmt(STMT_TYPE type1, STMT_NO follows);
+	static STMT_LIST getAllChildStarStmt(STMT_NO followedBy, STMT_TYPE type1);
 
 	//Modifies Function
 	static bool setModifiesStmtRelation(STMT_NO stmtNo, VAR_NAME varName);
@@ -107,11 +121,24 @@ public:
 	static bool isCallRelationship(PROC_NAME caller, PROC_NAME callee);
 	static bool isCallStarRelationship(PROC_NAME caller, PROC_NAME callee);
 
+	static TABLE getAllCallerCalleeProc();
+	static PROC_LIST getAllCallerProc(PROC_NAME procName);
+	static PROC_LIST getAllCalleProc(PROC_NAME procName);
+	static TABLE getAllCallerCalleeStarProc();
+	static PROC_LIST getAllCallerStarProc(PROC_NAME procName);
+	static PROC_LIST getAllCalleStarProc(PROC_NAME procName);
+
 	//Next Function
 	static bool setNextRelation(PROG_LINE n1, PROG_LINE n2);
 	static bool isNextRelationship(PROG_LINE n1, PROG_LINE n2);
 	static bool isNextStarRelationship(PROG_LINE n1, PROG_LINE n2);
 
+	static TABLE getAllNextByLineNextLineStmt();
+	static LINE_LIST getAllNextByLineStmt(PROG_LINE progLine);
+	static LINE_LIST getAllNextLineStmt(PROG_LINE progLine);
+	static TABLE getAllNextByLineNextLineStarStmt();
+	static LINE_LIST getAllNextByLineStarStmt(PROG_LINE progLine);
+	static LINE_LIST getAllNextLineStarStmt(PROG_LINE progLine);
 private:
 	static std::unordered_map<int, std::string> assignStmtTable;
 	static std::unordered_map<std::string, std::unordered_set<int>> assignVarTable;
