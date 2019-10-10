@@ -46,13 +46,13 @@ public:
 
 	//Stmt Functions
 	static bool setStmt(STMT_NO stmtNo, STMT_TYPE type);
-	static STMT_LIST getAllStmt();
-	static STMT_LIST getAllPrintStmt();
-	static STMT_LIST getAllReadStmt();
-	static STMT_LIST getAllAssignStmt();
-	static STMT_LIST getAllWhileStmt();
-	static STMT_LIST getAllIfStmt();
-	static STMT_LIST getAllCallStmt();
+	static STMT_LIST getStmts();
+	static STMT_LIST getPrints();
+	static STMT_LIST getReads();
+	static STMT_LIST getAssigns();
+	static STMT_LIST getWhiles();
+	static STMT_LIST getIfs();
+	static STMT_LIST getCalls();
 
 	//Procedure Functions
 	static PROC_LIST getAllProc();
