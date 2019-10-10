@@ -95,6 +95,10 @@ bool PKB::isParentExist(STMT_NO child) {
 	return PKBParent::isParentExist(child);
 }
 
+STMT_NO PKB::getParentStmt(STMT_NO child) {
+	return PKBParent::getParent(child);
+}
+
 //Modifies
 bool PKB::setModifiesStmtRelation(STMT_NO stmtNo, VAR_NAME varName) {
 	return PKBModifies::setModifiesStmt(stmtNo, varName);

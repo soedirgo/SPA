@@ -9,7 +9,7 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace UnitTesting
 {
-	/*
+	
 	TEST_CLASS(TestProgramParser)
 
 	{
@@ -277,5 +277,5 @@ namespace UnitTesting
 			Assert::AreEqual(expected, actual);
 		}
 	};
-	*/
+	
 }

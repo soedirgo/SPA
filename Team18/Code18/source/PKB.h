@@ -87,6 +87,7 @@ public:
 	static bool isParentRelationship(STMT_NO parent, STMT_NO child);
 	static bool isParentStarRelationship(STMT_NO parent, STMT_NO child);
 	static bool isParentExist(STMT_NO child);
+	static STMT_NO getParentStmt(STMT_NO child);
 
 	//Modifies Function
 	static bool setModifiesStmtRelation(STMT_NO stmtNo, VAR_NAME varName);
