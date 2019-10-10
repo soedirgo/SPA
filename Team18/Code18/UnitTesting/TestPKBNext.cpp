@@ -69,7 +69,9 @@ namespace UnitTesting
 			PKB.setNextRelation("6", "7");
 			PKB.setNextRelation("7", "8");
 			PKB.setNextRelation("8", "9");
+			
 			PKB.setNextRelation("9", "6");
+			
 			PKB.setNextRelation("6", "10");
 			PKB.setNextRelation("10", "11");
 			PKB.setNextRelation("10", "12");
@@ -79,7 +81,9 @@ namespace UnitTesting
 			PKB.setNextRelation("14", "15");
 			PKB.setNextRelation("16", "17");
 			PKB.setNextRelation("17", "18");
-			PKB.setNextRelation("18", "19");
+
+			DesignExtractor DesignExtractor;
+			DesignExtractor.extractDesign();
 		}
 		TEST_METHOD(NextRelationship)
 		{
@@ -101,9 +105,90 @@ namespace UnitTesting
 			Assert::IsTrue(PKB.isNextRelationship("14", "15"));
 			Assert::IsTrue(PKB.isNextRelationship("16", "17"));
 			Assert::IsTrue(PKB.isNextRelationship("17", "18"));
-			Assert::IsTrue(PKB.isNextRelationship("18", "19"));
 		}
+		
+		TEST_METHOD(NextStarRelationship)
+		{
+			PKBNext PKB;
+			Assert::IsTrue(PKB.isNextStarRelationship("1", "2"));
+			Assert::IsTrue(PKB.isNextStarRelationship("2", "3"));
+			Assert::IsTrue(PKB.isNextStarRelationship("4", "5"));
+			Assert::IsTrue(PKB.isNextStarRelationship("5", "6"));
+			Assert::IsTrue(PKB.isNextStarRelationship("6", "7"));
+			Assert::IsTrue(PKB.isNextStarRelationship("7", "8"));
+			Assert::IsTrue(PKB.isNextStarRelationship("8", "9"));
+			Assert::IsTrue(PKB.isNextStarRelationship("9", "6"));
+			Assert::IsTrue(PKB.isNextStarRelationship("6", "10"));
+			Assert::IsTrue(PKB.isNextStarRelationship("10", "11"));
+			Assert::IsTrue(PKB.isNextStarRelationship("10", "12"));
+			Assert::IsTrue(PKB.isNextStarRelationship("11", "13"));
+			Assert::IsTrue(PKB.isNextStarRelationship("12", "13"));
+			Assert::IsTrue(PKB.isNextStarRelationship("13", "14"));
+			Assert::IsTrue(PKB.isNextStarRelationship("14", "15"));
+			Assert::IsTrue(PKB.isNextStarRelationship("16", "17"));
+			Assert::IsTrue(PKB.isNextStarRelationship("17", "18"));
 
+			Assert::IsTrue(PKB.isNextStarRelationship("1", "3"));
+			Assert::IsTrue(PKB.isNextStarRelationship("4", "6"));
+			Assert::IsTrue(PKB.isNextStarRelationship("4", "7"));
+			Assert::IsTrue(PKB.isNextStarRelationship("4", "8"));
+			Assert::IsTrue(PKB.isNextStarRelationship("4", "9"));
+			Assert::IsTrue(PKB.isNextStarRelationship("4", "10"));
+			Assert::IsTrue(PKB.isNextStarRelationship("4", "11"));
+			Assert::IsTrue(PKB.isNextStarRelationship("4", "12"));
+			Assert::IsTrue(PKB.isNextStarRelationship("4", "13"));
+			Assert::IsTrue(PKB.isNextStarRelationship("4", "14"));
+			Assert::IsTrue(PKB.isNextStarRelationship("5", "7"));
+			Assert::IsTrue(PKB.isNextStarRelationship("5", "8"));
+			Assert::IsTrue(PKB.isNextStarRelationship("5", "9"));
+			Assert::IsTrue(PKB.isNextStarRelationship("5", "10"));
+			Assert::IsTrue(PKB.isNextStarRelationship("5", "11"));
+			Assert::IsTrue(PKB.isNextStarRelationship("5", "12"));
+			Assert::IsTrue(PKB.isNextStarRelationship("5", "13"));
+			Assert::IsTrue(PKB.isNextStarRelationship("5", "14"));
+			Assert::IsTrue(PKB.isNextStarRelationship("5", "15"));
+			Assert::IsTrue(PKB.isNextStarRelationship("6", "8"));
+			Assert::IsTrue(PKB.isNextStarRelationship("6", "9"));
+			Assert::IsTrue(PKB.isNextStarRelationship("6", "10"));
+			Assert::IsTrue(PKB.isNextStarRelationship("6", "11"));
+			Assert::IsTrue(PKB.isNextStarRelationship("6", "12"));
+			Assert::IsTrue(PKB.isNextStarRelationship("6", "13"));
+			Assert::IsTrue(PKB.isNextStarRelationship("6", "14"));
+			Assert::IsTrue(PKB.isNextStarRelationship("6", "15"));		
+			Assert::IsTrue(PKB.isNextStarRelationship("7", "9"));
+			/*
+			Assert::IsTrue(PKB.isNextStarRelationship("7", "10"));
+			Assert::IsTrue(PKB.isNextStarRelationship("7", "11"));
+			Assert::IsTrue(PKB.isNextStarRelationship("7", "12"));
+			Assert::IsTrue(PKB.isNextStarRelationship("7", "13"));
+			Assert::IsTrue(PKB.isNextStarRelationship("7", "14"));
+			Assert::IsTrue(PKB.isNextStarRelationship("7", "15"));
+			Assert::IsTrue(PKB.isNextStarRelationship("8", "10"));
+			Assert::IsTrue(PKB.isNextStarRelationship("8", "11"));
+			Assert::IsTrue(PKB.isNextStarRelationship("8", "12"));
+			Assert::IsTrue(PKB.isNextStarRelationship("8", "13"));
+			Assert::IsTrue(PKB.isNextStarRelationship("8", "14"));
+			Assert::IsTrue(PKB.isNextStarRelationship("8", "15"));
+			Assert::IsTrue(PKB.isNextStarRelationship("9", "11"));
+			Assert::IsTrue(PKB.isNextStarRelationship("9", "12"));
+			Assert::IsTrue(PKB.isNextStarRelationship("9", "13"));
+			Assert::IsTrue(PKB.isNextStarRelationship("9", "14"));
+			Assert::IsTrue(PKB.isNextStarRelationship("9", "15"));
+			*/
+			Assert::IsTrue(PKB.isNextStarRelationship("10", "12"));
+			Assert::IsTrue(PKB.isNextStarRelationship("10", "13"));
+			Assert::IsTrue(PKB.isNextStarRelationship("10", "14"));
+			Assert::IsTrue(PKB.isNextStarRelationship("10", "15"));
+			Assert::IsTrue(PKB.isNextStarRelationship("11", "13"));
+			Assert::IsTrue(PKB.isNextStarRelationship("11", "14"));
+			Assert::IsTrue(PKB.isNextStarRelationship("11", "15"));
+			Assert::IsTrue(PKB.isNextStarRelationship("12", "14"));
+			Assert::IsTrue(PKB.isNextStarRelationship("12", "15"));
+			Assert::IsTrue(PKB.isNextStarRelationship("13", "15"));
+			Assert::IsTrue(PKB.isNextStarRelationship("16", "18"));
+			
+		}
+		
 		TEST_METHOD(NextGenericBoth)
 		{
 			PKBNext PKB;
@@ -111,7 +196,7 @@ namespace UnitTesting
 
 			actual = PKB.getAllNextByLineNextLineStmt();
 			expected = { {"1","2"},{"2","3"},{"4","5"},{"5","6"},{"6","7"},{"7","8"},{"8","9"},{"9","6"},{"6","10"},{"10","11"},{"10","12"},{"11","13"}
-			,{"12","13"},{"13","14"},{"14","15"},{"16","17"},{"17","18"},{"18","19"} };
+			,{"12","13"},{"13","14"},{"14","15"},{"16","17"},{"17","18"} };
 			Assert::IsTrue(actual == expected);
 		}
 

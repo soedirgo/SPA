@@ -4,6 +4,7 @@
 #include "PKBFollows.h"
 #include "PKBCall.h"
 #include "PKBNext.h"
+#include "PKBStmt.h"
 
 using namespace std;
 
@@ -12,17 +13,20 @@ void DesignExtractor::extractDesign()
 	extractFollowsStar();
 	extractParentStar();
 	extractCallStar();
-	//extractNextStar();
+	extractNextStar();
 }
 
 void DesignExtractor::extractNextStar()
 {
 	unordered_set<vector<string>, VectorDoubleStringHash> nextTable = PKBNext::getNextTable();
+	STMT_LIST whileList = PKBStmt::getAllStmtByType("WHILE");
 	for (auto vectorIter : nextTable) {
 		string n1 = vectorIter.front();
 		string n2 = vectorIter.back();
 		PKBNext::setNextStar(n1, n2);
-		recurseNext(n1, n2);
+		if (stoi(n2) > stoi(n1)) {
+			recurseNext(n1, n2, whileList);
+		}
 	}
 }
 
@@ -92,14 +96,30 @@ void DesignExtractor::recurseParent(STMT_NO parent, STMT_NO child) {
 	}
 }
 
-void DesignExtractor::recurseNext(PROG_LINE nextByLine, PROG_LINE nextLine) {
+void DesignExtractor::recurseNext(PROG_LINE nextByLine, PROG_LINE nextLine, STMT_LIST whileList) {
 	LINE_LIST lineList = PKBNext::getNext(nextLine);
-	if (lineList.size() == 0) {
+	if (lineList.size() == 0 ) {
 		return;
 	}
+	
 	for (auto vectorIter : lineList) {
 		PROG_LINE newNextLine = vectorIter.back();
+		if (PKBNext::isNextStarRelationship(nextByLine, newNextLine)) {
+
+			/*
+			for (auto vectorIter2 : whileList) {
+				if (vectorIter2.front() == nextByLine) {
+					return;
+				}
+			}
+			*/
+			return;
+		}
+		if (stoi(nextByLine) >= stoi(newNextLine)) {
+			return;
+		}
 		PKBNext::setNextStar(nextByLine, newNextLine);
-		recurseNext(nextByLine, newNextLine);
+		recurseNext(nextByLine, newNextLine, whileList);
+		
 	}
 }
