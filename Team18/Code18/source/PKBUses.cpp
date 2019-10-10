@@ -1,5 +1,6 @@
 #include "PKBUses.h"
 #include "PKBStmt.h"
+#include "PKBCall.h"
 using namespace std;
 
 unordered_set<vector<string>, VectorDoubleStringHash> PKBUses::usesStmtTable;
@@ -40,7 +41,7 @@ bool PKBUses::isUsesStmtRelationship(STMT_NO stmtNo, VAR_NAME varName) {
 	}
 	return false;
 }
-	
+
 
 //Uses(procName1, "x") -> True/False
 //LHS fixed proc, RHS fixed var 
@@ -56,8 +57,8 @@ bool PKBUses::isUsesProcRelationship(PROC_NAME procName, VAR_NAME varName) {
 }
 
 
-//Stmt s1 ; Select Uses(s1,__) 
-//LHS stmt syn, RHS 
+//Uses(s1,__) 
+//LHS stmt synnoym, RHS 
 STMT_LIST PKBUses::getAllUsesStmt() {
 	STMT_LIST stmtListResult;
 	for (auto iter : usesStmtTable) {
@@ -68,33 +69,63 @@ STMT_LIST PKBUses::getAllUsesStmt() {
 	return stmtListResult;
 }
 
+//LHS is either a print/if/while/assign/call stmt and NOT a procedure
+// e.g. Uses(a1, _ ), Uses(ifs , _ ) 
+STMT_LIST PKBUses::getAllUsesStmtByType(STMT_TYPE type) {
+	STMT_LIST stmtList = PKBStmt::getAllStmtByType(type);
+	return stmtList;
+}
 
-//Stmt s1, Assign a1 ; e.g. Select s1 such that Uses(s1, "x") pattern a1("x",_)
-//s1 is either a print/if/while/assign/call stmt and NOT a procedure
-STMT_LIST PKBUses::getAllUsesStmtByType(STMT_TYPE type ) {
+
+//LHS is either a print/if/while/assign/call stmt and NOT a procedure
+//RHS is a specific variable name 
+// e.g. Uses(a1, "x" ), Uses(ifs ,"x" ) 
+
+STMT_LIST PKBUses::getUsesStmtByTypeAndVar(STMT_TYPE type, VAR_NAME varName) {
 	STMT_LIST stmtList = PKBStmt::getAllStmtByType(type);
 	STMT_LIST result;
-	for (auto iter : stmtList) {
-		for (auto iter2 : usesStmtTable) {
-			vector<string> tuple = vector<string>();
-			tuple.push_back(iter2.front());
-			if (iter == tuple) {
-				result.emplace(iter2);
+	if (type == "CALL") {
+		for (auto callStmtNo : stmtList) {
+			vector<string> call1;
+			PROC_NAME procName = PKBCall::getCalledProcByStmt(callStmtNo.front());
+			call1.push_back(procName);
+
+			for (auto tuple : usesProcTable) { //check the proc table instead of usesStmtTable
+				vector<string> call2ProcName;
+				call2ProcName.push_back(tuple.front()); 
+				VAR_NAME call2VarName = tuple.back();
+				if (call2ProcName == call1 && call2VarName == varName) {
+					result.emplace(callStmtNo);
+				}
+			}
+		}
+		return result;
+	}
+	//Else Type = is either a print/if/while/assign
+	for (auto usesStmt1 : stmtList) {
+		for (auto tuple : usesStmtTable) {
+
+			vector<string> usesStmt2 = vector<string>();
+			VAR_NAME usedVarName = tuple.back();
+			usesStmt2.push_back(tuple.front());
+			if (usesStmt2 == usesStmt1 && usedVarName == varName) {
+				result.emplace(usesStmt1);
 			}
 		}
 	}
 	return result;
 }
 
-	
-//Select s such that uses(s, "x")
+
+
+//uses(s, "x")
 //LHS stmt syn, RHS fixed var 
 STMT_LIST PKBUses::getUsesStmtByVar(VAR_NAME varName) {
 	STMT_LIST stmtListResult;
-	
+
 	for (auto vectorIter : usesStmtTable) {
 		if (vectorIter.back() == varName) {
-			vector<string> myVector = vector<string>(); 
+			vector<string> myVector = vector<string>();
 			myVector.push_back(vectorIter.front());
 			stmtListResult.emplace(myVector);
 		}
@@ -103,15 +134,15 @@ STMT_LIST PKBUses::getUsesStmtByVar(VAR_NAME varName) {
 }
 
 
-// Select v such that Uses( 3 , v) 
+// S Uses( 3 , v) 
 //LHS fixed, RHS syn
 VAR_LIST PKBUses::getUsesVarByStmt(STMT_NO stmtNo) {
 	VAR_LIST varListResult;
 	for (auto vectorIter : usesStmtTable) {
-		
+
 		if (vectorIter.front() == stmtNo) {
-			vector<string> myVector = vector<string>(); 
-			myVector.push_back(vectorIter.front()); 
+			vector<string> myVector = vector<string>();
+			myVector.push_back(vectorIter.back());
 			varListResult.emplace(myVector);
 		}
 	}
@@ -153,7 +184,7 @@ PROC_LIST PKBUses::getUsesVarByProc(PROC_NAME procName) {
 	for (auto vectorIter : usesProcTable) {
 		if (vectorIter.front() == procName) {
 			vector<string> myVector = vector<string>();
-			myVector.push_back(vectorIter.back() );
+			myVector.push_back(vectorIter.back());
 			varListResult.emplace(myVector);
 		}
 	}

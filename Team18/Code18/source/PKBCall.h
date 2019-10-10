@@ -12,7 +12,8 @@ public:
 	static bool isCallRelationship(PROC_NAME caller, PROC_NAME callee);
 	static bool isCallStarRelationship(PROC_NAME caller, PROC_NAME callee);
 
-	static TABLE getCallProcTable();
+	static PROC_NAME getCalledProcByStmt(STMT_NO stmtNo); //not tested
+	static std::unordered_set<std::vector<std::string>, VectorDoubleStringHash> getCallProcTable();
 	static PROC_LIST getCalleeProc(PROC_NAME caller);
 
 	static TABLE getAllCallerCalleeProc();
