@@ -7,7 +7,7 @@ class PKBVariable {
 public:
 
 	static bool setVar(VAR_NAME varName);
-	static VAR_LIST getVariables();
+	static VAR_LIST getVariable();
 
 	// Clear
 	static bool clear();

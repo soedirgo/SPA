@@ -10,7 +10,7 @@ bool PKBVariable::setVar(VAR_NAME varName) {
 	return true;
 }
 
-VAR_LIST PKBVariable::getVariables() {
+VAR_LIST PKBVariable::getVariable() {
 	return varTable;
 }
 

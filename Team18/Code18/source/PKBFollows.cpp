@@ -4,7 +4,7 @@
 using namespace std;
 
 TABLE PKBFollows::followsTable;
-TABLE PKBFollows::followsStarTable;
+TABLE PKBFollows::followsTTable;
 
 bool PKBFollows::setFollows(STMT_NO followedBy, STMT_NO follows) {
 	vector<string> tuple = vector<string>();
@@ -18,7 +18,7 @@ bool PKBFollows::setFollowsStar(STMT_NO followedBy, STMT_NO follows) {
 	vector<string> tuple = vector<string>();
 	tuple.push_back(followedBy);
 	tuple.push_back(follows);
-	followsStarTable.emplace(tuple);
+	followsTTable.emplace(tuple);
 	return true;
 }
 
@@ -45,7 +45,7 @@ bool PKBFollows::isFollowsRelationship(STMT_NO followedBy, STMT_NO follows) {
 
 bool PKBFollows::isFollowsStarRelationship(STMT_NO followedBy, STMT_NO follows) {
 
-	for (auto vectorIter : followsStarTable) {
+	for (auto vectorIter : followsTTable) {
 		if (vectorIter.front() == followedBy) {
 			if (vectorIter.back() == follows) {
 				return true;
@@ -61,40 +61,56 @@ TABLE PKBFollows::getFollowsTable() {
 
 bool PKBFollows::isFollows(STMT_REF s1, STMT_REF s2){
 	if (s1 == "_" && s2 == "_") {
-		return PKBFollows::isFollowsS1GenericS2Generic();
+		return PKBFollows::isLeftGenericRightGeneric(followsTable);
 	}
 	else if (s1 == "_" && isdigit(s2.at(0))) {
-		return PKBFollows::isFollowsS1GenericS2StmtNo(s2);
+		return PKBFollows::isLeftGenericRightFixed(s2, followsTable);
 	}
 	else if (isdigit(s1.at(0)) && s2 == "_") {
-		return PKBFollows::isFollowsS1StmtNoS2Generic(s1);
+		return PKBFollows::isLeftFixedRightGeneric(s1, followsTable);
 	}
 	else if (isdigit(s1.at(0)) && isdigit(s2.at(0))) {
-		return PKBFollows::isFollowsS1StmtNoS2StmtNo(s1,s2);
+		return PKBFollows::isLeftFixedRightFixed(s1,s2, followsTable);
 	}
 	return false;
 }
-bool PKBFollows::isFollowsS1GenericS2Generic() {
-	return !followsTable.empty();
+
+bool PKBFollows::isFollowsT(STMT_REF s1, STMT_REF s2) {
+	if (s1 == "_" && s2 == "_") {
+		return PKBFollows::isLeftGenericRightGeneric(followsTTable);
+	}
+	else if (s1 == "_" && isdigit(s2.at(0))) {
+		return PKBFollows::isLeftGenericRightFixed(s2, followsTTable);
+	}
+	else if (isdigit(s1.at(0)) && s2 == "_") {
+		return PKBFollows::isLeftFixedRightGeneric(s1, followsTTable);
+	}
+	else if (isdigit(s1.at(0)) && isdigit(s2.at(0))) {
+		return PKBFollows::isLeftFixedRightFixed(s1, s2, followsTTable);
+	}
+	return false;
 }
-bool PKBFollows::isFollowsS1GenericS2StmtNo(STMT_NO follows) {
-	for (auto vectorIter : followsStarTable) {
+bool PKBFollows::isLeftGenericRightGeneric(TABLE tableName) {
+	return !tableName.empty();
+}
+bool PKBFollows::isLeftGenericRightFixed(STMT_NO follows, TABLE tableName) {
+	for (auto vectorIter : tableName) {
 		if (vectorIter.back() == follows) {
 			return true;
 		}
 	}
 	return false;
 }
-bool PKBFollows::isFollowsS1StmtNoS2Generic(STMT_NO followedBy) {
-	for (auto vectorIter : followsStarTable) {
+bool PKBFollows::isLeftFixedRightGeneric(STMT_NO followedBy, TABLE tableName) {
+	for (auto vectorIter : tableName) {
 		if (vectorIter.front() == followedBy) {
 			return true;
 		}
 	}
 	return false;
 }
-bool PKBFollows::isFollowsS1StmtNoS2StmtNo(STMT_NO followedBy, STMT_NO follows) {
-	for (auto vectorIter : followsStarTable) {
+bool PKBFollows::isLeftFixedRightFixed(STMT_NO followedBy, STMT_NO follows, TABLE tableName) {
+	for (auto vectorIter : tableName) {
 		if (vectorIter.front() == followedBy) {
 			if (vectorIter.back() == follows) {
 				return true;
@@ -108,59 +124,49 @@ bool PKBFollows::isFollowsS1StmtNoS2StmtNo(STMT_NO followedBy, STMT_NO follows) 
 
 TABLE PKBFollows::getFollows(STMT_REF s1, STMT_REF s2) {
 	if (s1 == "_") {
-		if (isdigit(s2.at(0))) {
-			return PKBFollows::getResultGenericLeft(s1, s2, followsTable);
-		}
-		else {
-			return PKBFollows::getResultGenericLeft("_", s2, followsTable);
-		}
+		return PKBFollows::getResultGenericLeft("_", s2, followsTable);
+	}
+	else if (isdigit(s1.at(0))) {
+		return PKBFollows::getResultGenericRight(s1, s2, followsTable);
 	}
 	else if (s2 == "_") {
-		if (isdigit(s1.at(0))) {
-			return PKBFollows::getResultGenericRight(s1, s2, followsTable);
-		}
-		else {
-			return PKBFollows::getResultGenericRight(s1, "_", followsTable);
-		}
+		return PKBFollows::getResultGenericRight(s1, "_", followsTable);
 	}
-	else {
-		return PKBFollows::getResultTableGenericBoth(s1, s2, followsTable);
+	else if (isdigit(s2.at(0))) {
+		return PKBFollows::getResultGenericLeft(s1, s2, followsTable);
 	}
+	return PKBFollows::getResultTableGenericBoth(s1, s2, followsTable);
 }
 
-
-
-TABLE PKBFollows::getFollowsS1S2Same(STMT_TYPE s1, STMT_TYPE s2) {
-	TABLE resultTable;
-	return resultTable;
-}
-
-TABLE PKBFollows::getAllFollowedByFollowsStarStmt(STMT_TYPE type1, STMT_TYPE type2) {
-	return PKBFollows::getResultTableGenericBoth(type1, type2, followsStarTable);
-}
-STMT_LIST PKBFollows::getAllFollowedByStarStmt(STMT_TYPE type, STMT_NO follows) {
-	return PKBFollows::getResultGenericLeft(type, follows, followsStarTable);
-}
-STMT_LIST PKBFollows::getAllFollowsStarStmt(STMT_NO followedBy, STMT_TYPE type) {
-	return PKBFollows::getResultGenericRight(followedBy, type, followsStarTable);
+TABLE PKBFollows::getFollowsT(STMT_REF s1, STMT_REF s2) {
+	if (s1 == "_") {
+		return PKBFollows::getResultGenericLeft("_", s2, followsTTable);
+	}
+	else if (isdigit(s1.at(0))) {
+		return PKBFollows::getResultGenericRight(s1, s2, followsTTable);
+	}
+	else if (s2 == "_") {
+		return PKBFollows::getResultGenericRight(s1, "_", followsTTable);
+	}
+	else if (isdigit(s2.at(0))) {
+		return PKBFollows::getResultGenericLeft(s1, s2, followsTTable);
+	}
+	return PKBFollows::getResultTableGenericBoth(s1, s2, followsTTable);
 }
 
 TABLE PKBFollows::getResultTableGenericBoth(STMT_TYPE type1, STMT_TYPE type2, TABLE tableName) {
 	TABLE resultTable;
-	if (type1 != "_" && type2 != "_" && type1 == type2) {
-		return resultTable;
-	}
-	if (type1 == "_" && type2 == "_") {
+	if (type1 == "stmt" && type2 == "stmt") {
 		return tableName;
 	}
 	STMT_LIST list1, list2;
-	if (type1 == "_" || type1 == "STMT") {
+	if (type1 == "_" || type1 == "stmt") {
 		list1 = PKBStmt::getAllStmt();
 	}
 	else {
 		list1 = PKBStmt::getAllStmtByType(type1);
 	}
-	if (type2 == "_" || type2 == "STMT") {
+	if (type2 == "_" || type2 == "stmt") {
 		list2 = PKBStmt::getAllStmt();
 	}
 	else {
@@ -187,11 +193,11 @@ TABLE PKBFollows::getResultTableGenericBoth(STMT_TYPE type1, STMT_TYPE type2, TA
 	return resultTable;
 }
 
-STMT_LIST PKBFollows::getResultGenericLeft(STMT_TYPE type, STMT_NO stmtNo, TABLE tableName) {
-	STMT_LIST resultTable;
+TABLE PKBFollows::getResultGenericLeft(STMT_TYPE type, STMT_NO stmtNo, TABLE tableName) {
+	TABLE resultTable;
 	STMT_LIST list;
 	STMT_NO s;
-	if (type == "STMT") {
+	if (type == "stmt") {
 		list = PKBStmt::getAllStmt();
 	}
 	else {
@@ -226,11 +232,11 @@ STMT_LIST PKBFollows::getResultGenericLeft(STMT_TYPE type, STMT_NO stmtNo, TABLE
 	return resultTable;
 }
 
-STMT_LIST PKBFollows::getResultGenericRight(STMT_NO stmtNo, STMT_TYPE type, TABLE tableName) {
-	STMT_LIST resultTable;
+TABLE PKBFollows::getResultGenericRight(STMT_NO stmtNo, STMT_TYPE type, TABLE tableName) {
+	TABLE resultTable;
 	STMT_LIST list;
 	STMT_NO s;
-	if (type == "STMT") {
+	if (type == "stmt") {
 		list = PKBStmt::getAllStmt();
 	}
 	else {
@@ -267,6 +273,6 @@ STMT_LIST PKBFollows::getResultGenericRight(STMT_NO stmtNo, STMT_TYPE type, TABL
 
 bool PKBFollows::clear() {
 	followsTable.clear();
-	followsStarTable.clear();
+	followsTTable.clear();
 	return true;
 }

@@ -143,7 +143,7 @@ public:
 	static PROC_LIST getAllCalleStarProc(PROC_NAME procName);
 
 	static bool isCalls(PROC_NAME p1, PROC_NAME p2);
-	static TABLE getCalls(PROC_NAME p1, PROC_NAME p2);
+	static TABLE getCall(PROC_NAME p1, PROC_NAME p2);
 
 	//Next Function
 	static bool setNext(PROG_LINE n1, PROG_LINE n2);
