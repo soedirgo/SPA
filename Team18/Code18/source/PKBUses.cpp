@@ -69,7 +69,7 @@ bool PKBUses::isUsesProc(PROC_NAME procName, VAR_NAME varName) {
 //Uses(s1,__) , Uses(a1, _ ), Uses(ifs , _ ) 
 STMT_LIST PKBUses::getAllUsesStmtByType(STMT_TYPE type) {
 	STMT_LIST result; 
-	if (type == "STMT") { 
+	if (type == "stmt") { 
 		for (auto iter : usesStmtTable) {
 			vector<string> myVector = vector<string>();
 			myVector.push_back(iter.front());
@@ -77,7 +77,7 @@ STMT_LIST PKBUses::getAllUsesStmtByType(STMT_TYPE type) {
 		}
 	}
 	
-	else if (type == "IF" || type == "WHILE" || type=="ASSIGN" || type=="PRINT" || type =="CALL") { 
+	else { 
 		STMT_LIST stmtList = PKBStmt::getAllStmtByType(type);
 		for (auto stmt : stmtList) {
 			for (auto usesStmt: usesStmtTable) {
@@ -92,12 +92,12 @@ STMT_LIST PKBUses::getAllUsesStmtByType(STMT_TYPE type) {
 }
 
 
-//LHS is either a stmt syn or print/if/while/assign/call stmt
+//LHS is either a stmt syn or print/if/while/assign/call syn
 //RHS is a specific variable name 
 // e.g. Uses(s1, "x" ) , Uses(a1, "x" ), Uses(ifs ,"x" ) 
 STMT_LIST PKBUses::getUsesStmtByTypeAndVar(STMT_TYPE type, VAR_NAME varName) {
 	STMT_LIST result;
-	if (type == "STMT") {
+	if (type == "stmt") {
 		for (auto usesStmt : usesStmtTable) {
 			if (usesStmt.back() == varName) {
 				vector<string> myVector = vector<string>();
@@ -106,7 +106,7 @@ STMT_LIST PKBUses::getUsesStmtByTypeAndVar(STMT_TYPE type, VAR_NAME varName) {
 			}
 		}
 	}
-	else if (type == "IF" || type == "WHILE" || type == "ASSIGN" || type == "PRINT" || type == "CALL") {
+	else {
 		STMT_LIST stmtList = PKBStmt::getAllStmtByType(type);
 
 		for (auto stmt : stmtList) {
@@ -140,6 +140,28 @@ VAR_LIST PKBUses::getUsesVarByStmt(STMT_NO stmtNo) {
 }
 
 
+//Uses( if , v), Uses(call , v) , Uses (s,v) 
+//LHS is either a stmt syn or print/if/while/assign/call syn
+//RHS is a var syn
+DOUBLE_COL_TABLE PKBUses::getAllUsesStmtPair(STMT_TYPE type) {
+	DOUBLE_COL_TABLE resultTable;
+	if (type == "stmt") {
+		return usesStmtTable; 
+	}
+	else{
+		STMT_LIST stmtList = PKBStmt::getAllStmtByType(type);
+		for (auto stmt : stmtList) {
+			for (auto usesStmt : usesStmtTable) {
+				if (usesStmt.front() == stmt.front()) {
+					resultTable.emplace(usesStmt);
+				}
+			}
+		}
+		
+	}
+	return resultTable;
+}
+
 //Procedure p1 ; Select Uses(p1,__) 
 PROC_LIST PKBUses::getAllUsesProc() {
 	PROC_LIST result;
@@ -167,7 +189,7 @@ PROC_LIST PKBUses::getUsesProcByVar(VAR_NAME varName) {
 }
 
 
-//select v such that uses("procName", v)  
+//uses("procName", v)  
 //LHS proc name string, RHS var syn 
 PROC_LIST PKBUses::getUsesVarByProc(PROC_NAME procName) {
 	VAR_LIST varListResult;
@@ -181,3 +203,11 @@ PROC_LIST PKBUses::getUsesVarByProc(PROC_NAME procName) {
 	return varListResult;
 }
 
+
+
+//Uses(p , v) 
+//LHS proc syn, RHS var syn
+DOUBLE_COL_TABLE PKBUses::getAllUsesProcPair() {
+	DOUBLE_COL_TABLE pairResults;
+	return usesProcTable; 
+}
