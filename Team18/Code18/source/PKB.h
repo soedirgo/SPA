@@ -53,6 +53,7 @@ public:
 	static STMT_LIST getWhiles();
 	static STMT_LIST getIfs();
 	static STMT_LIST getCalls();
+	static STMT_LIST getNexts();
 
 	//Procedure Functions
 	static PROC_LIST getAllProc();

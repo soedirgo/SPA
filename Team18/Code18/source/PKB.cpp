@@ -369,6 +369,10 @@ bool PKB::isCallStarRelationship(PROC_NAME caller, PROC_NAME callee) {
 ////////////////////////////////////
 // NextTable APIs
 ////////////////////////////////////
+STMT_LIST PKB::getNexts() {
+	return PKBStmt::getAllStmt();
+}
+
 bool PKB::setNext(PROG_LINE n1, PROG_LINE n2) {
 	return PKBNext::setNext(n1, n2);
 };
