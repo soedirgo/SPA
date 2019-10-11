@@ -67,87 +67,109 @@ namespace UnitTesting
 			Stmts.setStmt("17", "assign");
 			Stmts.setStmt("18", "print");
 
+			
+			//Line #3 Calls Second
+			PKB.setUsesS("3", "y");
+			PKB.setUsesS("3", "i");
+			PKB.setUsesS("3", "x");
+			PKB.setUsesS("3", "z"); 
+			PKB.setUsesS("3", "v"); //#3 Calls Second, which calls Third
+
 			//Direct assignment stmts with var on RHS 
-			PKB.setUsesStmt("3", "y");
-			PKB.setUsesStmt("6", "i");
-			PKB.setUsesStmt("7", "x");
-			PKB.setUsesStmt("7", "y");
-			PKB.setUsesStmt("9", "i");
-			PKB.setUsesStmt("6", "x");
-			PKB.setUsesStmt("6", "y");
-			PKB.setUsesStmt("6", "i");
-			PKB.setUsesStmt("8", "z");
-			PKB.setUsesStmt("8", "v");
-			PKB.setUsesStmt("10", "x");
-			PKB.setUsesStmt("11", "x");
-			PKB.setUsesStmt("13", "z");
-			PKB.setUsesStmt("13", "x");
-			PKB.setUsesStmt("13", "i");
-			PKB.setUsesStmt("14", "z");
-			PKB.setUsesStmt("15", "x");
-			PKB.setUsesStmt("15", "y");
-			PKB.setUsesStmt("15", "z");
-			PKB.setUsesStmt("17", "z");
-			PKB.setUsesStmt("18", "v");
+			PKB.setUsesS("6", "i");
+			PKB.setUsesS("7", "x");
+			PKB.setUsesS("7", "y");
+			PKB.setUsesS("9", "i");
+			PKB.setUsesS("6", "x");
+			PKB.setUsesS("6", "y");
+			PKB.setUsesS("6", "i");
+			PKB.setUsesS("8", "z");
+			PKB.setUsesS("8", "v");
+			PKB.setUsesS("10", "x");
+			PKB.setUsesS("11", "x");
+			PKB.setUsesS("13", "z");
+			PKB.setUsesS("13", "x");
+			PKB.setUsesS("13", "i");
+			PKB.setUsesS("14", "z");
+			PKB.setUsesS("15", "x");
+			PKB.setUsesS("15", "y");
+			PKB.setUsesS("15", "z");
+			PKB.setUsesS("17", "z");
+			PKB.setUsesS("18", "v");
 
 			//More complex uses 
 
 
-			PKB.setUsesProc("Second", "i");
-			PKB.setUsesProc("Second", "x");
-			PKB.setUsesProc("Second", "y");
-			PKB.setUsesProc("Second", "z");
-			PKB.setUsesProc("Third", "v");
-			PKB.setUsesProc("Third", "z");
+			PKB.setUsesP("Second", "i");
+			PKB.setUsesP("Second", "x");
+			PKB.setUsesP("Second", "y");
+			PKB.setUsesP("Second", "z");
+			PKB.setUsesP("Third", "v");
+			PKB.setUsesP("Third", "z");
 
-			PKB.setUsesProc("Second", "v");
-			PKB.setUsesProc("First", "i");
-			PKB.setUsesProc("First", "x");
-			PKB.setUsesProc("First", "y");
-			PKB.setUsesProc("First", "z");
-			PKB.setUsesProc("First", "v");
+			PKB.setUsesP("Second", "v");
+			PKB.setUsesP("First", "i");
+			PKB.setUsesP("First", "x");
+			PKB.setUsesP("First", "y");
+			PKB.setUsesP("First", "z");
+			PKB.setUsesP("First", "v");
 
 			Calls.setCallProc("3", "Second");
 			Calls.setCallProc("8", "Third");
 
 		}
 
-		TEST_METHOD(UsesStmtRelationship)
+		TEST_METHOD(isUsesS)
 		{
 			PKBUses PKB;
-			Assert::IsTrue(PKB.isUsesStmtRelationship("6", "i"));
-			Assert::IsTrue(PKB.isUsesStmtRelationship("7", "x"));
-			Assert::IsTrue(PKB.isUsesStmtRelationship("7", "y"));
-			Assert::IsTrue(PKB.isUsesStmtRelationship("9", "i"));
-			Assert::IsTrue(PKB.isUsesStmtRelationship("6", "x"));
-			Assert::IsTrue(PKB.isUsesStmtRelationship("6", "y"));
-			Assert::IsTrue(PKB.isUsesStmtRelationship("10", "x"));
-			Assert::IsTrue(PKB.isUsesStmtRelationship("11", "x"));
-			Assert::IsTrue(PKB.isUsesStmtRelationship("13", "z"));
-			Assert::IsTrue(PKB.isUsesStmtRelationship("13", "x"));
-			Assert::IsTrue(PKB.isUsesStmtRelationship("14", "z"));
-			Assert::IsTrue(PKB.isUsesStmtRelationship("15", "x"));
-			Assert::IsTrue(PKB.isUsesStmtRelationship("15", "y"));
-			Assert::IsTrue(PKB.isUsesStmtRelationship("15", "z"));
-			Assert::IsTrue(PKB.isUsesStmtRelationship("17", "z"));
-			Assert::IsTrue(PKB.isUsesStmtRelationship("18", "v"));
+			Assert::IsTrue(PKB.isUsesS("6", "i"));
+			Assert::IsTrue(PKB.isUsesS("7", "x"));
+			Assert::IsTrue(PKB.isUsesS("7", "y"));
+			Assert::IsTrue(PKB.isUsesS("9", "i"));
+			Assert::IsTrue(PKB.isUsesS("6", "x"));
+			Assert::IsTrue(PKB.isUsesS("6", "y"));
+			Assert::IsTrue(PKB.isUsesS("10", "x"));
+			Assert::IsTrue(PKB.isUsesS("11", "x"));
+			Assert::IsTrue(PKB.isUsesS("13", "z"));
+			Assert::IsTrue(PKB.isUsesS("13", "x"));
+			Assert::IsTrue(PKB.isUsesS("14", "z"));
+			Assert::IsTrue(PKB.isUsesS("15", "x"));
+			Assert::IsTrue(PKB.isUsesS("15", "y"));
+			Assert::IsTrue(PKB.isUsesS("15", "z"));
+			Assert::IsTrue(PKB.isUsesS("17", "z"));
+			Assert::IsTrue(PKB.isUsesS("18", "v"));
+
+			Assert::IsTrue(PKB.isUsesS("6", "_"));
+			Assert::IsTrue(PKB.isUsesS("7", "_"));
+			Assert::IsTrue(PKB.isUsesS("7", "_"));
+			Assert::IsTrue(PKB.isUsesS("9", "_"));
+			Assert::IsTrue(PKB.isUsesS("6", "_"));
+			Assert::IsTrue(PKB.isUsesS("6", "_"));
+			Assert::IsTrue(PKB.isUsesS("10", "_"));
+			Assert::IsTrue(PKB.isUsesS("11", "_"));
+			Assert::IsTrue(PKB.isUsesS("13", "_"));
+			Assert::IsTrue(PKB.isUsesS("13", "_"));
+			Assert::IsTrue(PKB.isUsesS("14", "_"));
+			Assert::IsTrue(PKB.isUsesS("15", "_"));
+			Assert::IsTrue(PKB.isUsesS("15", "_"));
+			Assert::IsTrue(PKB.isUsesS("15", "_"));
+			Assert::IsTrue(PKB.isUsesS("17", "_"));
+			Assert::IsTrue(PKB.isUsesS("18", "_"));
+			
 		}
-		TEST_METHOD(UsesProcRelationship)
+		TEST_METHOD(isUsesP)
 		{
 			PKBUses PKB;
-			Assert::IsTrue(PKB.isUsesProcRelationship("Second", "x"));
-			Assert::IsTrue(PKB.isUsesProcRelationship("Second", "y"));
-			Assert::IsTrue(PKB.isUsesProcRelationship("Second", "z"));
+			Assert::IsTrue(PKB.isUsesP("Second", "x"));
+			Assert::IsTrue(PKB.isUsesP("Second", "y"));
+			Assert::IsTrue(PKB.isUsesP("Second", "z"));
+
+			Assert::IsTrue(PKB.isUsesP("First", "_"));
+			Assert::IsTrue(PKB.isUsesP("Second", "_"));
+			Assert::IsTrue(PKB.isUsesP("Third", "_"));
 		}
 
-		TEST_METHOD(GetAllUsesStmt)
-		{
-			PKBUses PKB;
-			STMT_LIST result = PKB.getAllUsesStmt();
-			STMT_LIST expected = { {"3"} , {"6"},{"7"}, {"8"},{"9"},{"10"},{"11"},{"13"},{"14"},{"15"},{"17"},{"18"} };
-
-			Assert::IsTrue(expected == result);
-		}
+		
 
 		TEST_METHOD(getAllUsesStmtByType)
 		{//LHS is either a print/if/while/assign/call 
@@ -161,16 +183,21 @@ namespace UnitTesting
 			Assert::IsTrue(printExpected == printResult);
 
 			STMT_LIST assignResult = PKB.getAllUsesStmtByType("assign");
-			STMT_LIST assignExpected = { {"4"}, {"5"}, {"7"}, {"9"}, {"11"}, {"12"} , {"13"}, {"14"}, {"15"}, {"16"}, {"17"} };
+			STMT_LIST assignExpected = { {"7"}, {"9"}, {"11"}, {"13"}, {"14"}, {"15"}, {"17"} };
 			Assert::IsTrue(assignExpected == assignResult);
 
-			STMT_LIST callResult = PKB.getAllUsesStmtByType("call");
-			STMT_LIST callExpected = { {"3"}, {"8"} };
+			STMT_LIST callResult = PKB.getAllUsesStmtByType("call");//Second third firs
+			STMT_LIST callExpected = { {"3"}, {"8"} }; 
 			Assert::IsTrue(callExpected == callResult);
 
 			STMT_LIST whileResult = PKB.getAllUsesStmtByType("while");
 			STMT_LIST whileExpected = { {"6"} };
 			Assert::IsTrue(whileExpected == whileResult);
+
+			STMT_LIST allUsesResults = PKB.getAllUsesStmtByType("stmt");
+			STMT_LIST allUsesExpected = { {"3"} , {"6"},{"7"}, {"8"},{"9"},{"10"},{"11"},{"13"},{"14"},{"15"},{"17"},{"18"} };
+		
+
 		}
 
 		TEST_METHOD(getUsesStmtByTypeAndVar)
@@ -229,30 +256,27 @@ namespace UnitTesting
 			expected = { {"3"} , {"8"} };
 			Assert::IsTrue(result == expected);
 
-
-		}
-
-		TEST_METHOD(getUsesStmtByVar) {
-			PKBUses pkb;
-			STMT_LIST expected = { {"6"} , {"7"} , {"10"} , {"11"} , {"13"} , {"15"} };
-			STMT_LIST result = pkb.getUsesStmtByVar("x");
+			result = PKB.getUsesStmtByTypeAndVar("stmt", "v");
+			expected = { {"3"} , {"8"} , {"18"}  };
 			Assert::IsTrue(result == expected);
 
-			result = pkb.getUsesStmtByVar("i");
-			expected = { {"6"} , {"9"} , {"13"} };
+			result = PKB.getUsesStmtByTypeAndVar("stmt", "z");
+			expected = { {"3"} , {"8"} , {"13"}, {"14"}, {"15"} , {"17"} };
 			Assert::IsTrue(result == expected);
 
-			result = pkb.getUsesStmtByVar("v");
-			expected = { {"8"},  {"18"} };
+			result = PKB.getUsesStmtByTypeAndVar("stmt", "x");
+			expected = { {"3"} , {"6"} ,{"7"} , {"10"}, {"11"}, {"13"} , {"15"} };
 			Assert::IsTrue(result == expected);
 
-			result = pkb.getUsesStmtByVar("y");
-			expected = { {"3"} ,  {"6"} , {"7"} , {"15"} };
+			result = PKB.getUsesStmtByTypeAndVar("stmt", "y");
+			expected = { {"3"} , {"6"} ,{"7"} , {"15"} };
 			Assert::IsTrue(result == expected);
 
-			result = pkb.getUsesStmtByVar("z");
-			expected = { {"8"} , {"13"} ,  {"14"} , {"15"} , {"17"} };
+			result = PKB.getUsesStmtByTypeAndVar("stmt", "i");
+			expected = { {"3"} , {"6"} ,{"9"} , {"13"} };
 			Assert::IsTrue(result == expected);
+
+
 		}
 
 		TEST_METHOD(getUsesVarByStmt) {
@@ -269,9 +293,9 @@ namespace UnitTesting
 			result = pkb.getUsesVarByStmt("5");
 			Assert::IsTrue(result == expected);
 
-			//Special call stmt case
-			//result = pkb.getUsesVarByStmt("3");
-			//Assert::IsTrue(result == expected);
+			expected = { {"x"} , {"y"}, {"z"}, {"v"}, {"i"} };
+			result = pkb.getUsesVarByStmt("3");//Special call stmt case
+			Assert::IsTrue(result == expected);
 
 			//Other assignment cases etc. 
 			expected = { {"i"}, {"x"} , {"y"} };
@@ -294,6 +318,56 @@ namespace UnitTesting
 			PROC_LIST result = pkb.getAllUsesProc();
 			Assert::IsTrue(result == expected);
 		}
+		
+		TEST_METHOD(getAllUsesStmtPair) {
+			PKBUses pkb; 
+			DOUBLE_COL_TABLE result = pkb.getAllUsesStmtPair("if");
+			DOUBLE_COL_TABLE expected =
+			{ { {"10"} , {"x"} } };
+			Assert::IsTrue(result == expected);
+
+			result = pkb.getAllUsesStmtPair("while");
+			expected =
+			{ { {"6"} , {"i"} }
+			,{ {"6"} , {"x"} } 
+			,{ {"6"} , {"y"} } };
+			Assert::IsTrue(result == expected);
+
+			result = pkb.getAllUsesStmtPair("print");
+			expected =
+			{ { {"18"} , {"v"} } };
+			Assert::IsTrue(result == expected);
+
+			result = pkb.getAllUsesStmtPair("assign");
+			expected =
+			{ { {"7"} , {"x"} }
+			,{ {"7"} , {"y"} }
+			,{ {"9"} , {"i"} }
+			,{ {"11"} , {"x"} } 
+			,{ {"13"} , {"z"} } 
+			,{ {"13"} , {"x"} } 
+			,{ {"13"} , {"i"} } 
+			,{ {"14"} , {"z"} } 
+			,{ {"15"} , {"x"} }
+			,{ {"15"} , {"y"} }
+			,{ {"15"} , {"z"} }
+			,{ {"17"} , {"z"} } };
+			Assert::IsTrue(result == expected);
+
+			result = pkb.getAllUsesStmtPair("call");
+			expected =
+			{ { {"3"} , {"x"} }
+			,{ {"3"} , {"y"} }
+			,{ {"3"} , {"i"} }
+			,{ {"3"} , {"z"} }
+			,{ {"3"} , {"v"} }
+			,{ {"8"} , {"z"}}
+			,{ {"8"} , {"v"} } };
+
+			Assert::IsTrue(result == expected);
+
+
+		}
 		TEST_METHOD(getUsesProcByVar) {
 			PKBUses pkb;
 			PROC_LIST expected = { {"First"} , {"Second"}, {"Third"} };
@@ -311,10 +385,38 @@ namespace UnitTesting
 
 		}
 		TEST_METHOD(getUsesVarByProc) {
+			PKBUses pkb;
+			PROC_LIST expected = { {"x"}, {"y"},{"z"}, {"i"}, {"v"} };
+			PROC_LIST result = pkb.getUsesVarByProc("First");
+			Assert::IsTrue(result == expected);
 
+			result = pkb.getUsesVarByProc("Second");
+			Assert::IsTrue(result == expected);
+
+			expected = { {"z"}, {"v"} };
+			result = pkb.getUsesVarByProc("Third");
+			Assert::IsTrue(result == expected);
 		}
 
+		TEST_METHOD(getAllUsesProcPair) {
+			PKBUses pkb; 
+			DOUBLE_COL_TABLE expected = 
+			{ { {"First"} , {"x"} }
+			, { {"First"} , {"y"} }
+			, { {"First"} , {"z"} } 
+			, { {"First"} , {"i"} } 
+			, { {"First"} , {"v"} }
+			, { {"Second"} , {"x"} }
+			, { {"Second"} , {"y"} }
+			, { {"Second"} , {"z"} }
+			, { {"Second"} , {"i"} }
+			, { {"Second"} , {"v"} }
+			, { {"Third"} , {"z"} }
+			, { {"Third"} , {"v"} } };
 
+			DOUBLE_COL_TABLE result = pkb.getAllUsesProcPair(); 
+			Assert::IsTrue(result == expected);
+		}
 
 	};
 

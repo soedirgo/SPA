@@ -102,7 +102,7 @@ namespace UnitTesting
 			pkb.setStmt(9, Assign);
 			pkb.setAssignStmt(9, "x");
 			pkb.setVar("x");
-			pkb.setUsesStmt(9, "x");
+			pkb.setUsesS(9, "x");
 			pkb.setModifiesStmt(9, "x");
 			pkb.setFollows(8, 9);
 			pkb.setFollowsT(8, 9);

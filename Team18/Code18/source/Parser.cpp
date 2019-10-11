@@ -73,7 +73,7 @@ int Parser::Parse(string filename) {
 				else {
 					pkb.setVar(var);
 					currProc.addModifies(var);
-					pkb.setUsesStmt(to_string(stmtNo), var);
+					pkb.setUsesS(to_string(stmtNo), var);
 				}
 			}
 
@@ -122,7 +122,7 @@ int Parser::Parse(string filename) {
 				else {
 					pkb.setVar(var);
 					currProc.addUses(var);
-					pkb.setUsesStmt(to_string(stmtNo), var);
+					pkb.setUsesS(to_string(stmtNo), var);
 				}
 			}
 
@@ -174,7 +174,7 @@ int Parser::Parse(string filename) {
 				else {
 					pkb.setVar(var);
 					currProc.addUses(var);
-					pkb.setUsesStmt(to_string(stmtNo), var);
+					pkb.setUsesS(to_string(stmtNo), var);
 				}
 			}
 
@@ -315,10 +315,10 @@ int Parser::Parse(string filename) {
 					}
 					for (string var : proc.getUses()) {
 						int currStmtNo = stmtNo;
-						pkb.setUsesStmt(to_string(stmtNo), var);
+						pkb.setUsesS(to_string(stmtNo), var);
 						while (PKB::isParentExist(to_string(currStmtNo))) {
 							currStmtNo = stoi(PKB::getParentStmt(to_string(currStmtNo)));
-							pkb.setUsesStmt(to_string(currStmtNo), var);
+							pkb.setUsesS(to_string(currStmtNo), var);
 						}
 					}
 				}
@@ -512,7 +512,7 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 				}
 				else {
 					pkb.setVar(var);
-					pkb.setUsesStmt(to_string(currStmtNo), var);
+					pkb.setUsesS(to_string(currStmtNo), var);
 					result.addUses(var);
 					currProc.addUses(var);
 				}
@@ -600,7 +600,7 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 				}
 				else {
 					pkb.setVar(var);
-					pkb.setUsesStmt(to_string(currStmtNo), var);
+					pkb.setUsesS(to_string(currStmtNo), var);
 					result.addUses(var);
 					currProc.addUses(var);
 				}
@@ -692,7 +692,7 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 				}
 				else {
 					pkb.setVar(var);
-					pkb.setUsesStmt(to_string(currStmtNo), var);
+					pkb.setUsesS(to_string(currStmtNo), var);
 					result.addUses(var);
 					currProc.addUses(var);
 				}
@@ -823,7 +823,7 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 			pkb.setStmt(to_string(currStmtNo), "print");
 			pkb.setParent(to_string(startStmtNo), to_string(currStmtNo));
 
-			pkb.setUsesStmt(to_string(currStmtNo), printArg);
+			pkb.setUsesS(to_string(currStmtNo), printArg);
 			pkb.setVar(printArg);
 			result.addUses(printArg);
 			currProc.addUses(printArg);
@@ -1032,7 +1032,7 @@ NestedResult Parser::parseIfNestedInThen(string ifLine, int parentStmtNo) {
 				}
 				else {
 					pkb.setVar(var);
-					pkb.setUsesStmt(to_string(currStmtNo), var);
+					pkb.setUsesS(to_string(currStmtNo), var);
 					result.addUses(var);
 					currProc.addUses(var);
 				}
@@ -1120,7 +1120,7 @@ NestedResult Parser::parseIfNestedInThen(string ifLine, int parentStmtNo) {
 				}
 				else {
 					pkb.setVar(var);
-					pkb.setUsesStmt(to_string(currStmtNo), var);
+					pkb.setUsesS(to_string(currStmtNo), var);
 					result.addUses(var);
 					currProc.addUses(var);
 				}
@@ -1212,7 +1212,7 @@ NestedResult Parser::parseIfNestedInThen(string ifLine, int parentStmtNo) {
 				}
 				else {
 					pkb.setVar(var);
-					pkb.setUsesStmt(to_string(currStmtNo), var);
+					pkb.setUsesS(to_string(currStmtNo), var);
 					result.addUses(var);
 					currProc.addUses(var);
 				}
@@ -1344,7 +1344,7 @@ NestedResult Parser::parseIfNestedInThen(string ifLine, int parentStmtNo) {
 			pkb.setStmt(to_string(currStmtNo), "print");
 			pkb.setParent(to_string(startStmtNo), to_string(currStmtNo));
 
-			pkb.setUsesStmt(to_string(currStmtNo), printArg);
+			pkb.setUsesS(to_string(currStmtNo), printArg);
 			pkb.setVar(printArg);
 			result.addUses(printArg);
 			currProc.addUses(printArg);
@@ -1542,7 +1542,7 @@ NestedResult Parser::parseWhileNestedInThen(string whileLine, int parentStmtNo) 
 				}
 				else {
 					pkb.setVar(var);
-					pkb.setUsesStmt(to_string(currStmtNo), var);
+					pkb.setUsesS(to_string(currStmtNo), var);
 					result.addUses(var);
 					currProc.addUses(var);
 				}
@@ -1598,7 +1598,7 @@ NestedResult Parser::parseWhileNestedInThen(string whileLine, int parentStmtNo) 
 				}
 				else {
 					pkb.setVar(var);
-					pkb.setUsesStmt(to_string(currStmtNo), var);
+					pkb.setUsesS(to_string(currStmtNo), var);
 					result.addUses(var);
 					currProc.addUses(var);
 				}
@@ -1664,7 +1664,7 @@ NestedResult Parser::parseWhileNestedInThen(string whileLine, int parentStmtNo) 
 				}
 				else {
 					pkb.setVar(var);
-					pkb.setUsesStmt(to_string(currStmtNo), var);
+					pkb.setUsesS(to_string(currStmtNo), var);
 					result.addUses(var);
 					currProc.addUses(var);
 				}
@@ -1743,7 +1743,7 @@ NestedResult Parser::parseWhileNestedInThen(string whileLine, int parentStmtNo) 
 			pkb.setStmt(to_string(currStmtNo), "print");
 			pkb.setParent(to_string(startStmtNo), to_string(currStmtNo));
 
-			pkb.setUsesStmt(to_string(currStmtNo), printArg);
+			pkb.setUsesS(to_string(currStmtNo), printArg);
 			pkb.setVar(printArg);
 			result.addUses(printArg);
 			currProc.addUses(printArg);
@@ -1871,7 +1871,7 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 				}
 				else {
 					pkb.setVar(var);
-					pkb.setUsesStmt(to_string(currStmtNo), var);
+					pkb.setUsesS(to_string(currStmtNo), var);
 					result.addUses(var);
 					currProc.addUses(var);
 				}
@@ -1927,7 +1927,7 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 				}
 				else {
 					pkb.setVar(var);
-					pkb.setUsesStmt(to_string(currStmtNo), var);
+					pkb.setUsesS(to_string(currStmtNo), var);
 					result.addUses(var);
 					currProc.addUses(var);
 				}
@@ -1993,7 +1993,7 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 				}
 				else {
 					pkb.setVar(var);
-					pkb.setUsesStmt(to_string(currStmtNo), var);
+					pkb.setUsesS(to_string(currStmtNo), var);
 					result.addUses(var);
 					currProc.addUses(var);
 				}
@@ -2072,7 +2072,7 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 			pkb.setStmt(to_string(currStmtNo), "print");
 			pkb.setParent(to_string(startStmtNo), to_string(currStmtNo));
 
-			pkb.setUsesStmt(to_string(currStmtNo), printArg);
+			pkb.setUsesS(to_string(currStmtNo), printArg);
 			pkb.setVar(printArg);
 			result.addUses(printArg);
 			currProc.addUses(printArg);
