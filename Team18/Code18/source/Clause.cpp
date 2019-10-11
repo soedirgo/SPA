@@ -1,18 +1,20 @@
 #include <string>
+#include <vector>
 #include "Clause.h"
 using namespace std;
 
-Clause::Clause(string type, string lhs, string rhs)
-    : type(type), lhs(lhs), rhs(rhs) {}
+Clause::Clause(string type, vector<string> fields)
+    : type(type), fields(fields) {}
 
-string Clause::getType() {
+string Clause::getType() const {
     return this->type;
 }
 
-string Clause::getLhs() {
-    return this->lhs;
+vector<string> Clause::getFields() const {
+    return this->fields;
 }
 
-string Clause::getRhs() {
-    return this->rhs;
+bool Clause::operator== (const Clause& other) const {
+    return this->type == other.getType()
+        && this->fields == other.getFields();
 }
