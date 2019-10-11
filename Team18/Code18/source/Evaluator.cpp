@@ -1,3 +1,4 @@
+#include <functional>
 #include <string>
 #include <unordered_map>
 #include <unordered_set>
@@ -147,7 +148,7 @@ namespace Evaluator {
 
             unordered_map<string,
                           function<unordered_set<vector<string>>
-                                   (string, string)>> tableIdentApiMap =
+                                   (string)>> tableIdentApiMap =
                 {{"Calls", PKB::getCallsIdent},
                  {"Follows", PKB::getFollowsIdent},
                  {"Follows*", PKB::getFollowsTIdent},
