@@ -31,6 +31,7 @@ STMT_NO PKBFollows::getFollowsStmt(STMT_NO followedBy) {
 	return "";
 }
 
+/*
 bool PKBFollows::isFollowsRelationship(STMT_NO followedBy, STMT_NO follows) {
 
 	for (auto vectorIter : followsTable) {
@@ -54,6 +55,7 @@ bool PKBFollows::isFollowsStarRelationship(STMT_NO followedBy, STMT_NO follows) 
 	}
 	return false;
 }
+*/
 
 TABLE PKBFollows::getFollowsTable() {
 	return followsTable;

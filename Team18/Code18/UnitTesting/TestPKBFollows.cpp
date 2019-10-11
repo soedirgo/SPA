@@ -97,24 +97,24 @@ namespace UnitTesting
 		TEST_METHOD(FollowsStarRelationship)
 		{
 			PKBFollows PKB;
-			Assert::IsTrue(PKB.isFollowsStarRelationship("1", "2"));
-			Assert::IsTrue(PKB.isFollowsStarRelationship("2", "3"));
-			Assert::IsTrue(PKB.isFollowsStarRelationship("4", "5"));
-			Assert::IsTrue(PKB.isFollowsStarRelationship("5", "6"));
-			Assert::IsTrue(PKB.isFollowsStarRelationship("6", "10"));
-			Assert::IsTrue(PKB.isFollowsStarRelationship("7", "8"));
-			Assert::IsTrue(PKB.isFollowsStarRelationship("8", "9"));
-			Assert::IsTrue(PKB.isFollowsStarRelationship("10", "13"));
-			Assert::IsTrue(PKB.isFollowsStarRelationship("13", "14"));
-			Assert::IsTrue(PKB.isFollowsStarRelationship("14", "15"));
-			Assert::IsTrue(PKB.isFollowsStarRelationship("16", "17"));
-			Assert::IsTrue(PKB.isFollowsStarRelationship("17", "18"));
+			Assert::IsTrue(PKB.isFollowsT("1", "2"));
+			Assert::IsTrue(PKB.isFollowsT("2", "3"));
+			Assert::IsTrue(PKB.isFollowsT("4", "5"));
+			Assert::IsTrue(PKB.isFollowsT("5", "6"));
+			Assert::IsTrue(PKB.isFollowsT("6", "10"));
+			Assert::IsTrue(PKB.isFollowsT("7", "8"));
+			Assert::IsTrue(PKB.isFollowsT("8", "9"));
+			Assert::IsTrue(PKB.isFollowsT("10", "13"));
+			Assert::IsTrue(PKB.isFollowsT("13", "14"));
+			Assert::IsTrue(PKB.isFollowsT("14", "15"));
+			Assert::IsTrue(PKB.isFollowsT("16", "17"));
+			Assert::IsTrue(PKB.isFollowsT("17", "18"));
 
-			Assert::IsTrue(PKB.isFollowsStarRelationship("1", "3"));
-			Assert::IsTrue(PKB.isFollowsStarRelationship("4", "6"));
-			Assert::IsTrue(PKB.isFollowsStarRelationship("7", "9"));
-			Assert::IsTrue(PKB.isFollowsStarRelationship("13", "15"));
-			Assert::IsTrue(PKB.isFollowsStarRelationship("16", "18"));
+			Assert::IsTrue(PKB.isFollowsT("1", "3"));
+			Assert::IsTrue(PKB.isFollowsT("4", "6"));
+			Assert::IsTrue(PKB.isFollowsT("7", "9"));
+			Assert::IsTrue(PKB.isFollowsT("13", "15"));
+			Assert::IsTrue(PKB.isFollowsT("16", "18"));
 		}
 		TEST_METHOD(FollowsGenericBoth)
 		{

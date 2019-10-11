@@ -74,10 +74,6 @@ TABLE PKB::getFollows(STMT_REF s1, STMT_REF s2) {
 	return PKBFollows::getFollows(s1, s2);
 }
 
-bool PKB::isFollowsStarRelationship(STMT_NO followedBy, STMT_NO follow) {
-	return PKBFollows::isFollowsStarRelationship(followedBy, follow);
-}
-
 //Parents
 bool PKB::setParent(STMT_NO parent, STMT_NO child) {
 	return PKBParent::setParent(parent, child);

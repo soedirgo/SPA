@@ -5,7 +5,7 @@
 using namespace std;
 
 TABLE PKBParent::parentTable;
-TABLE PKBParent::parentStarTable;
+TABLE PKBParent::parentTTable;
 
 bool PKBParent::setParent(STMT_NO parent, STMT_NO child) {
 	vector<string> tuple = vector<string>();
@@ -19,7 +19,7 @@ bool PKBParent::setParentStar(STMT_NO parent, STMT_NO child) {
 	vector<string> tuple = vector<string>();
 	tuple.push_back(parent);
 	tuple.push_back(child);
-	parentStarTable.emplace(tuple);
+	parentTTable.emplace(tuple);
 	return true;
 }
 
@@ -67,7 +67,7 @@ bool PKBParent::isParentRelationship(STMT_NO parent, STMT_NO child) {
 
 bool PKBParent::isParentStarRelationship(STMT_NO parent, STMT_NO child) {
 
-	for (auto vectorIter : parentStarTable) {
+	for (auto vectorIter : parentTTable) {
 		if (vectorIter.front() == parent) {
 			if (vectorIter.back() == child) {
 				return true;
@@ -81,31 +81,104 @@ TABLE PKBParent::getParentTable() {
 	return parentTable;
 }
 
-TABLE PKBParent::getAllParentChildStmt(STMT_TYPE type1, STMT_TYPE type2) {
-	return PKBParent::getResultTableGenericBoth(type1, type2, parentTable);
-}
-STMT_LIST PKBParent::getAllParentStmt(STMT_TYPE type1, STMT_NO follows) {
-	return PKBParent::getResultTableGenericLeft(type1, follows, parentTable);
-}
-STMT_LIST PKBParent::getAllChildStmt(STMT_NO followedBy, STMT_TYPE type) {
-	return PKBParent::getResultTableGenericRight(followedBy, type, parentTable);
-}
-TABLE PKBParent::getAllParentChildStarStmt(STMT_TYPE type1, STMT_TYPE type2) {
-	return PKBParent::getResultTableGenericBoth(type1, type2, parentStarTable);
-}
-STMT_LIST PKBParent::getAllParentStarStmt(STMT_TYPE type, STMT_NO follows) {
-	return PKBParent::getResultTableGenericLeft(type, follows, parentStarTable);
-}
-STMT_LIST PKBParent::getAllChildStarStmt(STMT_NO followedBy, STMT_TYPE type) {
-	return PKBParent::getResultTableGenericRight(followedBy, type, parentStarTable);
+bool PKBParent::isParent(STMT_REF s1, STMT_REF s2) {
+	if (s1 == "_" && s2 == "_") {
+		return PKBParent::isLeftGenericRightGeneric(parentTable);
+	}
+	else if (s1 == "_" && isdigit(s2.at(0))) {
+		return PKBParent::isLeftGenericRightFixed(s2, parentTable);
+	}
+	else if (isdigit(s1.at(0)) && s2 == "_") {
+		return PKBParent::isLeftFixedRightGeneric(s1, parentTable);
+	}
+	else if (isdigit(s1.at(0)) && isdigit(s2.at(0))) {
+		return PKBParent::isLeftFixedRightFixed(s1, s2, parentTable);
+	}
+	return false;
 }
 
-TABLE PKBParent::getResultTableGenericBoth(STMT_TYPE type1, STMT_TYPE type2, TABLE tableName) {
-	TABLE resultTable;
-	if (type1 != "_" && type2 != "_" && type1 == type2) {
-		return resultTable;
+bool PKBParent::isParentT(STMT_REF s1, STMT_REF s2) {
+	if (s1 == "_" && s2 == "_") {
+		return PKBParent::isLeftGenericRightGeneric(parentTTable);
 	}
-	if (type1 == "_" && type2 == "_") {
+	else if (s1 == "_" && isdigit(s2.at(0))) {
+		return PKBParent::isLeftGenericRightFixed(s2, parentTTable);
+	}
+	else if (isdigit(s1.at(0)) && s2 == "_") {
+		return PKBParent::isLeftFixedRightGeneric(s1, parentTTable);
+	}
+	else if (isdigit(s1.at(0)) && isdigit(s2.at(0))) {
+		return PKBParent::isLeftFixedRightFixed(s1, s2, parentTTable);
+	}
+	return false;
+}
+
+bool PKBParent::isLeftGenericRightGeneric(TABLE tableName) {
+	return !tableName.empty();
+}
+
+TABLE PKBParent::getParent(STMT_REF s1, STMT_REF s2) {
+	if (s1 == "_") {
+		return PKBParent::getResultGenericLeft("_", s2, parentTable);
+	}
+	else if (isdigit(s1.at(0))) {
+		return PKBParent::getResultGenericRight(s1, s2, parentTable);
+	}
+	else if (s2 == "_") {
+		return PKBParent::getResultGenericRight(s1, "_", parentTable);
+	}
+	else if (isdigit(s2.at(0))) {
+		return PKBParent::getResultGenericLeft(s1, s2, parentTable);
+	}
+	return PKBParent::getResultGenericBoth(s1, s2, parentTable);
+}
+
+TABLE PKBParent::getParentT(STMT_REF s1, STMT_REF s2) {
+	if (s1 == "_") {
+		return PKBParent::getResultGenericLeft("_", s2, parentTTable);
+	}
+	else if (isdigit(s1.at(0))) {
+		return PKBParent::getResultGenericRight(s1, s2, parentTTable);
+	}
+	else if (s2 == "_") {
+		return PKBParent::getResultGenericRight(s1, "_", parentTTable);
+	}
+	else if (isdigit(s2.at(0))) {
+		return PKBParent::getResultGenericLeft(s1, s2, parentTTable);
+	}
+	return PKBParent::getResultGenericBoth(s1, s2, parentTTable);
+}
+
+bool PKBParent::isLeftGenericRightFixed(STMT_NO follows, TABLE tableName) {
+	for (auto vectorIter : tableName) {
+		if (vectorIter.back() == follows) {
+			return true;
+		}
+	}
+	return false;
+}
+bool PKBParent::isLeftFixedRightGeneric(STMT_NO followedBy, TABLE tableName) {
+	for (auto vectorIter : tableName) {
+		if (vectorIter.front() == followedBy) {
+			return true;
+		}
+	}
+	return false;
+}
+bool PKBParent::isLeftFixedRightFixed(STMT_NO followedBy, STMT_NO follows, TABLE tableName) {
+	for (auto vectorIter : tableName) {
+		if (vectorIter.front() == followedBy) {
+			if (vectorIter.back() == follows) {
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+TABLE PKBParent::getResultGenericBoth(STMT_TYPE type1, STMT_TYPE type2, TABLE tableName) {
+	TABLE resultTable;
+	if (type1 == "stmt" && type2 == "stmt") {
 		return tableName;
 	}
 	STMT_LIST list1, list2;
@@ -142,48 +215,77 @@ TABLE PKBParent::getResultTableGenericBoth(STMT_TYPE type1, STMT_TYPE type2, TAB
 	return resultTable;
 }
 
-STMT_LIST PKBParent::getResultTableGenericLeft(STMT_TYPE type, STMT_NO stmtNo, TABLE tableName) {
-	STMT_LIST resultTable;
+TABLE PKBParent::getResultGenericLeft(STMT_TYPE type, STMT_NO stmtNo, TABLE tableName) {
+	TABLE resultTable;
 	STMT_LIST list;
 	STMT_NO s;
-	if (type == "_" || type == "stmt") {
+	if (type == "stmt") {
 		list = PKBStmt::getAllStmt();
 	}
 	else {
 		list = PKBStmt::getAllStmtByType(type);
 	}
-	for (auto iter : list) {
-		s = iter.front();
-		for (auto vectorIter : tableName) {
-			vector<string> tuple = vector<string>();
-			if (vectorIter.front() == s && vectorIter.back() == stmtNo) {
-				tuple.push_back(vectorIter.front());
-				//tuple.push_back(vectorIter.back());
-				resultTable.emplace(tuple);
+	if (type == "_") {
+		for (auto iter : list) {
+			s = iter.front();
+			for (auto vectorIter : tableName) {
+				vector<string> tuple = vector<string>();
+				if (vectorIter.front() == s) {
+					tuple.push_back(vectorIter.front());
+					//tuple.push_back(vectorIter.back());
+					resultTable.emplace(tuple);
+				}
+			}
+		}
+	}
+	else {
+		for (auto iter : list) {
+			s = iter.front();
+			for (auto vectorIter : tableName) {
+				vector<string> tuple = vector<string>();
+				if (vectorIter.front() == s && vectorIter.back() == stmtNo) {
+					tuple.push_back(vectorIter.front());
+					//tuple.push_back(vectorIter.back());
+					resultTable.emplace(tuple);
+				}
 			}
 		}
 	}
 	return resultTable;
 }
 
-STMT_LIST PKBParent::getResultTableGenericRight(STMT_NO stmtNo, STMT_TYPE type, TABLE tableName) {
-	STMT_LIST resultTable;
+TABLE PKBParent::getResultGenericRight(STMT_NO stmtNo, STMT_TYPE type, TABLE tableName) {
+	TABLE resultTable;
 	STMT_LIST list;
 	STMT_NO s;
-	if (type == "_" || type == "stmt") {
+	if (type == "stmt") {
 		list = PKBStmt::getAllStmt();
 	}
 	else {
 		list = PKBStmt::getAllStmtByType(type);
 	}
-	for (auto iter : list) {
-		s = iter.front();
-		for (auto vectorIter : tableName) {
-			vector<string> tuple = vector<string>();
-			if (vectorIter.front() == stmtNo && vectorIter.back() == s) {
-				//tuple.push_back(vectorIter.front());
-				tuple.push_back(vectorIter.back());
-				resultTable.emplace(tuple);
+	if (type == "_") {
+		for (auto iter : list) {
+			s = iter.front();
+			for (auto vectorIter : tableName) {
+				vector<string> tuple = vector<string>();
+				if (vectorIter.back() == s) {
+					tuple.push_back(vectorIter.back());
+					resultTable.emplace(tuple);
+				}
+			}
+		}
+	}
+	else {
+		for (auto iter : list) {
+			s = iter.front();
+			for (auto vectorIter : tableName) {
+				vector<string> tuple = vector<string>();
+				if (vectorIter.front() == stmtNo && vectorIter.back() == s) {
+					//tuple.push_back(vectorIter.front());
+					tuple.push_back(vectorIter.back());
+					resultTable.emplace(tuple);
+				}
 			}
 		}
 	}
@@ -192,6 +294,6 @@ STMT_LIST PKBParent::getResultTableGenericRight(STMT_NO stmtNo, STMT_TYPE type, 
 
 bool PKBParent::clear() {
 	parentTable.clear();
-	parentStarTable.clear();
+	parentTTable.clear();
 	return true;
 }
