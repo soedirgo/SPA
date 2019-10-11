@@ -11,25 +11,36 @@ public:
 	static bool setNextStar(PROG_LINE nextByLine, PROG_LINE nextLine);
 	static LINE_LIST getNext(PROG_LINE nextByLine);
 
-	static bool isNextRelationship(PROG_LINE nextByLine, PROG_LINE nextLine);
-	static bool isNextStarRelationship(PROG_LINE nextByLine, PROG_LINE nextLine);
-
 	static TABLE getNextTable();
 
-	static TABLE getAllNextByLineNextLineStmt();
-	static LINE_LIST getAllNextByLineStmt(PROG_LINE progLine);
-	static LINE_LIST getAllNextLineStmt(PROG_LINE progLine);
-	static TABLE getAllNextByLineNextLineStarStmt();
-	static LINE_LIST getAllNextByLineStarStmt(PROG_LINE progLine);
-	static LINE_LIST getAllNextLineStarStmt(PROG_LINE progLine);
+	//Bool Evaluation
+	static bool isNextAnyAny();
+	static bool isNextAnyIdent(PROG_LINE n2);
+	static bool isNextIdentAny(PROG_LINE n1);
+	static bool isNextIdentIdent(PROG_LINE n1, PROG_LINE n2);
+
+	static bool isNextTAnyAny();
+	static bool isNextTAnyIdent(PROG_LINE n2);
+	static bool isNextTIdentAny(PROG_LINE n1);
+	static bool isNextTIdentIdent(PROG_LINE n1, PROG_LINE n2);
+
+	//Table Evaluation
+	static TABLE getNextAnyEnt();
+	static TABLE getNextIdentEnt(PROG_LINE n1);
+	static TABLE getNextEntAny();
+	static TABLE getNextEntIdent(PROG_LINE n2);
+	static TABLE getNextEntEnt();
+
+	static TABLE getNextTAnyEnt();
+	static TABLE getNextTIdentEnt(PROG_LINE n1);
+	static TABLE getNextTEntAny();
+	static TABLE getNextTEntIdent(PROG_LINE n2);
+	static TABLE getNextTEntEnt();
 
 	// Clear
 	static bool clear();
 
 private:
-	static TABLE getResultGenericBoth(TABLE tableName);
-	static LINE_LIST getResultGenericLeft(PROG_LINE progLine, TABLE tableName);
-	static LINE_LIST getResultGenericRight(PROG_LINE progLine, TABLE tableName);
 	static TABLE nextTable;
-	static TABLE nextStarTable;
+	static TABLE nextTTable;
 };

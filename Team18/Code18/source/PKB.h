@@ -79,36 +79,60 @@ public:
 	//Follow Functions
 	static bool setFollows(STMT_NO followedBy, STMT_NO follow);
 	static bool setFollowsT(STMT_NO followedBy, STMT_NO follow);
-	static bool isFollowsRelationship(STMT_NO followedBy, STMT_NO follow);
-	static bool isFollowsStarRelationship(STMT_NO followedBy, STMT_NO follow);
 
-	static TABLE getAllFollowedByFollowsStmt(STMT_TYPE type1, STMT_TYPE type2);
-	static STMT_LIST getAllFollowedByStmt(STMT_TYPE type, STMT_NO follows);
-	static STMT_LIST getAllFollowsStmt(STMT_NO followedBy, STMT_TYPE type1);
-	static TABLE getAllFollowedByFollowsStarStmt(STMT_TYPE type1, STMT_TYPE type2);
-	static STMT_LIST getAllFollowedByStarStmt(STMT_TYPE type, STMT_NO follows);
-	static STMT_LIST getAllFollowsStarStmt(STMT_NO followedBy, STMT_TYPE type);
+	//Follow Bool Evaluation
+	static bool isFollowsAnyAny();
+	static bool isFollowsAnyIdent(STMT_NO s2);
+	static bool isFollowsIdentAny(STMT_NO s1);
+	static bool isFollowsIdentIdent(STMT_NO s1, STMT_NO s2);
 
-	static bool isFollows(STMT_REF s1, STMT_REF s2);
-	static TABLE getFollows(STMT_REF s1, STMT_REF s2);
+	static bool isFollowsTAnyAny();
+	static bool isFollowsTAnyIdent(STMT_NO s2);
+	static bool isFollowsTIdentAny(STMT_NO s1);
+	static bool isFollowsTIdentIdent(STMT_NO s1, STMT_NO s2);
+
+	//Follow Table Evaluation
+	static TABLE getFollowsAnyEnt(STMT_TYPE s2);
+	static TABLE getFollowsIdentEnt(STMT_NO s1, STMT_TYPE s2);
+	static TABLE getFollowsEntAny(STMT_TYPE s1);
+	static TABLE getFollowsEntIdent(STMT_TYPE s1, STMT_NO s2);
+	static TABLE getFollowsEntEnt(STMT_TYPE s1, STMT_TYPE s2);
+
+	static TABLE getFollowsTAnyEnt(STMT_TYPE s2);
+	static TABLE getFollowsTIdentEnt(STMT_NO s1, STMT_TYPE s2);
+	static TABLE getFollowsTEntAny(STMT_TYPE s1);
+	static TABLE getFollowsTEntIdent(STMT_TYPE s1, STMT_NO s2);
+	static TABLE getFollowsTEntEnt(STMT_TYPE s1, STMT_TYPE s2);
 
 	//Parent Functions
 	static bool setParent(STMT_NO parent, STMT_NO child);
 	static bool setParentT(STMT_NO parent, STMT_NO child);
-	static bool isParentRelationship(STMT_NO parent, STMT_NO child);
-	static bool isParentStarRelationship(STMT_NO parent, STMT_NO child);
 	static bool isParentExist(STMT_NO child);
 	static STMT_NO getParentStmt(STMT_NO child);
 
-	static TABLE getAllParentChildStmt(STMT_TYPE type1, STMT_TYPE type2);
-	static STMT_LIST getAllParentStmt(STMT_TYPE type1, STMT_NO follows);
-	static STMT_LIST getAllChildStmt(STMT_NO followedBy, STMT_TYPE type1);
-	static TABLE getAllParentChildStarStmt(STMT_TYPE type1, STMT_TYPE type2);
-	static STMT_LIST getAllParentStarStmt(STMT_TYPE type1, STMT_NO follows);
-	static STMT_LIST getAllChildStarStmt(STMT_NO followedBy, STMT_TYPE type1);
+	//Parent Bool Evaluation 
+	static bool isParentAnyAny();
+	static bool isParentAnyIdent(STMT_NO s2);
+	static bool isParentIdentAny(STMT_NO s1);
+	static bool isParentIdentIdent(STMT_NO s1, STMT_NO s2);
 
-	static bool isParent(STMT_REF s1, STMT_REF s2);
-	static TABLE getParent(STMT_REF s1, STMT_REF s2);
+	static bool isParentTAnyAny();
+	static bool isParentTAnyIdent(STMT_NO s2);
+	static bool isParentTIdentAny(STMT_NO s1);
+	static bool isParentTIdentIdent(STMT_NO s1, STMT_NO s2);
+	
+	//Parent Table Evaluation
+	static TABLE getParentAnyEnt(STMT_TYPE s2);
+	static TABLE getParentIdentEnt(STMT_NO s1, STMT_TYPE s2);
+	static TABLE getParentEntAny(STMT_TYPE s1);
+	static TABLE getParentEntIdent(STMT_TYPE s1, STMT_NO s2);
+	static TABLE getParentEntEnt(STMT_TYPE s1, STMT_TYPE s2);
+
+	static TABLE getParentTAnyEnt(STMT_TYPE s2);
+	static TABLE getParentTIdentEnt(STMT_NO s1, STMT_TYPE s2);
+	static TABLE getParentTEntAny(STMT_TYPE s1);
+	static TABLE getParentTEntIdent(STMT_TYPE s1, STMT_NO s2);
+	static TABLE getParentTEntEnt(STMT_TYPE s1, STMT_TYPE s2);
 
 	//Modifies Function
 	static bool setModifiesStmt(STMT_NO stmtNo, VAR_NAME varName);
@@ -116,49 +140,68 @@ public:
 	static bool isModifiesStmtRelationship(STMT_NO stmtNo, VAR_NAME varName);
 	static bool isModifiesProcRelationship(PROC_NAME procName, VAR_NAME varName);
 
-	static bool isModifiesS(STMT_REF s1, ENT_REF e2);
-	static bool isModifiesP(ENT_REF e1, ENT_REF e2);
-
 	//Uses Function
 	static bool setUsesS(STMT_NO stmtNo, VAR_NAME varName);
 	static bool setUsesP(PROC_NAME procName, VAR_NAME varName);
 	static bool isUsesStmtRelationship(STMT_NO stmtNo, VAR_NAME varName);
 	static bool isUsesProcRelationship(PROC_NAME procName, VAR_NAME varName);
 
-	static bool isUsesS(STMT_REF s1, ENT_REF e2);
-	static bool isUsesP(ENT_REF e1, ENT_REF e2);
-
 	//Call Function
 	static bool setCallStmt(STMT_NO stmtNo, PROC_NAME procName);
 	static bool setCallProc(PROC_NAME caller, PROC_NAME callee);
 	static bool setCallT(PROC_NAME caller, PROC_NAME callee);
-	static bool isCallRelationship(PROC_NAME caller, PROC_NAME callee);
-	static bool isCallStarRelationship(PROC_NAME caller, PROC_NAME callee);
 
-	static TABLE getAllCallerCalleeProc();
-	static PROC_LIST getAllCallerProc(PROC_NAME procName);
-	static PROC_LIST getAllCalleProc(PROC_NAME procName);
-	static TABLE getAllCallerCalleeStarProc();
-	static PROC_LIST getAllCallerStarProc(PROC_NAME procName);
-	static PROC_LIST getAllCalleStarProc(PROC_NAME procName);
+	//Call Bool Evaluation
+	static bool isCallsAnyAny();
+	static bool isCallsAnyIdent(PROC_NAME p2);
+	static bool isCallsIdentAny(PROC_NAME p1);
+	static bool isCallsIdentIdent(PROC_NAME p1, PROC_NAME p2);
 
-	static bool isCalls(PROC_NAME p1, PROC_NAME p2);
-	static TABLE getCalls(PROC_NAME p1, PROC_NAME p2);
+	static bool isCallsTAnyAny();
+	static bool isCallsTAnyIdent(PROC_NAME p2);
+	static bool isCallsTIdentAny(PROC_NAME p1);
+	static bool isCallsTIdentIdent(PROC_NAME p1, PROC_NAME p2);
+
+	//Call Table Evaluation
+	static TABLE getCallsAnyEnt();
+	static TABLE getCallsIdentEnt(PROC_NAME p1);
+	static TABLE getCallsEntAny();
+	static TABLE getCallsEntIdent(PROC_NAME p2);
+	static TABLE getCallsEntEnt();
+
+	static TABLE getCallsTAnyEnt();
+	static TABLE getCallsTIdentEnt(PROC_NAME p1);
+	static TABLE getCallsTEntAny();
+	static TABLE getCallsTEntIdent(PROC_NAME p2);
+	static TABLE getCallsTEntEnt();
 
 	//Next Function
 	static bool setNext(PROG_LINE n1, PROG_LINE n2);
-	static bool isNextRelationship(PROG_LINE n1, PROG_LINE n2);
-	static bool isNextStarRelationship(PROG_LINE n1, PROG_LINE n2);
 
-	static TABLE getAllNextByLineNextLineStmt();
-	static LINE_LIST getAllNextByLineStmt(PROG_LINE progLine);
-	static LINE_LIST getAllNextLineStmt(PROG_LINE progLine);
-	static TABLE getAllNextByLineNextLineStarStmt();
-	static LINE_LIST getAllNextByLineStarStmt(PROG_LINE progLine);
-	static LINE_LIST getAllNextLineStarStmt(PROG_LINE progLine);
+	//Next Bool Evaluation
+	static bool isNextAnyAny();
+	static bool isNextAnyIdent(PROG_LINE n2);
+	static bool isNextIdentAny(PROG_LINE n1);
+	static bool isNextIdentIdent(PROG_LINE n1, PROG_LINE n2);
 
-	static bool isNext(STMT_REF s1, STMT_REF s2);
-	static TABLE getNext(STMT_REF s1, STMT_REF s2);
+	static bool isNextTAnyAny();
+	static bool isNextTAnyIdent(PROG_LINE n2);
+	static bool isNextTIdentAny(PROG_LINE n1);
+	static bool isNextTIdentIdent(PROG_LINE n1, PROG_LINE n2);
+
+	//Next Table Evaluation
+	static TABLE getNextAnyEnt();
+	static TABLE getNextIdentEnt(PROG_LINE n1);
+	static TABLE getNextEntAny();
+	static TABLE getNextEntIdent(PROG_LINE n2);
+	static TABLE getNextEntEnt();
+
+	static TABLE getNextTAnyEnt();
+	static TABLE getNextTIdentEnt(PROG_LINE n1);
+	static TABLE getNextTEntAny();
+	static TABLE getNextTEntIdent(PROG_LINE n2);
+	static TABLE getNextTEntEnt();
+
 private:
 	static std::unordered_map<int, std::string> assignStmtTable;
 	static std::unordered_map<std::string, std::unordered_set<int>> assignVarTable;

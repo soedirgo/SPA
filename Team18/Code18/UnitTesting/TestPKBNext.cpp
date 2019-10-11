@@ -88,105 +88,106 @@ namespace UnitTesting
 		TEST_METHOD(NextRelationship)
 		{
 			PKBNext PKB;
-			Assert::IsTrue(PKB.isNextRelationship("1", "2"));
-			Assert::IsTrue(PKB.isNextRelationship("2", "3"));
-			Assert::IsTrue(PKB.isNextRelationship("4", "5"));
-			Assert::IsTrue(PKB.isNextRelationship("5", "6"));
-			Assert::IsTrue(PKB.isNextRelationship("6", "7"));
-			Assert::IsTrue(PKB.isNextRelationship("7", "8"));
-			Assert::IsTrue(PKB.isNextRelationship("8", "9"));
-			Assert::IsTrue(PKB.isNextRelationship("9", "6"));
-			Assert::IsTrue(PKB.isNextRelationship("6", "10"));
-			Assert::IsTrue(PKB.isNextRelationship("10", "11"));
-			Assert::IsTrue(PKB.isNextRelationship("10", "12"));
-			Assert::IsTrue(PKB.isNextRelationship("11", "13"));
-			Assert::IsTrue(PKB.isNextRelationship("12", "13"));
-			Assert::IsTrue(PKB.isNextRelationship("13", "14"));
-			Assert::IsTrue(PKB.isNextRelationship("14", "15"));
-			Assert::IsTrue(PKB.isNextRelationship("16", "17"));
-			Assert::IsTrue(PKB.isNextRelationship("17", "18"));
+			Assert::IsTrue(PKB.isNextIdentIdent("1", "2"));
+			Assert::IsTrue(PKB.isNextIdentIdent("2", "3"));
+			Assert::IsTrue(PKB.isNextIdentIdent("4", "5"));
+			Assert::IsTrue(PKB.isNextIdentIdent("5", "6"));
+			Assert::IsTrue(PKB.isNextIdentIdent("6", "7"));
+			Assert::IsTrue(PKB.isNextIdentIdent("7", "8"));
+			Assert::IsTrue(PKB.isNextIdentIdent("8", "9"));
+			Assert::IsTrue(PKB.isNextIdentIdent("9", "6"));
+			Assert::IsTrue(PKB.isNextIdentIdent("6", "10"));
+			Assert::IsTrue(PKB.isNextIdentIdent("10", "11"));
+			Assert::IsTrue(PKB.isNextIdentIdent("10", "12"));
+			Assert::IsTrue(PKB.isNextIdentIdent("11", "13"));
+			Assert::IsTrue(PKB.isNextIdentIdent("12", "13"));
+			Assert::IsTrue(PKB.isNextIdentIdent("13", "14"));
+			Assert::IsTrue(PKB.isNextIdentIdent("14", "15"));
+			Assert::IsTrue(PKB.isNextIdentIdent("16", "17"));
+			Assert::IsTrue(PKB.isNextIdentIdent("17", "18"));
 		}
 		
 		TEST_METHOD(NextStarRelationship)
 		{
 			PKBNext PKB;
-			Assert::IsTrue(PKB.isNextStarRelationship("1", "2"));
-			Assert::IsTrue(PKB.isNextStarRelationship("2", "3"));
-			Assert::IsTrue(PKB.isNextStarRelationship("4", "5"));
-			Assert::IsTrue(PKB.isNextStarRelationship("5", "6"));
-			Assert::IsTrue(PKB.isNextStarRelationship("6", "7"));
-			Assert::IsTrue(PKB.isNextStarRelationship("7", "8"));
-			Assert::IsTrue(PKB.isNextStarRelationship("8", "9"));
-			Assert::IsTrue(PKB.isNextStarRelationship("9", "6"));
-			Assert::IsTrue(PKB.isNextStarRelationship("6", "10"));
-			Assert::IsTrue(PKB.isNextStarRelationship("10", "11"));
-			Assert::IsTrue(PKB.isNextStarRelationship("10", "12"));
-			Assert::IsTrue(PKB.isNextStarRelationship("11", "13"));
-			Assert::IsTrue(PKB.isNextStarRelationship("12", "13"));
-			Assert::IsTrue(PKB.isNextStarRelationship("13", "14"));
-			Assert::IsTrue(PKB.isNextStarRelationship("14", "15"));
-			Assert::IsTrue(PKB.isNextStarRelationship("16", "17"));
-			Assert::IsTrue(PKB.isNextStarRelationship("17", "18"));
+			Assert::IsTrue(PKB.isNextTIdentIdent("1", "2"));
+			Assert::IsTrue(PKB.isNextTIdentIdent("2", "3"));
+			Assert::IsTrue(PKB.isNextTIdentIdent("4", "5"));
+			Assert::IsTrue(PKB.isNextTIdentIdent("5", "6"));
+			Assert::IsTrue(PKB.isNextTIdentIdent("6", "7"));
+			Assert::IsTrue(PKB.isNextTIdentIdent("7", "8"));
+			Assert::IsTrue(PKB.isNextTIdentIdent("8", "9"));
+			Assert::IsTrue(PKB.isNextTIdentIdent("9", "6"));
+			Assert::IsTrue(PKB.isNextTIdentIdent("6", "10"));
+			Assert::IsTrue(PKB.isNextTIdentIdent("10", "11"));
+			Assert::IsTrue(PKB.isNextTIdentIdent("10", "12"));
+			Assert::IsTrue(PKB.isNextTIdentIdent("11", "13"));
+			Assert::IsTrue(PKB.isNextTIdentIdent("12", "13"));
+			Assert::IsTrue(PKB.isNextTIdentIdent("13", "14"));
+			Assert::IsTrue(PKB.isNextTIdentIdent("14", "15"));
+			Assert::IsTrue(PKB.isNextTIdentIdent("16", "17"));
+			Assert::IsTrue(PKB.isNextTIdentIdent("17", "18"));
 
-			Assert::IsTrue(PKB.isNextStarRelationship("1", "3"));
-			Assert::IsTrue(PKB.isNextStarRelationship("4", "6"));
-			Assert::IsTrue(PKB.isNextStarRelationship("4", "7"));
-			Assert::IsTrue(PKB.isNextStarRelationship("4", "8"));
-			Assert::IsTrue(PKB.isNextStarRelationship("4", "9"));
-			Assert::IsTrue(PKB.isNextStarRelationship("4", "10"));
-			Assert::IsTrue(PKB.isNextStarRelationship("4", "11"));
-			Assert::IsTrue(PKB.isNextStarRelationship("4", "12"));
-			Assert::IsTrue(PKB.isNextStarRelationship("4", "13"));
-			Assert::IsTrue(PKB.isNextStarRelationship("4", "14"));
-			Assert::IsTrue(PKB.isNextStarRelationship("5", "7"));
-			Assert::IsTrue(PKB.isNextStarRelationship("5", "8"));
-			Assert::IsTrue(PKB.isNextStarRelationship("5", "9"));
-			Assert::IsTrue(PKB.isNextStarRelationship("5", "10"));
-			Assert::IsTrue(PKB.isNextStarRelationship("5", "11"));
-			Assert::IsTrue(PKB.isNextStarRelationship("5", "12"));
-			Assert::IsTrue(PKB.isNextStarRelationship("5", "13"));
-			Assert::IsTrue(PKB.isNextStarRelationship("5", "14"));
-			Assert::IsTrue(PKB.isNextStarRelationship("5", "15"));
-			Assert::IsTrue(PKB.isNextStarRelationship("6", "8"));
-			Assert::IsTrue(PKB.isNextStarRelationship("6", "9"));
-			Assert::IsTrue(PKB.isNextStarRelationship("6", "10"));
-			Assert::IsTrue(PKB.isNextStarRelationship("6", "11"));
-			Assert::IsTrue(PKB.isNextStarRelationship("6", "12"));
-			Assert::IsTrue(PKB.isNextStarRelationship("6", "13"));
-			Assert::IsTrue(PKB.isNextStarRelationship("6", "14"));
-			Assert::IsTrue(PKB.isNextStarRelationship("6", "15"));		
-			Assert::IsTrue(PKB.isNextStarRelationship("7", "9"));
+			Assert::IsTrue(PKB.isNextTIdentIdent("1", "3"));
+			Assert::IsTrue(PKB.isNextTIdentIdent("4", "6"));
+			Assert::IsTrue(PKB.isNextTIdentIdent("4", "7"));
+			Assert::IsTrue(PKB.isNextTIdentIdent("4", "8"));
+			Assert::IsTrue(PKB.isNextTIdentIdent("4", "9"));
+			Assert::IsTrue(PKB.isNextTIdentIdent("4", "10"));
+			Assert::IsTrue(PKB.isNextTIdentIdent("4", "11"));
+			Assert::IsTrue(PKB.isNextTIdentIdent("4", "12"));
+			Assert::IsTrue(PKB.isNextTIdentIdent("4", "13"));
+			Assert::IsTrue(PKB.isNextTIdentIdent("4", "14"));
+			Assert::IsTrue(PKB.isNextTIdentIdent("5", "7"));
+			Assert::IsTrue(PKB.isNextTIdentIdent("5", "8"));
+			Assert::IsTrue(PKB.isNextTIdentIdent("5", "9"));
+			Assert::IsTrue(PKB.isNextTIdentIdent("5", "10"));
+			Assert::IsTrue(PKB.isNextTIdentIdent("5", "11"));
+			Assert::IsTrue(PKB.isNextTIdentIdent("5", "12"));
+			Assert::IsTrue(PKB.isNextTIdentIdent("5", "13"));
+			Assert::IsTrue(PKB.isNextTIdentIdent("5", "14"));
+			Assert::IsTrue(PKB.isNextTIdentIdent("5", "15"));
+			Assert::IsTrue(PKB.isNextTIdentIdent("6", "8"));
+			Assert::IsTrue(PKB.isNextTIdentIdent("6", "9"));
+			Assert::IsTrue(PKB.isNextTIdentIdent("6", "10"));
+			Assert::IsTrue(PKB.isNextTIdentIdent("6", "11"));
+			Assert::IsTrue(PKB.isNextTIdentIdent("6", "12"));
+			Assert::IsTrue(PKB.isNextTIdentIdent("6", "13"));
+			Assert::IsTrue(PKB.isNextTIdentIdent("6", "14"));
+			Assert::IsTrue(PKB.isNextTIdentIdent("6", "15"));		
+			Assert::IsTrue(PKB.isNextTIdentIdent("7", "9"));
 			
-			Assert::IsTrue(PKB.isNextStarRelationship("7", "6"));
 			/*
-			Assert::IsTrue(PKB.isNextStarRelationship("7", "11"));
-			Assert::IsTrue(PKB.isNextStarRelationship("7", "12"));
-			Assert::IsTrue(PKB.isNextStarRelationship("7", "13"));
-			Assert::IsTrue(PKB.isNextStarRelationship("7", "14"));
-			Assert::IsTrue(PKB.isNextStarRelationship("7", "15"));
-			Assert::IsTrue(PKB.isNextStarRelationship("8", "10"));
-			Assert::IsTrue(PKB.isNextStarRelationship("8", "11"));
-			Assert::IsTrue(PKB.isNextStarRelationship("8", "12"));
-			Assert::IsTrue(PKB.isNextStarRelationship("8", "13"));
-			Assert::IsTrue(PKB.isNextStarRelationship("8", "14"));
-			Assert::IsTrue(PKB.isNextStarRelationship("8", "15"));
-			Assert::IsTrue(PKB.isNextStarRelationship("9", "11"));
-			Assert::IsTrue(PKB.isNextStarRelationship("9", "12"));
-			Assert::IsTrue(PKB.isNextStarRelationship("9", "13"));
-			Assert::IsTrue(PKB.isNextStarRelationship("9", "14"));
-			Assert::IsTrue(PKB.isNextStarRelationship("9", "15"));
+			Assert::IsTrue(PKB.isNextTIdentIdent("7", "6"));
+			
+			Assert::IsTrue(PKB.isNextTIdentIdent("7", "11"));
+			Assert::IsTrue(PKB.isNextTIdentIdent("7", "12"));
+			Assert::IsTrue(PKB.isNextTIdentIdent("7", "13"));
+			Assert::IsTrue(PKB.isNextTIdentIdent("7", "14"));
+			Assert::IsTrue(PKB.isNextTIdentIdent("7", "15"));
+			Assert::IsTrue(PKB.isNextTIdentIdent("8", "10"));
+			Assert::IsTrue(PKB.isNextTIdentIdent("8", "11"));
+			Assert::IsTrue(PKB.isNextTIdentIdent("8", "12"));
+			Assert::IsTrue(PKB.isNextTIdentIdent("8", "13"));
+			Assert::IsTrue(PKB.isNextTIdentIdent("8", "14"));
+			Assert::IsTrue(PKB.isNextTIdentIdent("8", "15"));
+			Assert::IsTrue(PKB.isNextTIdentIdent("9", "11"));
+			Assert::IsTrue(PKB.isNextTIdentIdent("9", "12"));
+			Assert::IsTrue(PKB.isNextTIdentIdent("9", "13"));
+			Assert::IsTrue(PKB.isNextTIdentIdent("9", "14"));
+			Assert::IsTrue(PKB.isNextTIdentIdent("9", "15"));
 			*/
-			Assert::IsTrue(PKB.isNextStarRelationship("10", "12"));
-			Assert::IsTrue(PKB.isNextStarRelationship("10", "13"));
-			Assert::IsTrue(PKB.isNextStarRelationship("10", "14"));
-			Assert::IsTrue(PKB.isNextStarRelationship("10", "15"));
-			Assert::IsTrue(PKB.isNextStarRelationship("11", "13"));
-			Assert::IsTrue(PKB.isNextStarRelationship("11", "14"));
-			Assert::IsTrue(PKB.isNextStarRelationship("11", "15"));
-			Assert::IsTrue(PKB.isNextStarRelationship("12", "14"));
-			Assert::IsTrue(PKB.isNextStarRelationship("12", "15"));
-			Assert::IsTrue(PKB.isNextStarRelationship("13", "15"));
-			Assert::IsTrue(PKB.isNextStarRelationship("16", "18"));
+			Assert::IsTrue(PKB.isNextTIdentIdent("10", "12"));
+			Assert::IsTrue(PKB.isNextTIdentIdent("10", "13"));
+			Assert::IsTrue(PKB.isNextTIdentIdent("10", "14"));
+			Assert::IsTrue(PKB.isNextTIdentIdent("10", "15"));
+			Assert::IsTrue(PKB.isNextTIdentIdent("11", "13"));
+			Assert::IsTrue(PKB.isNextTIdentIdent("11", "14"));
+			Assert::IsTrue(PKB.isNextTIdentIdent("11", "15"));
+			Assert::IsTrue(PKB.isNextTIdentIdent("12", "14"));
+			Assert::IsTrue(PKB.isNextTIdentIdent("12", "15"));
+			Assert::IsTrue(PKB.isNextTIdentIdent("13", "15"));
+			Assert::IsTrue(PKB.isNextTIdentIdent("16", "18"));
 			
 		}
 		
@@ -195,7 +196,7 @@ namespace UnitTesting
 			PKBNext PKB;
 			TABLE actual, expected;
 
-			actual = PKB.getAllNextByLineNextLineStmt();
+			actual = PKB.getNextEntEnt();
 			expected = { {"1","2"},{"2","3"},{"4","5"},{"5","6"},{"6","7"},{"7","8"},{"8","9"},{"9","6"},{"6","10"},{"10","11"},{"10","12"},{"11","13"}
 			,{"12","13"},{"13","14"},{"14","15"},{"16","17"},{"17","18"} };
 			Assert::IsTrue(actual == expected);
@@ -206,7 +207,7 @@ namespace UnitTesting
 			PKBNext PKB;
 			LINE_LIST actual, expected;
 
-			actual = PKB.getAllNextByLineStmt("6");
+			actual = PKB.getNextEntIdent("6");
 			expected = { {"5"},{"9"} };
 			Assert::IsTrue(actual == expected);
 		}
@@ -216,7 +217,7 @@ namespace UnitTesting
 			PKBNext PKB;
 			LINE_LIST actual, expected;
 
-			actual = PKB.getAllNextLineStmt("6");
+			actual = PKB.getNextIdentEnt("6");
 			expected = { {"7"},{"10"} };
 			Assert::IsTrue(actual == expected);
 		}

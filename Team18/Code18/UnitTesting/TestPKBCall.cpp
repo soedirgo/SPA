@@ -73,7 +73,7 @@ namespace UnitTesting
 			Assert::IsTrue(PKB.isCallsTIdentIdent("First", "Third"));
 		}
 
-		TEST_METHOD(CallGenericBoth)
+		TEST_METHOD(CallsEntEnt)
 		{
 			PKBCall PKB;
 			TABLE actual, expected;
@@ -83,7 +83,7 @@ namespace UnitTesting
 			Assert::IsTrue(actual == expected);
 		}
 
-		TEST_METHOD(CallGenericLeft)
+		TEST_METHOD(CallsEntIdent)
 		{
 			PKBCall PKB;
 			PROC_LIST actual, expected;
@@ -95,7 +95,7 @@ namespace UnitTesting
 			expected = { {"First"} };
 			Assert::IsTrue(actual == expected);
 		}
-		TEST_METHOD(CallGenericRight)
+		TEST_METHOD(CallsIdentEnt)
 		{
 			PKBCall PKB;
 			PROC_LIST actual, expected;
@@ -108,7 +108,7 @@ namespace UnitTesting
 			Assert::IsTrue(actual == expected);
 		}
 
-		TEST_METHOD(CallStarGenericBoth)
+		TEST_METHOD(CallsTEntEnt)
 		{
 			PKBCall PKB;
 			TABLE actual, expected;
@@ -118,7 +118,7 @@ namespace UnitTesting
 			Assert::IsTrue(actual == expected);
 		}
 
-		TEST_METHOD(CallStarGenericLeft)
+		TEST_METHOD(CallsTEntIdent)
 		{
 			PKBCall PKB;
 			PROC_LIST actual, expected;
@@ -130,15 +130,15 @@ namespace UnitTesting
 			expected = { {"First"}, {"Second"} };
 			Assert::IsTrue(actual == expected);
 		}
-		TEST_METHOD(CallStarGenericRight)
+		TEST_METHOD(CallsTIdentEnt)
 		{
 			PKBCall PKB;
 			PROC_LIST actual, expected;
 
-			actual = PKB.getCallsIdentEnt("Third");
+			actual = PKB.getCallsTIdentEnt("Third");
 			Assert::IsTrue(actual.size() == 0);
 
-			actual = PKB.getCallsIdentEnt("First");
+			actual = PKB.getCallsTIdentEnt("First");
 			expected = { {"Second"},{"Third"} };
 			Assert::IsTrue(actual == expected);
 		}

@@ -66,6 +66,66 @@ bool PKB::setFollowsT(STMT_NO followedBy, STMT_NO follow) {
 	return PKBFollows::setFollowsStar(followedBy, follow);
 }
 
+//Follow Bool Evaluation
+bool PKB::isFollowsAnyAny() {
+	return PKBFollows::isFollowsAnyAny();
+}
+bool PKB::isFollowsAnyIdent(STMT_NO s2) {
+	return PKBFollows::isFollowsAnyIdent(s2);
+}
+bool PKB::isFollowsIdentAny(STMT_NO s1) {
+	return PKBFollows::isFollowsIdentAny(s1);
+}
+bool PKB::isFollowsIdentIdent(STMT_NO s1, STMT_NO s2) {
+	return PKBFollows::isFollowsIdentIdent(s1, s2);
+}
+
+bool PKB::isFollowsTAnyAny() {
+	return PKBFollows::isFollowsTAnyAny();
+}
+bool PKB::isFollowsTAnyIdent(STMT_NO s2) {
+	return PKBFollows::isFollowsTAnyIdent(s2);
+}
+bool PKB::isFollowsTIdentAny(STMT_NO s1) {
+	return PKBFollows::isFollowsTIdentAny(s1);
+}
+bool PKB::isFollowsTIdentIdent(STMT_NO s1, STMT_NO s2) {
+	return PKBFollows::isFollowsTIdentIdent(s1, s2);
+}
+
+//Follow Table Evaluation
+TABLE PKB::getFollowsAnyEnt(STMT_TYPE s2) {
+	return PKBFollows::getFollowsAnyEnt(s2);
+}
+TABLE PKB::getFollowsIdentEnt(STMT_NO s1, STMT_TYPE s2) {
+	return PKBFollows::getFollowsIdentEnt(s1, s2);
+}
+TABLE PKB::getFollowsEntAny(STMT_TYPE s1) {
+	return PKBFollows::getFollowsEntAny(s1);
+}
+TABLE PKB::getFollowsEntIdent(STMT_TYPE s1, STMT_NO s2) {
+	return PKBFollows::getFollowsEntIdent(s1, s2);
+}
+TABLE PKB::getFollowsEntEnt(STMT_TYPE s1, STMT_TYPE s2) {
+	return PKBFollows::getFollowsEntEnt(s1, s2);
+}
+
+TABLE PKB::getFollowsTAnyEnt(STMT_TYPE s2) {
+	return PKBFollows::getFollowsTAnyEnt(s2);
+}
+TABLE PKB::getFollowsTIdentEnt(STMT_NO s1, STMT_TYPE s2) {
+	return PKBFollows::getFollowsTIdentEnt(s1, s2);
+}
+TABLE PKB::getFollowsTEntAny(STMT_TYPE s1) {
+	return PKBFollows::getFollowsTEntAny(s1);
+}
+TABLE PKB::getFollowsTEntIdent(STMT_TYPE s1, STMT_NO s2) {
+	return PKBFollows::getFollowsTEntIdent(s1, s2);
+}
+TABLE PKB::getFollowsTEntEnt(STMT_TYPE s1, STMT_TYPE s2) {
+	return PKBFollows::getFollowsTEntEnt(s1, s2);
+}
+
 //Parents
 bool PKB::setParent(STMT_NO parent, STMT_NO child) {
 	return PKBParent::setParent(parent, child);
@@ -82,6 +142,66 @@ bool PKB::isParentExist(STMT_NO child) {
 
 STMT_NO PKB::getParentStmt(STMT_NO child) {
 	return PKBParent::getParent(child);
+}
+
+//Parent Evaluation Bool Functions
+bool PKB::isParentAnyAny() { 
+	return PKBParent::isParentAnyAny();
+}
+bool PKB::isParentAnyIdent(STMT_NO s2) {
+	return PKBParent::isParentAnyIdent(s2);
+}
+bool PKB::isParentIdentAny(STMT_NO s1) {
+	return PKBParent::isParentIdentAny(s1);
+}
+bool PKB::isParentIdentIdent(STMT_NO s1, STMT_NO s2) {
+	return PKBParent::isParentIdentIdent(s1, s2);
+}
+
+bool PKB::isParentTAnyAny() {
+	return PKBParent::isParentTAnyAny();
+}
+bool PKB::isParentTAnyIdent(STMT_NO s2) {
+	return PKBParent::isParentTAnyIdent(s2);
+}
+bool PKB::isParentTIdentAny(STMT_NO s1) {
+	return PKBParent::isParentTIdentAny(s1);
+}
+bool PKB::isParentTIdentIdent(STMT_NO s1, STMT_NO s2) {
+	return PKBParent::isParentTIdentIdent(s1, s2);
+}
+
+//Parent Evaluation Table Functions
+TABLE PKB::getParentAnyEnt(STMT_TYPE s2) {
+	return PKBParent::getParentAnyEnt(s2);
+}
+TABLE PKB::getParentIdentEnt(STMT_NO s1, STMT_TYPE s2) {
+	return PKBParent::getParentIdentEnt(s1,s2);
+}
+TABLE PKB::getParentEntAny(STMT_TYPE s1) {
+	return PKBParent::getParentEntAny(s1);
+}
+TABLE PKB::getParentEntIdent(STMT_TYPE s1, STMT_NO s2) {
+	return PKBParent::getParentEntIdent(s1, s2);
+}
+TABLE PKB::getParentEntEnt(STMT_TYPE s1, STMT_TYPE s2) {
+	return PKBParent::getParentEntEnt(s1, s2);
+}
+
+TABLE PKB::getParentTAnyEnt(STMT_TYPE s2) {
+	return PKBParent::getParentTAnyEnt(s2);
+}
+TABLE PKB::getParentTIdentEnt(STMT_NO s1, STMT_TYPE s2) {
+	return PKBParent::getParentTIdentEnt(s1, s2);
+}
+TABLE PKB::getParentTEntAny(STMT_TYPE s1) {
+	return PKBParent::getParentTEntAny(s1);
+}
+TABLE PKB::getParentTEntIdent(STMT_TYPE s1, STMT_NO s2) {
+	return PKBParent::getParentTEntIdent(s1,s2);
+}
+TABLE PKB::getParentTEntEnt(STMT_TYPE s1, STMT_TYPE s2) {
+	return PKBParent::getParentTEntEnt(s1, s2);
 }
 
 
@@ -343,6 +463,66 @@ bool PKB::setCallT(PROC_NAME caller, PROC_NAME callee) {
 	return PKBCall::setCallTProc(caller, callee);
 };
 
+//Call Bool Evaluation
+bool PKB::isCallsAnyAny() {
+	return PKBCall::isCallsAnyAny();
+}
+bool PKB::isCallsAnyIdent(PROC_NAME p2) {
+	return PKBCall::isCallsAnyIdent(p2);
+}
+bool PKB::isCallsIdentAny(PROC_NAME p1) {
+	return PKBCall::isCallsIdentAny(p1);
+}
+bool PKB::isCallsIdentIdent(PROC_NAME p1, PROC_NAME p2) {
+	return PKBCall::isCallsIdentIdent(p1,p2);
+}
+
+bool PKB::isCallsTAnyAny() {
+	return PKBCall::isCallsTAnyAny();
+}
+bool PKB::isCallsTAnyIdent(PROC_NAME p2) {
+	return PKBCall::isCallsTAnyIdent(p2);
+}
+bool PKB::isCallsTIdentAny(PROC_NAME p1) {
+	return PKBCall::isCallsTIdentAny(p1);
+}
+bool PKB::isCallsTIdentIdent(PROC_NAME p1, PROC_NAME p2) {
+	return PKBCall::isCallsTIdentIdent(p1,p2);
+}
+
+//Call Table Evaluation
+TABLE PKB::getCallsAnyEnt() {
+	return PKBCall::getCallsAnyEnt();
+}
+TABLE PKB::getCallsIdentEnt(PROC_NAME p1) {
+	return PKBCall::getCallsIdentEnt(p1);
+}
+TABLE PKB::getCallsEntAny() {
+	return PKBCall::getCallsEntAny();
+}
+TABLE PKB::getCallsEntIdent(PROC_NAME p2) {
+	return PKBCall::getCallsEntIdent(p2);
+}
+TABLE PKB::getCallsEntEnt() {
+	return PKBCall::getCallsEntEnt();
+}
+
+TABLE PKB::getCallsTAnyEnt() {
+	return PKBCall::getCallsTAnyEnt();
+}
+TABLE PKB::getCallsTIdentEnt(PROC_NAME p1) {
+	return PKBCall::getCallsTIdentEnt(p1);
+}
+TABLE PKB::getCallsTEntAny() {
+	return PKBCall::getCallsTEntAny();
+}
+TABLE PKB::getCallsTEntIdent(PROC_NAME p2) {
+	return PKBCall::getCallsTEntIdent(p2);
+}
+TABLE PKB::getCallsTEntEnt() {
+	return PKBCall::getCallsTEntEnt();
+}
+
 ////////////////////////////////////
 // NextTable APIs
 ////////////////////////////////////
@@ -354,12 +534,64 @@ bool PKB::setNext(PROG_LINE n1, PROG_LINE n2) {
 	return PKBNext::setNext(n1, n2);
 };
 
-bool PKB::isNextRelationship(PROG_LINE n1, PROG_LINE n2) {
-	return PKBNext::isNextRelationship(n1, n2);
+//Next Bool Evaluation
+bool PKB::isNextAnyAny() {
+	return PKBNext::isNextAnyAny();
+}
+bool PKB::isNextAnyIdent(PROG_LINE n2) {
+	return PKBNext::isNextAnyIdent(n2);
+}
+bool PKB::isNextIdentAny(PROG_LINE n1) {
+	return PKBNext::isNextIdentAny(n1);
+}
+bool PKB::isNextIdentIdent(PROG_LINE n1, PROG_LINE n2) {
+	return PKBNext::isNextIdentIdent(n1,n2);
 }
 
-bool PKB::isNextStarRelationship(PROG_LINE n1, PROG_LINE n2) {
-	return PKBNext::isNextStarRelationship(n1, n2);
+bool PKB::isNextTAnyAny() {
+	return PKBNext::isNextTAnyAny();
+}
+bool PKB::isNextTAnyIdent(PROG_LINE n2) {
+	return PKBNext::isNextTAnyIdent(n2);
+}
+bool PKB::isNextTIdentAny(PROG_LINE n1) {
+	return PKBNext::isNextTIdentAny(n1);
+}
+bool PKB::isNextTIdentIdent(PROG_LINE n1, PROG_LINE n2) {
+	return PKBNext::isNextTIdentIdent(n1,n2);
+}
+
+//Next Table Evaluation
+TABLE PKB::getNextAnyEnt() {
+	return PKBNext::getNextAnyEnt();
+}
+TABLE PKB::getNextIdentEnt(PROG_LINE n1) {
+	return PKBNext::getNextIdentEnt(n1);
+}
+TABLE PKB::getNextEntAny() {
+	return PKBNext::getNextEntAny();
+}
+TABLE PKB::getNextEntIdent(PROG_LINE n2) {
+	return PKBNext::getNextEntIdent(n2);
+}
+TABLE PKB::getNextEntEnt() {
+	return PKBNext::getNextEntEnt();
+}
+
+TABLE PKB::getNextTAnyEnt() {
+	return PKBNext::getNextTAnyEnt();
+}
+TABLE PKB::getNextTIdentEnt(PROG_LINE n1) {
+	return PKBNext::getNextTIdentEnt(n1);
+}
+TABLE PKB::getNextTEntAny() {
+	return PKBNext::getNextTEntAny();
+}
+TABLE PKB::getNextTEntIdent(PROG_LINE n2) {
+	return PKBNext::getNextTEntIdent(n2);
+}
+TABLE PKB::getNextTEntEnt() {
+	return PKBNext::getNextTEntEnt();
 }
 
 
