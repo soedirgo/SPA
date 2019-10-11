@@ -230,7 +230,7 @@ int Parser::Parse(string filename) {
 			string printArg = parsePrint(line);
 			//Sets stmt information in PKB and then sets modifies variable for that stmt
 			pkb.setStmt(to_string(stmtNo), "print");
-			pkb.setUsesStmt(to_string(stmtNo), printArg);
+			pkb.setUsesS(to_string(stmtNo), printArg);
 			pkb.setVar(printArg);
 			currProc.addUses(printArg);
 

@@ -321,8 +321,8 @@ namespace UnitTesting
 		
 		TEST_METHOD(getAllUsesStmtPair) {
 			PKBUses pkb; 
-			DOUBLE_COL_TABLE result = pkb.getAllUsesStmtPair("if");
-			DOUBLE_COL_TABLE expected =
+			TABLE result = pkb.getAllUsesStmtPair("if");
+			TABLE expected =
 			{ { {"10"} , {"x"} } };
 			Assert::IsTrue(result == expected);
 
@@ -400,7 +400,7 @@ namespace UnitTesting
 
 		TEST_METHOD(getAllUsesProcPair) {
 			PKBUses pkb; 
-			DOUBLE_COL_TABLE expected = 
+			TABLE expected = 
 			{ { {"First"} , {"x"} }
 			, { {"First"} , {"y"} }
 			, { {"First"} , {"z"} } 
@@ -414,7 +414,7 @@ namespace UnitTesting
 			, { {"Third"} , {"z"} }
 			, { {"Third"} , {"v"} } };
 
-			DOUBLE_COL_TABLE result = pkb.getAllUsesProcPair(); 
+			TABLE result = pkb.getAllUsesProcPair(); 
 			Assert::IsTrue(result == expected);
 		}
 

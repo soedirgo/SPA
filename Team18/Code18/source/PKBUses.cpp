@@ -143,8 +143,8 @@ VAR_LIST PKBUses::getUsesVarByStmt(STMT_NO stmtNo) {
 //Uses( if , v), Uses(call , v) , Uses (s,v) 
 //LHS is either a stmt syn or print/if/while/assign/call syn
 //RHS is a var syn
-DOUBLE_COL_TABLE PKBUses::getAllUsesStmtPair(STMT_TYPE type) {
-	DOUBLE_COL_TABLE resultTable;
+TABLE PKBUses::getAllUsesStmtPair(STMT_TYPE type) {
+	TABLE resultTable;
 	if (type == "stmt") {
 		return usesStmtTable; 
 	}
@@ -207,7 +207,7 @@ PROC_LIST PKBUses::getUsesVarByProc(PROC_NAME procName) {
 
 //Uses(p , v) 
 //LHS proc syn, RHS var syn
-DOUBLE_COL_TABLE PKBUses::getAllUsesProcPair() {
-	DOUBLE_COL_TABLE pairResults;
+TABLE PKBUses::getAllUsesProcPair() {
+	TABLE pairResults;
 	return usesProcTable; 
 }
