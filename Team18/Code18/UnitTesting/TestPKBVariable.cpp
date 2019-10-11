@@ -57,10 +57,10 @@ namespace UnitTesting
 
 		}
 
-		TEST_METHOD(getAllVar)
+		TEST_METHOD(getVariables)
 		{
 			PKBVariable PKB;
-			VAR_LIST actual = PKB.getAllVar();
+			VAR_LIST actual = PKB.getVariables();
 			VAR_LIST expected = { {"x"},{"z"},{"i"},{"y"},{"v"} };
 			Assert::IsTrue(actual == expected);
 		}

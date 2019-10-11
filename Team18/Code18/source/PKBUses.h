@@ -28,6 +28,6 @@ public:
 	static bool clear();
 
 private:
-	static std::unordered_set<std::vector<std::string>, VectorDoubleStringHash> usesStmtTable;
-	static std::unordered_set<std::vector<std::string>, VectorDoubleStringHash> usesProcTable;
+	static TABLE usesStmtTable;
+	static TABLE usesProcTable;
 };

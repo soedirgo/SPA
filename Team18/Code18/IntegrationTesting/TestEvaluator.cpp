@@ -37,7 +37,7 @@ namespace IntegrationTesting
 
             pkb.clear();
 
-            pkb.setProc("main");
+            pkb.setProcedure("main");
             
             pkb.setStmt(1, Assign);
             pkb.setAssignStmt(1, "x");
@@ -48,15 +48,15 @@ namespace IntegrationTesting
             pkb.setStmt(2, Assign);
             pkb.setAssignStmt(2, "y");
             pkb.setVar("y");
-            pkb.setUsesStmtRelation(2, "x");
+            pkb.setUsesStmt(2, "x");
             pkb.setModifiesStmt(2, "y");
             pkb.setFollows(1, 2);
             pkb.setFollowsT(1, 2);
 
             pkb.setStmt(3, If);
             //pkb.setIfStmt(3);
-            pkb.setUsesStmtRelation(3, "x");
-            pkb.setUsesStmtRelation(3, "y");
+            pkb.setUsesStmt(3, "x");
+            pkb.setUsesStmt(3, "y");
             pkb.setModifiesStmt(3, "z");
             pkb.setFollows(2, 3);
             pkb.setFollowsT(1, 3);
@@ -79,7 +79,7 @@ namespace IntegrationTesting
 
             pkb.setStmt(6, While);
             //pkb.setWhileStmt(6);
-            pkb.setUsesStmtRelation(6, "x");
+            pkb.setUsesStmt(6, "x");
             pkb.setModifiesStmt(6, "x");
             pkb.setFollows(3, 6);
             pkb.setFollowsT(1, 6);
@@ -94,7 +94,7 @@ namespace IntegrationTesting
 
             pkb.setStmt(8, Print);
             pkb.setPrint(8, "x");
-            pkb.setUsesStmtRelation(8, "x");
+            pkb.setUsesStmt(8, "x");
             pkb.setParent(6, 8);
             pkb.setParentT(6, 8);
             pkb.setFollows(7, 8);

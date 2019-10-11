@@ -1,7 +1,7 @@
 #include "PKBVariable.h"
 using namespace std;
 
-unordered_set<vector<string>, VectorSingleStringHash> PKBVariable::varTable;
+TABLE PKBVariable::varTable;
 
 bool PKBVariable::setVar(VAR_NAME varName) {
 	vector<string> tuple = vector<string>();
@@ -10,7 +10,7 @@ bool PKBVariable::setVar(VAR_NAME varName) {
 	return true;
 }
 
-VAR_LIST PKBVariable::getAllVar() {
+VAR_LIST PKBVariable::getVariables() {
 	return varTable;
 }
 
