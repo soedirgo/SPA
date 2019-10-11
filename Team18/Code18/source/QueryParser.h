@@ -17,7 +17,11 @@ public:
 
 	static std::unordered_map<std::string, std::string> splitVariablesInDeclerations(std::vector<std::string> declerations);
 
-	static std::string splitSelect(std::string statements);
+	static std::string splitSelect(std::string 
+		
+		
+		
+		s);
 
 	static std::vector<std::pair<std::string, std::pair<std::string, std::string>>> splitSuchThat(std::vector<std::string> suchThat);
 

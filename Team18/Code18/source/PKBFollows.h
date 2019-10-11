@@ -14,19 +14,17 @@ public:
 	static bool isFollowsRelationship(STMT_NO followedBy, STMT_NO follows);
 	static bool isFollowsStarRelationship(STMT_NO followedBy, STMT_NO follows);
 
-	static bool isFollows(std::string stmt1, std::string stmt2);
+	static bool isFollows(STMT_REF stmt1, STMT_REF stmt2);
+
 	static bool isFollowsS1GenericS2Generic();
 	static bool isFollowsS1GenericS2StmtNo(STMT_NO follows);
 	static bool isFollowsS1StmtNoS2Generic(STMT_NO followedBy);
 	static bool isFollowsS1StmtNoS2StmtNo(STMT_NO followedBy, STMT_NO follows);
 
-	static STMT_LIST getFollowsS2(STMT_TYPE s2);
-	static STMT_LIST getFollowsS2WithS1StmtNo(STMT_NO s1, STMT_TYPE s2);
-	static STMT_LIST getFollowsS1(STMT_TYPE s1);
-	static STMT_LIST getFollowsS1WithS2StmtNo(STMT_TYPE s1, STMT_NO s2);
-	static TABLE getFollowsS1S2(STMT_TYPE s1, STMT_TYPE s2);
 	static TABLE getFollowsS1S2Same(STMT_TYPE s1, STMT_TYPE s2);
 
+	static TABLE getFollowsResult(STMT_REF s1, STMT_REF s2);
+	static TABLE getFollowsIdent(STMT_TYPE s);
 	/*
 	static TABLE getAllFollowedByFollowsStmt(STMT_TYPE type1, STMT_TYPE type2);
 	static STMT_LIST getAllFollowedByStmt(STMT_TYPE type, STMT_NO follows);

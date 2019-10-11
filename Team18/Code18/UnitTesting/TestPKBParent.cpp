@@ -134,7 +134,7 @@ namespace UnitTesting
 			actual = PKB.getAllParentChildStmt("ASSIGN", "READ");
 			Assert::IsTrue(actual.size() == 0);
 
-			actual = PKB.getAllParentChildStmt("IF", "STATEMENT");
+			actual = PKB.getAllParentChildStmt("IF", "STMT");
 			expected = { {"10","11"},{"10","12"},{"14","15"},{"14","16"} };
 			Assert::IsTrue(actual == expected);
 
@@ -142,7 +142,7 @@ namespace UnitTesting
 			expected = { {"6","7"},{"6","8"},{"6","9"},{"6","10"},{"10","11"},{"10","12"},{"14","15"},{"14","16"} };
 			Assert::IsTrue(actual == expected);
 
-			actual = PKB.getAllParentChildStmt("STATEMENT", "STATEMENT");
+			actual = PKB.getAllParentChildStmt("STMT", "STMT");
 			Assert::IsTrue(actual.size() == 0);
 		}
 
@@ -200,7 +200,7 @@ namespace UnitTesting
 			actual = PKB.getAllParentChildStarStmt("ASSIGN", "READ");
 			Assert::IsTrue(actual.size() == 0);
 
-			actual = PKB.getAllParentChildStarStmt("IF", "STATEMENT");
+			actual = PKB.getAllParentChildStarStmt("IF", "STMT");
 			expected = { {"10","11"},{"10","12"},{"14","15"},{"14","16"} };
 			Assert::IsTrue(actual == expected);
 
@@ -208,7 +208,7 @@ namespace UnitTesting
 			expected = { {"6","7"},{"6","8"},{"6","9"},{"6","10"},{"6","11"},{"6","12"},{"10","11"},{"10","12"},{"14","15"},{"14","16"} };
 			Assert::IsTrue(actual == expected);
 
-			actual = PKB.getAllParentChildStarStmt("STATEMENT", "STATEMENT");
+			actual = PKB.getAllParentChildStarStmt("STMT", "STMT");
 			Assert::IsTrue(actual.size() == 0);
 		}
 
