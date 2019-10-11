@@ -54,8 +54,8 @@ void DesignExtractor::extractFollowsStar()
 
 void DesignExtractor::extractCallStar()
 {
-	TABLE callProcTable = PKBCall::getCallProcTable();
-	for (auto vectorIter : callProcTable) {
+	TABLE callStmtTable = PKBCall::getCallProcTable();
+	for (auto vectorIter : callStmtTable) {
 		PROC_NAME caller = vectorIter.front();
 		PROC_NAME callee = vectorIter.back();
 		PKBCall::setCallTProc(caller, callee);
@@ -104,7 +104,7 @@ void DesignExtractor::recurseNext(PROG_LINE nextByLine, PROG_LINE nextLine, STMT
 	
 	for (auto vectorIter : lineList) {
 		PROG_LINE newNextLine = vectorIter.back();
-		if (PKBNext::isNextStarRelationship(nextByLine, newNextLine)) {
+		if (PKBNext::isNextTIdentIdent(nextByLine, newNextLine)) {
 			STMT_NO follows = PKBFollows::getFollowsStmt(nextByLine);
 			if (follows == "") {
 				return;

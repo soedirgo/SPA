@@ -44,16 +44,16 @@ namespace UnitTesting
 			PKBVariable PKB;
 			PKB.clear();
 
-			PKB.setVar("x");
-			PKB.setVar("z");
-			PKB.setVar("i");
-			PKB.setVar("y");
-			PKB.setVar("v");
+			PKB.setVariable("x");
+			PKB.setVariable("z");
+			PKB.setVariable("i");
+			PKB.setVariable("y");
+			PKB.setVariable("v");
 
 			//Extra insert test
-			PKB.setVar("x");
-			PKB.setVar("y");
-			PKB.setVar("z");
+			PKB.setVariable("x");
+			PKB.setVariable("y");
+			PKB.setVariable("z");
 
 		}
 

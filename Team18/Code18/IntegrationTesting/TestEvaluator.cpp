@@ -41,22 +41,22 @@ namespace IntegrationTesting
             
             pkb.setStmt(1, Assign);
             pkb.setAssignStmt(1, "x");
-            pkb.setVar("x");
+            pkb.setVariable("x");
             pkb.setConstant("1", 1);
             pkb.setModifiesStmt(1, "x");
 
             pkb.setStmt(2, Assign);
             pkb.setAssignStmt(2, "y");
-            pkb.setVar("y");
-            pkb.setUsesStmt(2, "x");
+            pkb.setVariable("y");
+            pkb.setUsesS(2, "x");
             pkb.setModifiesStmt(2, "y");
             pkb.setFollows(1, 2);
             pkb.setFollowsT(1, 2);
 
             pkb.setStmt(3, If);
             //pkb.setIfStmt(3);
-            pkb.setUsesStmt(3, "x");
-            pkb.setUsesStmt(3, "y");
+            pkb.setUsesS(3, "x");
+            pkb.setUsesS(3, "y");
             pkb.setModifiesStmt(3, "z");
             pkb.setFollows(2, 3);
             pkb.setFollowsT(1, 3);
@@ -64,7 +64,7 @@ namespace IntegrationTesting
 
             pkb.setStmt(4, Assign);
             pkb.setAssignStmt(4, "z");
-            pkb.setVar("z");
+            pkb.setVariable("z");
             pkb.setConstant("0", 4);
             pkb.setModifiesStmt(4, "z");
             pkb.setParent(3, 4);
@@ -79,7 +79,7 @@ namespace IntegrationTesting
 
             pkb.setStmt(6, While);
             //pkb.setWhileStmt(6);
-            pkb.setUsesStmt(6, "x");
+            pkb.setUsesS(6, "x");
             pkb.setModifiesStmt(6, "x");
             pkb.setFollows(3, 6);
             pkb.setFollowsT(1, 6);
@@ -94,7 +94,7 @@ namespace IntegrationTesting
 
             pkb.setStmt(8, Print);
             pkb.setPrint(8, "x");
-            pkb.setUsesStmt(8, "x");
+            pkb.setUsesS(8, "x");
             pkb.setParent(6, 8);
             pkb.setParentT(6, 8);
             pkb.setFollows(7, 8);

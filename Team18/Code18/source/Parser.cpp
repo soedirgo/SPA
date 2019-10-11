@@ -62,7 +62,7 @@ int Parser::Parse(string filename) {
 			int prevStmt = results.getPrevWhileStmt();
 
 			for (string var : modifies) {
-				pkb.setVar(var);
+				pkb.setVariable(var);
 				currProc.addModifies(var);
 				pkb.setModifiesStmt(to_string(stmtNo), var);
 			}
@@ -71,9 +71,9 @@ int Parser::Parse(string filename) {
 					pkb.setConstant(var, to_string(stmtNo));
 				}
 				else {
-					pkb.setVar(var);
+					pkb.setVariable(var);
 					currProc.addModifies(var);
-					pkb.setUsesStmt(to_string(stmtNo), var);
+					pkb.setUsesS(to_string(stmtNo), var);
 				}
 			}
 
@@ -111,7 +111,7 @@ int Parser::Parse(string filename) {
 			vector<int> prevStmts = results.getPrevIfStmt();
 
 			for (string var : modifies) {
-				pkb.setVar(var);
+				pkb.setVariable(var);
 				currProc.addModifies(var);
 				pkb.setModifiesStmt(to_string(stmtNo), var);
 			}
@@ -120,9 +120,9 @@ int Parser::Parse(string filename) {
 					pkb.setConstant(var, to_string(stmtNo));
 				}
 				else {
-					pkb.setVar(var);
+					pkb.setVariable(var);
 					currProc.addUses(var);
-					pkb.setUsesStmt(to_string(stmtNo), var);
+					pkb.setUsesS(to_string(stmtNo), var);
 				}
 			}
 
@@ -159,7 +159,7 @@ int Parser::Parse(string filename) {
 			//Splits the assign statement by the = sign and get LHS and RHS
 			int index = assign.find("=");
 			string varMod = assign.substr(0, index);
-			pkb.setVar(varMod);
+			pkb.setVariable(varMod);
 			pkb.setModifiesStmt(to_string(stmtNo), varMod);
 			currProc.addModifies(varMod);
 
@@ -172,9 +172,9 @@ int Parser::Parse(string filename) {
 					pkb.setConstant(var, to_string(stmtNo));
 				}
 				else {
-					pkb.setVar(var);
+					pkb.setVariable(var);
 					currProc.addUses(var);
-					pkb.setUsesStmt(to_string(stmtNo), var);
+					pkb.setUsesS(to_string(stmtNo), var);
 				}
 			}
 
@@ -203,7 +203,7 @@ int Parser::Parse(string filename) {
 			//Sets stmt information in PKB and then sets modifies variable for that stmt
 			pkb.setStmt(to_string(stmtNo), "read");
 			pkb.setModifiesStmt(to_string(stmtNo), readArg);
-			pkb.setVar(readArg);
+			pkb.setVariable(readArg);
 			currProc.addModifies(readArg);
 
 			if (stmtNo != startStmtNo) {
@@ -230,8 +230,8 @@ int Parser::Parse(string filename) {
 			string printArg = parsePrint(line);
 			//Sets stmt information in PKB and then sets modifies variable for that stmt
 			pkb.setStmt(to_string(stmtNo), "print");
-			pkb.setUsesStmt(to_string(stmtNo), printArg);
-			pkb.setVar(printArg);
+			pkb.setUsesS(to_string(stmtNo), printArg);
+			pkb.setVariable(printArg);
 			currProc.addUses(printArg);
 
 			if (stmtNo != startStmtNo) {
@@ -315,10 +315,10 @@ int Parser::Parse(string filename) {
 					}
 					for (string var : proc.getUses()) {
 						int currStmtNo = stmtNo;
-						pkb.setUsesStmt(to_string(stmtNo), var);
+						pkb.setUsesS(to_string(stmtNo), var);
 						while (PKB::isParentExist(to_string(currStmtNo))) {
 							currStmtNo = stoi(PKB::getParentStmt(to_string(currStmtNo)));
-							pkb.setUsesStmt(to_string(currStmtNo), var);
+							pkb.setUsesS(to_string(currStmtNo), var);
 						}
 					}
 				}
@@ -500,7 +500,7 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 			vector<string> uses = results.getUses();
 			int stmt = results.getPrevWhileStmt();
 			for (string var : modifies) {
-				pkb.setVar(var);
+				pkb.setVariable(var);
 				pkb.setModifiesStmt(to_string(currStmtNo), var);
 				result.addModifies(var);
 				currProc.addModifies(var);
@@ -511,8 +511,8 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 					result.addUses(var);
 				}
 				else {
-					pkb.setVar(var);
-					pkb.setUsesStmt(to_string(currStmtNo), var);
+					pkb.setVariable(var);
+					pkb.setUsesS(to_string(currStmtNo), var);
 					result.addUses(var);
 					currProc.addUses(var);
 				}
@@ -588,7 +588,7 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 			vector<string> uses = results.getUses();
 			vector<int> stmt = results.getPrevIfStmt();
 			for (string var : modifies) {
-				pkb.setVar(var);
+				pkb.setVariable(var);
 				pkb.setModifiesStmt(to_string(currStmtNo), var);
 				result.addModifies(var);
 				currProc.addModifies(var);
@@ -599,8 +599,8 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 					result.addUses(var);
 				}
 				else {
-					pkb.setVar(var);
-					pkb.setUsesStmt(to_string(currStmtNo), var);
+					pkb.setVariable(var);
+					pkb.setUsesS(to_string(currStmtNo), var);
 					result.addUses(var);
 					currProc.addUses(var);
 				}
@@ -675,7 +675,7 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 			//Splits the assign statement by the = sign and get LHS and RHS
 			int index = assign.find("=");
 			string varMod = assign.substr(0, index);
-			pkb.setVar(varMod);
+			pkb.setVariable(varMod);
 			pkb.setModifiesStmt(to_string(currStmtNo), varMod);
 			result.addModifies(varMod);
 			currProc.addModifies(varMod);
@@ -691,8 +691,8 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 					result.addUses(var);
 				}
 				else {
-					pkb.setVar(var);
-					pkb.setUsesStmt(to_string(currStmtNo), var);
+					pkb.setVariable(var);
+					pkb.setUsesS(to_string(currStmtNo), var);
 					result.addUses(var);
 					currProc.addUses(var);
 				}
@@ -759,7 +759,7 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 			pkb.setParent(to_string(startStmtNo), to_string(currStmtNo));
 
 			pkb.setModifiesStmt(to_string(currStmtNo), readArg);
-			pkb.setVar(readArg);
+			pkb.setVariable(readArg);
 			result.addModifies(readArg);
 			currProc.addModifies(readArg);
 
@@ -823,8 +823,8 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 			pkb.setStmt(to_string(currStmtNo), "print");
 			pkb.setParent(to_string(startStmtNo), to_string(currStmtNo));
 
-			pkb.setUsesStmt(to_string(currStmtNo), printArg);
-			pkb.setVar(printArg);
+			pkb.setUsesS(to_string(currStmtNo), printArg);
+			pkb.setVariable(printArg);
 			result.addUses(printArg);
 			currProc.addUses(printArg);
 
@@ -1020,7 +1020,7 @@ NestedResult Parser::parseIfNestedInThen(string ifLine, int parentStmtNo) {
 			vector<string> uses = results.getUses();
 			int stmt = results.getPrevWhileStmt();
 			for (string var : modifies) {
-				pkb.setVar(var);
+				pkb.setVariable(var);
 				pkb.setModifiesStmt(to_string(currStmtNo), var);
 				result.addModifies(var);
 				currProc.addModifies(var);
@@ -1031,8 +1031,8 @@ NestedResult Parser::parseIfNestedInThen(string ifLine, int parentStmtNo) {
 					result.addUses(var);
 				}
 				else {
-					pkb.setVar(var);
-					pkb.setUsesStmt(to_string(currStmtNo), var);
+					pkb.setVariable(var);
+					pkb.setUsesS(to_string(currStmtNo), var);
 					result.addUses(var);
 					currProc.addUses(var);
 				}
@@ -1108,7 +1108,7 @@ NestedResult Parser::parseIfNestedInThen(string ifLine, int parentStmtNo) {
 			vector<string> uses = results.getUses();
 			vector<int> stmt = results.getPrevIfStmt();
 			for (string var : modifies) {
-				pkb.setVar(var);
+				pkb.setVariable(var);
 				pkb.setModifiesStmt(to_string(currStmtNo), var);
 				result.addModifies(var);
 				currProc.addModifies(var);
@@ -1119,8 +1119,8 @@ NestedResult Parser::parseIfNestedInThen(string ifLine, int parentStmtNo) {
 					result.addUses(var);
 				}
 				else {
-					pkb.setVar(var);
-					pkb.setUsesStmt(to_string(currStmtNo), var);
+					pkb.setVariable(var);
+					pkb.setUsesS(to_string(currStmtNo), var);
 					result.addUses(var);
 					currProc.addUses(var);
 				}
@@ -1195,7 +1195,7 @@ NestedResult Parser::parseIfNestedInThen(string ifLine, int parentStmtNo) {
 			//Splits the assign statement by the = sign and get LHS and RHS
 			int index = assign.find("=");
 			string varMod = assign.substr(0, index);
-			pkb.setVar(varMod);
+			pkb.setVariable(varMod);
 			pkb.setModifiesStmt(to_string(currStmtNo), varMod);
 			result.addModifies(varMod);
 			currProc.addModifies(varMod);
@@ -1211,8 +1211,8 @@ NestedResult Parser::parseIfNestedInThen(string ifLine, int parentStmtNo) {
 					result.addUses(var);
 				}
 				else {
-					pkb.setVar(var);
-					pkb.setUsesStmt(to_string(currStmtNo), var);
+					pkb.setVariable(var);
+					pkb.setUsesS(to_string(currStmtNo), var);
 					result.addUses(var);
 					currProc.addUses(var);
 				}
@@ -1280,7 +1280,7 @@ NestedResult Parser::parseIfNestedInThen(string ifLine, int parentStmtNo) {
 			pkb.setParent(to_string(startStmtNo), to_string(currStmtNo));
 
 			pkb.setModifiesStmt(to_string(currStmtNo), readArg);
-			pkb.setVar(readArg);
+			pkb.setVariable(readArg);
 			result.addModifies(readArg);
 			currProc.addModifies(readArg);
 
@@ -1344,8 +1344,8 @@ NestedResult Parser::parseIfNestedInThen(string ifLine, int parentStmtNo) {
 			pkb.setStmt(to_string(currStmtNo), "print");
 			pkb.setParent(to_string(startStmtNo), to_string(currStmtNo));
 
-			pkb.setUsesStmt(to_string(currStmtNo), printArg);
-			pkb.setVar(printArg);
+			pkb.setUsesS(to_string(currStmtNo), printArg);
+			pkb.setVariable(printArg);
 			result.addUses(printArg);
 			currProc.addUses(printArg);
 
@@ -1530,7 +1530,7 @@ NestedResult Parser::parseWhileNestedInThen(string whileLine, int parentStmtNo) 
 			vector<string> uses = results.getUses();
 			int stmt = results.getPrevWhileStmt();
 			for (string var : modifies) {
-				pkb.setVar(var);
+				pkb.setVariable(var);
 				pkb.setModifiesStmt(to_string(currStmtNo), var);
 				result.addModifies(var);
 				currProc.addModifies(var);
@@ -1541,8 +1541,8 @@ NestedResult Parser::parseWhileNestedInThen(string whileLine, int parentStmtNo) 
 					result.addUses(var);
 				}
 				else {
-					pkb.setVar(var);
-					pkb.setUsesStmt(to_string(currStmtNo), var);
+					pkb.setVariable(var);
+					pkb.setUsesS(to_string(currStmtNo), var);
 					result.addUses(var);
 					currProc.addUses(var);
 				}
@@ -1586,7 +1586,7 @@ NestedResult Parser::parseWhileNestedInThen(string whileLine, int parentStmtNo) 
 			vector<string> uses = results.getUses();
 			vector<int> stmt = results.getPrevIfStmt();
 			for (string var : modifies) {
-				pkb.setVar(var);
+				pkb.setVariable(var);
 				pkb.setModifiesStmt(to_string(currStmtNo), var);
 				result.addModifies(var);
 				currProc.addModifies(var);
@@ -1597,8 +1597,8 @@ NestedResult Parser::parseWhileNestedInThen(string whileLine, int parentStmtNo) 
 					result.addUses(var);
 				}
 				else {
-					pkb.setVar(var);
-					pkb.setUsesStmt(to_string(currStmtNo), var);
+					pkb.setVariable(var);
+					pkb.setUsesS(to_string(currStmtNo), var);
 					result.addUses(var);
 					currProc.addUses(var);
 				}
@@ -1647,7 +1647,7 @@ NestedResult Parser::parseWhileNestedInThen(string whileLine, int parentStmtNo) 
 			//Splits the assign statement by the = sign and get LHS and RHS
 			int index = assign.find("=");
 			string varMod = assign.substr(0, index);
-			pkb.setVar(varMod);
+			pkb.setVariable(varMod);
 			pkb.setModifiesStmt(to_string(currStmtNo), varMod);
 			result.addModifies(varMod);
 			currProc.addModifies(varMod);
@@ -1663,8 +1663,8 @@ NestedResult Parser::parseWhileNestedInThen(string whileLine, int parentStmtNo) 
 					result.addUses(var);
 				}
 				else {
-					pkb.setVar(var);
-					pkb.setUsesStmt(to_string(currStmtNo), var);
+					pkb.setVariable(var);
+					pkb.setUsesS(to_string(currStmtNo), var);
 					result.addUses(var);
 					currProc.addUses(var);
 				}
@@ -1705,7 +1705,7 @@ NestedResult Parser::parseWhileNestedInThen(string whileLine, int parentStmtNo) 
 			pkb.setParent(to_string(startStmtNo), to_string(currStmtNo));
 
 			pkb.setModifiesStmt(to_string(currStmtNo), readArg);
-			pkb.setVar(readArg);
+			pkb.setVariable(readArg);
 			result.addModifies(readArg);
 			currProc.addModifies(readArg);
 
@@ -1743,8 +1743,8 @@ NestedResult Parser::parseWhileNestedInThen(string whileLine, int parentStmtNo) 
 			pkb.setStmt(to_string(currStmtNo), "print");
 			pkb.setParent(to_string(startStmtNo), to_string(currStmtNo));
 
-			pkb.setUsesStmt(to_string(currStmtNo), printArg);
-			pkb.setVar(printArg);
+			pkb.setUsesS(to_string(currStmtNo), printArg);
+			pkb.setVariable(printArg);
 			result.addUses(printArg);
 			currProc.addUses(printArg);
 
@@ -1859,7 +1859,7 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 			vector<string> uses = results.getUses();
 			int stmt = results.getPrevWhileStmt();
 			for (string var : modifies) {
-				pkb.setVar(var);
+				pkb.setVariable(var);
 				pkb.setModifiesStmt(to_string(currStmtNo), var);
 				result.addModifies(var);
 				currProc.addModifies(var);
@@ -1870,8 +1870,8 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 					result.addUses(var);
 				}
 				else {
-					pkb.setVar(var);
-					pkb.setUsesStmt(to_string(currStmtNo), var);
+					pkb.setVariable(var);
+					pkb.setUsesS(to_string(currStmtNo), var);
 					result.addUses(var);
 					currProc.addUses(var);
 				}
@@ -1915,7 +1915,7 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 			vector<string> uses = results.getUses();
 			vector<int> stmt = results.getPrevIfStmt();
 			for (string var : modifies) {
-				pkb.setVar(var);
+				pkb.setVariable(var);
 				pkb.setModifiesStmt(to_string(currStmtNo), var);
 				result.addModifies(var);
 				currProc.addModifies(var);
@@ -1926,8 +1926,8 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 					result.addUses(var);
 				}
 				else {
-					pkb.setVar(var);
-					pkb.setUsesStmt(to_string(currStmtNo), var);
+					pkb.setVariable(var);
+					pkb.setUsesS(to_string(currStmtNo), var);
 					result.addUses(var);
 					currProc.addUses(var);
 				}
@@ -1976,7 +1976,7 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 			//Splits the assign statement by the = sign and get LHS and RHS
 			int index = assign.find("=");
 			string varMod = assign.substr(0, index);
-			pkb.setVar(varMod);
+			pkb.setVariable(varMod);
 			pkb.setModifiesStmt(to_string(currStmtNo), varMod);
 			result.addModifies(varMod);
 			currProc.addModifies(varMod);
@@ -1992,8 +1992,8 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 					result.addUses(var);
 				}
 				else {
-					pkb.setVar(var);
-					pkb.setUsesStmt(to_string(currStmtNo), var);
+					pkb.setVariable(var);
+					pkb.setUsesS(to_string(currStmtNo), var);
 					result.addUses(var);
 					currProc.addUses(var);
 				}
@@ -2034,7 +2034,7 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 			pkb.setParent(to_string(startStmtNo), to_string(currStmtNo));
 
 			pkb.setModifiesStmt(to_string(currStmtNo), readArg);
-			pkb.setVar(readArg);
+			pkb.setVariable(readArg);
 			result.addModifies(readArg);
 			currProc.addModifies(readArg);
 
@@ -2072,8 +2072,8 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 			pkb.setStmt(to_string(currStmtNo), "print");
 			pkb.setParent(to_string(startStmtNo), to_string(currStmtNo));
 
-			pkb.setUsesStmt(to_string(currStmtNo), printArg);
-			pkb.setVar(printArg);
+			pkb.setUsesS(to_string(currStmtNo), printArg);
+			pkb.setVariable(printArg);
 			result.addUses(printArg);
 			currProc.addUses(printArg);
 

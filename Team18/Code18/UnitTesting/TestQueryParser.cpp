@@ -41,13 +41,13 @@ namespace UnitTesting
 
             pkb.setStmt(1, Assign);
             pkb.setAssignStmt(1, "x");
-            pkb.setVar("x");
+            pkb.setVariable("x");
             pkb.setConstant("1", 1);
             //pkb.setModifiesVarByStmt(1, "x");
 
             pkb.setStmt(2, Assign);
             pkb.setAssignStmt(2, "y");
-            pkb.setVar("y");
+            pkb.setVariable("y");
             pkb.setUsesVarByStmt(2, "x");
             //pkb.setModifiesVarByStmt(2, "y");
             pkb.setFollows(1, 2);
@@ -64,7 +64,7 @@ namespace UnitTesting
 
             pkb.setStmt(4, Assign);
             pkb.setAssignStmt(4, "z");
-            pkb.setVar("z");
+            pkb.setVariable("z");
             pkb.setConstant("0", 4);
             //pkb.setModifiesVarByStmt(4, "z");
             pkb.setParent(3, 4);
@@ -101,8 +101,8 @@ namespace UnitTesting
 
 			pkb.setStmt(9, Assign);
 			pkb.setAssignStmt(9, "x");
-			pkb.setVar("x");
-			pkb.setUsesStmt(9, "x");
+			pkb.setVariable("x");
+			pkb.setUsesS(9, "x");
 			pkb.setModifiesStmt(9, "x");
 			pkb.setFollows(8, 9);
 			pkb.setFollowsT(8, 9);

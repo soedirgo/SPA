@@ -5,7 +5,7 @@
 using namespace std;
 
 TABLE PKBNext::nextTable;
-TABLE PKBNext::nextStarTable;
+TABLE PKBNext::nextTTable;
 
 bool PKBNext::setNext(PROG_LINE nextByLine, PROG_LINE nextLine) {
 	vector<string> tuple = vector<string>();
@@ -19,7 +19,7 @@ bool PKBNext::setNextStar(PROG_LINE nextByLine, PROG_LINE nextLine) {
 	vector<string> tuple = vector<string>();
 	tuple.push_back(nextByLine);
 	tuple.push_back(nextLine);
-	nextStarTable.emplace(tuple);
+	nextTTable.emplace(tuple);
 	return true;
 }
 
@@ -35,98 +35,226 @@ LINE_LIST PKBNext::getNext(PROG_LINE nextByLine) {
 	return list;
 }
 
-bool PKBNext::isNextRelationship(PROG_LINE nextByLine, PROG_LINE nextLine) {
-
-	for (auto vectorIter : nextTable) {
-		if (vectorIter.front() == nextByLine) {
-			if (vectorIter.back() == nextLine) {
-				return true;
-			}
-		}
-	}
-	return false;
-}
-
-bool PKBNext::isNextStarRelationship(PROG_LINE nextByLine, PROG_LINE nextLine) {
-
-	for (auto vectorIter : nextStarTable) {
-		if (vectorIter.front() == nextByLine) {
-			if (vectorIter.back() == nextLine) {
-				return true;
-			}
-		}
-	}
-	return false;
-}
-
 TABLE PKBNext::getNextTable() {
 	return nextTable;
 }
 
-TABLE PKBNext::getAllNextByLineNextLineStmt() {
-	return PKBNext::getResultTableGenericBoth(nextTable);
+bool PKBNext::isNextAnyAny() {
+	return !nextTable.empty();
 }
-LINE_LIST PKBNext::getAllNextByLineStmt(PROG_LINE progLine) {
-	return PKBNext::getResultTableGenericLeft(progLine, nextTable);
+bool PKBNext::isNextAnyIdent(PROG_LINE nextLine) {
+	for (auto vectorIter : nextTable) {
+		if (vectorIter.back() == nextLine) {
+			return true;
+		}
+	}
+	return false;
 }
-LINE_LIST PKBNext::getAllNextLineStmt(PROG_LINE progLine) {
-	return PKBNext::getResultTableGenericRight(progLine, nextTable);
+bool PKBNext::isNextIdentAny(PROG_LINE currentLine) {
+	for (auto vectorIter : nextTable) {
+		if (vectorIter.front() == currentLine) {
+			return true;
+		}
+	}
+	return false;
 }
-TABLE PKBNext::getAllNextByLineNextLineStarStmt() {
-	return PKBNext::getResultTableGenericBoth(nextStarTable);
+bool PKBNext::isNextIdentIdent(PROG_LINE currentLine, PROG_LINE nextLine) {
+	for (auto vectorIter : nextTable) {
+		if (vectorIter.front() == currentLine) {
+			if (vectorIter.back() == nextLine) {
+				return true;
+			}
+		}
+	}
+	return false;
 }
-LINE_LIST PKBNext::getAllNextByLineStarStmt(PROG_LINE progLine) {
-	return PKBNext::getResultTableGenericLeft(progLine, nextStarTable);
+
+bool PKBNext::isNextTAnyAny() {
+	return !nextTTable.empty();
 }
-LINE_LIST PKBNext::getAllNextLineStarStmt(PROG_LINE progLine) {
-	return PKBNext::getResultTableGenericRight(progLine, nextStarTable);
+bool PKBNext::isNextTAnyIdent(PROG_LINE nextLine) {
+	for (auto vectorIter : nextTTable) {
+		if (vectorIter.back() == nextLine) {
+			return true;
+		}
+	}
+	return false;
+}
+bool PKBNext::isNextTIdentAny(PROG_LINE currentLine) {
+	for (auto vectorIter : nextTTable) {
+		if (vectorIter.front() == currentLine) {
+			return true;
+		}
+	}
+	return false;
+}
+bool PKBNext::isNextTIdentIdent(PROG_LINE currentLine, PROG_LINE nextLine) {
+	for (auto vectorIter : nextTTable) {
+		if (vectorIter.front() == currentLine) {
+			if (vectorIter.back() == nextLine) {
+				return true;
+			}
+		}
+	}
+	return false;
 }
 
 bool PKBNext::clear() {
 	nextTable.clear();
-	nextStarTable.clear();
+	nextTTable.clear();
 	return true;
 }
 
-TABLE PKBNext::getResultTableGenericBoth(TABLE tableName) {
-	return tableName;
-}
-
-LINE_LIST PKBNext::getResultTableGenericLeft(PROG_LINE progLine, TABLE tableName) {
-	LINE_LIST resultTable;
+//NEW EVALUATION API
+TABLE PKBNext::getNextAnyEnt() {
+	PROC_LIST resultTable;
 	LINE_LIST list;
 	PROG_LINE n;
 	list = PKBStmt::getAllStmt();
 	for (auto iter : list) {
 		n = iter.front();
-		for (auto vectorIter : tableName) {
+		for (auto vectorIter : nextTable) {
 			vector<string> tuple = vector<string>();
-			if (vectorIter.front() == n && vectorIter.back() == progLine) {
-				tuple.push_back(vectorIter.front());
-				//tuple.push_back(vectorIter.back());
-				resultTable.emplace(tuple);
-			}
-		}
-	}
-	return resultTable;
-}
-
-LINE_LIST PKBNext::getResultTableGenericRight(PROG_LINE progLine, TABLE tableName) {
-	LINE_LIST resultTable;
-	LINE_LIST list;
-	PROG_LINE n;
-	list = PKBStmt::getAllStmt();
-	for (auto iter : list) {
-		n = iter.front();
-		for (auto vectorIter : tableName) {
-			vector<string> tuple = vector<string>();
-			if (vectorIter.front() == progLine && vectorIter.back() == n) {
-				//tuple.push_back(vectorIter.front());
+			if (vectorIter.back() == n) {
 				tuple.push_back(vectorIter.back());
 				resultTable.emplace(tuple);
 			}
 		}
 	}
 	return resultTable;
+}
+
+TABLE PKBNext::getNextEntAny() {
+	PROC_LIST resultTable;
+	LINE_LIST list;
+	PROG_LINE n;
+	list = PKBStmt::getAllStmt();
+	for (auto iter : list) {
+		n = iter.front();
+		for (auto vectorIter : nextTable) {
+			vector<string> tuple = vector<string>();
+			if (vectorIter.front() == n) {
+				tuple.push_back(vectorIter.front());
+				resultTable.emplace(tuple);
+			}
+		}
+	}
+	return resultTable;
+}
+
+TABLE PKBNext::getNextIdentEnt(PROG_LINE progLine) {
+	PROC_LIST resultTable;
+	LINE_LIST list;
+	PROG_LINE n;
+	list = PKBStmt::getAllStmt();
+	for (auto iter : list) {
+		n = iter.front();
+		for (auto vectorIter : nextTable) {
+			vector<string> tuple = vector<string>();
+			if (vectorIter.front() == progLine && vectorIter.back() == n) {
+				tuple.push_back(vectorIter.back());
+				resultTable.emplace(tuple);
+			}
+		}
+	}
+	return resultTable;
+}
+
+TABLE PKBNext::getNextEntIdent(PROG_LINE progLine) {
+	PROC_LIST resultTable;
+	LINE_LIST list;
+	PROG_LINE n;
+	list = PKBStmt::getAllStmt();
+	for (auto iter : list) {
+		n = iter.front();
+		for (auto vectorIter : nextTable) {
+			vector<string> tuple = vector<string>();
+			if (vectorIter.front() == n && vectorIter.back() == progLine) {
+				tuple.push_back(vectorIter.front());
+				resultTable.emplace(tuple);
+			}
+		}
+	}
+	return resultTable;
+}
+
+TABLE PKBNext::getNextEntEnt() {
+	return nextTable;
+}
+
+TABLE PKBNext::getNextTAnyEnt() {
+	PROC_LIST resultTable;
+	LINE_LIST list;
+	PROG_LINE n;
+	list = PKBStmt::getAllStmt();
+	for (auto iter : list) {
+		n = iter.front();
+		for (auto vectorIter : nextTTable) {
+			vector<string> tuple = vector<string>();
+			if (vectorIter.back() == n) {
+				tuple.push_back(vectorIter.back());
+				resultTable.emplace(tuple);
+			}
+		}
+	}
+	return resultTable;
+}
+
+TABLE PKBNext::getNextTEntAny() {
+	PROC_LIST resultTable;
+	LINE_LIST list;
+	PROG_LINE n;
+	list = PKBStmt::getAllStmt();
+	for (auto iter : list) {
+		n = iter.front();
+		for (auto vectorIter : nextTTable) {
+			vector<string> tuple = vector<string>();
+			if (vectorIter.front() == n) {
+				tuple.push_back(vectorIter.front());
+				resultTable.emplace(tuple);
+			}
+		}
+	}
+	return resultTable;
+}
+
+TABLE PKBNext::getNextTIdentEnt(PROG_LINE progLine) {
+	PROC_LIST resultTable;
+	LINE_LIST list;
+	PROG_LINE n;
+	list = PKBStmt::getAllStmt();
+	for (auto iter : list) {
+		n = iter.front();
+		for (auto vectorIter : nextTTable) {
+			vector<string> tuple = vector<string>();
+			if (vectorIter.front() == progLine && vectorIter.back() == n) {
+				tuple.push_back(vectorIter.back());
+				resultTable.emplace(tuple);
+			}
+		}
+	}
+	return resultTable;
+}
+
+TABLE PKBNext::getNextTEntIdent(PROG_LINE progLine) {
+	PROC_LIST resultTable;
+	LINE_LIST list;
+	PROG_LINE n;
+	list = PKBStmt::getAllStmt();
+	for (auto iter : list) {
+		n = iter.front();
+		for (auto vectorIter : nextTTable) {
+			vector<string> tuple = vector<string>();
+			if (vectorIter.front() == n && vectorIter.back() == progLine) {
+				tuple.push_back(vectorIter.front());
+				resultTable.emplace(tuple);
+			}
+		}
+	}
+	return resultTable;
+}
+
+TABLE PKBNext::getNextTEntEnt() {
+	return nextTTable;
 }
 

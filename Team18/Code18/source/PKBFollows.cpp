@@ -4,7 +4,7 @@
 using namespace std;
 
 TABLE PKBFollows::followsTable;
-TABLE PKBFollows::followsStarTable;
+TABLE PKBFollows::followsTTable;
 
 bool PKBFollows::setFollows(STMT_NO followedBy, STMT_NO follows) {
 	vector<string> tuple = vector<string>();
@@ -18,7 +18,7 @@ bool PKBFollows::setFollowsStar(STMT_NO followedBy, STMT_NO follows) {
 	vector<string> tuple = vector<string>();
 	tuple.push_back(followedBy);
 	tuple.push_back(follows);
-	followsStarTable.emplace(tuple);
+	followsTTable.emplace(tuple);
 	return true;
 }
 
@@ -31,6 +31,7 @@ STMT_NO PKBFollows::getFollowsStmt(STMT_NO followedBy) {
 	return "";
 }
 
+/*
 bool PKBFollows::isFollowsRelationship(STMT_NO followedBy, STMT_NO follows) {
 
 	for (auto vectorIter : followsTable) {
@@ -45,7 +46,42 @@ bool PKBFollows::isFollowsRelationship(STMT_NO followedBy, STMT_NO follows) {
 
 bool PKBFollows::isFollowsStarRelationship(STMT_NO followedBy, STMT_NO follows) {
 
-	for (auto vectorIter : followsStarTable) {
+	for (auto vectorIter : followsTTable) {
+		if (vectorIter.front() == followedBy) {
+			if (vectorIter.back() == follows) {
+				return true;
+			}
+		}
+	}
+	return false;
+}
+*/
+
+TABLE PKBFollows::getFollowsTable() {
+	return followsTable;
+}
+
+bool PKBFollows::isFollowsAnyAny() {
+	return !followsTable.empty();
+}
+bool PKBFollows::isFollowsAnyIdent(STMT_NO follows) {
+	for (auto vectorIter : followsTable) {
+		if (vectorIter.back() == follows) {
+			return true;
+		}
+	}
+	return false;
+}
+bool PKBFollows::isFollowsIdentAny(STMT_NO followedBy) {
+	for (auto vectorIter : followsTable) {
+		if (vectorIter.front() == followedBy) {
+			return true;
+		}
+	}
+	return false;
+}
+bool PKBFollows::isFollowsIdentIdent(STMT_NO followedBy, STMT_NO follows) {
+	for (auto vectorIter : followsTable) {
 		if (vectorIter.front() == followedBy) {
 			if (vectorIter.back() == follows) {
 				return true;
@@ -55,46 +91,27 @@ bool PKBFollows::isFollowsStarRelationship(STMT_NO followedBy, STMT_NO follows) 
 	return false;
 }
 
-TABLE PKBFollows::getFollowsTable() {
-	return followsTable;
+bool PKBFollows::isFollowsTAnyAny() {
+	return !followsTTable.empty();
 }
-
-bool PKBFollows::isFollows(STMT_REF s1, STMT_REF s2){
-	if (s1 == "_" && s2 == "_") {
-		return PKBFollows::isFollowsS1GenericS2Generic();
-	}
-	else if (s1 == "_" && isdigit(s2.at(0))) {
-		return PKBFollows::isFollowsS1GenericS2StmtNo(s2);
-	}
-	else if (isdigit(s1.at(0)) && s2 == "_") {
-		return PKBFollows::isFollowsS1StmtNoS2Generic(s1);
-	}
-	else if (isdigit(s1.at(0)) && isdigit(s2.at(0))) {
-		return PKBFollows::isFollowsS1StmtNoS2StmtNo(s1,s2);
-	}
-	return false;
-}
-bool PKBFollows::isFollowsS1GenericS2Generic() {
-	return !followsTable.empty();
-}
-bool PKBFollows::isFollowsS1GenericS2StmtNo(STMT_NO follows) {
-	for (auto vectorIter : followsStarTable) {
+bool PKBFollows::isFollowsTAnyIdent(STMT_NO follows) {
+	for (auto vectorIter : followsTTable) {
 		if (vectorIter.back() == follows) {
 			return true;
 		}
 	}
 	return false;
 }
-bool PKBFollows::isFollowsS1StmtNoS2Generic(STMT_NO followedBy) {
-	for (auto vectorIter : followsStarTable) {
+bool PKBFollows::isFollowsTIdentAny(STMT_NO followedBy) {
+	for (auto vectorIter : followsTTable) {
 		if (vectorIter.front() == followedBy) {
 			return true;
 		}
 	}
 	return false;
 }
-bool PKBFollows::isFollowsS1StmtNoS2StmtNo(STMT_NO followedBy, STMT_NO follows) {
-	for (auto vectorIter : followsStarTable) {
+bool PKBFollows::isFollowsTIdentIdent(STMT_NO followedBy, STMT_NO follows) {
+	for (auto vectorIter : followsTTable) {
 		if (vectorIter.front() == followedBy) {
 			if (vectorIter.back() == follows) {
 				return true;
@@ -105,62 +122,111 @@ bool PKBFollows::isFollowsS1StmtNoS2StmtNo(STMT_NO followedBy, STMT_NO follows) 
 }
 
 //NEW EVALUATION API
-
-TABLE PKBFollows::getFollows(STMT_REF s1, STMT_REF s2) {
-	if (s1 == "_") {
-		if (isdigit(s2.at(0))) {
-			return PKBFollows::getResultGenericLeft(s1, s2, followsTable);
-		}
-		else {
-			return PKBFollows::getResultGenericLeft("_", s2, followsTable);
-		}
-	}
-	else if (s2 == "_") {
-		if (isdigit(s1.at(0))) {
-			return PKBFollows::getResultGenericRight(s1, s2, followsTable);
-		}
-		else {
-			return PKBFollows::getResultGenericRight(s1, "_", followsTable);
-		}
+TABLE PKBFollows::getFollowsAnyEnt(STMT_TYPE type) {
+	TABLE resultTable;
+	STMT_LIST list;
+	STMT_NO s;
+	if (type == "stmt") {
+		list = PKBStmt::getAllStmt();
 	}
 	else {
-		return PKBFollows::getResultTableGenericBoth(s1, s2, followsTable);
+		list = PKBStmt::getAllStmtByType(type);
 	}
-}
-
-
-
-TABLE PKBFollows::getFollowsS1S2Same(STMT_TYPE s1, STMT_TYPE s2) {
-	TABLE resultTable;
+	for (auto iter : list) {
+		s = iter.front();
+		for (auto vectorIter : followsTable) {
+			vector<string> tuple = vector<string>();
+			if (vectorIter.back() == s) {
+				tuple.push_back(vectorIter.back());
+				resultTable.emplace(tuple);
+			}
+		}
+	}
 	return resultTable;
 }
 
-TABLE PKBFollows::getAllFollowedByFollowsStarStmt(STMT_TYPE type1, STMT_TYPE type2) {
-	return PKBFollows::getResultTableGenericBoth(type1, type2, followsStarTable);
-}
-STMT_LIST PKBFollows::getAllFollowedByStarStmt(STMT_TYPE type, STMT_NO follows) {
-	return PKBFollows::getResultGenericLeft(type, follows, followsStarTable);
-}
-STMT_LIST PKBFollows::getAllFollowsStarStmt(STMT_NO followedBy, STMT_TYPE type) {
-	return PKBFollows::getResultGenericRight(followedBy, type, followsStarTable);
+TABLE PKBFollows::getFollowsEntAny(STMT_TYPE type) {
+	TABLE resultTable;
+	STMT_LIST list;
+	STMT_NO s;
+	if (type == "stmt") {
+		list = PKBStmt::getAllStmt();
+	}
+	else {
+		list = PKBStmt::getAllStmtByType(type);
+	}
+	for (auto iter : list) {
+		s = iter.front();
+		for (auto vectorIter : followsTable) {
+			vector<string> tuple = vector<string>();
+			if (vectorIter.front() == s) {
+				tuple.push_back(vectorIter.front());
+				resultTable.emplace(tuple);
+			}
+		}
+	}
+	return resultTable;
 }
 
-TABLE PKBFollows::getResultTableGenericBoth(STMT_TYPE type1, STMT_TYPE type2, TABLE tableName) {
+TABLE PKBFollows::getFollowsIdentEnt(STMT_NO stmtNo, STMT_TYPE type) {
 	TABLE resultTable;
-	if (type1 != "_" && type2 != "_" && type1 == type2) {
-		return resultTable;
+	STMT_LIST list;
+	STMT_NO s;
+	if (type == "stmt") {
+		list = PKBStmt::getAllStmt();
 	}
-	if (type1 == "_" && type2 == "_") {
-		return tableName;
+	else {
+		list = PKBStmt::getAllStmtByType(type);
+	}
+	for (auto iter : list) {
+		s = iter.front();
+		for (auto vectorIter : followsTable) {
+			vector<string> tuple = vector<string>();
+			if (vectorIter.front() == stmtNo && vectorIter.back() == s) {
+				tuple.push_back(vectorIter.back());
+				resultTable.emplace(tuple);
+			}
+		}
+	}
+	return resultTable;
+}
+
+TABLE PKBFollows::getFollowsEntIdent(STMT_TYPE type, STMT_NO stmtNo) {
+	TABLE resultTable;
+	STMT_LIST list;
+	STMT_NO s;
+	if (type == "stmt") {
+		list = PKBStmt::getAllStmt();
+	}
+	else {
+		list = PKBStmt::getAllStmtByType(type);
+	}
+	for (auto iter : list) {
+		s = iter.front();
+		for (auto vectorIter : followsTable) {
+			vector<string> tuple = vector<string>();
+			if (vectorIter.front() == s && vectorIter.back() == stmtNo) {
+				tuple.push_back(vectorIter.front());
+				resultTable.emplace(tuple);
+			}
+		}
+	}
+	return resultTable;
+}
+
+TABLE PKBFollows::getFollowsEntEnt(STMT_TYPE type1, STMT_TYPE type2) {
+	TABLE resultTable;
+	if (type1 == "stmt" && type2 == "stmt") {
+		return followsTable;
 	}
 	STMT_LIST list1, list2;
-	if (type1 == "_" || type1 == "STMT") {
+	if (type1 == "stmt") {
 		list1 = PKBStmt::getAllStmt();
 	}
 	else {
 		list1 = PKBStmt::getAllStmtByType(type1);
 	}
-	if (type2 == "_" || type2 == "STMT") {
+	if (type2 == "stmt") {
 		list2 = PKBStmt::getAllStmt();
 	}
 	else {
@@ -173,7 +239,7 @@ TABLE PKBFollows::getResultTableGenericBoth(STMT_TYPE type1, STMT_TYPE type2, TA
 		s1 = iter1.front();
 		for (auto iter2 : list2) {
 			s2 = iter2.front();
-			for (auto vectorIter : tableName) {
+			for (auto vectorIter : followsTable) {
 				vector<string> tuple = vector<string>();
 				if (vectorIter.front() == s1 && vectorIter.back() == s2) {
 					tuple.push_back(vectorIter.front());
@@ -187,86 +253,141 @@ TABLE PKBFollows::getResultTableGenericBoth(STMT_TYPE type1, STMT_TYPE type2, TA
 	return resultTable;
 }
 
-STMT_LIST PKBFollows::getResultGenericLeft(STMT_TYPE type, STMT_NO stmtNo, TABLE tableName) {
-	STMT_LIST resultTable;
+TABLE PKBFollows::getFollowsTAnyEnt(STMT_TYPE type) {
+	TABLE resultTable;
 	STMT_LIST list;
 	STMT_NO s;
-	if (type == "STMT") {
+	if (type == "stmt") {
 		list = PKBStmt::getAllStmt();
 	}
 	else {
 		list = PKBStmt::getAllStmtByType(type);
 	}
-	if (type == "_") {
-		for (auto iter : list) {
-			s = iter.front();
-			for (auto vectorIter : tableName) {
-				vector<string> tuple = vector<string>();
-				if (vectorIter.front() == s) {
-					tuple.push_back(vectorIter.front());
-					//tuple.push_back(vectorIter.back());
-					resultTable.emplace(tuple);
-				}
-			}
-		}
-	}
-	else {
-		for (auto iter : list) {
-			s = iter.front();
-			for (auto vectorIter : tableName) {
-				vector<string> tuple = vector<string>();
-				if (vectorIter.front() == s && vectorIter.back() == stmtNo) {
-					tuple.push_back(vectorIter.front());
-					//tuple.push_back(vectorIter.back());
-					resultTable.emplace(tuple);
-				}
+	for (auto iter : list) {
+		s = iter.front();
+		for (auto vectorIter : followsTTable) {
+			vector<string> tuple = vector<string>();
+			if (vectorIter.back() == s) {
+				tuple.push_back(vectorIter.back());
+				resultTable.emplace(tuple);
 			}
 		}
 	}
 	return resultTable;
 }
 
-STMT_LIST PKBFollows::getResultGenericRight(STMT_NO stmtNo, STMT_TYPE type, TABLE tableName) {
-	STMT_LIST resultTable;
+TABLE PKBFollows::getFollowsTEntAny(STMT_TYPE type) {
+	TABLE resultTable;
 	STMT_LIST list;
 	STMT_NO s;
-	if (type == "STMT") {
+	if (type == "stmt") {
 		list = PKBStmt::getAllStmt();
 	}
 	else {
 		list = PKBStmt::getAllStmtByType(type);
 	}
-	if (type == "_") {
-		for (auto iter : list) {
-			s = iter.front();
-			for (auto vectorIter : tableName) {
-				vector<string> tuple = vector<string>();
-				if (vectorIter.back() == s) {
-					tuple.push_back(vectorIter.back());
-					resultTable.emplace(tuple);
-				}
-			}
-		}
-	}
-	else {
-		for (auto iter : list) {
-			s = iter.front();
-			for (auto vectorIter : tableName) {
-				vector<string> tuple = vector<string>();
-				if (vectorIter.front() == stmtNo && vectorIter.back() == s) {
-					//tuple.push_back(vectorIter.front());
-					tuple.push_back(vectorIter.back());
-					resultTable.emplace(tuple);
-				}
+	for (auto iter : list) {
+		s = iter.front();
+		for (auto vectorIter : followsTTable) {
+			vector<string> tuple = vector<string>();
+			if (vectorIter.front() == s) {
+				tuple.push_back(vectorIter.front());
+				resultTable.emplace(tuple);
 			}
 		}
 	}
 	return resultTable;
 }
+
+TABLE PKBFollows::getFollowsTIdentEnt(STMT_NO stmtNo, STMT_TYPE type) {
+	TABLE resultTable;
+	STMT_LIST list;
+	STMT_NO s;
+	if (type == "stmt") {
+		list = PKBStmt::getAllStmt();
+	}
+	else {
+		list = PKBStmt::getAllStmtByType(type);
+	}
+	for (auto iter : list) {
+		s = iter.front();
+		for (auto vectorIter : followsTTable) {
+			vector<string> tuple = vector<string>();
+			if (vectorIter.front() == stmtNo && vectorIter.back() == s) {
+				tuple.push_back(vectorIter.back());
+				resultTable.emplace(tuple);
+			}
+		}
+	}
+	return resultTable;
+}
+
+TABLE PKBFollows::getFollowsTEntIdent(STMT_TYPE type, STMT_NO stmtNo) {
+	TABLE resultTable;
+	STMT_LIST list;
+	STMT_NO s;
+	if (type == "stmt") {
+		list = PKBStmt::getAllStmt();
+	}
+	else {
+		list = PKBStmt::getAllStmtByType(type);
+	}
+	for (auto iter : list) {
+		s = iter.front();
+		for (auto vectorIter : followsTTable) {
+			vector<string> tuple = vector<string>();
+			if (vectorIter.front() == s && vectorIter.back() == stmtNo) {
+				tuple.push_back(vectorIter.front());
+				resultTable.emplace(tuple);
+			}
+		}
+	}
+	return resultTable;
+}
+
+TABLE PKBFollows::getFollowsTEntEnt(STMT_TYPE type1, STMT_TYPE type2) {
+	TABLE resultTable;
+	if (type1 == "stmt" && type2 == "stmt") {
+		return followsTTable;
+	}
+	STMT_LIST list1, list2;
+	if (type1 == "stmt") {
+		list1 = PKBStmt::getAllStmt();
+	}
+	else {
+		list1 = PKBStmt::getAllStmtByType(type1);
+	}
+	if (type2 == "stmt") {
+		list2 = PKBStmt::getAllStmt();
+	}
+	else {
+		list2 = PKBStmt::getAllStmtByType(type2);
+	}
+
+	STMT_NO s1;
+	STMT_NO s2;
+	for (auto iter1 : list1) {
+		s1 = iter1.front();
+		for (auto iter2 : list2) {
+			s2 = iter2.front();
+			for (auto vectorIter : followsTTable) {
+				vector<string> tuple = vector<string>();
+				if (vectorIter.front() == s1 && vectorIter.back() == s2) {
+					tuple.push_back(vectorIter.front());
+					tuple.push_back(vectorIter.back());
+					resultTable.emplace(tuple);
+				}
+			}
+		}
+	}
+
+	return resultTable;
+}
+
 
 
 bool PKBFollows::clear() {
 	followsTable.clear();
-	followsStarTable.clear();
+	followsTTable.clear();
 	return true;
 }

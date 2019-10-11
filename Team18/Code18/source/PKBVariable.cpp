@@ -3,7 +3,7 @@ using namespace std;
 
 TABLE PKBVariable::varTable;
 
-bool PKBVariable::setVar(VAR_NAME varName) {
+bool PKBVariable::setVariable(VAR_NAME varName) {
 	vector<string> tuple = vector<string>();
 	tuple.push_back(varName);
 	varTable.emplace(tuple);

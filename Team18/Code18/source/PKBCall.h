@@ -9,27 +9,41 @@ public:
 	static bool setCallStmt(STMT_NO stmtNo, PROC_NAME q);
 	static bool setCallProc(PROC_NAME caller, PROC_NAME callee);
 	static bool setCallTProc(PROC_NAME caller, PROC_NAME callee);
-	static bool isCallRelationship(PROC_NAME caller, PROC_NAME callee);
-	static bool isCallStarRelationship(PROC_NAME caller, PROC_NAME callee);
 
 	static PROC_NAME getCalledProcByStmt(STMT_NO stmtNo); //not tested
+	//	static STMT_LIST getCallStmtsByProc(STMT_NO stmtNo); //to be implemented
 	static TABLE getCallProcTable();
 	static PROC_LIST getCalleeProc(PROC_NAME caller);
 
-	static TABLE getAllCallerCalleeProc();
-	static PROC_LIST getAllCallerProc(PROC_NAME procName);
-	static PROC_LIST getAllCalleProc(PROC_NAME procName);
-	static TABLE getAllCallerCalleeStarProc();
-	static PROC_LIST getAllCallerStarProc(PROC_NAME procName);
-	static PROC_LIST getAllCalleStarProc(PROC_NAME procName);
+	//Bool Evaluation
+	static bool isCallsAnyAny();
+	static bool isCallsAnyIdent(PROC_NAME p2);
+	static bool isCallsIdentAny(PROC_NAME p1);
+	static bool isCallsIdentIdent(PROC_NAME p1, PROC_NAME p2);
+
+	static bool isCallsTAnyAny();
+	static bool isCallsTAnyIdent(PROC_NAME p2);
+	static bool isCallsTIdentAny(PROC_NAME p1);
+	static bool isCallsTIdentIdent(PROC_NAME p1, PROC_NAME p2);
+
+	//Table Evaluation
+	static TABLE getCallsAnyEnt();
+	static TABLE getCallsIdentEnt(PROC_NAME p1);
+	static TABLE getCallsEntAny();
+	static TABLE getCallsEntIdent(PROC_NAME p2);
+	static TABLE getCallsEntEnt();
+
+	static TABLE getCallsTAnyEnt();
+	static TABLE getCallsTIdentEnt(PROC_NAME p1);
+	static TABLE getCallsTEntAny();
+	static TABLE getCallsTEntIdent(PROC_NAME p2);
+	static TABLE getCallsTEntEnt();
+	
 	// Clear
 	static bool clear();
 
 private:
-	static TABLE getResultTableGenericBoth(TABLE tableName);
-	static PROC_LIST getResultTableGenericLeft(PROC_NAME procName, TABLE tableName);
-	static PROC_LIST getResultTableGenericRight(PROC_NAME procName, TABLE tableName);
-	static TABLE callProcTable;
-	static TABLE callStarProcTable;
-	static TABLE callStmtTable;
+	static TABLE callsProcTable;
+	static TABLE callsTProcTable;
+	static TABLE callTable;
 };

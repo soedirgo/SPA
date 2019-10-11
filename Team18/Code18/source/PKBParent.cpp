@@ -5,7 +5,7 @@
 using namespace std;
 
 TABLE PKBParent::parentTable;
-TABLE PKBParent::parentStarTable;
+TABLE PKBParent::parentTTable;
 
 bool PKBParent::setParent(STMT_NO parent, STMT_NO child) {
 	vector<string> tuple = vector<string>();
@@ -19,7 +19,7 @@ bool PKBParent::setParentStar(STMT_NO parent, STMT_NO child) {
 	vector<string> tuple = vector<string>();
 	tuple.push_back(parent);
 	tuple.push_back(child);
-	parentStarTable.emplace(tuple);
+	parentTTable.emplace(tuple);
 	return true;
 }
 
@@ -53,8 +53,30 @@ bool PKBParent::isParentExist(STMT_NO child) {
 	return true;
 }
 
-bool PKBParent::isParentRelationship(STMT_NO parent, STMT_NO child) {
+TABLE PKBParent::getParentTable() {
+	return parentTable;
+}
 
+bool PKBParent::isParentAnyAny() {
+	return !parentTable.empty();
+}
+bool PKBParent::isParentAnyIdent(STMT_NO child) {
+	for (auto vectorIter : parentTable) {
+		if (vectorIter.back() == child) {
+			return true;
+		}
+	}
+	return false;
+}
+bool PKBParent::isParentIdentAny(STMT_NO parent) {
+	for (auto vectorIter : parentTable) {
+		if (vectorIter.front() == parent) {
+			return true;
+		}
+	}
+	return false;
+}
+bool PKBParent::isParentIdentIdent(STMT_NO parent, STMT_NO child) {
 	for (auto vectorIter : parentTable) {
 		if (vectorIter.front() == parent) {
 			if (vectorIter.back() == child) {
@@ -65,11 +87,29 @@ bool PKBParent::isParentRelationship(STMT_NO parent, STMT_NO child) {
 	return false;
 }
 
-bool PKBParent::isParentStarRelationship(STMT_NO parent, STMT_NO child) {
-
-	for (auto vectorIter : parentStarTable) {
+bool PKBParent::isParentTAnyAny() {
+	return !parentTTable.empty();
+}
+bool PKBParent::isParentTAnyIdent(STMT_NO childT) {
+	for (auto vectorIter : parentTTable) {
+		if (vectorIter.back() == childT) {
+			return true;
+		}
+	}
+	return false;
+}
+bool PKBParent::isParentTIdentAny(STMT_NO parent) {
+	for (auto vectorIter : parentTTable) {
 		if (vectorIter.front() == parent) {
-			if (vectorIter.back() == child) {
+			return true;
+		}
+	}
+	return false;
+}
+bool PKBParent::isParentTIdentIdent(STMT_NO parent, STMT_NO childT) {
+	for (auto vectorIter : parentTTable) {
+		if (vectorIter.front() == parent) {
+			if (vectorIter.back() == childT) {
 				return true;
 			}
 		}
@@ -77,45 +117,112 @@ bool PKBParent::isParentStarRelationship(STMT_NO parent, STMT_NO child) {
 	return false;
 }
 
-TABLE PKBParent::getParentTable() {
-	return parentTable;
-}
-
-TABLE PKBParent::getAllParentChildStmt(STMT_TYPE type1, STMT_TYPE type2) {
-	return PKBParent::getResultTableGenericBoth(type1, type2, parentTable);
-}
-STMT_LIST PKBParent::getAllParentStmt(STMT_TYPE type1, STMT_NO follows) {
-	return PKBParent::getResultTableGenericLeft(type1, follows, parentTable);
-}
-STMT_LIST PKBParent::getAllChildStmt(STMT_NO followedBy, STMT_TYPE type) {
-	return PKBParent::getResultTableGenericRight(followedBy, type, parentTable);
-}
-TABLE PKBParent::getAllParentChildStarStmt(STMT_TYPE type1, STMT_TYPE type2) {
-	return PKBParent::getResultTableGenericBoth(type1, type2, parentStarTable);
-}
-STMT_LIST PKBParent::getAllParentStarStmt(STMT_TYPE type, STMT_NO follows) {
-	return PKBParent::getResultTableGenericLeft(type, follows, parentStarTable);
-}
-STMT_LIST PKBParent::getAllChildStarStmt(STMT_NO followedBy, STMT_TYPE type) {
-	return PKBParent::getResultTableGenericRight(followedBy, type, parentStarTable);
-}
-
-TABLE PKBParent::getResultTableGenericBoth(STMT_TYPE type1, STMT_TYPE type2, TABLE tableName) {
+//NEW EVALUATION API
+TABLE PKBParent::getParentAnyEnt(STMT_TYPE type) {
 	TABLE resultTable;
-	if (type1 != "_" && type2 != "_" && type1 == type2) {
-		return resultTable;
+	STMT_LIST list;
+	STMT_NO s;
+	if (type == "stmt") {
+		list = PKBStmt::getAllStmt();
 	}
-	if (type1 == "_" && type2 == "_") {
-		return tableName;
+	else {
+		list = PKBStmt::getAllStmtByType(type);
+	}
+	for (auto iter : list) {
+		s = iter.front();
+		for (auto vectorIter : parentTable) {
+			vector<string> tuple = vector<string>();
+			if (vectorIter.back() == s) {
+				tuple.push_back(vectorIter.back());
+				resultTable.emplace(tuple);
+			}
+		}
+	}
+	return resultTable;
+}
+
+TABLE PKBParent::getParentEntAny(STMT_TYPE type) {
+	TABLE resultTable;
+	STMT_LIST list;
+	STMT_NO s;
+	if (type == "stmt") {
+		list = PKBStmt::getAllStmt();
+	}
+	else {
+		list = PKBStmt::getAllStmtByType(type);
+	}
+	for (auto iter : list) {
+		s = iter.front();
+		for (auto vectorIter : parentTable) {
+			vector<string> tuple = vector<string>();
+			if (vectorIter.front() == s) {
+				tuple.push_back(vectorIter.front());
+				resultTable.emplace(tuple);
+			}
+		}
+	}
+	return resultTable;
+}
+
+TABLE PKBParent::getParentIdentEnt(STMT_NO stmtNo, STMT_TYPE type) {
+	TABLE resultTable;
+	STMT_LIST list;
+	STMT_NO s;
+	if (type == "stmt") {
+		list = PKBStmt::getAllStmt();
+	}
+	else {
+		list = PKBStmt::getAllStmtByType(type);
+	}
+	for (auto iter : list) {
+		s = iter.front();
+		for (auto vectorIter : parentTable) {
+			vector<string> tuple = vector<string>();
+			if (vectorIter.front() == stmtNo && vectorIter.back() == s) {
+				tuple.push_back(vectorIter.back());
+				resultTable.emplace(tuple);
+			}
+		}
+	}
+	return resultTable;
+}
+
+TABLE PKBParent::getParentEntIdent(STMT_TYPE type, STMT_NO stmtNo) {
+	TABLE resultTable;
+	STMT_LIST list;
+	STMT_NO s;
+	if (type == "stmt") {
+		list = PKBStmt::getAllStmt();
+	}
+	else {
+		list = PKBStmt::getAllStmtByType(type);
+	}
+	for (auto iter : list) {
+		s = iter.front();
+		for (auto vectorIter : parentTable) {
+			vector<string> tuple = vector<string>();
+			if (vectorIter.front() == s && vectorIter.back() == stmtNo) {
+				tuple.push_back(vectorIter.front());
+				resultTable.emplace(tuple);
+			}
+		}
+	}
+	return resultTable;
+}
+
+TABLE PKBParent::getParentEntEnt(STMT_TYPE type1, STMT_TYPE type2) {
+	TABLE resultTable;
+	if (type1 == "stmt" && type2 == "stmt") {
+		return parentTable;
 	}
 	STMT_LIST list1, list2;
-	if (type1 == "_" || type1 == "stmt") {
+	if (type1 == "stmt") {
 		list1 = PKBStmt::getAllStmt();
 	}
 	else {
 		list1 = PKBStmt::getAllStmtByType(type1);
 	}
-	if (type2 == "_" || type2 == "stmt") {
+	if (type2 == "stmt") {
 		list2 = PKBStmt::getAllStmt();
 	}
 	else {
@@ -128,7 +235,7 @@ TABLE PKBParent::getResultTableGenericBoth(STMT_TYPE type1, STMT_TYPE type2, TAB
 		s1 = iter1.front();
 		for (auto iter2 : list2) {
 			s2 = iter2.front();
-			for (auto vectorIter : tableName) {
+			for (auto vectorIter : parentTable) {
 				vector<string> tuple = vector<string>();
 				if (vectorIter.front() == s1 && vectorIter.back() == s2) {
 					tuple.push_back(vectorIter.front());
@@ -142,11 +249,11 @@ TABLE PKBParent::getResultTableGenericBoth(STMT_TYPE type1, STMT_TYPE type2, TAB
 	return resultTable;
 }
 
-STMT_LIST PKBParent::getResultTableGenericLeft(STMT_TYPE type, STMT_NO stmtNo, TABLE tableName) {
-	STMT_LIST resultTable;
+TABLE PKBParent::getParentTAnyEnt(STMT_TYPE type) {
+	TABLE resultTable;
 	STMT_LIST list;
 	STMT_NO s;
-	if (type == "_" || type == "stmt") {
+	if (type == "stmt") {
 		list = PKBStmt::getAllStmt();
 	}
 	else {
@@ -154,34 +261,9 @@ STMT_LIST PKBParent::getResultTableGenericLeft(STMT_TYPE type, STMT_NO stmtNo, T
 	}
 	for (auto iter : list) {
 		s = iter.front();
-		for (auto vectorIter : tableName) {
+		for (auto vectorIter : parentTTable) {
 			vector<string> tuple = vector<string>();
-			if (vectorIter.front() == s && vectorIter.back() == stmtNo) {
-				tuple.push_back(vectorIter.front());
-				//tuple.push_back(vectorIter.back());
-				resultTable.emplace(tuple);
-			}
-		}
-	}
-	return resultTable;
-}
-
-STMT_LIST PKBParent::getResultTableGenericRight(STMT_NO stmtNo, STMT_TYPE type, TABLE tableName) {
-	STMT_LIST resultTable;
-	STMT_LIST list;
-	STMT_NO s;
-	if (type == "_" || type == "stmt") {
-		list = PKBStmt::getAllStmt();
-	}
-	else {
-		list = PKBStmt::getAllStmtByType(type);
-	}
-	for (auto iter : list) {
-		s = iter.front();
-		for (auto vectorIter : tableName) {
-			vector<string> tuple = vector<string>();
-			if (vectorIter.front() == stmtNo && vectorIter.back() == s) {
-				//tuple.push_back(vectorIter.front());
+			if (vectorIter.back() == s) {
 				tuple.push_back(vectorIter.back());
 				resultTable.emplace(tuple);
 			}
@@ -190,8 +272,117 @@ STMT_LIST PKBParent::getResultTableGenericRight(STMT_NO stmtNo, STMT_TYPE type, 
 	return resultTable;
 }
 
+TABLE PKBParent::getParentTEntAny(STMT_TYPE type) {
+	TABLE resultTable;
+	STMT_LIST list;
+	STMT_NO s;
+	if (type == "stmt") {
+		list = PKBStmt::getAllStmt();
+	}
+	else {
+		list = PKBStmt::getAllStmtByType(type);
+	}
+	for (auto iter : list) {
+		s = iter.front();
+		for (auto vectorIter : parentTTable) {
+			vector<string> tuple = vector<string>();
+			if (vectorIter.front() == s) {
+				tuple.push_back(vectorIter.front());
+				resultTable.emplace(tuple);
+			}
+		}
+	}
+	return resultTable;
+}
+
+TABLE PKBParent::getParentTIdentEnt(STMT_NO stmtNo, STMT_TYPE type) {
+	TABLE resultTable;
+	STMT_LIST list;
+	STMT_NO s;
+	if (type == "stmt") {
+		list = PKBStmt::getAllStmt();
+	}
+	else {
+		list = PKBStmt::getAllStmtByType(type);
+	}
+	for (auto iter : list) {
+		s = iter.front();
+		for (auto vectorIter : parentTTable) {
+			vector<string> tuple = vector<string>();
+			if (vectorIter.front() == stmtNo && vectorIter.back() == s) {
+				tuple.push_back(vectorIter.back());
+				resultTable.emplace(tuple);
+			}
+		}
+	}
+	return resultTable;
+}
+
+TABLE PKBParent::getParentTEntIdent(STMT_TYPE type, STMT_NO stmtNo) {
+	TABLE resultTable;
+	STMT_LIST list;
+	STMT_NO s;
+	if (type == "stmt") {
+		list = PKBStmt::getAllStmt();
+	}
+	else {
+		list = PKBStmt::getAllStmtByType(type);
+	}
+	for (auto iter : list) {
+		s = iter.front();
+		for (auto vectorIter : parentTTable) {
+			vector<string> tuple = vector<string>();
+			if (vectorIter.front() == s && vectorIter.back() == stmtNo) {
+				tuple.push_back(vectorIter.front());
+				resultTable.emplace(tuple);
+			}
+		}
+	}
+	return resultTable;
+}
+
+TABLE PKBParent::getParentTEntEnt(STMT_TYPE type1, STMT_TYPE type2) {
+	TABLE resultTable;
+	if (type1 == "stmt" && type2 == "stmt") {
+		return parentTTable;
+	}
+	STMT_LIST list1, list2;
+	if (type1 == "stmt") {
+		list1 = PKBStmt::getAllStmt();
+	}
+	else {
+		list1 = PKBStmt::getAllStmtByType(type1);
+	}
+	if (type2 == "stmt") {
+		list2 = PKBStmt::getAllStmt();
+	}
+	else {
+		list2 = PKBStmt::getAllStmtByType(type2);
+	}
+
+	STMT_NO s1;
+	STMT_NO s2;
+	for (auto iter1 : list1) {
+		s1 = iter1.front();
+		for (auto iter2 : list2) {
+			s2 = iter2.front();
+			for (auto vectorIter : parentTTable) {
+				vector<string> tuple = vector<string>();
+				if (vectorIter.front() == s1 && vectorIter.back() == s2) {
+					tuple.push_back(vectorIter.front());
+					tuple.push_back(vectorIter.back());
+					resultTable.emplace(tuple);
+				}
+			}
+		}
+	}
+
+	return resultTable;
+}
+
+
 bool PKBParent::clear() {
 	parentTable.clear();
-	parentStarTable.clear();
+	parentTTable.clear();
 	return true;
 }
