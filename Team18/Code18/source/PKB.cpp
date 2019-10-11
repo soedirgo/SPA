@@ -119,12 +119,12 @@ bool PKB::isModifiesProcRelationship(PROC_NAME procName, VAR_NAME varName) {
 
 
 //Uses
-bool PKB::setUsesStmtRelation(STMT_NO stmtNo, VAR_NAME varName) {
+bool PKB::setUsesStmt(STMT_NO stmtNo, VAR_NAME varName) {
 	return PKBUses::setUsesStmt(stmtNo, varName);
 
 };
 
-bool PKB::setUsesProcRelation(PROC_NAME procName, VAR_NAME varName) {
+bool PKB::setUsesProc(PROC_NAME procName, VAR_NAME varName) {
 	return PKBUses::setUsesProc(procName, varName);
 };
 
@@ -354,6 +354,10 @@ bool PKB::setCallStmt(STMT_NO stmtNo, PROC_NAME procName) {
 	return PKBCall::setCallStmt(stmtNo, procName);
 };
 
+bool PKB::setCallT(PROC_NAME caller, PROC_NAME callee) {
+	return PKBCall::setCallTProc(caller, callee);
+};
+
 bool PKB::isCallRelationship(PROC_NAME caller, PROC_NAME callee) {
 	return PKBCall::isCallRelationship(caller, callee);
 }
@@ -379,12 +383,12 @@ bool PKB::isNextStarRelationship(PROG_LINE n1, PROG_LINE n2) {
 
 
 // New While Uses
-bool PKB::setWhileUsesRelation(STMT_NO stmtNo, VAR_NAME varName) {
+bool PKB::setWhileCondition(STMT_NO stmtNo, VAR_NAME varName) {
 	return PKBWhile::setWhileUses(stmtNo, varName);
 }
 
 // New If Uses
-bool PKB::setIfUsesRelation(STMT_NO stmtNo, VAR_NAME varName) {
+bool PKB::setIfCondition(STMT_NO stmtNo, VAR_NAME varName) {
 	return PKBIf::setIfUses(stmtNo, varName);
 }
 

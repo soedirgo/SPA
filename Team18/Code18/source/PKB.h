@@ -70,10 +70,10 @@ public:
 	//static CONST_VAL getConstantValByStmt(STMT_NO stmtNo); 
 
 	//While Functions
-	static bool setWhileUsesRelation(STMT_NO stmtNo, VAR_NAME varName);
+	static bool setWhileCondition(STMT_NO stmtNo, VAR_NAME varName);
 
 	//If Functions
-	static bool setIfUsesRelation(STMT_NO stmtNo, VAR_NAME varName);
+	static bool setIfCondition(STMT_NO stmtNo, VAR_NAME varName);
 
 	//Follow Functions
 	static bool setFollows(STMT_NO followedBy, STMT_NO follow);
@@ -110,14 +110,15 @@ public:
 	static bool isModifiesProcRelationship(PROC_NAME procName, VAR_NAME varName);
 
 	//Uses Function
-	static bool setUsesStmtRelation(STMT_NO stmtNo, VAR_NAME varName);
-	static bool setUsesProcRelation(PROC_NAME procName, VAR_NAME varName);
+	static bool setUsesStmt(STMT_NO stmtNo, VAR_NAME varName);
+	static bool setUsesProc(PROC_NAME procName, VAR_NAME varName);
 	static bool isUsesStmtRelationship(STMT_NO stmtNo, VAR_NAME varName);
 	static bool isUsesProcRelationship(PROC_NAME procName, VAR_NAME varName);
 
 	//Call Function
 	static bool setCallStmt(STMT_NO stmtNo, PROC_NAME procName);
 	static bool setCallProc(PROC_NAME caller, PROC_NAME callee);
+	static bool setCallT(PROC_NAME caller, PROC_NAME callee);
 	static bool isCallRelationship(PROC_NAME caller, PROC_NAME callee);
 	static bool isCallStarRelationship(PROC_NAME caller, PROC_NAME callee);
 

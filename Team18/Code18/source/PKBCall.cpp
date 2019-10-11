@@ -71,7 +71,7 @@ bool PKBCall::isCallStarRelationship(PROC_NAME caller, PROC_NAME callee) {
 	return false;
 }
 
-bool PKBCall::setCallStarProc(PROC_NAME caller, PROC_NAME callee) {
+bool PKBCall::setCallTProc(PROC_NAME caller, PROC_NAME callee) {
 	vector<string> tuple = vector<string>();
 	tuple.push_back(caller);
 	tuple.push_back(callee);

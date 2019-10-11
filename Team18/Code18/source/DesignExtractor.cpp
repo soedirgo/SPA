@@ -58,7 +58,7 @@ void DesignExtractor::extractCallStar()
 	for (auto vectorIter : callProcTable) {
 		PROC_NAME caller = vectorIter.front();
 		PROC_NAME callee = vectorIter.back();
-		PKBCall::setCallStarProc(caller, callee);
+		PKBCall::setCallTProc(caller, callee);
 		recurseCall(caller, callee);
 	}
 }
@@ -70,7 +70,7 @@ void DesignExtractor::recurseCall(PROC_NAME caller, PROC_NAME callee) {
 	}
 	for (auto vectorIter : calleeList) {
 		PROC_NAME newCallee = vectorIter.back();
-		PKBCall::setCallStarProc(caller, newCallee);
+		PKBCall::setCallTProc(caller, newCallee);
 		recurseCall(caller, newCallee);
 	}
 }

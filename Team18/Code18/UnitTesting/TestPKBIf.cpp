@@ -45,7 +45,7 @@ namespace UnitTesting
 			PKB PKB;
 			PKB.clear();
 
-			PKB.setIfUsesRelation("10", "x");
+			PKB.setIfCondition("10", "x");
 		}
 
 		TEST_METHOD(IfUsesRelationship)

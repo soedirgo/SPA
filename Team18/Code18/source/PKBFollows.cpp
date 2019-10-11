@@ -126,17 +126,6 @@ TABLE PKBFollows::getFollowsS1S2Same(STMT_TYPE s1, STMT_TYPE s2) {
 	return resultTable;
 }
 
-/*
-TABLE PKBFollows::getAllFollowedByFollowsStmt(STMT_TYPE type1, STMT_TYPE type2) {
-	return PKBFollows::getResultTableGenericBoth(type1, type2, followsTable);
-}
-STMT_LIST PKBFollows::getAllFollowedByStmt(STMT_TYPE type1, STMT_NO follows) {
-	return PKBFollows::getResultGenericLeft(type1, follows, followsTable);
-}
-STMT_LIST PKBFollows::getAllFollowsStmt(STMT_NO followedBy, STMT_TYPE type) {
-	return PKBFollows::getResultGenericRight(followedBy, type, followsTable);
-}
-*/
 TABLE PKBFollows::getAllFollowedByFollowsStarStmt(STMT_TYPE type1, STMT_TYPE type2) {
 	return PKBFollows::getResultTableGenericBoth(type1, type2, followsStarTable);
 }

@@ -8,7 +8,7 @@ class PKBCall {
 public:
 	static bool setCallStmt(STMT_NO stmtNo, PROC_NAME q);
 	static bool setCallProc(PROC_NAME caller, PROC_NAME callee);
-	static bool setCallStarProc(PROC_NAME caller, PROC_NAME callee);
+	static bool setCallTProc(PROC_NAME caller, PROC_NAME callee);
 	static bool isCallRelationship(PROC_NAME caller, PROC_NAME callee);
 	static bool isCallStarRelationship(PROC_NAME caller, PROC_NAME callee);
 

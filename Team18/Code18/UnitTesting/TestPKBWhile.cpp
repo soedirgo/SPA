@@ -45,7 +45,7 @@ namespace UnitTesting
 			PKB PKB;
 			PKB.clear();
 
-			PKB.setWhileUsesRelation("6", "i");
+			PKB.setWhileCondition("6", "i");
 		}
 
 		TEST_METHOD(WhileUsesRelationship)
