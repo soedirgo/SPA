@@ -206,20 +206,54 @@ TABLE PKB::getParentTEntEnt(STMT_TYPE s1, STMT_TYPE s2) {
 
 
 //Modifies
-bool PKB::setModifiesStmt(STMT_NO stmtNo, VAR_NAME varName) {
-	return PKBModifies::setModifiesStmt(stmtNo, varName);
+bool PKB::setModifiesS(STMT_NO stmtNo, VAR_NAME varName) {
+	return PKBModifies::setModifiesS(stmtNo, varName);
 };
 
-bool PKB::setModifiesProc(PROC_NAME procName, VAR_NAME varName) {
-	return PKBModifies::setModifiesProc(procName, varName);
+bool PKB::setModifiesP(PROC_NAME procName, VAR_NAME varName) {
+	return PKBModifies::setModifiesP(procName, varName);
 };
 
-bool PKB::isModifiesStmtRelationship(STMT_NO stmtNo, VAR_NAME varName) {
-	return PKBModifies::isModifiesStmtRelationship(stmtNo, varName);
+//Modifies Bool Evaluation
+bool PKB::isModifiesSIdentAny(STMT_NO stmtNo) {
+	return PKBModifies::isModifiesSIdentAny(stmtNo);
+}
+bool PKB::isModifiesSIdentIdent(STMT_NO stmtNo, VAR_NAME varName) {
+	return PKBModifies::isModifiesSIdentIdent(stmtNo, varName);
 }
 
-bool PKB::isModifiesProcRelationship(PROC_NAME procName, VAR_NAME varName) {
-	return PKBModifies::isModifiesProcRelationship(procName, varName);
+bool PKB::isModifiesPIdentAny(PROC_NAME procName) {
+	return PKBModifies::isModifiesPIdentAny(procName);
+}
+bool PKB::isModifiesPIdentIdent(PROC_NAME procName, VAR_NAME varName) {
+	return PKBModifies::isModifiesPIdentIdent(procName, varName);
+}
+
+//Modifies Table Evaluation
+STMT_LIST PKB::getModifiesSEntAny(STMT_TYPE type) {
+	return PKBModifies::getModifiesSEntAny(type);
+}
+TABLE PKB::getModifiesSEntIdent(STMT_TYPE type, VAR_NAME varName) {
+	return PKBModifies::getModifiesSEntIdent(type, varName);
+}
+VAR_LIST PKB::getModifiesSIdentEnt(STMT_NO stmtNo) {
+	return PKBModifies::getModifiesSIdentEnt(stmtNo);
+}
+TABLE PKB::getModifiesSEntEnt(STMT_TYPE type) {
+	return PKBModifies::getModifiesSEntEnt(type);
+}
+
+PROC_LIST PKB::getModifiesPEntAny() {
+	return PKBModifies::getModifiesPEntAny();
+}
+PROC_LIST PKB::getModifiesPEntIdent(VAR_NAME varName) {
+	return PKBModifies::getModifiesPEntIdent(varName);
+}
+VAR_LIST PKB::getModifiesPIdentEnt(PROC_NAME procName) {
+	return PKBModifies::getModifiesPIdentEnt(procName);
+}
+TABLE PKB::getModifiesPEntEnt() {
+	return PKBModifies::getModifiesPEntEnt();
 }
 
 
@@ -233,12 +267,46 @@ bool PKB::setUsesP(PROC_NAME procName, VAR_NAME varName) {
 	return PKBUses::setUsesP(procName, varName);
 };
 
-bool PKB::isUsesStmtRelationship(STMT_NO stmtNo, VAR_NAME varName) {
-	return PKBUses::isUsesS(stmtNo, varName);
+//Uses Bool Evaluation
+bool PKB::isUsesSIdentAny(STMT_NO stmtNo) {
+	return PKBUses::isUsesSIdentAny(stmtNo);
+}
+bool PKB::isUsesSIdentIdent(STMT_NO stmtNo, VAR_NAME varName) {
+	return PKBUses::isUsesSIdentIdent(stmtNo, varName);
 }
 
-bool PKB::isUsesProcRelationship(PROC_NAME procName, VAR_NAME varName) {
-	return PKBUses::isUsesP(procName, varName);
+bool PKB::isUsesPIdentAny(PROC_NAME procName) {
+	return PKBUses::isUsesPIdentAny(procName);
+}
+bool PKB::isUsesPIdentIdent(PROC_NAME procName, VAR_NAME varName) {
+	return PKBUses::isUsesPIdentIdent(procName, varName);
+}
+
+//Uses Table Evaluation
+STMT_LIST PKB::getUsesSEntAny(STMT_TYPE type) {
+	return PKBUses::getUsesSEntAny(type);
+}
+STMT_LIST PKB::getUsesSEntIdent(STMT_TYPE type, VAR_NAME varName) {
+	return  PKBUses::getUsesSEntIdent(type, varName);
+}
+VAR_LIST PKB::getUsesSIdentEnt(STMT_NO stmtNo) {
+	return  PKBUses::getUsesSIdentEnt(stmtNo);
+}
+TABLE PKB::getUsesSEntEnt(STMT_TYPE type) {
+	return PKBUses::getUsesSEntEnt(type);
+}
+
+PROC_LIST PKB::getUsesPEntAny() {
+	return PKBUses::getUsesPEntAny();
+}
+PROC_LIST PKB::getUsesPEntIdent(VAR_NAME varName) {
+	return PKB::getUsesPEntIdent(varName);
+}
+VAR_LIST PKB::getUsesPIdentEnt(PROC_NAME procName) {
+	return PKB::getUsesPIdentEnt(procName);
+}
+TABLE PKB::getUsesPEntEnt() {
+	return PKB::getUsesPEntEnt();
 }
 
 /*
@@ -280,7 +348,7 @@ bool PKB::insertAssignRelation(int stmtNo, string varModified, unordered_set<str
 	try {
 		setAssignStmt(stmtNo, varModified);
 		setAssignStmtByVar(stmtNo, varModified);
-		PKBModifies::setModifiesStmt(stmtNo, varModified);
+		PKBModifies::setModifiesS(stmtNo, varModified);
 		if (!varUsed.empty()) {
 			for (string var : varUsed) {
 				setUsesS(stmtNo, var);
