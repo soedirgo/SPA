@@ -12,25 +12,34 @@ public:
 	static STMT_NO getFollowsStmt(STMT_NO followedBy);
 	static TABLE getFollowsTable();
 
-	static bool isFollows(STMT_REF stmt1, STMT_REF stmt2);
-	static bool isFollowsT(STMT_REF stmt1, STMT_REF stmt2);
+	//Bool Evaluation
+	static bool isFollowsAnyAny();
+	static bool isFollowsAnyIdent(STMT_NO s2);
+	static bool isFollowsIdentAny(STMT_NO s1);
+	static bool isFollowsIdentIdent(STMT_NO s1, STMT_NO s2);
 
-	static TABLE getFollows(STMT_REF s1, STMT_REF s2);
-	static TABLE getFollowsT(STMT_REF s1, STMT_REF s2);
+	static bool isFollowsTAnyAny();
+	static bool isFollowsTAnyIdent(STMT_NO s2);
+	static bool isFollowsTIdentAny(STMT_NO s1);
+	static bool isFollowsTIdentIdent(STMT_NO s1, STMT_NO s2);
+
+	//Table Evaluation
+	static TABLE getFollowsAnyEnt(STMT_TYPE s2);
+	static TABLE getFollowsIdentEnt(STMT_NO s1, STMT_TYPE s2);
+	static TABLE getFollowsEntAny(STMT_TYPE s1);
+	static TABLE getFollowsEntIdent(STMT_TYPE s1, STMT_NO s2);
+	static TABLE getFollowsEntEnt(STMT_TYPE s1, STMT_TYPE s2);
+
+	static TABLE getFollowsTAnyEnt(STMT_TYPE s2);
+	static TABLE getFollowsTIdentEnt(STMT_NO s1, STMT_TYPE s2);
+	static TABLE getFollowsTEntAny(STMT_TYPE s1);
+	static TABLE getFollowsTEntIdent(STMT_TYPE s1, STMT_NO s2);
+	static TABLE getFollowsTEntEnt(STMT_TYPE s1, STMT_TYPE s2);
 
 	// Clear
 	static bool clear();
 
 private:
-	static TABLE getResultTableGenericBoth(STMT_TYPE type1, STMT_TYPE type2, TABLE tableName);
-	static TABLE getResultGenericLeft(STMT_TYPE type, STMT_NO follows, TABLE tableName);
-	static TABLE getResultGenericRight(STMT_NO followedBy, STMT_TYPE type, TABLE tableName);
-	
-	static bool isLeftGenericRightGeneric(TABLE tableName);
-	static bool isLeftGenericRightFixed(STMT_NO follows, TABLE tableName);
-	static bool isLeftFixedRightGeneric(STMT_NO followedBy, TABLE tableName);
-	static bool isLeftFixedRightFixed(STMT_NO followedBy, STMT_NO follows, TABLE tableName);
-
 	static TABLE followsTable;
 	static TABLE followsTTable;
 };

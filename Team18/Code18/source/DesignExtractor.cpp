@@ -54,8 +54,8 @@ void DesignExtractor::extractFollowsStar()
 
 void DesignExtractor::extractCallStar()
 {
-	TABLE callProcTable = PKBCall::getCallProcTable();
-	for (auto vectorIter : callProcTable) {
+	TABLE callsProcTable = PKBCall::getCallProcTable();
+	for (auto vectorIter : callsProcTable) {
 		PROC_NAME caller = vectorIter.front();
 		PROC_NAME callee = vectorIter.back();
 		PKBCall::setCallTProc(caller, callee);

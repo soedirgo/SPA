@@ -44,23 +44,23 @@ namespace UnitTesting
 			PKBVariable PKB;
 			PKB.clear();
 
-			PKB.setVar("x");
-			PKB.setVar("z");
-			PKB.setVar("i");
-			PKB.setVar("y");
-			PKB.setVar("v");
+			PKB.setVariable("x");
+			PKB.setVariable("z");
+			PKB.setVariable("i");
+			PKB.setVariable("y");
+			PKB.setVariable("v");
 
 			//Extra insert test
-			PKB.setVar("x");
-			PKB.setVar("y");
-			PKB.setVar("z");
+			PKB.setVariable("x");
+			PKB.setVariable("y");
+			PKB.setVariable("z");
 
 		}
 
-		TEST_METHOD(getVariable)
+		TEST_METHOD(getVariables)
 		{
 			PKBVariable PKB;
-			VAR_LIST actual = PKB.getVariable();
+			VAR_LIST actual = PKB.getVariables();
 			VAR_LIST expected = { {"x"},{"z"},{"i"},{"y"},{"v"} };
 			Assert::IsTrue(actual == expected);
 		}

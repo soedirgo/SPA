@@ -66,14 +66,6 @@ bool PKB::setFollowsT(STMT_NO followedBy, STMT_NO follow) {
 	return PKBFollows::setFollowsStar(followedBy, follow);
 }
 
-bool PKB::isFollows(STMT_REF s1, STMT_REF s2) {
-	return PKBFollows::isFollows(s1, s2);
-}
-
-TABLE PKB::getFollows(STMT_REF s1, STMT_REF s2) {
-	return PKBFollows::getFollows(s1, s2);
-}
-
 //Parents
 bool PKB::setParent(STMT_NO parent, STMT_NO child) {
 	return PKBParent::setParent(parent, child);
@@ -83,13 +75,6 @@ bool PKB::setParentT(STMT_NO parent, STMT_NO child) {
 	return PKBParent::setParentStar(parent, child);
 }
 
-bool PKB::isParentRelationship(STMT_NO parent, STMT_NO child) {
-	return PKBParent::isParentRelationship(parent, child);
-}
-
-bool PKB::isParentStarRelationship(STMT_NO parent, STMT_NO child) {
-	return PKBParent::isParentStarRelationship(parent, child);
-}
 
 bool PKB::isParentExist(STMT_NO child) {
 	return PKBParent::isParentExist(child);
@@ -198,12 +183,12 @@ bool PKB::insertAssignRelation(int stmtNo, string varModified, unordered_set<str
 
 //Variable
 
-bool PKB::setVar(VAR_NAME varName) {
-	return PKBVariable::setVar(varName);
+bool PKB::setVariable(VAR_NAME varName) {
+	return PKBVariable::setVariable(varName);
 }
 
-VAR_LIST PKB::getVariable() {
-	return PKBVariable::getVariable();
+VAR_LIST PKB::getVariables() {
+	return PKBVariable::getVariables();
 }
 
 // constantTable APIs
@@ -228,13 +213,13 @@ bool PKB::setStmt(STMT_NO stmtNo, STMT_TYPE type) {
 	return PKBStmt::setStmt(stmtNo, type);
 }
 
-STMT_LIST PKB::getStmt() {
+STMT_LIST PKB::getStmts() {
 	return PKBStmt::getAllStmt();
 }
 
 // assignStmtTable APIs
 
-STMT_LIST PKB::getAssign() {
+STMT_LIST PKB::getAssigns() {
 	return PKBStmt::getAllStmtByType("assign");
 }
 
@@ -286,7 +271,7 @@ bool PKB::setAssignStmtByVar(STMT_NO stmtNo, string varName) {
 // whileTable APIs
 ////////////////////////////////////
 
-STMT_LIST PKB::getWhile() {
+STMT_LIST PKB::getWhiles() {
 	return PKBStmt::getAllStmtByType("while");
 };
 
@@ -295,7 +280,7 @@ STMT_LIST PKB::getWhile() {
 // ifTable APIs
 ////////////////////////////////////
 
-STMT_LIST PKB::getIf() {
+STMT_LIST PKB::getIfs() {
 	return PKBStmt::getAllStmtByType("if");
 };
 
@@ -303,7 +288,7 @@ STMT_LIST PKB::getIf() {
 // printTable APIs
 ////////////////////////////////////
 
-STMT_LIST PKB::getPrint() {
+STMT_LIST PKB::getPrints() {
 	return PKBStmt::getAllStmtByType("print");
 };
 
@@ -315,7 +300,7 @@ bool PKB::setPrint(STMT_NO stmtNo, VAR_NAME varName) {
 // ReadTable APIs
 ////////////////////////////////////
 
-STMT_LIST PKB::getRead() {
+STMT_LIST PKB::getReads() {
 	return PKBStmt::getAllStmtByType("read");
 };
 
@@ -342,7 +327,7 @@ bool PKB::setProcedure(PROC_NAME procName) {
 // CallTable APIs
 ////////////////////////////////////
 
-STMT_LIST PKB::getCall() {
+STMT_LIST PKB::getCalls() {
 	return PKBStmt::getAllStmtByType("call");
 };
 
@@ -358,18 +343,10 @@ bool PKB::setCallT(PROC_NAME caller, PROC_NAME callee) {
 	return PKBCall::setCallTProc(caller, callee);
 };
 
-bool PKB::isCallRelationship(PROC_NAME caller, PROC_NAME callee) {
-	return PKBCall::isCallRelationship(caller, callee);
-}
-
-bool PKB::isCallStarRelationship(PROC_NAME caller, PROC_NAME callee) {
-	return PKBCall::isCallStarRelationship(caller, callee);
-}
-
 ////////////////////////////////////
 // NextTable APIs
 ////////////////////////////////////
-STMT_LIST PKB::getProgLine() {
+STMT_LIST PKB::getProgLines() {
 	return PKBStmt::getAllStmt();
 }
 

@@ -64,22 +64,22 @@ TABLE PKBNext::getNextTable() {
 }
 
 TABLE PKBNext::getAllNextByLineNextLineStmt() {
-	return PKBNext::getResultTableGenericBoth(nextTable);
+	return PKBNext::getResultGenericBoth(nextTable);
 }
 LINE_LIST PKBNext::getAllNextByLineStmt(PROG_LINE progLine) {
-	return PKBNext::getResultTableGenericLeft(progLine, nextTable);
+	return PKBNext::getResultGenericLeft(progLine, nextTable);
 }
 LINE_LIST PKBNext::getAllNextLineStmt(PROG_LINE progLine) {
-	return PKBNext::getResultTableGenericRight(progLine, nextTable);
+	return PKBNext::getResultGenericRight(progLine, nextTable);
 }
 TABLE PKBNext::getAllNextByLineNextLineStarStmt() {
-	return PKBNext::getResultTableGenericBoth(nextStarTable);
+	return PKBNext::getResultGenericBoth(nextStarTable);
 }
 LINE_LIST PKBNext::getAllNextByLineStarStmt(PROG_LINE progLine) {
-	return PKBNext::getResultTableGenericLeft(progLine, nextStarTable);
+	return PKBNext::getResultGenericLeft(progLine, nextStarTable);
 }
 LINE_LIST PKBNext::getAllNextLineStarStmt(PROG_LINE progLine) {
-	return PKBNext::getResultTableGenericRight(progLine, nextStarTable);
+	return PKBNext::getResultGenericRight(progLine, nextStarTable);
 }
 
 bool PKBNext::clear() {
@@ -88,11 +88,11 @@ bool PKBNext::clear() {
 	return true;
 }
 
-TABLE PKBNext::getResultTableGenericBoth(TABLE tableName) {
+TABLE PKBNext::getResultGenericBoth(TABLE tableName) {
 	return tableName;
 }
 
-LINE_LIST PKBNext::getResultTableGenericLeft(PROG_LINE progLine, TABLE tableName) {
+LINE_LIST PKBNext::getResultGenericLeft(PROG_LINE progLine, TABLE tableName) {
 	LINE_LIST resultTable;
 	LINE_LIST list;
 	PROG_LINE n;
@@ -111,7 +111,7 @@ LINE_LIST PKBNext::getResultTableGenericLeft(PROG_LINE progLine, TABLE tableName
 	return resultTable;
 }
 
-LINE_LIST PKBNext::getResultTableGenericRight(PROG_LINE progLine, TABLE tableName) {
+LINE_LIST PKBNext::getResultGenericRight(PROG_LINE progLine, TABLE tableName) {
 	LINE_LIST resultTable;
 	LINE_LIST list;
 	PROG_LINE n;

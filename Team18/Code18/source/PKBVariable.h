@@ -6,8 +6,8 @@
 class PKBVariable {
 public:
 
-	static bool setVar(VAR_NAME varName);
-	static VAR_LIST getVariable();
+	static bool setVariable(VAR_NAME varName);
+	static VAR_LIST getVariables();
 
 	// Clear
 	static bool clear();

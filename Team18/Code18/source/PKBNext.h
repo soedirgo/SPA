@@ -27,9 +27,9 @@ public:
 	static bool clear();
 
 private:
-	static TABLE getResultTableGenericBoth(TABLE tableName);
-	static LINE_LIST getResultTableGenericLeft(PROG_LINE progLine, TABLE tableName);
-	static LINE_LIST getResultTableGenericRight(PROG_LINE progLine, TABLE tableName);
+	static TABLE getResultGenericBoth(TABLE tableName);
+	static LINE_LIST getResultGenericLeft(PROG_LINE progLine, TABLE tableName);
+	static LINE_LIST getResultGenericRight(PROG_LINE progLine, TABLE tableName);
 	static TABLE nextTable;
 	static TABLE nextStarTable;
 };

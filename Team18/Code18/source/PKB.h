@@ -41,19 +41,19 @@ public:
 	static bool clear();
 
 	//Variable Functions
-	static bool setVar(VAR_NAME varName);
-	static VAR_LIST getVariable();
+	static bool setVariable(VAR_NAME varName);
+	static VAR_LIST getVariables();
 
 	//Stmt Functions
 	static bool setStmt(STMT_NO stmtNo, STMT_TYPE type);
-	static STMT_LIST getStmt();
-	static STMT_LIST getPrint();
-	static STMT_LIST getRead();
-	static STMT_LIST getAssign();
-	static STMT_LIST getWhile();
-	static STMT_LIST getIf();
-	static STMT_LIST getCall();
-	static STMT_LIST getProgLine();
+	static STMT_LIST getStmts();
+	static STMT_LIST getPrints();
+	static STMT_LIST getReads();
+	static STMT_LIST getAssigns();
+	static STMT_LIST getWhiles();
+	static STMT_LIST getIfs();
+	static STMT_LIST getCalls();
+	static STMT_LIST getProgLines();
 
 	//Procedure Functions
 	static PROC_LIST getProcedures();
@@ -143,7 +143,7 @@ public:
 	static PROC_LIST getAllCalleStarProc(PROC_NAME procName);
 
 	static bool isCalls(PROC_NAME p1, PROC_NAME p2);
-	static TABLE getCall(PROC_NAME p1, PROC_NAME p2);
+	static TABLE getCalls(PROC_NAME p1, PROC_NAME p2);
 
 	//Next Function
 	static bool setNext(PROG_LINE n1, PROG_LINE n2);
