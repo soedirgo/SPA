@@ -4,7 +4,6 @@
 #include <utility>
 #include <vector>
 #include "Clause.h"
-#include "Entity.h"
 #include "Evaluator.h"
 #include "PKB.h"
 #include "Query.h"
