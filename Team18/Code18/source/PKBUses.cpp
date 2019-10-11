@@ -6,7 +6,7 @@ using namespace std;
 TABLE PKBUses::usesStmtTable;
 TABLE PKBUses::usesProcTable;
 
-bool PKBUses::setUsesStmt(STMT_NO stmtNo, VAR_NAME varName) {
+bool PKBUses::setUsesS(STMT_NO stmtNo, VAR_NAME varName) {
 	vector<string> tuple = vector<string>();
 	tuple.push_back(stmtNo);
 	tuple.push_back(varName);
@@ -14,7 +14,7 @@ bool PKBUses::setUsesStmt(STMT_NO stmtNo, VAR_NAME varName) {
 	return true;
 }
 
-bool PKBUses::setUsesProc(PROC_NAME procName, VAR_NAME varName) {
+bool PKBUses::setUsesP(PROC_NAME procName, VAR_NAME varName) {
 	vector<string> tuple = vector<string>();
 	tuple.push_back(procName);
 	tuple.push_back(varName);
@@ -32,7 +32,7 @@ bool PKBUses::clear() {
 //Uses(1, "x")  -> True/False
 //Uses(1 , _) -> True/False
 //LHS fixed stmt, RHS fixed var or _ 
-bool PKBUses::isUsesStmt(STMT_NO stmtNo, VAR_NAME varName) {
+bool PKBUses::isUsesS(STMT_NO stmtNo, VAR_NAME varName) {
 	for (auto vectorIter : usesStmtTable) {
 		if ( (varName == "_")  && (vectorIter.front() == stmtNo) ) {
 			return true;
@@ -49,7 +49,7 @@ bool PKBUses::isUsesStmt(STMT_NO stmtNo, VAR_NAME varName) {
 //Uses(procName1, "x") -> True/False
 //Uses(procName1, _) -> True/False
 //LHS fixed proc, RHS fixed var or _ 
-bool PKBUses::isUsesProc(PROC_NAME procName, VAR_NAME varName) {
+bool PKBUses::isUsesP(PROC_NAME procName, VAR_NAME varName) {
 	for (auto vectorIter : usesProcTable) {
 		if (varName == "_"  && vectorIter.front() == procName ) {
 			return true; 

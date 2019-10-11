@@ -111,8 +111,8 @@ public:
 	static bool isModifiesProcRelationship(PROC_NAME procName, VAR_NAME varName);
 
 	//Uses Function
-	static bool setUsesStmt(STMT_NO stmtNo, VAR_NAME varName);
-	static bool setUsesProc(PROC_NAME procName, VAR_NAME varName);
+	static bool setUsesS(STMT_NO stmtNo, VAR_NAME varName);
+	static bool setUsesP(PROC_NAME procName, VAR_NAME varName);
 	static bool isUsesStmtRelationship(STMT_NO stmtNo, VAR_NAME varName);
 	static bool isUsesProcRelationship(PROC_NAME procName, VAR_NAME varName);
 

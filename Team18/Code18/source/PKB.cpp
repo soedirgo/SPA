@@ -119,21 +119,21 @@ bool PKB::isModifiesProcRelationship(PROC_NAME procName, VAR_NAME varName) {
 
 
 //Uses
-bool PKB::setUsesStmt(STMT_NO stmtNo, VAR_NAME varName) {
-	return PKBUses::setUsesStmt(stmtNo, varName);
+bool PKB::setUsesS(STMT_NO stmtNo, VAR_NAME varName) {
+	return PKBUses::setUsesS(stmtNo, varName);
 
 };
 
-bool PKB::setUsesProc(PROC_NAME procName, VAR_NAME varName) {
-	return PKBUses::setUsesProc(procName, varName);
+bool PKB::setUsesP(PROC_NAME procName, VAR_NAME varName) {
+	return PKBUses::setUsesP(procName, varName);
 };
 
 bool PKB::isUsesStmtRelationship(STMT_NO stmtNo, VAR_NAME varName) {
-	return PKBUses::isUsesStmt(stmtNo, varName);
+	return PKBUses::isUsesS(stmtNo, varName);
 }
 
 bool PKB::isUsesProcRelationship(PROC_NAME procName, VAR_NAME varName) {
-	return PKBUses::isUsesProc(procName, varName);
+	return PKBUses::isUsesP(procName, varName);
 }
 
 /*
@@ -178,7 +178,7 @@ bool PKB::insertAssignRelation(int stmtNo, string varModified, unordered_set<str
 		PKBModifies::setModifiesStmt(stmtNo, varModified);
 		if (!varUsed.empty()) {
 			for (string var : varUsed) {
-				setUsesStmt(stmtNo, var);
+				setUsesS(stmtNo, var);
 				setUsesVarByStmt(stmtNo, var);
 			}
 		}

@@ -69,104 +69,104 @@ namespace UnitTesting
 
 			
 			//Line #3 Calls Second
-			PKB.setUsesStmt("3", "y");
-			PKB.setUsesStmt("3", "i");
-			PKB.setUsesStmt("3", "x");
-			PKB.setUsesStmt("3", "z"); 
-			PKB.setUsesStmt("3", "v"); //#3 Calls Second, which calls Third
+			PKB.setUsesS("3", "y");
+			PKB.setUsesS("3", "i");
+			PKB.setUsesS("3", "x");
+			PKB.setUsesS("3", "z"); 
+			PKB.setUsesS("3", "v"); //#3 Calls Second, which calls Third
 
 			//Direct assignment stmts with var on RHS 
-			PKB.setUsesStmt("6", "i");
-			PKB.setUsesStmt("7", "x");
-			PKB.setUsesStmt("7", "y");
-			PKB.setUsesStmt("9", "i");
-			PKB.setUsesStmt("6", "x");
-			PKB.setUsesStmt("6", "y");
-			PKB.setUsesStmt("6", "i");
-			PKB.setUsesStmt("8", "z");
-			PKB.setUsesStmt("8", "v");
-			PKB.setUsesStmt("10", "x");
-			PKB.setUsesStmt("11", "x");
-			PKB.setUsesStmt("13", "z");
-			PKB.setUsesStmt("13", "x");
-			PKB.setUsesStmt("13", "i");
-			PKB.setUsesStmt("14", "z");
-			PKB.setUsesStmt("15", "x");
-			PKB.setUsesStmt("15", "y");
-			PKB.setUsesStmt("15", "z");
-			PKB.setUsesStmt("17", "z");
-			PKB.setUsesStmt("18", "v");
+			PKB.setUsesS("6", "i");
+			PKB.setUsesS("7", "x");
+			PKB.setUsesS("7", "y");
+			PKB.setUsesS("9", "i");
+			PKB.setUsesS("6", "x");
+			PKB.setUsesS("6", "y");
+			PKB.setUsesS("6", "i");
+			PKB.setUsesS("8", "z");
+			PKB.setUsesS("8", "v");
+			PKB.setUsesS("10", "x");
+			PKB.setUsesS("11", "x");
+			PKB.setUsesS("13", "z");
+			PKB.setUsesS("13", "x");
+			PKB.setUsesS("13", "i");
+			PKB.setUsesS("14", "z");
+			PKB.setUsesS("15", "x");
+			PKB.setUsesS("15", "y");
+			PKB.setUsesS("15", "z");
+			PKB.setUsesS("17", "z");
+			PKB.setUsesS("18", "v");
 
 			//More complex uses 
 
 
-			PKB.setUsesProc("Second", "i");
-			PKB.setUsesProc("Second", "x");
-			PKB.setUsesProc("Second", "y");
-			PKB.setUsesProc("Second", "z");
-			PKB.setUsesProc("Third", "v");
-			PKB.setUsesProc("Third", "z");
+			PKB.setUsesP("Second", "i");
+			PKB.setUsesP("Second", "x");
+			PKB.setUsesP("Second", "y");
+			PKB.setUsesP("Second", "z");
+			PKB.setUsesP("Third", "v");
+			PKB.setUsesP("Third", "z");
 
-			PKB.setUsesProc("Second", "v");
-			PKB.setUsesProc("First", "i");
-			PKB.setUsesProc("First", "x");
-			PKB.setUsesProc("First", "y");
-			PKB.setUsesProc("First", "z");
-			PKB.setUsesProc("First", "v");
+			PKB.setUsesP("Second", "v");
+			PKB.setUsesP("First", "i");
+			PKB.setUsesP("First", "x");
+			PKB.setUsesP("First", "y");
+			PKB.setUsesP("First", "z");
+			PKB.setUsesP("First", "v");
 
 			Calls.setCallProc("3", "Second");
 			Calls.setCallProc("8", "Third");
 
 		}
 
-		TEST_METHOD(isUsesStmt)
+		TEST_METHOD(isUsesS)
 		{
 			PKBUses PKB;
-			Assert::IsTrue(PKB.isUsesStmt("6", "i"));
-			Assert::IsTrue(PKB.isUsesStmt("7", "x"));
-			Assert::IsTrue(PKB.isUsesStmt("7", "y"));
-			Assert::IsTrue(PKB.isUsesStmt("9", "i"));
-			Assert::IsTrue(PKB.isUsesStmt("6", "x"));
-			Assert::IsTrue(PKB.isUsesStmt("6", "y"));
-			Assert::IsTrue(PKB.isUsesStmt("10", "x"));
-			Assert::IsTrue(PKB.isUsesStmt("11", "x"));
-			Assert::IsTrue(PKB.isUsesStmt("13", "z"));
-			Assert::IsTrue(PKB.isUsesStmt("13", "x"));
-			Assert::IsTrue(PKB.isUsesStmt("14", "z"));
-			Assert::IsTrue(PKB.isUsesStmt("15", "x"));
-			Assert::IsTrue(PKB.isUsesStmt("15", "y"));
-			Assert::IsTrue(PKB.isUsesStmt("15", "z"));
-			Assert::IsTrue(PKB.isUsesStmt("17", "z"));
-			Assert::IsTrue(PKB.isUsesStmt("18", "v"));
+			Assert::IsTrue(PKB.isUsesS("6", "i"));
+			Assert::IsTrue(PKB.isUsesS("7", "x"));
+			Assert::IsTrue(PKB.isUsesS("7", "y"));
+			Assert::IsTrue(PKB.isUsesS("9", "i"));
+			Assert::IsTrue(PKB.isUsesS("6", "x"));
+			Assert::IsTrue(PKB.isUsesS("6", "y"));
+			Assert::IsTrue(PKB.isUsesS("10", "x"));
+			Assert::IsTrue(PKB.isUsesS("11", "x"));
+			Assert::IsTrue(PKB.isUsesS("13", "z"));
+			Assert::IsTrue(PKB.isUsesS("13", "x"));
+			Assert::IsTrue(PKB.isUsesS("14", "z"));
+			Assert::IsTrue(PKB.isUsesS("15", "x"));
+			Assert::IsTrue(PKB.isUsesS("15", "y"));
+			Assert::IsTrue(PKB.isUsesS("15", "z"));
+			Assert::IsTrue(PKB.isUsesS("17", "z"));
+			Assert::IsTrue(PKB.isUsesS("18", "v"));
 
-			Assert::IsTrue(PKB.isUsesStmt("6", "_"));
-			Assert::IsTrue(PKB.isUsesStmt("7", "_"));
-			Assert::IsTrue(PKB.isUsesStmt("7", "_"));
-			Assert::IsTrue(PKB.isUsesStmt("9", "_"));
-			Assert::IsTrue(PKB.isUsesStmt("6", "_"));
-			Assert::IsTrue(PKB.isUsesStmt("6", "_"));
-			Assert::IsTrue(PKB.isUsesStmt("10", "_"));
-			Assert::IsTrue(PKB.isUsesStmt("11", "_"));
-			Assert::IsTrue(PKB.isUsesStmt("13", "_"));
-			Assert::IsTrue(PKB.isUsesStmt("13", "_"));
-			Assert::IsTrue(PKB.isUsesStmt("14", "_"));
-			Assert::IsTrue(PKB.isUsesStmt("15", "_"));
-			Assert::IsTrue(PKB.isUsesStmt("15", "_"));
-			Assert::IsTrue(PKB.isUsesStmt("15", "_"));
-			Assert::IsTrue(PKB.isUsesStmt("17", "_"));
-			Assert::IsTrue(PKB.isUsesStmt("18", "_"));
+			Assert::IsTrue(PKB.isUsesS("6", "_"));
+			Assert::IsTrue(PKB.isUsesS("7", "_"));
+			Assert::IsTrue(PKB.isUsesS("7", "_"));
+			Assert::IsTrue(PKB.isUsesS("9", "_"));
+			Assert::IsTrue(PKB.isUsesS("6", "_"));
+			Assert::IsTrue(PKB.isUsesS("6", "_"));
+			Assert::IsTrue(PKB.isUsesS("10", "_"));
+			Assert::IsTrue(PKB.isUsesS("11", "_"));
+			Assert::IsTrue(PKB.isUsesS("13", "_"));
+			Assert::IsTrue(PKB.isUsesS("13", "_"));
+			Assert::IsTrue(PKB.isUsesS("14", "_"));
+			Assert::IsTrue(PKB.isUsesS("15", "_"));
+			Assert::IsTrue(PKB.isUsesS("15", "_"));
+			Assert::IsTrue(PKB.isUsesS("15", "_"));
+			Assert::IsTrue(PKB.isUsesS("17", "_"));
+			Assert::IsTrue(PKB.isUsesS("18", "_"));
 			
 		}
-		TEST_METHOD(isUsesProc)
+		TEST_METHOD(isUsesP)
 		{
 			PKBUses PKB;
-			Assert::IsTrue(PKB.isUsesProc("Second", "x"));
-			Assert::IsTrue(PKB.isUsesProc("Second", "y"));
-			Assert::IsTrue(PKB.isUsesProc("Second", "z"));
+			Assert::IsTrue(PKB.isUsesP("Second", "x"));
+			Assert::IsTrue(PKB.isUsesP("Second", "y"));
+			Assert::IsTrue(PKB.isUsesP("Second", "z"));
 
-			Assert::IsTrue(PKB.isUsesProc("First", "_"));
-			Assert::IsTrue(PKB.isUsesProc("Second", "_"));
-			Assert::IsTrue(PKB.isUsesProc("Third", "_"));
+			Assert::IsTrue(PKB.isUsesP("First", "_"));
+			Assert::IsTrue(PKB.isUsesP("Second", "_"));
+			Assert::IsTrue(PKB.isUsesP("Third", "_"));
 		}
 
 		
