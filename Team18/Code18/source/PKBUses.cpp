@@ -84,7 +84,7 @@ STMT_LIST PKBUses::getAllUsesStmtByType(STMT_TYPE type) {
 STMT_LIST PKBUses::getUsesStmtByTypeAndVar(STMT_TYPE type, VAR_NAME varName) {
 	STMT_LIST stmtList = PKBStmt::getAllStmtByType(type);
 	STMT_LIST result;
-	if (type == "CALL") {
+	if (type == "call") {
 		for (auto callStmtNo : stmtList) {
 			vector<string> call1;
 			PROC_NAME procName = PKBCall::getCalledProcByStmt(callStmtNo.front());

@@ -22,7 +22,7 @@ bool PKBFollows::setFollowsStar(STMT_NO followedBy, STMT_NO follows) {
 	return true;
 }
 
-string PKBFollows::getFollows(STMT_NO followedBy) {
+STMT_NO PKBFollows::getFollowsStmt(STMT_NO followedBy) {
 	for (auto vectorIter : followsTable) {
 		if (vectorIter.front() == followedBy) {
 			return vectorIter.back();
@@ -106,7 +106,7 @@ bool PKBFollows::isFollowsS1StmtNoS2StmtNo(STMT_NO followedBy, STMT_NO follows) 
 
 //NEW EVALUATION API
 
-TABLE PKBFollows::getFollowsResult(STMT_REF s1, STMT_REF s2) {
+TABLE PKBFollows::getFollows(STMT_REF s1, STMT_REF s2) {
 	if (s1 == "_") {
 		if (isdigit(s2.at(0))) {
 			return PKBFollows::getResultGenericLeft(s1, s2, followsTable);
@@ -127,6 +127,8 @@ TABLE PKBFollows::getFollowsResult(STMT_REF s1, STMT_REF s2) {
 		return PKBFollows::getResultTableGenericBoth(s1, s2, followsTable);
 	}
 }
+
+
 
 TABLE PKBFollows::getFollowsS1S2Same(STMT_TYPE s1, STMT_TYPE s2) {
 	TABLE resultTable;

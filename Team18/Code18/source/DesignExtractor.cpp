@@ -76,7 +76,7 @@ void DesignExtractor::recurseCall(PROC_NAME caller, PROC_NAME callee) {
 }
 
 void DesignExtractor::recurseFollows(STMT_NO followedBy, STMT_NO follows) {
-	string newFollows = PKBFollows::getFollows(follows);
+	string newFollows = PKBFollows::getFollowsStmt(follows);
 	if (newFollows == "") {
 		return;
 	}
@@ -105,7 +105,13 @@ void DesignExtractor::recurseNext(PROG_LINE nextByLine, PROG_LINE nextLine, STMT
 	for (auto vectorIter : lineList) {
 		PROG_LINE newNextLine = vectorIter.back();
 		if (PKBNext::isNextStarRelationship(nextByLine, newNextLine)) {
-
+			STMT_NO follows = PKBFollows::getFollowsStmt(nextByLine);
+			if (follows == "") {
+				return;
+			}
+			else {
+				recurseNext(nextByLine, follows, whileList);
+			}
 			/*
 			for (auto vectorIter2 : whileList) {
 				if (vectorIter2.front() == nextByLine) {

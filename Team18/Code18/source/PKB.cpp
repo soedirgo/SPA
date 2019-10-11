@@ -235,7 +235,7 @@ STMT_LIST PKB::getStmts() {
 // assignStmtTable APIs
 
 STMT_LIST PKB::getAssigns() {
-	return PKBStmt::getAllStmtByType("ASSIGN");
+	return PKBStmt::getAllStmtByType("assign");
 }
 
 /*
@@ -287,7 +287,7 @@ bool PKB::setAssignStmtByVar(STMT_NO stmtNo, string varName) {
 ////////////////////////////////////
 
 STMT_LIST PKB::getWhiles() {
-	return PKBStmt::getAllStmtByType("WHILE");
+	return PKBStmt::getAllStmtByType("while");
 };
 
 
@@ -296,7 +296,7 @@ STMT_LIST PKB::getWhiles() {
 ////////////////////////////////////
 
 STMT_LIST PKB::getIfs() {
-	return PKBStmt::getAllStmtByType("IF");
+	return PKBStmt::getAllStmtByType("if");
 };
 
 ////////////////////////////////////
@@ -304,7 +304,7 @@ STMT_LIST PKB::getIfs() {
 ////////////////////////////////////
 
 STMT_LIST PKB::getPrints() {
-	return PKBStmt::getAllStmtByType("PRINT");
+	return PKBStmt::getAllStmtByType("print");
 };
 
 bool PKB::setPrint(STMT_NO stmtNo, VAR_NAME varName) {
@@ -316,7 +316,7 @@ bool PKB::setPrint(STMT_NO stmtNo, VAR_NAME varName) {
 ////////////////////////////////////
 
 STMT_LIST PKB::getReads() {
-	return PKBStmt::getAllStmtByType("READ");
+	return PKBStmt::getAllStmtByType("read");
 };
 
 bool PKB::setRead(STMT_NO stmtNo, VAR_NAME varName) {
@@ -343,7 +343,7 @@ bool PKB::setProcedure(PROC_NAME procName) {
 ////////////////////////////////////
 
 STMT_LIST PKB::getCalls() {
-	return PKBStmt::getAllStmtByType("CALL");
+	return PKBStmt::getAllStmtByType("call");
 };
 
 bool PKB::setCallProc(PROC_NAME caller, PROC_NAME callee) {
