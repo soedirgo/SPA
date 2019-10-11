@@ -206,20 +206,20 @@ TABLE PKB::getParentTEntEnt(STMT_TYPE s1, STMT_TYPE s2) {
 
 
 //Modifies
-bool PKB::setModifiesStmt(STMT_NO stmtNo, VAR_NAME varName) {
-	return PKBModifies::setModifiesStmt(stmtNo, varName);
+bool PKB::setModifiesS(STMT_NO stmtNo, VAR_NAME varName) {
+	return PKBModifies::setModifiesS(stmtNo, varName);
 };
 
-bool PKB::setModifiesProc(PROC_NAME procName, VAR_NAME varName) {
-	return PKBModifies::setModifiesProc(procName, varName);
+bool PKB::setModifiesP(PROC_NAME procName, VAR_NAME varName) {
+	return PKBModifies::setModifiesP(procName, varName);
 };
 
-bool PKB::isModifiesStmtRelationship(STMT_NO stmtNo, VAR_NAME varName) {
-	return PKBModifies::isModifiesStmtRelationship(stmtNo, varName);
+bool PKB::isModifiesSIdentIdent(STMT_NO stmtNo, VAR_NAME varName) {
+	return PKBModifies::isModifiesSIdentIdent(stmtNo, varName);
 }
 
-bool PKB::isModifiesProcRelationship(PROC_NAME procName, VAR_NAME varName) {
-	return PKBModifies::isModifiesProcRelationship(procName, varName);
+bool PKB::isModifiesPIdentIdent(PROC_NAME procName, VAR_NAME varName) {
+	return PKBModifies::isModifiesPIdentIdent(procName, varName);
 }
 
 
@@ -234,11 +234,11 @@ bool PKB::setUsesP(PROC_NAME procName, VAR_NAME varName) {
 };
 
 bool PKB::isUsesStmtRelationship(STMT_NO stmtNo, VAR_NAME varName) {
-	return PKBUses::isUsesS(stmtNo, varName);
+	return PKBUses::isUsesSIdentIdent(stmtNo, varName);
 }
 
 bool PKB::isUsesProcRelationship(PROC_NAME procName, VAR_NAME varName) {
-	return PKBUses::isUsesP(procName, varName);
+	return PKBUses::isUsesPIdentIdent(procName, varName);
 }
 
 /*
@@ -280,7 +280,7 @@ bool PKB::insertAssignRelation(int stmtNo, string varModified, unordered_set<str
 	try {
 		setAssignStmt(stmtNo, varModified);
 		setAssignStmtByVar(stmtNo, varModified);
-		PKBModifies::setModifiesStmt(stmtNo, varModified);
+		PKBModifies::setModifiesS(stmtNo, varModified);
 		if (!varUsed.empty()) {
 			for (string var : varUsed) {
 				setUsesS(stmtNo, var);

@@ -135,10 +135,10 @@ public:
 	static TABLE getParentTEntEnt(STMT_TYPE s1, STMT_TYPE s2);
 
 	//Modifies Function
-	static bool setModifiesStmt(STMT_NO stmtNo, VAR_NAME varName);
-	static bool setModifiesProc(PROC_NAME procName, VAR_NAME varName);
-	static bool isModifiesStmtRelationship(STMT_NO stmtNo, VAR_NAME varName);
-	static bool isModifiesProcRelationship(PROC_NAME procName, VAR_NAME varName);
+	static bool setModifiesS(STMT_NO stmtNo, VAR_NAME varName);
+	static bool setModifiesP(PROC_NAME procName, VAR_NAME varName);
+	static bool isModifiesSIdentIdent(STMT_NO stmtNo, VAR_NAME varName);
+	static bool isModifiesPIdentIdent(PROC_NAME procName, VAR_NAME varName);
 
 	//Uses Function
 	static bool setUsesS(STMT_NO stmtNo, VAR_NAME varName);

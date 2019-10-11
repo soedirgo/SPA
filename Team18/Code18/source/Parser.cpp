@@ -64,7 +64,7 @@ int Parser::Parse(string filename) {
 			for (string var : modifies) {
 				pkb.setVariable(var);
 				currProc.addModifies(var);
-				pkb.setModifiesStmt(to_string(stmtNo), var);
+				pkb.setModifiesS(to_string(stmtNo), var);
 			}
 			for (string var : uses) {
 				if (isdigit(var.at(0))) {
@@ -113,7 +113,7 @@ int Parser::Parse(string filename) {
 			for (string var : modifies) {
 				pkb.setVariable(var);
 				currProc.addModifies(var);
-				pkb.setModifiesStmt(to_string(stmtNo), var);
+				pkb.setModifiesS(to_string(stmtNo), var);
 			}
 			for (string var : uses) {
 				if (isdigit(var.at(0))) {
@@ -307,10 +307,10 @@ int Parser::Parse(string filename) {
 				if (proc.getProcName() == procName) {
 					for (string var : proc.getModifies()) {
 						int currStmtNo = stmtNo;
-						pkb.setModifiesStmt(to_string(stmtNo), var);
+						pkb.setModifiesS(to_string(stmtNo), var);
 						while (PKB::isParentExist(to_string(currStmtNo))) {
 							currStmtNo = stoi(PKB::getParentStmt(to_string(currStmtNo)));
-							pkb.setModifiesStmt(to_string(currStmtNo), var);
+							pkb.setModifiesS(to_string(currStmtNo), var);
 						}
 					}
 					for (string var : proc.getUses()) {
