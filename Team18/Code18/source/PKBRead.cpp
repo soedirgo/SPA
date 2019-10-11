@@ -1,7 +1,7 @@
 #include "PKBRead.h"
 
 using namespace std;
-unordered_set<vector<string>, VectorDoubleStringHash> PKBRead::readTable;
+TABLE PKBRead::readTable;
 
 bool PKBRead::setRead(STMT_NO stmtNo, VAR_NAME varName) {
 	vector<string> tuple = vector<string>();

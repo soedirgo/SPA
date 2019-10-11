@@ -1,7 +1,7 @@
 #include "PKBConstant.h"
 using namespace std;
 
-unordered_set<vector<string>, VectorDoubleStringHash> PKBConstant::constantTable;
+TABLE PKBConstant::constantTable;
 
 bool PKBConstant::setConstant(STMT_NO stmtNo, CONST_VAL constValue) {
 	vector<string> tuple = vector<string>();

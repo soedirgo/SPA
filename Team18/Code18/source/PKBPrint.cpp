@@ -1,7 +1,7 @@
 #include "PKBPrint.h"
 
 using namespace std;
-unordered_set<vector<string>, VectorDoubleStringHash> PKBPrint::printTable;
+TABLE PKBPrint::printTable;
 
 bool PKBPrint::setPrint(STMT_NO stmtNo, VAR_NAME varName) {
 	vector<string> tuple = vector<string>();

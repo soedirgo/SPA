@@ -42,6 +42,6 @@ private:
 	static TABLE getResultTableGenericBoth(STMT_TYPE type1, STMT_TYPE type2, TABLE tableName);
 	static STMT_LIST getResultGenericLeft(STMT_TYPE type, STMT_NO follows, TABLE tableName);
 	static STMT_LIST getResultGenericRight(STMT_NO followedBy, STMT_TYPE type, TABLE tableName);
-	static std::unordered_set<std::vector<std::string>, VectorDoubleStringHash> followsTable;
-	static std::unordered_set<std::vector<std::string>, VectorDoubleStringHash> followsStarTable;
+	static TABLE followsTable;
+	static TABLE followsStarTable;
 };

@@ -82,13 +82,13 @@ namespace Evaluator {
 			if (fil.count(varRef)) { // varRef has been filtered before
 				variables.insert(fil[varRef]);
 			} else if (declarations.count(varRef)) { // varRef is a synonym
-				for (const auto& var : PKB::getAllVar()) {
+				for (const auto& var : PKB::getVariables()) {
 					variables.insert(var.back());
 				}
 			} else if (varRef.front() == '\"' && varRef.back() == '\"') { // varRef is an explicit name
 				variables.insert(varRef.substr(1, varRef.size() - 2));
 			} else { // varRef is a ``_''
-				for (const auto& var : PKB::getAllVar()) {
+				for (const auto& var : PKB::getVariables()) {
 					variables.insert(var.back());
 				}
 			}
@@ -102,11 +102,11 @@ namespace Evaluator {
 				factors.insert(fil[factorRef]);
 			} else if (declarations.count(factorRef)) { // factorRef is a synonym
                 if (declarations[factorRef] == "variable") {
-                    for (const auto& var : PKB::getAllVar()) {
+                    for (const auto& var : PKB::getVariables()) {
                         factors.insert(var.back());
                     }
                 } else if (declarations[factorRef] == "constant") {
-                    for (const auto& cons : PKB::getAllConstant()) {
+                    for (const auto& cons : PKB::getConstants()) {
                         factors.insert(cons.back());
                     }
                 }
@@ -114,10 +114,10 @@ namespace Evaluator {
                 // factorRef is an explicit name
                 factors.insert(factorRef.substr(1, factorRef.length() - 2));
             } else { // factorRef is a ``_''
-				for (const auto& var : PKB::getAllVar()) {
+				for (const auto& var : PKB::getVariables()) {
 					factors.insert(var.back());
 				}
-                for (const auto& cons : PKB::getAllConstant()) {
+                for (const auto& cons : PKB::getConstants()) {
 					factors.insert(cons.back());
                 }
 			}
@@ -354,11 +354,11 @@ namespace Evaluator {
 		}
 		/*
 		else if (selectSynType == "variable") {
-			resultCandidates = PKB::getAllVar();
+			resultCandidates = PKB::getVariables();
 		} else if (selectSynType == "constant") {
-			resultCandidates = PKB::getAllConstant();
+			resultCandidates = PKB::getConstants();
 		} else if (selectSynType == "procedure") {
-			resultCandidates = PKB::getAllProc();
+			resultCandidates = PKB::getProcedures();
         }
 		*
 		

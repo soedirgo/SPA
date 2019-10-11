@@ -1,7 +1,7 @@
 #include "PKBStmt.h"
 using namespace std;
 
-unordered_set<vector<string>, VectorDoubleStringHash> PKBStmt::stmtTable;
+TABLE PKBStmt::stmtTable;
 
 bool PKBStmt::setStmt(STMT_NO stmtNo, STMT_TYPE type) {
 	vector<string> tuple = vector<string>();

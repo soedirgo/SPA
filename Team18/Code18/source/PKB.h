@@ -42,7 +42,7 @@ public:
 
 	//Variable Functions
 	static bool setVar(VAR_NAME varName);
-	static VAR_LIST getAllVar();
+	static VAR_LIST getVariables();
 
 	//Stmt Functions
 	static bool setStmt(STMT_NO stmtNo, STMT_TYPE type);
@@ -53,11 +53,11 @@ public:
 	static STMT_LIST getWhiles();
 	static STMT_LIST getIfs();
 	static STMT_LIST getCalls();
-	static STMT_LIST getNexts();
+	static STMT_LIST getProgLines();
 
 	//Procedure Functions
-	static PROC_LIST getAllProc();
-	static bool setProc(PROC_NAME procName);
+	static PROC_LIST getProcedures();
+	static bool setProcedure(PROC_NAME procName);
 
 	//Print Functions
 	static bool setPrint(STMT_NO stmtNo, VAR_NAME varName);
@@ -67,7 +67,7 @@ public:
 
 	//Constant Functions
 	static bool setConstant(STMT_NO stmtNo, CONST_VAL constantVal);
-	static CONST_LIST getAllConstant();
+	static CONST_LIST getConstants();
 	//static CONST_VAL getConstantValByStmt(STMT_NO stmtNo); 
 
 	//While Functions

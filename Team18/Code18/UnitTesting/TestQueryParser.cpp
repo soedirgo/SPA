@@ -37,7 +37,7 @@ namespace UnitTesting
 
             pkb.clear();
 
-            pkb.setProc("main");
+            pkb.setProcedure("main");
 
             pkb.setStmt(1, Assign);
             pkb.setAssignStmt(1, "x");

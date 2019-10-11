@@ -2,9 +2,9 @@
 #include "PKBProcedure.h"
 
 using namespace std;
-unordered_set<vector<string>, VectorDoubleStringHash> PKBCall::callProcTable;
-unordered_set<vector<string>, VectorDoubleStringHash> PKBCall::callStarProcTable;
-unordered_set<vector<string>, VectorDoubleStringHash> PKBCall::callStmtTable;
+TABLE PKBCall::callProcTable;
+TABLE PKBCall::callStarProcTable;
+TABLE PKBCall::callStmtTable;
 
 bool PKBCall::setCallProc(PROC_NAME caller, PROC_NAME callee) {
 	vector<string> tuple = vector<string>();
@@ -118,7 +118,7 @@ PROC_LIST PKBCall::getResultTableGenericLeft(PROC_NAME procName, TABLE tableName
 	PROC_LIST resultTable;
 	PROC_LIST list;
 	PROC_NAME p;
-	list = PKBProcedure::getAllProc();
+	list = PKBProcedure::getProcedures();
 	for (auto iter : list) {
 		p = iter.front();
 		for (auto vectorIter : tableName) {
@@ -137,7 +137,7 @@ PROC_LIST PKBCall::getResultTableGenericRight(PROC_NAME procName, TABLE tableNam
 	PROC_LIST resultTable;
 	PROC_LIST list;
 	PROC_NAME p;
-	list = PKBProcedure::getAllProc();
+	list = PKBProcedure::getProcedures();
 	for (auto iter : list) {
 		p = iter.front();
 		for (auto vectorIter : tableName) {

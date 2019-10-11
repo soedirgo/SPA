@@ -202,8 +202,8 @@ bool PKB::setVar(VAR_NAME varName) {
 	return PKBVariable::setVar(varName);
 }
 
-VAR_LIST PKB::getAllVar() {
-	return PKBVariable::getAllVar();
+VAR_LIST PKB::getVariables() {
+	return PKBVariable::getVariables();
 }
 
 // constantTable APIs
@@ -218,7 +218,7 @@ CONST_VAL PKB::getConstantValByStmt(STMT_NO stmtNo) {
 }
 */
 
-CONST_LIST PKB::getAllConstant() {
+CONST_LIST PKB::getConstants() {
 	return PKBConstant::getAllConstantVal();
 }
 
@@ -328,13 +328,13 @@ bool PKB::setRead(STMT_NO stmtNo, VAR_NAME varName) {
 // ProecedureTable APIs
 ////////////////////////////////////
 
-PROC_LIST PKB::getAllProc() {
-	return PKBProcedure::getAllProc();
+PROC_LIST PKB::getProcedures() {
+	return PKBProcedure::getProcedures();
 };
 
 
-bool PKB::setProc(PROC_NAME procName) {
-	return PKBProcedure::setProc(procName);
+bool PKB::setProcedure(PROC_NAME procName) {
+	return PKBProcedure::setProcedure(procName);
 };
 
 
@@ -369,7 +369,7 @@ bool PKB::isCallStarRelationship(PROC_NAME caller, PROC_NAME callee) {
 ////////////////////////////////////
 // NextTable APIs
 ////////////////////////////////////
-STMT_LIST PKB::getNexts() {
+STMT_LIST PKB::getProgLines() {
 	return PKBStmt::getAllStmt();
 }
 

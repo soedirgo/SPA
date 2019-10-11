@@ -4,8 +4,8 @@
 
 using namespace std;
 
-unordered_set<vector<string>, VectorDoubleStringHash> PKBParent::parentTable;
-unordered_set<vector<string>, VectorDoubleStringHash> PKBParent::parentStarTable;
+TABLE PKBParent::parentTable;
+TABLE PKBParent::parentStarTable;
 
 bool PKBParent::setParent(STMT_NO parent, STMT_NO child) {
 	vector<string> tuple = vector<string>();

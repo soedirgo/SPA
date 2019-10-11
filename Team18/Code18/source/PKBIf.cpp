@@ -1,7 +1,7 @@
 #include "PKBIf.h"
 
 using namespace std;
-unordered_set<vector<string>, VectorDoubleStringHash> PKBIf::ifUsesTable;
+TABLE PKBIf::ifUsesTable;
 
 bool PKBIf::setIfUses(STMT_NO stmtNo, VAR_NAME varName) {
 	vector<string> tuple = vector<string>();

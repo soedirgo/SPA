@@ -227,9 +227,6 @@ namespace UnitTesting
 			expected = { {"1"}, {"2"} };
 			Assert::IsTrue(actual == expected);
 
-			actual = PKB.getAllFollowedByStarStmt("_", "3");
-			expected = { {"1"}, {"2"} };
-			Assert::IsTrue(actual == expected);
 		}
 
 		TEST_METHOD(FollowsStarGenericRight)
@@ -246,10 +243,6 @@ namespace UnitTesting
 
 			actual = PKB.getAllFollowsStarStmt("5", "WHILE");
 			expected = { {"6"} };
-			Assert::IsTrue(actual == expected);
-
-			actual = PKB.getAllFollowsStarStmt("1", "_");
-			expected = { {"3"}, {"2"} };
 			Assert::IsTrue(actual == expected);
 		}
 	};

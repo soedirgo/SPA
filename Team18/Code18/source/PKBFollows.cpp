@@ -3,8 +3,8 @@
 
 using namespace std;
 
-unordered_set<vector<string>, VectorDoubleStringHash> PKBFollows::followsTable;
-unordered_set<vector<string>, VectorDoubleStringHash> PKBFollows::followsStarTable;
+TABLE PKBFollows::followsTable;
+TABLE PKBFollows::followsStarTable;
 
 bool PKBFollows::setFollows(STMT_NO followedBy, STMT_NO follows) {
 	vector<string> tuple = vector<string>();

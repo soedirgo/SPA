@@ -4,8 +4,8 @@
 
 using namespace std;
 
-unordered_set<vector<string>, VectorDoubleStringHash> PKBNext::nextTable;
-unordered_set<vector<string>, VectorDoubleStringHash> PKBNext::nextStarTable;
+TABLE PKBNext::nextTable;
+TABLE PKBNext::nextStarTable;
 
 bool PKBNext::setNext(PROG_LINE nextByLine, PROG_LINE nextLine) {
 	vector<string> tuple = vector<string>();
@@ -59,7 +59,7 @@ bool PKBNext::isNextStarRelationship(PROG_LINE nextByLine, PROG_LINE nextLine) {
 	return false;
 }
 
-unordered_set<vector<string>, VectorDoubleStringHash> PKBNext::getNextTable() {
+TABLE PKBNext::getNextTable() {
 	return nextTable;
 }
 

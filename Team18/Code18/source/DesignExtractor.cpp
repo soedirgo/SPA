@@ -18,7 +18,7 @@ void DesignExtractor::extractDesign()
 
 void DesignExtractor::extractNextStar()
 {
-	unordered_set<vector<string>, VectorDoubleStringHash> nextTable = PKBNext::getNextTable();
+	TABLE nextTable = PKBNext::getNextTable();
 	STMT_LIST whileList = PKBStmt::getAllStmtByType("WHILE");
 	for (auto vectorIter : nextTable) {
 		string n1 = vectorIter.front();
@@ -32,7 +32,7 @@ void DesignExtractor::extractNextStar()
 
 void DesignExtractor::extractParentStar()
 {
-	unordered_set<vector<string>, VectorDoubleStringHash> parentTable = PKBParent::getParentTable();
+	TABLE parentTable = PKBParent::getParentTable();
 	for (auto vectorIter : parentTable) {
 		string followedBy = vectorIter.front();
 		string follows = vectorIter.back();
@@ -43,7 +43,7 @@ void DesignExtractor::extractParentStar()
 
 void DesignExtractor::extractFollowsStar()
 {
-	unordered_set<vector<string>, VectorDoubleStringHash> followsTable = PKBFollows::getFollowsTable();
+	TABLE followsTable = PKBFollows::getFollowsTable();
 	for (auto vectorIter : followsTable) {
 		string followedBy = vectorIter.front();
 		string follows = vectorIter.back();
@@ -54,7 +54,7 @@ void DesignExtractor::extractFollowsStar()
 
 void DesignExtractor::extractCallStar()
 {
-	unordered_set<vector<string>, VectorDoubleStringHash> callProcTable = PKBCall::getCallProcTable();
+	TABLE callProcTable = PKBCall::getCallProcTable();
 	for (auto vectorIter : callProcTable) {
 		PROC_NAME caller = vectorIter.front();
 		PROC_NAME callee = vectorIter.back();

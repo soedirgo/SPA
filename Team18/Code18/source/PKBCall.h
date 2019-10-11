@@ -29,7 +29,7 @@ private:
 	static TABLE getResultTableGenericBoth(TABLE tableName);
 	static PROC_LIST getResultTableGenericLeft(PROC_NAME procName, TABLE tableName);
 	static PROC_LIST getResultTableGenericRight(PROC_NAME procName, TABLE tableName);
-	static std::unordered_set<std::vector<std::string>, VectorDoubleStringHash> callProcTable;
-	static std::unordered_set<std::vector<std::string>, VectorDoubleStringHash> callStarProcTable;
-	static std::unordered_set<std::vector<std::string>, VectorDoubleStringHash> callStmtTable;
+	static TABLE callProcTable;
+	static TABLE callStarProcTable;
+	static TABLE callStmtTable;
 };

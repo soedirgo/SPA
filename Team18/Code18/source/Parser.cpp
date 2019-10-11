@@ -51,7 +51,7 @@ int Parser::Parse(string filename) {
 			string header = parseProc(line);
 			//Calls PKB API to set procedure name
 			currProc.setProcName(header);
-			pkb.setProc(header);
+			pkb.setProcedure(header);
 		}
 		else if (line.find("while") != string::npos && line.find('{') != string::npos) {
 			pkb.setStmt(to_string(stmtNo), "WHILE");
