@@ -194,7 +194,7 @@ namespace UnitTesting
 			STMT_LIST whileExpected = { {"6"} };
 			Assert::IsTrue(whileExpected == whileResult);
 
-			STMT_LIST allUsesResults = PKB.getAllUsesStmtByType("STMT");
+			STMT_LIST allUsesResults = PKB.getAllUsesStmtByType("stmt");
 			STMT_LIST allUsesExpected = { {"3"} , {"6"},{"7"}, {"8"},{"9"},{"10"},{"11"},{"13"},{"14"},{"15"},{"17"},{"18"} };
 		
 
@@ -256,23 +256,23 @@ namespace UnitTesting
 			expected = { {"3"} , {"8"} };
 			Assert::IsTrue(result == expected);
 
-			result = PKB.getUsesStmtByTypeAndVar("STMT", "v");
+			result = PKB.getUsesStmtByTypeAndVar("stmt", "v");
 			expected = { {"3"} , {"8"} , {"18"}  };
 			Assert::IsTrue(result == expected);
 
-			result = PKB.getUsesStmtByTypeAndVar("STMT", "z");
+			result = PKB.getUsesStmtByTypeAndVar("stmt", "z");
 			expected = { {"3"} , {"8"} , {"13"}, {"14"}, {"15"} , {"17"} };
 			Assert::IsTrue(result == expected);
 
-			result = PKB.getUsesStmtByTypeAndVar("STMT", "x");
+			result = PKB.getUsesStmtByTypeAndVar("stmt", "x");
 			expected = { {"3"} , {"6"} ,{"7"} , {"10"}, {"11"}, {"13"} , {"15"} };
 			Assert::IsTrue(result == expected);
 
-			result = PKB.getUsesStmtByTypeAndVar("STMT", "y");
+			result = PKB.getUsesStmtByTypeAndVar("stmt", "y");
 			expected = { {"3"} , {"6"} ,{"7"} , {"15"} };
 			Assert::IsTrue(result == expected);
 
-			result = PKB.getUsesStmtByTypeAndVar("STMT", "i");
+			result = PKB.getUsesStmtByTypeAndVar("stmt", "i");
 			expected = { {"3"} , {"6"} ,{"9"} , {"13"} };
 			Assert::IsTrue(result == expected);
 
