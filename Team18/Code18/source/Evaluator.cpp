@@ -251,47 +251,47 @@ namespace Evaluator {
         vector<string> initResults;
         unordered_set<vector<string>> initTable;
         if (declarations[selectSyn] == "stmt") {
-            for (const auto& elem : PKB::getStmt()) {
+            for (const auto& elem : PKB::getStmts()) {
                 initTable.insert(vector<string>({elem}));
             }
         } else if (declarations[selectSyn] == "read") {
-            for (const auto& elem : PKB::getRead()) {
+            for (const auto& elem : PKB::getReads()) {
                 initTable.insert(vector<string>({elem}));
             }
         } else if (declarations[selectSyn] == "print") {
-            for (const auto& elem : PKB::getPrint()) {
+            for (const auto& elem : PKB::getPrints()) {
                 initTable.insert(vector<string>({elem}));
             }
         } else if (declarations[selectSyn] == "call") {
-            for (const auto& elem : PKB::getCall()) {
+            for (const auto& elem : PKB::getCalls()) {
                 initTable.insert(vector<string>({elem}));
             }
         } else if (declarations[selectSyn] == "while") {
-            for (const auto& elem : PKB::getWhile()) {
+            for (const auto& elem : PKB::getWhiles()) {
                 initTable.insert(vector<string>({elem}));
             }
         } else if (declarations[selectSyn] == "if") {
-            for (const auto& elem : PKB::getIf()) {
+            for (const auto& elem : PKB::getIfs()) {
                 initTable.insert(vector<string>({elem}));
             }
         } else if (declarations[selectSyn] == "assign") {
-            for (const auto& elem : PKB::getAssign()) {
+            for (const auto& elem : PKB::getAssigns()) {
                 initTable.insert(vector<string>({elem}));
             }
         } else if (declarations[selectSyn] == "variable") {
-            for (const auto& elem : PKB::getVariable()) {
+            for (const auto& elem : PKB::getVariables()) {
                 initTable.insert(vector<string>({elem}));
             }
         } else if (declarations[selectSyn] == "constant") {
-            for (const auto& elem : PKB::getConstant()) {
+            for (const auto& elem : PKB::getConstants()) {
                 initTable.insert(vector<string>({elem}));
             }
         } else if (declarations[selectSyn] == "prog_line") {
-            for (const auto& elem : PKB::getProgLine()) {
+            for (const auto& elem : PKB::getProgLines()) {
                 initTable.insert(vector<string>({elem}));
             }
         } else if (declarations[selectSyn] == "procedure") {
-            for (const auto& elem : PKB::getProcedure()) {
+            for (const auto& elem : PKB::getProcedures()) {
                 initTable.insert(vector<string>({elem}));
             }
         }        
