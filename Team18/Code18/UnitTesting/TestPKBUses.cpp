@@ -67,12 +67,12 @@ namespace UnitTesting
 			Stmts.setStmt("17", "assign");
 			Stmts.setStmt("18", "print");
 
-			
+
 			//Line #3 Calls Second
 			PKB.setUsesS("3", "y");
 			PKB.setUsesS("3", "i");
 			PKB.setUsesS("3", "x");
-			PKB.setUsesS("3", "z"); 
+			PKB.setUsesS("3", "z");
 			PKB.setUsesS("3", "v"); //#3 Calls Second, which calls Third
 
 			//Direct assignment stmts with var on RHS 
@@ -118,243 +118,251 @@ namespace UnitTesting
 			Calls.setCallProc("8", "Third");
 
 		}
-
-		TEST_METHOD(isUsesS)
+		TEST_METHOD(isUsesSIdentAny) {
+			PKBUses PKB;
+			Assert::IsTrue(PKB.isUsesSIdentAny("6"));
+			Assert::IsTrue(PKB.isUsesSIdentAny("7"));
+			Assert::IsTrue(PKB.isUsesSIdentAny("7"));
+			Assert::IsTrue(PKB.isUsesSIdentAny("9"));	
+			Assert::IsTrue(PKB.isUsesSIdentAny("6"));
+			Assert::IsTrue(PKB.isUsesSIdentAny("10"));
+			Assert::IsTrue(PKB.isUsesSIdentAny("11"));
+			Assert::IsTrue(PKB.isUsesSIdentAny("13"));
+			Assert::IsTrue(PKB.isUsesSIdentAny("13"));
+			Assert::IsTrue(PKB.isUsesSIdentAny("14"));
+			Assert::IsTrue(PKB.isUsesSIdentAny("15"));
+			Assert::IsTrue(PKB.isUsesSIdentAny("17"));
+			Assert::IsTrue(PKB.isUsesSIdentAny("18"));
+		}
+		TEST_METHOD(isUsesSIdentIdent)
 		{
 			PKBUses PKB;
-			Assert::IsTrue(PKB.isUsesS("6", "i"));
-			Assert::IsTrue(PKB.isUsesS("7", "x"));
-			Assert::IsTrue(PKB.isUsesS("7", "y"));
-			Assert::IsTrue(PKB.isUsesS("9", "i"));
-			Assert::IsTrue(PKB.isUsesS("6", "x"));
-			Assert::IsTrue(PKB.isUsesS("6", "y"));
-			Assert::IsTrue(PKB.isUsesS("10", "x"));
-			Assert::IsTrue(PKB.isUsesS("11", "x"));
-			Assert::IsTrue(PKB.isUsesS("13", "z"));
-			Assert::IsTrue(PKB.isUsesS("13", "x"));
-			Assert::IsTrue(PKB.isUsesS("14", "z"));
-			Assert::IsTrue(PKB.isUsesS("15", "x"));
-			Assert::IsTrue(PKB.isUsesS("15", "y"));
-			Assert::IsTrue(PKB.isUsesS("15", "z"));
-			Assert::IsTrue(PKB.isUsesS("17", "z"));
-			Assert::IsTrue(PKB.isUsesS("18", "v"));
+			Assert::IsTrue(PKB.isUsesSIdentIdent("6", "i"));
+			Assert::IsTrue(PKB.isUsesSIdentIdent("7", "x"));
+			Assert::IsTrue(PKB.isUsesSIdentIdent("7", "y"));
+			Assert::IsTrue(PKB.isUsesSIdentIdent("9", "i"));
+			Assert::IsTrue(PKB.isUsesSIdentIdent("6", "x"));
+			Assert::IsTrue(PKB.isUsesSIdentIdent("6", "y"));
+			Assert::IsTrue(PKB.isUsesSIdentIdent("10", "x"));
+			Assert::IsTrue(PKB.isUsesSIdentIdent("11", "x"));
+			Assert::IsTrue(PKB.isUsesSIdentIdent("13", "z"));
+			Assert::IsTrue(PKB.isUsesSIdentIdent("13", "x"));
+			Assert::IsTrue(PKB.isUsesSIdentIdent("14", "z"));
+			Assert::IsTrue(PKB.isUsesSIdentIdent("15", "x"));
+			Assert::IsTrue(PKB.isUsesSIdentIdent("15", "y"));
+			Assert::IsTrue(PKB.isUsesSIdentIdent("15", "z"));
+			Assert::IsTrue(PKB.isUsesSIdentIdent("17", "z"));
+			Assert::IsTrue(PKB.isUsesSIdentIdent("18", "v"));
 
-			Assert::IsTrue(PKB.isUsesS("6", "_"));
-			Assert::IsTrue(PKB.isUsesS("7", "_"));
-			Assert::IsTrue(PKB.isUsesS("7", "_"));
-			Assert::IsTrue(PKB.isUsesS("9", "_"));
-			Assert::IsTrue(PKB.isUsesS("6", "_"));
-			Assert::IsTrue(PKB.isUsesS("6", "_"));
-			Assert::IsTrue(PKB.isUsesS("10", "_"));
-			Assert::IsTrue(PKB.isUsesS("11", "_"));
-			Assert::IsTrue(PKB.isUsesS("13", "_"));
-			Assert::IsTrue(PKB.isUsesS("13", "_"));
-			Assert::IsTrue(PKB.isUsesS("14", "_"));
-			Assert::IsTrue(PKB.isUsesS("15", "_"));
-			Assert::IsTrue(PKB.isUsesS("15", "_"));
-			Assert::IsTrue(PKB.isUsesS("15", "_"));
-			Assert::IsTrue(PKB.isUsesS("17", "_"));
-			Assert::IsTrue(PKB.isUsesS("18", "_"));
-			
+
+
 		}
-		TEST_METHOD(isUsesP)
+
+
+		TEST_METHOD(isUsesPIdentAny)
 		{
 			PKBUses PKB;
-			Assert::IsTrue(PKB.isUsesP("Second", "x"));
-			Assert::IsTrue(PKB.isUsesP("Second", "y"));
-			Assert::IsTrue(PKB.isUsesP("Second", "z"));
+			Assert::IsTrue(PKB.isUsesPIdentAny("First"));
+			Assert::IsTrue(PKB.isUsesPIdentAny("Second"));
+			Assert::IsTrue(PKB.isUsesPIdentAny("Third"));
 
-			Assert::IsTrue(PKB.isUsesP("First", "_"));
-			Assert::IsTrue(PKB.isUsesP("Second", "_"));
-			Assert::IsTrue(PKB.isUsesP("Third", "_"));
+		}
+		TEST_METHOD(isUsesPIdentIdent)
+		{
+			PKBUses PKB;
+			Assert::IsTrue(PKB.isUsesPIdentIdent("Second", "x"));
+			Assert::IsTrue(PKB.isUsesPIdentIdent("Second", "y"));
+			Assert::IsTrue(PKB.isUsesPIdentIdent("Second", "z"));
+
+
 		}
 
-		
 
-		TEST_METHOD(getAllUsesStmtByType)
+
+		TEST_METHOD(getUsesSEntAny)
 		{//LHS is either a print/if/while/assign/call 
 			PKBUses PKB;
-			STMT_LIST ifResult = PKB.getAllUsesStmtByType("if");
+			STMT_LIST ifResult = PKB.getUsesSEntAny("if");
 			STMT_LIST ifExpected = { {"10"} };
 			Assert::IsTrue(ifExpected == ifResult);
 
-			STMT_LIST printResult = PKB.getAllUsesStmtByType("print");
+			STMT_LIST printResult = PKB.getUsesSEntAny("print");
 			STMT_LIST printExpected = { {"18"} };
 			Assert::IsTrue(printExpected == printResult);
 
-			STMT_LIST assignResult = PKB.getAllUsesStmtByType("assign");
+			STMT_LIST assignResult = PKB.getUsesSEntAny("assign");
 			STMT_LIST assignExpected = { {"7"}, {"9"}, {"11"}, {"13"}, {"14"}, {"15"}, {"17"} };
 			Assert::IsTrue(assignExpected == assignResult);
 
-			STMT_LIST callResult = PKB.getAllUsesStmtByType("call");//Second third firs
-			STMT_LIST callExpected = { {"3"}, {"8"} }; 
+			STMT_LIST callResult = PKB.getUsesSEntAny("call");//Second third firs
+			STMT_LIST callExpected = { {"3"}, {"8"} };
 			Assert::IsTrue(callExpected == callResult);
 
-			STMT_LIST whileResult = PKB.getAllUsesStmtByType("while");
+			STMT_LIST whileResult = PKB.getUsesSEntAny("while");
 			STMT_LIST whileExpected = { {"6"} };
 			Assert::IsTrue(whileExpected == whileResult);
 
-			STMT_LIST allUsesResults = PKB.getAllUsesStmtByType("stmt");
+			STMT_LIST allUsesResults = PKB.getUsesSEntAny("stmt");
 			STMT_LIST allUsesExpected = { {"3"} , {"6"},{"7"}, {"8"},{"9"},{"10"},{"11"},{"13"},{"14"},{"15"},{"17"},{"18"} };
-		
+
 
 		}
 
-		TEST_METHOD(getUsesStmtByTypeAndVar)
+		TEST_METHOD(getUsesSEntIdent)
 		{//LHS is either a print/if/while/assign/call 
 			PKBUses PKB;
-			STMT_LIST result = PKB.getUsesStmtByTypeAndVar("assign", "i");
+			STMT_LIST result = PKB.getUsesSEntIdent("assign", "i");
 			STMT_LIST expected = { {"9"}, {"13"} };
 			Assert::IsTrue(result == expected);
 
 
-			result = PKB.getUsesStmtByTypeAndVar("assign", "x");
+			result = PKB.getUsesSEntIdent("assign", "x");
 			expected = { {"7"} , {"11"}  , {"13"} , {"15"} };
 			Assert::IsTrue(result == expected);
 
-			result = PKB.getUsesStmtByTypeAndVar("assign", "y");
+			result = PKB.getUsesSEntIdent("assign", "y");
 			expected = { {"7"} ,  {"15"} };
 			Assert::IsTrue(result == expected);
 
-			result = PKB.getUsesStmtByTypeAndVar("assign", "z");
+			result = PKB.getUsesSEntIdent("assign", "z");
 			expected = { {"13"} , {"14"} ,{"15"} ,{"17"} };
 			Assert::IsTrue(result == expected);
 
-			result = PKB.getUsesStmtByTypeAndVar("assign", "z");
+			result = PKB.getUsesSEntIdent("assign", "z");
 			expected = { {"13"} , {"14"} ,{"15"} ,{"17"} };
 			Assert::IsTrue(result == expected);
 
-			result = PKB.getUsesStmtByTypeAndVar("print", "v");
+			result = PKB.getUsesSEntIdent("print", "v");
 			expected = { {"18"} };
 			Assert::IsTrue(result == expected);
 
-			result = PKB.getUsesStmtByTypeAndVar("if", "x");
+			result = PKB.getUsesSEntIdent("if", "x");
 			expected = { {"10"} };
 			Assert::IsTrue(result == expected);
 
-			result = PKB.getUsesStmtByTypeAndVar("while", "i");
+			result = PKB.getUsesSEntIdent("while", "i");
 			expected = { {"6"} };
 			Assert::IsTrue(result == expected);
 
-			result = PKB.getUsesStmtByTypeAndVar("call", "i");
+			result = PKB.getUsesSEntIdent("call", "i");
 			expected = { {"3"} };
 			Assert::IsTrue(result == expected);
 
-			result = PKB.getUsesStmtByTypeAndVar("call", "x");
+			result = PKB.getUsesSEntIdent("call", "x");
 			expected = { {"3"} };
 			Assert::IsTrue(result == expected);
 
-			result = PKB.getUsesStmtByTypeAndVar("call", "y");
+			result = PKB.getUsesSEntIdent("call", "y");
 			expected = { {"3"} };
 			Assert::IsTrue(result == expected);
 
-			result = PKB.getUsesStmtByTypeAndVar("call", "z");
+			result = PKB.getUsesSEntIdent("call", "z");
 			expected = { {"3"} , {"8"} };
 			Assert::IsTrue(result == expected);
 
-			result = PKB.getUsesStmtByTypeAndVar("call", "v");
+			result = PKB.getUsesSEntIdent("call", "v");
 			expected = { {"3"} , {"8"} };
 			Assert::IsTrue(result == expected);
 
-			result = PKB.getUsesStmtByTypeAndVar("stmt", "v");
-			expected = { {"3"} , {"8"} , {"18"}  };
+			result = PKB.getUsesSEntIdent("stmt", "v");
+			expected = { {"3"} , {"8"} , {"18"} };
 			Assert::IsTrue(result == expected);
 
-			result = PKB.getUsesStmtByTypeAndVar("stmt", "z");
+			result = PKB.getUsesSEntIdent("stmt", "z");
 			expected = { {"3"} , {"8"} , {"13"}, {"14"}, {"15"} , {"17"} };
 			Assert::IsTrue(result == expected);
 
-			result = PKB.getUsesStmtByTypeAndVar("stmt", "x");
+			result = PKB.getUsesSEntIdent("stmt", "x");
 			expected = { {"3"} , {"6"} ,{"7"} , {"10"}, {"11"}, {"13"} , {"15"} };
 			Assert::IsTrue(result == expected);
 
-			result = PKB.getUsesStmtByTypeAndVar("stmt", "y");
+			result = PKB.getUsesSEntIdent("stmt", "y");
 			expected = { {"3"} , {"6"} ,{"7"} , {"15"} };
 			Assert::IsTrue(result == expected);
 
-			result = PKB.getUsesStmtByTypeAndVar("stmt", "i");
+			result = PKB.getUsesSEntIdent("stmt", "i");
 			expected = { {"3"} , {"6"} ,{"9"} , {"13"} };
 			Assert::IsTrue(result == expected);
 
 
 		}
 
-		TEST_METHOD(getUsesVarByStmt) {
+		TEST_METHOD(getUsesSIdentEnt) {
 			PKBUses pkb;
 
 			//All empty result queries
 			STMT_LIST expected = {};
-			STMT_LIST result = pkb.getUsesVarByStmt("1");
+			STMT_LIST result = pkb.getUsesSIdentEnt("1");
 			Assert::IsTrue(result == expected);
-			result = pkb.getUsesVarByStmt("2");
+			result = pkb.getUsesSIdentEnt("2");
 			Assert::IsTrue(result == expected);
-			result = pkb.getUsesVarByStmt("4");
+			result = pkb.getUsesSIdentEnt("4");
 			Assert::IsTrue(result == expected);
-			result = pkb.getUsesVarByStmt("5");
+			result = pkb.getUsesSIdentEnt("5");
 			Assert::IsTrue(result == expected);
 
 			expected = { {"x"} , {"y"}, {"z"}, {"v"}, {"i"} };
-			result = pkb.getUsesVarByStmt("3");//Special call stmt case
+			result = pkb.getUsesSIdentEnt("3");//Special call stmt case
 			Assert::IsTrue(result == expected);
 
 			//Other assignment cases etc. 
 			expected = { {"i"}, {"x"} , {"y"} };
-			result = pkb.getUsesVarByStmt("6");
+			result = pkb.getUsesSIdentEnt("6");
 			Assert::IsTrue(result == expected);
 
 			//if
 			expected = { {"x"} };
-			result = pkb.getUsesVarByStmt("10");
+			result = pkb.getUsesSIdentEnt("10");
 			Assert::IsTrue(result == expected);
 
 			//assignment
 			expected = { {"x"}, {"y"}, {"z"} };
-			result = pkb.getUsesVarByStmt("15");
+			result = pkb.getUsesSIdentEnt("15");
 			Assert::IsTrue(result == expected);
 		}
-		TEST_METHOD(getAllUsesProc) {
-			PKBUses pkb; 
+		TEST_METHOD(getUsesPEntAny) {
+			PKBUses pkb;
 			PROC_LIST expected = { {"First"}, {"Second"}, {"Third"} };
-			PROC_LIST result = pkb.getAllUsesProc();
+			PROC_LIST result = pkb.getUsesPEntAny();
 			Assert::IsTrue(result == expected);
 		}
-		
-		TEST_METHOD(getAllUsesStmtPair) {
-			PKBUses pkb; 
-			TABLE result = pkb.getAllUsesStmtPair("if");
+
+		TEST_METHOD(getUsesSEntEnt) {
+			PKBUses pkb;
+			TABLE result = pkb.getUsesSEntEnt("if");
 			TABLE expected =
 			{ { {"10"} , {"x"} } };
 			Assert::IsTrue(result == expected);
 
-			result = pkb.getAllUsesStmtPair("while");
+			result = pkb.getUsesSEntEnt("while");
 			expected =
 			{ { {"6"} , {"i"} }
-			,{ {"6"} , {"x"} } 
+			,{ {"6"} , {"x"} }
 			,{ {"6"} , {"y"} } };
 			Assert::IsTrue(result == expected);
 
-			result = pkb.getAllUsesStmtPair("print");
+			result = pkb.getUsesSEntEnt("print");
 			expected =
 			{ { {"18"} , {"v"} } };
 			Assert::IsTrue(result == expected);
 
-			result = pkb.getAllUsesStmtPair("assign");
+			result = pkb.getUsesSEntEnt("assign");
 			expected =
 			{ { {"7"} , {"x"} }
 			,{ {"7"} , {"y"} }
 			,{ {"9"} , {"i"} }
-			,{ {"11"} , {"x"} } 
-			,{ {"13"} , {"z"} } 
-			,{ {"13"} , {"x"} } 
-			,{ {"13"} , {"i"} } 
-			,{ {"14"} , {"z"} } 
+			,{ {"11"} , {"x"} }
+			,{ {"13"} , {"z"} }
+			,{ {"13"} , {"x"} }
+			,{ {"13"} , {"i"} }
+			,{ {"14"} , {"z"} }
 			,{ {"15"} , {"x"} }
 			,{ {"15"} , {"y"} }
 			,{ {"15"} , {"z"} }
 			,{ {"17"} , {"z"} } };
 			Assert::IsTrue(result == expected);
 
-			result = pkb.getAllUsesStmtPair("call");
+			result = pkb.getUsesSEntEnt("call");
 			expected =
 			{ { {"3"} , {"x"} }
 			,{ {"3"} , {"y"} }
@@ -368,43 +376,43 @@ namespace UnitTesting
 
 
 		}
-		TEST_METHOD(getUsesProcByVar) {
+		TEST_METHOD(getUsesPEntIdent) {
 			PKBUses pkb;
 			PROC_LIST expected = { {"First"} , {"Second"}, {"Third"} };
-			PROC_LIST result = pkb.getUsesProcByVar( "z" );
+			PROC_LIST result = pkb.getUsesPEntIdent("z");
 			Assert::IsTrue(result == expected);
 
-			result = pkb.getUsesProcByVar("v");
+			result = pkb.getUsesPEntIdent("v");
 			Assert::IsTrue(result == expected);
 
-			result = pkb.getUsesProcByVar("x");
+			result = pkb.getUsesPEntIdent("x");
 			expected = { {"First"} , {"Second"} };
 
-			result = pkb.getUsesProcByVar("y");
+			result = pkb.getUsesPEntIdent("y");
 			expected = { {"First"} , {"Second"} };
 
 		}
-		TEST_METHOD(getUsesVarByProc) {
+		TEST_METHOD(getUsesPIdentEnt) {
 			PKBUses pkb;
 			PROC_LIST expected = { {"x"}, {"y"},{"z"}, {"i"}, {"v"} };
-			PROC_LIST result = pkb.getUsesVarByProc("First");
+			PROC_LIST result = pkb.getUsesPIdentEnt("First");
 			Assert::IsTrue(result == expected);
 
-			result = pkb.getUsesVarByProc("Second");
+			result = pkb.getUsesPIdentEnt("Second");
 			Assert::IsTrue(result == expected);
 
 			expected = { {"z"}, {"v"} };
-			result = pkb.getUsesVarByProc("Third");
+			result = pkb.getUsesPIdentEnt("Third");
 			Assert::IsTrue(result == expected);
 		}
 
-		TEST_METHOD(getAllUsesProcPair) {
-			PKBUses pkb; 
-			TABLE expected = 
+		TEST_METHOD(getUsesPEntEnt) {
+			PKBUses pkb;
+			TABLE expected =
 			{ { {"First"} , {"x"} }
 			, { {"First"} , {"y"} }
-			, { {"First"} , {"z"} } 
-			, { {"First"} , {"i"} } 
+			, { {"First"} , {"z"} }
+			, { {"First"} , {"i"} }
 			, { {"First"} , {"v"} }
 			, { {"Second"} , {"x"} }
 			, { {"Second"} , {"y"} }
@@ -414,7 +422,7 @@ namespace UnitTesting
 			, { {"Third"} , {"z"} }
 			, { {"Third"} , {"v"} } };
 
-			TABLE result = pkb.getAllUsesProcPair(); 
+			TABLE result = pkb.getUsesPEntEnt();
 			Assert::IsTrue(result == expected);
 		}
 

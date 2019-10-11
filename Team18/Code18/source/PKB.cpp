@@ -129,11 +129,11 @@ bool PKB::setUsesP(PROC_NAME procName, VAR_NAME varName) {
 };
 
 bool PKB::isUsesStmtRelationship(STMT_NO stmtNo, VAR_NAME varName) {
-	return PKBUses::isUsesS(stmtNo, varName);
+	return PKBUses::isUsesSIdentIdent(stmtNo, varName);
 }
 
 bool PKB::isUsesProcRelationship(PROC_NAME procName, VAR_NAME varName) {
-	return PKBUses::isUsesP(procName, varName);
+	return PKBUses::isUsesPIdentIdent(procName, varName);
 }
 
 /*

@@ -126,7 +126,7 @@ public:
 	static bool isUsesProcRelationship(PROC_NAME procName, VAR_NAME varName);
 
 	static bool isUsesS(STMT_REF s1, ENT_REF e2);
-	static bool isUsesP(ENT_REF e1, ENT_REF e2);
+	static bool isUsesPIdentIdent(ENT_REF e1, ENT_REF e2);
 
 	//Call Function
 	static bool setCallStmt(STMT_NO stmtNo, PROC_NAME procName);
