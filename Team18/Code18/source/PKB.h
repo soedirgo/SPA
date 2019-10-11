@@ -137,14 +137,46 @@ public:
 	//Modifies Function
 	static bool setModifiesS(STMT_NO stmtNo, VAR_NAME varName);
 	static bool setModifiesP(PROC_NAME procName, VAR_NAME varName);
+
+	//Modifies Bool Evaluation
+	static bool isModifiesSIdentAny(STMT_NO stmtNo);
 	static bool isModifiesSIdentIdent(STMT_NO stmtNo, VAR_NAME varName);
+
+	static bool isModifiesPIdentAny(PROC_NAME procName);
 	static bool isModifiesPIdentIdent(PROC_NAME procName, VAR_NAME varName);
+
+	//Modifies Table Evaluation
+	static STMT_LIST getModifiesSEntAny(STMT_TYPE type);
+	static TABLE getModifiesSEntIdent(STMT_TYPE type, VAR_NAME varName);
+	static VAR_LIST getModifiesSIdentEnt(STMT_NO stmtNo);
+	static TABLE getModifiesSEntEnt(STMT_TYPE type);
+
+	static PROC_LIST getModifiesPEntAny();
+	static PROC_LIST getModifiesPEntIdent(VAR_NAME varName);
+	static VAR_LIST getModifiesPIdentEnt(PROC_NAME procName);
+	static TABLE getModifiesPEntEnt();
 
 	//Uses Function
 	static bool setUsesS(STMT_NO stmtNo, VAR_NAME varName);
 	static bool setUsesP(PROC_NAME procName, VAR_NAME varName);
-	static bool isUsesStmtRelationship(STMT_NO stmtNo, VAR_NAME varName);
-	static bool isUsesProcRelationship(PROC_NAME procName, VAR_NAME varName);
+
+	//Uses Bool Evaluation
+	static bool isUsesSIdentAny(STMT_NO stmtNo);
+	static bool isUsesSIdentIdent(STMT_NO stmtNo, VAR_NAME varName);
+
+	static bool isUsesPIdentAny(PROC_NAME procName);
+	static bool isUsesPIdentIdent(PROC_NAME procName, VAR_NAME varName);
+
+	//Uses Table Evaluation
+	static STMT_LIST getUsesSEntAny(STMT_TYPE type);
+	static STMT_LIST getUsesSEntIdent(STMT_TYPE type, VAR_NAME varName);
+	static VAR_LIST getUsesSIdentEnt(STMT_NO stmtNo);
+	static TABLE getUsesSEntEnt(STMT_TYPE type);
+
+	static PROC_LIST getUsesPEntAny();
+	static PROC_LIST getUsesPEntIdent(VAR_NAME varName);
+	static VAR_LIST getUsesPIdentEnt(PROC_NAME procName);
+	static TABLE getUsesPEntEnt();
 
 	//Call Function
 	static bool setCallStmt(STMT_NO stmtNo, PROC_NAME procName);
