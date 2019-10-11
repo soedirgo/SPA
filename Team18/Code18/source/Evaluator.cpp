@@ -104,479 +104,11 @@ namespace Evaluator {
         string selectSyn;
         vector<Result> intermediateResults;
 
-        // Result evalUsesS(string lhs, string rhs) {
-        //     bool resultExists;
-        //     unordered_map<string, int> synonyms = {};
-        //     unordered_set<vector<string>> results = {};
-        //     /**
-        //      * Cases:
-        //      * - Uses("1", _)
-        //      * - Uses("1", "x")
-        //      * - Uses("1", v)
-        //      * - Uses(s, _)
-        //      * - Uses(s, "x")
-        //      * - Uses(s, v)
-        //      */
-        //     if (lhs.front() == '\"' && lhs.back() == '\"') {
-        //         if (rhs == "_"
-        //             || rhs.front() == '\"' && rhs.back() == '\"') {
-        //             resultExists = PKB::isUsesS(lhs, rhs);
-        //         } else {
-        //             synonyms[rhs] = 0;
-        //             results = PKB::getUsesS(lhs, declarations[rhs]);
-        //             resultExists = results.size();
-        //         }
-        //     } else {
-        //         synonyms[lhs] = 0;
-        //         if (rhs == "_"
-        //             || rhs.front() == '\"' && rhs.back() == '\"') {
-        //             results = PKB::getUsesS(declarations[lhs], rhs);
-        //         } else {
-        //             synonyms[rhs] = 0;
-        //             results = PKB::getUsesS(declarations[lhs], declarations[rhs]);
-        //         }
-        //         resultExists = results.size();
-        //     }
-
-        //     return Result(resultExists, synonyms, results);
-        // }
-
-        // Result evalUsesP(string lhs, string rhs) {
-        //     bool resultExists;
-        //     unordered_map<string, int> synonyms;
-        //     unordered_set<vector<string>> results;
-        //     /**
-        //      * Cases:
-        //      * - UsesP("main", _)
-        //      * - UsesP("main", "x")
-        //      * - UsesP("main", v)
-        //      * - UsesP(p, _)
-        //      * - UsesP(p, "x")
-        //      * - UsesP(p, v)
-        //      */
-        //     if (lhs.front() == '\"' && lhs.back() == '\"') {
-        //         if (rhs == "_"
-        //             || rhs.front() == '\"' && rhs.back() == '\"') {
-        //             resultExists = PKB::isUsesP(lhs, rhs);
-        //         } else {
-        //             synonyms[rhs] = 0;
-        //             results = PKB::getUsesP(lhs, declarations[rhs]);
-        //             resultExists = results.size();
-        //         }
-        //     } else {
-        //         synonyms[lhs] = 0;
-        //         if (rhs == "_"
-        //             || rhs.front() == '\"' && rhs.back() == '\"') {
-        //             results = PKB::getUsesP(declarations[lhs], rhs);
-        //         } else {
-        //             synonyms[rhs] = 0;
-        //             results = PKB::getUsesP(declarations[lhs], declarations[rhs]);
-        //         }
-        //         resultExists = results.size();
-        //     }
-
-        //     return Result(resultExists, synonyms, results);
-        // }
-
-        // Result evalModifiesS(string lhs, string rhs) {
-        //     bool resultExists;
-        //     unordered_map<string, int> synonyms;
-        //     unordered_set<vector<string>> results;
-        //     /**
-        //      * Cases:
-        //      * - Modifies("1", _)
-        //      * - Modifies("1", "x")
-        //      * - Modifies("1", v)
-        //      * - Modifies(s, _)
-        //      * - Modifies(s, "x")
-        //      * - Modifies(s, v)
-        //      */
-        //     if (lhs.front() == '\"' && lhs.back() == '\"') {
-        //         if (rhs == "_"
-        //             || rhs.front() == '\"' && rhs.back() == '\"') {
-        //             resultExists = PKB::isModifiesS(lhs, rhs);
-        //         } else {
-        //             synonyms[rhs] = 0;
-        //             results = PKB::getModifiesS(lhs, declarations[rhs]);
-        //             resultExists = results.size();
-        //         }
-        //     } else {
-        //         synonyms[lhs] = 0;
-        //         if (rhs == "_"
-        //             || rhs.front() == '\"' && rhs.back() == '\"') {
-        //             results = PKB::getModifiesS(declarations[lhs], rhs);
-        //         } else {
-        //             synonyms[rhs] = 0;
-        //             results = PKB::getModifiesS(declarations[lhs], declarations[rhs]);
-        //         }
-        //         resultExists = results.size();
-        //     }
-
-        //     return Result(resultExists, synonyms, results);
-        // }
-
-        // Result evalModifiesP(string lhs, string rhs) {
-        //     bool resultExists;
-        //     unordered_map<string, int> synonyms;
-        //     unordered_set<vector<string>> results;
-        //     /**
-        //      * Cases:
-        //      * - ModifiesP("1", _)
-        //      * - ModifiesP("1", "x")
-        //      * - ModifiesP("1", v)
-        //      * - ModifiesP(p, _)
-        //      * - ModifiesP(p, "x")
-        //      * - ModifiesP(p, v)
-        //      */
-        //     if (lhs.front() == '\"' && lhs.back() == '\"') {
-        //         if (rhs == "_"
-        //             || rhs.front() == '\"' && rhs.back() == '\"') {
-        //             resultExists = PKB::isModifiesP(lhs, rhs);
-        //         } else {
-        //             synonyms[rhs] = 0;
-        //             results = PKB::getModifiesP(lhs, declarations[rhs]);
-        //             resultExists = results.size();
-        //         }
-        //     } else {
-        //         synonyms[lhs] = 0;
-        //         if (rhs == "_"
-        //             || rhs.front() == '\"' && rhs.back() == '\"') {
-        //             results = PKB::getModifiesP(declarations[lhs], rhs);
-        //         } else {
-        //             synonyms[rhs] = 0;
-        //             results = PKB::getModifiesP(declarations[lhs], declarations[rhs]);
-        //         }
-        //         resultExists = results.size();
-        //     }
-
-        //     return Result(resultExists, synonyms, results);
-        // }
-
-        // Result evalCalls(string lhs, string rhs) {
-        //     bool resultExists;
-        //     unordered_map<string, int> synonyms;
-        //     unordered_set<vector<string>> results;
-        //     /**
-        //      * Cases:
-        //      * - Calls(_, _)
-        //      * - Calls(_, "main")
-        //      * - Calls(_, p)
-        //      * - Calls("main", _)
-        //      * - Calls("main", "main")
-        //      * - Calls("main", p)
-        //      * - Calls(p, _)
-        //      * - Calls(p, "main")
-        //      * - Calls(p, p)
-        //      */
-        //     if (lhs == "_"
-        //         || lhs.front() == '\"' && lhs.back() == '\"') {
-        //         if (rhs == "_"
-        //             || rhs.front() == '\"' && rhs.back() == '\"') {
-        //             resultExists = PKB::isCalls(lhs, rhs);
-        //         } else {
-        //             synonyms[rhs] = 0;
-        //             results = PKB::getCalls(lhs, declarations[rhs]);
-        //             resultExists = results.size();
-        //         }
-        //     } else {
-        //         synonyms[lhs] = 0;
-        //         if (rhs == "_"
-        //             || rhs.front() == '\"' && rhs.back() == '\"') {
-        //             results = PKB::getCalls(declarations[lhs], rhs);
-        //         } else {
-        //             synonyms[rhs] = 0;
-        //             results = PKB::getCalls(declarations[lhs], declarations[rhs]);
-        //         }
-        //         resultExists = results.size();
-        //     }
-
-        //     return Result(resultExists, synonyms, results);
-        // }
-
-        // Result evalCallsT(string lhs, string rhs) {
-        //     bool resultExists;
-        //     unordered_map<string, int> synonyms;
-        //     unordered_set<vector<string>> results;
-        //     /**
-        //      * Cases:
-        //      * - CallsT(_, _)
-        //      * - CallsT(_, "main")
-        //      * - CallsT(_, p)
-        //      * - CallsT("main", _)
-        //      * - CallsT("main", "main")
-        //      * - CallsT("main", p)
-        //      * - CallsT(p, _)
-        //      * - CallsT(p, "main")
-        //      * - CallsT(p, p)
-        //      */
-        //     if (lhs.front() == '\"' && lhs.back() == '\"') {
-        //         if (rhs == "_"
-        //             || rhs.front() == '\"' && rhs.back() == '\"') {
-        //             resultExists = PKB::isUsesS(lhs, rhs);
-        //         } else {
-        //             synonyms[rhs] = 0;
-        //             results = PKB::getUsesS(lhs, declarations[rhs]);
-        //             resultExists = results.size();
-        //         }
-        //     } else {
-        //         synonyms[lhs] = 0;
-        //         if (rhs == "_"
-        //             || rhs.front() == '\"' && rhs.back() == '\"') {
-        //             results = PKB::getUsesS(declarations[lhs], rhs);
-        //         } else {
-        //             synonyms[rhs] = 0;
-        //             results = PKB::getUsesS(declarations[lhs], declarations[rhs]);
-        //         }
-        //         resultExists = results.size();
-        //     }
-
-        //     return Result(resultExists, synonyms, results);
-        // }
-
-        // Result evalFollows(string lhs, string rhs) {
-        //     bool resultExists;
-        //     unordered_map<string, int> synonyms;
-        //     unordered_set<vector<string>> results;
-        //     /**
-        //      * Cases:
-        //      * - Follows(_, _)
-        //      * - Follows(_, "1")
-        //      * - Follows(_, s)
-        //      * - Follows("1", _)
-        //      * - Follows("1", "1")
-        //      * - Follows("1", s)
-        //      * - Follows(s, _)
-        //      * - Follows(s, "1")
-        //      * - Follows(s, s)
-        //      */
-        //     if (lhs.front() == '\"' && lhs.back() == '\"') {
-        //         if (rhs == "_"
-        //             || rhs.front() == '\"' && rhs.back() == '\"') {
-        //             resultExists = PKB::isUsesS(lhs, rhs);
-        //         } else {
-        //             synonyms[rhs] = 0;
-        //             results = PKB::getUsesS(lhs, declarations[rhs]);
-        //             resultExists = results.size();
-        //         }
-        //     } else {
-        //         synonyms[lhs] = 0;
-        //         if (rhs == "_"
-        //             || rhs.front() == '\"' && rhs.back() == '\"') {
-        //             results = PKB::getUsesS(declarations[lhs], rhs);
-        //         } else {
-        //             synonyms[rhs] = 0;
-        //             results = PKB::getUsesS(declarations[lhs], declarations[rhs]);
-        //         }
-        //         resultExists = results.size();
-        //     }
-
-        //     return Result(resultExists, synonyms, results);
-        // }
-
-        // Result evalFollowsT(string lhs, string rhs) {
-        //     bool resultExists;
-        //     unordered_map<string, int> synonyms;
-        //     unordered_set<vector<string>> results;
-        //     /**
-        //      * Cases:
-        //      * - FollowsT(_, _)
-        //      * - FollowsT(_, "1")
-        //      * - FollowsT(_, s)
-        //      * - FollowsT("1", _)
-        //      * - FollowsT("1", "1")
-        //      * - FollowsT("1", s)
-        //      * - FollowsT(s, _)
-        //      * - FollowsT(s, "1")
-        //      * - FollowsT(s, s)
-        //      */
-        //     if (lhs.front() == '\"' && lhs.back() == '\"') {
-        //         if (rhs == "_"
-        //             || rhs.front() == '\"' && rhs.back() == '\"') {
-        //             resultExists = PKB::isUsesS(lhs, rhs);
-        //         } else {
-        //             synonyms[rhs] = 0;
-        //             results = PKB::getUsesS(lhs, declarations[rhs]);
-        //             resultExists = results.size();
-        //         }
-        //     } else {
-        //         synonyms[lhs] = 0;
-        //         if (rhs == "_"
-        //             || rhs.front() == '\"' && rhs.back() == '\"') {
-        //             results = PKB::getUsesS(declarations[lhs], rhs);
-        //         } else {
-        //             synonyms[rhs] = 0;
-        //             results = PKB::getUsesS(declarations[lhs], declarations[rhs]);
-        //         }
-        //         resultExists = results.size();
-        //     }
-
-        //     return Result(resultExists, synonyms, results);
-        // }
-
-        // Result evalParent(string lhs, string rhs) {
-        //     bool resultExists;
-        //     unordered_map<string, int> synonyms;
-        //     unordered_set<vector<string>> results;
-        //     /**
-        //      * Cases:
-        //      * - Parent(_, _)
-        //      * - Parent(_, "1")
-        //      * - Parent(_, s)
-        //      * - Parent("1", _)
-        //      * - Parent("1", "1")
-        //      * - Parent("1", s)
-        //      * - Parent(s, _)
-        //      * - Parent(s, "1")
-        //      * - Parent(s, s)
-        //      */
-        //     if (lhs.front() == '\"' && lhs.back() == '\"') {
-        //         if (rhs == "_"
-        //             || rhs.front() == '\"' && rhs.back() == '\"') {
-        //             resultExists = PKB::isUsesS(lhs, rhs);
-        //         } else {
-        //             synonyms[rhs] = 0;
-        //             results = PKB::getUsesS(lhs, declarations[rhs]);
-        //             resultExists = results.size();
-        //         }
-        //     } else {
-        //         synonyms[lhs] = 0;
-        //         if (rhs == "_"
-        //             || rhs.front() == '\"' && rhs.back() == '\"') {
-        //             results = PKB::getUsesS(declarations[lhs], rhs);
-        //         } else {
-        //             synonyms[rhs] = 0;
-        //             results = PKB::getUsesS(declarations[lhs], declarations[rhs]);
-        //         }
-        //         resultExists = results.size();
-        //     }
-
-        //     return Result(resultExists, synonyms, results);
-        // }
-
-        // Result evalParentT(string lhs, string rhs) {
-        //     bool resultExists;
-        //     unordered_map<string, int> synonyms;
-        //     unordered_set<vector<string>> results;
-        //     /**
-        //      * Cases:
-        //      * - ParentT(_, _)
-        //      * - ParentT(_, "1")
-        //      * - ParentT(_, s)
-        //      * - ParentT("1", _)
-        //      * - ParentT("1", "1")
-        //      * - ParentT("1", s)
-        //      * - ParentT(s, _)
-        //      * - ParentT(s, "1")
-        //      * - ParentT(s, s)
-        //      */
-        //     if (lhs.front() == '\"' && lhs.back() == '\"') {
-        //         if (rhs == "_"
-        //             || rhs.front() == '\"' && rhs.back() == '\"') {
-        //             resultExists = PKB::isUsesS(lhs, rhs);
-        //         } else {
-        //             synonyms[rhs] = 0;
-        //             results = PKB::getUsesS(lhs, declarations[rhs]);
-        //             resultExists = results.size();
-        //         }
-        //     } else {
-        //         synonyms[lhs] = 0;
-        //         if (rhs == "_"
-        //             || rhs.front() == '\"' && rhs.back() == '\"') {
-        //             results = PKB::getUsesS(declarations[lhs], rhs);
-        //         } else {
-        //             synonyms[rhs] = 0;
-        //             results = PKB::getUsesS(declarations[lhs], declarations[rhs]);
-        //         }
-        //         resultExists = results.size();
-        //     }
-
-        //     return Result(resultExists, synonyms, results);
-        // }
-
-        // Result evalNext(string lhs, string rhs) {
-        //     bool resultExists;
-        //     unordered_map<string, int> synonyms;
-        //     unordered_set<vector<string>> results;
-        //     /**
-        //      * Cases:
-        //      * - Next(_, _)
-        //      * - Next(_, "1")
-        //      * - Next(_, s)
-        //      * - Next("1", _)
-        //      * - Next("1", "1")
-        //      * - Next("1", s)
-        //      * - Next(s, _)
-        //      * - Next(s, "1")
-        //      * - Next(s, s)
-        //      */
-        //     if (lhs.front() == '\"' && lhs.back() == '\"') {
-        //         if (rhs == "_"
-        //             || rhs.front() == '\"' && rhs.back() == '\"') {
-        //             resultExists = PKB::isUsesS(lhs, rhs);
-        //         } else {
-        //             synonyms[rhs] = 0;
-        //             results = PKB::getUsesS(lhs, declarations[rhs]);
-        //             resultExists = results.size();
-        //         }
-        //     } else {
-        //         synonyms[lhs] = 0;
-        //         if (rhs == "_"
-        //             || rhs.front() == '\"' && rhs.back() == '\"') {
-        //             results = PKB::getUsesS(declarations[lhs], rhs);
-        //         } else {
-        //             synonyms[rhs] = 0;
-        //             results = PKB::getUsesS(declarations[lhs], declarations[rhs]);
-        //         }
-        //         resultExists = results.size();
-        //     }
-
-        //     return Result(resultExists, synonyms, results);
-        // }
-
-        // Result evalNextT(string lhs, string rhs) {
-        //     bool resultExists;
-        //     unordered_map<string, int> synonyms;
-        //     unordered_set<vector<string>> results;
-        //     /**
-        //      * Cases:
-        //      * - NextT(_, _)
-        //      * - NextT(_, "1")
-        //      * - NextT(_, s)
-        //      * - NextT("1", _)
-        //      * - NextT("1", "1")
-        //      * - NextT("1", s)
-        //      * - NextT(s, _)
-        //      * - NextT(s, "1")
-        //      * - NextT(s, s)
-        //      */
-        //     if (lhs.front() == '\"' && lhs.back() == '\"') {
-        //         if (rhs == "_"
-        //             || rhs.front() == '\"' && rhs.back() == '\"') {
-        //             resultExists = PKB::isUsesS(lhs, rhs);
-        //         } else {
-        //             synonyms[rhs] = 0;
-        //             results = PKB::getUsesS(lhs, declarations[rhs]);
-        //             resultExists = results.size();
-        //         }
-        //     } else {
-        //         synonyms[lhs] = 0;
-        //         if (rhs == "_"
-        //             || rhs.front() == '\"' && rhs.back() == '\"') {
-        //             results = PKB::getUsesS(declarations[lhs], rhs);
-        //         } else {
-        //             synonyms[rhs] = 0;
-        //             results = PKB::getUsesS(declarations[lhs], declarations[rhs]);
-        //         }
-        //         resultExists = results.size();
-        //     }
-
-        //     return Result(resultExists, synonyms, results);
-        // }
-
-        Result evalSuchThatClause(pair<string, pair<string, string>> clause) {
-            string rel = clause.first;
-            string lhs = clause.second.first;
-            string rhs = clause.second.second;
+        Result evalSuchThat(Clause clause) {
+            vector<string> fields = clause.getFields();
+            string& rel = fields[0];
+            string& lhs = fields[1];
+            string& rhs = fields[2];
             if (rel == "Uses" || rel == "Modifies") {
                 if (lhs.front() == '\"' && lhs.back() == '\"') {
                     rel += isdigit(lhs[1]) ? "P" : "S";
@@ -667,11 +199,13 @@ namespace Evaluator {
             return Result(resultExists, synonyms, results);
         }
 
-        Result evalPatternClause(pair<string, pair<string, string>> clause) {
-            string syn = clause.first;
-            string lhs = clause.second.first;
-            string rhs = clause.second.second;
+        Result evalPattern(Clause clause) {
+            vector<string> fields = clause.getFields();
+            string& syn = fields[0];
+            string& lhs = fields[1];
+            string& rhs = fields[2];
 
+            bool resultExists;
             unordered_map<string, int> synonyms;
             unordered_set<vector<string>> results;
             /**
@@ -683,28 +217,19 @@ namespace Evaluator {
              * - pattern a(v, _)
              * - pattern a(v, _"1"_)
              */
-            if (lhs == "_") {
-                if (rhs == "_") {
-                    //TODO
-                } else {
-                    //TODO
-                }
-            } else if (lhs.front() == '\"' && lhs.back() == '\"') {
-                if (rhs == "_") {
-                    //TODO
-                } else {
-                    //TODO
-                }
+            synonyms[syn] = 0;
+            if (lhs == "_"
+                || (lhs.front() == '\"' && lhs.back() == '\"')) {
+                results = PKB::getPattern(declarations[syn], lhs, rhs);
             } else {
-                synonyms[lhs] = 0;
-                if (rhs == "_") {
-                    //TODO
-                } else {
-                    //TODO
-                }
+                synonyms[lhs] = 1;
+                results = PKB::getPattern(declarations[syn],
+                                          declarations[lhs],
+                                          rhs);
             }
+            resultExists = results.size();
 
-            return Result(synonyms, results);
+            return Result(resultExists, synonyms, results);
         }
     }
 
@@ -712,23 +237,67 @@ namespace Evaluator {
         // extract info from query object
         declarations = q.getDeclarations();
         selectSyn = q.getSelectSynonym();
-        suchThatClauses = q.getClauses();
-        patternClauses = q.getPatternClauses();
+        clauses = q.getClauses();
 
-        // for every such-that clauses, get results and store in
-        // intermediateResults
-        for (const auto& clause : suchThatClauses) {
-            intermediateResults.push_back(evalSuchThatClause(clause));
-        }
-
-        // for every pattern clauses, get results and store in
+        // for every clause, get results and store in
         // intermediate results
-        for (const auto& clause : patternClauses) {
-            intermediateResults.push_back(evalPatternClause(clause));
+        for (const auto& clause : clauses) {
+            clause.getType() == "pattern"
+                ? intermediateResults.push_back(evalPattern(clause))
+                : intermediateResults.push_back(evalSuchThat(clause));
         }
+
+        // select clause as the starting intermediate result
+        vector<string> initResults;
+        unordered_set<vector<string>> initTable;
+        if (declarations[selectSyn] == "stmt") {
+            for (const auto& elem : PKB::getStmt()) {
+                initTable.insert(vector<string>(elem));
+            }
+        } else if (declarations[selectSyn] == "read") {
+            for (const auto& elem : PKB::getRead()) {
+                initTable.insert(vector<string>(elem));
+            }
+        } else if (declarations[selectSyn] == "print") {
+            for (const auto& elem : PKB::getPrint()) {
+                initTable.insert(vector<string>(elem));
+            }
+        } else if (declarations[selectSyn] == "call") {
+            for (const auto& elem : PKB::getCall()) {
+                initTable.insert(vector<string>(elem));
+            }
+        } else if (declarations[selectSyn] == "while") {
+            for (const auto& elem : PKB::getWhile()) {
+                initTable.insert(vector<string>(elem));
+            }
+        } else if (declarations[selectSyn] == "if") {
+            for (const auto& elem : PKB::getIf()) {
+                initTable.insert(vector<string>(elem));
+            }
+        } else if (declarations[selectSyn] == "assign") {
+            for (const auto& elem : PKB::getAssign()) {
+                initTable.insert(vector<string>(elem));
+            }
+        } else if (declarations[selectSyn] == "variable") {
+            for (const auto& elem : PKB::getVariable()) {
+                initTable.insert(vector<string>(elem));
+            }
+        } else if (declarations[selectSyn] == "constant") {
+            for (const auto& elem : PKB::getConstant()) {
+                initTable.insert(vector<string>(elem));
+            }
+        } else if (declarations[selectSyn] == "prog_line") {
+            for (const auto& elem : PKB::getProgLine()) {
+                initTable.insert(vector<string>(elem));
+            }
+        } else if (declarations[selectSyn] == "procedure") {
+            for (const auto& elem : PKB::getProcedure()) {
+                initTable.insert(vector<string>(elem));
+            }
+        }        
+        Result finalResult = Result(true, {{selectSyn, 0}}, initTable);
 
         // merge everything in intermediateResults
-        Result finalResult = Result();
         for (auto& result : intermediateResults) {
             finalResult = Result::merge(finalResult, result);
         }
