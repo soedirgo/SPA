@@ -1,7 +1,7 @@
 #include "PKBWhile.h"
 
 using namespace std;
-unordered_set<vector<string>, VectorDoubleStringHash> PKBWhile::whileUsesTable;
+TABLE PKBWhile::whileUsesTable;
 
 bool PKBWhile::setWhileUses(STMT_NO stmtNo, VAR_NAME varName) {
 	vector<string> tuple = vector<string>();

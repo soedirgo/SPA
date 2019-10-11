@@ -48,28 +48,28 @@ namespace UnitTesting
 
 			PKB PKB;
 			PKB.clear();
-			PKB.setStmt("1", "READ");
-			PKB.setStmt("2", "READ");
-			PKB.setStmt("3", "CALL");
-			PKB.setStmt("4", "ASSIGN");
-			PKB.setStmt("5", "ASSIGN");
-			PKB.setStmt("6", "WHILE");
-			PKB.setStmt("7", "ASSIGN");
-			PKB.setStmt("8", "CALL");
-			PKB.setStmt("9", "ASSIGN");
-			PKB.setStmt("10", "IF");
-			PKB.setStmt("11", "ASSIGN");
-			PKB.setStmt("12", "ASSIGN");
-			PKB.setStmt("13", "ASSIGN");
-			PKB.setStmt("14", "IF");
-			PKB.setStmt("15", "ASSIGN");
-			PKB.setStmt("16", "ASSIGN");
-			PKB.setStmt("17", "ASSIGN");
-			PKB.setStmt("18", "ASSIGN");
-			PKB.setStmt("19", "ASSIGN");
-			PKB.setStmt("20", "ASSIGN");
-			PKB.setStmt("21", "ASSIGN");
-			PKB.setStmt("22", "PRINT");
+			PKB.setStmt("1", "read");
+			PKB.setStmt("2", "read");
+			PKB.setStmt("3", "call");
+			PKB.setStmt("4", "assign");
+			PKB.setStmt("5", "assign");
+			PKB.setStmt("6", "while");
+			PKB.setStmt("7", "assign");
+			PKB.setStmt("8", "call");
+			PKB.setStmt("9", "assign");
+			PKB.setStmt("10", "if");
+			PKB.setStmt("11", "assign");
+			PKB.setStmt("12", "assign");
+			PKB.setStmt("13", "assign");
+			PKB.setStmt("14", "if");
+			PKB.setStmt("15", "assign");
+			PKB.setStmt("16", "assign");
+			PKB.setStmt("17", "assign");
+			PKB.setStmt("18", "assign");
+			PKB.setStmt("19", "assign");
+			PKB.setStmt("20", "assign");
+			PKB.setStmt("21", "assign");
+			PKB.setStmt("22", "print");
 
 			PKB.setParent("6", "7");
 			PKB.setParent("6", "8");
@@ -127,14 +127,14 @@ namespace UnitTesting
 			PKBParent PKB;
 			TABLE actual, expected;
 
-			actual = PKB.getAllParentChildStmt("IF", "ASSIGN");
+			actual = PKB.getAllParentChildStmt("if", "assign");
 			expected = { {"10","11"},{"10","12"},{"14","15"},{"14","16"} };
 			Assert::IsTrue(actual == expected);
 
-			actual = PKB.getAllParentChildStmt("ASSIGN", "READ");
+			actual = PKB.getAllParentChildStmt("assign", "read");
 			Assert::IsTrue(actual.size() == 0);
 
-			actual = PKB.getAllParentChildStmt("IF", "STATEMENT");
+			actual = PKB.getAllParentChildStmt("if", "stmt");
 			expected = { {"10","11"},{"10","12"},{"14","15"},{"14","16"} };
 			Assert::IsTrue(actual == expected);
 
@@ -142,7 +142,7 @@ namespace UnitTesting
 			expected = { {"6","7"},{"6","8"},{"6","9"},{"6","10"},{"10","11"},{"10","12"},{"14","15"},{"14","16"} };
 			Assert::IsTrue(actual == expected);
 
-			actual = PKB.getAllParentChildStmt("STATEMENT", "STATEMENT");
+			actual = PKB.getAllParentChildStmt("stmt", "stmt");
 			Assert::IsTrue(actual.size() == 0);
 		}
 
@@ -151,14 +151,14 @@ namespace UnitTesting
 			PKBParent PKB;
 			STMT_LIST actual, expected;
 
-			actual = PKB.getAllParentStmt("IF", "15");
+			actual = PKB.getAllParentStmt("if", "15");
 			expected = { {"14"} };
 			Assert::IsTrue(actual == expected);
 
-			actual = PKB.getAllParentStmt("ASSIGN", "2");
+			actual = PKB.getAllParentStmt("assign", "2");
 			Assert::IsTrue(actual.size() == 0);
 
-			actual = PKB.getAllParentStmt("WHILE", "9");
+			actual = PKB.getAllParentStmt("while", "9");
 			expected = { {"6"} };
 			Assert::IsTrue(actual == expected);
 
@@ -172,14 +172,14 @@ namespace UnitTesting
 			PKBParent PKB;
 			STMT_LIST actual, expected;
 
-			actual = PKB.getAllChildStmt("14", "ASSIGN");
+			actual = PKB.getAllChildStmt("14", "assign");
 			expected = { {"15"}, {"16"} };
 			Assert::IsTrue(actual == expected);
 
-			actual = PKB.getAllChildStmt("2", "ASSIGN");
+			actual = PKB.getAllChildStmt("2", "assign");
 			Assert::IsTrue(actual.size() == 0);
 
-			actual = PKB.getAllChildStmt("6", "IF");
+			actual = PKB.getAllChildStmt("6", "if");
 			expected = { {"10"} };
 			Assert::IsTrue(actual == expected);
 
@@ -193,14 +193,14 @@ namespace UnitTesting
 			PKBParent PKB;
 			TABLE actual, expected;
 
-			actual = PKB.getAllParentChildStarStmt("WHILE", "ASSIGN");
+			actual = PKB.getAllParentChildStarStmt("while", "assign");
 			expected = { {"6","7"},{"6","9"},{"6","11"},{"6","12"} };
 			Assert::IsTrue(actual == expected);
 
-			actual = PKB.getAllParentChildStarStmt("ASSIGN", "READ");
+			actual = PKB.getAllParentChildStarStmt("assign", "read");
 			Assert::IsTrue(actual.size() == 0);
 
-			actual = PKB.getAllParentChildStarStmt("IF", "STATEMENT");
+			actual = PKB.getAllParentChildStarStmt("if", "stmt");
 			expected = { {"10","11"},{"10","12"},{"14","15"},{"14","16"} };
 			Assert::IsTrue(actual == expected);
 
@@ -208,7 +208,7 @@ namespace UnitTesting
 			expected = { {"6","7"},{"6","8"},{"6","9"},{"6","10"},{"6","11"},{"6","12"},{"10","11"},{"10","12"},{"14","15"},{"14","16"} };
 			Assert::IsTrue(actual == expected);
 
-			actual = PKB.getAllParentChildStarStmt("STATEMENT", "STATEMENT");
+			actual = PKB.getAllParentChildStarStmt("stmt", "stmt");
 			Assert::IsTrue(actual.size() == 0);
 		}
 
@@ -217,14 +217,14 @@ namespace UnitTesting
 			PKBParent PKB;
 			STMT_LIST actual, expected;
 
-			actual = PKB.getAllParentStarStmt("IF", "15");
+			actual = PKB.getAllParentStarStmt("if", "15");
 			expected = { {"14"} };
 			Assert::IsTrue(actual == expected);
 
-			actual = PKB.getAllParentStarStmt("ASSIGN", "2");
+			actual = PKB.getAllParentStarStmt("assign", "2");
 			Assert::IsTrue(actual.size() == 0);
 
-			actual = PKB.getAllParentStarStmt("WHILE", "9");
+			actual = PKB.getAllParentStarStmt("while", "9");
 			expected = { {"6"} };
 			Assert::IsTrue(actual == expected);
 
@@ -238,14 +238,14 @@ namespace UnitTesting
 			PKBParent PKB;
 			STMT_LIST actual, expected;
 
-			actual = PKB.getAllChildStarStmt("14", "ASSIGN");
+			actual = PKB.getAllChildStarStmt("14", "assign");
 			expected = { {"15"}, {"16"} };
 			Assert::IsTrue(actual == expected);
 
-			actual = PKB.getAllChildStarStmt("2", "ASSIGN");
+			actual = PKB.getAllChildStarStmt("2", "assign");
 			Assert::IsTrue(actual.size() == 0);
 			
-			actual = PKB.getAllChildStarStmt("6", "ASSIGN");
+			actual = PKB.getAllChildStarStmt("6", "assign");
 			expected = { {"7"},{"9"},{"11"},{"12"} };
 			Assert::IsTrue(actual == expected);
 			

@@ -7,11 +7,11 @@ class PKBVariable {
 public:
 
 	static bool setVar(VAR_NAME varName);
-	static VAR_LIST getAllVar();
+	static VAR_LIST getVariables();
 
 	// Clear
 	static bool clear();
 
 private:
-	static std::unordered_set<std::vector<std::string>, VectorSingleStringHash> varTable;
+	static TABLE varTable;
 };

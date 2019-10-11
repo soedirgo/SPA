@@ -8,7 +8,7 @@ class PKBCall {
 public:
 	static bool setCallStmt(STMT_NO stmtNo, PROC_NAME q);
 	static bool setCallProc(PROC_NAME caller, PROC_NAME callee);
-	static bool setCallStarProc(PROC_NAME caller, PROC_NAME callee);
+	static bool setCallTProc(PROC_NAME caller, PROC_NAME callee);
 	static bool isCallRelationship(PROC_NAME caller, PROC_NAME callee);
 	static bool isCallStarRelationship(PROC_NAME caller, PROC_NAME callee);
 
@@ -29,7 +29,7 @@ private:
 	static TABLE getResultTableGenericBoth(TABLE tableName);
 	static PROC_LIST getResultTableGenericLeft(PROC_NAME procName, TABLE tableName);
 	static PROC_LIST getResultTableGenericRight(PROC_NAME procName, TABLE tableName);
-	static std::unordered_set<std::vector<std::string>, VectorDoubleStringHash> callProcTable;
-	static std::unordered_set<std::vector<std::string>, VectorDoubleStringHash> callStarProcTable;
-	static std::unordered_set<std::vector<std::string>, VectorDoubleStringHash> callStmtTable;
+	static TABLE callProcTable;
+	static TABLE callStarProcTable;
+	static TABLE callStmtTable;
 };

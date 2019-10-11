@@ -45,20 +45,20 @@ namespace UnitTesting
 			PKB PKB;
 			PKB.clear();
 
-			PKB.setProc("First");
-			PKB.setProc("Second");
-			PKB.setProc("Third");
+			PKB.setProcedure("First");
+			PKB.setProcedure("Second");
+			PKB.setProcedure("Third");
 
 			//Extra insert test
-			PKB.setProc("First");
-			PKB.setProc("First");
+			PKB.setProcedure("First");
+			PKB.setProcedure("First");
 
 		}
 
-		TEST_METHOD(getAllProc)
+		TEST_METHOD(getProcedures)
 		{
 			PKBProcedure PKB;
-			VAR_LIST actual = PKB.getAllProc();
+			VAR_LIST actual = PKB.getProcedures();
 			VAR_LIST expected = { {"First"},{"Second"},{"Third"}};
 			Assert::IsTrue(actual == expected);
 		}

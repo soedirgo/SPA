@@ -43,24 +43,24 @@ namespace UnitTesting
 		   */
 			PKB PKB;
 			PKB.clear();
-			PKB.setStmt("1", "READ");
-			PKB.setStmt("2", "READ");
-			PKB.setStmt("3", "CALL");
-			PKB.setStmt("4", "ASSIGN");
-			PKB.setStmt("5", "ASSIGN");
-			PKB.setStmt("6", "WHILE");
-			PKB.setStmt("7", "ASSIGN");
-			PKB.setStmt("8", "CALL");
-			PKB.setStmt("9", "ASSIGN");
-			PKB.setStmt("10", "IF");
-			PKB.setStmt("11", "ASSIGN");
-			PKB.setStmt("12", "ASSIGN");
-			PKB.setStmt("13", "ASSIGN");
-			PKB.setStmt("14", "ASSIGN");
-			PKB.setStmt("15", "ASSIGN");
-			PKB.setStmt("16", "ASSIGN");
-			PKB.setStmt("17", "ASSIGN");
-			PKB.setStmt("18", "PRINT");
+			PKB.setStmt("1", "read");
+			PKB.setStmt("2", "read");
+			PKB.setStmt("3", "call");
+			PKB.setStmt("4", "assign");
+			PKB.setStmt("5", "assign");
+			PKB.setStmt("6", "while");
+			PKB.setStmt("7", "assign");
+			PKB.setStmt("8", "call");
+			PKB.setStmt("9", "assign");
+			PKB.setStmt("10", "if");
+			PKB.setStmt("11", "assign");
+			PKB.setStmt("12", "assign");
+			PKB.setStmt("13", "assign");
+			PKB.setStmt("14", "assign");
+			PKB.setStmt("15", "assign");
+			PKB.setStmt("16", "assign");
+			PKB.setStmt("17", "assign");
+			PKB.setStmt("18", "print");
 
 			PKB.setNext("1", "2");
 			PKB.setNext("2", "3");
@@ -156,8 +156,9 @@ namespace UnitTesting
 			Assert::IsTrue(PKB.isNextStarRelationship("6", "14"));
 			Assert::IsTrue(PKB.isNextStarRelationship("6", "15"));		
 			Assert::IsTrue(PKB.isNextStarRelationship("7", "9"));
+			
+			Assert::IsTrue(PKB.isNextStarRelationship("7", "6"));
 			/*
-			Assert::IsTrue(PKB.isNextStarRelationship("7", "10"));
 			Assert::IsTrue(PKB.isNextStarRelationship("7", "11"));
 			Assert::IsTrue(PKB.isNextStarRelationship("7", "12"));
 			Assert::IsTrue(PKB.isNextStarRelationship("7", "13"));

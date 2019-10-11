@@ -48,24 +48,24 @@ namespace UnitTesting
 			PKBCall Calls;
 			PKB.clear();
 
-			Stmts.setStmt("1", "READ");
-			Stmts.setStmt("2", "READ");
-			Stmts.setStmt("3", "CALL");
-			Stmts.setStmt("4", "ASSIGN");
-			Stmts.setStmt("5", "ASSIGN");
-			Stmts.setStmt("6", "WHILE");
-			Stmts.setStmt("7", "ASSIGN");
-			Stmts.setStmt("8", "CALL");
-			Stmts.setStmt("9", "ASSIGN");
-			Stmts.setStmt("10", "IF");
-			Stmts.setStmt("11", "ASSIGN");
-			Stmts.setStmt("12", "ASSIGN");
-			Stmts.setStmt("13", "ASSIGN");
-			Stmts.setStmt("14", "ASSIGN");
-			Stmts.setStmt("15", "ASSIGN");
-			Stmts.setStmt("16", "ASSIGN");
-			Stmts.setStmt("17", "ASSIGN");
-			Stmts.setStmt("18", "PRINT");
+			Stmts.setStmt("1", "read");
+			Stmts.setStmt("2", "read");
+			Stmts.setStmt("3", "call");
+			Stmts.setStmt("4", "assign");
+			Stmts.setStmt("5", "assign");
+			Stmts.setStmt("6", "while");
+			Stmts.setStmt("7", "assign");
+			Stmts.setStmt("8", "call");
+			Stmts.setStmt("9", "assign");
+			Stmts.setStmt("10", "if");
+			Stmts.setStmt("11", "assign");
+			Stmts.setStmt("12", "assign");
+			Stmts.setStmt("13", "assign");
+			Stmts.setStmt("14", "assign");
+			Stmts.setStmt("15", "assign");
+			Stmts.setStmt("16", "assign");
+			Stmts.setStmt("17", "assign");
+			Stmts.setStmt("18", "print");
 
 			//Direct assignment stmts with var on RHS 
 			PKB.setUsesStmt("3", "y");
@@ -152,23 +152,23 @@ namespace UnitTesting
 		TEST_METHOD(getAllUsesStmtByType)
 		{//LHS is either a print/if/while/assign/call 
 			PKBUses PKB;
-			STMT_LIST ifResult = PKB.getAllUsesStmtByType("IF");
+			STMT_LIST ifResult = PKB.getAllUsesStmtByType("if");
 			STMT_LIST ifExpected = { {"10"} };
 			Assert::IsTrue(ifExpected == ifResult);
 
-			STMT_LIST printResult = PKB.getAllUsesStmtByType("PRINT");
+			STMT_LIST printResult = PKB.getAllUsesStmtByType("print");
 			STMT_LIST printExpected = { {"18"} };
 			Assert::IsTrue(printExpected == printResult);
 
-			STMT_LIST assignResult = PKB.getAllUsesStmtByType("ASSIGN");
+			STMT_LIST assignResult = PKB.getAllUsesStmtByType("assign");
 			STMT_LIST assignExpected = { {"4"}, {"5"}, {"7"}, {"9"}, {"11"}, {"12"} , {"13"}, {"14"}, {"15"}, {"16"}, {"17"} };
 			Assert::IsTrue(assignExpected == assignResult);
 
-			STMT_LIST callResult = PKB.getAllUsesStmtByType("CALL");
+			STMT_LIST callResult = PKB.getAllUsesStmtByType("call");
 			STMT_LIST callExpected = { {"3"}, {"8"} };
 			Assert::IsTrue(callExpected == callResult);
 
-			STMT_LIST whileResult = PKB.getAllUsesStmtByType("WHILE");
+			STMT_LIST whileResult = PKB.getAllUsesStmtByType("while");
 			STMT_LIST whileExpected = { {"6"} };
 			Assert::IsTrue(whileExpected == whileResult);
 		}
@@ -176,56 +176,56 @@ namespace UnitTesting
 		TEST_METHOD(getUsesStmtByTypeAndVar)
 		{//LHS is either a print/if/while/assign/call 
 			PKBUses PKB;
-			STMT_LIST result = PKB.getUsesStmtByTypeAndVar("ASSIGN", "i");
+			STMT_LIST result = PKB.getUsesStmtByTypeAndVar("assign", "i");
 			STMT_LIST expected = { {"9"}, {"13"} };
 			Assert::IsTrue(result == expected);
 
 
-			result = PKB.getUsesStmtByTypeAndVar("ASSIGN", "x");
+			result = PKB.getUsesStmtByTypeAndVar("assign", "x");
 			expected = { {"7"} , {"11"}  , {"13"} , {"15"} };
 			Assert::IsTrue(result == expected);
 
-			result = PKB.getUsesStmtByTypeAndVar("ASSIGN", "y");
+			result = PKB.getUsesStmtByTypeAndVar("assign", "y");
 			expected = { {"7"} ,  {"15"} };
 			Assert::IsTrue(result == expected);
 
-			result = PKB.getUsesStmtByTypeAndVar("ASSIGN", "z");
+			result = PKB.getUsesStmtByTypeAndVar("assign", "z");
 			expected = { {"13"} , {"14"} ,{"15"} ,{"17"} };
 			Assert::IsTrue(result == expected);
 
-			result = PKB.getUsesStmtByTypeAndVar("ASSIGN", "z");
+			result = PKB.getUsesStmtByTypeAndVar("assign", "z");
 			expected = { {"13"} , {"14"} ,{"15"} ,{"17"} };
 			Assert::IsTrue(result == expected);
 
-			result = PKB.getUsesStmtByTypeAndVar("PRINT", "v");
+			result = PKB.getUsesStmtByTypeAndVar("print", "v");
 			expected = { {"18"} };
 			Assert::IsTrue(result == expected);
 
-			result = PKB.getUsesStmtByTypeAndVar("IF", "x");
+			result = PKB.getUsesStmtByTypeAndVar("if", "x");
 			expected = { {"10"} };
 			Assert::IsTrue(result == expected);
 
-			result = PKB.getUsesStmtByTypeAndVar("WHILE", "i");
+			result = PKB.getUsesStmtByTypeAndVar("while", "i");
 			expected = { {"6"} };
 			Assert::IsTrue(result == expected);
 
-			result = PKB.getUsesStmtByTypeAndVar("CALL", "i");
+			result = PKB.getUsesStmtByTypeAndVar("call", "i");
 			expected = { {"3"} };
 			Assert::IsTrue(result == expected);
 
-			result = PKB.getUsesStmtByTypeAndVar("CALL", "x");
+			result = PKB.getUsesStmtByTypeAndVar("call", "x");
 			expected = { {"3"} };
 			Assert::IsTrue(result == expected);
 
-			result = PKB.getUsesStmtByTypeAndVar("CALL", "y");
+			result = PKB.getUsesStmtByTypeAndVar("call", "y");
 			expected = { {"3"} };
 			Assert::IsTrue(result == expected);
 
-			result = PKB.getUsesStmtByTypeAndVar("CALL", "z");
+			result = PKB.getUsesStmtByTypeAndVar("call", "z");
 			expected = { {"3"} , {"8"} };
 			Assert::IsTrue(result == expected);
 
-			result = PKB.getUsesStmtByTypeAndVar("CALL", "v");
+			result = PKB.getUsesStmtByTypeAndVar("call", "v");
 			expected = { {"3"} , {"8"} };
 			Assert::IsTrue(result == expected);
 

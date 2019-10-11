@@ -119,12 +119,12 @@ bool PKB::isModifiesProcRelationship(PROC_NAME procName, VAR_NAME varName) {
 
 
 //Uses
-bool PKB::setUsesStmtRelation(STMT_NO stmtNo, VAR_NAME varName) {
+bool PKB::setUsesStmt(STMT_NO stmtNo, VAR_NAME varName) {
 	return PKBUses::setUsesStmt(stmtNo, varName);
 
 };
 
-bool PKB::setUsesProcRelation(PROC_NAME procName, VAR_NAME varName) {
+bool PKB::setUsesProc(PROC_NAME procName, VAR_NAME varName) {
 	return PKBUses::setUsesProc(procName, varName);
 };
 
@@ -202,8 +202,8 @@ bool PKB::setVar(VAR_NAME varName) {
 	return PKBVariable::setVar(varName);
 }
 
-VAR_LIST PKB::getAllVar() {
-	return PKBVariable::getAllVar();
+VAR_LIST PKB::getVariables() {
+	return PKBVariable::getVariables();
 }
 
 // constantTable APIs
@@ -218,7 +218,7 @@ CONST_VAL PKB::getConstantValByStmt(STMT_NO stmtNo) {
 }
 */
 
-CONST_LIST PKB::getAllConstant() {
+CONST_LIST PKB::getConstants() {
 	return PKBConstant::getAllConstantVal();
 }
 
@@ -235,7 +235,7 @@ STMT_LIST PKB::getStmts() {
 // assignStmtTable APIs
 
 STMT_LIST PKB::getAssigns() {
-	return PKBStmt::getAllStmtByType("ASSIGN");
+	return PKBStmt::getAllStmtByType("assign");
 }
 
 /*
@@ -287,7 +287,7 @@ bool PKB::setAssignStmtByVar(STMT_NO stmtNo, string varName) {
 ////////////////////////////////////
 
 STMT_LIST PKB::getWhiles() {
-	return PKBStmt::getAllStmtByType("WHILE");
+	return PKBStmt::getAllStmtByType("while");
 };
 
 
@@ -296,7 +296,7 @@ STMT_LIST PKB::getWhiles() {
 ////////////////////////////////////
 
 STMT_LIST PKB::getIfs() {
-	return PKBStmt::getAllStmtByType("IF");
+	return PKBStmt::getAllStmtByType("if");
 };
 
 ////////////////////////////////////
@@ -304,7 +304,7 @@ STMT_LIST PKB::getIfs() {
 ////////////////////////////////////
 
 STMT_LIST PKB::getPrints() {
-	return PKBStmt::getAllStmtByType("PRINT");
+	return PKBStmt::getAllStmtByType("print");
 };
 
 bool PKB::setPrint(STMT_NO stmtNo, VAR_NAME varName) {
@@ -316,7 +316,7 @@ bool PKB::setPrint(STMT_NO stmtNo, VAR_NAME varName) {
 ////////////////////////////////////
 
 STMT_LIST PKB::getReads() {
-	return PKBStmt::getAllStmtByType("READ");
+	return PKBStmt::getAllStmtByType("read");
 };
 
 bool PKB::setRead(STMT_NO stmtNo, VAR_NAME varName) {
@@ -328,13 +328,13 @@ bool PKB::setRead(STMT_NO stmtNo, VAR_NAME varName) {
 // ProecedureTable APIs
 ////////////////////////////////////
 
-PROC_LIST PKB::getAllProc() {
-	return PKBProcedure::getAllProc();
+PROC_LIST PKB::getProcedures() {
+	return PKBProcedure::getProcedures();
 };
 
 
-bool PKB::setProc(PROC_NAME procName) {
-	return PKBProcedure::setProc(procName);
+bool PKB::setProcedure(PROC_NAME procName) {
+	return PKBProcedure::setProcedure(procName);
 };
 
 
@@ -343,7 +343,7 @@ bool PKB::setProc(PROC_NAME procName) {
 ////////////////////////////////////
 
 STMT_LIST PKB::getCalls() {
-	return PKBStmt::getAllStmtByType("CALL");
+	return PKBStmt::getAllStmtByType("call");
 };
 
 bool PKB::setCallProc(PROC_NAME caller, PROC_NAME callee) {
@@ -352,6 +352,10 @@ bool PKB::setCallProc(PROC_NAME caller, PROC_NAME callee) {
 
 bool PKB::setCallStmt(STMT_NO stmtNo, PROC_NAME procName) {
 	return PKBCall::setCallStmt(stmtNo, procName);
+};
+
+bool PKB::setCallT(PROC_NAME caller, PROC_NAME callee) {
+	return PKBCall::setCallTProc(caller, callee);
 };
 
 bool PKB::isCallRelationship(PROC_NAME caller, PROC_NAME callee) {
@@ -365,6 +369,10 @@ bool PKB::isCallStarRelationship(PROC_NAME caller, PROC_NAME callee) {
 ////////////////////////////////////
 // NextTable APIs
 ////////////////////////////////////
+STMT_LIST PKB::getProgLines() {
+	return PKBStmt::getAllStmt();
+}
+
 bool PKB::setNext(PROG_LINE n1, PROG_LINE n2) {
 	return PKBNext::setNext(n1, n2);
 };
@@ -379,12 +387,12 @@ bool PKB::isNextStarRelationship(PROG_LINE n1, PROG_LINE n2) {
 
 
 // New While Uses
-bool PKB::setWhileUsesRelation(STMT_NO stmtNo, VAR_NAME varName) {
+bool PKB::setWhileCondition(STMT_NO stmtNo, VAR_NAME varName) {
 	return PKBWhile::setWhileUses(stmtNo, varName);
 }
 
 // New If Uses
-bool PKB::setIfUsesRelation(STMT_NO stmtNo, VAR_NAME varName) {
+bool PKB::setIfCondition(STMT_NO stmtNo, VAR_NAME varName) {
 	return PKBIf::setIfUses(stmtNo, varName);
 }
 

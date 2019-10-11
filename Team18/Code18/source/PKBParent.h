@@ -29,6 +29,6 @@ private:
 	static TABLE getResultTableGenericBoth(STMT_TYPE type1, STMT_TYPE type2, TABLE tableName);
 	static STMT_LIST getResultTableGenericLeft(STMT_TYPE type, STMT_NO child, TABLE tableName);
 	static STMT_LIST getResultTableGenericRight(STMT_NO parent, STMT_TYPE type, TABLE tableName);
-	static std::unordered_set<std::vector<std::string>, VectorDoubleStringHash> parentTable;
-	static std::unordered_set<std::vector<std::string>, VectorDoubleStringHash> parentStarTable;
+	static TABLE parentTable;
+	static TABLE parentStarTable;
 };

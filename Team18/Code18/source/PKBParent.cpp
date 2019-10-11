@@ -4,8 +4,8 @@
 
 using namespace std;
 
-unordered_set<vector<string>, VectorDoubleStringHash> PKBParent::parentTable;
-unordered_set<vector<string>, VectorDoubleStringHash> PKBParent::parentStarTable;
+TABLE PKBParent::parentTable;
+TABLE PKBParent::parentStarTable;
 
 bool PKBParent::setParent(STMT_NO parent, STMT_NO child) {
 	vector<string> tuple = vector<string>();
@@ -109,13 +109,13 @@ TABLE PKBParent::getResultTableGenericBoth(STMT_TYPE type1, STMT_TYPE type2, TAB
 		return tableName;
 	}
 	STMT_LIST list1, list2;
-	if (type1 == "_" || type1 == "STATEMENT") {
+	if (type1 == "_" || type1 == "stmt") {
 		list1 = PKBStmt::getAllStmt();
 	}
 	else {
 		list1 = PKBStmt::getAllStmtByType(type1);
 	}
-	if (type2 == "_" || type2 == "STATEMENT") {
+	if (type2 == "_" || type2 == "stmt") {
 		list2 = PKBStmt::getAllStmt();
 	}
 	else {
@@ -146,7 +146,7 @@ STMT_LIST PKBParent::getResultTableGenericLeft(STMT_TYPE type, STMT_NO stmtNo, T
 	STMT_LIST resultTable;
 	STMT_LIST list;
 	STMT_NO s;
-	if (type == "_" || type == "STATEMENT") {
+	if (type == "_" || type == "stmt") {
 		list = PKBStmt::getAllStmt();
 	}
 	else {
@@ -170,7 +170,7 @@ STMT_LIST PKBParent::getResultTableGenericRight(STMT_NO stmtNo, STMT_TYPE type, 
 	STMT_LIST resultTable;
 	STMT_LIST list;
 	STMT_NO s;
-	if (type == "_" || type == "STATEMENT") {
+	if (type == "_" || type == "stmt") {
 		list = PKBStmt::getAllStmt();
 	}
 	else {

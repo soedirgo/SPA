@@ -6,12 +6,12 @@
 
 class PKBProcedure {
 public:
-	static PROC_LIST getAllProc();
-	static bool setProc(PROC_NAME procName);
+	static PROC_LIST getProcedures();
+	static bool setProcedure(PROC_NAME procName);
 
 	// Clear
 	static bool clear();
 
 private:
-	static std::unordered_set<std::vector<std::string>, VectorSingleStringHash> procedureTable;
+	static TABLE procedureTable;
 };
