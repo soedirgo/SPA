@@ -129,11 +129,11 @@ bool PKB::setUsesProc(PROC_NAME procName, VAR_NAME varName) {
 };
 
 bool PKB::isUsesStmtRelationship(STMT_NO stmtNo, VAR_NAME varName) {
-	return PKBUses::isUsesStmtRelationship(stmtNo, varName);
+	return PKBUses::isUsesStmt(stmtNo, varName);
 }
 
 bool PKB::isUsesProcRelationship(PROC_NAME procName, VAR_NAME varName) {
-	return PKBUses::isUsesProcRelationship(procName, varName);
+	return PKBUses::isUsesProc(procName, varName);
 }
 
 /*

@@ -13,10 +13,11 @@ public:
 	static bool isCallStarRelationship(PROC_NAME caller, PROC_NAME callee);
 
 	static PROC_NAME getCalledProcByStmt(STMT_NO stmtNo); //not tested
+	//	static STMT_LIST getCallStmtsByProc(STMT_NO stmtNo); //to be implemented
 	static TABLE getCallProcTable();
 	static PROC_LIST getCalleeProc(PROC_NAME caller);
 
-	static TABLE getAllCallerCalleeProc();
+	static TABLE getAllCallerCalleeProc();	
 	static PROC_LIST getAllCallerProc(PROC_NAME procName);
 	static PROC_LIST getAllCalleProc(PROC_NAME procName);
 	static TABLE getAllCallerCalleeStarProc();
