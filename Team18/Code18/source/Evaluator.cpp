@@ -159,7 +159,7 @@ namespace Evaluator {
 				for (const auto& v : enumeratedVar) {
 					if (declarations.count(clause.second.second))
 						fil[clause.second.second] = v;
-					if (PKB::isModifiesStmtRelationship(s, v))
+					if (PKB::isModifiesSIdentIdent(s, v))
                         if (evalClauses(cls, fil))
                             return true;
                         else
@@ -272,7 +272,7 @@ namespace Evaluator {
 					fil[clause.first] = assign;
                 // for each v
                 for (const auto& lhs : enumeratedLhs) {
-                    if (!PKB::isModifiesStmtRelationship(assign, lhs))
+                    if (!PKB::isModifiesSIdentIdent(assign, lhs))
                         continue;
                     if (declarations.count(clause.second.first))
                         fil[clause.second.first] = lhs;

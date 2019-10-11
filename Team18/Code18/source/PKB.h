@@ -111,10 +111,10 @@ public:
 	static TABLE getParent(STMT_REF s1, STMT_REF s2);
 
 	//Modifies Function
-	static bool setModifiesStmt(STMT_NO stmtNo, VAR_NAME varName);
-	static bool setModifiesProc(PROC_NAME procName, VAR_NAME varName);
-	static bool isModifiesStmtRelationship(STMT_NO stmtNo, VAR_NAME varName);
-	static bool isModifiesProcRelationship(PROC_NAME procName, VAR_NAME varName);
+	static bool setModifiesS(STMT_NO stmtNo, VAR_NAME varName);
+	static bool setModifiesP(PROC_NAME procName, VAR_NAME varName);
+	static bool isModifiesSIdentIdent(STMT_NO stmtNo, VAR_NAME varName);
+	static bool isModifiesPIdentIdent(PROC_NAME procName, VAR_NAME varName);
 
 	static bool isModifiesS(STMT_REF s1, ENT_REF e2);
 	static bool isModifiesP(ENT_REF e1, ENT_REF e2);
