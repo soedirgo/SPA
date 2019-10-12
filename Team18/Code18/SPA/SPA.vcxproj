@@ -11,58 +11,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\source\Clause.cpp" />
-    <ClCompile Include="..\source\DesignExtractor.cpp" />
-    <ClCompile Include="..\source\Evaluator.cpp" />
-    <ClCompile Include="..\source\NestedResult.cpp" />
-    <ClCompile Include="..\source\Parser.cpp" />
-    <ClCompile Include="..\source\PKB.cpp" />
-    <ClCompile Include="..\source\PKBCall.cpp" />
-    <ClCompile Include="..\source\PKBConstant.cpp" />
-    <ClCompile Include="..\source\PKBFollows.cpp" />
-    <ClCompile Include="..\source\PKBModifies.cpp" />
-    <ClCompile Include="..\source\PKBNext.cpp" />
-    <ClCompile Include="..\source\PKBParent.cpp" />
-    <ClCompile Include="..\source\PKBPattern.cpp" />
-    <ClCompile Include="..\source\PKBPrint.cpp" />
-    <ClCompile Include="..\source\PKBProcedure.cpp" />
-    <ClCompile Include="..\source\PKBRead.cpp" />
-    <ClCompile Include="..\source\PKBStmt.cpp" />
-    <ClCompile Include="..\source\PKBUses.cpp" />
-    <ClCompile Include="..\source\PKBVariable.cpp" />
-    <ClCompile Include="..\source\Preprocessor.cpp" />
-    <ClCompile Include="..\source\Query.cpp" />
-    <ClCompile Include="..\source\QueryParser.cpp" />
-    <ClCompile Include="..\source\TNode.cpp" />
+    <ClCompile Include="..\source\*.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\source\AbstractType.h" />
-    <ClInclude Include="..\source\Clause.h" />
-    <ClInclude Include="..\source\DesignExtractor.h" />
-    <ClInclude Include="..\source\Entity.h" />
-    <ClInclude Include="..\source\Evaluator.h" />
-    <ClInclude Include="..\source\NestedResult.h" />
-    <ClInclude Include="..\source\Parser.h" />
-    <ClInclude Include="..\source\PKB.h" />
-    <ClInclude Include="..\source\PKBCall.h" />
-    <ClInclude Include="..\source\PKBConstant.h" />
-    <ClInclude Include="..\source\PKBFollows.h" />
-    <ClInclude Include="..\source\PKBHash.h" />
-    <ClInclude Include="..\source\PKBModifies.h" />
-    <ClInclude Include="..\source\PKBNext.h" />
-    <ClInclude Include="..\source\PKBParent.h" />
-    <ClInclude Include="..\source\PKBPattern.h" />
-    <ClInclude Include="..\source\PKBPrint.h" />
-    <ClInclude Include="..\source\PKBProcedure.h" />
-    <ClInclude Include="..\source\PKBRead.h" />
-    <ClInclude Include="..\source\PKBStmt.h" />
-    <ClInclude Include="..\source\PKBUses.h" />
-    <ClInclude Include="..\source\PKBVariable.h" />
-    <ClInclude Include="..\source\Preprocessor.h" />
-    <ClInclude Include="..\source\Query.h" />
-    <ClInclude Include="..\source\QueryParser.h" />
-    <ClInclude Include="..\source\Relationship.h" />
-    <ClInclude Include="..\source\TNode.h" />
+    <ClInclude Include="..\source\*.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{DC21A1EA-D2C6-4D14-A2B4-E025B64BDE81}</ProjectGuid>
