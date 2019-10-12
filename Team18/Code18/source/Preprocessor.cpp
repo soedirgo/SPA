@@ -171,7 +171,7 @@ namespace Preprocessor {
         return true;
     }
 
-    Query preprocess(string input) {
-        return Query({}, "", {}, {});
-    }
+    //Query preprocess(string input) {
+         //return Query({}, "", {}, {});
+    //}
 }

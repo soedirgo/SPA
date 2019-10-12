@@ -60,9 +60,14 @@ void TestWrapper::evaluate(std::string query, std::list<std::string>& results){
     }
 
 	QueryParser queryParser = QueryParser();
-	//list<string> evResult = queryParser.parse(query);
+	Query queryObject = queryParser.parse(query);
+	if (queryObject.getSelectSynonym() == "Invalid") {
+		results = {};
+		return;
+	}
 
-	//std::cout << evResult;
+	//Evaluator ev = Evaluator();
+	//string finalResult = ev.something();
 
 
   // store the answers to the query in the results list (it is initially empty)
