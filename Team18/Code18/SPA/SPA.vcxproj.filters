@@ -78,13 +78,10 @@
     <ClCompile Include="..\source\PKBConstant.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\source\PKBWhile.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\PKBIf.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\source\PKBNext.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\PKBPattern.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -164,13 +161,10 @@
     <ClInclude Include="..\source\PKBConstant.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\source\PKBWhile.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\PKBIf.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\source\PKBNext.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\PKBPattern.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "CppUnitTest.h"
 #include "PKB.h"
-#include "PKBIf.h"
+#include "PKBPattern.h"
 #include "DesignExtractor.h"
 
 using namespace std;
@@ -9,7 +9,7 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace UnitTesting
 {
-	TEST_CLASS(PKBIfTest)
+	TEST_CLASS(PKBPatternTest)
 	{
 	public:
 		TEST_METHOD_INITIALIZE(PKB_START)
@@ -45,15 +45,24 @@ namespace UnitTesting
 			PKB PKB;
 			PKB.clear();
 
+			PKB.setWhileCondition("6", "i");
 			PKB.setIfCondition("10", "x");
+
 		}
 
+		TEST_METHOD(WhileUsesRelationship)
+		{
+			PKBPattern PKB;
+			Assert::IsTrue(PKB.isWhileUsesRelationship("6", "i"));
+
+		}
 		TEST_METHOD(IfUsesRelationship)
 		{
-			PKBIf PKB;
+			PKBPattern PKB;
 			Assert::IsTrue(PKB.isIfUsesRelationship("10", "x"));
 
 		}
+	
 
 	};
 };

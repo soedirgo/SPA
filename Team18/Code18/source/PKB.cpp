@@ -15,8 +15,7 @@
 #include "PKBPrint.h"
 #include "PKBRead.h"
 #include "PKBConstant.h"
-#include "PKBWhile.h"
-#include "PKBIf.h"
+#include "PKBPattern.h"
 using namespace std;
 
 unordered_map<int, string> PKB::assignStmtTable;
@@ -29,7 +28,6 @@ bool PKB::clear()
 	PKBCall::clear();
 	PKBConstant::clear();
 	PKBFollows::clear();
-	PKBIf::clear();
 	PKBModifies::clear();
 	PKBNext::clear();
 	PKBParent::clear();
@@ -39,7 +37,7 @@ bool PKB::clear()
 	PKBStmt::clear();
 	PKBUses::clear();
 	PKBVariable::clear();
-	PKBWhile::clear();
+	PKBPattern::clear();
 
 	return true;
 }
@@ -665,11 +663,11 @@ TABLE PKB::getNextTEntEnt() {
 
 // New While Uses
 bool PKB::setWhileCondition(STMT_NO stmtNo, VAR_NAME varName) {
-	return PKBWhile::setWhileUses(stmtNo, varName);
+	return PKBPattern::setWhileUses(stmtNo, varName);
 }
 
 // New If Uses
 bool PKB::setIfCondition(STMT_NO stmtNo, VAR_NAME varName) {
-	return PKBIf::setIfUses(stmtNo, varName);
+	return PKBPattern::setIfUses(stmtNo, varName);
 }
 
