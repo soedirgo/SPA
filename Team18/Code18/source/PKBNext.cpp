@@ -258,3 +258,21 @@ TABLE PKBNext::getNextTEntEnt() {
 	return nextTTable;
 }
 
+TABLE PKBNext::getNextTSelf() {
+	PROC_LIST resultTable;
+	LINE_LIST list;
+	PROG_LINE n;
+	list = PKBStmt::getAllStmt();
+	for (auto iter1 : list) {
+		n = iter1.front();
+		for (auto vectorIter : nextTTable) {
+			vector<string> tuple = vector<string>();
+			if (vectorIter.front() == n && vectorIter.back() == n) {
+				tuple.push_back(vectorIter.front());
+				resultTable.emplace(tuple);
+			}
+		}
+	}
+	return resultTable;
+}
+

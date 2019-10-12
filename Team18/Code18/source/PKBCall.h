@@ -10,10 +10,11 @@ public:
 	static bool setCallProc(PROC_NAME caller, PROC_NAME callee);
 	static bool setCallTProc(PROC_NAME caller, PROC_NAME callee);
 
-	static PROC_NAME getCalledProcByStmt(STMT_NO stmtNo); //not tested
+	static PROC_NAME getCallProcByStmt(STMT_NO stmtNo); //not tested
 	//	static STMT_LIST getCallStmtsByProc(STMT_NO stmtNo); //to be implemented
 	static TABLE getCallProcTable();
 	static PROC_LIST getCalleeProc(PROC_NAME caller);
+	static PROC_LIST getAllCallProc();
 
 	//Bool Evaluation
 	static bool isCallsAnyAny();
