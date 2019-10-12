@@ -146,6 +146,16 @@ Query QueryParser::parse(string query) {
 		clausesVector.push_back(c);
 	}
 
+	for (int j = 0; j < pattern.size(); j++) {
+		vector<string> patternStr;
+		patternStr.push_back(pattern[j].first);
+		patternStr.push_back(pattern[j].second.first);
+		patternStr.push_back(pattern[j].second.second);
+
+		Clause patternC = Clause("pattern", patternStr);
+		clausesVector.push_back(patternC);
+	}
+
 	Query q = Query(declerationVariables, selectVars, clausesVector);
 	return q;
 }
