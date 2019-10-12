@@ -390,7 +390,7 @@ CONST_VAL PKB::getConstantValByStmt(STMT_NO stmtNo) {
 */
 
 CONST_LIST PKB::getConstants() {
-	return PKBConstant::getAllConstantVal();
+	return PKBConstant::getConstants();
 }
 
 // stmtTable APIs
@@ -482,6 +482,14 @@ bool PKB::setPrint(STMT_NO stmtNo, VAR_NAME varName) {
 	return PKBPrint::setPrint(stmtNo, varName);
 };
 
+VAR_LIST PKB::getAllPrintVar() {
+	return PKBPrint::getAllPrintVar();
+}
+
+VAR_NAME PKB::getPrintVar(STMT_NO stmtNo) {
+	return PKBPrint::getPrintVar(stmtNo);
+}
+
 ////////////////////////////////////
 // ReadTable APIs
 ////////////////////////////////////
@@ -493,6 +501,14 @@ STMT_LIST PKB::getReads() {
 bool PKB::setRead(STMT_NO stmtNo, VAR_NAME varName) {
 	return PKBRead::setRead(stmtNo, varName);
 };
+
+VAR_LIST PKB::getAllReadVar() {
+	return PKBRead::getAllReadVar();
+}
+
+VAR_NAME PKB::getReadVar(STMT_NO stmtNo) {
+	return PKBRead::getReadVar(stmtNo);
+}
 
 
 ////////////////////////////////////
@@ -528,6 +544,14 @@ bool PKB::setCallStmt(STMT_NO stmtNo, PROC_NAME procName) {
 bool PKB::setCallT(PROC_NAME caller, PROC_NAME callee) {
 	return PKBCall::setCallTProc(caller, callee);
 };
+
+PROC_LIST PKB::getAllCallProc() {
+	return PKBCall::getAllCallProc();
+}
+
+PROC_NAME PKB::getCallProcByStmt(STMT_NO stmtNo) {
+	return PKBCall::getCallProcByStmt(stmtNo);
+}
 
 //Call Bool Evaluation
 bool PKB::isCallsAnyAny() {

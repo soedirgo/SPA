@@ -61,9 +61,13 @@ public:
 
 	//Print Functions
 	static bool setPrint(STMT_NO stmtNo, VAR_NAME varName);
+	static VAR_NAME getPrintVar(STMT_NO stmtNo);
+	static VAR_LIST getAllPrintVar();
 
 	//Read Functions
 	static bool setRead(STMT_NO stmtNo, VAR_NAME varName);
+	static VAR_NAME getReadVar(STMT_NO stmtNo);
+	static VAR_LIST getAllReadVar();
 
 	//Constant Functions
 	static bool setConstant(STMT_NO stmtNo, CONST_VAL constantVal);
@@ -176,6 +180,8 @@ public:
 	static bool setCallStmt(STMT_NO stmtNo, PROC_NAME procName);
 	static bool setCallProc(PROC_NAME caller, PROC_NAME callee);
 	static bool setCallT(PROC_NAME caller, PROC_NAME callee);
+	static PROC_LIST getAllCallProc();
+	static PROC_NAME getCallProcByStmt(STMT_NO stmtNo);
 
 	//Call Bool Evaluation
 	static bool isCallsAnyAny();

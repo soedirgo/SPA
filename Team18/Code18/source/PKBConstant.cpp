@@ -23,7 +23,7 @@ STMT_LIST PKBConstant::getAllConstantStmtByVal(CONST_VAL constValue) {
 	return list;
 }
 
-CONST_LIST PKBConstant::getAllConstantVal() {
+CONST_LIST PKBConstant::getConstants() {
 	CONST_LIST list;
 	for (auto vectorIter : constantTable) {
 		vector<string> tuple = vector<string>();
