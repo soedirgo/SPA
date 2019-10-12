@@ -165,7 +165,6 @@
     <ClCompile Include="TestPKBCall.cpp" />
     <ClCompile Include="TestPKBConstant.cpp" />
     <ClCompile Include="TestPKBFollows.cpp" />
-    <ClCompile Include="TestPKBIf.cpp" />
     <ClCompile Include="TestPKBModifies.cpp" />
     <ClCompile Include="TestPKBNext.cpp" />
     <ClCompile Include="TestPKBParent.cpp" />
@@ -176,13 +175,13 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="TestAST.cpp" />
+    <ClCompile Include="TestPKBPattern.cpp" />
     <ClCompile Include="TestPKBPrint.cpp" />
     <ClCompile Include="TestPKBProcedure.cpp" />
     <ClCompile Include="TestPKBRead.cpp" />
     <ClCompile Include="TestPKBStmt.cpp" />
     <ClCompile Include="TestPKBUses.cpp" />
     <ClCompile Include="TestPKBVariable.cpp" />
-    <ClCompile Include="TestPKBWhile.cpp" />
     <ClCompile Include="TestProgramParser.cpp" />
     <ClCompile Include="TestQueryParser.cpp" />
     <ClCompile Include="TestPreprocessor.cpp" />
