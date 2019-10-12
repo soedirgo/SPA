@@ -24,9 +24,7 @@ void DesignExtractor::extractNextStar()
 		string n1 = vectorIter.front();
 		string n2 = vectorIter.back();
 		PKBNext::setNextStar(n1, n2);
-		if (stoi(n2) > stoi(n1)) {
-			recurseNext(n1, n2, whileList);
-		}
+		recurseNext(n1, n2, whileList);
 	}
 }
 
@@ -119,9 +117,6 @@ void DesignExtractor::recurseNext(PROG_LINE nextByLine, PROG_LINE nextLine, STMT
 				}
 			}
 			*/
-			return;
-		}
-		if (stoi(nextByLine) >= stoi(newNextLine)) {
 			return;
 		}
 		PKBNext::setNextStar(nextByLine, newNextLine);
