@@ -5,6 +5,8 @@
 #include "PKBCall.h"
 #include "PKBNext.h"
 #include "PKBStmt.h"
+#include "PKBUses.h"
+#include "PKBModifies.h"
 
 using namespace std;
 
@@ -14,17 +16,18 @@ void DesignExtractor::extractDesign()
 	extractParentStar();
 	extractCallStar();
 	extractNextStar();
+	extractModifiesP();
+	extractUsesP();
 }
 
 void DesignExtractor::extractNextStar()
 {
 	TABLE nextTable = PKBNext::getNextTable();
-	STMT_LIST whileList = PKBStmt::getAllStmtByType("WHILE");
 	for (auto vectorIter : nextTable) {
 		string n1 = vectorIter.front();
 		string n2 = vectorIter.back();
 		PKBNext::setNextStar(n1, n2);
-		recurseNext(n1, n2, whileList);
+		recurseNext(n1, n2);
 	}
 }
 
@@ -61,6 +64,88 @@ void DesignExtractor::extractCallStar()
 	}
 }
 
+void DesignExtractor::extractModifiesP()
+{
+	TABLE callProcTable = PKBCall::getCallProcTable();
+	for (auto vectorIter1 : callProcTable) {
+		PROC_NAME callee = vectorIter1.back();
+		PROC_NAME caller = vectorIter1.front();
+		bool isCaller = false;
+		for (auto vectorIter2 : callProcTable) {
+			//Check if callee is a caller then set flag to true
+			if (callee == vectorIter2.front()) {
+				isCaller = true;
+				break;
+			}
+		}
+		if (isCaller == false) {
+			TABLE usesPTable = PKBModifies::getModifiesPIdentEnt(callee);
+			for (auto vectorIter : usesPTable) {
+				VAR_NAME varName = vectorIter.back();
+				PKBModifies::setModifiesP(caller, varName);
+			}
+			recurseModifies(caller);
+		}	
+	}
+}
+
+void DesignExtractor::recurseModifies(PROC_NAME callee) {
+	TABLE callerList = PKBCall::getCallerProc(callee);
+	if (callerList.size() == 0) {
+		return;
+	}
+	for (auto vectorIter : callerList) {
+		PROC_NAME newCaller = vectorIter.front();
+		TABLE varList = PKBModifies::getModifiesPIdentEnt(callee);
+		for (auto vectorIter : varList) {
+			VAR_NAME varName = vectorIter.back();
+			PKBModifies::setModifiesP(newCaller, varName);
+		}
+		recurseModifies(newCaller);
+	}
+}
+
+void DesignExtractor::extractUsesP()
+{
+	TABLE callProcTable = PKBCall::getCallProcTable();
+	for (auto vectorIter1 : callProcTable) {
+		PROC_NAME callee = vectorIter1.back();
+		PROC_NAME caller = vectorIter1.front();
+		bool isCaller = false;
+		for (auto vectorIter2 : callProcTable) {
+			//Check if callee is a caller then set flag to true
+			if (callee == vectorIter2.front()) {
+				isCaller = true;
+				break;
+			}
+		}
+		if (isCaller == false) {
+			TABLE usesPTable = PKBUses::getUsesPIdentEnt(callee);
+			for (auto vectorIter : usesPTable) {
+				VAR_NAME varName = vectorIter.back();
+				PKBUses::setUsesP(caller, varName);
+			}
+			recurseUses(caller);
+		}
+	}
+}
+
+void DesignExtractor::recurseUses(PROC_NAME callee) {
+	TABLE callerList = PKBCall::getCallerProc(callee);
+	if (callerList.size() == 0) {
+		return;
+	}
+	for (auto vectorIter : callerList) {
+		PROC_NAME newCaller = vectorIter.front();
+		TABLE varList = PKBUses::getUsesPIdentEnt(callee);
+		for (auto vectorIter : varList) {
+			VAR_NAME varName = vectorIter.back();
+			PKBUses::setUsesP(newCaller, varName);
+		}
+		recurseUses(newCaller);
+	}
+}
+
 void DesignExtractor::recurseCall(PROC_NAME caller, PROC_NAME callee) {
 	PROC_LIST calleeList = PKBCall::getCalleeProc(callee);
 	if (calleeList.size() == 0) {
@@ -94,7 +179,7 @@ void DesignExtractor::recurseParent(STMT_NO parent, STMT_NO child) {
 	}
 }
 
-void DesignExtractor::recurseNext(PROG_LINE nextByLine, PROG_LINE nextLine, STMT_LIST whileList) {
+void DesignExtractor::recurseNext(PROG_LINE nextByLine, PROG_LINE nextLine) {
 	LINE_LIST lineList = PKBNext::getNext(nextLine);
 	if (lineList.size() == 0 ) {
 		return;
@@ -107,20 +192,9 @@ void DesignExtractor::recurseNext(PROG_LINE nextByLine, PROG_LINE nextLine, STMT
 			if (follows == "") {
 				return;
 			}
-			else {
-				recurseNext(nextByLine, follows, whileList);
-			}
-			/*
-			for (auto vectorIter2 : whileList) {
-				if (vectorIter2.front() == nextByLine) {
-					return;
-				}
-			}
-			*/
-			return;
 		}
 		PKBNext::setNextStar(nextByLine, newNextLine);
-		recurseNext(nextByLine, newNextLine, whileList);
+		recurseNext(nextByLine, newNextLine);
 		
 	}
 }

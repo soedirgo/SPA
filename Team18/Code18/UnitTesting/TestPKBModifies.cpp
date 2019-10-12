@@ -68,6 +68,8 @@ namespace UnitTesting
 			Stmts.setStmt("17", "assign");
 			Stmts.setStmt("18", "print");
 
+			Calls.setCallProc("First", "Second");
+			Calls.setCallProc("Second", "Third");
 
 			//Procedure First
 			PKB.setModifiesS("1", "x");
@@ -120,16 +122,21 @@ namespace UnitTesting
 			PKB.setModifiesP("Third", "z");
 			PKB.setModifiesP("Third", "v");
 
+			/*
 			PKB.setModifiesP("Second", "z");
 			PKB.setModifiesP("Second", "v");
 
+			
 			PKB.setModifiesP("First", "z");
 			PKB.setModifiesP("First", "v");
 			PKB.setModifiesP("First", "x");
 			PKB.setModifiesP("First", "i");
 			PKB.setModifiesP("First", "y");
 			PKB.setModifiesP("First", "z");
+			*/
 
+			DesignExtractor DesignExtractor;
+			DesignExtractor.extractDesign();
 		}
 
 		TEST_METHOD(isModifiesSIdentIdent)
@@ -154,7 +161,6 @@ namespace UnitTesting
 			Assert::IsTrue(PKB.isModifiesSIdentIdent("10", "z"));
 
 		}
-
 		TEST_METHOD(isModifiesPIdentIdent)
 		{
 			PKB PKB;

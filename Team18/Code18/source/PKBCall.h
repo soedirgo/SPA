@@ -14,6 +14,7 @@ public:
 	//	static STMT_LIST getCallStmtsByProc(STMT_NO stmtNo); //to be implemented
 	static TABLE getCallProcTable();
 	static PROC_LIST getCalleeProc(PROC_NAME caller);
+	static PROC_LIST getCallerProc(PROC_NAME callee);
 	static PROC_LIST getAllCallProc();
 
 	//Bool Evaluation

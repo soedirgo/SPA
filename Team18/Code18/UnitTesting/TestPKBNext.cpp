@@ -230,7 +230,7 @@ namespace UnitTesting
 
 			actual = PKB.getNextTSelf();
 			expected = { {"6"},{"7"},{"8"},{"9"} };
-			//Assert::IsTrue(actual == expected);
+			Assert::IsTrue(actual == expected);
 		}
 	};
 };
