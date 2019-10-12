@@ -22,10 +22,10 @@ bool PKBCall::setCallStmt(STMT_NO stmtNo, PROC_NAME caller) {
 	return true;
 }
 
-PROC_NAME PKBCall::getCalledProcByStmt(STMT_NO stmtNo) {
+PROC_NAME PKBCall::getCallProcByStmt(STMT_NO stmtNo) {
 	PROC_NAME result;
 
-	for (auto vectorIter : callsProcTable) {
+	for (auto vectorIter : callTable) {
 		if (vectorIter.front() == stmtNo) {
 			return vectorIter.back(); 
 		}
@@ -42,6 +42,16 @@ PROC_LIST PKBCall::getCalleeProc(PROC_NAME caller) {
 			tuple.push_back(vectorIter.back());
 			list.emplace(tuple);
 		}
+	}
+	return list;
+}
+
+PROC_LIST PKBCall::getAllCallProc() {
+	PROC_LIST list;
+	vector<string> tuple = vector<string>();
+	for (auto vectorIter : callsProcTable) {
+		tuple.push_back(vectorIter.front());
+		list.emplace(tuple);
 	}
 	return list;
 }

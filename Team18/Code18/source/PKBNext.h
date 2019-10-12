@@ -36,6 +36,7 @@ public:
 	static TABLE getNextTEntAny();
 	static TABLE getNextTEntIdent(PROG_LINE n2);
 	static TABLE getNextTEntEnt();
+	static TABLE getNextTSelf();
 
 	// Clear
 	static bool clear();

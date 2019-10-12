@@ -61,20 +61,18 @@ public:
 
 	//Print Functions
 	static bool setPrint(STMT_NO stmtNo, VAR_NAME varName);
+	static VAR_NAME getPrintVar(STMT_NO stmtNo);
+	static VAR_LIST getAllPrintVar();
 
 	//Read Functions
 	static bool setRead(STMT_NO stmtNo, VAR_NAME varName);
+	static VAR_NAME getReadVar(STMT_NO stmtNo);
+	static VAR_LIST getAllReadVar();
 
 	//Constant Functions
 	static bool setConstant(STMT_NO stmtNo, CONST_VAL constantVal);
 	static CONST_LIST getConstants();
 	//static CONST_VAL getConstantValByStmt(STMT_NO stmtNo); 
-
-	//While Functions
-	static bool setWhileCondition(STMT_NO stmtNo, VAR_NAME varName);
-
-	//If Functions
-	static bool setIfCondition(STMT_NO stmtNo, VAR_NAME varName);
 
 	//Follow Functions
 	static bool setFollows(STMT_NO followedBy, STMT_NO follow);
@@ -182,6 +180,8 @@ public:
 	static bool setCallStmt(STMT_NO stmtNo, PROC_NAME procName);
 	static bool setCallProc(PROC_NAME caller, PROC_NAME callee);
 	static bool setCallT(PROC_NAME caller, PROC_NAME callee);
+	static PROC_LIST getAllCallProc();
+	static PROC_NAME getCallProcByStmt(STMT_NO stmtNo);
 
 	//Call Bool Evaluation
 	static bool isCallsAnyAny();
@@ -233,6 +233,31 @@ public:
 	static TABLE getNextTEntAny();
 	static TABLE getNextTEntIdent(PROG_LINE n2);
 	static TABLE getNextTEntEnt();
+	static TABLE getNextTSelf();
+
+	//Pattern 
+	static bool setIfPattern(STMT_NO stmtNo, VAR_NAME varName);
+	static bool setWhilePattern(STMT_NO stmtNo, VAR_NAME varName);
+	static bool setAssignPattern(STMT_NO stmtNo, EXPR_SPEC pattern);
+
+	//Pattern Evaluation
+	static STMT_LIST getPatternIfAny();
+	static STMT_LIST getPatternIfIdent(VAR_NAME varName);
+	static TABLE getPatternIfEnt();
+
+	static STMT_LIST getPatternWhileAny();
+	static STMT_LIST getPatternWhileIdent(VAR_NAME varName);
+	static TABLE getPatternWhileEnt();
+
+	static TABLE getPatternAssignAnyAny();
+	static TABLE getPatternAssignAnyPartial(EXPR_SPEC expression);
+	static TABLE getPatternAssignAnyFull(EXPR_SPEC expression);
+	static TABLE getPatternAssignIdentAny(VAR_NAME varName);
+	static TABLE getPatternAssignIdentPartial(VAR_NAME varName, EXPR_SPEC expression);
+	static TABLE getPatternAssignIdentFull(VAR_NAME varName, EXPR_SPEC expression);
+	static TABLE getPatternAssignEntAny();
+	static TABLE getPatternAssignEntPartial(EXPR_SPEC expression);
+	static TABLE getPatternAssignEntFull(EXPR_SPEC expression);
 
 private:
 	static std::unordered_map<int, std::string> assignStmtTable;

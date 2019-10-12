@@ -32,6 +32,16 @@ VAR_NAME PKBPrint::getPrintVar(STMT_NO stmtNo) {
 	return "";
 }
 
+VAR_LIST PKBPrint::getAllPrintVar() {
+	VAR_LIST list;
+	for (auto vectorIter : printTable) {
+		vector<string> tuple = vector<string>();
+		tuple.push_back(vectorIter.front());
+		list.emplace(tuple);
+	}
+	return list;
+}
+
 bool PKBPrint::clear() {
 	printTable.clear();
 	return true;

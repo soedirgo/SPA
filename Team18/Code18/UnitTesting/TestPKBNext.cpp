@@ -221,6 +221,16 @@ namespace UnitTesting
 			expected = { {"7"},{"10"} };
 			Assert::IsTrue(actual == expected);
 		}
+
+		TEST_METHOD(NextTSelf)
+		{
+			PKBNext PKB;
+			LINE_LIST actual, expected;
+
+			actual = PKB.getNextTSelf();
+			expected = { {"6"},{"7"},{"8"},{"9"} };
+			//Assert::IsTrue(actual == expected);
+		}
 	};
 };
 

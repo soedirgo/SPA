@@ -68,16 +68,13 @@
     <ClCompile Include="TestPKBStmt.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TestPKBWhile.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TestPKBIf.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="TestPKBNext.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="TestPKBUses.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TestPKBPattern.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

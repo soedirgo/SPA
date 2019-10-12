@@ -9,6 +9,7 @@ public:
 	static bool setRead(STMT_NO stmtNo, VAR_NAME varName);
 	static STMT_LIST getReadStmt(VAR_NAME varName);
 	static VAR_NAME getReadVar(STMT_NO stmtNo);
+	static VAR_LIST getAllReadVar();
 	// Clear
 	static bool clear();
 
