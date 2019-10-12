@@ -105,65 +105,6 @@ namespace Evaluator {
         vector<Clause> clauses;
         string selectSyn;
         vector<Result> intermediateResults;
-
-        Result evalSuchThat(Clause clause) {
-            vector<string> fields = clause.getFields();
-            string& rel = fields[0];
-            string& lhs = fields[1];
-            string& rhs = fields[2];
-            if (rel == "Uses" || rel == "Modifies") {
-                if (lhs.front() == '\"' && lhs.back() == '\"') {
-                    rel += isdigit(lhs[1]) ? "P" : "S";
-                } else {
-                    rel += declarations[lhs] == "procedure" ? "P" : "S";
-                }
-            }
-
-            bool resultExists;
-            unordered_map<string, int> synonyms;
-            if (lhs != "_" && lhs.front() != '\"')
-                synonyms[lhs] = synonyms.size();
-            if (rhs != "_" && rhs.front() != '\"')
-                synonyms[rhs] = synonyms.size();
-
-            unordered_set<vector<string>> results;
-            Dispatcher::dispatch(rel, lhs, rhs, declarations, resultExists, results);
-
-            return Result(resultExists, synonyms, results);
-        }
-
-        Result evalPattern(Clause clause) {
-            vector<string> fields = clause.getFields();
-            string& syn = fields[0];
-            string& lhs = fields[1];
-            string& rhs = fields[2];
-
-            bool resultExists;
-            unordered_map<string, int> synonyms;
-            unordered_set<vector<string>> results;
-            /**
-             * Cases:
-             * - pattern a(_, _)
-             * - pattern a(_, _"1"_)
-             * - pattern a("x", _)
-             * - pattern a("x", _"1"_)
-             * - pattern a(v, _)
-             * - pattern a(v, _"1"_)
-             */
-            synonyms[syn] = 0;
-            if (lhs == "_"
-                || (lhs.front() == '\"' && lhs.back() == '\"')) {
-                results = PKB::getPattern(declarations[syn], lhs, rhs);
-            } else {
-                synonyms[lhs] = 1;
-                results = PKB::getPattern(declarations[syn],
-                                          declarations[lhs],
-                                          rhs);
-            }
-            resultExists = results.size();
-
-            return Result(resultExists, synonyms, results);
-        }
     }
 
     list<string> evalQuery(Query q) {
@@ -174,10 +115,19 @@ namespace Evaluator {
 
         // for every clause, get results and store in
         // intermediate results
-        for (const auto& clause : clauses) {
-            clause.getType() == "pattern"
-                ? intermediateResults.push_back(evalPattern(clause))
-                : intermediateResults.push_back(evalSuchThat(clause));
+        bool resultExists;
+        unordered_map<string, int> synonyms;
+        unordered_set<vector<string>> results;
+        for (auto& clause : clauses) {
+            resultExists = false;
+            synonyms = {};
+            results = {};
+            Dispatcher::dispatch(clause,
+                                 declarations,
+                                 resultExists,
+                                 synonyms,
+                                 results);
+            intermediateResults.push_back(Result(resultExists, synonyms, results));
         }
 
         // select clause as the starting intermediate result
@@ -228,17 +178,17 @@ namespace Evaluator {
                 initTable.insert(vector<string>({elem}));
             }
         }        
-        Result finalResult = Result(true, {{selectSyn, 0}}, initTable);
+        Result currentResult = Result(true, {{selectSyn, 0}}, initTable);
 
         // merge everything in intermediateResults
-        for (auto& result : intermediateResults) {
-            finalResult = Result::merge(finalResult, result);
+        for (auto& otherResult : intermediateResults) {
+            currentResult = Result::merge(currentResult, otherResult);
         }
 
         // return results (projection)
-        unordered_set<vector<string>> results = finalResult.getResults();
+        unordered_set<vector<string>> finalResults = currentResult.getResults();
         list<string> selectResults = {};
-        int selectSynIdx = finalResult.getSynonyms()[selectSyn];
+        int selectSynIdx = currentResult.getSynonyms()[selectSyn];
         for (const auto& result : results) {
             selectResults.push_back(result[selectSynIdx]);
         }

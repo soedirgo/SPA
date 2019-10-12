@@ -1,6 +1,7 @@
 #include <functional>
 #include <string>
 #include <unordered_map>
+#include "Clause.h"
 #include "Dispatcher.h"
 #include "PKB.h"
 #include "PKBHash.h"
@@ -10,12 +11,17 @@ namespace Dispatcher {
     namespace {
         unordered_map<string, string> declarations;
 
-        bool isUnderscore(string& str) {
+        bool isUnderscore(string str) {
             return str == "_";
         }
 
-        bool isIdentifier(string& str) {
+        bool isIdentifier(string str) {
             return str.front() == '\"';
+        }
+
+        bool isFullPattern(string str) {
+            //TODO: change this after shunting yard is implemented
+            return str.front() != '\"';
         }
 
         string trimQuotes(string str) {
@@ -26,38 +32,64 @@ namespace Dispatcher {
             return declarations[str];
         }
 
-        unordered_map<string, function<bool(string, string)>> boolApiMap =
-        {{"UsesS",
+        unordered_map<string, function<bool(string, string)>> suchThatBoolApiMap =
+        {{"Uses",
           [](string lhs, string rhs) {
-              if (isUnderscore(rhs))
-                  return PKB::isUsesSIdentAny(trimQuotes(lhs));
+              if (isIdentifier(lhs))
+                  if (isdigit(lhs[1]))
+                      if (isUnderscore(rhs))
+                          return PKB::isUsesSIdentAny(trimQuotes(lhs));
+                      else
+                          return PKB::isUsesSIdentIdent(trimQuotes(lhs),
+                                                        trimQuotes(rhs));
+                  else
+                      if (isUnderscore(rhs))
+                          return PKB::isUsesPIdentAny(trimQuotes(lhs));
+                      else
+                          return PKB::isUsesPIdentIdent(trimQuotes(lhs),
+                                                        trimQuotes(rhs));
               else
-                  return PKB::isUsesSIdentIdent(trimQuotes(lhs),
-                                                trimQuotes(rhs));
+                  if (getEntity(lhs) == "procedure")
+                      if (isUnderscore(rhs))
+                          return PKB::isUsesPIdentAny(trimQuotes(lhs));
+                      else
+                          return PKB::isUsesPIdentIdent(trimQuotes(lhs),
+                                                        trimQuotes(rhs));
+                  else
+                      if (isUnderscore(rhs))
+                          return PKB::isUsesPIdentAny(trimQuotes(lhs));
+                      else
+                          return PKB::isUsesPIdentIdent(trimQuotes(lhs),
+                                                        trimQuotes(rhs));
           }},
-         {"UsesP",
+         {"Modifies",
           [](string lhs, string rhs) {
-              if (isUnderscore(rhs))
-                  return PKB::isUsesPIdentAny(trimQuotes(lhs));
+              if (isIdentifier(lhs))
+                  if (isdigit(lhs[1]))
+                      if (isUnderscore(rhs))
+                          return PKB::isModifiesSIdentAny(trimQuotes(lhs));
+                      else
+                          return PKB::isModifiesSIdentIdent(trimQuotes(lhs),
+                                                            trimQuotes(rhs));
+                  else
+                      if (isUnderscore(rhs))
+                          return PKB::isModifiesPIdentAny(trimQuotes(lhs));
+                      else
+                          return PKB::isModifiesPIdentIdent(trimQuotes(lhs),
+                                                            trimQuotes(rhs));
               else
-                  return PKB::isUsesPIdentIdent(trimQuotes(lhs),
-                                                trimQuotes(rhs));
-          }},
-         {"ModifiesS",
-          [](string lhs, string rhs) {
-              if (isUnderscore(rhs))
-                  return PKB::isModifiesSIdentAny(trimQuotes(lhs));
-              else
-                  return PKB::isModifiesSIdentIdent(trimQuotes(lhs),
-                                                    trimQuotes(rhs));
-          }},
-         {"ModifiesP",
-          [](string lhs, string rhs) {
-              if (isUnderscore(rhs))
-                  return PKB::isModifiesPIdentAny(trimQuotes(lhs));
-              else
-                  return PKB::isModifiesPIdentIdent(trimQuotes(lhs),
-                                                    trimQuotes(rhs));
+                  if (getEntity(lhs) == "procedure")
+                      if (isUnderscore(rhs))
+                          return PKB::isModifiesPIdentAny(trimQuotes(lhs));
+                      else
+                          return PKB::isModifiesPIdentIdent(trimQuotes(lhs),
+                                                            trimQuotes(rhs));
+                  else
+                      if (isUnderscore(rhs))
+                          return PKB::isModifiesPIdentAny(trimQuotes(lhs));
+                      else
+                          return PKB::isModifiesPIdentIdent(trimQuotes(lhs),
+                                                            trimQuotes(rhs));
           }},
          {"Calls",
           [](string lhs, string rhs) {
@@ -159,56 +191,54 @@ namespace Dispatcher {
           }}};
 
         unordered_map<string, function<unordered_set<vector<string>>
-                                       (string, string)>> tableApiMap =
-        {{"UsesS",
+                                       (string, string)>> suchThatTableApiMap =
+        {{"Uses",
           [](string lhs, string rhs) {
               if (isIdentifier(lhs))
-                  return PKB::getUsesSIdentEnt(trimQuotes(lhs));
-              else
-                  if (isUnderscore(rhs))
-                      return PKB::getUsesSEntAny(getEntity(lhs));
-                  else if (isIdentifier(rhs))
-                      return PKB::getUsesSEntIdent(getEntity(lhs),
-                                                   trimQuotes(rhs));
+                  if (isdigit(lhs[1]))
+                      return PKB::getUsesSIdentEnt(trimQuotes(lhs));
                   else
-                      return PKB::getUsesSEntEnt(getEntity(lhs));
+                      return PKB::getUsesPIdentEnt(trimQuotes(lhs));
+              else
+                  if (getEntity(lhs) == "procedure")
+                      if (isUnderscore(rhs))
+                          return PKB::getUsesPEntAny();
+                      else if (isIdentifier(rhs))
+                          return PKB::getUsesPEntIdent(trimQuotes(rhs));
+                      else
+                          return PKB::getUsesPEntEnt();
+                  else
+                      if (isUnderscore(rhs))
+                          return PKB::getUsesSEntAny(getEntity(lhs));
+                      else if (isIdentifier(rhs))
+                          return PKB::getUsesSEntIdent(getEntity(lhs),
+                                                       trimQuotes(rhs));
+                      else
+                          return PKB::getUsesSEntEnt(getEntity(lhs));
           }},
-         {"UsesP",
+         {"Modifies",
           [](string lhs, string rhs) {
               if (isIdentifier(lhs))
-                  return PKB::getUsesPIdentEnt(trimQuotes(lhs));
-              else
-                  if (isUnderscore(rhs))
-                      return PKB::getUsesPEntAny();
-                  else if (isIdentifier(rhs))
-                      return PKB::getUsesPEntIdent(trimQuotes(rhs));
+                  if (isdigit(lhs[1]))
+                      return PKB::getModifiesSIdentEnt(trimQuotes(lhs));
                   else
-                      return PKB::getUsesPEntEnt();
-          }},
-         {"ModifiesS",
-          [](string lhs, string rhs) {
-              if (isIdentifier(lhs))
-                  return PKB::getModifiesSIdentEnt(trimQuotes(lhs));
+                      return PKB::getModifiesPIdentEnt(trimQuotes(lhs));
               else
-                  if (isUnderscore(rhs))
-                      return PKB::getModifiesSEntAny(getEntity(lhs));
-                  else if (isIdentifier(rhs))
-                      return PKB::getModifiesSEntIdent(getEntity(lhs),
-                                                   trimQuotes(rhs));
+                  if (getEntity(lhs) == "procedure")
+                      if (isUnderscore(rhs))
+                          return PKB::getModifiesPEntAny();
+                      else if (isIdentifier(rhs))
+                          return PKB::getModifiesPEntIdent(trimQuotes(rhs));
+                      else
+                          return PKB::getModifiesPEntEnt();
                   else
-                      return PKB::getModifiesSEntEnt(getEntity(lhs));
-          }},
-         {"ModifiesP",
-          [](string lhs, string rhs) {
-              if (isIdentifier(lhs))
-                  return PKB::getModifiesPIdentEnt(trimQuotes(lhs));
-              else
-                  if (isUnderscore(rhs))
-                      return PKB::getModifiesPEntAny();
-                  else if (isIdentifier(rhs))
-                      return PKB::getModifiesPEntIdent(trimQuotes(rhs));
-                  else
-                      return PKB::getModifiesPEntEnt();
+                      if (isUnderscore(rhs))
+                          return PKB::getModifiesSEntAny(getEntity(lhs));
+                      else if (isIdentifier(rhs))
+                          return PKB::getModifiesSEntIdent(getEntity(lhs),
+                                                           trimQuotes(rhs));
+                      else
+                          return PKB::getModifiesSEntEnt(getEntity(lhs));
           }},
          {"Calls",
           [](string lhs, string rhs) {
@@ -230,7 +260,7 @@ namespace Dispatcher {
                   return PKB::getFollowsAnyEnt(getEntity(rhs));
               else if (isIdentifier(lhs))
                   return PKB::getFollowsIdentEnt(trimQuotes(lhs),
-                                            getEntity(rhs));
+                                                 getEntity(rhs));
               else
                   if (isUnderscore(rhs))
                       return PKB::getFollowsEntAny(getEntity(lhs));
@@ -247,16 +277,16 @@ namespace Dispatcher {
                   return PKB::getFollowsTAnyEnt(getEntity(rhs));
               else if (isIdentifier(lhs))
                   return PKB::getFollowsTIdentEnt(trimQuotes(lhs),
-                                            getEntity(rhs));
+                                                  getEntity(rhs));
               else
                   if (isUnderscore(rhs))
                       return PKB::getFollowsTEntAny(getEntity(lhs));
                   else if (isIdentifier(rhs))
                       return PKB::getFollowsTEntIdent(getEntity(lhs),
-                                                     trimQuotes(rhs));
+                                                      trimQuotes(rhs));
                   else
                       return PKB::getFollowsTEntEnt(getEntity(lhs),
-                                                   getEntity(rhs));
+                                                    getEntity(rhs));
           }},
          {"Parent",
           [](string lhs, string rhs) {
@@ -264,16 +294,16 @@ namespace Dispatcher {
                   return PKB::getParentAnyEnt(getEntity(rhs));
               else if (isIdentifier(lhs))
                   return PKB::getParentIdentEnt(trimQuotes(lhs),
-                                            getEntity(rhs));
+                                                getEntity(rhs));
               else
                   if (isUnderscore(rhs))
                       return PKB::getParentEntAny(getEntity(lhs));
                   else if (isIdentifier(rhs))
                       return PKB::getParentEntIdent(getEntity(lhs),
-                                                     trimQuotes(rhs));
+                                                    trimQuotes(rhs));
                   else
                       return PKB::getParentEntEnt(getEntity(lhs),
-                                                   getEntity(rhs));
+                                                  getEntity(rhs));
           }},
          {"Parent*",
           [](string lhs, string rhs) {
@@ -281,7 +311,7 @@ namespace Dispatcher {
                   return PKB::getParentTAnyEnt(getEntity(rhs));
               else if (isIdentifier(lhs))
                   return PKB::getParentTIdentEnt(trimQuotes(lhs),
-                                            getEntity(rhs));
+                                                 getEntity(rhs));
               else
                   if (isUnderscore(rhs))
                       return PKB::getParentTEntAny(getEntity(lhs));
@@ -322,20 +352,78 @@ namespace Dispatcher {
                   else
                       return PKB::getNextTEntEnt();
           }}};
+
+        unordered_map<string, function<unordered_set<vector<string>>
+                                       (string, string)>> patternApiMap =
+        {{"assign",
+          [](string lhs, string rhs) {
+              if (isUnderscore(lhs))
+                  if (isUnderscore(rhs))
+                      return PKB::getPatternAssignAnyAny();
+                  else if (isFullPattern(rhs))
+                      return PKB::getPatternAssignAnyFull(rhs);
+                  else
+                      return PKB::getPatternAssignAnyPartial(rhs);
+              else if (isIdentifier(lhs))
+                  if (isUnderscore(rhs))
+                      return PKB::getPatternAssignIdentAny(trimQuotes(lhs));
+                  else if (isFullPattern(rhs))
+                      return PKB::getPatternAssignIdentFull(trimQuotes(lhs),
+                                                            rhs);
+                  else
+                      return PKB::getPatternAssignIdentPartial(trimQuotes(lhs),
+                                                               rhs);
+              else
+                  if (isUnderscore(rhs))
+                      return PKB::getPatternAssignEntAny();
+                  else if (isIdentifier(rhs))
+                      return PKB::getPatternAssignEntFull(rhs);
+                  else
+                      return PKB::getPatternAssignEntPartial(rhs);
+          }},
+         {"if",
+          [](string lhs, string rhs) {
+              if (isUnderscore(lhs))
+                  return PKB::getPatternIfAny();
+              else if (isIdentifier(lhs))
+                  return PKB::getPatternIfIdent(trimQuotes(lhs));
+              else
+                  return PKB::getPatternIfEnt();
+          }},
+         {"while",
+          [](string lhs, string rhs) {
+              if (isUnderscore(lhs))
+                  return PKB::getPatternIfAny();
+              else if (isIdentifier(lhs))
+                  return PKB::getPatternIfIdent(trimQuotes(lhs));
+              else
+                  return PKB::getPatternIfEnt();
+          }}};
     }
 
-    void dispatch(string rel,
-                  string lhs,
-                  string rhs,
+    void dispatch(Clause& clause,
                   unordered_map<string, string>& decl,
                   bool& resultExists,
+                  unordered_map<string, int>& synonyms,
                   unordered_set<vector<string>>& results) {
+        string type = clause.getType();
+        vector<string> fields = clause.getFields();
         declarations = decl;
-        if ((isUnderscore(lhs) || isIdentifier(lhs))
-            && (isUnderscore(rhs) || isIdentifier(rhs)))
-            resultExists = boolApiMap[rel](lhs, rhs);
-        else {
-            results = tableApiMap[rel](lhs, rhs);
+
+        for (const auto& field : fields)
+            if (!isIdentifier(field) && field.front() != '_')
+                synonyms[field] = synonyms.size();
+        
+        if (type == "such-that")
+            if ((isUnderscore(fields[1]) || isIdentifier(fields[1]))
+                && (isUnderscore(fields[2]) || isIdentifier(fields[2])))
+                resultExists = suchThatBoolApiMap[fields[0]](fields[1], fields[2]);
+            else {
+                results = suchThatTableApiMap[fields[0]](fields[1], fields[2]);
+                resultExists = results.size();
+            }
+        else if (type == "pattern") {
+            results = patternApiMap[getEntity(fields[0])](fields[1], fields[2]);
             resultExists = results.size();
         }
     }

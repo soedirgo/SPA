@@ -4,12 +4,12 @@
 #include <unordered_set>
 #include <vector>
 #include "PKBHash.h"
+#include "Clause.h"
 
 namespace Dispatcher {
-    void dispatch(std::string rel,
-                  std::string lhs,
-                  std::string rhs,
+    void dispatch(Clause& clause,
                   std::unordered_map<std::string, std::string>& decl,
                   bool& resultExists,
+                  std::unordered_map<std::string, int>& synonyms,
                   std::unordered_set<std::vector<std::string>>& results);
 }
