@@ -5,8 +5,10 @@
 #include <utility>
 #include <vector>
 #include "Clause.h"
+#include "Dispatcher.h"
 #include "Evaluator.h"
 #include "PKB.h"
+#include "PKBHash.h"
 #include "Query.h"
 using namespace std;
 
@@ -16,10 +18,10 @@ namespace Evaluator {
         public:
             Result() {}
 
-            Result(bool resEx,
+            Result(bool resExists,
                    unordered_map<string, int> syn,
                    unordered_set<vector<string>> res)
-                : resultExists(resEx),
+                : resultExists(resExists),
                   synonyms(syn),
                   results(res) {}
 
@@ -117,84 +119,15 @@ namespace Evaluator {
                 }
             }
 
-            unordered_map<string, function<bool(string, string)>> boolApiMap =
-                {{"UsesS", PKB::isUsesS},
-                 {"UsesP", PKB::isUsesP},
-                 {"ModifiesS", PKB::isModifiesS},
-                 {"ModifiesP", PKB::isModifiesP},
-                 {"Calls", PKB::isCalls},
-                 {"Follows", PKB::isFollows},
-                 {"Follows*", PKB::isFollowsT},
-                 {"Parent", PKB::isParent},
-                 {"Parent*", PKB::isParentT},
-                 {"Next", PKB::isNext},
-                 {"Next*", PKB::isNextT}};
-
-            unordered_map<string,
-                          function<unordered_set<vector<string>>
-                                   (string, string)>> tableApiMap =
-                {{"UsesS", PKB::getUsesS},
-                 {"UsesP", PKB::getUsesP},
-                 {"ModifiesS", PKB::getModifiesS},
-                 {"ModifiesP", PKB::getModifiesP},
-                 {"Calls", PKB::getCalls},
-                 {"Follows", PKB::getFollows},
-                 {"Follows*", PKB::getFollowsT},
-                 {"Parent", PKB::getParent},
-                 {"Parent*", PKB::getParentT},
-                 {"Next", PKB::getNext},
-                 {"Next*", PKB::getNextT}};
-
-            unordered_map<string,
-                          function<unordered_set<vector<string>>
-                                   (string)>> tableIdentApiMap =
-                {{"Calls", PKB::getCallsIdent},
-                 {"Follows", PKB::getFollowsIdent},
-                 {"Follows*", PKB::getFollowsTIdent},
-                 {"Parent", PKB::getParentIdent},
-                 {"Parent*", PKB::getParentTIdent},
-                 {"Next", PKB::getNextIdent},
-                 {"Next*", PKB::getNextTIdent}};
-
             bool resultExists;
             unordered_map<string, int> synonyms;
+            if (lhs != "_" && lhs.front() != '\"')
+                synonyms[lhs] = synonyms.size();
+            if (rhs != "_" && rhs.front() != '\"')
+                synonyms[rhs] = synonyms.size();
+
             unordered_set<vector<string>> results;
-            /**
-             * Cases:
-             * - (_, _)
-             * - (_, "1")
-             * - (_, s)
-             * - ("1", _)
-             * - ("1", "1")
-             * - ("1", s)
-             * - (s, _)
-             * - (s, "1")
-             * - (s, s)
-             */
-            if (lhs == "_"
-                || (lhs.front() == '\"' && lhs.back() == '\"')) {
-                if (rhs == "_"
-                    || (rhs.front() == '\"' && rhs.back() == '\"')) {
-                    resultExists = boolApiMap[rel](lhs, rhs);
-                } else {
-                    synonyms[rhs] = 0;
-                    results = tableApiMap[rel](lhs, declarations[rhs]);
-                    resultExists = results.size();
-                }
-            } else {
-                synonyms[lhs] = 0;
-                if (rhs == "_"
-                    || rhs.front() == '\"' && rhs.back() == '\"') {
-                    results = tableApiMap[rel](declarations[lhs], rhs);
-                } else if (lhs == rhs) {
-                    results = tableIdentApiMap[rel](declarations[lhs]);
-                } else {
-                    synonyms[rhs] = 1;
-                    results = tableApiMap[rel](declarations[lhs],
-                                               declarations[rhs]);
-                }
-                resultExists = results.size();
-            }
+            Dispatcher::dispatch(rel, lhs, rhs, declarations, resultExists, results);
 
             return Result(resultExists, synonyms, results);
         }
