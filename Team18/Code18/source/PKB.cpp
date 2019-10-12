@@ -684,6 +684,10 @@ TABLE PKB::getNextTEntEnt() {
 	return PKBNext::getNextTEntEnt();
 }
 
+TABLE PKB::getNextTSelf() {
+	return PKBNext::getNextTSelf();
+}
+
 
 bool PKB::setIfPattern(STMT_NO stmtNo, VAR_NAME varName) {
 	return PKBPattern::setIfPattern(stmtNo, varName);
