@@ -2,7 +2,8 @@
 #include "CppUnitTest.h"
 #include "PKB.h"
 #include "PKBPattern.h"
-#include "DesignExtractor.h"
+#include "PKBModifies.h"
+#include "PKBStmt.h"
 
 using namespace std;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
@@ -41,29 +42,135 @@ namespace UnitTesting
 				17.		v = z;
 				18.		print v; }
 		   */
+			PKBStmt PKBStmt;
+			PKBStmt.clear();
 
-			PKB PKB;
+			PKBStmt.setStmt("1", "read");
+			PKBStmt.setStmt("2", "read");
+			PKBStmt.setStmt("3", "call");
+			PKBStmt.setStmt("4", "assign");
+			PKBStmt.setStmt("5", "assign");
+			PKBStmt.setStmt("6", "while");
+			PKBStmt.setStmt("7", "assign");
+			PKBStmt.setStmt("8", "call");
+			PKBStmt.setStmt("9", "assign");
+			PKBStmt.setStmt("10", "if");
+			PKBStmt.setStmt("11", "assign");
+			PKBStmt.setStmt("12", "assign");
+			PKBStmt.setStmt("13", "assign");
+			PKBStmt.setStmt("14", "assign");
+			PKBStmt.setStmt("15", "assign");
+			PKBStmt.setStmt("16", "assign");
+			PKBStmt.setStmt("17", "assign");
+			PKBStmt.setStmt("18", "print");
+
+			PKBPattern PKB;
 			PKB.clear();
 
-			PKB.setWhileCondition("6", "i");
-			PKB.setIfCondition("10", "x");
+			PKBModifies PKBModifies;
+			PKBModifies.clear();
+			PKBModifies.setModifiesS("1","x");
+			PKBModifies.setModifiesS("2", "y");
+
+			PKBModifies.setModifiesS("4", "x");
+			PKBModifies.setModifiesS("5", "i");
+			PKBModifies.setModifiesS("7", "x");
+			PKBModifies.setModifiesS("9", "i");
+			PKBModifies.setModifiesS("11", "x");
+			PKBModifies.setModifiesS("12", "z");
+			PKBModifies.setModifiesS("13", "z");
+			PKBModifies.setModifiesS("14", "y");
+			PKBModifies.setModifiesS("15", "x");
+
+			PKB.setAssignPattern("4", "0");
+			PKB.setAssignPattern("5", "5");
+			PKB.setAssignPattern("7", "x2y*+");
+			PKB.setAssignPattern("9", "i1-");
+			PKB.setAssignPattern("11", "x1+");
+			PKB.setAssignPattern("12", "1");
+			PKB.setAssignPattern("13", "zxi++");
+			PKB.setAssignPattern("14", "z2+");
+			PKB.setAssignPattern("15", "xyz*+");
+
+			PKB.setWhilePattern("6", "i");
+			PKB.setIfPattern("10", "x");
 
 		}
-
-		TEST_METHOD(WhileUsesRelationship)
+		TEST_METHOD(AssignPattern)
 		{
 			PKBPattern PKB;
-			Assert::IsTrue(PKB.isWhileUsesRelationship("6", "i"));
+			TABLE actual, expected;
 
+			actual = PKB.getPatternAssignAnyAny();
+			expected = { {"4"},{"5"},{"7"},{"9"},{"11"},{"12"},{"13"},{"14"},{"15"} };
+			Assert::IsTrue(actual == expected);
+
+			actual = PKB.getPatternAssignAnyPartial("2y*");
+			expected = { {"7"} };
+			Assert::IsTrue(actual == expected);
+
+			actual = PKB.getPatternAssignAnyFull("x2y*+");
+			expected = { {"7"} };
+			Assert::IsTrue(actual == expected);
+
+			actual = PKB.getPatternAssignIdentAny("x");
+			expected = { {"4"},{"7"},{"11"},{"15"}};
+			Assert::IsTrue(actual == expected);
+
+			actual = PKB.getPatternAssignIdentPartial("x", "2y*");
+			expected = { {"7"}};
+			Assert::IsTrue(actual == expected);
+			
+			actual = PKB.getPatternAssignIdentFull("x", "xyz*+");
+			expected = { {"15"} };
+			Assert::IsTrue(actual == expected);
+
+			actual = PKB.getPatternAssignEntAny();
+			expected = { {"4","x"},{"5","i"},{"7","x"},{"9","i"},{"11","x"},{"12","z"},{"13","z"},{"14","y"},{"15","x"} };
+			Assert::IsTrue(actual == expected);			
+
+			actual = PKB.getPatternAssignEntPartial("2y*");
+			expected = { {"7","x"}};
+			Assert::IsTrue(actual == expected);
+			
+			actual = PKB.getPatternAssignEntFull("xyz*+");
+			expected = { {"15","x"} };
+			Assert::IsTrue(actual == expected);
 		}
-		TEST_METHOD(IfUsesRelationship)
+		TEST_METHOD(WhilePattern)
 		{
 			PKBPattern PKB;
-			Assert::IsTrue(PKB.isIfUsesRelationship("10", "x"));
+			TABLE actual, expected;
+
+			actual = PKB.getPatternWhileAny();
+			expected = { {"6"} };
+			Assert::IsTrue(actual == expected);
+
+			actual = PKB.getPatternWhileIdent("i");
+			expected = { {"6"} };
+			Assert::IsTrue(actual == expected);
+
+			actual = PKB.getPatternWhileEnt();
+			expected = { {"6", "i"} };
+			
 
 		}
-	
+		TEST_METHOD(IfPattern)
+		{
+			PKBPattern PKB;
+			TABLE actual, expected;
 
+			actual = PKB.getPatternIfAny();
+			expected = { {"10"} };
+			Assert::IsTrue(actual == expected);
+
+			actual = PKB.getPatternIfIdent("x");
+			expected = { {"10"} };
+			Assert::IsTrue(actual == expected);
+
+			actual = PKB.getPatternIfEnt();
+			expected = { {"10", "i"} };
+		}
 	};
 };
 
