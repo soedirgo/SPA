@@ -67,6 +67,9 @@ namespace UnitTesting
 			Stmts.setStmt("17", "assign");
 			Stmts.setStmt("18", "print");
 
+			Calls.setCallProc("First", "Second");
+			Calls.setCallProc("Second", "Third");
+
 
 			//Line #3 Calls Second
 			PKB.setUsesS("3", "y");
@@ -99,7 +102,7 @@ namespace UnitTesting
 
 			//More complex uses 
 
-
+			
 			PKB.setUsesP("Second", "i");
 			PKB.setUsesP("Second", "x");
 			PKB.setUsesP("Second", "y");
@@ -107,6 +110,7 @@ namespace UnitTesting
 			PKB.setUsesP("Third", "v");
 			PKB.setUsesP("Third", "z");
 
+			/*
 			PKB.setUsesP("Second", "v");
 			PKB.setUsesP("First", "i");
 			PKB.setUsesP("First", "x");
@@ -116,6 +120,10 @@ namespace UnitTesting
 
 			Calls.setCallProc("3", "Second");
 			Calls.setCallProc("8", "Third");
+			*/
+
+			DesignExtractor DesignExtractor;
+			DesignExtractor.extractDesign();
 
 		}
 		TEST_METHOD(isUsesSIdentAny) {

@@ -26,8 +26,8 @@ bool PKBNext::setNextStar(PROG_LINE nextByLine, PROG_LINE nextLine) {
 LINE_LIST PKBNext::getNext(PROG_LINE nextByLine) {
 	LINE_LIST list;
 	for (auto vectorIter : nextTable) {
-		vector<string> tuple = vector<string>();
 		if (vectorIter.front() == nextByLine) {
+			vector<string> tuple = vector<string>();
 			tuple.push_back(vectorIter.back());
 			list.emplace(tuple);
 		}
