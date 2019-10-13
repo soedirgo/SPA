@@ -411,12 +411,12 @@ namespace Dispatcher {
         declarations = decl;
 
         for (const auto& field : fields)
-            if (type == "such-that" && field == fields[0])
+            if (type == "such that" && field == fields[0])
                 continue;
             else if (!isIdentifier(field) && field.front() != '_')
                 synonyms[field] = synonyms.size();
         
-        if (type == "such-that")
+        if (type == "such that")
             if ((isUnderscore(fields[1]) || isIdentifier(fields[1]))
                 && (isUnderscore(fields[2]) || isIdentifier(fields[2])))
                 resultExists = suchThatBoolApiMap[fields[0]](fields[1], fields[2]);
