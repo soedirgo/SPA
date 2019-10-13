@@ -1,0 +1,30 @@
+procedure PR1 {
+  x = 1;
+  read y;
+  if (x < y) then {
+    y = x;
+    read z;
+    while ( !(y + x >= z) ) {
+      x = x + 2;
+      y = y + 1;
+      print x;
+      print y; } }
+  else {
+    z = x + y; }
+  print z;
+}
+
+procedure PR2 {
+  while (dwhilep != diff) {
+    while (z > (x - y) ) {
+      z = (z - x) * y;
+      print z;
+      read i; }
+    print j;
+    k = l;
+    l = k; }
+  print k;
+  print l;
+  fin = fin * (k - (l + y) );
+  read fin;
+}
