@@ -6,11 +6,11 @@
 using namespace std;
 
 Query::Query(unordered_map<string, string> decl,
-             string syn,
-             vector<Clause> cls)
-    : declarations(decl),
-      selectSynonym(syn),
-      clauses(cls) {}
+	string syn,
+	vector<Clause> cls)
+	: declarations(decl),
+	selectSynonym(syn),
+	clauses(cls) {}
 
 unordered_map<string, string> Query::getDeclarations() const {
     return this->declarations;
@@ -21,11 +21,11 @@ string Query::getSelectSynonym() const {
 }
 
 vector<Clause> Query::getClauses() const {
-    return this->clauses;
+	return this->clauses;
 }
 
 bool Query::operator== (const Query& other) const {
-    return this->declarations == other.getDeclarations()
-        && this->selectSynonym == other.getSelectSynonym()
-        && this->clauses == other.getClauses();
+	return this->declarations == other.getDeclarations()
+		&& this->selectSynonym == other.getSelectSynonym()
+		&& this->clauses == other.getClauses();
 }

@@ -10,13 +10,13 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace UnitTesting
 {
-	/*
+	
 	TEST_CLASS(TestQueryParser)
 	{
 	public:
+		/*
         TEST_METHOD_INITIALIZE(queryParserInit)
         {
-            /**
                SIMPLE program:
                _   procedure main {
                1.      x = 1
@@ -31,8 +31,8 @@ namespace UnitTesting
                8.          print x;
 			   9.		   x = x + 1;
                _       }
-            */
-			/*
+            
+			
             PKB pkb;
 
             pkb.clear();
@@ -106,9 +106,9 @@ namespace UnitTesting
 			pkb.setModifiesS(9, "x");
 			pkb.setFollows(8, 9);
 			pkb.setFollowsT(8, 9);
-			*/
+			
 		}
-		/*
+		
         TEST_METHOD(validQueries)
         {
             list<string> expected;
@@ -209,6 +209,7 @@ namespace UnitTesting
 			actual = QueryParser::parse("stmt s; variable v; Select s such that Modifies(v, v)");
 			Assert::IsTrue(expected == actual);
         }
+		*/
 
 		TEST_METHOD(findInitialDecleration)
 		{
@@ -300,4 +301,4 @@ namespace UnitTesting
 		
 	};
 	
-}*/
+}
