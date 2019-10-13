@@ -267,6 +267,8 @@ namespace Dispatcher {
                   else if (isIdentifier(rhs))
                       return PKB::getFollowsEntIdent(getEntity(lhs),
                                                      rhs);
+                  else if (lhs == rhs)
+                      return {};
                   else
                       return PKB::getFollowsEntEnt(getEntity(lhs),
                                                    getEntity(rhs));
@@ -284,6 +286,8 @@ namespace Dispatcher {
                   else if (isIdentifier(rhs))
                       return PKB::getFollowsTEntIdent(getEntity(lhs),
                                                       rhs);
+                  else if (lhs == rhs)
+                      return {};
                   else
                       return PKB::getFollowsTEntEnt(getEntity(lhs),
                                                     getEntity(rhs));
@@ -301,6 +305,8 @@ namespace Dispatcher {
                   else if (isIdentifier(rhs))
                       return PKB::getParentEntIdent(getEntity(lhs),
                                                     rhs);
+                  else if (lhs == rhs)
+                      return {};
                   else
                       return PKB::getParentEntEnt(getEntity(lhs),
                                                   getEntity(rhs));
@@ -318,6 +324,8 @@ namespace Dispatcher {
                   else if (isIdentifier(rhs))
                       return PKB::getParentTEntIdent(getEntity(lhs),
                                                      rhs);
+                  else if (lhs == rhs)
+                      return {};
                   else
                       return PKB::getParentTEntEnt(getEntity(lhs),
                                                    getEntity(rhs));
@@ -333,6 +341,8 @@ namespace Dispatcher {
                       return PKB::getNextEntAny();
                   else if (isIdentifier(rhs))
                       return PKB::getNextEntIdent(rhs);
+                  else if (lhs == rhs)
+                      return {};
                   else
                       return PKB::getNextEntEnt();
           }},
