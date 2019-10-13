@@ -268,7 +268,7 @@ namespace Dispatcher {
                       return PKB::getFollowsEntIdent(getEntity(lhs),
                                                      rhs);
                   else if (lhs == rhs)
-                      return {};
+                      return unordered_set<vector<string>>();
                   else
                       return PKB::getFollowsEntEnt(getEntity(lhs),
                                                    getEntity(rhs));
@@ -287,7 +287,7 @@ namespace Dispatcher {
                       return PKB::getFollowsTEntIdent(getEntity(lhs),
                                                       rhs);
                   else if (lhs == rhs)
-                      return {};
+                      return unordered_set<vector<string>>();
                   else
                       return PKB::getFollowsTEntEnt(getEntity(lhs),
                                                     getEntity(rhs));
@@ -306,7 +306,7 @@ namespace Dispatcher {
                       return PKB::getParentEntIdent(getEntity(lhs),
                                                     rhs);
                   else if (lhs == rhs)
-                      return {};
+                      return unordered_set<vector<string>>();
                   else
                       return PKB::getParentEntEnt(getEntity(lhs),
                                                   getEntity(rhs));
@@ -325,7 +325,7 @@ namespace Dispatcher {
                       return PKB::getParentTEntIdent(getEntity(lhs),
                                                      rhs);
                   else if (lhs == rhs)
-                      return {};
+                      return unordered_set<vector<string>>();
                   else
                       return PKB::getParentTEntEnt(getEntity(lhs),
                                                    getEntity(rhs));
@@ -342,7 +342,7 @@ namespace Dispatcher {
                   else if (isIdentifier(rhs))
                       return PKB::getNextEntIdent(rhs);
                   else if (lhs == rhs)
-                      return {};
+                      return unordered_set<vector<string>>();
                   else
                       return PKB::getNextEntEnt();
           }},
