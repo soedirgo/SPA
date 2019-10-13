@@ -15,7 +15,7 @@ bool PKBNext::setNext(PROG_LINE nextByLine, PROG_LINE nextLine) {
 	return true;
 }
 
-bool PKBNext::setNextStar(PROG_LINE nextByLine, PROG_LINE nextLine) {
+bool PKBNext::setNextT(PROG_LINE nextByLine, PROG_LINE nextLine) {
 	vector<string> tuple = vector<string>();
 	tuple.push_back(nextByLine);
 	tuple.push_back(nextLine);

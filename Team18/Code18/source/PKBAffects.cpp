@@ -183,3 +183,97 @@ TABLE PKBAffects::getAffectsSelf() {
 	}
 	return resultTable;
 }
+
+TABLE PKBAffects::getAffectsTAnyEnt() {
+	PROC_LIST resultTable;
+	LINE_LIST list;
+	PROG_LINE n;
+	list = PKBStmt::getAllStmt();
+	for (auto iter : list) {
+		n = iter.front();
+		for (auto vectorIter : affectsTTable) {
+			vector<string> tuple = vector<string>();
+			if (vectorIter.back() == n) {
+				tuple.push_back(vectorIter.back());
+				resultTable.emplace(tuple);
+			}
+		}
+	}
+	return resultTable;
+}
+
+TABLE PKBAffects::getAffectsTEntAny() {
+	PROC_LIST resultTable;
+	LINE_LIST list;
+	PROG_LINE n;
+	list = PKBStmt::getAllStmt();
+	for (auto iter : list) {
+		n = iter.front();
+		for (auto vectorIter : affectsTTable) {
+			vector<string> tuple = vector<string>();
+			if (vectorIter.front() == n) {
+				tuple.push_back(vectorIter.front());
+				resultTable.emplace(tuple);
+			}
+		}
+	}
+	return resultTable;
+}
+
+TABLE PKBAffects::getAffectsTIdentEnt(STMT_NO stmtNo) {
+	PROC_LIST resultTable;
+	LINE_LIST list;
+	PROG_LINE n;
+	list = PKBStmt::getAllStmt();
+	for (auto iter : list) {
+		n = iter.front();
+		for (auto vectorIter : affectsTTable) {
+			vector<string> tuple = vector<string>();
+			if (vectorIter.front() == stmtNo && vectorIter.back() == n) {
+				tuple.push_back(vectorIter.back());
+				resultTable.emplace(tuple);
+			}
+		}
+	}
+	return resultTable;
+}
+
+TABLE PKBAffects::getAffectsTEntIdent(STMT_NO stmtNo) {
+	PROC_LIST resultTable;
+	LINE_LIST list;
+	PROG_LINE n;
+	list = PKBStmt::getAllStmt();
+	for (auto iter : list) {
+		n = iter.front();
+		for (auto vectorIter : affectsTTable) {
+			vector<string> tuple = vector<string>();
+			if (vectorIter.front() == n && vectorIter.back() == stmtNo) {
+				tuple.push_back(vectorIter.front());
+				resultTable.emplace(tuple);
+			}
+		}
+	}
+	return resultTable;
+}
+
+TABLE PKBAffects::getAffectsTEntEnt() {
+	return affectsTTable;
+}
+
+TABLE PKBAffects::getAffectsTSelf() {
+	STMT_LIST resultTable;
+	STMT_LIST list;
+	STMT_NO s;
+	list = PKBStmt::getAllStmt();
+	for (auto iter1 : list) {
+		s = iter1.front();
+		for (auto vectorIter : affectsTTable) {
+			vector<string> tuple = vector<string>();
+			if (vectorIter.front() == s && vectorIter.back() == s) {
+				tuple.push_back(vectorIter.front());
+				resultTable.emplace(tuple);
+			}
+		}
+	}
+	return resultTable;
+}

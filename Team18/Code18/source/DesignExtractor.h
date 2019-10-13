@@ -9,14 +9,16 @@ public:
 	static void extractDesign();
 
 private:
-	static void extractFollowsStar();
-	static void extractParentStar();
-	static void extractCallStar();
-	static void extractNextStar();
+	static void extractFollowsT();
+	static void extractParentT();
+	static void extractCallsT();
+	static void extractNextT();
 	static void extractModifiesP();
 	static void extractUsesP();
 	static void extractAffects();
+	static void extractAffectsT();
 
+	static void recurseAffects(STMT_NO a1, STMT_NO a2);
 	static void recurseModifies(PROC_NAME p);
 	static void recurseUses(PROC_NAME p);
 	static void recurseCall(PROC_NAME p, PROC_NAME q);

@@ -63,6 +63,19 @@ namespace UnitTesting
 			PKB.setStmt("17", "assign");
 			PKB.setStmt("18", "print");
 
+			PKB.setFollows("1", "2");
+			PKB.setFollows("2", "3");
+			PKB.setFollows("4", "5");
+			PKB.setFollows("5", "6");
+			PKB.setFollows("6", "10");
+			PKB.setFollows("10", "13");
+			PKB.setFollows("7", "8");
+			PKB.setFollows("8", "9");
+			PKB.setFollows("13", "14");
+			PKB.setFollows("14", "15");
+			PKB.setFollows("16", "17");
+			PKB.setFollows("17", "18");
+
 			PKB.setNext("1", "2");
 			PKB.setNext("2", "3");
 			PKB.setNext("4", "5");
@@ -173,23 +186,60 @@ namespace UnitTesting
 			PKB.setUsesP("Second", "z");
 			PKB.setUsesP("Third", "v");
 			PKB.setUsesP("Third", "z");
+			
 
-			DesignExtractor DesignExtractor;
-			DesignExtractor.extractDesign();
+			
 		}
 		TEST_METHOD(AffectsRelationship)
 		{
+			
+			DesignExtractor DesignExtractor;
+			DesignExtractor.extractDesign();
 			PKBAffects PKB;
 			Assert::IsTrue(PKB.isAffectsIdentIdent("4", "7"));
+			Assert::IsTrue(PKB.isAffectsIdentIdent("4", "11"));
+			Assert::IsTrue(PKB.isAffectsIdentIdent("4", "13"));
+			Assert::IsTrue(PKB.isAffectsIdentIdent("4", "15"));
 			Assert::IsTrue(PKB.isAffectsIdentIdent("5", "9"));
+			Assert::IsTrue(PKB.isAffectsIdentIdent("5", "13"));
 			Assert::IsTrue(PKB.isAffectsIdentIdent("7", "7"));
+			Assert::IsTrue(PKB.isAffectsIdentIdent("7", "11"));
+			Assert::IsTrue(PKB.isAffectsIdentIdent("7", "13"));
+			Assert::IsTrue(PKB.isAffectsIdentIdent("7", "15"));
 			Assert::IsTrue(PKB.isAffectsIdentIdent("9", "9"));	
+			Assert::IsTrue(PKB.isAffectsIdentIdent("9", "13"));
 			Assert::IsTrue(PKB.isAffectsIdentIdent("12", "13"));
 			Assert::IsTrue(PKB.isAffectsIdentIdent("13", "14"));
+			Assert::IsTrue(PKB.isAffectsIdentIdent("13", "15"));
 			Assert::IsTrue(PKB.isAffectsIdentIdent("14", "15"));
 			Assert::IsTrue(PKB.isAffectsIdentIdent("16", "17"));
 			
 		}
+		
+		TEST_METHOD(AffectsTRelationship)
+		{
+			PKBAffects PKB;
+			Assert::IsTrue(PKB.isAffectsTIdentIdent("4", "7"));
+			Assert::IsTrue(PKB.isAffectsTIdentIdent("4", "11"));
+			Assert::IsTrue(PKB.isAffectsTIdentIdent("4", "13"));
+			Assert::IsTrue(PKB.isAffectsTIdentIdent("4", "15"));
+			Assert::IsTrue(PKB.isAffectsTIdentIdent("5", "9"));
+			Assert::IsTrue(PKB.isAffectsTIdentIdent("5", "13"));
+			Assert::IsTrue(PKB.isAffectsTIdentIdent("7", "7"));
+			Assert::IsTrue(PKB.isAffectsTIdentIdent("7", "11"));
+			Assert::IsTrue(PKB.isAffectsTIdentIdent("7", "13"));
+			Assert::IsTrue(PKB.isAffectsTIdentIdent("7", "15"));
+			Assert::IsTrue(PKB.isAffectsTIdentIdent("9", "9"));
+			Assert::IsTrue(PKB.isAffectsTIdentIdent("9", "13"));
+			Assert::IsTrue(PKB.isAffectsTIdentIdent("12", "13"));
+			Assert::IsTrue(PKB.isAffectsTIdentIdent("13", "14"));
+			Assert::IsTrue(PKB.isAffectsTIdentIdent("13", "15"));
+			Assert::IsTrue(PKB.isAffectsTIdentIdent("14", "15"));
+			Assert::IsTrue(PKB.isAffectsTIdentIdent("16", "17"));
+
+			Assert::IsTrue(PKB.isAffectsTIdentIdent("4", "14"));
+		}
+		
 	};
 };
 

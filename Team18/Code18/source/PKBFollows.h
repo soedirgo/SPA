@@ -8,7 +8,7 @@ class PKBFollows {
 public:
 
 	static bool setFollows(STMT_NO followedBy, STMT_NO follows);
-	static bool setFollowsStar(STMT_NO followedBy, STMT_NO follows);
+	static bool setFollowsT(STMT_NO followedBy, STMT_NO follows);
 	static STMT_NO getFollowsStmt(STMT_NO followedBy);
 	static TABLE getFollowsTable();
 

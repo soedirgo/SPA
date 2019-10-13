@@ -8,7 +8,7 @@ class PKBNext {
 public:
 
 	static bool setNext(PROG_LINE nextByLine, PROG_LINE nextLine);
-	static bool setNextStar(PROG_LINE nextByLine, PROG_LINE nextLine);
+	static bool setNextT(PROG_LINE nextByLine, PROG_LINE nextLine);
 	static LINE_LIST getNext(PROG_LINE nextByLine);
 
 	static TABLE getNextTable();
