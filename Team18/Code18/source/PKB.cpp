@@ -716,6 +716,9 @@ TABLE PKB::getAffectsEntIdent(STMT_NO a2) {
 TABLE PKB::getAffectsEntEnt() {
 	return PKBAffects::getAffectsEntEnt();
 }
+TABLE PKB::getAffectsSelf() {
+	return PKBAffects::getAffectsSelf();
+}
 
 bool PKB::setIfPattern(STMT_NO stmtNo, VAR_NAME varName) {
 	return PKBPattern::setIfPattern(stmtNo, varName);

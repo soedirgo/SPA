@@ -165,3 +165,21 @@ TABLE PKBAffects::getAffectsEntIdent(STMT_NO stmtNo) {
 TABLE PKBAffects::getAffectsEntEnt() {
 	return affectsTable;
 }
+
+TABLE PKBAffects::getAffectsSelf() {
+	STMT_LIST resultTable;
+	STMT_LIST list;
+	STMT_NO s;
+	list = PKBStmt::getAllStmt();
+	for (auto iter1 : list) {
+		s = iter1.front();
+		for (auto vectorIter : affectsTable) {
+			vector<string> tuple = vector<string>();
+			if (vectorIter.front() == s && vectorIter.back() == s) {
+				tuple.push_back(vectorIter.front());
+				resultTable.emplace(tuple);
+			}
+		}
+	}
+	return resultTable;
+}

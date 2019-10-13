@@ -280,7 +280,7 @@ public:
 	static TABLE getAffectsEntAny();
 	static TABLE getAffectsEntIdent(STMT_NO a2);
 	static TABLE getAffectsEntEnt();
-	//static TABLE getAffectsSelf();
+	static TABLE getAffectsSelf();
 
 private:
 	static std::unordered_map<int, std::string> assignStmtTable;
