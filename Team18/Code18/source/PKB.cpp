@@ -651,40 +651,40 @@ bool PKB::isNextTIdentIdent(PROG_LINE n1, PROG_LINE n2) {
 }
 
 //Next Table Evaluation
-TABLE PKB::getNextAnyEnt() {
-	return PKBNext::getNextAnyEnt();
+TABLE PKB::getNextAnyEnt(STMT_TYPE stmtType) {
+	return PKBNext::getNextAnyEnt(stmtType);
 }
-TABLE PKB::getNextIdentEnt(PROG_LINE n1) {
-	return PKBNext::getNextIdentEnt(n1);
+TABLE PKB::getNextIdentEnt(PROG_LINE n1, STMT_TYPE stmtType) {
+	return PKBNext::getNextIdentEnt(n1, stmtType);
 }
-TABLE PKB::getNextEntAny() {
-	return PKBNext::getNextEntAny();
+TABLE PKB::getNextEntAny(STMT_TYPE stmtType) {
+	return PKBNext::getNextEntAny(stmtType);
 }
-TABLE PKB::getNextEntIdent(PROG_LINE n2) {
-	return PKBNext::getNextEntIdent(n2);
+TABLE PKB::getNextEntIdent(STMT_TYPE stmtType, PROG_LINE n2) {
+	return PKBNext::getNextEntIdent(stmtType, n2);
 }
-TABLE PKB::getNextEntEnt() {
-	return PKBNext::getNextEntEnt();
-}
-
-TABLE PKB::getNextTAnyEnt() {
-	return PKBNext::getNextTAnyEnt();
-}
-TABLE PKB::getNextTIdentEnt(PROG_LINE n1) {
-	return PKBNext::getNextTIdentEnt(n1);
-}
-TABLE PKB::getNextTEntAny() {
-	return PKBNext::getNextTEntAny();
-}
-TABLE PKB::getNextTEntIdent(PROG_LINE n2) {
-	return PKBNext::getNextTEntIdent(n2);
-}
-TABLE PKB::getNextTEntEnt() {
-	return PKBNext::getNextTEntEnt();
+TABLE PKB::getNextEntEnt(STMT_TYPE stmtType1, STMT_TYPE stmtType2) {
+	return PKBNext::getNextEntEnt(stmtType1, stmtType2);
 }
 
-TABLE PKB::getNextTSelf() {
-	return PKBNext::getNextTSelf();
+TABLE PKB::getNextTAnyEnt(STMT_TYPE stmtType) {
+	return PKBNext::getNextTAnyEnt(stmtType);
+}
+TABLE PKB::getNextTIdentEnt(PROG_LINE n1, STMT_TYPE stmtType) {
+	return PKBNext::getNextTIdentEnt(n1, stmtType);
+}
+TABLE PKB::getNextTEntAny(STMT_TYPE stmtType) {
+	return PKBNext::getNextTEntAny(stmtType);
+}
+TABLE PKB::getNextTEntIdent(STMT_TYPE stmtType, PROG_LINE n2) {
+	return PKBNext::getNextTEntIdent(stmtType, n2);
+}
+TABLE PKB::getNextTEntEnt(STMT_TYPE stmtType1, STMT_TYPE stmtType2) {
+	return PKBNext::getNextTEntEnt(stmtType1, stmtType2);
+}
+
+TABLE PKB::getNextTSelf(STMT_TYPE stmtType) {
+	return PKBNext::getNextTSelf(stmtType);
 }
 
 bool PKB::isAffectsAnyAny() {

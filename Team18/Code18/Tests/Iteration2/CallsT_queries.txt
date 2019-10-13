@@ -30,7 +30,7 @@ B, D, E, G, H
 5000
 7 - Calls*, syntax, LHS wildcard RHS wildcard
 procedure Calls;
-Select Calls such that Calls*(_, _)
+Select Calls such that Calls*(_,_)
 A, B, C, D, E, F, G, H, I, J
 5000
 8 - Calls* syntax, LHS synonym RHS Ident

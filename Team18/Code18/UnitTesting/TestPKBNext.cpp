@@ -210,7 +210,7 @@ namespace UnitTesting
 			PKBNext PKB;
 			TABLE actual, expected;
 
-			actual = PKB.getNextEntEnt();
+			actual = PKB.getNextEntEnt("stmt","stmt");
 			expected = { {"1","2"},{"2","3"},{"4","5"},{"5","6"},{"6","7"},{"7","8"},{"8","9"},{"9","6"},{"6","10"},{"10","11"},{"10","12"},{"11","13"}
 			,{"12","13"},{"13","14"},{"14","15"},{"16","17"},{"17","18"} };
 			Assert::IsTrue(actual == expected);
@@ -221,7 +221,7 @@ namespace UnitTesting
 			PKBNext PKB;
 			LINE_LIST actual, expected;
 
-			actual = PKB.getNextEntIdent("6");
+			actual = PKB.getNextEntIdent("stmt","6");
 			expected = { {"5"},{"9"} };
 			Assert::IsTrue(actual == expected);
 		}
@@ -231,7 +231,7 @@ namespace UnitTesting
 			PKBNext PKB;
 			LINE_LIST actual, expected;
 
-			actual = PKB.getNextIdentEnt("6");
+			actual = PKB.getNextIdentEnt("6", "stmt");
 			expected = { {"7"},{"10"} };
 			Assert::IsTrue(actual == expected);
 		}
@@ -241,7 +241,7 @@ namespace UnitTesting
 			PKBNext PKB;
 			LINE_LIST actual, expected;
 
-			actual = PKB.getNextTSelf();
+			actual = PKB.getNextTSelf("stmt");
 			expected = { {"6"},{"7"},{"8"},{"9"} };
 			Assert::IsTrue(actual == expected);
 		}
