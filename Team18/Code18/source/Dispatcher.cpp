@@ -36,11 +36,11 @@ namespace Dispatcher {
         {{"Uses",
           [](string lhs, string rhs) {
               if (isIdentifier(lhs))
-                  if (isdigit(lhs[1]))
+                  if (isdigit(lhs[0]))
                       if (isUnderscore(rhs))
-                          return PKB::isUsesSIdentAny(trimQuotes(lhs));
+                          return PKB::isUsesSIdentAny(lhs);
                       else
-                          return PKB::isUsesSIdentIdent(trimQuotes(lhs),
+                          return PKB::isUsesSIdentIdent(lhs,
                                                         trimQuotes(rhs));
                   else
                       if (isUnderscore(rhs))
@@ -57,19 +57,19 @@ namespace Dispatcher {
                                                         trimQuotes(rhs));
                   else
                       if (isUnderscore(rhs))
-                          return PKB::isUsesPIdentAny(trimQuotes(lhs));
+                          return PKB::isUsesSIdentAny(lhs);
                       else
-                          return PKB::isUsesPIdentIdent(trimQuotes(lhs),
+                          return PKB::isUsesSIdentIdent(lhs,
                                                         trimQuotes(rhs));
           }},
          {"Modifies",
           [](string lhs, string rhs) {
               if (isIdentifier(lhs))
-                  if (isdigit(lhs[1]))
+                  if (isdigit(lhs[0]))
                       if (isUnderscore(rhs))
-                          return PKB::isModifiesSIdentAny(trimQuotes(lhs));
+                          return PKB::isModifiesSIdentAny(lhs);
                       else
-                          return PKB::isModifiesSIdentIdent(trimQuotes(lhs),
+                          return PKB::isModifiesSIdentIdent(lhs,
                                                             trimQuotes(rhs));
                   else
                       if (isUnderscore(rhs))
@@ -86,9 +86,9 @@ namespace Dispatcher {
                                                             trimQuotes(rhs));
                   else
                       if (isUnderscore(rhs))
-                          return PKB::isModifiesPIdentAny(trimQuotes(lhs));
+                          return PKB::isModifiesSIdentAny(lhs);
                       else
-                          return PKB::isModifiesPIdentIdent(trimQuotes(lhs),
+                          return PKB::isModifiesSIdentIdent(lhs,
                                                             trimQuotes(rhs));
           }},
          {"Calls",
@@ -111,13 +111,13 @@ namespace Dispatcher {
                   if (isUnderscore(rhs))
                       return PKB::isFollowsAnyAny();
                   else
-                      return PKB::isFollowsAnyIdent(trimQuotes(rhs));
+                      return PKB::isFollowsAnyIdent(rhs);
               else
                   if (isUnderscore(rhs)) 
-                      return PKB::isFollowsIdentAny(trimQuotes(lhs));
+                      return PKB::isFollowsIdentAny(lhs);
                   else
-                      return PKB::isFollowsIdentIdent(trimQuotes(lhs),
-                                                      trimQuotes(rhs));
+                      return PKB::isFollowsIdentIdent(lhs,
+                                                      rhs);
           }},
          {"Follows*",
           [](string lhs, string rhs) {
@@ -125,13 +125,13 @@ namespace Dispatcher {
                   if (isUnderscore(rhs))
                       return PKB::isFollowsTAnyAny();
                   else
-                      return PKB::isFollowsTAnyIdent(trimQuotes(rhs));
+                      return PKB::isFollowsTAnyIdent(rhs);
               else
                   if (isUnderscore(rhs)) 
-                      return PKB::isFollowsTIdentAny(trimQuotes(lhs));
+                      return PKB::isFollowsTIdentAny(lhs);
                   else
-                      return PKB::isFollowsTIdentIdent(trimQuotes(lhs),
-                                                       trimQuotes(rhs));
+                      return PKB::isFollowsTIdentIdent(lhs,
+                                                       rhs);
           }},
          {"Parent",
           [](string lhs, string rhs) {
@@ -139,13 +139,13 @@ namespace Dispatcher {
                   if (isUnderscore(rhs))
                       return PKB::isParentAnyAny();
                   else
-                      return PKB::isParentAnyIdent(trimQuotes(rhs));
+                      return PKB::isParentAnyIdent(rhs);
               else
                   if (isUnderscore(rhs)) 
-                      return PKB::isParentIdentAny(trimQuotes(lhs));
+                      return PKB::isParentIdentAny(lhs);
                   else
-                      return PKB::isParentIdentIdent(trimQuotes(lhs),
-                                                     trimQuotes(rhs));
+                      return PKB::isParentIdentIdent(lhs,
+                                                     rhs);
           }},
          {"Parent*",
           [](string lhs, string rhs) {
@@ -153,13 +153,13 @@ namespace Dispatcher {
                   if (isUnderscore(rhs))
                       return PKB::isParentTAnyAny();
                   else
-                      return PKB::isParentTAnyIdent(trimQuotes(rhs));
+                      return PKB::isParentTAnyIdent(rhs);
               else
                   if (isUnderscore(rhs)) 
-                      return PKB::isParentTIdentAny(trimQuotes(lhs));
+                      return PKB::isParentTIdentAny(lhs);
                   else
-                      return PKB::isParentTIdentIdent(trimQuotes(lhs),
-                                                      trimQuotes(rhs));
+                      return PKB::isParentTIdentIdent(lhs,
+                                                      rhs);
           }},
          {"Next",
           [](string lhs, string rhs) {
@@ -167,13 +167,13 @@ namespace Dispatcher {
                   if (isUnderscore(rhs))
                       return PKB::isNextAnyAny();
                   else
-                      return PKB::isNextAnyIdent(trimQuotes(rhs));
+                      return PKB::isNextAnyIdent(rhs);
               else
                   if (isUnderscore(rhs)) 
-                      return PKB::isNextIdentAny(trimQuotes(lhs));
+                      return PKB::isNextIdentAny(lhs);
                   else
-                      return PKB::isNextIdentIdent(trimQuotes(lhs),
-                                                   trimQuotes(rhs));
+                      return PKB::isNextIdentIdent(lhs,
+                                                   rhs);
           }},
          {"Next*",
           [](string lhs, string rhs) {
@@ -181,13 +181,13 @@ namespace Dispatcher {
                   if (isUnderscore(rhs))
                       return PKB::isNextTAnyAny();
                   else
-                      return PKB::isNextTAnyIdent(trimQuotes(rhs));
+                      return PKB::isNextTAnyIdent(rhs);
               else
                   if (isUnderscore(rhs)) 
-                      return PKB::isNextTIdentAny(trimQuotes(lhs));
+                      return PKB::isNextTIdentAny(lhs);
                   else
-                      return PKB::isNextTIdentIdent(trimQuotes(lhs),
-                                                    trimQuotes(rhs));
+                      return PKB::isNextTIdentIdent(lhs,
+                                                    rhs);
           }}};
 
         unordered_map<string, function<unordered_set<vector<string>>
@@ -195,8 +195,8 @@ namespace Dispatcher {
         {{"Uses",
           [](string lhs, string rhs) {
               if (isIdentifier(lhs))
-                  if (isdigit(lhs[1]))
-                      return PKB::getUsesSIdentEnt(trimQuotes(lhs));
+                  if (isdigit(lhs[0]))
+                      return PKB::getUsesSIdentEnt(lhs);
                   else
                       return PKB::getUsesPIdentEnt(trimQuotes(lhs));
               else
@@ -219,8 +219,8 @@ namespace Dispatcher {
          {"Modifies",
           [](string lhs, string rhs) {
               if (isIdentifier(lhs))
-                  if (isdigit(lhs[1]))
-                      return PKB::getModifiesSIdentEnt(trimQuotes(lhs));
+                  if (isdigit(lhs[0]))
+                      return PKB::getModifiesSIdentEnt(lhs);
                   else
                       return PKB::getModifiesPIdentEnt(trimQuotes(lhs));
               else
@@ -259,14 +259,14 @@ namespace Dispatcher {
               if (isUnderscore(lhs))
                   return PKB::getFollowsAnyEnt(getEntity(rhs));
               else if (isIdentifier(lhs))
-                  return PKB::getFollowsIdentEnt(trimQuotes(lhs),
+                  return PKB::getFollowsIdentEnt(lhs,
                                                  getEntity(rhs));
               else
                   if (isUnderscore(rhs))
                       return PKB::getFollowsEntAny(getEntity(lhs));
                   else if (isIdentifier(rhs))
                       return PKB::getFollowsEntIdent(getEntity(lhs),
-                                                     trimQuotes(rhs));
+                                                     rhs);
                   else
                       return PKB::getFollowsEntEnt(getEntity(lhs),
                                                    getEntity(rhs));
@@ -276,14 +276,14 @@ namespace Dispatcher {
               if (isUnderscore(lhs))
                   return PKB::getFollowsTAnyEnt(getEntity(rhs));
               else if (isIdentifier(lhs))
-                  return PKB::getFollowsTIdentEnt(trimQuotes(lhs),
+                  return PKB::getFollowsTIdentEnt(lhs,
                                                   getEntity(rhs));
               else
                   if (isUnderscore(rhs))
                       return PKB::getFollowsTEntAny(getEntity(lhs));
                   else if (isIdentifier(rhs))
                       return PKB::getFollowsTEntIdent(getEntity(lhs),
-                                                      trimQuotes(rhs));
+                                                      rhs);
                   else
                       return PKB::getFollowsTEntEnt(getEntity(lhs),
                                                     getEntity(rhs));
@@ -293,14 +293,14 @@ namespace Dispatcher {
               if (isUnderscore(lhs))
                   return PKB::getParentAnyEnt(getEntity(rhs));
               else if (isIdentifier(lhs))
-                  return PKB::getParentIdentEnt(trimQuotes(lhs),
+                  return PKB::getParentIdentEnt(lhs,
                                                 getEntity(rhs));
               else
                   if (isUnderscore(rhs))
                       return PKB::getParentEntAny(getEntity(lhs));
                   else if (isIdentifier(rhs))
                       return PKB::getParentEntIdent(getEntity(lhs),
-                                                    trimQuotes(rhs));
+                                                    rhs);
                   else
                       return PKB::getParentEntEnt(getEntity(lhs),
                                                   getEntity(rhs));
@@ -310,14 +310,14 @@ namespace Dispatcher {
               if (isUnderscore(lhs))
                   return PKB::getParentTAnyEnt(getEntity(rhs));
               else if (isIdentifier(lhs))
-                  return PKB::getParentTIdentEnt(trimQuotes(lhs),
+                  return PKB::getParentTIdentEnt(lhs,
                                                  getEntity(rhs));
               else
                   if (isUnderscore(rhs))
                       return PKB::getParentTEntAny(getEntity(lhs));
                   else if (isIdentifier(rhs))
                       return PKB::getParentTEntIdent(getEntity(lhs),
-                                                     trimQuotes(rhs));
+                                                     rhs);
                   else
                       return PKB::getParentTEntEnt(getEntity(lhs),
                                                    getEntity(rhs));
@@ -327,12 +327,12 @@ namespace Dispatcher {
               if (isUnderscore(lhs))
                   return PKB::getNextAnyEnt();
               else if (isIdentifier(lhs))
-                  return PKB::getNextIdentEnt(trimQuotes(lhs));
+                  return PKB::getNextIdentEnt(lhs);
               else
                   if (isUnderscore(rhs))
                       return PKB::getNextEntAny();
                   else if (isIdentifier(rhs))
-                      return PKB::getNextEntIdent(trimQuotes(rhs));
+                      return PKB::getNextEntIdent(rhs);
                   else
                       return PKB::getNextEntEnt();
           }},
@@ -341,12 +341,12 @@ namespace Dispatcher {
               if (isUnderscore(lhs))
                   return PKB::getNextTAnyEnt();
               else if (isIdentifier(lhs))
-                  return PKB::getNextTIdentEnt(trimQuotes(lhs));
+                  return PKB::getNextTIdentEnt(lhs);
               else
                   if (isUnderscore(rhs))
                       return PKB::getNextTEntAny();
                   else if (isIdentifier(rhs))
-                      return PKB::getNextTEntIdent(trimQuotes(rhs));
+                      return PKB::getNextTEntIdent(rhs);
                   else if (lhs == rhs)
                       return PKB::getNextTSelf();
                   else
