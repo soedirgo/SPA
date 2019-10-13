@@ -225,7 +225,7 @@ namespace IntegrationTesting
             actual.sort();
             Assert::IsTrue(expected == actual);
 
-            expected = {"1", "0"};
+            expected = {"0", "1"};
             actual = Evaluator::evalQuery(Query(decl, "C",
                                                 { Clause("such-that", {"Uses", "2", "\"x\""}) }));
             actual.sort();
@@ -355,13 +355,13 @@ namespace IntegrationTesting
 
             expected = {"1", "5"};
             actual = Evaluator::evalQuery(Query(decl, "a",
-                                                { Clause("pattern", {"a", "_", "\"1\""}) }));
+                                                { Clause("pattern", {"a", "_", "1"}) }));
             actual.sort();
             Assert::IsTrue(expected == actual);
 
             expected = {"4"};
             actual = Evaluator::evalQuery(Query(decl, "a",
-                                                { Clause("pattern", {"a", "\"z\"", "\"0\""}) }));
+                                                { Clause("pattern", {"a", "\"z\"", "0"}) }));
             actual.sort();
             Assert::IsTrue(expected == actual);
         }
