@@ -151,7 +151,7 @@ void DesignExtractor::recurseUses(PROC_NAME callee) {
 void DesignExtractor::extractAffects()
 {
 	TABLE assignStmtTable = PKBStmt::getAllStmtByType("assign");
-	//TABLE callStmtTable = PKBStmt::getAllStmtByType("call");
+	TABLE callStmtTable = PKBStmt::getAllStmtByType("call");
 	TABLE nextTTable = PKBNext::getNextTEntEnt();
 	for (auto vectorIter1 : assignStmtTable) {
 		STMT_NO a1 = vectorIter1.front();
@@ -183,6 +183,17 @@ void DesignExtractor::extractAffects()
 						}
 					}
 					for (int i = stoi(a1) + 1; i < stoi(a2); i++) {
+						for (auto vectorIter4 : callStmtTable) {
+							STMT_NO callStmt = vectorIter4.front();
+							if (i == stoi(callStmt)) {
+								VAR_LIST varList3 = PKBModifies::getModifiesSIdentEnt(to_string(i));
+								for (auto vectorIter4 : varList3) {
+									if (varNameModified == vectorIter4.front()) {
+										affectsHold = false;
+									}
+								}
+							}
+						}
 						for (auto vectorIter4 : assignStmtTable) {
 							STMT_NO assignStmt = vectorIter4.front();
 							if (i == stoi(assignStmt)) {
