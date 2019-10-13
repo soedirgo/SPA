@@ -1,4 +1,3 @@
-#include <iostream>
 #include <string>
 #include <vector>
 #include "PKB.h"
@@ -15,6 +14,7 @@
 #include "PKBRead.h"
 #include "PKBConstant.h"
 #include "PKBPattern.h"
+#include "PKBAffects.h"
 using namespace std;
 
 unordered_map<int, string> PKB::assignStmtTable;
@@ -687,6 +687,35 @@ TABLE PKB::getNextTSelf() {
 	return PKBNext::getNextTSelf();
 }
 
+bool PKB::isAffectsAnyAny() {
+	return PKBAffects::isAffectsAnyAny();
+}
+bool PKB::isAffectsAnyIdent(STMT_NO a2) {
+	return PKBAffects::isAffectsAnyIdent(a2);
+}
+bool PKB::isAffectsIdentAny(STMT_NO a1) {
+	return PKBAffects::isAffectsIdentAny(a1);
+}
+bool PKB::isAffectsIdentIdent(STMT_NO a1, STMT_NO a2) {
+	return PKBAffects::isAffectsIdentIdent(a1,a2);
+}
+
+//Affects Table Evaluation
+TABLE PKB::getAffectsAnyEnt() {
+	return PKBAffects::getAffectsAnyEnt();
+}
+TABLE PKB::getAffectsIdentEnt(STMT_NO a1) {
+	return PKBAffects::getAffectsIdentEnt(a1);
+}
+TABLE PKB::getAffectsEntAny() {
+	return PKBAffects::getAffectsEntAny();
+}
+TABLE PKB::getAffectsEntIdent(STMT_NO a2) {
+	return PKBAffects::getAffectsEntIdent(a2);
+}
+TABLE PKB::getAffectsEntEnt() {
+	return PKBAffects::getAffectsEntEnt();
+}
 
 bool PKB::setIfPattern(STMT_NO stmtNo, VAR_NAME varName) {
 	return PKBPattern::setIfPattern(stmtNo, varName);

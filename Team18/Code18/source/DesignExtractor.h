@@ -15,6 +15,7 @@ private:
 	static void extractNextStar();
 	static void extractModifiesP();
 	static void extractUsesP();
+	static void extractAffects();
 
 	static void recurseModifies(PROC_NAME p);
 	static void recurseUses(PROC_NAME p);

@@ -18,9 +18,15 @@
     <ClCompile Include="..\source\*.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\source\PKBAffects.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\source\*.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\PKBAffects.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

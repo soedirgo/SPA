@@ -259,6 +259,29 @@ public:
 	static TABLE getPatternAssignEntPartial(EXPR_SPEC expression);
 	static TABLE getPatternAssignEntFull(EXPR_SPEC expression);
 
+	//Affects
+
+	//Affects Bool Evaluation
+	static bool isAffectsAnyAny();
+	static bool isAffectsAnyIdent(STMT_NO a2);
+	static bool isAffectsIdentAny(STMT_NO a1);
+	static bool isAffectsIdentIdent(STMT_NO a1, STMT_NO a2);
+
+	/*
+	static bool isAffectsTAnyAny();
+	static bool isAffectsTAnyIdent(STMT_NO a2);
+	static bool isAffectsTIdentAny(STMT_NO a1);
+	static bool isAffectsTIdentIdent(STMT_NO a1, STMT_NO a2);
+	*/
+
+	//Affects Table Evaluation
+	static TABLE getAffectsAnyEnt();
+	static TABLE getAffectsIdentEnt(STMT_NO a1);
+	static TABLE getAffectsEntAny();
+	static TABLE getAffectsEntIdent(STMT_NO a2);
+	static TABLE getAffectsEntEnt();
+	//static TABLE getAffectsSelf();
+
 private:
 	static std::unordered_map<int, std::string> assignStmtTable;
 	static std::unordered_map<std::string, std::unordered_set<int>> assignVarTable;
