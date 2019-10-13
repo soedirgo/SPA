@@ -33,6 +33,15 @@ STMT_LIST PKBStmt::getAllStmtByType(STMT_TYPE type) {
 	return list;
 };
 
+STMT_TYPE PKBStmt::getTypeByStmtNo(STMT_NO stmtNo) {
+	for (auto vectorIter : stmtTable) {
+		if (vectorIter.front() == stmtNo) {
+			return vectorIter.back();
+		}
+	}
+	return "";
+};
+
 bool PKBStmt::clear() {
 	stmtTable.clear();
 	return true;

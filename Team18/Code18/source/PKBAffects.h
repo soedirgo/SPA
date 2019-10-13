@@ -29,14 +29,12 @@ public:
 	static TABLE getAffectsEntEnt();
 	static TABLE getAffectsSelf();
 
-	/*
 	static TABLE getAffectsTAnyEnt();
 	static TABLE getAffectsTIdentEnt(STMT_NO a1);
 	static TABLE getAffectsTEntAny();
 	static TABLE getAffectsTEntIdent(STMT_NO a2);
 	static TABLE getAffectsTEntEnt();
 	static TABLE getAffectsTSelf();
-	*/
 
 	// Clear
 	static bool clear();

@@ -14,7 +14,7 @@ bool PKBFollows::setFollows(STMT_NO followedBy, STMT_NO follows) {
 	return true;
 }
 
-bool PKBFollows::setFollowsStar(STMT_NO followedBy, STMT_NO follows) {
+bool PKBFollows::setFollowsT(STMT_NO followedBy, STMT_NO follows) {
 	vector<string> tuple = vector<string>();
 	tuple.push_back(followedBy);
 	tuple.push_back(follows);

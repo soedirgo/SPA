@@ -15,7 +15,7 @@ bool PKBParent::setParent(STMT_NO parent, STMT_NO child) {
 	return true;
 }
 
-bool PKBParent::setParentStar(STMT_NO parent, STMT_NO child) {
+bool PKBParent::setParentT(STMT_NO parent, STMT_NO child) {
 	vector<string> tuple = vector<string>();
 	tuple.push_back(parent);
 	tuple.push_back(child);

@@ -60,7 +60,7 @@ bool PKB::setFollows(STMT_NO followedBy, STMT_NO follow) {
 }
 
 bool PKB::setFollowsT(STMT_NO followedBy, STMT_NO follow) {
-	return PKBFollows::setFollowsStar(followedBy, follow);
+	return PKBFollows::setFollowsT(followedBy, follow);
 }
 
 //Follow Bool Evaluation
@@ -129,7 +129,7 @@ bool PKB::setParent(STMT_NO parent, STMT_NO child) {
 }
 
 bool PKB::setParentT(STMT_NO parent, STMT_NO child) {
-	return PKBParent::setParentStar(parent, child);
+	return PKBParent::setParentT(parent, child);
 }
 
 
@@ -700,6 +700,19 @@ bool PKB::isAffectsIdentIdent(STMT_NO a1, STMT_NO a2) {
 	return PKBAffects::isAffectsIdentIdent(a1,a2);
 }
 
+bool PKB::isAffectsTAnyAny() {
+	return PKBAffects::isAffectsTAnyAny();
+}
+bool PKB::isAffectsTAnyIdent(STMT_NO a2) {
+	return PKBAffects::isAffectsTAnyIdent(a2);
+}
+bool PKB::isAffectsTIdentAny(STMT_NO a1) {
+	return PKBAffects::isAffectsTIdentAny(a1);
+}
+bool PKB::isAffectsTIdentIdent(STMT_NO a1, STMT_NO a2) {
+	return PKBAffects::isAffectsTIdentIdent(a1,a2);
+}
+
 //Affects Table Evaluation
 TABLE PKB::getAffectsAnyEnt() {
 	return PKBAffects::getAffectsAnyEnt();
@@ -715,6 +728,28 @@ TABLE PKB::getAffectsEntIdent(STMT_NO a2) {
 }
 TABLE PKB::getAffectsEntEnt() {
 	return PKBAffects::getAffectsEntEnt();
+}
+TABLE PKB::getAffectsSelf() {
+	return PKBAffects::getAffectsSelf();
+}
+
+TABLE PKB::getAffectsTAnyEnt() {
+	return PKBAffects::getAffectsTAnyEnt();
+}
+TABLE PKB::getAffectsTIdentEnt(STMT_NO a1) {
+	return PKBAffects::getAffectsTIdentEnt(a1);
+}
+TABLE PKB::getAffectsTEntAny() {
+	return PKBAffects::getAffectsTEntAny();
+}
+TABLE PKB::getAffectsTEntIdent(STMT_NO a2) {
+	return PKBAffects::getAffectsTEntIdent(a2);
+}
+TABLE PKB::getAffectsTEntEnt() {
+	return PKBAffects::getAffectsTEntEnt();
+}
+TABLE PKB::getAffectsTSelf() {
+	return PKBAffects::getAffectsTSelf();
 }
 
 bool PKB::setIfPattern(STMT_NO stmtNo, VAR_NAME varName) {

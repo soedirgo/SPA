@@ -82,6 +82,19 @@ namespace UnitTesting
 			PKB.setNext("16", "17");
 			PKB.setNext("17", "18");
 
+			PKB.setFollows("1", "2");
+			PKB.setFollows("2", "3");
+			PKB.setFollows("4", "5");
+			PKB.setFollows("5", "6");
+			PKB.setFollows("6", "10");
+			PKB.setFollows("10", "13");
+			PKB.setFollows("7", "8");
+			PKB.setFollows("8", "9");
+			PKB.setFollows("13", "14");
+			PKB.setFollows("14", "15");
+			PKB.setFollows("16", "17");
+			PKB.setFollows("17", "18");
+
 			DesignExtractor DesignExtractor;
 			DesignExtractor.extractDesign();
 		}
