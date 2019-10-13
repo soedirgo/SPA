@@ -9,7 +9,6 @@
 #include "PKB.h"
 #include "PKBParent.h"
 #include "NestedResult.h"
-#include "TNode.h"
 using namespace std;
 
 Parser::Parser() {
@@ -79,7 +78,7 @@ int Parser::Parse(string filename) {
 
 			vector<string> condExpr = results.getCondExpr();
 			for (string var : condExpr) {
-				//pkb.setIfCond(to_string(stmtNo), var);
+				pkb.setWhilePattern(to_string(stmtNo), var);
 			}
 			if (stmtNo != startStmtNo) {
 				pkb.setFollows(to_string(prevStmtNo), to_string(stmtNo));
@@ -128,7 +127,7 @@ int Parser::Parse(string filename) {
 
 			vector<string> condExpr = results.getCondExpr();
 			for (string var : condExpr) {
-				//pkb.setIfCond(stmtNo, var);
+				pkb.setIfPattern(to_string(stmtNo), var);
 			}
 			if (stmtNo != startStmtNo) {
 				pkb.setFollows(to_string(prevStmtNo), to_string(stmtNo));
@@ -285,6 +284,7 @@ int Parser::Parse(string filename) {
 			;
 		}
 
+		//sets all the uses and modifies from the calls statements (brute force now - to be changed to a topo-sort algorithm)
 		for (NestedResult proc : procedures) {
 			string procName = proc.getProcName();
 			vector<string> calls = proc.getCallList();
@@ -332,10 +332,10 @@ int Parser::Parse(string filename) {
 		for (NestedResult proc : procedures) {
 			string procName = proc.getProcName();
 			for (string var : proc.getModifies()) {
-				//pkb.insertProcModifiesRelation(procName, var);
+				pkb.setModifiesP(procName, var);
 			}
 			for (string var : proc.getUses()) {
-				//pkb.insertProcUsesRelation(procName, var);
+				pkb.setUsesP(procName, var);
 			}
 		}
 	}
@@ -524,7 +524,7 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 
 			vector<string> condExpr = results.getCondExpr();
 			for (string var : condExpr) {
-				//pkb.setIfCond(stmtNo, var);
+				pkb.setWhilePattern(to_string(currStmtNo), var);
 			}
 			if (currStmtNo != (startStmtNo + 1)) {
 				if (passedElse) {
@@ -612,7 +612,7 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 
 			vector<string> condExpr = results.getCondExpr();
 			for (string var : condExpr) {
-				//pkb.setIfCond(stmtNo, var);
+				pkb.setIfPattern(to_string(currStmtNo), var);
 			}
 			if (currStmtNo != (startStmtNo + 1)) {
 				if (passedElse) {
@@ -1048,7 +1048,7 @@ NestedResult Parser::parseIfNestedInThen(string ifLine, int parentStmtNo) {
 
 			vector<string> condExpr = results.getCondExpr();
 			for (string var : condExpr) {
-				//pkb.setIfCond(stmtNo, var);
+				pkb.setWhilePattern(to_string(currStmtNo), var);
 			}
 			if (currStmtNo != (startStmtNo + 1)) {
 				if (passedElse) {
@@ -1136,7 +1136,7 @@ NestedResult Parser::parseIfNestedInThen(string ifLine, int parentStmtNo) {
 
 			vector<string> condExpr = results.getCondExpr();
 			for (string var : condExpr) {
-				//pkb.setIfCond(stmtNo, var);
+				pkb.setIfPattern(to_string(currStmtNo), var);
 			}
 			if (currStmtNo != (startStmtNo + 1)) {
 				if (passedElse) {
@@ -1562,7 +1562,7 @@ NestedResult Parser::parseWhileNestedInThen(string whileLine, int parentStmtNo) 
 
 			vector<string> condExpr = results.getCondExpr();
 			for (string var : condExpr) {
-				//pkb.setIfCond(stmtNo, var);
+				pkb.setWhilePattern(to_string(currStmtNo), var);
 			}
 			if (currStmtNo != (startStmtNo + 1)) {
 				pkb.setFollows(to_string(prevStmtNo), to_string(currStmtNo));
@@ -1618,7 +1618,7 @@ NestedResult Parser::parseWhileNestedInThen(string whileLine, int parentStmtNo) 
 
 			vector<string> condExpr = results.getCondExpr();
 			for (string var : condExpr) {
-				//pkb.setIfCond(stmtNo, var);
+				pkb.setIfPattern(to_string(currStmtNo), var);
 			}
 			if (currStmtNo != (startStmtNo + 1)) {
 				pkb.setFollows(to_string(prevStmtNo), to_string(currStmtNo));
@@ -1895,7 +1895,7 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 
 			vector<string> condExpr = results.getCondExpr();
 			for (string var : condExpr) {
-				//pkb.setIfCond(to_string(currStmtNo), var);
+				pkb.setWhilePattern(to_string(currStmtNo), var);
 			}
 			if (currStmtNo != (startStmtNo + 1)) {
 				pkb.setFollows(to_string(prevStmtNo), to_string(currStmtNo));
@@ -1951,7 +1951,7 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 
 			vector<string> condExpr = results.getCondExpr();
 			for (string var : condExpr) {
-				//pkb.setIfCond(to_string(currStmtNo), var);
+				pkb.setIfPattern(to_string(currStmtNo), var);
 			}
 			if (currStmtNo != (startStmtNo + 1)) {
 				pkb.setFollows(to_string(prevStmtNo), to_string(currStmtNo));
