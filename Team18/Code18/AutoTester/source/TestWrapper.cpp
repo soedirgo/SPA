@@ -54,10 +54,10 @@ void TestWrapper::parse(std::string filename) {
 void TestWrapper::evaluate(std::string query, std::list<std::string>& results){
 // call your evaluator to evaluate the query here
   // ...code to evaluate query...
-    if (!Preprocessor::isValid(query)) {
-        results = {};
-        return;
-    }
+    //if (!Preprocessor::isValid(query)) {
+        //results = {};
+        //return;
+    //}
 
 	QueryParser queryParser = QueryParser();
 	Query queryObject = queryParser.parse(query);
