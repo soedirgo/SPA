@@ -65,7 +65,7 @@ void TestWrapper::evaluate(std::string query, std::list<std::string>& results){
 		results = {};
 		return;
 	}
-
+	results = Evaluator::evalQuery(queryObject);
 	//Evaluator ev = Evaluator();
 	//string finalResult = ev.something();
 
