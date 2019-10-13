@@ -54,15 +54,20 @@ void TestWrapper::parse(std::string filename) {
 void TestWrapper::evaluate(std::string query, std::list<std::string>& results){
 // call your evaluator to evaluate the query here
   // ...code to evaluate query...
-    if (!Preprocessor::isValid(query)) {
-        results = {};
-        return;
-    }
+    //if (!Preprocessor::isValid(query)) {
+        //results = {};
+        //return;
+    //}
 
 	QueryParser queryParser = QueryParser();
-	//list<string> evResult = queryParser.parse(query);
-
-	//std::cout << evResult;
+	Query queryObject = queryParser.parse(query);
+	if (queryObject.getSelectSynonym() == "Invalid") {
+		results = {};
+		return;
+	}
+	results = Evaluator::evalQuery(queryObject);
+	//Evaluator ev = Evaluator();
+	//string finalResult = ev.something();
 
 
   // store the answers to the query in the results list (it is initially empty)

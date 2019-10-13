@@ -11,27 +11,23 @@
 
 class QueryParser {
 public:
-	static std::list<std::string> parse(std::string query);
+	static Query parse(std::string query);
 
 	static std::vector<std::string> findInitialDecleration(std::string query);
 
 	static std::unordered_map<std::string, std::string> splitVariablesInDeclerations(std::vector<std::string> declerations);
 
-	static std::string splitSelect(std::string 
-		
-		
-		
-		s);
+	static std::string splitSelect(std::string s);
 
 	static std::vector<std::pair<std::string, std::pair<std::string, std::string>>> splitSuchThat(std::vector<std::string> suchThat);
 
 	static std::vector<std::pair<std::string, std::pair<std::string, std::string>>> splitPattern(std::vector<std::string> pattern);
 
-	static std::list<std::string> evalQuery(Query q);
-
 	static std::string trim(std::string str, std::string whitespace);
 
 	static std::string removeSpaces(std::string s, std::string whitespace);
+
+	static std::string removeWhiteSpaces(std::string s, char whitespace);
 
 	static int getMinimumIndex(std::vector<int> indexes);
 
@@ -42,4 +38,8 @@ public:
 	static std::string selectVariablesValidation(std::unordered_map<std::string, std::string> declerationVariables, std::string selectVars);
 
 	static std::string suchThatValidation(std::unordered_map<std::string, std::string> declerationVariables, std::vector<std::pair<std::string, std::pair<std::string, std::string>>> suchThat);
+
+	static std::string infixtoRPNexpression(std::string infix);
+
+	static int getPrecedenceWeight(char token);
 };

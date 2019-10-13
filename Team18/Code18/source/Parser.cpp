@@ -67,7 +67,7 @@ int Parser::Parse(string filename) {
 			}
 			for (string var : uses) {
 				if (isdigit(var.at(0))) {
-					pkb.setConstant(var, to_string(stmtNo));
+					pkb.setConstant(to_string(stmtNo),var);
 				}
 				else {
 					pkb.setVariable(var);
@@ -78,7 +78,7 @@ int Parser::Parse(string filename) {
 
 			vector<string> condExpr = results.getCondExpr();
 			for (string var : condExpr) {
-				//pkb.setIfCond(to_string(stmtNo), var);
+				pkb.setWhilePattern(to_string(stmtNo), var);
 			}
 			if (stmtNo != startStmtNo) {
 				pkb.setFollows(to_string(prevStmtNo), to_string(stmtNo));
@@ -116,7 +116,7 @@ int Parser::Parse(string filename) {
 			}
 			for (string var : uses) {
 				if (isdigit(var.at(0))) {
-					pkb.setConstant(var, to_string(stmtNo));
+					pkb.setConstant(to_string(stmtNo),var);
 				}
 				else {
 					pkb.setVariable(var);
@@ -127,7 +127,7 @@ int Parser::Parse(string filename) {
 
 			vector<string> condExpr = results.getCondExpr();
 			for (string var : condExpr) {
-				//pkb.setIfCond(stmtNo, var);
+				pkb.setIfPattern(to_string(stmtNo), var);
 			}
 			if (stmtNo != startStmtNo) {
 				pkb.setFollows(to_string(prevStmtNo), to_string(stmtNo));
@@ -168,7 +168,7 @@ int Parser::Parse(string filename) {
 
 			for (string var : results) {
 				if (isdigit(var.at(0))) {
-					pkb.setConstant(var, to_string(stmtNo));
+					pkb.setConstant(to_string(stmtNo),var);
 				}
 				else {
 					pkb.setVariable(var);
@@ -201,6 +201,7 @@ int Parser::Parse(string filename) {
 			string readArg = parseRead(line);
 			//Sets stmt information in PKB and then sets modifies variable for that stmt
 			pkb.setStmt(to_string(stmtNo), "read");
+			pkb.setRead(to_string(stmtNo), readArg);
 			pkb.setModifiesS(to_string(stmtNo), readArg);
 			pkb.setVariable(readArg);
 			currProc.addModifies(readArg);
@@ -229,6 +230,7 @@ int Parser::Parse(string filename) {
 			string printArg = parsePrint(line);
 			//Sets stmt information in PKB and then sets modifies variable for that stmt
 			pkb.setStmt(to_string(stmtNo), "print");
+			pkb.setPrint(to_string(stmtNo), printArg);
 			pkb.setUsesS(to_string(stmtNo), printArg);
 			pkb.setVariable(printArg);
 			currProc.addUses(printArg);
@@ -255,6 +257,8 @@ int Parser::Parse(string filename) {
 		else if (line.find("call") != string::npos) {
 			string proc = parseCall(line);
 			pkb.setStmt(to_string(stmtNo), "call");
+			pkb.setCallStmt(to_string(stmtNo), proc);
+			pkb.setCallProc(currProc.getProcName(), proc);
 			callStmts.push_back(make_pair(stmtNo, proc));
 			currProc.addCalls(proc);
 			if (stmtNo != startStmtNo) {
@@ -280,6 +284,7 @@ int Parser::Parse(string filename) {
 			;
 		}
 
+		//sets all the uses and modifies from the calls statements (brute force now - to be changed to a topo-sort algorithm)
 		for (NestedResult proc : procedures) {
 			string procName = proc.getProcName();
 			vector<string> calls = proc.getCallList();
@@ -327,10 +332,10 @@ int Parser::Parse(string filename) {
 		for (NestedResult proc : procedures) {
 			string procName = proc.getProcName();
 			for (string var : proc.getModifies()) {
-				//pkb.insertProcModifiesRelation(procName, var);
+				pkb.setModifiesP(procName, var);
 			}
 			for (string var : proc.getUses()) {
-				//pkb.insertProcUsesRelation(procName, var);
+				pkb.setUsesP(procName, var);
 			}
 		}
 	}
@@ -506,7 +511,7 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 			}
 			for (string var : uses) {
 				if (isdigit(var.at(0))) {
-					pkb.setConstant(var, to_string(currStmtNo));
+					pkb.setConstant(to_string(currStmtNo),var);
 					result.addUses(var);
 				}
 				else {
@@ -519,7 +524,7 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 
 			vector<string> condExpr = results.getCondExpr();
 			for (string var : condExpr) {
-				//pkb.setIfCond(stmtNo, var);
+				pkb.setWhilePattern(to_string(currStmtNo), var);
 			}
 			if (currStmtNo != (startStmtNo + 1)) {
 				if (passedElse) {
@@ -594,7 +599,7 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 			}
 			for (string var : uses) {
 				if (isdigit(var.at(0))) {
-					pkb.setConstant(var, to_string(currStmtNo));
+					pkb.setConstant(to_string(currStmtNo),var);
 					result.addUses(var);
 				}
 				else {
@@ -607,7 +612,7 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 
 			vector<string> condExpr = results.getCondExpr();
 			for (string var : condExpr) {
-				//pkb.setIfCond(stmtNo, var);
+				pkb.setIfPattern(to_string(currStmtNo), var);
 			}
 			if (currStmtNo != (startStmtNo + 1)) {
 				if (passedElse) {
@@ -686,7 +691,7 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 
 			for (string var : results) {
 				if (isdigit(var.at(0))) {
-					pkb.setConstant(var, to_string(currStmtNo));
+					pkb.setConstant(to_string(currStmtNo),var);
 					result.addUses(var);
 				}
 				else {
@@ -755,6 +760,7 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 			readArg = parseRead(readArg);
 			//Sets stmt information in PKB and then sets modifies variable for that stmt
 			pkb.setStmt(to_string(currStmtNo), "read");
+			pkb.setRead(to_string(currStmtNo), readArg);
 			pkb.setParent(to_string(startStmtNo), to_string(currStmtNo));
 
 			pkb.setModifiesS(to_string(currStmtNo), readArg);
@@ -820,6 +826,7 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 			printArg = parsePrint(line);
 			//Sets stmt information in PKB and then sets modifies variable for that stmt
 			pkb.setStmt(to_string(currStmtNo), "print");
+			pkb.setPrint(to_string(currStmtNo), printArg);
 			pkb.setParent(to_string(startStmtNo), to_string(currStmtNo));
 
 			pkb.setUsesS(to_string(currStmtNo), printArg);
@@ -878,6 +885,8 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 		else if (line.find("call") != string::npos) {
 			string proc = parseCall(line);
 			pkb.setStmt(to_string(currStmtNo), "call");
+			pkb.setCallStmt(to_string(currStmtNo), proc);
+			pkb.setCallProc(currProc.getProcName(), proc);
 			pkb.setParent(to_string(startStmtNo), to_string(currStmtNo));
 			callStmts.push_back(make_pair(currStmtNo, proc));
 			currProc.addCalls(proc);
@@ -1026,7 +1035,7 @@ NestedResult Parser::parseIfNestedInThen(string ifLine, int parentStmtNo) {
 			}
 			for (string var : uses) {
 				if (isdigit(var.at(0))) {
-					pkb.setConstant(var, to_string(currStmtNo));
+					pkb.setConstant(to_string(currStmtNo),var);
 					result.addUses(var);
 				}
 				else {
@@ -1039,7 +1048,7 @@ NestedResult Parser::parseIfNestedInThen(string ifLine, int parentStmtNo) {
 
 			vector<string> condExpr = results.getCondExpr();
 			for (string var : condExpr) {
-				//pkb.setIfCond(stmtNo, var);
+				pkb.setWhilePattern(to_string(currStmtNo), var);
 			}
 			if (currStmtNo != (startStmtNo + 1)) {
 				if (passedElse) {
@@ -1114,7 +1123,7 @@ NestedResult Parser::parseIfNestedInThen(string ifLine, int parentStmtNo) {
 			}
 			for (string var : uses) {
 				if (isdigit(var.at(0))) {
-					pkb.setConstant(var, to_string(currStmtNo));
+					pkb.setConstant(to_string(currStmtNo),var);
 					result.addUses(var);
 				}
 				else {
@@ -1127,7 +1136,7 @@ NestedResult Parser::parseIfNestedInThen(string ifLine, int parentStmtNo) {
 
 			vector<string> condExpr = results.getCondExpr();
 			for (string var : condExpr) {
-				//pkb.setIfCond(stmtNo, var);
+				pkb.setIfPattern(to_string(currStmtNo), var);
 			}
 			if (currStmtNo != (startStmtNo + 1)) {
 				if (passedElse) {
@@ -1206,7 +1215,7 @@ NestedResult Parser::parseIfNestedInThen(string ifLine, int parentStmtNo) {
 
 			for (string var : results) {
 				if (isdigit(var.at(0))) {
-					pkb.setConstant(var, to_string(currStmtNo));
+					pkb.setConstant(to_string(currStmtNo),var);
 					result.addUses(var);
 				}
 				else {
@@ -1276,6 +1285,7 @@ NestedResult Parser::parseIfNestedInThen(string ifLine, int parentStmtNo) {
 			readArg = parseRead(readArg);
 			//Sets stmt information in PKB and then sets modifies variable for that stmt
 			pkb.setStmt(to_string(currStmtNo), "read");
+			pkb.setRead(to_string(currStmtNo), readArg);
 			pkb.setParent(to_string(startStmtNo), to_string(currStmtNo));
 
 			pkb.setModifiesS(to_string(currStmtNo), readArg);
@@ -1341,6 +1351,7 @@ NestedResult Parser::parseIfNestedInThen(string ifLine, int parentStmtNo) {
 			printArg = parsePrint(line);
 			//Sets stmt information in PKB and then sets modifies variable for that stmt
 			pkb.setStmt(to_string(currStmtNo), "print");
+			pkb.setPrint(to_string(currStmtNo), printArg);
 			pkb.setParent(to_string(startStmtNo), to_string(currStmtNo));
 
 			pkb.setUsesS(to_string(currStmtNo), printArg);
@@ -1399,6 +1410,8 @@ NestedResult Parser::parseIfNestedInThen(string ifLine, int parentStmtNo) {
 		else if (line.find("call") != string::npos) {
 			string proc = parseCall(line);
 			pkb.setStmt(to_string(currStmtNo), "call");
+			pkb.setCallStmt(to_string(currStmtNo), proc);
+			pkb.setCallProc(currProc.getProcName(), proc);
 			pkb.setParent(to_string(startStmtNo), to_string(currStmtNo));
 			callStmts.push_back(make_pair(currStmtNo, proc));
 			currProc.addCalls(proc);
@@ -1536,7 +1549,7 @@ NestedResult Parser::parseWhileNestedInThen(string whileLine, int parentStmtNo) 
 			}
 			for (string var : uses) {
 				if (isdigit(var.at(0))) {
-					pkb.setConstant(var, to_string(currStmtNo));
+					pkb.setConstant(to_string(currStmtNo),var);
 					result.addUses(var);
 				}
 				else {
@@ -1549,7 +1562,7 @@ NestedResult Parser::parseWhileNestedInThen(string whileLine, int parentStmtNo) 
 
 			vector<string> condExpr = results.getCondExpr();
 			for (string var : condExpr) {
-				//pkb.setIfCond(stmtNo, var);
+				pkb.setWhilePattern(to_string(currStmtNo), var);
 			}
 			if (currStmtNo != (startStmtNo + 1)) {
 				pkb.setFollows(to_string(prevStmtNo), to_string(currStmtNo));
@@ -1592,7 +1605,7 @@ NestedResult Parser::parseWhileNestedInThen(string whileLine, int parentStmtNo) 
 			}
 			for (string var : uses) {
 				if (isdigit(var.at(0))) {
-					pkb.setConstant(var, to_string(currStmtNo));
+					pkb.setConstant(to_string(currStmtNo),var);
 					result.addUses(var);
 				}
 				else {
@@ -1605,7 +1618,7 @@ NestedResult Parser::parseWhileNestedInThen(string whileLine, int parentStmtNo) 
 
 			vector<string> condExpr = results.getCondExpr();
 			for (string var : condExpr) {
-				//pkb.setIfCond(stmtNo, var);
+				pkb.setIfPattern(to_string(currStmtNo), var);
 			}
 			if (currStmtNo != (startStmtNo + 1)) {
 				pkb.setFollows(to_string(prevStmtNo), to_string(currStmtNo));
@@ -1658,7 +1671,7 @@ NestedResult Parser::parseWhileNestedInThen(string whileLine, int parentStmtNo) 
 
 			for (string var : results) {
 				if (isdigit(var.at(0))) {
-					pkb.setConstant(var, to_string(currStmtNo));
+					pkb.setConstant(to_string(currStmtNo),var);
 					result.addUses(var);
 				}
 				else {
@@ -1701,6 +1714,7 @@ NestedResult Parser::parseWhileNestedInThen(string whileLine, int parentStmtNo) 
 			readArg = parseRead(readArg);
 			//Sets stmt information in PKB and then sets modifies variable for that stmt
 			pkb.setStmt(to_string(currStmtNo), "read");
+			pkb.setRead(to_string(currStmtNo), readArg);
 			pkb.setParent(to_string(startStmtNo), to_string(currStmtNo));
 
 			pkb.setModifiesS(to_string(currStmtNo), readArg);
@@ -1740,6 +1754,7 @@ NestedResult Parser::parseWhileNestedInThen(string whileLine, int parentStmtNo) 
 			printArg = parsePrint(line);
 			//Sets stmt information in PKB and then sets modifies variable for that stmt
 			pkb.setStmt(to_string(currStmtNo), "print");
+			pkb.setPrint(to_string(currStmtNo), printArg);
 			pkb.setParent(to_string(startStmtNo), to_string(currStmtNo));
 
 			pkb.setUsesS(to_string(currStmtNo), printArg);
@@ -1772,6 +1787,8 @@ NestedResult Parser::parseWhileNestedInThen(string whileLine, int parentStmtNo) 
 		else if (line.find("call") != string::npos) {
 			string proc = parseCall(line);
 			pkb.setStmt(to_string(currStmtNo), "call");
+			pkb.setCallStmt(to_string(currStmtNo), proc);
+			pkb.setCallProc(currProc.getProcName(), proc);
 			pkb.setParent(to_string(startStmtNo), to_string(currStmtNo));
 			callStmts.push_back(make_pair(currStmtNo, proc));
 			currProc.addCalls(proc);
@@ -1865,7 +1882,7 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 			}
 			for (string var : uses) {
 				if (isdigit(var.at(0))) {
-					pkb.setConstant(var, to_string(currStmtNo));
+					pkb.setConstant(to_string(currStmtNo),var);
 					result.addUses(var);
 				}
 				else {
@@ -1878,7 +1895,7 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 
 			vector<string> condExpr = results.getCondExpr();
 			for (string var : condExpr) {
-				//pkb.setIfCond(to_string(currStmtNo), var);
+				pkb.setWhilePattern(to_string(currStmtNo), var);
 			}
 			if (currStmtNo != (startStmtNo + 1)) {
 				pkb.setFollows(to_string(prevStmtNo), to_string(currStmtNo));
@@ -1921,7 +1938,7 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 			}
 			for (string var : uses) {
 				if (isdigit(var.at(0))) {
-					pkb.setConstant(var, to_string(currStmtNo));
+					pkb.setConstant(to_string(currStmtNo),var);
 					result.addUses(var);
 				}
 				else {
@@ -1934,7 +1951,7 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 
 			vector<string> condExpr = results.getCondExpr();
 			for (string var : condExpr) {
-				//pkb.setIfCond(to_string(currStmtNo), var);
+				pkb.setIfPattern(to_string(currStmtNo), var);
 			}
 			if (currStmtNo != (startStmtNo + 1)) {
 				pkb.setFollows(to_string(prevStmtNo), to_string(currStmtNo));
@@ -1987,7 +2004,7 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 
 			for (string var : results) {
 				if (isdigit(var.at(0))) {
-					pkb.setConstant(var, to_string(currStmtNo));
+					pkb.setConstant(to_string(currStmtNo),var);
 					result.addUses(var);
 				}
 				else {
@@ -2030,6 +2047,7 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 			readArg = parseRead(readArg);
 			//Sets stmt information in PKB and then sets modifies variable for that stmt
 			pkb.setStmt(to_string(currStmtNo), "read");
+			pkb.setRead(to_string(currStmtNo), readArg);
 			pkb.setParent(to_string(startStmtNo), to_string(currStmtNo));
 
 			pkb.setModifiesS(to_string(currStmtNo), readArg);
@@ -2069,6 +2087,7 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 			printArg = parsePrint(line);
 			//Sets stmt information in PKB and then sets modifies variable for that stmt
 			pkb.setStmt(to_string(currStmtNo), "print");
+			pkb.setPrint(to_string(currStmtNo), printArg);
 			pkb.setParent(to_string(startStmtNo), to_string(currStmtNo));
 
 			pkb.setUsesS(to_string(currStmtNo), printArg);
@@ -2101,6 +2120,8 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 		else if (line.find("call") != string::npos) {
 			string proc = parseCall(line);
 			pkb.setStmt(to_string(currStmtNo), "call");
+			pkb.setCallStmt(to_string(currStmtNo), proc);
+			pkb.setCallProc(currProc.getProcName(), proc);
 			pkb.setParent(to_string(startStmtNo), to_string(currStmtNo));
 			callStmts.push_back(make_pair(currStmtNo, proc));
 			currProc.addCalls(proc);

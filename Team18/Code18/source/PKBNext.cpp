@@ -39,6 +39,10 @@ TABLE PKBNext::getNextTable() {
 	return nextTable;
 }
 
+TABLE PKBNext::getNextTTable() {
+	return nextTTable;
+}
+
 bool PKBNext::isNextAnyAny() {
 	return !nextTable.empty();
 }
@@ -106,16 +110,21 @@ bool PKBNext::clear() {
 }
 
 //NEW EVALUATION API
-TABLE PKBNext::getNextAnyEnt() {
-	PROC_LIST resultTable;
-	LINE_LIST list;
-	PROG_LINE n;
-	list = PKBStmt::getAllStmt();
+TABLE PKBNext::getNextAnyEnt(STMT_TYPE type) {
+	TABLE resultTable;
+	STMT_LIST list;
+	STMT_NO s;
+	if (type == "stmt" || type == "prog_line") {
+		list = PKBStmt::getAllStmt();
+	}
+	else {
+		list = PKBStmt::getAllStmtByType(type);
+	}
 	for (auto iter : list) {
-		n = iter.front();
+		s = iter.front();
 		for (auto vectorIter : nextTable) {
 			vector<string> tuple = vector<string>();
-			if (vectorIter.back() == n) {
+			if (vectorIter.back() == s) {
 				tuple.push_back(vectorIter.back());
 				resultTable.emplace(tuple);
 			}
@@ -124,16 +133,21 @@ TABLE PKBNext::getNextAnyEnt() {
 	return resultTable;
 }
 
-TABLE PKBNext::getNextEntAny() {
-	PROC_LIST resultTable;
-	LINE_LIST list;
-	PROG_LINE n;
-	list = PKBStmt::getAllStmt();
+TABLE PKBNext::getNextEntAny(STMT_TYPE type) {
+	TABLE resultTable;
+	STMT_LIST list;
+	STMT_NO s;
+	if (type == "stmt" || type == "prog_line") {
+		list = PKBStmt::getAllStmt();
+	}
+	else {
+		list = PKBStmt::getAllStmtByType(type);
+	}
 	for (auto iter : list) {
-		n = iter.front();
+		s = iter.front();
 		for (auto vectorIter : nextTable) {
 			vector<string> tuple = vector<string>();
-			if (vectorIter.front() == n) {
+			if (vectorIter.front() == s) {
 				tuple.push_back(vectorIter.front());
 				resultTable.emplace(tuple);
 			}
@@ -142,16 +156,21 @@ TABLE PKBNext::getNextEntAny() {
 	return resultTable;
 }
 
-TABLE PKBNext::getNextIdentEnt(PROG_LINE progLine) {
-	PROC_LIST resultTable;
-	LINE_LIST list;
-	PROG_LINE n;
-	list = PKBStmt::getAllStmt();
+TABLE PKBNext::getNextIdentEnt(PROG_LINE stmtNo, STMT_TYPE type) {
+	TABLE resultTable;
+	STMT_LIST list;
+	STMT_NO s;
+	if (type == "stmt" || type == "prog_line") {
+		list = PKBStmt::getAllStmt();
+	}
+	else {
+		list = PKBStmt::getAllStmtByType(type);
+	}
 	for (auto iter : list) {
-		n = iter.front();
+		s = iter.front();
 		for (auto vectorIter : nextTable) {
 			vector<string> tuple = vector<string>();
-			if (vectorIter.front() == progLine && vectorIter.back() == n) {
+			if (vectorIter.front() == stmtNo && vectorIter.back() == s) {
 				tuple.push_back(vectorIter.back());
 				resultTable.emplace(tuple);
 			}
@@ -160,16 +179,21 @@ TABLE PKBNext::getNextIdentEnt(PROG_LINE progLine) {
 	return resultTable;
 }
 
-TABLE PKBNext::getNextEntIdent(PROG_LINE progLine) {
-	PROC_LIST resultTable;
-	LINE_LIST list;
-	PROG_LINE n;
-	list = PKBStmt::getAllStmt();
+TABLE PKBNext::getNextEntIdent(STMT_TYPE type, PROG_LINE stmtNo) {
+	TABLE resultTable;
+	STMT_LIST list;
+	STMT_NO s;
+	if (type == "stmt" || type == "prog_line") {
+		list = PKBStmt::getAllStmt();
+	}
+	else {
+		list = PKBStmt::getAllStmtByType(type);
+	}
 	for (auto iter : list) {
-		n = iter.front();
+		s = iter.front();
 		for (auto vectorIter : nextTable) {
 			vector<string> tuple = vector<string>();
-			if (vectorIter.front() == n && vectorIter.back() == progLine) {
+			if (vectorIter.front() == s && vectorIter.back() == stmtNo) {
 				tuple.push_back(vectorIter.front());
 				resultTable.emplace(tuple);
 			}
@@ -178,20 +202,60 @@ TABLE PKBNext::getNextEntIdent(PROG_LINE progLine) {
 	return resultTable;
 }
 
-TABLE PKBNext::getNextEntEnt() {
-	return nextTable;
+TABLE PKBNext::getNextEntEnt(STMT_TYPE type1, STMT_TYPE type2) {
+	TABLE resultTable;
+	if (type1 == "stmt" && type2 == "stmt") {
+		return nextTable;
+	}
+	STMT_LIST list1, list2;
+	if (type1 == "stmt" || type1 == "prog_line") {
+		list1 = PKBStmt::getAllStmt();
+	}
+	else {
+		list1 = PKBStmt::getAllStmtByType(type1);
+	}
+	if (type2 == "stmt" || type2 == "prog_line") {
+		list2 = PKBStmt::getAllStmt();
+	}
+	else {
+		list2 = PKBStmt::getAllStmtByType(type2);
+	}
+
+	STMT_NO s1;
+	STMT_NO s2;
+	for (auto iter1 : list1) {
+		s1 = iter1.front();
+		for (auto iter2 : list2) {
+			s2 = iter2.front();
+			for (auto vectorIter : nextTable) {
+				vector<string> tuple = vector<string>();
+				if (vectorIter.front() == s1 && vectorIter.back() == s2) {
+					tuple.push_back(vectorIter.front());
+					tuple.push_back(vectorIter.back());
+					resultTable.emplace(tuple);
+				}
+			}
+		}
+	}
+
+	return resultTable;
 }
 
-TABLE PKBNext::getNextTAnyEnt() {
-	PROC_LIST resultTable;
-	LINE_LIST list;
-	PROG_LINE n;
-	list = PKBStmt::getAllStmt();
+TABLE PKBNext::getNextTAnyEnt(STMT_TYPE type) {
+	TABLE resultTable;
+	STMT_LIST list;
+	STMT_NO s;
+	if (type == "stmt" || type == "prog_line") {
+		list = PKBStmt::getAllStmt();
+	}
+	else {
+		list = PKBStmt::getAllStmtByType(type);
+	}
 	for (auto iter : list) {
-		n = iter.front();
+		s = iter.front();
 		for (auto vectorIter : nextTTable) {
 			vector<string> tuple = vector<string>();
-			if (vectorIter.back() == n) {
+			if (vectorIter.back() == s) {
 				tuple.push_back(vectorIter.back());
 				resultTable.emplace(tuple);
 			}
@@ -200,16 +264,21 @@ TABLE PKBNext::getNextTAnyEnt() {
 	return resultTable;
 }
 
-TABLE PKBNext::getNextTEntAny() {
-	PROC_LIST resultTable;
-	LINE_LIST list;
-	PROG_LINE n;
-	list = PKBStmt::getAllStmt();
+TABLE PKBNext::getNextTEntAny(STMT_TYPE type) {
+	TABLE resultTable;
+	STMT_LIST list;
+	STMT_NO s;
+	if (type == "stmt" || type == "prog_line") {
+		list = PKBStmt::getAllStmt();
+	}
+	else {
+		list = PKBStmt::getAllStmtByType(type);
+	}
 	for (auto iter : list) {
-		n = iter.front();
+		s = iter.front();
 		for (auto vectorIter : nextTTable) {
 			vector<string> tuple = vector<string>();
-			if (vectorIter.front() == n) {
+			if (vectorIter.front() == s) {
 				tuple.push_back(vectorIter.front());
 				resultTable.emplace(tuple);
 			}
@@ -218,16 +287,21 @@ TABLE PKBNext::getNextTEntAny() {
 	return resultTable;
 }
 
-TABLE PKBNext::getNextTIdentEnt(PROG_LINE progLine) {
-	PROC_LIST resultTable;
-	LINE_LIST list;
-	PROG_LINE n;
-	list = PKBStmt::getAllStmt();
+TABLE PKBNext::getNextTIdentEnt(PROG_LINE stmtNo, STMT_TYPE type) {
+	TABLE resultTable;
+	STMT_LIST list;
+	STMT_NO s;
+	if (type == "stmt" || type == "prog_line") {
+		list = PKBStmt::getAllStmt();
+	}
+	else {
+		list = PKBStmt::getAllStmtByType(type);
+	}
 	for (auto iter : list) {
-		n = iter.front();
+		s = iter.front();
 		for (auto vectorIter : nextTTable) {
 			vector<string> tuple = vector<string>();
-			if (vectorIter.front() == progLine && vectorIter.back() == n) {
+			if (vectorIter.front() == stmtNo && vectorIter.back() == s) {
 				tuple.push_back(vectorIter.back());
 				resultTable.emplace(tuple);
 			}
@@ -236,16 +310,21 @@ TABLE PKBNext::getNextTIdentEnt(PROG_LINE progLine) {
 	return resultTable;
 }
 
-TABLE PKBNext::getNextTEntIdent(PROG_LINE progLine) {
-	PROC_LIST resultTable;
-	LINE_LIST list;
-	PROG_LINE n;
-	list = PKBStmt::getAllStmt();
+TABLE PKBNext::getNextTEntIdent(STMT_TYPE type, PROG_LINE stmtNo) {
+	TABLE resultTable;
+	STMT_LIST list;
+	STMT_NO s;
+	if (type == "stmt" || type == "prog_line") {
+		list = PKBStmt::getAllStmt();
+	}
+	else {
+		list = PKBStmt::getAllStmtByType(type);
+	}
 	for (auto iter : list) {
-		n = iter.front();
+		s = iter.front();
 		for (auto vectorIter : nextTTable) {
 			vector<string> tuple = vector<string>();
-			if (vectorIter.front() == n && vectorIter.back() == progLine) {
+			if (vectorIter.front() == s && vectorIter.back() == stmtNo) {
 				tuple.push_back(vectorIter.front());
 				resultTable.emplace(tuple);
 			}
@@ -254,15 +333,55 @@ TABLE PKBNext::getNextTEntIdent(PROG_LINE progLine) {
 	return resultTable;
 }
 
-TABLE PKBNext::getNextTEntEnt() {
-	return nextTTable;
+TABLE PKBNext::getNextTEntEnt(STMT_TYPE type1, STMT_TYPE type2) {
+	TABLE resultTable;
+	if (type1 == "stmt" && type2 == "stmt") {
+		return nextTTable;
+	}
+	STMT_LIST list1, list2;
+	if (type1 == "stmt" || type1 == "prog_line") {
+		list1 = PKBStmt::getAllStmt();
+	}
+	else {
+		list1 = PKBStmt::getAllStmtByType(type1);
+	}
+	if (type2 == "stmt" || type2 == "prog_line") {
+		list2 = PKBStmt::getAllStmt();
+	}
+	else {
+		list2 = PKBStmt::getAllStmtByType(type2);
+	}
+
+	STMT_NO s1;
+	STMT_NO s2;
+	for (auto iter1 : list1) {
+		s1 = iter1.front();
+		for (auto iter2 : list2) {
+			s2 = iter2.front();
+			for (auto vectorIter : nextTTable) {
+				vector<string> tuple = vector<string>();
+				if (vectorIter.front() == s1 && vectorIter.back() == s2) {
+					tuple.push_back(vectorIter.front());
+					tuple.push_back(vectorIter.back());
+					resultTable.emplace(tuple);
+				}
+			}
+		}
+	}
+
+	return resultTable;
 }
 
-TABLE PKBNext::getNextTSelf() {
+TABLE PKBNext::getNextTSelf(STMT_TYPE type) {
 	PROC_LIST resultTable;
 	LINE_LIST list;
 	PROG_LINE n;
-	list = PKBStmt::getAllStmt();
+	if (type == "stmt" || type == "prog_line") {
+		list = PKBStmt::getAllStmt();
+	}
+	else {
+		list = PKBStmt::getAllStmtByType(type);
+	}
 	for (auto iter1 : list) {
 		n = iter1.front();
 		for (auto vectorIter : nextTTable) {

@@ -116,6 +116,8 @@ namespace UnitTesting
 			actual = PKB.getCallsTEntEnt();
 			expected = { {"First","Second"} ,{"Second","Third"}, {"First","Third"} };
 			Assert::IsTrue(actual == expected);
+
+			Assert::IsTrue(PKB.isCallsTAnyAny());
 		}
 
 		TEST_METHOD(CallsTEntIdent)

@@ -10,13 +10,13 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace UnitTesting
 {
-	/*
+	
 	TEST_CLASS(TestQueryParser)
 	{
 	public:
+		/*
         TEST_METHOD_INITIALIZE(queryParserInit)
         {
-            /**
                SIMPLE program:
                _   procedure main {
                1.      x = 1
@@ -31,8 +31,8 @@ namespace UnitTesting
                8.          print x;
 			   9.		   x = x + 1;
                _       }
-            */
-			/*
+            
+			
             PKB pkb;
 
             pkb.clear();
@@ -106,9 +106,9 @@ namespace UnitTesting
 			pkb.setModifiesS(9, "x");
 			pkb.setFollows(8, 9);
 			pkb.setFollowsT(8, 9);
-			*/
+			
 		}
-		/*
+		
         TEST_METHOD(validQueries)
         {
             list<string> expected;
@@ -209,6 +209,7 @@ namespace UnitTesting
 			actual = QueryParser::parse("stmt s; variable v; Select s such that Modifies(v, v)");
 			Assert::IsTrue(expected == actual);
         }
+		*/
 
 		TEST_METHOD(findInitialDecleration)
 		{
@@ -253,10 +254,20 @@ namespace UnitTesting
 			vector<pair<string, pair<string, string>>> expected{ {"a", {"_", "_"}} };
 			Assert::AreEqual(actual == expected, true);
 			
-			vector<string> input2 = { "pattern a(_, _\"a+b*c\"_)" };
+			vector<string> input2 = { "pattern a(_, a+b*c)" };
 			vector<pair<string, pair<string, string>>> actual2 = QueryParser::splitPattern(input2);
-			vector<pair<string, pair<string, string>>> expected2{ {"a", {"_", "\"a+b*c\""}} };
+			vector<pair<string, pair<string, string>>> expected2{ {"a", {"_", "abc*+"}} };
 			Assert::AreEqual(actual2 == expected2, true);
+
+			vector<string> input3 = { "pattern a(_, _\"a+b*c\"_)" };
+			vector<pair<string, pair<string, string>>> actual3 = QueryParser::splitPattern(input3);
+			vector<pair<string, pair<string, string>>> expected3{ {"a", {"_", "_abc*+_"}} };
+			Assert::AreEqual(actual3 == expected3, true);
+
+			//vector<string> input4 = { "pattern a(_, _  \"  a+b*c  \"  _)" };
+			//vector<pair<string, pair<string, string>>> actual4 = QueryParser::splitPattern(input4);
+			//vector<pair<string, pair<string, string>>> expected4{ {"a", {"_", "_abc*+_"}} };
+			//Assert::AreEqual(actual4 == expected4, true);
 		}
 
 		TEST_METHOD(initialValidation)
@@ -297,7 +308,36 @@ namespace UnitTesting
 			Assert::AreEqual(actual4 == expected4, true);
 		
 		}
+
+		TEST_METHOD(infixToRPNexpression)
+		{
+			string input = "a+b";
+			string actual = QueryParser::infixtoRPNexpression(input);
+			string expected = "ab+";
+			Assert::AreEqual(actual == expected, true);
+
+			string input2 = "a+b*c";
+			string actual2 = QueryParser::infixtoRPNexpression(input2);
+			string expected2 = "abc*+";
+			Assert::AreEqual(actual2 == expected2, true);
+
+			string input3 = "A+B*C";
+			string actual3 = QueryParser::infixtoRPNexpression(input3);
+			string expected3 = "ABC*+";
+			Assert::AreEqual(actual3 == expected3, true);
+
+			string input4 = "(A+B)*C";
+			string actual4 = QueryParser::infixtoRPNexpression(input4);
+			string expected4 = "AB+C*";
+			Assert::AreEqual(actual4 == expected4, true);
+
+			string input5 = "(A+B)*(C+D)";
+			string actual5 = QueryParser::infixtoRPNexpression(input5);
+			string expected5 = "AB+CD+*";
+			Assert::AreEqual(actual5 == expected5, true);
+
+		}
 		
 	};
 	
-}*/
+}

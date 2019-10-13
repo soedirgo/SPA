@@ -12,6 +12,7 @@ public:
 	static LINE_LIST getNext(PROG_LINE nextByLine);
 
 	static TABLE getNextTable();
+	static TABLE getNextTTable();
 
 	//Bool Evaluation
 	static bool isNextAnyAny();
@@ -25,18 +26,18 @@ public:
 	static bool isNextTIdentIdent(PROG_LINE n1, PROG_LINE n2);
 
 	//Table Evaluation
-	static TABLE getNextAnyEnt();
-	static TABLE getNextIdentEnt(PROG_LINE n1);
-	static TABLE getNextEntAny();
-	static TABLE getNextEntIdent(PROG_LINE n2);
-	static TABLE getNextEntEnt();
+	static TABLE getNextAnyEnt(STMT_TYPE stmtType);
+	static TABLE getNextIdentEnt(PROG_LINE n1, STMT_TYPE stmtType);
+	static TABLE getNextEntAny(STMT_TYPE stmtType);
+	static TABLE getNextEntIdent(STMT_TYPE stmtType,PROG_LINE n2);
+	static TABLE getNextEntEnt(STMT_TYPE stmtType1, STMT_TYPE stmtType2);
 
-	static TABLE getNextTAnyEnt();
-	static TABLE getNextTIdentEnt(PROG_LINE n1);
-	static TABLE getNextTEntAny();
-	static TABLE getNextTEntIdent(PROG_LINE n2);
-	static TABLE getNextTEntEnt();
-	static TABLE getNextTSelf();
+	static TABLE getNextTAnyEnt(STMT_TYPE stmtType);
+	static TABLE getNextTIdentEnt(PROG_LINE n1, STMT_TYPE stmtType);
+	static TABLE getNextTEntAny(STMT_TYPE stmtType);
+	static TABLE getNextTEntIdent(STMT_TYPE stmtType, PROG_LINE n2);
+	static TABLE getNextTEntEnt(STMT_TYPE stmtType1, STMT_TYPE stmtType2);
+	static TABLE getNextTSelf(STMT_TYPE stmtType);
 
 	// Clear
 	static bool clear();

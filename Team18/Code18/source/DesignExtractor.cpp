@@ -21,6 +21,10 @@ void DesignExtractor::extractDesign()
 	extractModifiesP();
 	extractUsesP();
 	extractAffects();
+	TABLE test = PKBCall::getCallProcTable();
+	int i = test.size();
+	//TABLE test = PKBNext::getNextTable();
+	//int i = test.size();
 	//extractAffectsT();
 }
 
@@ -150,7 +154,7 @@ void DesignExtractor::extractAffects()
 {
 	TABLE assignStmtTable = PKBStmt::getAllStmtByType("assign");
 	TABLE callStmtTable = PKBStmt::getAllStmtByType("call");
-	TABLE nextTTable = PKBNext::getNextTEntEnt();
+	TABLE nextTTable = PKBNext::getNextTTable();
 
 	for (auto vectorIter3 : nextTTable) {
 		STMT_NO a1 = vectorIter3.front();
@@ -172,7 +176,7 @@ void DesignExtractor::extractAffects()
 				}
 			}
 			//Validate if affects Hold and var is not modified in between
-			TABLE stmtList = PKBNext::getNextTIdentEnt(a1);
+			TABLE stmtList = PKBNext::getNextTIdentEnt(a1,"stmt");
 			vector<int> v;
 			for (auto vectorIter1 : stmtList) {
 				if (stoi(vectorIter1.front()) < stoi(a2)) {

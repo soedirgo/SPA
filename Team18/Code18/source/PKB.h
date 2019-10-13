@@ -209,7 +209,7 @@ public:
 
 	//Next Function
 	static bool setNext(PROG_LINE n1, PROG_LINE n2);
-
+	
 	//Next Bool Evaluation
 	static bool isNextAnyAny();
 	static bool isNextAnyIdent(PROG_LINE n2);
@@ -220,7 +220,7 @@ public:
 	static bool isNextTAnyIdent(PROG_LINE n2);
 	static bool isNextTIdentAny(PROG_LINE n1);
 	static bool isNextTIdentIdent(PROG_LINE n1, PROG_LINE n2);
-
+	/*
 	//Next Table Evaluation
 	static TABLE getNextAnyEnt();
 	static TABLE getNextIdentEnt(PROG_LINE n1);
@@ -234,6 +234,19 @@ public:
 	static TABLE getNextTEntIdent(PROG_LINE n2);
 	static TABLE getNextTEntEnt();
 	static TABLE getNextTSelf();
+	*/
+	static TABLE getNextAnyEnt(STMT_TYPE stmtType);
+	static TABLE getNextIdentEnt(PROG_LINE n1, STMT_TYPE stmtType);
+	static TABLE getNextEntAny(STMT_TYPE stmtType);
+	static TABLE getNextEntIdent(STMT_TYPE stmtType, PROG_LINE n2);
+	static TABLE getNextEntEnt(STMT_TYPE stmtType1, STMT_TYPE stmtType2);
+
+	static TABLE getNextTAnyEnt(STMT_TYPE stmtType);
+	static TABLE getNextTIdentEnt(PROG_LINE n1, STMT_TYPE stmtType);
+	static TABLE getNextTEntAny(STMT_TYPE stmtType);
+	static TABLE getNextTEntIdent(STMT_TYPE stmtType, PROG_LINE n2);
+	static TABLE getNextTEntEnt(STMT_TYPE stmtType1, STMT_TYPE stmtType2);
+	static TABLE getNextTSelf(STMT_TYPE stmtType);
 
 	//Pattern 
 	static bool setIfPattern(STMT_NO stmtNo, VAR_NAME varName);
