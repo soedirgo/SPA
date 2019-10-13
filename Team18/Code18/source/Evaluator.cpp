@@ -1,4 +1,5 @@
 #include <functional>
+#include <set>
 #include <string>
 #include <unordered_map>
 #include <unordered_set>
@@ -26,7 +27,7 @@ namespace Evaluator {
                   results(res) {}
 
             static Result merge(Result& r1, Result& r2) {
-                bool resultExists = r1.hasResults() || r2.hasResults();
+                bool resultExists = r1.hasResults() && r2.hasResults();
                 if (!r1.getResults().size()) {
                     if (!r2.getResults().size()) {
                         // both empty
@@ -37,7 +38,7 @@ namespace Evaluator {
                     }
                 } else if (!r2.getResults().size()) {
                     // only r2 empty
-                    return Result(r1.hasResults() || r2.hasResults(),
+                    return Result(r1.hasResults() && r2.hasResults(),
                                   r1.getSynonyms(), r1.getResults());
                 } else {
                     // both non-empty
@@ -79,8 +80,7 @@ namespace Evaluator {
                         }
                     }
 
-                    return Result(r1.hasResults() || r2.hasResults(),
-                                  synonyms, results);
+                    return Result(resultExists, synonyms, results);
                 }
             }
 
@@ -100,18 +100,14 @@ namespace Evaluator {
             unordered_map<string, int> synonyms;
             unordered_set<vector<string>> results;
         };
-
-        unordered_map<string, string> declarations;
-        vector<Clause> clauses;
-        string selectSyn;
-        vector<Result> intermediateResults;
     }
 
     list<string> evalQuery(Query q) {
         // extract info from query object
-        declarations = q.getDeclarations();
-        selectSyn = q.getSelectSynonym();
-        clauses = q.getClauses();
+        unordered_map<string, string> declarations = q.getDeclarations();
+        string selectSyn = q.getSelectSynonym();
+        vector<Clause> clauses = q.getClauses();
+        vector<Result> intermediateResults;
 
         // for every clause, get results and store in
         // intermediate results
@@ -134,49 +130,27 @@ namespace Evaluator {
         vector<string> initResults;
         unordered_set<vector<string>> initTable;
         if (declarations[selectSyn] == "stmt") {
-            for (const auto& elem : PKB::getStmts()) {
-                initTable.insert(vector<string>({elem}));
-            }
+            initTable = PKB::getStmts();
         } else if (declarations[selectSyn] == "read") {
-            for (const auto& elem : PKB::getReads()) {
-                initTable.insert(vector<string>({elem}));
-            }
+            initTable = PKB::getReads();
         } else if (declarations[selectSyn] == "print") {
-            for (const auto& elem : PKB::getPrints()) {
-                initTable.insert(vector<string>({elem}));
-            }
+            initTable = PKB::getPrints();
         } else if (declarations[selectSyn] == "call") {
-            for (const auto& elem : PKB::getCalls()) {
-                initTable.insert(vector<string>({elem}));
-            }
+            initTable = PKB::getCalls();
         } else if (declarations[selectSyn] == "while") {
-            for (const auto& elem : PKB::getWhiles()) {
-                initTable.insert(vector<string>({elem}));
-            }
+            initTable = PKB::getWhiles();
         } else if (declarations[selectSyn] == "if") {
-            for (const auto& elem : PKB::getIfs()) {
-                initTable.insert(vector<string>({elem}));
-            }
+            initTable = PKB::getIfs();
         } else if (declarations[selectSyn] == "assign") {
-            for (const auto& elem : PKB::getAssigns()) {
-                initTable.insert(vector<string>({elem}));
-            }
+            initTable = PKB::getAssigns();
         } else if (declarations[selectSyn] == "variable") {
-            for (const auto& elem : PKB::getVariables()) {
-                initTable.insert(vector<string>({elem}));
-            }
+            initTable = PKB::getVariables();
         } else if (declarations[selectSyn] == "constant") {
-            for (const auto& elem : PKB::getConstants()) {
-                initTable.insert(vector<string>({elem}));
-            }
+            initTable = PKB::getConstants();
         } else if (declarations[selectSyn] == "prog_line") {
-            for (const auto& elem : PKB::getProgLines()) {
-                initTable.insert(vector<string>({elem}));
-            }
+            initTable = PKB::getProgLines();
         } else if (declarations[selectSyn] == "procedure") {
-            for (const auto& elem : PKB::getProcedures()) {
-                initTable.insert(vector<string>({elem}));
-            }
+            initTable = PKB::getProcedures();
         }        
         Result currentResult = Result(true, {{selectSyn, 0}}, initTable);
 
@@ -185,13 +159,18 @@ namespace Evaluator {
             currentResult = Result::merge(currentResult, otherResult);
         }
 
+        if (!currentResult.hasResults())
+            return {};
+
         // return results (projection)
         unordered_set<vector<string>> finalResults = currentResult.getResults();
-        list<string> selectResults = {};
+        set<string> selectResultsSet;
         int selectSynIdx = currentResult.getSynonyms()[selectSyn];
-        for (const auto& result : results) {
-            selectResults.push_back(result[selectSynIdx]);
-        }
-        return selectResults;
+        for (const auto& result : finalResults)
+            selectResultsSet.insert(result[selectSynIdx]);
+        list<string> selectResults;
+        for (const auto& result : selectResultsSet)
+            selectResults.push_back(result);
+        return (selectResults);
     }
 }

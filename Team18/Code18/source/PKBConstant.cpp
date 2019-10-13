@@ -27,7 +27,7 @@ CONST_LIST PKBConstant::getConstants() {
 	CONST_LIST list;
 	for (auto vectorIter : constantTable) {
 		vector<string> tuple = vector<string>();
-		tuple.push_back(vectorIter.front());
+		tuple.push_back(vectorIter.back());
 		list.emplace(tuple);
 	}
 	return list;

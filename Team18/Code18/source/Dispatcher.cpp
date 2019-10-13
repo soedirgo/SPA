@@ -16,7 +16,7 @@ namespace Dispatcher {
         }
 
         bool isIdentifier(string str) {
-            return str.front() == '\"';
+            return str.front() == '\"' || isdigit(str.front());
         }
 
         bool isFullPattern(string str) {
@@ -411,7 +411,9 @@ namespace Dispatcher {
         declarations = decl;
 
         for (const auto& field : fields)
-            if (!isIdentifier(field) && field.front() != '_')
+            if (type == "such-that" && field == fields[0])
+                continue;
+            else if (!isIdentifier(field) && field.front() != '_')
                 synonyms[field] = synonyms.size();
         
         if (type == "such-that")
