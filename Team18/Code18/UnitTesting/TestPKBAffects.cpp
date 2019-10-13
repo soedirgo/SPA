@@ -180,15 +180,16 @@ namespace UnitTesting
 		TEST_METHOD(AffectsRelationship)
 		{
 			PKBAffects PKB;
+			Assert::IsTrue(PKB.isAffectsIdentIdent("4", "7"));
+			Assert::IsTrue(PKB.isAffectsIdentIdent("5", "9"));
 			Assert::IsTrue(PKB.isAffectsIdentIdent("7", "7"));
-			Assert::IsTrue(PKB.isAffectsIdentIdent("13", "14"));
-			Assert::IsTrue(PKB.isAffectsIdentIdent("7", "10"));
+			Assert::IsTrue(PKB.isAffectsIdentIdent("9", "9"));	
 			Assert::IsTrue(PKB.isAffectsIdentIdent("12", "13"));
+			Assert::IsTrue(PKB.isAffectsIdentIdent("13", "14"));
 			Assert::IsTrue(PKB.isAffectsIdentIdent("14", "15"));
 			Assert::IsTrue(PKB.isAffectsIdentIdent("16", "17"));
-
+			
 		}
-
 	};
 };
 
