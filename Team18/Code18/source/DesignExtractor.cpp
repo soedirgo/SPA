@@ -7,6 +7,7 @@
 #include "PKBStmt.h"
 #include "PKBUses.h"
 #include "PKBModifies.h"
+#include "PKBAffects.h"
 
 using namespace std;
 
@@ -18,6 +19,7 @@ void DesignExtractor::extractDesign()
 	extractNextStar();
 	extractModifiesP();
 	extractUsesP();
+	extractAffects();
 }
 
 void DesignExtractor::extractNextStar()
@@ -143,6 +145,50 @@ void DesignExtractor::recurseUses(PROC_NAME callee) {
 			PKBUses::setUsesP(newCaller, varName);
 		}
 		recurseUses(newCaller);
+	}
+}
+
+void DesignExtractor::extractAffects()
+{
+	TABLE assignStmtTable = PKBStmt::getAllStmtByType("assign");
+	TABLE callStmtTable = PKBStmt::getAllStmtByType("call");
+	TABLE nextTTable = PKBNext::getNextTEntEnt();
+	for (auto vectorIter1 : assignStmtTable) {
+		STMT_NO a1 = vectorIter1.front();
+		for (auto vectorIter2 : assignStmtTable) {
+			STMT_NO a2 = vectorIter2.front();
+			for (auto vectorIter3 : nextTTable) {
+				if (vectorIter3.front() == a1 && vectorIter3.back() == a2) {
+					bool affectsHold = false;
+					// will only have 1 in varList
+					VAR_LIST varList1 = PKBModifies::getModifiesSIdentEnt(a1);
+					VAR_NAME varNameModified;
+					for (auto vectorIter4 : varList1) {
+						varNameModified = vectorIter4.front();
+					}
+					VAR_LIST varList2 = PKBUses::getUsesSIdentEnt(a2);
+					for (auto vectorIter4 : varList2) {
+						VAR_NAME varNameUses = vectorIter4.front();
+						//Means Affects Hold but havent check if modifies changed in between
+						if (varNameModified == varNameUses) {
+							affectsHold = true;
+						}
+					}
+					//Validate if affects Hold and var is not modified in between
+					for (int i = stoi(a1)+1; i < stoi(a2); i++) {
+						VAR_LIST varList3 = PKBModifies::getModifiesSIdentEnt(a1);
+						for (auto vectorIter4 : varList3) {
+							if (varNameModified == vectorIter4.front()) {
+								affectsHold = false;
+							}
+						}
+					}
+					if (affectsHold == true) {
+						PKBAffects::setAffects(a1, a2);
+					}
+				}
+			}
+		}
 	}
 }
 

@@ -17,6 +17,7 @@
     <ClCompile Include="..\source\NestedResult.cpp" />
     <ClCompile Include="..\source\Parser.cpp" />
     <ClCompile Include="..\source\PKB.cpp" />
+    <ClCompile Include="..\source\PKBAffects.cpp" />
     <ClCompile Include="..\source\PKBCall.cpp" />
     <ClCompile Include="..\source\PKBConstant.cpp" />
     <ClCompile Include="..\source\PKBFollows.cpp" />
@@ -44,6 +45,7 @@
     <ClInclude Include="..\source\NestedResult.h" />
     <ClInclude Include="..\source\Parser.h" />
     <ClInclude Include="..\source\PKB.h" />
+    <ClInclude Include="..\source\PKBAffects.h" />
     <ClInclude Include="..\source\PKBCall.h" />
     <ClInclude Include="..\source\PKBConstant.h" />
     <ClInclude Include="..\source\PKBFollows.h" />

@@ -162,6 +162,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="TestPKBAffects.cpp" />
     <ClCompile Include="TestPKBCall.cpp" />
     <ClCompile Include="TestPKBConstant.cpp" />
     <ClCompile Include="TestPKBFollows.cpp" />
