@@ -185,49 +185,49 @@ namespace IntegrationTesting
 
             expected = {"2", "3", "6", "8"};
             actual = Evaluator::evalQuery(Query(decl, "s",
-                                                { Clause("such-that", {"Uses", "s", "v"}) }));
+                                                { Clause("such that", {"Uses", "s", "v"}) }));
             actual.sort();
             Assert::IsTrue(expected == actual);
  
             expected = {"7"};
 			actual = Evaluator::evalQuery(Query(decl, "r",
-                                                { Clause("such-that", {"Modifies", "r", "v"}) }));
+                                                { Clause("such that", {"Modifies", "r", "v"}) }));
             actual.sort();
             Assert::IsTrue(expected == actual);
 
             expected = {"8"};
 			actual = Evaluator::evalQuery(Query(decl, "p",
-                                                { Clause("such-that", {"Uses", "p", "v"}) }));
+                                                { Clause("such that", {"Uses", "p", "v"}) }));
             actual.sort();
             Assert::IsTrue(expected == actual);
 
             expected = {"6"};
             actual = Evaluator::evalQuery(Query(decl, "w",
-                                                { Clause("such-that", {"Uses", "w", "v"}) }));
+                                                { Clause("such that", {"Uses", "w", "v"}) }));
             actual.sort();
             Assert::IsTrue(expected == actual);
 
             expected = {};
             actual = Evaluator::evalQuery(Query(decl, "i",
-                                                { Clause("such-that", {"Uses", "i", "\"z\""}) }));
+                                                { Clause("such that", {"Uses", "i", "\"z\""}) }));
             actual.sort();
             Assert::IsTrue(expected == actual);
  
             expected = {"1"};
             actual = Evaluator::evalQuery(Query(decl, "a",
-                                                { Clause("such-that", {"Modifies", "a", "\"x\""}) }));
+                                                { Clause("such that", {"Modifies", "a", "\"x\""}) }));
             actual.sort();
             Assert::IsTrue(expected == actual);
 
             expected = {"x"};
             actual = Evaluator::evalQuery(Query(decl, "v",
-                                                { Clause("such-that", {"Uses", "2", "v"}) }));
+                                                { Clause("such that", {"Uses", "2", "v"}) }));
             actual.sort();
             Assert::IsTrue(expected == actual);
 
             expected = {"0", "1"};
             actual = Evaluator::evalQuery(Query(decl, "C",
-                                                { Clause("such-that", {"Uses", "2", "\"x\""}) }));
+                                                { Clause("such that", {"Uses", "2", "\"x\""}) }));
             actual.sort();
             Assert::IsTrue(expected == actual);
 
@@ -263,61 +263,61 @@ namespace IntegrationTesting
             
             expected = {"2"};
             actual = Evaluator::evalQuery(Query(decl, "s",
-                                                { Clause("such-that", {"Follows", "1", "s"}) }));
+                                                { Clause("such that", {"Follows", "1", "s"}) }));
             actual.sort();
             Assert::IsTrue(expected == actual);
 
             expected = {"3"};
             actual = Evaluator::evalQuery(Query(decl, "s",
-                                                { Clause("such-that", {"Follows", "s", "6"}) }));
+                                                { Clause("such that", {"Follows", "s", "6"}) }));
             actual.sort();
             Assert::IsTrue(expected == actual);
 
             expected = {"2", "3", "6"};
             actual = Evaluator::evalQuery(Query(decl, "s",
-                                                { Clause("such-that", {"Follows*", "1", "s"}) }));
+                                                { Clause("such that", {"Follows*", "1", "s"}) }));
             actual.sort();
             Assert::IsTrue(expected == actual);
 
             expected = {"7"};
             actual = Evaluator::evalQuery(Query(decl, "r",
-                                                { Clause("such-that", {"Follows", "r", "p"}) }));
+                                                { Clause("such that", {"Follows", "r", "p"}) }));
             actual.sort();
             Assert::IsTrue(expected == actual);
 
             expected = {"1", "2"};
             actual = Evaluator::evalQuery(Query(decl, "a",
-                                                { Clause("such-that", {"Follows*", "a", "w"}) }));
+                                                { Clause("such that", {"Follows*", "a", "w"}) }));
             actual.sort();
             Assert::IsTrue(expected == actual);
 
             expected = {"4", "5"};
             actual = Evaluator::evalQuery(Query(decl, "s",
-                                                { Clause("such-that", {"Parent", "3", "s"}) }));
+                                                { Clause("such that", {"Parent", "3", "s"}) }));
             actual.sort();
             Assert::IsTrue(expected == actual);
 
             expected = {"4", "5"};
             actual = Evaluator::evalQuery(Query(decl, "a",
-                                                { Clause("such-that", {"Parent", "i", "a"}) }));
+                                                { Clause("such that", {"Parent", "i", "a"}) }));
             actual.sort();
             Assert::IsTrue(expected == actual);
 
             expected = {};
             actual = Evaluator::evalQuery(Query(decl, "s",
-                                                { Clause("such-that", {"Parent", "4", "s"}) }));
+                                                { Clause("such that", {"Parent", "4", "s"}) }));
             actual.sort();
             Assert::IsTrue(expected == actual);
 
             expected = {"8"};
             actual = Evaluator::evalQuery(Query(decl, "p",
-                                                { Clause("such-that", {"Parent*", "w", "p"}) }));
+                                                { Clause("such that", {"Parent*", "w", "p"}) }));
             actual.sort();
             Assert::IsTrue(expected == actual);
 
             expected = {"4", "5"};
             actual = Evaluator::evalQuery(Query(decl, "a",
-                                                { Clause("such-that", {"Parent*", "s", "a"}) }));
+                                                { Clause("such that", {"Parent*", "s", "a"}) }));
             actual.sort();
             Assert::IsTrue(expected == actual);
         }
