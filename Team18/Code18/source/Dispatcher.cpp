@@ -7,7 +7,7 @@
 #include "PKBHash.h"
 
 using namespace std;
-namespace Dispatcher {
+namespace Evaluator {
     namespace {
         unordered_map<string, string> declarations;
 
@@ -439,4 +439,4 @@ namespace Dispatcher {
             resultExists = results.size();
         }
     }
-}
+} // namespace Evaluator

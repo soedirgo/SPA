@@ -11,8 +11,8 @@
 #include "PKB.h"
 #include "PKBHash.h"
 #include "Query.h"
-using namespace std;
 
+using namespace std;
 namespace Evaluator {
     namespace {
         class Result {
@@ -118,11 +118,11 @@ namespace Evaluator {
             resultExists = false;
             synonyms = {};
             results = {};
-            Dispatcher::dispatch(clause,
-                                 declarations,
-                                 resultExists,
-                                 synonyms,
-                                 results);
+            dispatch(clause,
+                     declarations,
+                     resultExists,
+                     synonyms,
+                     results);
             intermediateResults.push_back(Result(resultExists, synonyms, results));
         }
 
@@ -173,4 +173,4 @@ namespace Evaluator {
             selectResults.push_back(result);
         return (selectResults);
     }
-}
+} // namespace Evaluator
