@@ -9,10 +9,12 @@
 #include "PKB.h"
 #include "PKBParent.h"
 #include "NestedResult.h"
+
 using namespace std;
 
 Parser::Parser() {
 	this->pkb = PKB();
+	this->patternProcessor = QueryParser();
 	this->stmtNo = 1;
 	this->nestingLevel = 0;
 	this->currProc = NestedResult();
@@ -165,6 +167,8 @@ int Parser::Parse(string filename) {
 			string varUse = assign.substr(index + 1);
 			//Calls to parse RHS of assign stmt
 			vector<string> results = parseAssignRHS(varUse);
+			string pattern = patternProcessor.infixtoRPNexpression(varUse);
+			pkb.setAssignPattern(to_string(stmtNo), pattern);
 
 			for (string var : results) {
 				if (isdigit(var.at(0))) {
@@ -688,6 +692,8 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 
 			//Calls to parse RHS of assign stmt
 			vector<string> results = parseAssignRHS(varUse);
+			string pattern = patternProcessor.infixtoRPNexpression(varUse);
+			pkb.setAssignPattern(to_string(currStmtNo), pattern);
 
 			for (string var : results) {
 				if (isdigit(var.at(0))) {
@@ -1212,6 +1218,8 @@ NestedResult Parser::parseIfNestedInThen(string ifLine, int parentStmtNo) {
 
 			//Calls to parse RHS of assign stmt
 			vector<string> results = parseAssignRHS(varUse);
+			string pattern = patternProcessor.infixtoRPNexpression(varUse);
+			pkb.setAssignPattern(to_string(currStmtNo), pattern);
 
 			for (string var : results) {
 				if (isdigit(var.at(0))) {
@@ -1668,6 +1676,8 @@ NestedResult Parser::parseWhileNestedInThen(string whileLine, int parentStmtNo) 
 
 			//Calls to parse RHS of assign stmt
 			vector<string> results = parseAssignRHS(varUse);
+			string pattern = patternProcessor.infixtoRPNexpression(varUse);
+			pkb.setAssignPattern(to_string(currStmtNo), pattern);
 
 			for (string var : results) {
 				if (isdigit(var.at(0))) {
@@ -2001,6 +2011,8 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 
 			//Calls to parse RHS of assign stmt
 			vector<string> results = parseAssignRHS(varUse);
+			string pattern = patternProcessor.infixtoRPNexpression(varUse);
+			pkb.setAssignPattern(to_string(currStmtNo), pattern);
 
 			for (string var : results) {
 				if (isdigit(var.at(0))) {

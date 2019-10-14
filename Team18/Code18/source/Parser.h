@@ -5,6 +5,7 @@
 #include <fstream>
 #include <string>
 #include "NestedResult.h"
+#include "QueryParser.h"
 
 using namespace std;
 
@@ -30,6 +31,7 @@ public:
 	string removeOuterBrackets(std::string line);
 private:
 	PKB pkb;
+	QueryParser patternProcessor;
 	ifstream programFile;
 	vector<NestedResult> procedures;
 	NestedResult currProc;
