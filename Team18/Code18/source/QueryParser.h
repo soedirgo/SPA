@@ -23,11 +23,11 @@ public:
 
 	static std::vector<std::pair<std::string, std::pair<std::string, std::string>>> splitPattern(std::vector<std::string> pattern);
 
-	//static std::list<std::string> evalQuery(Query q);
-
 	static std::string trim(std::string str, std::string whitespace);
 
 	static std::string removeSpaces(std::string s, std::string whitespace);
+
+	static std::string removeWhiteSpaces(std::string s, char whitespace);
 
 	static int getMinimumIndex(std::vector<int> indexes);
 
@@ -38,4 +38,8 @@ public:
 	static std::string selectVariablesValidation(std::unordered_map<std::string, std::string> declerationVariables, std::string selectVars);
 
 	static std::string suchThatValidation(std::unordered_map<std::string, std::string> declerationVariables, std::vector<std::pair<std::string, std::pair<std::string, std::string>>> suchThat);
+
+	static std::string infixtoRPNexpression(std::string infix);
+
+	static int getPrecedenceWeight(char token);
 };

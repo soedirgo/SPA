@@ -6,13 +6,17 @@ using namespace std;
 #include <vector>
 #include <list>
 #include <unordered_set>
+#include <stack>
 
 #include "Evaluator.h"
 #include "Query.h"
 #include "QueryParser.h"
 #include "Clause.h"
+#include <algorithm>
 
 string whitespace = " ";
+char whitespacech = ' ';
+char whitespacech2 = '"';
 int maxInt = numeric_limits<int>::max();
 unordered_set<string> validTypes = { "stmt", "variable", "assign", "constant", "read", "while", "if",
 "print", "call" , "prog_line" ,"procedure" };
@@ -310,15 +314,27 @@ vector<pair<string, pair<string, string>>> QueryParser::splitPattern(vector<stri
 
 		//Don't include _
 		string firstVar = trim(pattern[i].substr(posOfOpenBracket + 1, posOfComma - posOfOpenBracket-1),whitespace);
-		string secondVar = removeSpaces(pattern[i].substr(posOfComma + 1, posOfCloseBracket - posOfComma-1),whitespace);
-		int flag = (secondVar.find("_") != -1);
-		int flag2 = (secondVar.length() > 1);
+		cout << pattern[i].substr(posOfComma + 1, posOfCloseBracket - posOfComma - 1) << '\n';
+		string second = removeSpaces(pattern[i].substr(posOfComma + 1, posOfCloseBracket - posOfComma-1),whitespace);
+		int flag = (second.find("_") != -1);
+		int flag2 = (second.length() > 1);
 		if (flag && flag2) {
-			while (secondVar.find("_") != -1) {
-				int index = secondVar.find("_");
-				secondVar = secondVar.erase(index,index+1);
+			while (second.find("_") != -1) {
+				int index = second.find("_");
+				second = second.erase(index, index + 1);
 			}
 		}
+		cout << second << '\n';
+		second = removeWhiteSpaces(second, whitespacech);
+		string secondVar = infixtoRPNexpression(second);
+		cout << secondVar << '\n';
+
+		if (flag && flag2) {
+			secondVar.insert(0,"_");
+			secondVar.insert(secondVar.length(),"_");
+			cout << secondVar << '\n';
+		}
+
 		s.push_back(make_pair(clauseType, make_pair(firstVar, secondVar)));
 	}
 
@@ -347,6 +363,18 @@ string QueryParser::trim(string str, string whitespace) {
 string QueryParser::removeSpaces(string s, string whitespace) {
 	s.erase(0, s.find_first_not_of(whitespace));
 	s.erase(s.find_last_not_of(whitespace) + 1);
+	return s;
+}
+
+string QueryParser::removeWhiteSpaces(string s, char whitespace) {
+	int a = 0;
+	while (a < s.length()) {
+		if (s[a] == whitespacech || s[a] == whitespacech2) {
+			s.erase(a,1);
+		}
+		a++;
+	}
+
 	return s;
 }
 
@@ -804,4 +832,80 @@ string QueryParser::suchThatValidation(unordered_map<string, string> decleration
 		}
 	}
 	return resultString;
+}
+
+string QueryParser::infixtoRPNexpression(string infix) {
+	stack<char> workingStack;
+	int i = 0;
+	int j = 0;
+	int precedenceWeight; 
+	string rpnExpression = "";
+	while (i < infix.size()) {
+		char tempStr = infix[i];
+
+		//If is (, push to stack
+		if (infix[i] == '(') {
+			workingStack.push(tempStr);
+			i++;
+			continue;
+		}
+
+		//If is ), pop tokens from stack and append to output until ( is seen, then pop (
+		if (tempStr == ')') {
+			while (!workingStack.empty() && workingStack.top() != '(') {
+				rpnExpression.append(1,workingStack.top());
+				workingStack.pop();
+
+			}
+			if (!workingStack.empty()) {
+				workingStack.pop();
+			}
+			i++;
+			continue;
+		}
+
+		precedenceWeight = getPrecedenceWeight(tempStr);
+		//If is number, append to output
+		if (precedenceWeight == 1) {
+			rpnExpression.append(1,tempStr);
+		}
+		else {
+			if (workingStack.empty()) {
+				workingStack.push(tempStr);
+			}
+			else {
+				//If operator on the top of stack has greater precedence, pop the operator and append to output
+				//Brackets don't count
+				while (!workingStack.empty() && (workingStack.top() != '(') && precedenceWeight <= getPrecedenceWeight(workingStack.top())) {
+					rpnExpression.append(1,workingStack.top());
+					workingStack.pop();
+				}
+
+				//Push current operator to stack
+				workingStack.push(tempStr);
+			}
+		}
+		i++;
+	}
+	//Once above is done, if there's tokens in the stack, append to output
+	while (!workingStack.empty())
+	{
+		rpnExpression.append(1, workingStack.top());
+		workingStack.pop();
+	}
+	return rpnExpression;
+}
+
+int QueryParser::getPrecedenceWeight(char token) {
+	if (token == '*' || token == '/' || token == '%') {
+		return 3;
+	}
+
+	else if (token == '+' || token == '-') {
+		return 2;
+	}
+
+	else {
+		return 1;
+	}
 }

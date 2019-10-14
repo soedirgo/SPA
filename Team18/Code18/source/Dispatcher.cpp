@@ -105,6 +105,20 @@ namespace Evaluator {
                       return PKB::isCallsIdentIdent(trimQuotes(lhs),
                                                     trimQuotes(rhs));
           }},
+		 {"Calls*",
+		  [](string lhs, string rhs) {
+			  if (isUnderscore(lhs))
+				  if (isUnderscore(rhs))
+					  return PKB::isCallsTAnyAny();
+				  else
+					  return PKB::isCallsTAnyIdent(trimQuotes(rhs));
+			  else
+				  if (isUnderscore(rhs))
+					  return PKB::isCallsTIdentAny(trimQuotes(lhs));
+				  else
+					  return PKB::isCallsTIdentIdent(trimQuotes(lhs),
+													trimQuotes(rhs));
+		  }},
          {"Follows",
           [](string lhs, string rhs) {
               if (isUnderscore(lhs))
@@ -251,9 +265,27 @@ namespace Evaluator {
                       return PKB::getCallsEntAny();
                   else if (isIdentifier(rhs))
                       return PKB::getCallsEntIdent(trimQuotes(rhs));
+				  else if (lhs == rhs)
+					  return unordered_set<vector<string>>();
                   else
                       return PKB::getCallsEntEnt();
           }},
+		 {"Calls*",
+		  [](string lhs, string rhs) {
+			  if (isUnderscore(lhs))
+				  return PKB::getCallsTAnyEnt();
+			  else if (isIdentifier(lhs))
+				  return PKB::getCallsTIdentEnt(trimQuotes(lhs));
+			  else
+				  if (isUnderscore(rhs))
+					  return PKB::getCallsTEntAny();
+				  else if (isIdentifier(rhs))
+					  return PKB::getCallsTEntIdent(trimQuotes(rhs));
+				  else if (lhs == rhs)
+					  return unordered_set<vector<string>>();
+				  else
+					  return PKB::getCallsTEntEnt();
+		  }},
          {"Follows",
           [](string lhs, string rhs) {
               if (isUnderscore(lhs))
@@ -268,7 +300,7 @@ namespace Evaluator {
                       return PKB::getFollowsEntIdent(getEntity(lhs),
                                                      rhs);
                   else if (lhs == rhs)
-                      return []{ return {}; };
+                      return unordered_set<vector<string>>();
                   else
                       return PKB::getFollowsEntEnt(getEntity(lhs),
                                                    getEntity(rhs));
@@ -287,7 +319,7 @@ namespace Evaluator {
                       return PKB::getFollowsTEntIdent(getEntity(lhs),
                                                       rhs);
                   else if (lhs == rhs)
-                      return []{ return {}; }
+                      return unordered_set<vector<string>>();
                   else
                       return PKB::getFollowsTEntEnt(getEntity(lhs),
                                                     getEntity(rhs));
@@ -306,7 +338,7 @@ namespace Evaluator {
                       return PKB::getParentEntIdent(getEntity(lhs),
                                                     rhs);
                   else if (lhs == rhs)
-                      return []{ return {}; }
+                      return unordered_set<vector<string>>();
                   else
                       return PKB::getParentEntEnt(getEntity(lhs),
                                                   getEntity(rhs));
@@ -325,7 +357,7 @@ namespace Evaluator {
                       return PKB::getParentTEntIdent(getEntity(lhs),
                                                      rhs);
                   else if (lhs == rhs)
-                      return []{ return {}; }
+                      return unordered_set<vector<string>>();
                   else
                       return PKB::getParentTEntEnt(getEntity(lhs),
                                                    getEntity(rhs));
@@ -333,34 +365,40 @@ namespace Evaluator {
          {"Next",
           [](string lhs, string rhs) {
               if (isUnderscore(lhs))
-                  return PKB::getNextAnyEnt();
+                  return PKB::getNextAnyEnt(getEntity(rhs));
               else if (isIdentifier(lhs))
-                  return PKB::getNextIdentEnt(lhs);
+                  return PKB::getNextIdentEnt(lhs,
+												getEntity(rhs));
               else
                   if (isUnderscore(rhs))
-                      return PKB::getNextEntAny();
+                      return PKB::getNextEntAny(getEntity(lhs));
                   else if (isIdentifier(rhs))
-                      return PKB::getNextEntIdent(rhs);
+                      return PKB::getNextEntIdent(getEntity(lhs), 
+													rhs);
                   else if (lhs == rhs)
-                      return []{ return {}; }
+                      return unordered_set<vector<string>>();
                   else
-                      return PKB::getNextEntEnt();
+                      return PKB::getNextEntEnt(getEntity(lhs),
+												   getEntity(rhs));
           }},
          {"Next*",
           [](string lhs, string rhs) {
               if (isUnderscore(lhs))
-                  return PKB::getNextTAnyEnt();
+                  return PKB::getNextTAnyEnt(getEntity(rhs));
               else if (isIdentifier(lhs))
-                  return PKB::getNextTIdentEnt(lhs);
+                  return PKB::getNextTIdentEnt(lhs,
+												 getEntity(rhs));
               else
                   if (isUnderscore(rhs))
-                      return PKB::getNextTEntAny();
+                      return PKB::getNextTEntAny(getEntity(lhs));
                   else if (isIdentifier(rhs))
-                      return PKB::getNextTEntIdent(rhs);
+                      return PKB::getNextTEntIdent(getEntity(lhs), 
+													rhs);
                   else if (lhs == rhs)
-                      return PKB::getNextTSelf();
+                      return PKB::getNextTSelf(getEntity(lhs));
                   else
-                      return PKB::getNextTEntEnt();
+                      return PKB::getNextTEntEnt(getEntity(lhs),
+												   getEntity(rhs));
           }}};
 
         unordered_map<string, function<unordered_set<vector<string>>
