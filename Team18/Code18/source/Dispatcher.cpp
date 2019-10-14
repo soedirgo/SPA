@@ -25,7 +25,7 @@ namespace Evaluator {
             return !isUnderscore(str) && str.front() == '_';
         }
 
-        string trimQuotes(string str) {
+        string trimEnds(string str) {
             return str.substr(1, str.size() - 2);
         }
 
@@ -42,26 +42,26 @@ namespace Evaluator {
                           return PKB::isUsesSIdentAny(lhs);
                       else
                           return PKB::isUsesSIdentIdent(lhs,
-                                                        trimQuotes(rhs));
+                                                        trimEnds(rhs));
                   else
                       if (isUnderscore(rhs))
-                          return PKB::isUsesPIdentAny(trimQuotes(lhs));
+                          return PKB::isUsesPIdentAny(trimEnds(lhs));
                       else
-                          return PKB::isUsesPIdentIdent(trimQuotes(lhs),
-                                                        trimQuotes(rhs));
+                          return PKB::isUsesPIdentIdent(trimEnds(lhs),
+                                                        trimEnds(rhs));
               else
                   if (getEntity(lhs) == "procedure")
                       if (isUnderscore(rhs))
-                          return PKB::isUsesPIdentAny(trimQuotes(lhs));
+                          return PKB::isUsesPIdentAny(trimEnds(lhs));
                       else
-                          return PKB::isUsesPIdentIdent(trimQuotes(lhs),
-                                                        trimQuotes(rhs));
+                          return PKB::isUsesPIdentIdent(trimEnds(lhs),
+                                                        trimEnds(rhs));
                   else
                       if (isUnderscore(rhs))
                           return PKB::isUsesSIdentAny(lhs);
                       else
                           return PKB::isUsesSIdentIdent(lhs,
-                                                        trimQuotes(rhs));
+                                                        trimEnds(rhs));
           }},
          {"Modifies",
           [](string lhs, string rhs) {
@@ -71,26 +71,26 @@ namespace Evaluator {
                           return PKB::isModifiesSIdentAny(lhs);
                       else
                           return PKB::isModifiesSIdentIdent(lhs,
-                                                            trimQuotes(rhs));
+                                                            trimEnds(rhs));
                   else
                       if (isUnderscore(rhs))
-                          return PKB::isModifiesPIdentAny(trimQuotes(lhs));
+                          return PKB::isModifiesPIdentAny(trimEnds(lhs));
                       else
-                          return PKB::isModifiesPIdentIdent(trimQuotes(lhs),
-                                                            trimQuotes(rhs));
+                          return PKB::isModifiesPIdentIdent(trimEnds(lhs),
+                                                            trimEnds(rhs));
               else
                   if (getEntity(lhs) == "procedure")
                       if (isUnderscore(rhs))
-                          return PKB::isModifiesPIdentAny(trimQuotes(lhs));
+                          return PKB::isModifiesPIdentAny(trimEnds(lhs));
                       else
-                          return PKB::isModifiesPIdentIdent(trimQuotes(lhs),
-                                                            trimQuotes(rhs));
+                          return PKB::isModifiesPIdentIdent(trimEnds(lhs),
+                                                            trimEnds(rhs));
                   else
                       if (isUnderscore(rhs))
                           return PKB::isModifiesSIdentAny(lhs);
                       else
                           return PKB::isModifiesSIdentIdent(lhs,
-                                                            trimQuotes(rhs));
+                                                            trimEnds(rhs));
           }},
          {"Calls",
           [](string lhs, string rhs) {
@@ -98,13 +98,13 @@ namespace Evaluator {
                   if (isUnderscore(rhs))
                       return PKB::isCallsAnyAny();
                   else
-                      return PKB::isCallsAnyIdent(trimQuotes(rhs));
+                      return PKB::isCallsAnyIdent(trimEnds(rhs));
               else
                   if (isUnderscore(rhs)) 
-                      return PKB::isCallsIdentAny(trimQuotes(lhs));
+                      return PKB::isCallsIdentAny(trimEnds(lhs));
                   else
-                      return PKB::isCallsIdentIdent(trimQuotes(lhs),
-                                                    trimQuotes(rhs));
+                      return PKB::isCallsIdentIdent(trimEnds(lhs),
+                                                    trimEnds(rhs));
           }},
 		 {"Calls*",
 		  [](string lhs, string rhs) {
@@ -112,13 +112,13 @@ namespace Evaluator {
 				  if (isUnderscore(rhs))
 					  return PKB::isCallsTAnyAny();
 				  else
-					  return PKB::isCallsTAnyIdent(trimQuotes(rhs));
+					  return PKB::isCallsTAnyIdent(trimEnds(rhs));
 			  else
 				  if (isUnderscore(rhs))
-					  return PKB::isCallsTIdentAny(trimQuotes(lhs));
+					  return PKB::isCallsTIdentAny(trimEnds(lhs));
 				  else
-					  return PKB::isCallsTIdentIdent(trimQuotes(lhs),
-													trimQuotes(rhs));
+					  return PKB::isCallsTIdentIdent(trimEnds(lhs),
+													trimEnds(rhs));
 		  }},
          {"Follows",
           [](string lhs, string rhs) {
@@ -213,13 +213,13 @@ namespace Evaluator {
                   if (isdigit(lhs[0]))
                       return PKB::getUsesSIdentEnt(lhs);
                   else
-                      return PKB::getUsesPIdentEnt(trimQuotes(lhs));
+                      return PKB::getUsesPIdentEnt(trimEnds(lhs));
               else
                   if (getEntity(lhs) == "procedure")
                       if (isUnderscore(rhs))
                           return PKB::getUsesPEntAny();
                       else if (isIdentifier(rhs))
-                          return PKB::getUsesPEntIdent(trimQuotes(rhs));
+                          return PKB::getUsesPEntIdent(trimEnds(rhs));
                       else
                           return PKB::getUsesPEntEnt();
                   else
@@ -227,7 +227,7 @@ namespace Evaluator {
                           return PKB::getUsesSEntAny(getEntity(lhs));
                       else if (isIdentifier(rhs))
                           return PKB::getUsesSEntIdent(getEntity(lhs),
-                                                       trimQuotes(rhs));
+                                                       trimEnds(rhs));
                       else
                           return PKB::getUsesSEntEnt(getEntity(lhs));
           }},
@@ -237,13 +237,13 @@ namespace Evaluator {
                   if (isdigit(lhs[0]))
                       return PKB::getModifiesSIdentEnt(lhs);
                   else
-                      return PKB::getModifiesPIdentEnt(trimQuotes(lhs));
+                      return PKB::getModifiesPIdentEnt(trimEnds(lhs));
               else
                   if (getEntity(lhs) == "procedure")
                       if (isUnderscore(rhs))
                           return PKB::getModifiesPEntAny();
                       else if (isIdentifier(rhs))
-                          return PKB::getModifiesPEntIdent(trimQuotes(rhs));
+                          return PKB::getModifiesPEntIdent(trimEnds(rhs));
                       else
                           return PKB::getModifiesPEntEnt();
                   else
@@ -251,7 +251,7 @@ namespace Evaluator {
                           return PKB::getModifiesSEntAny(getEntity(lhs));
                       else if (isIdentifier(rhs))
                           return PKB::getModifiesSEntIdent(getEntity(lhs),
-                                                           trimQuotes(rhs));
+                                                           trimEnds(rhs));
                       else
                           return PKB::getModifiesSEntEnt(getEntity(lhs));
           }},
@@ -260,12 +260,12 @@ namespace Evaluator {
               if (isUnderscore(lhs))
                   return PKB::getCallsAnyEnt();
               else if (isIdentifier(lhs))
-                  return PKB::getCallsIdentEnt(trimQuotes(lhs));
+                  return PKB::getCallsIdentEnt(trimEnds(lhs));
               else
                   if (isUnderscore(rhs))
                       return PKB::getCallsEntAny();
                   else if (isIdentifier(rhs))
-                      return PKB::getCallsEntIdent(trimQuotes(rhs));
+                      return PKB::getCallsEntIdent(trimEnds(rhs));
 				  else if (lhs == rhs)
 					  return unordered_set<vector<string>>();
                   else
@@ -276,12 +276,12 @@ namespace Evaluator {
 			  if (isUnderscore(lhs))
 				  return PKB::getCallsTAnyEnt();
 			  else if (isIdentifier(lhs))
-				  return PKB::getCallsTIdentEnt(trimQuotes(lhs));
+				  return PKB::getCallsTIdentEnt(trimEnds(lhs));
 			  else
 				  if (isUnderscore(rhs))
 					  return PKB::getCallsTEntAny();
 				  else if (isIdentifier(rhs))
-					  return PKB::getCallsTEntIdent(trimQuotes(rhs));
+					  return PKB::getCallsTEntIdent(trimEnds(rhs));
 				  else if (lhs == rhs)
 					  return unordered_set<vector<string>>();
 				  else
@@ -410,17 +410,17 @@ namespace Evaluator {
                   if (isUnderscore(rhs))
                       return PKB::getPatternAssignAnyAny();
                   else if (isPartialPattern(rhs))
-                      return PKB::getPatternAssignAnyPartial(rhs);
+                      return PKB::getPatternAssignAnyPartial(trimEnds(rhs));
                   else
                       return PKB::getPatternAssignAnyFull(rhs);
               else if (isIdentifier(lhs))
                   if (isUnderscore(rhs))
-                      return PKB::getPatternAssignIdentAny(trimQuotes(lhs));
+                      return PKB::getPatternAssignIdentAny(trimEnds(lhs));
                   else if (isPartialPattern(rhs))
-                      return PKB::getPatternAssignIdentPartial(trimQuotes(lhs),
-                                                               rhs);
+                      return PKB::getPatternAssignIdentPartial(trimEnds(lhs),
+                                                               trimEnds(rhs));
                   else
-                      return PKB::getPatternAssignIdentFull(trimQuotes(lhs),
+                      return PKB::getPatternAssignIdentFull(trimEnds(lhs),
                                                             rhs);
               else
                   if (isUnderscore(rhs))
@@ -428,14 +428,14 @@ namespace Evaluator {
                   else if (isIdentifier(rhs))
                       return PKB::getPatternAssignEntFull(rhs);
                   else
-                      return PKB::getPatternAssignEntPartial(rhs);
+                      return PKB::getPatternAssignEntPartial(trimEnds(rhs));
           }},
          {"if",
           [](string lhs, string rhs) {
               if (isUnderscore(lhs))
                   return PKB::getPatternIfAny();
               else if (isIdentifier(lhs))
-                  return PKB::getPatternIfIdent(trimQuotes(lhs));
+                  return PKB::getPatternIfIdent(trimEnds(lhs));
               else
                   return PKB::getPatternIfEnt();
           }},
@@ -444,7 +444,7 @@ namespace Evaluator {
               if (isUnderscore(lhs))
                   return PKB::getPatternIfAny();
               else if (isIdentifier(lhs))
-                  return PKB::getPatternIfIdent(trimQuotes(lhs));
+                  return PKB::getPatternIfIdent(trimEnds(lhs));
               else
                   return PKB::getPatternIfEnt();
           }}};
