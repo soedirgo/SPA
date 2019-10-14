@@ -8,6 +8,7 @@
 #include "PKBUses.h"
 #include "PKBModifies.h"
 #include "PKBAffects.h"
+#include "PKBPattern.h"
 #include <algorithm>
 
 using namespace std;
@@ -21,8 +22,11 @@ void DesignExtractor::extractDesign()
 	extractModifiesP();
 	extractUsesP();
 	extractAffects();
-	TABLE test = PKBCall::getCallProcTable();
-	int i = test.size();
+	
+	//TABLE test = PKBPattern::getAssignPatternTable();
+	//int i = test.size();
+	//TABLE test = PKBCall::getCallProcTable();
+	//int i = test.size();
 	//TABLE test = PKBNext::getNextTable();
 	//int i = test.size();
 	//extractAffectsT();

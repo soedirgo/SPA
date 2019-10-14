@@ -6,6 +6,10 @@ TABLE PKBPattern::patternIfTable;
 TABLE PKBPattern::patternWhileTable;
 TABLE PKBPattern::patternAssignTable;
 
+TABLE PKBPattern::getAssignPatternTable() {
+	return patternAssignTable;
+}
+
 bool PKBPattern::setIfPattern(STMT_NO stmtNo, VAR_NAME varName) {
 	vector<string> tuple = vector<string>();
 	tuple.push_back(stmtNo);

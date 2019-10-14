@@ -17,6 +17,9 @@ public:
 	static STMT_LIST getPatternIfIdent(VAR_NAME varName);
 	static TABLE getPatternIfEnt();
 
+	//Debugging
+	static TABLE getAssignPatternTable();
+
 	static STMT_LIST getPatternWhileAny();
 	static STMT_LIST getPatternWhileIdent(VAR_NAME varName);
 	static TABLE getPatternWhileEnt();

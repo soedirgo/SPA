@@ -1,0 +1,15 @@
+115 - Select all while if there is assign pattern LHS y and RHS y
+while w;
+Select w pattern a("y", _"y"_)
+none
+5000
+129 - Select all variable in assign pattern LHS variable and RHS 1
+variable v; assign a;
+Select v pattern a(v, _"1"_)
+x, i
+5000
+133 - Select all assign that has pattern some variable and RHS i
+assign a;
+Select a pattern a(_, _"i"_)
+9, 11, 40
+5000

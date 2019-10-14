@@ -842,6 +842,11 @@ string QueryParser::infixtoRPNexpression(string infix) {
 	string rpnExpression = "";
 	while (i < infix.size()) {
 		char tempStr = infix[i];
+		bool isAlphaDigitFlag = false;
+		if (i + 1 < infix.size()) {
+			if (isalpha(infix[i + 1]) || isdigit(infix[i + 1]))
+				isAlphaDigitFlag = true;
+		}
 
 		//If is (, push to stack
 		if (infix[i] == '(') {
@@ -854,6 +859,7 @@ string QueryParser::infixtoRPNexpression(string infix) {
 		if (tempStr == ')') {
 			while (!workingStack.empty() && workingStack.top() != '(') {
 				rpnExpression.append(1,workingStack.top());
+				rpnExpression.append("_");
 				workingStack.pop();
 
 			}
@@ -867,7 +873,13 @@ string QueryParser::infixtoRPNexpression(string infix) {
 		precedenceWeight = getPrecedenceWeight(tempStr);
 		//If is number, append to output
 		if (precedenceWeight == 1) {
-			rpnExpression.append(1,tempStr);
+			if (isAlphaDigitFlag) {
+				rpnExpression.append(1, tempStr);
+			}
+			else {
+				rpnExpression.append(1, tempStr);
+				rpnExpression.append("_");
+			}
 		}
 		else {
 			if (workingStack.empty()) {
@@ -878,6 +890,7 @@ string QueryParser::infixtoRPNexpression(string infix) {
 				//Brackets don't count
 				while (!workingStack.empty() && (workingStack.top() != '(') && precedenceWeight <= getPrecedenceWeight(workingStack.top())) {
 					rpnExpression.append(1,workingStack.top());
+					rpnExpression.append("_");
 					workingStack.pop();
 				}
 
@@ -891,6 +904,7 @@ string QueryParser::infixtoRPNexpression(string infix) {
 	while (!workingStack.empty())
 	{
 		rpnExpression.append(1, workingStack.top());
+		rpnExpression.append("_");
 		workingStack.pop();
 	}
 	return rpnExpression;
