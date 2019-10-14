@@ -1,8 +1,8 @@
 #pragma once
+#include "Query.h"
 #include <string>
 #include <list>
-#include "Query.h"
 
 namespace Evaluator {
-	std::list<std::string> evalQuery(Query q);
+	std::list<std::string> evaluate(Query q);
 }

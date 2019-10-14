@@ -1,10 +1,11 @@
+#include "Dispatcher.h"
+#include "Clause.h"
+#include "PKB.h"
+#include "PKBHash.h"
+#include "Result.h"
 #include <functional>
 #include <string>
 #include <unordered_map>
-#include "Clause.h"
-#include "Dispatcher.h"
-#include "PKB.h"
-#include "PKBHash.h"
 
 using namespace std;
 namespace Evaluator {
@@ -19,9 +20,9 @@ namespace Evaluator {
             return str.front() == '\"' || isdigit(str.front());
         }
 
-        bool isFullPattern(string str) {
+        bool isPartialPattern(string str) {
             //TODO: change this after shunting yard is implemented
-            return str.front() != '\"';
+            return !isUnderscore(str) && str.front() == '_';
         }
 
         string trimQuotes(string str) {
@@ -408,19 +409,19 @@ namespace Evaluator {
               if (isUnderscore(lhs))
                   if (isUnderscore(rhs))
                       return PKB::getPatternAssignAnyAny();
-                  else if (isFullPattern(rhs))
-                      return PKB::getPatternAssignAnyFull(rhs);
-                  else
+                  else if (isPartialPattern(rhs))
                       return PKB::getPatternAssignAnyPartial(rhs);
+                  else
+                      return PKB::getPatternAssignAnyFull(rhs);
               else if (isIdentifier(lhs))
                   if (isUnderscore(rhs))
                       return PKB::getPatternAssignIdentAny(trimQuotes(lhs));
-                  else if (isFullPattern(rhs))
-                      return PKB::getPatternAssignIdentFull(trimQuotes(lhs),
-                                                            rhs);
-                  else
+                  else if (isPartialPattern(rhs))
                       return PKB::getPatternAssignIdentPartial(trimQuotes(lhs),
                                                                rhs);
+                  else
+                      return PKB::getPatternAssignIdentFull(trimQuotes(lhs),
+                                                            rhs);
               else
                   if (isUnderscore(rhs))
                       return PKB::getPatternAssignEntAny();
@@ -449,11 +450,11 @@ namespace Evaluator {
           }}};
     }
 
-    void dispatch(Clause& clause,
-                  unordered_map<string, string>& decl,
-                  bool& resultExists,
-                  unordered_map<string, int>& synonyms,
-                  unordered_set<vector<string>>& results) {
+    Result dispatch(Clause& clause,
+                    unordered_map<string, string>& decl) {
+        bool resultExists;
+        unordered_map<string, int> synonyms;
+        unordered_set<vector<string>> results;
         string type = clause.getType();
         vector<string> fields = clause.getFields();
         declarations = decl;
@@ -476,5 +477,7 @@ namespace Evaluator {
             results = patternApiMap[getEntity(fields[0])](fields[1], fields[2]);
             resultExists = results.size();
         }
+
+        return Result(resultExists, synonyms, results);
     }
 } // namespace Evaluator

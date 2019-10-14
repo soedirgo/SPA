@@ -1,3 +1,10 @@
+#include "Evaluator.h"
+#include "Clause.h"
+#include "Dispatcher.h"
+#include "PKB.h"
+#include "PKBHash.h"
+#include "Query.h"
+#include "Result.h"
 #include <functional>
 #include <set>
 #include <string>
@@ -5,103 +12,9 @@
 #include <unordered_set>
 #include <utility>
 #include <vector>
-#include "Clause.h"
-#include "Dispatcher.h"
-#include "Evaluator.h"
-#include "PKB.h"
-#include "PKBHash.h"
-#include "Query.h"
 
 using namespace std;
 namespace Evaluator {
-    namespace {
-        class Result {
-        public:
-            Result() {}
-
-            Result(bool resExists,
-                   unordered_map<string, int> syn,
-                   unordered_set<vector<string>> res)
-                : resultExists(resExists),
-                  synonyms(syn),
-                  results(res) {}
-
-            static Result merge(Result& r1, Result& r2) {
-                bool resultExists = r1.hasResults() && r2.hasResults();
-                if (!r1.getResults().size()) {
-                    if (!r2.getResults().size()) {
-                        // both empty
-                        return Result(resultExists, {}, {});
-                    } else {
-                        // only r1 empty
-                        return Result(resultExists, r2.getSynonyms(), r2.getResults());
-                    }
-                } else if (!r2.getResults().size()) {
-                    // only r2 empty
-                    return Result(r1.hasResults() && r2.hasResults(),
-                                  r1.getSynonyms(), r1.getResults());
-                } else {
-                    // both non-empty
-                    unordered_map<string, int> r1Synonyms = r1.getSynonyms();
-                    unordered_map<string, int> r2Synonyms = r2.getSynonyms();
-                    unordered_map<string, int> synonyms = r1Synonyms;
-                    vector<string> overlappingSynonyms;
-                    vector<string> newSynonyms;
-                    for (const auto& it : r2Synonyms) {
-                        if (r1Synonyms.count(it.first)) {
-                            overlappingSynonyms.push_back(it.first);
-                        } else {
-                            newSynonyms.push_back(it.first);
-                            synonyms[it.first] = synonyms.size();
-                        }
-                    }
-
-                    unordered_set<vector<string>> results;
-                    for (auto r1e : r1.getResults()) {
-                        for (auto r2e : r2.getResults()) {
-                            // if overlaps don't match, continue
-                            bool overlapMatches = true;
-                            for (const auto& syn : overlappingSynonyms) {
-                                if (r1e[r1Synonyms[syn]] != r2e[r2Synonyms[syn]]) {
-                                    overlapMatches = false;
-                                    break;
-                                }
-                            }
-                            if (!overlapMatches) {
-                                continue;
-                            }
-
-                            // cross-product new synonyms
-                            vector<string>& mergedResult = r1e;
-                            for (const auto& syn : newSynonyms) {
-                                mergedResult.push_back(r2e[r2Synonyms[syn]]);
-                            }
-                            results.insert(mergedResult);
-                        }
-                    }
-
-                    return Result(resultExists, synonyms, results);
-                }
-            }
-
-            bool hasResults() const {
-                return this->resultExists;
-            }
-
-            unordered_map<string, int> getSynonyms() const {
-                return this->synonyms;
-            }
-
-            unordered_set<vector<string>> getResults() const {
-                return this->results;
-            }
-        private:
-            bool resultExists;
-            unordered_map<string, int> synonyms;
-            unordered_set<vector<string>> results;
-        };
-    }
-
     list<string> evalQuery(Query q) {
         // extract info from query object
         unordered_map<string, string> declarations = q.getDeclarations();
@@ -111,19 +24,8 @@ namespace Evaluator {
 
         // for every clause, get results and store in
         // intermediate results
-        bool resultExists;
-        unordered_map<string, int> synonyms;
-        unordered_set<vector<string>> results;
         for (auto& clause : clauses) {
-            resultExists = false;
-            synonyms = {};
-            results = {};
-            dispatch(clause,
-                     declarations,
-                     resultExists,
-                     synonyms,
-                     results);
-            intermediateResults.push_back(Result(resultExists, synonyms, results));
+            intermediateResults.push_back(dispatch(clause, declarations));
         }
 
         // select clause as the starting intermediate result
