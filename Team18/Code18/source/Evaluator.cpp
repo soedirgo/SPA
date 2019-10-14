@@ -15,7 +15,7 @@
 
 using namespace std;
 namespace Evaluator {
-    list<string> evalQuery(Query q) {
+    list<string> evaluate(Query q) {
         // extract info from query object
         unordered_map<string, string> declarations = q.getDeclarations();
         string selectSyn = q.getSelectSynonym();
