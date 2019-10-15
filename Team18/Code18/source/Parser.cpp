@@ -290,6 +290,7 @@ int Parser::Parse(string filename) {
 			;
 		}
 	}
+	procedures.push_back(currProc);
 
 	//sets all the uses and modifies from the calls statements (brute force now - to be changed to a topo-sort algorithm)
 	for (NestedResult proc : procedures) {
