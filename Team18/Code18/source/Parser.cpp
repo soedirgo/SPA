@@ -1715,6 +1715,9 @@ NestedResult Parser::parseWhileNestedInThen(string whileLine, int parentStmtNo) 
 					pkb.setNext(to_string(prevStmtNo), to_string(currStmtNo));
 				}
 			}
+			else {
+				pkb.setNext(to_string(startStmtNo), to_string(currStmtNo));
+			}
 			prevStmtNo = currStmtNo;
 			currStmtNo++;
 			if (nestingLevel != currNestingLevel) {
@@ -1754,6 +1757,9 @@ NestedResult Parser::parseWhileNestedInThen(string whileLine, int parentStmtNo) 
 				else {
 					pkb.setNext(to_string(prevStmtNo), to_string(currStmtNo));
 				}
+			}
+			else {
+				pkb.setNext(to_string(startStmtNo), to_string(currStmtNo));
 			}
 			prevStmtNo = currStmtNo;
 			currStmtNo++;
@@ -1795,6 +1801,9 @@ NestedResult Parser::parseWhileNestedInThen(string whileLine, int parentStmtNo) 
 					pkb.setNext(to_string(prevStmtNo), to_string(currStmtNo));
 				}
 			}
+			else {
+				pkb.setNext(to_string(startStmtNo), to_string(currStmtNo));
+			}
 			prevStmtNo = currStmtNo;
 			currStmtNo++;
 			if (nestingLevel != currNestingLevel) {
@@ -1824,6 +1833,9 @@ NestedResult Parser::parseWhileNestedInThen(string whileLine, int parentStmtNo) 
 				else {
 					pkb.setNext(to_string(prevStmtNo), to_string(currStmtNo));
 				}
+			}
+			else {
+				pkb.setNext(to_string(startStmtNo), to_string(currStmtNo));
 			}
 			prevStmtNo = currStmtNo;
 			currStmtNo++;
@@ -2056,6 +2068,9 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 					pkb.setNext(to_string(prevStmtNo), to_string(currStmtNo));
 				}
 			}
+			else {
+				pkb.setNext(to_string(startStmtNo), to_string(currStmtNo));
+			}
 			prevStmtNo = currStmtNo;
 			currStmtNo++;
 			if (nestingLevel != currNestingLevel) {
@@ -2095,6 +2110,9 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 				else {
 					pkb.setNext(to_string(prevStmtNo), to_string(currStmtNo));
 				}
+			}
+			else {
+				pkb.setNext(to_string(startStmtNo), to_string(currStmtNo));
 			}
 			prevStmtNo = currStmtNo;
 			currStmtNo++;
@@ -2136,6 +2154,9 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 					pkb.setNext(to_string(prevStmtNo), to_string(currStmtNo));
 				}
 			}
+			else {
+				pkb.setNext(to_string(startStmtNo), to_string(currStmtNo));
+			}
 			prevStmtNo = currStmtNo;
 			currStmtNo++;
 			if (nestingLevel != currNestingLevel) {
@@ -2165,6 +2186,9 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 				else {
 					pkb.setNext(to_string(prevStmtNo), to_string(currStmtNo));
 				}
+			}
+			else {
+				pkb.setNext(to_string(startStmtNo), to_string(currStmtNo));
 			}
 			prevStmtNo = currStmtNo;
 			currStmtNo++;
