@@ -18,15 +18,18 @@ void DesignExtractor::extractDesign()
 	extractFollowsT();
 	extractParentT();
 	extractCallsT();
-	extractNextT();
+	//extractNextT();
 	extractModifiesP();
 	extractUsesP();
-	extractAffects();
+	//extractAffects();
 	
-	TABLE test = PKBPattern::getAssignPatternTable();
+	
+	TABLE test = PKBUses::getUsesProcTable();
 	int i = test.size();
-	//TABLE test = PKBCall::getCallProcTable();
+	//TABLE test = PKBPattern::getAssignPatternTable();
 	//int i = test.size();
+	TABLE test2 = PKBCall::getCallProcTable();
+	int i2 = test2.size();
 	//TABLE test = PKBNext::getNextTable();
 	//int i = test.size();
 	//extractAffectsT();

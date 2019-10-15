@@ -297,13 +297,13 @@ PROC_LIST PKB::getUsesPEntAny() {
 	return PKBUses::getUsesPEntAny();
 }
 PROC_LIST PKB::getUsesPEntIdent(VAR_NAME varName) {
-	return PKB::getUsesPEntIdent(varName);
+	return PKBUses::getUsesPEntIdent(varName);
 }
 VAR_LIST PKB::getUsesPIdentEnt(PROC_NAME procName) {
-	return PKB::getUsesPIdentEnt(procName);
+	return PKBUses::getUsesPIdentEnt(procName);
 }
 TABLE PKB::getUsesPEntEnt() {
-	return PKB::getUsesPEntEnt();
+	return PKBUses::getUsesPEntEnt();
 }
 
 /*

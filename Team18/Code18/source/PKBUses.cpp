@@ -28,6 +28,10 @@ bool PKBUses::clear() {
 	return true;
 }
 
+TABLE PKBUses::getUsesProcTable() {
+	return usesProcTable;
+}
+
 //Uses(1 , _) -> True/False
 //LHS fixed stmt, RHS _
 bool PKBUses::isUsesSIdentAny(STMT_NO stmtNo) {
