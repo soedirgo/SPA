@@ -41,5 +41,5 @@ public:
 
 	static std::string infixtoRPNexpression(std::string infix);
 
-	static int getPrecedenceWeight(char token);
+	static int getPrecedenceWeight(string token);
 };

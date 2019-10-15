@@ -23,8 +23,8 @@ void DesignExtractor::extractDesign()
 	extractUsesP();
 	extractAffects();
 	
-	//TABLE test = PKBPattern::getAssignPatternTable();
-	//int i = test.size();
+	TABLE test = PKBPattern::getAssignPatternTable();
+	int i = test.size();
 	//TABLE test = PKBCall::getCallProcTable();
 	//int i = test.size();
 	//TABLE test = PKBNext::getNextTable();
