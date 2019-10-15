@@ -1,4 +1,4 @@
-#include<stdio.h>
+#include <stdio.h>
 #include <algorithm>
 #include <iostream>
 #include <fstream>
@@ -422,9 +422,9 @@ vector<string> Parser::parseAssignRHS(string varUse) {
 	patternRHS.erase(std::remove(patternRHS.begin(), patternRHS.end(), '('), patternRHS.end());
 	string var = "";
 	vector<string> result;
-	int i = 999;
+	int i = INT_MAX;
 	while (patternRHS.size() > 0) {
-		i = 999;
+		i = INT_MAX;
 		if (patternRHS.find("+") != string::npos || patternRHS.find("-") != string::npos || patternRHS.find("*") != string::npos ||
 			patternRHS.find("/") != string::npos || patternRHS.find("%") != string::npos) {
 			if (patternRHS.find("+") != string::npos) {
