@@ -48,6 +48,8 @@ int Parser::Parse(string filename) {
 				procedures.push_back(currProc);
 				currProc = NestedResult();
 				startStmtNo = stmtNo;
+				prevIf = false;
+				prevWhile = false;
 			}
 			string header = parseProc(line);
 			//Calls PKB API to set procedure name
@@ -287,63 +289,62 @@ int Parser::Parse(string filename) {
 		else {
 			;
 		}
+	}
 
-		//sets all the uses and modifies from the calls statements (brute force now - to be changed to a topo-sort algorithm)
-		for (NestedResult proc : procedures) {
-			string procName = proc.getProcName();
-			vector<string> calls = proc.getCallList();
-			for (int i = 0; i < procedures.size(); i++) {
-				for (string call : calls) {
-					for (NestedResult procedure : procedures) {
-						if (procedure.getProcName() == call) {
-							for (string var : procedure.getModifies()) {
-								proc.addModifies(var);
-							}
-							for (string var : procedure.getUses()) {
-								proc.addUses(var);
-							}
+	//sets all the uses and modifies from the calls statements (brute force now - to be changed to a topo-sort algorithm)
+	for (NestedResult proc : procedures) {
+		string procName = proc.getProcName();
+		vector<string> calls = proc.getCallList();
+		for (int i = 0; i < procedures.size(); i++) {
+			for (string call : calls) {
+				for (NestedResult procedure : procedures) {
+					if (procedure.getProcName() == call) {
+						for (string var : procedure.getModifies()) {
+							proc.addModifies(var);
+						}
+						for (string var : procedure.getUses()) {
+							proc.addUses(var);
 						}
 					}
 				}
-			}
-		}
-
-		for (pair<int, std::string> call : callStmts) {
-			int stmtNo = call.first;
-			string procName = call.second;
-			for (NestedResult proc : procedures) {
-				if (proc.getProcName() == procName) {
-					for (string var : proc.getModifies()) {
-						int currStmtNo = stmtNo;
-						pkb.setModifiesS(to_string(stmtNo), var);
-						while (PKB::isParentExist(to_string(currStmtNo))) {
-							currStmtNo = stoi(PKB::getParentStmt(to_string(currStmtNo)));
-							pkb.setModifiesS(to_string(currStmtNo), var);
-						}
-					}
-					for (string var : proc.getUses()) {
-						int currStmtNo = stmtNo;
-						pkb.setUsesS(to_string(stmtNo), var);
-						while (PKB::isParentExist(to_string(currStmtNo))) {
-							currStmtNo = stoi(PKB::getParentStmt(to_string(currStmtNo)));
-							pkb.setUsesS(to_string(currStmtNo), var);
-						}
-					}
-				}
-			}
-		}
-
-		for (NestedResult proc : procedures) {
-			string procName = proc.getProcName();
-			for (string var : proc.getModifies()) {
-				pkb.setModifiesP(procName, var);
-			}
-			for (string var : proc.getUses()) {
-				pkb.setUsesP(procName, var);
 			}
 		}
 	}
 
+	for (pair<int, std::string> call : callStmts) {
+		int stmtNo = call.first;
+		string procName = call.second;
+		for (NestedResult proc : procedures) {
+			if (proc.getProcName() == procName) {
+				for (string var : proc.getModifies()) {
+					int currStmtNo = stmtNo;
+					pkb.setModifiesS(to_string(stmtNo), var);
+					while (PKB::isParentExist(to_string(currStmtNo))) {
+						currStmtNo = stoi(PKB::getParentStmt(to_string(currStmtNo)));
+						pkb.setModifiesS(to_string(currStmtNo), var);
+					}
+				}
+				for (string var : proc.getUses()) {
+					int currStmtNo = stmtNo;
+					pkb.setUsesS(to_string(stmtNo), var);
+					while (PKB::isParentExist(to_string(currStmtNo))) {
+						currStmtNo = stoi(PKB::getParentStmt(to_string(currStmtNo)));
+						pkb.setUsesS(to_string(currStmtNo), var);
+					}
+				}
+			}
+		}
+	}
+
+	for (NestedResult proc : procedures) {
+		string procName = proc.getProcName();
+		for (string var : proc.getModifies()) {
+			pkb.setModifiesP(procName, var);
+		}
+		for (string var : proc.getUses()) {
+			pkb.setUsesP(procName, var);
+		}
+	}
 
 	return 0;
 }
@@ -1588,6 +1589,9 @@ NestedResult Parser::parseWhileNestedInThen(string whileLine, int parentStmtNo) 
 					pkb.setNext(to_string(prevStmtNo), to_string(currStmtNo));
 				}
 			}
+			else {
+				pkb.setNext(to_string(startStmtNo), to_string(currStmtNo));
+			}
 
 			prevWhile = true;
 			prevWhileStmtNo = stmt;
@@ -1643,6 +1647,9 @@ NestedResult Parser::parseWhileNestedInThen(string whileLine, int parentStmtNo) 
 				else {
 					pkb.setNext(to_string(prevStmtNo), to_string(currStmtNo));
 				}
+			}
+			else {
+				pkb.setNext(to_string(startStmtNo), to_string(currStmtNo));
 			}
 
 			prevIf = true;
@@ -1923,6 +1930,9 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 					pkb.setNext(to_string(prevStmtNo), to_string(currStmtNo));
 				}
 			}
+			else {
+				pkb.setNext(to_string(startStmtNo), to_string(currStmtNo));
+			}
 
 			prevWhile = true;
 			prevWhileStmtNo = stmt;
@@ -1978,6 +1988,9 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 				else {
 					pkb.setNext(to_string(prevStmtNo), to_string(currStmtNo));
 				}
+			}
+			else {
+				pkb.setNext(to_string(startStmtNo), to_string(currStmtNo));
 			}
 
 			prevIf = true;
