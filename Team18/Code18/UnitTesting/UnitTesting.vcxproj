@@ -181,6 +181,7 @@
     <ClCompile Include="TestPKBRead.cpp" />
     <ClCompile Include="TestPKBStmt.cpp" />
     <ClCompile Include="TestPKBUses.cpp" />
+    <ClCompile Include="TestPKBUsesProc.cpp" />
     <ClCompile Include="TestPKBVariable.cpp" />
     <ClCompile Include="TestProgramParser.cpp" />
     <ClCompile Include="TestQueryParser.cpp" />

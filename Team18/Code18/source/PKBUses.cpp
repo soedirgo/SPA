@@ -28,8 +28,12 @@ bool PKBUses::clear() {
 	return true;
 }
 
-TABLE PKBUses::getUsesProcTable() {
+TABLE PKBUses::getUsesPTable() {
 	return usesProcTable;
+}
+
+TABLE PKBUses::getUsesSTable() {
+	return usesStmtTable;
 }
 
 //Uses(1 , _) -> True/False

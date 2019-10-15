@@ -80,6 +80,10 @@ TABLE PKBCall::getCallProcTable() {
 	return callsProcTable;
 }
 
+TABLE PKBCall::getCallStmtTable() {
+	return callTable;
+}
+
 bool PKBCall::clear() {
 	callsProcTable.clear();
 	callsTProcTable.clear();
