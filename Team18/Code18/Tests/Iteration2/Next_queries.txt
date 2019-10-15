@@ -256,7 +256,7 @@ Select n such that Next(42, n)
 52 - Relation, Select all synonym that is nexted by an integer 1
 print pn;
 Select pn such that Next(pn, 36)
-35
+35, 45, 49
 5000
 53 - Relation, Select all synonym that is nexted by an integer 2
 if ifs;

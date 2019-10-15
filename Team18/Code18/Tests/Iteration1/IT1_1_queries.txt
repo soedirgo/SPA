@@ -569,7 +569,7 @@ Select ifs pattern a("k", _"y"_)
 8, 16, 19, 25, 33
 5000
 115 - Select all while if there is assign pattern LHS y and RHS y
-while w;
+while w; assign a;
 Select w pattern a("y", _"y"_)
 none
 5000

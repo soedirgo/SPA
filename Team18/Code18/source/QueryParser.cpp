@@ -326,7 +326,12 @@ vector<pair<string, pair<string, string>>> QueryParser::splitPattern(vector<stri
 		}
 		cout << second << '\n';
 		second = removeWhiteSpaces(second, whitespacech);
-		string secondVar = infixtoRPNexpression(second);
+		//Check if the second parameter is just "_"
+		string secondVar = second;
+		if (!(second.size() == 1 && second.at(0) == '_')) {
+			secondVar = infixtoRPNexpression(second);
+		}
+		//string secondVar = infixtoRPNexpression(second);
 		cout << secondVar << '\n';
 
 		if (flag && flag2) {
@@ -858,8 +863,9 @@ string QueryParser::infixtoRPNexpression(string infix) {
 		//If is ), pop tokens from stack and append to output until ( is seen, then pop (
 		if (tempStr == ')') {
 			while (!workingStack.empty() && workingStack.top() != '(') {
+				rpnExpression.append(" ");
 				rpnExpression.append(1,workingStack.top());
-				rpnExpression.append("_");
+				rpnExpression.append(" ");
 				workingStack.pop();
 
 			}
@@ -877,8 +883,9 @@ string QueryParser::infixtoRPNexpression(string infix) {
 				rpnExpression.append(1, tempStr);
 			}
 			else {
+				rpnExpression.append(" ");
 				rpnExpression.append(1, tempStr);
-				rpnExpression.append("_");
+				rpnExpression.append(" ");
 			}
 		}
 		else {
@@ -889,8 +896,9 @@ string QueryParser::infixtoRPNexpression(string infix) {
 				//If operator on the top of stack has greater precedence, pop the operator and append to output
 				//Brackets don't count
 				while (!workingStack.empty() && (workingStack.top() != '(') && precedenceWeight <= getPrecedenceWeight(workingStack.top())) {
+					rpnExpression.append(" ");
 					rpnExpression.append(1,workingStack.top());
-					rpnExpression.append("_");
+					rpnExpression.append(" ");
 					workingStack.pop();
 				}
 
@@ -903,8 +911,9 @@ string QueryParser::infixtoRPNexpression(string infix) {
 	//Once above is done, if there's tokens in the stack, append to output
 	while (!workingStack.empty())
 	{
+		rpnExpression.append(" ");
 		rpnExpression.append(1, workingStack.top());
-		rpnExpression.append("_");
+		rpnExpression.append(" ");
 		workingStack.pop();
 	}
 	return rpnExpression;
