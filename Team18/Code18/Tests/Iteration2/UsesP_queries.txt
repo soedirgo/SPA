@@ -1,0 +1,245 @@
+1 - Set 1 - Test syntax of UsesP. UsesP syntax, LHS synonym RHS synonym
+procedure pr; variable v;
+Select v such that Uses(pr, v)
+x, y, z, i, h, red, orange, sky, clear, rainbow, yellow, green, blue, purple, Mon, Tue, Sat, Sun, Wed, use1, use2, use3, orange, apple, pear, mango, banana, fresh
+5000
+2 - UsesP syntax, LHS invalid synonym RHS synonym
+constant c; variable v;
+Select v such that Uses(c, v)
+none
+5000
+3 - UsesP syntax, LHS synonym RHS invalid synonym
+procedure pr; stmt s;
+Select pr such that Uses(pr, s)
+none
+5000
+4 - UsesP syntax, LHS invalid synonym RHS invalid synonym
+variable v; prog_line n;
+Select v such that Uses(v, n)
+none
+5000
+5 - UsesP syntax, LHS synonym RHS wildcard
+procedure pr;
+Select pr such that Uses(pr, _)
+A, B, C, D, E, G, I, J, K, L
+5000
+6 - UsesP syntax, LHS wildcard RHS synonym
+variable v;
+Select v such that Uses(_, v)
+none
+5000
+7 - UsesP syntax, LHS wildcard RHS wildcard
+while w;
+Select w such that Uses(_, _)
+none
+5000
+8 - UsesP syntax, LHS synonym RHS Ident
+procedure pr;
+Select pr such that Uses(pr, "i")
+B, J, K, L
+5000
+9 - UsesP syntax, LHS synonym RHS invalid Ident
+procedure pr;
+Select pr such that Uses(pr, "3g")
+none
+5000
+10 - UsesP syntax, LHS Ident RHS synonym
+variable v;
+Select v such that Uses("I", v)
+orange, apple, pear, mango, banana, use1, use2, use3, Mon, Tue, Sat, Sun, Wed
+5000
+11 - UsesP syntax, LHS invalid Ident RHS synonym
+variable v;
+Select v such that Uses("d3ad", v)
+none
+5000
+12 - UsesP syntax, LHS Ident RHS Ident
+prog_line n;
+Select n such that Uses("K", "fresh")
+1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50
+5000
+13 - UsesP syntax, LHS invalid Ident RHS Ident
+stmt s;
+Select s such that Uses("sky", "blue")
+none
+5000
+14 - UsesP syntax, LHS Ident RHS invalid Ident
+print pn;
+Select pn such that Uses("C", "wrong")
+none
+5000
+15 - UsesP syntax, LHS invalid Ident RHS invalid Ident
+read r;
+Select r such that Uses("Q", "nonexist")
+none
+5000
+16 - Set 2 - Relation tests for UsesP. Relation, Procedure that does not exist
+variable v;
+Select v such that Uses("X", v)
+none
+5000
+17 - Relation, Variable that does not exist
+procedure pr;
+Select pr such that Uses(pr, "alive")
+none
+5000
+18 - Relation, Procedure that does not use any variable 1
+constant c; variable v;
+Select c such that Uses("F", v)
+none
+5000
+19 - Relation, Procedure that does not use any variable 2
+constant c; variable v;
+Select c such that Uses("H", v)
+none
+5000
+20 - Relation, Variable that is not used in any procedure 1
+procedure pr;
+Select pr such that Uses(pr, "mod1")
+none
+5000
+21 - Relation Variable that is not used in any procedure 1
+procedure pr;
+Select pr such that Uses(pr, "pineapple")
+none
+5000
+22 - Relation, Variable that is used but not modified 1
+procedure pr;
+Select pr such that Uses(pr, "use2")
+E, G, I
+5000
+23 - Relation Variable that is used but not modified 2
+procedure pr;
+Select pr such that Uses(pr, "blue")
+C
+5000
+24 - Relation, Variable that is modified but not used 1
+procedure pr;
+Select pr such that Uses(pr, "mod2")
+none
+5000
+25 - Relation, Variable that is modified but not used 2
+procedure pr;
+Select pr such that Uses(pr, "k")
+none
+5000
+26 - Relation, Variable that is used and modified 1
+procedure pr;
+Select pr such that Uses(pr, "x")
+A
+5000
+27 - Relation, Variable that is used and modified 2
+procedure pr;
+Select pr such that Uses(pr, "Sat")
+D, I
+5000
+28 - Relation, Select all procedure that uses a variable
+procedure pr; variable v;
+Select pr such that Uses(pr, v)
+A, B, C, D, E, G, I, J, K, L
+5000
+29 - Relation, Select all variable that is used
+procedure pr; variable v;
+Select v such that Uses(pr, v)
+x, y, z, i, h, red, orange, sky, clear, rainbow, yellow, green, blue, purple, Mon, Tue, Sat, Sun, Wed, use1, use2, use3, orange, apple, pear, mango, banana, fresh
+5000
+30 - Relation, Select all procedures that uses a specific variable 1
+procedure pr;
+Select pr such that (pr, "Wed")
+D, I
+5000
+31 - Relation, Select all procedures that uses a specific variable 2
+procedure pr;
+Select pr such that (pr, "mango")
+I, J
+5000
+32 - Relation, Select all variables used by a specific procedure 1
+variable v;
+Select v such that ("D", v)
+Mon, Tue, Sat, Sun, Wed
+5000
+33 - Relation, Select all variables used by a specific procedure 2
+variable v;
+Select v such that ("L", v)
+mango, green, fresh, apple, i, h
+5000
+34 - Relation, Procedure uses a variable due to assign definition of uses 1
+procedure pr;
+Select pr such that Uses(pr, "fresh")
+J
+5000
+35 - Relation, Procedure uses a variable due to assign definition of uses 2
+procedure pr;
+Select pr such that Uses(pr, "rainbow")
+C
+5000
+36 - Relation, Procedure uses a variable due to print definition of uses 1
+procedure pr;
+Select pr such that Uses(pr, "h")
+B
+5000
+37 - Relation, Procedure uses a variable due to print definition of uses 2
+procedure pr;
+Select pr such that Uses(pr, "use3")
+E, G, I
+5000
+38 - Relation, Procedure uses a variable due to if/while definition of uses 1
+procedure pr;
+Select pr such that Uses(pr, "sky")
+C
+5000
+39 - Relation, Procedure uses a variable due to if/while definition of uses 2
+procedure pr;
+Select pr such that Uses(pr, "Wed")
+D, I
+5000
+40 - Relation, Procedure uses a variable due to call definition of uses 1
+procedure pr;
+Select pr such that Uses(pr, "use1")
+E, G, I
+5000
+41 - Relation, Procedure uses a variable due to call definition of uses 2
+procedure pr;
+Select pr such that Uses(pr, "fresh")
+J, K, L
+5000
+42 - Relation, Procedure uses a variable due to procedure definition of uses 1
+procedure pr;
+Select pr such that Uses(pr, "z")
+A
+5000
+43 - Relation, Procedure uses a variable due to procedure definition of uses 2
+procedure pr;
+Select pr such that Uses(pr, "h")
+B, J, K, L
+5000
+44 - Relation, Procedure that uses a variable in itself 1
+procedure pr;
+Select pr such that Uses("C", "red")
+A, B, C, D, E, F, G, H, I, J, K, L
+5000
+45 - Relation, Procedure that uses a variable in itself 2
+procedure pr;
+Select pr such that Uses("J", "green")
+A, B, C, D, E, F, G, H, I, J, K, L
+5000
+46 - Relation, Procedure that does not use a variable itself but calls another that does 1
+constant c;
+Select c such that Uses("G", "use1")
+1, 10, 4, 8, 0, 2, 5
+5000
+47 - Relation, Procedure that does not use a variable itself but calls another that does 2
+constant c;
+Select c such that Uses("J", "h")
+1, 10, 4, 8, 0, 2, 5
+5000
+48 - Relation, Procedure that does not use a variable itself but transitively calls another that does 1
+print pn;
+Select pn such that Uses("L", "mango")
+4, 6, 12, 19, 21, 22, 27, 29, 37, 43
+5000
+49 - Relation, Procedure that does not use a variable itself but transitively calls another that does 2
+read r;
+Select r such that Uses("K", "h")
+2, 8, 11, 20, 25, 26, 30, 32
+5000
