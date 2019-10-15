@@ -47,6 +47,8 @@ namespace UnitTesting
 			PKBStmt Stmts;
 			PKBCall Calls;
 			PKB.clear();
+			Stmts.clear();
+			Calls.clear();
 
 			Stmts.setStmt("1", "read");
 			Stmts.setStmt("2", "read");
@@ -69,14 +71,16 @@ namespace UnitTesting
 
 			Calls.setCallProc("First", "Second");
 			Calls.setCallProc("Second", "Third");
+			Calls.setCallStmt("3", "Second");
+			Calls.setCallStmt("8", "Third");
 
 
 			//Line #3 Calls Second
-			PKB.setUsesS("3", "y");
-			PKB.setUsesS("3", "i");
-			PKB.setUsesS("3", "x");
-			PKB.setUsesS("3", "z");
-			PKB.setUsesS("3", "v"); //#3 Calls Second, which calls Third
+			//PKB.setUsesS("3", "y");
+			//PKB.setUsesS("3", "i");
+			//PKB.setUsesS("3", "x");
+			//PKB.setUsesS("3", "z");
+			//PKB.setUsesS("3", "v"); //#3 Calls Second, which calls Third
 
 			//Direct assignment stmts with var on RHS 
 			PKB.setUsesS("6", "i");
@@ -86,8 +90,8 @@ namespace UnitTesting
 			PKB.setUsesS("6", "x");
 			PKB.setUsesS("6", "y");
 			PKB.setUsesS("6", "i");
-			PKB.setUsesS("8", "z");
-			PKB.setUsesS("8", "v");
+			//PKB.setUsesS("8", "z");
+			//PKB.setUsesS("8", "v");
 			PKB.setUsesS("10", "x");
 			PKB.setUsesS("11", "x");
 			PKB.setUsesS("13", "z");
@@ -189,6 +193,8 @@ namespace UnitTesting
 
 		TEST_METHOD(getUsesSEntAny)
 		{//LHS is either a print/if/while/assign/call 
+			
+
 			PKBUses PKB;
 			STMT_LIST ifResult = PKB.getUsesSEntAny("if");
 			STMT_LIST ifExpected = { {"10"} };

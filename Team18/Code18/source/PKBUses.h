@@ -28,7 +28,8 @@ public:
 	static VAR_LIST getUsesPIdentEnt(PROC_NAME procName); 
 	static TABLE getUsesPEntEnt();
 	
-	static TABLE getUsesProcTable();
+	static TABLE getUsesPTable();
+	static TABLE getUsesSTable();
 
 	// Clear
 	static bool clear();

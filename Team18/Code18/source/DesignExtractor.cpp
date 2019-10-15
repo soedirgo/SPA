@@ -23,7 +23,9 @@ void DesignExtractor::extractDesign()
 	extractCallsT();
 	extractNextT();
 	extractModifiesP();
+	extractModifiesS();
 	extractUsesP();
+	extractUsesS();
 	extractAffects();
 	
 	
@@ -157,6 +159,38 @@ void DesignExtractor::extractUsesP()
 			}
 			recurseUses(caller);
 		//}
+	}
+}
+
+void DesignExtractor::extractUsesS()
+{
+	TABLE callStmtList = PKBCall::getCallStmtTable();
+
+	for (auto vectorIter1 : callStmtList) {
+		STMT_NO stmtNo = vectorIter1.front();
+		PROC_NAME procName = vectorIter1.back();
+
+		TABLE usesPTable = PKBUses::getUsesPIdentEnt(procName);
+		for (auto vectorIter2 : usesPTable) {
+			VAR_NAME varName = vectorIter2.back();
+			PKBUses::setUsesS(stmtNo, varName);
+		}
+	}
+}
+
+void DesignExtractor::extractModifiesS()
+{
+	TABLE callStmtList = PKBCall::getCallStmtTable();
+
+	for (auto vectorIter1 : callStmtList) {
+		STMT_NO stmtNo = vectorIter1.front();
+		PROC_NAME procName = vectorIter1.back();
+
+		TABLE usesPTable = PKBModifies::getModifiesPIdentEnt(procName);
+		for (auto vectorIter2 : usesPTable) {
+			VAR_NAME varName = vectorIter2.back();
+			PKBModifies::setModifiesS(stmtNo, varName);
+		}
 	}
 }
 

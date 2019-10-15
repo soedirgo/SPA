@@ -17,6 +17,8 @@ private:
 	static void extractUsesP();
 	static void extractAffects();
 	static void extractAffectsT();
+	static void extractUsesS();
+	static void extractModifiesS();
 
 	static void recurseAffects(STMT_NO a1, STMT_NO a2);
 	static void recurseModifies(PROC_NAME p);

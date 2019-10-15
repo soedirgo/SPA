@@ -132,7 +132,8 @@ namespace UnitTesting
 			PKB.setUsesP("Fifth", "c");
 			PKB.setUsesP("Fifth", "d");
 
-
+			DesignExtractor DesignExtractor;
+			DesignExtractor.extractDesign();
 			
 		}
 		TEST_METHOD(isUsesSIdentAny) {
@@ -147,7 +148,6 @@ namespace UnitTesting
 			Assert::IsTrue(PKB.isUsesSIdentAny("13"));
 			Assert::IsTrue(PKB.isUsesSIdentAny("14"));
 			Assert::IsTrue(PKB.isUsesSIdentAny("15"));
-			Assert::IsTrue(PKB.isUsesSIdentAny("18"));
 		}
 		TEST_METHOD(isUsesSIdentIdent)
 		{
@@ -166,7 +166,6 @@ namespace UnitTesting
 			Assert::IsTrue(PKB.isUsesSIdentIdent("15", "x"));
 			Assert::IsTrue(PKB.isUsesSIdentIdent("15", "y"));
 			Assert::IsTrue(PKB.isUsesSIdentIdent("15", "z"));
-			Assert::IsTrue(PKB.isUsesSIdentIdent("18", "v"));
 		}
 
 
@@ -180,8 +179,7 @@ namespace UnitTesting
 		}
 		TEST_METHOD(isUsesPIdentIdent)
 		{
-			DesignExtractor DesignExtractor;
-			DesignExtractor.extractDesign();
+			
 
 			PKBUses PKB;
 
