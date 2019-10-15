@@ -4,7 +4,7 @@
 using namespace std;
 TABLE PKBCall::callsProcTable;
 TABLE PKBCall::callsTProcTable;
-TABLE PKBCall::callTable;
+TABLE PKBCall::callStmtTable;
 
 bool PKBCall::setCallProc(PROC_NAME caller, PROC_NAME callee) {
 	vector<string> tuple = vector<string>();
@@ -18,14 +18,14 @@ bool PKBCall::setCallStmt(STMT_NO stmtNo, PROC_NAME caller) {
 	vector<string> tuple = vector<string>();
 	tuple.push_back(stmtNo);
 	tuple.push_back(caller);
-	callTable.emplace(tuple);
+	callStmtTable.emplace(tuple);
 	return true;
 }
 
 PROC_NAME PKBCall::getCallProcByStmt(STMT_NO stmtNo) {
 	PROC_NAME result;
 
-	for (auto vectorIter : callTable) {
+	for (auto vectorIter : callStmtTable) {
 		if (vectorIter.front() == stmtNo) {
 			return vectorIter.back(); 
 		}
@@ -81,13 +81,13 @@ TABLE PKBCall::getCallProcTable() {
 }
 
 TABLE PKBCall::getCallStmtTable() {
-	return callTable;
+	return callStmtTable;
 }
 
 bool PKBCall::clear() {
 	callsProcTable.clear();
 	callsTProcTable.clear();
-	callTable.clear();
+	callStmtTable.clear();
 	return true;
 }
 

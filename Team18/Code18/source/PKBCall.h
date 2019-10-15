@@ -48,5 +48,5 @@ public:
 private:
 	static TABLE callsProcTable;
 	static TABLE callsTProcTable;
-	static TABLE callTable;
+	static TABLE callStmtTable;
 };
