@@ -4,6 +4,7 @@
 #include "Query.h"
 #include "Clause.h"
 #include "PKB.h"
+#include "PatternProcessor.h"
 
 using namespace std;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
@@ -312,27 +313,27 @@ namespace UnitTesting
 		TEST_METHOD(infixToRPNexpression)
 		{
 			string input = "a+b";
-			string actual = QueryParser::infixtoRPNexpression(input);
+			string actual = PatternProcessor::infixtoRPNexpression(input);
 			string expected = "ab+";
 			Assert::AreEqual(actual == expected, true);
 
 			string input2 = "a+b*c";
-			string actual2 = QueryParser::infixtoRPNexpression(input2);
+			string actual2 = PatternProcessor::infixtoRPNexpression(input2);
 			string expected2 = "abc*+";
 			Assert::AreEqual(actual2 == expected2, true);
 
 			string input3 = "A+B*C";
-			string actual3 = QueryParser::infixtoRPNexpression(input3);
+			string actual3 = PatternProcessor::infixtoRPNexpression(input3);
 			string expected3 = "ABC*+";
 			Assert::AreEqual(actual3 == expected3, true);
 
 			string input4 = "(A+B)*C";
-			string actual4 = QueryParser::infixtoRPNexpression(input4);
+			string actual4 = PatternProcessor::infixtoRPNexpression(input4);
 			string expected4 = "AB+C*";
 			Assert::AreEqual(actual4 == expected4, true);
 
 			string input5 = "(A+B)*(C+D)";
-			string actual5 = QueryParser::infixtoRPNexpression(input5);
+			string actual5 = PatternProcessor::infixtoRPNexpression(input5);
 			string expected5 = "AB+CD+*";
 			Assert::AreEqual(actual5 == expected5, true);
 

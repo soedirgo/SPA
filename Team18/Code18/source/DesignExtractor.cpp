@@ -15,21 +15,23 @@ using namespace std;
 
 void DesignExtractor::extractDesign()
 {
+
+	TABLE test = PKBUses::getUsesPEntEnt();
+	int i = test.size();
 	extractFollowsT();
 	extractParentT();
 	extractCallsT();
-	//extractNextT();
+	extractNextT();
 	extractModifiesP();
 	extractUsesP();
-	//extractAffects();
+	extractAffects();
 	
 	
-	TABLE test = PKBUses::getUsesProcTable();
-	int i = test.size();
+	
 	//TABLE test = PKBPattern::getAssignPatternTable();
 	//int i = test.size();
-	TABLE test2 = PKBCall::getCallProcTable();
-	int i2 = test2.size();
+	//TABLE test2 = PKBCall::getCallProcTable();
+	//int i2 = test2.size();
 	//TABLE test = PKBNext::getNextTable();
 	//int i = test.size();
 	//extractAffectsT();
@@ -138,6 +140,7 @@ void DesignExtractor::extractUsesP()
 		PROC_NAME callee = vectorIter1.back();
 		PROC_NAME caller = vectorIter1.front();
 		bool isCaller = false;
+		/*
 		for (auto vectorIter2 : callProcTable) {
 			//Check if callee is a caller then set flag to true
 			if (callee == vectorIter2.front()) {
@@ -145,14 +148,31 @@ void DesignExtractor::extractUsesP()
 				break;
 			}
 		}
-		if (isCaller == false) {
+		*/
+		//if (isCaller == false) {
 			TABLE usesPTable = PKBUses::getUsesPIdentEnt(callee);
 			for (auto vectorIter : usesPTable) {
 				VAR_NAME varName = vectorIter.back();
 				PKBUses::setUsesP(caller, varName);
 			}
 			recurseUses(caller);
+		//}
+	}
+}
+
+void DesignExtractor::recurseUses(PROC_NAME callee) {
+	TABLE callerList = PKBCall::getCallerProc(callee);
+	if (callerList.size() == 0) {
+		return;
+	}
+	for (auto vectorIter : callerList) {
+		PROC_NAME newCaller = vectorIter.front();
+		TABLE varList = PKBUses::getUsesPIdentEnt(callee);
+		for (auto vectorIter : varList) {
+			VAR_NAME varName = vectorIter.back();
+			PKBUses::setUsesP(newCaller, varName);
 		}
+		recurseUses(newCaller);
 	}
 }
 
@@ -219,22 +239,6 @@ void DesignExtractor::extractAffects()
 				PKBAffects::setAffects(a1, a2);
 			}
 		}
-	}
-}
-
-void DesignExtractor::recurseUses(PROC_NAME callee) {
-	TABLE callerList = PKBCall::getCallerProc(callee);
-	if (callerList.size() == 0) {
-		return;
-	}
-	for (auto vectorIter : callerList) {
-		PROC_NAME newCaller = vectorIter.front();
-		TABLE varList = PKBUses::getUsesPIdentEnt(callee);
-		for (auto vectorIter : varList) {
-			VAR_NAME varName = vectorIter.back();
-			PKBUses::setUsesP(newCaller, varName);
-		}
-		recurseUses(newCaller);
 	}
 }
 
