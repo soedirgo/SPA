@@ -41,7 +41,7 @@ procedure C {
   read blue;
   sky = blue;
   grass = green;
-  Call A;
+  call A;
   print sun;
   while (sun >= moon) {
     moon = moon + 4;
