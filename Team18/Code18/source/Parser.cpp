@@ -890,7 +890,12 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 			}
 		}
 		else if (line.find("call") != string::npos) {
-			string proc = parseCall(line);
+			string callArg = line;
+			if (callArg.find("}") != string::npos && passedElse) {
+				nestingLevel = nestingLevel - count(line, '}');
+				callArg.erase(std::remove(callArg.begin(), callArg.end(), '}'), callArg.end());
+			}
+			string proc = parseCall(callArg);
 			pkb.setStmt(to_string(currStmtNo), "call");
 			pkb.setCallStmt(to_string(currStmtNo), proc);
 			pkb.setCallProc(currProc.getProcName(), proc);
@@ -1417,7 +1422,12 @@ NestedResult Parser::parseIfNestedInThen(string ifLine, int parentStmtNo) {
 			}
 		}
 		else if (line.find("call") != string::npos) {
-			string proc = parseCall(line);
+			string callArg = line;
+			if (callArg.find("}") != string::npos && passedElse) {
+				nestingLevel = nestingLevel - 1;
+				callArg.erase(std::remove(callArg.begin(), callArg.end(), '}'), callArg.end());
+			}
+			string proc = parseCall(callArg);
 			pkb.setStmt(to_string(currStmtNo), "call");
 			pkb.setCallStmt(to_string(currStmtNo), proc);
 			pkb.setCallProc(currProc.getProcName(), proc);
@@ -1811,7 +1821,12 @@ NestedResult Parser::parseWhileNestedInThen(string whileLine, int parentStmtNo) 
 			}
 		}
 		else if (line.find("call") != string::npos) {
-			string proc = parseCall(line);
+			string callArg = line;
+			if (callArg.find("}") != string::npos) {
+				nestingLevel = nestingLevel - 1;
+				callArg.erase(std::remove(callArg.begin(), callArg.end(), '}'), callArg.end());
+			}
+			string proc = parseCall(callArg);
 			pkb.setStmt(to_string(currStmtNo), "call");
 			pkb.setCallStmt(to_string(currStmtNo), proc);
 			pkb.setCallProc(currProc.getProcName(), proc);
@@ -2164,7 +2179,12 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 			}
 		}
 		else if (line.find("call") != string::npos) {
-			string proc = parseCall(line);
+			string callArg = line;
+			if (callArg.find("}") != string::npos) {
+				nestingLevel = nestingLevel - count(line, '}');
+				callArg.erase(std::remove(callArg.begin(), callArg.end(), '}'), callArg.end());
+			}
+			string proc = parseCall(callArg);
 			pkb.setStmt(to_string(currStmtNo), "call");
 			pkb.setCallStmt(to_string(currStmtNo), proc);
 			pkb.setCallProc(currProc.getProcName(), proc);
