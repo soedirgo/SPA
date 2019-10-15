@@ -650,7 +650,7 @@ high
 5000
 131 - Select all variable in assign pattern LHS variable and RHS low
 variable v; assign a;
-Select v pattern a(v, _"   low   " _)
+Select v pattern a(v, _"   low   "_)
 low
 5000
 132 - Select all assign that has pattern LHS some variable and RHS 3

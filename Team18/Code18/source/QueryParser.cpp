@@ -16,6 +16,7 @@ using namespace std;
 
 #include <iostream>
 #include <sstream>
+#include "PatternProcessor.h"
 
 string whitespace = " ";
 char whitespacech = ' ';
@@ -33,6 +34,7 @@ unordered_set<string> validFirstArgsUses = { "stmt", "print", "while", "if",
 unordered_set<string> validFirstArgsModifies = { "stmt", "read", "while", "if",
 "assign", "call","prog_line" ,"procedure"};
 unordered_set<string> validSecondArgsUsesModifies = { "variable" };
+unordered_set<string> validFirstSecondArgCall = { "procedure" };
 
 Query QueryParser::parse(string query) {
 
@@ -333,7 +335,7 @@ vector<pair<string, pair<string, string>>> QueryParser::splitPattern(vector<stri
 		second.erase(remove_if(second.begin(), second.end(), isspace), second.end());
 		string secondVar = second;
 		if (!(second.size() == 1 && second.at(0) == '_')) {
-			secondVar = infixtoRPNexpression(second);
+			secondVar = PatternProcessor::infixtoRPNexpression(second);
 		}
 		//string secondVar = infixtoRPNexpression(second);
 		cout << secondVar << '\n';
@@ -765,22 +767,22 @@ string QueryParser::suchThatValidation(unordered_map<string, string> decleration
 				}
 			}
 			else if ((suchThat[i].second.first[0] != '"' && (validFirstArgsModifies.find(firstArgsType) != validFirstArgsModifies.end()))) {
-			if (!isalpha(suchThat[i].second.first[0])) {
-				resultString = "Invalid";
-				return resultString;
-			}
-
-			//Rest must be alphabets or numbers
-			for (int j = 1; j < suchThat[i].second.first.length(); j++) {
-				if (!isalnum(suchThat[i].second.first[j])) {
+				if (!isalpha(suchThat[i].second.first[0])) {
 					resultString = "Invalid";
 					return resultString;
 				}
-			}
+
+				//Rest must be alphabets or numbers
+				for (int j = 1; j < suchThat[i].second.first.length(); j++) {
+					if (!isalnum(suchThat[i].second.first[j])) {
+						resultString = "Invalid";
+						return resultString;
+					}
+				}
 			}
 			else {
-			resultString = "Invalid";
-			return resultString;
+				resultString = "Invalid";
+				return resultString;
 			}
 
 			// Validating second args
@@ -839,201 +841,90 @@ string QueryParser::suchThatValidation(unordered_map<string, string> decleration
 				return resultString;
 			}
 		}
+
+		else if (suchThat[i].first == "Calls" || suchThat[i].first == "Calls*") {
+			// Validating first args
+			if (suchThat[i].second.first == "_") {
+				// valid first args
+			}
+
+			else if (suchThat[i].second.first[0] == '"') {
+				string name = suchThat[i].second.first.substr(1, suchThat[i].second.first.length() - 2);
+
+				if (!isalpha(name[0])) {
+					resultString = "Invalid";
+					return resultString;
+				}
+
+				//Rest must be alphabets or numbers
+				for (int j = 1; j < name.length(); j++) {
+					if (!isalnum(name[j])) {
+						resultString = "Invalid";
+						return resultString;
+					}
+				}
+			}
+			else if ((suchThat[i].second.first[0] != '"' && validFirstSecondArgCall.find(firstArgsType) != validFirstSecondArgCall.end())) {
+				if (!isalpha(suchThat[i].second.first[0])) {
+					resultString = "Invalid";
+					return resultString;
+				}
+
+				//Rest must be alphabets or numbers
+				for (int j = 1; j < suchThat[i].second.first.length(); j++) {
+					if (!isalnum(suchThat[i].second.first[j])) {
+						resultString = "Invalid";
+						return resultString;
+					}
+				}
+			}
+			else {
+				resultString = "Invalid";
+				return resultString;
+			}
+
+			// Validating second args
+			if (suchThat[i].second.second == "_") {
+				//valid
+			}
+
+			else if (suchThat[i].second.second[0] == '"') {
+				string name = suchThat[i].second.second.substr(1, suchThat[i].second.second.length() - 2);
+
+				if (!isalpha(name[0])) {
+					resultString = "Invalid";
+					return resultString;
+				}
+
+				//Rest must be alphabets or numbers
+				for (int j = 1; j < name.length(); j++) {
+					if (!isalnum(name[j])) {
+						resultString = "Invalid";
+						return resultString;
+					}
+				}
+
+			}
+
+			else if ((suchThat[i].second.second[0] != '"' && validFirstSecondArgCall.find(secondArgsType) != validFirstSecondArgCall.end())) {
+				if (!isalpha(suchThat[i].second.second[0])) {
+					resultString = "Invalid";
+					return resultString;
+				}
+
+				//Rest must be alphabets or numbers
+				for (int j = 1; j < suchThat[i].second.second.length(); j++) {
+					if (!isalnum(suchThat[i].second.second[j])) {
+						resultString = "Invalid";
+						return resultString;
+					}
+				}
+			}
+			else {
+				resultString = "Invalid";
+				return resultString;
+			}
+		}
 	}
 	return resultString;
-}
-
-//Helper method to split string
-template <typename Out>
-void split(const std::string& s, char delim, Out result) {
-	std::istringstream iss(s);
-	std::string item;
-	while (std::getline(iss, item, delim)) {
-		*result++ = item;
-	}
-}
-
-std::vector<std::string> split(const std::string& s, char delim) {
-	std::vector<std::string> elems;
-	split(s, delim, std::back_inserter(elems));
-	return elems;
-}
-
-string QueryParser::infixtoRPNexpression(string infix) {
-	string newString = "";
-	int pos = 0;
-	for (char& c : infix) {
-		string s(1, c);
-		string tempStr = s;
-		if (!isalpha(c) && !isdigit(c)) {
-			
-			tempStr = " " + s + " ";
-		}
-		newString.append(tempStr);
-	}
-	vector<string> vectorString = split(newString, ' ');
-	int precedenceWeight;
-	string rpnExpression = "";
-	stack<string> workingStack;
-	for (int i = 0; i < vectorString.size(); i++) {
-		string tempStr = vectorString[i];
-		if (tempStr == "") {
-			continue;
-		}
-		//If is (, push to stack
-		if (tempStr == "(") {
-			workingStack.push(tempStr);
-			continue;
-		}
-
-		//If is ), pop tokens from stack and append to output until ( is seen, then pop (
-		if (tempStr == ")") {
-			while (!workingStack.empty() && workingStack.top() != "(") {
-				rpnExpression.append(workingStack.top());
-				workingStack.pop();
-
-			}
-			if (!workingStack.empty()) {
-				workingStack.pop();
-			}
-			continue;
-		}
-
-		precedenceWeight = getPrecedenceWeight(tempStr);
-		//If is number, append to output
-		if (precedenceWeight == 1) {
-
-				rpnExpression.append("_");
-				rpnExpression.append(tempStr);
-				rpnExpression.append("_");
-			
-		}
-		else {
-			if (workingStack.empty()) {
-				workingStack.push(tempStr);
-			}
-			else {
-				//If operator on the top of stack has greater precedence, pop the operator and append to output
-				//Brackets don't count
-				while (!workingStack.empty() && (workingStack.top() != "(") && precedenceWeight <= getPrecedenceWeight(workingStack.top())) {
-					rpnExpression.append(workingStack.top());
-					workingStack.pop();
-				}
-
-				//Push current operator to stack
-				workingStack.push(tempStr);
-			}
-		}
-	}
-	//Once above is done, if there's tokens in the stack, append to output
-	while (!workingStack.empty())
-	{
-		rpnExpression.append(workingStack.top());
-		workingStack.pop();
-	}
-	/*
-	stack<char> workingStack;
-	int i = 0;
-	int j = 0;
-	int precedenceWeight;
-	string rpnExpression = "";
-	size_t  positionOperant = 0;
-	int wordSize = 0;
-	
-	
-
-
-	while (i < infix.size()) {
-		char tempStr = infix[i];
-		bool isOperatorFlag = false;
-
-		
-		if (infix.size() == 1) {
-			positionOperant = i;
-			isOperatorFlag = true;
-		}
-		//check if previous char is an operator
-		if (i > 0 && !isalpha(infix[i - 1]) && !isdigit(infix[i - 1])) {
-			positionOperant = i;
-			//wordSize = i - wordSize + 1;
-		}
-		
-		if (i == infix.size() - 1) {
-			isOperatorFlag = true;
-		}
-		if (i + 1 < infix.size()) {
-			if(!isalpha(infix[i + 1]) && !isdigit(infix[i + 1])) {
-				isOperatorFlag = true;
-			}
-		}
-		
-
-		//If is (, push to stack
-		if (infix[i] == '(') {
-			workingStack.push(tempStr);
-			i++;
-			continue;
-		}
-
-		//If is ), pop tokens from stack and append to output until ( is seen, then pop (
-		if (tempStr == ')') {
-			while (!workingStack.empty() && workingStack.top() != '(') {
-				rpnExpression.append(1,workingStack.top());
-				workingStack.pop();
-
-			}
-			if (!workingStack.empty()) {
-				workingStack.pop();
-			}
-			i++;
-			continue;
-		}
-
-		precedenceWeight = getPrecedenceWeight(tempStr);
-		//If is number, append to output
-		if (precedenceWeight == 1) {
-			if (!isOperatorFlag) {
-				rpnExpression.append(1, tempStr);
-			}
-			else {
-				//rpnExpression.insert(i,"_");
-				rpnExpression.append(1, tempStr);
-				rpnExpression.append("_");
-			}
-		}
-		else {
-			if (workingStack.empty()) {
-				workingStack.push(tempStr);
-			}
-			else {
-				//If operator on the top of stack has greater precedence, pop the operator and append to output
-				//Brackets don't count
-				while (!workingStack.empty() && (workingStack.top() != '(') && precedenceWeight <= getPrecedenceWeight(workingStack.top())) {
-					rpnExpression.append(1,workingStack.top());
-					workingStack.pop();
-				}
-
-				//Push current operator to stack
-				workingStack.push(tempStr);
-			}
-		}
-		i++;
-	}*/
-	
-	
-	return rpnExpression;
-}
-
-int QueryParser::getPrecedenceWeight(string token) {
-	if (token == "*" || token == "/" || token == "%") {
-		return 3;
-	}
-
-	else if (token == "+" || token == "-") {
-		return 2;
-	}
-
-	else {
-		return 1;
-	}
 }

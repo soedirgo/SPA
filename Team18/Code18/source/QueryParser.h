@@ -38,8 +38,4 @@ public:
 	static std::string selectVariablesValidation(std::unordered_map<std::string, std::string> declerationVariables, std::string selectVars);
 
 	static std::string suchThatValidation(std::unordered_map<std::string, std::string> declerationVariables, std::vector<std::pair<std::string, std::pair<std::string, std::string>>> suchThat);
-
-	static std::string infixtoRPNexpression(std::string infix);
-
-	static int getPrecedenceWeight(string token);
 };

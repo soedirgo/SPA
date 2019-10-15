@@ -14,7 +14,7 @@ using namespace std;
 
 Parser::Parser() {
 	this->pkb = PKB();
-	this->patternProcessor = QueryParser();
+	this->patternProcessor = PatternProcessor();
 	this->stmtNo = 1;
 	this->nestingLevel = 0;
 	this->currProc = NestedResult();
