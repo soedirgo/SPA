@@ -33,6 +33,7 @@ unordered_set<string> validFirstArgsUses = { "stmt", "print", "while", "if",
 unordered_set<string> validFirstArgsModifies = { "stmt", "read", "while", "if",
 "assign", "call","prog_line" ,"procedure"};
 unordered_set<string> validSecondArgsUsesModifies = { "variable" };
+unordered_set<string> validFirstSecondArgCall = { "procedure" };
 
 Query QueryParser::parse(string query) {
 
@@ -765,22 +766,22 @@ string QueryParser::suchThatValidation(unordered_map<string, string> decleration
 				}
 			}
 			else if ((suchThat[i].second.first[0] != '"' && (validFirstArgsModifies.find(firstArgsType) != validFirstArgsModifies.end()))) {
-			if (!isalpha(suchThat[i].second.first[0])) {
-				resultString = "Invalid";
-				return resultString;
-			}
-
-			//Rest must be alphabets or numbers
-			for (int j = 1; j < suchThat[i].second.first.length(); j++) {
-				if (!isalnum(suchThat[i].second.first[j])) {
+				if (!isalpha(suchThat[i].second.first[0])) {
 					resultString = "Invalid";
 					return resultString;
 				}
-			}
+
+				//Rest must be alphabets or numbers
+				for (int j = 1; j < suchThat[i].second.first.length(); j++) {
+					if (!isalnum(suchThat[i].second.first[j])) {
+						resultString = "Invalid";
+						return resultString;
+					}
+				}
 			}
 			else {
-			resultString = "Invalid";
-			return resultString;
+				resultString = "Invalid";
+				return resultString;
 			}
 
 			// Validating second args
@@ -821,6 +822,90 @@ string QueryParser::suchThatValidation(unordered_map<string, string> decleration
 			}
 
 			else if ((suchThat[i].second.second[0] != '"' && (validSecondArgsUsesModifies.find(secondArgsType) != validSecondArgsUsesModifies.end()))) {
+				if (!isalpha(suchThat[i].second.second[0])) {
+					resultString = "Invalid";
+					return resultString;
+				}
+
+				//Rest must be alphabets or numbers
+				for (int j = 1; j < suchThat[i].second.second.length(); j++) {
+					if (!isalnum(suchThat[i].second.second[j])) {
+						resultString = "Invalid";
+						return resultString;
+					}
+				}
+			}
+			else {
+				resultString = "Invalid";
+				return resultString;
+			}
+		}
+
+		else if (suchThat[i].first == "Calls" || suchThat[i].first == "Calls*") {
+			// Validating first args
+			if (suchThat[i].second.first == "_") {
+				// valid first args
+			}
+
+			else if (suchThat[i].second.first[0] == '"') {
+				string name = suchThat[i].second.first.substr(1, suchThat[i].second.first.length() - 2);
+
+				if (!isalpha(name[0])) {
+					resultString = "Invalid";
+					return resultString;
+				}
+
+				//Rest must be alphabets or numbers
+				for (int j = 1; j < name.length(); j++) {
+					if (!isalnum(name[j])) {
+						resultString = "Invalid";
+						return resultString;
+					}
+				}
+			}
+			else if ((suchThat[i].second.first[0] != '"' && validFirstSecondArgCall.find(firstArgsType) != validFirstSecondArgCall.end())) {
+				if (!isalpha(suchThat[i].second.first[0])) {
+					resultString = "Invalid";
+					return resultString;
+				}
+
+				//Rest must be alphabets or numbers
+				for (int j = 1; j < suchThat[i].second.first.length(); j++) {
+					if (!isalnum(suchThat[i].second.first[j])) {
+						resultString = "Invalid";
+						return resultString;
+					}
+				}
+			}
+			else {
+				resultString = "Invalid";
+				return resultString;
+			}
+
+			// Validating second args
+			if (suchThat[i].second.second == "_") {
+				//valid
+			}
+
+			else if (suchThat[i].second.second[0] == '"') {
+				string name = suchThat[i].second.second.substr(1, suchThat[i].second.second.length() - 2);
+
+				if (!isalpha(name[0])) {
+					resultString = "Invalid";
+					return resultString;
+				}
+
+				//Rest must be alphabets or numbers
+				for (int j = 1; j < name.length(); j++) {
+					if (!isalnum(name[j])) {
+						resultString = "Invalid";
+						return resultString;
+					}
+				}
+
+			}
+
+			else if ((suchThat[i].second.second[0] != '"' && validFirstSecondArgCall.find(secondArgsType) != validFirstSecondArgCall.end())) {
 				if (!isalpha(suchThat[i].second.second[0])) {
 					resultString = "Invalid";
 					return resultString;
