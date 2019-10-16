@@ -174,6 +174,17 @@ void DesignExtractor::extractUsesS()
 		for (auto vectorIter2 : usesPTable) {
 			VAR_NAME varName = vectorIter2.back();
 			PKBUses::setUsesS(stmtNo, varName);
+
+			//To populate the if/while statement with the vars uses from the call stmt
+			TABLE parentTTable = PKBParent::getParentTTable();
+			for (auto vectorIter1 : parentTTable) {
+				STMT_NO parent = vectorIter1.front();
+				STMT_NO children = vectorIter1.back();
+				//Found the parent* and populate all the ancestors
+				if (children == stmtNo) {
+					PKBUses::setUsesS(parent, varName);
+				}
+			}
 		}
 	}
 }
@@ -190,6 +201,17 @@ void DesignExtractor::extractModifiesS()
 		for (auto vectorIter2 : usesPTable) {
 			VAR_NAME varName = vectorIter2.back();
 			PKBModifies::setModifiesS(stmtNo, varName);
+
+			//To populate the if/while statement with the vars modifies from the call stmt
+			TABLE parentTTable = PKBParent::getParentTTable();
+			for (auto vectorIter1 : parentTTable) {
+				STMT_NO parent = vectorIter1.front();
+				STMT_NO children = vectorIter1.back();
+				//Found the parent* and populate all the ancestors
+				if (children == stmtNo) {
+					PKBModifies::setModifiesS(parent, varName);
+				}
+			}
 		}
 	}
 }

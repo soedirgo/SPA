@@ -57,6 +57,10 @@ TABLE PKBParent::getParentTable() {
 	return parentTable;
 }
 
+TABLE PKBParent::getParentTTable() {
+	return parentTTable;
+}
+
 bool PKBParent::isParentAnyAny() {
 	return !parentTable.empty();
 }
