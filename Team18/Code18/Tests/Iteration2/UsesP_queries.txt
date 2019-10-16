@@ -1,7 +1,7 @@
 1 - Set 1 - Test syntax of UsesP. UsesP syntax, LHS synonym RHS synonym
 procedure pr; variable v;
 Select v such that Uses(pr, v)
-x, y, z, i, h, red, orange, sky, clear, rainbow, yellow, green, blue, purple, Mon, Tue, Sat, Sun, Wed, use1, use2, use3, orange, apple, pear, mango, banana, fresh
+x, y, z, i, h, red, orange, sky, clear, rainbow, yellow, green, blue, purple, Mon, Tue, Sat, Sun, Wed, use1, use2, use3, apple, pear, mango, banana, fresh
 5000
 2 - UsesP syntax, LHS invalid synonym RHS synonym
 constant c; variable v;
@@ -141,32 +141,32 @@ A, B, C, D, E, G, I, J, K, L
 29 - Relation, Select all variable that is used
 procedure pr; variable v;
 Select v such that Uses(pr, v)
-x, y, z, i, h, red, orange, sky, clear, rainbow, yellow, green, blue, purple, Mon, Tue, Sat, Sun, Wed, use1, use2, use3, orange, apple, pear, mango, banana, fresh
+x, y, z, i, h, red, orange, sky, clear, rainbow, yellow, green, blue, purple, Mon, Tue, Sat, Sun, Wed, use1, use2, use3, apple, pear, mango, banana, fresh
 5000
 30 - Relation, Select all procedures that uses a specific variable 1
 procedure pr;
-Select pr such that (pr, "Wed")
+Select pr such that Uses(pr, "Wed")
 D, I
 5000
 31 - Relation, Select all procedures that uses a specific variable 2
 procedure pr;
-Select pr such that (pr, "mango")
-I, J
+Select pr such that Uses(pr, "mango")
+I, J, K, L
 5000
 32 - Relation, Select all variables used by a specific procedure 1
 variable v;
-Select v such that ("D", v)
+Select v such that Uses("D", v)
 Mon, Tue, Sat, Sun, Wed
 5000
 33 - Relation, Select all variables used by a specific procedure 2
 variable v;
-Select v such that ("L", v)
+Select v such that Uses("L", v)
 mango, green, fresh, apple, i, h
 5000
 34 - Relation, Procedure uses a variable due to assign definition of uses 1
 procedure pr;
 Select pr such that Uses(pr, "fresh")
-J
+J, K, L
 5000
 35 - Relation, Procedure uses a variable due to assign definition of uses 2
 procedure pr;
@@ -176,7 +176,7 @@ C
 36 - Relation, Procedure uses a variable due to print definition of uses 1
 procedure pr;
 Select pr such that Uses(pr, "h")
-B
+B, J, K, L
 5000
 37 - Relation, Procedure uses a variable due to print definition of uses 2
 procedure pr;

@@ -16,8 +16,7 @@ using namespace std;
 void DesignExtractor::extractDesign()
 {
 
-	TABLE test = PKBUses::getUsesPEntEnt();
-	int i = test.size();
+	
 	extractFollowsT();
 	extractParentT();
 	extractCallsT();
@@ -26,11 +25,12 @@ void DesignExtractor::extractDesign()
 	extractModifiesS();
 	extractUsesP();
 	extractUsesS();
-	extractAffects();
+	//extractAffects();
 	
 	
-	
-	//TABLE test = PKBPattern::getAssignPatternTable();
+	//TABLE test = PKBUses::getUsesPEntEnt();
+	//int i = test.size();
+	//TABLE test = PKBUses::getUsesPTable();
 	//int i = test.size();
 	//TABLE test2 = PKBCall::getCallProcTable();
 	//int i2 = test2.size();
