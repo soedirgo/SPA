@@ -21,7 +21,7 @@ none
 5 - ModifiesP syntax, LHS synonym RHS wildcard
 procedure pr;
 Select pr such that Modifies(pr, _)
-A, B, C, D, F, H, I, J, K, L
+A, B, C, D, F, H, I, J, K, L, E, G
 5000
 6 - ModifiesP syntax, LHS wildcard RHS synonym
 variable v;

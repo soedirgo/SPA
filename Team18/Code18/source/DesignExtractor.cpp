@@ -16,7 +16,8 @@ using namespace std;
 void DesignExtractor::extractDesign()
 {
 
-	
+	TABLE test = PKBModifies::getModifiesPEntEnt();
+	int i = test.size();
 	extractFollowsT();
 	extractParentT();
 	extractCallsT();
@@ -28,7 +29,7 @@ void DesignExtractor::extractDesign()
 	//extractAffects();
 	
 	
-	//TABLE test = PKBUses::getUsesPEntEnt();
+	//TABLE test = PKBModifies::getModifiesPEntEnt();
 	//int i = test.size();
 	//TABLE test = PKBUses::getUsesPTable();
 	//int i = test.size();
@@ -97,6 +98,7 @@ void DesignExtractor::extractCallsT()
 void DesignExtractor::extractModifiesP()
 {
 	TABLE callProcTable = PKBCall::getCallProcTable();
+	STMT_LIST procListWithoutCall;
 	for (auto vectorIter1 : callProcTable) {
 		PROC_NAME callee = vectorIter1.back();
 		PROC_NAME caller = vectorIter1.front();
@@ -109,13 +111,21 @@ void DesignExtractor::extractModifiesP()
 			}
 		}
 		if (isCaller == false) {
-			TABLE usesPTable = PKBModifies::getModifiesPIdentEnt(callee);
-			for (auto vectorIter : usesPTable) {
-				VAR_NAME varName = vectorIter.back();
-				PKBModifies::setModifiesP(caller, varName);
-			}
-			recurseModifies(caller);
-		}	
+			vector<string> tuple = vector<string>();
+			tuple.push_back(caller);
+			tuple.push_back(callee);
+			procListWithoutCall.emplace(tuple);
+		}
+	}
+	for (auto vectorIter1 : procListWithoutCall) {
+		PROC_NAME callee = vectorIter1.back();
+		PROC_NAME caller = vectorIter1.front();
+		TABLE usesPTable = PKBModifies::getModifiesPIdentEnt(callee);
+		for (auto vectorIter : usesPTable) {
+			VAR_NAME varName = vectorIter.back();
+			PKBModifies::setModifiesP(caller, varName);
+		}
+		recurseModifies(caller);
 	}
 }
 
@@ -138,11 +148,11 @@ void DesignExtractor::recurseModifies(PROC_NAME callee) {
 void DesignExtractor::extractUsesP()
 {
 	TABLE callProcTable = PKBCall::getCallProcTable();
+	STMT_LIST procListWithoutCall;
 	for (auto vectorIter1 : callProcTable) {
 		PROC_NAME callee = vectorIter1.back();
 		PROC_NAME caller = vectorIter1.front();
 		bool isCaller = false;
-		/*
 		for (auto vectorIter2 : callProcTable) {
 			//Check if callee is a caller then set flag to true
 			if (callee == vectorIter2.front()) {
@@ -150,15 +160,22 @@ void DesignExtractor::extractUsesP()
 				break;
 			}
 		}
-		*/
-		//if (isCaller == false) {
-			TABLE usesPTable = PKBUses::getUsesPIdentEnt(callee);
-			for (auto vectorIter : usesPTable) {
-				VAR_NAME varName = vectorIter.back();
-				PKBUses::setUsesP(caller, varName);
-			}
-			recurseUses(caller);
-		//}
+		if (isCaller == false) {
+			vector<string> tuple = vector<string>();
+			tuple.push_back(caller);
+			tuple.push_back(callee);
+			procListWithoutCall.emplace(tuple);
+		}
+	}
+	for (auto vectorIter1 : procListWithoutCall) {
+		PROC_NAME callee = vectorIter1.back();
+		PROC_NAME caller = vectorIter1.front();
+		TABLE usesPTable = PKBUses::getUsesPIdentEnt(callee);
+		for (auto vectorIter : usesPTable) {
+			VAR_NAME varName = vectorIter.back();
+			PKBUses::setUsesP(caller, varName);
+		}
+		recurseUses(caller);
 	}
 }
 
