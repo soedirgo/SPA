@@ -487,6 +487,7 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 	for (string var : toAdd) {
 		result.addUses(var);
 		if (!isdigit(var.at(0))) {
+			currProc.addUses(var);
 			result.addCondExpr(var);
 		}
 	}
@@ -1018,6 +1019,7 @@ NestedResult Parser::parseIfNestedInThen(string ifLine, int parentStmtNo) {
 	for (string var : toAdd) {
 		result.addUses(var);
 		if (!isdigit(var.at(0))) {
+			currProc.addUses(var);
 			result.addCondExpr(var);
 		}
 	}
@@ -1545,6 +1547,7 @@ NestedResult Parser::parseWhileNestedInThen(string whileLine, int parentStmtNo) 
 	for (string var : toAdd) {
 		result.addUses(var);
 		if (!isdigit(var.at(0))) {
+			currProc.addUses(var);
 			result.addCondExpr(var);
 		}
 	}
@@ -1903,6 +1906,7 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 	for (string var : toAdd) {
 		result.addUses(var);
 		if (!isdigit(var.at(0))) {
+			currProc.addUses(var);
 			result.addCondExpr(var);
 		}
 	}
