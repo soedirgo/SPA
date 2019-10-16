@@ -1,15 +1,14 @@
 #include "Evaluator.h"
+#include "AbstractType.h"
 #include "Clause.h"
 #include "Dispatcher.h"
 #include "PKB.h"
-#include "PKBHash.h"
 #include "Query.h"
 #include "Result.h"
 #include <functional>
 #include <set>
 #include <string>
 #include <unordered_map>
-#include <unordered_set>
 #include <utility>
 #include <vector>
 
@@ -30,7 +29,7 @@ namespace Evaluator {
 
         // select clause as the starting intermediate result
         vector<string> initResults;
-        unordered_set<vector<string>> initTable;
+        TABLE initTable;
         if (declarations[selectSyn] == "stmt") {
             initTable = PKB::getStmts();
         } else if (declarations[selectSyn] == "read") {
@@ -65,7 +64,7 @@ namespace Evaluator {
             return {};
 
         // return results (projection)
-        unordered_set<vector<string>> finalResults = currentResult.getResults();
+        TABLE finalResults = currentResult.getResults();
         set<string> selectResultsSet;
         int selectSynIdx = currentResult.getSynonyms()[selectSyn];
         for (const auto& result : finalResults)

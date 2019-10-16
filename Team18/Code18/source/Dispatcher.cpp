@@ -1,7 +1,7 @@
 #include "Dispatcher.h"
+#include "AbstractType.h"
 #include "Clause.h"
 #include "PKB.h"
-#include "PKBHash.h"
 #include "Result.h"
 #include <functional>
 #include <string>
@@ -21,7 +21,6 @@ namespace Evaluator {
         }
 
         bool isPartialPattern(string str) {
-            //TODO: change this after shunting yard is implemented
             return !isUnderscore(str) && str.front() == '_';
         }
 
@@ -205,8 +204,7 @@ namespace Evaluator {
                                                     rhs);
           }}};
 
-        unordered_map<string, function<unordered_set<vector<string>>
-                                       (string, string)>> suchThatTableApiMap =
+        unordered_map<string, function<TABLE(string, string)>> suchThatTableApiMap =
         {{"Uses",
           [](string lhs, string rhs) {
               if (isIdentifier(lhs))
@@ -267,7 +265,7 @@ namespace Evaluator {
                   else if (isIdentifier(rhs))
                       return PKB::getCallsEntIdent(trimEnds(rhs));
 				  else if (lhs == rhs)
-					  return unordered_set<vector<string>>();
+					  return TABLE();
                   else
                       return PKB::getCallsEntEnt();
           }},
@@ -283,7 +281,7 @@ namespace Evaluator {
 				  else if (isIdentifier(rhs))
 					  return PKB::getCallsTEntIdent(trimEnds(rhs));
 				  else if (lhs == rhs)
-					  return unordered_set<vector<string>>();
+					  return TABLE();
 				  else
 					  return PKB::getCallsTEntEnt();
 		  }},
@@ -301,7 +299,7 @@ namespace Evaluator {
                       return PKB::getFollowsEntIdent(getEntity(lhs),
                                                      rhs);
                   else if (lhs == rhs)
-                      return unordered_set<vector<string>>();
+                      return TABLE();
                   else
                       return PKB::getFollowsEntEnt(getEntity(lhs),
                                                    getEntity(rhs));
@@ -320,7 +318,7 @@ namespace Evaluator {
                       return PKB::getFollowsTEntIdent(getEntity(lhs),
                                                       rhs);
                   else if (lhs == rhs)
-                      return unordered_set<vector<string>>();
+                      return TABLE();
                   else
                       return PKB::getFollowsTEntEnt(getEntity(lhs),
                                                     getEntity(rhs));
@@ -339,7 +337,7 @@ namespace Evaluator {
                       return PKB::getParentEntIdent(getEntity(lhs),
                                                     rhs);
                   else if (lhs == rhs)
-                      return unordered_set<vector<string>>();
+                      return TABLE();
                   else
                       return PKB::getParentEntEnt(getEntity(lhs),
                                                   getEntity(rhs));
@@ -358,7 +356,7 @@ namespace Evaluator {
                       return PKB::getParentTEntIdent(getEntity(lhs),
                                                      rhs);
                   else if (lhs == rhs)
-                      return unordered_set<vector<string>>();
+                      return TABLE();
                   else
                       return PKB::getParentTEntEnt(getEntity(lhs),
                                                    getEntity(rhs));
@@ -377,7 +375,7 @@ namespace Evaluator {
                       return PKB::getNextEntIdent(getEntity(lhs), 
 													rhs);
                   else if (lhs == rhs)
-                      return unordered_set<vector<string>>();
+                      return TABLE();
                   else
                       return PKB::getNextEntEnt(getEntity(lhs),
 												   getEntity(rhs));
@@ -402,8 +400,7 @@ namespace Evaluator {
 												   getEntity(rhs));
           }}};
 
-        unordered_map<string, function<unordered_set<vector<string>>
-                                       (string, string)>> patternApiMap =
+        unordered_map<string, function<TABLE(string, string)>> patternApiMap =
         {{"assign",
           [](string lhs, string rhs) {
               if (isUnderscore(lhs))
@@ -454,7 +451,7 @@ namespace Evaluator {
                     unordered_map<string, string>& decl) {
         bool resultExists;
         unordered_map<string, int> synonyms;
-        unordered_set<vector<string>> results;
+        TABLE results;
         string type = clause.getType();
         vector<string> fields = clause.getFields();
         declarations = decl;
