@@ -335,52 +335,52 @@ none
 5000
 68 - Set 7 - Test multiple procedures with a few s.t. ModifiesS clause. ModifiesS, Select all stmt that modifies a variable
 stmt s; variable v;
-Select s such that Modifies(s, v)
+Select s such that Modifies(s, _)
 1, 2, 3, 4, 5, 6, 7, 8, 11, 13, 14, 15, 17, 19, 20, 23, 24
 5000
 69 - ModifiesS, Select all variable that is modified
 stmt s; variable v;
-Select v such that Modifies(s, v)
-y, z, x, i, k, l, fin
+Select v such that Modifies(s, _)
+y, z, i, fin, diff,dwhilep,j,k,l,x
 5000
 70 - ModifiesS, Select all assign that modifies a variable
 assign a; variable v;
-Select a such that Modifies(a, v)
+Select a such that Modifies(a, _)
 1, 4, 7, 8, 11, 15, 19, 20, 23
 5000
 71 - ModifiesS, Select all variable modified by assign
 assign a; variable v;
-Select v such that Modifies(a, v)
-x, y, z, k, l, fin
+Select v such that Modifies(a, _)
+y, z, i, fin, diff,dwhilep,j,k,l,x
 5000
 72 - ModifiesS, Select all read that modifies a variable
 read r; variable v;
-Select r such that Modifies(r, v)
+Select r such that Modifies(r, _)
 2, 5, 17, 24
 5000
 73 - ModifiesS, Select all variable modified by read
 read r; variable v;
-Select v such that Modifies(r, v)
-y, z, i, fin
+Select v such that Modifies(r, _)
+y, z, i, fin, diff,dwhilep,j,k,l,x
 5000
 74 - ModifiesS, Select all if that modifies a variable
 if ifs; variable v;
-Select ifs such that Modifies(ifs, v)
+Select ifs such that Modifies(ifs, _)
 3
 5000
 75 - ModifiesS, Select all variable modified by if
 if ifs; variable v;
-Select v such that Modifies(ifs, v)
-y, z, x
+Select v such that Modifies(ifs, _)
+y, z, i, fin, diff,dwhilep,j,k,l,x
 5000
 76 - ModifiesS, Select print that modifies a variable
 print pn; variable v;
-Select pn such tht Modifies(pn, v)
+Select pn such tht Modifies(pn, _)
 none
 5000
 77 - ModifiesS, Select all variable modified by print
 print pn; variable v;
-Select v such that Modifies(pn, v)
+Select v such that Modifies(pn, _)
 none
 5000
 78 - ModifiesS, LHS stmt# RHS wildcard
@@ -395,27 +395,27 @@ none
 5000
 80 - Set 8 - Test multiple procedures with a few p.a. assign clause. Pattern assign, Select a LHS v RHS v
 assign a; variable v;
-Select a pattern a(v, v)
-7, 8, 15, 23
+Select a pattern a(v, _)
+1, 4, 7, 8, 11, 15, 19, 20, 23
 5000
 81 - Pattern assign, Select v LHS v RHS v
 assign a; variable v;
-Select v pattern a(v, v)
-x, y, z, fin
+Select v pattern a(v, _)
+x, y, z, fin, k, l
 5000
 82 - Pattern assign, Select a LHS v RHS v1
 assign a; variable v, v1;
-Select a pattern a(v, v1)
-4, 11, 15, 19, 20, 23
+Select a pattern a(v, _)
+1, 7, 8, 4, 11, 15, 19, 20, 23
 5000
 83 - Pattern assign, Select v LHS v RHS v1
-assign al; variable v, v1;
-Select v pattern a(v, v1)
-y, z, k, l, fin
+assign a; variable v;
+Select v pattern a(v, _)
+y, z, k, l, fin, x
 5000
 84 - Pattern assign, Select v1 LHS v RHS v1
 assign a; variable v, v1;
-Select v1 pattern a(v, v1)
+Select v pattern a(v, _)
 x, y, z, l, k, fin
 5000
 85 - Pattern assign, Select a LHS v RHS Ident
@@ -425,28 +425,28 @@ Select a pattern a(v, _"x"_)
 5000
 86 - Pattern assign, Select v LHS v RHS Ident
 assign a; variable v;
-Select a pattern a(v, _"x"_)
+Select v pattern a(v, _"x"_)
 y, x, z
 5000
 87 - Pattern assign, Select a LHS Ident RHS v
 assign a; variable v;
-Select a pattern a("z", v)
+Select a pattern a("z", _)
 11, 15
 5000
 88 - Pattern assign, Select v LHS Ident RHS v
 assign a; variable v;
-Select v pattern a("z", v)
-x, y, z
+Select v pattern a("z", _)
+y, z, i, fin, diff,dwhilep,j,k,l,x
 5000
 89 - Pattern assign, Select a LHS wildcard RHS v
 assign a; variable v;
-Select a pattern a(_, v)
-4, 7, 8, 11, 15, 19, 20, 23
+Select a pattern a(_, _)
+1, 4, 7, 8, 11, 15, 19, 20, 23
 5000
 90 - Pattern assign, Select v LHS wildcard RHS v
 assign a; variable v;
-Select v pattern a(_, v)
-x, y, z, l, k, fin
+Select v pattern a(_, _)
+y, z, i, fin, diff,dwhilep,j,k,l,x
 5000
 91 - Pattern assign, Select a LHS v RHS wildcard
 assign a; variable v;
@@ -460,23 +460,23 @@ x, y, z, k, l, fin
 5000
 93 - Pattern assign, Select a LHS matches in different procedures
 assign a; variable v;
-Select a pattern a("z", v)
+Select a pattern a("z", _)
 11, 15
 5000
 94 - Pattern assign, Select v LHS matches in different procedures
 assign a; variable v;
-Select v pattern a("z", v)
-x, y, z
+Select v pattern a("z", _)
+y, z, i, fin, diff,dwhilep,j,k,l,x
 5000
 95 - Pattern assign, Select a LHS matches only in 1 procedure
 assign a; variable v;
-Select a pattern a("l", v)
+Select a pattern a("l", _)
 20
 5000
 96 - Pattern assign, Select v LHS matches only in 1 procedure
 assign a; variable v;
-Select a pattern a("l", v)
-k
+Select v pattern a("l", _)
+y, z, i, fin, diff,dwhilep,j,k,l,x
 5000
 97 - Pattern assign, Select a RHS matches in different procedures
 assign a; variable v;
