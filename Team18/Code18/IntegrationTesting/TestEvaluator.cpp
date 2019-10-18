@@ -15,10 +15,9 @@ namespace IntegrationTesting
 	public:
         TEST_METHOD_INITIALIZE(evaluatorInit)
         {
-			
             /**
              * SIMPLE source:
-             * ___ procedure main {
+             *     procedure main {
              *  1.   a = 1;
              *  2.   if (b == 2) {
              *  3.     while (c == 3) {
@@ -26,20 +25,21 @@ namespace IntegrationTesting
              *  5.         if (e == 5) {
              *  6.           if (f == 6) {
              *  7.             read g; }
-             * ___           else {
+             *               else {
              *  8.             while (h == 7) {
              *  9.               call sub; } } }
-             * ___         else {
+             *             else {
              * 10.           read i; } } } }
-             * ___   else {
+             *       else {
              * 11.     print j; }
-             * ___ }
+             *     }
              *
-             * ___ procedure sub {
+             *     procedure sub {
              * 12.   a = 8;
              * 13.   b = a;
-             * ___ }
+             *     }
              */
+
             PKB pkb;
 
             pkb.clear();
@@ -257,56 +257,196 @@ namespace IntegrationTesting
             list<string> expected;
             list<string> actual;
 
-            expected = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13" };
+            expected = { "1", "2", "3", "4", "5", "6", "7",
+                         "8", "9", "10", "11", "12", "13" };
             actual = Evaluator::evaluate(Query(decl, "s", {}));
+            expected.sort();
+            actual.sort();
+            Assert::IsTrue(expected == actual);
+
+            expected = { "7", "10" };
+            actual = Evaluator::evaluate(Query(decl, "r", {}));
+            expected.sort();
+            actual.sort();
+            Assert::IsTrue(expected == actual);
+
+            expected = { "11" };
+            actual = Evaluator::evaluate(Query(decl, "p", {}));
+            expected.sort();
+            actual.sort();
+            Assert::IsTrue(expected == actual);
+
+            expected = { "9" };
+            actual = Evaluator::evaluate(Query(decl, "c", {}));
+            expected.sort();
+            actual.sort();
+            Assert::IsTrue(expected == actual);
+
+            expected = { "3", "4", "8" };
+            actual = Evaluator::evaluate(Query(decl, "w", {}));
+            expected.sort();
+            actual.sort();
+            Assert::IsTrue(expected == actual);
+
+            expected = { "2", "5", "6" };
+            actual = Evaluator::evaluate(Query(decl, "i", {}));
+            expected.sort();
+            actual.sort();
+            Assert::IsTrue(expected == actual);
+
+            expected = { "1", "12", "13" };
+            actual = Evaluator::evaluate(Query(decl, "a", {}));
+            expected.sort();
+            actual.sort();
+            Assert::IsTrue(expected == actual);
+
+            expected = { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j" };
+            actual = Evaluator::evaluate(Query(decl, "v", {}));
+            expected.sort();
+            actual.sort();
+            Assert::IsTrue(expected == actual);
+
+            expected = { "1", "2", "3", "4", "5", "6", "7", "8" };
+            actual = Evaluator::evaluate(Query(decl, "cons", {}));
+            expected.sort();
+            actual.sort();
+            Assert::IsTrue(expected == actual);
+
+            expected = { "1", "2", "3", "4", "5", "6", "7",
+                         "8", "9", "10", "11", "12", "13" };
+            actual = Evaluator::evaluate(Query(decl, "n", {}));
+            expected.sort();
+            actual.sort();
+            Assert::IsTrue(expected == actual);
+
+            expected = { "main", "sub" };
+            actual = Evaluator::evaluate(Query(decl, "proc", {}));
             expected.sort();
             actual.sort();
             Assert::IsTrue(expected == actual);
         }
         TEST_METHOD(testOneSuchThatClause)
         {
+            unordered_map<string, string> decl = { {"s", "stmt"},
+                                                   {"r", "read"},
+                                                   {"p", "print"},
+                                                   {"c", "call"},
+                                                   {"w", "while"},
+                                                   {"i", "if"},
+                                                   {"a", "assign"},
+                                                   {"v", "variable"},
+                                                   {"cons", "constant"},
+                                                   {"n", "prog_line"},
+                                                   {"proc", "procedure"} };
+            list<string> expected;
+            list<string> actual;
+
             /**
-               To test:
-               1. Select s such that Uses(s, v);
-               2. Select r such that Modifies(r, v);
-               3. Select p such that Uses(p, v);
-               4. Select w such that Uses(w, v);
-               5. Select i such that Uses(i, "z");
-               6. Select a such that Modifies(a, "x");
-               7. Select v such that Uses(2, v);
-               8. Select C such that Uses(2, "x");
-               9. Select P such that Modifies(P, "z");
-            */
-            /**
-               1. Select s such that Follows(1, s);
-               2. Select s such that Follows(s, 6);
-               3. Select s such that Follows*(1, s);
-               4. Select r such that Follows(r, p);
-               5. Select a such that Follows*(a, w);
-               6. Select s such that Parent(3, s);
-               7. Select a such that Parent(i, a);
-               8. Select s such that Parent(4, s);
-               9. Select p such that Parent*(w, p);
-               10.Select a such that Parent*(s, a);
+             * Select s such that UsesS(s, v)
+             * Select cons such that UsesP("main", _)
+             * Select v such that ModifiesS(2, v)
+             * Select c such that ModifiesP(("sub", "b")
+             * Select n such that Calls("main", "main")
+             * Select c such that CallsT("main", c)
+             * Select p such that Follows(2, _)
+             * Select s such that FollowsT(s, 2)
+             * Select r such that Parent(9, _)
+             * Select i such that ParentT(i, w)
+             * Select proc such that Next(9, _)
+             * Select a such that NextT(n, 11)
              */
         }
         TEST_METHOD(testOnePatternClause)
         {
+            unordered_map<string, string> decl = { {"s", "stmt"},
+                                                   {"r", "read"},
+                                                   {"p", "print"},
+                                                   {"c", "call"},
+                                                   {"w", "while"},
+                                                   {"i", "if"},
+                                                   {"a", "assign"},
+                                                   {"v", "variable"},
+                                                   {"cons", "constant"},
+                                                   {"n", "prog_line"},
+                                                   {"proc", "procedure"} };
+            list<string> expected;
+            list<string> actual;
+
             /**
-               1. Select a pattern a(_, _)
-               2. Select a pattern a(x, _)
-               3. Select a pattern a(_, 1)
-               4. Select a pattern a(z, 0)
+             * Select a pattern a(_, 8)
+             * Select a pattern a("b", " a ")
+             * Select i pattern i(v, _, _)
+             * Select w pattern w(_, _)
              */
         }
         TEST_METHOD(testOneWithClause)
         {
-        }
-        TEST_METHOD(testOneClauseEach)
-        {
+            unordered_map<string, string> decl = { {"s", "stmt"},
+                                                   {"r", "read"},
+                                                   {"p", "print"},
+                                                   {"c", "call"},
+                                                   {"w", "while"},
+                                                   {"i", "if"},
+                                                   {"a", "assign"},
+                                                   {"v", "variable"},
+                                                   {"cons", "constant"},
+                                                   {"n", "prog_line"},
+                                                   {"proc", "procedure"} };
+            list<string> expected;
+            list<string> actual;
+
+            /**
+             * Select c with c.procName = cons.value
+             * Select v with v.varName = "h"
+             * Select n with n = cons.value
+             * Select cons with 1 = 2
+             */
         }
         TEST_METHOD(testMultiClauses)
         {
+            unordered_map<string, string> decl = { {"s", "stmt"},
+                                                   {"r", "read"},
+                                                   {"p", "print"},
+                                                   {"c", "call"},
+                                                   {"w", "while"},
+                                                   {"i", "if"},
+                                                   {"a", "assign"},
+                                                   {"v", "variable"},
+                                                   {"cons", "constant"},
+                                                   {"n", "prog_line"},
+                                                   {"proc", "procedure"} };
+            list<string> expected;
+            list<string> actual;
+
+            /**
+             * TODO:
+             * multi same type syn
+             * overlapping syn
+             * 5
+             */
+        }
+        TEST_METHOD(testBooleanTuple)
+        {
+            unordered_map<string, string> decl = { {"s", "stmt"},
+                                                   {"r", "read"},
+                                                   {"p", "print"},
+                                                   {"c", "call"},
+                                                   {"w", "while"},
+                                                   {"i", "if"},
+                                                   {"a", "assign"},
+                                                   {"v", "variable"},
+                                                   {"cons", "constant"},
+                                                   {"n", "prog_line"},
+                                                   {"proc", "procedure"} };
+            list<string> expected;
+            list<string> actual;
+
+            /**
+             * TODO:
+             * multi same type syn
+             * overlapping syn
+             * 5
+             */
         }
 	};
 }
