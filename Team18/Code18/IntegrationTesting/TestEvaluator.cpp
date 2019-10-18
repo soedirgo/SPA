@@ -256,6 +256,12 @@ namespace IntegrationTesting
                                                    {"proc", "procedure"} };
             list<string> expected;
             list<string> actual;
+
+            expected = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13" };
+            actual = Evaluator::evaluate(Query(decl, "s", {}));
+            expected.sort();
+            actual.sort();
+            Assert::IsTrue(expected == actual);
         }
         TEST_METHOD(testOneSuchThatClause)
         {
