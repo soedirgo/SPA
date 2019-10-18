@@ -17,147 +17,247 @@ namespace IntegrationTesting
         {
 			
             /**
-               SIMPLE program:
-               _   procedure main {
-               1.      x = 1
-               2.      y = x
-               3.      if (x == y) then {
-               4.          z = 0;
-               _       } else {
-               5.          z = 1;
-               _       }
-               6.      while (x > 0) {
-               7.          read x;
-               8.          print x;
-               _       }
-            */
+             * SIMPLE source:
+             * ___ procedure main {
+             *  1.   a = 1;
+             *  2.   if (b == 2) {
+             *  3.     while (c == 3) {
+             *  4.       while (d == 4) {
+             *  5.         if (e == 5) {
+             *  6.           if (f == 6) {
+             *  7.             read g; }
+             * ___           else {
+             *  8.             while (h == 7) {
+             *  9.               call sub; } } }
+             * ___         else {
+             * 10.           read i; } } } }
+             * ___   else {
+             * 11.     print j; }
+             * ___ }
+             *
+             * ___ procedure sub {
+             * 12.   a = 8;
+             * 13.   b = a;
+             * ___ }
+             */
             PKB pkb;
 
             pkb.clear();
 
             pkb.setProcedure("main");
-            
-            pkb.setStmt("1", "assign");
-            pkb.setAssignPattern("1", "1");
-            pkb.setVariable("x");
+            pkb.setProcedure("sub");
+
+            pkb.setVariable("a");
+            pkb.setVariable("b");
+            pkb.setVariable("c");
+            pkb.setVariable("d");
+            pkb.setVariable("e");
+            pkb.setVariable("f");
+            pkb.setVariable("g");
+            pkb.setVariable("h");
+            pkb.setVariable("i");
+            pkb.setVariable("j");
+
             pkb.setConstant("1", "1");
-            pkb.setModifiesS("1", "x");
+            pkb.setConstant("2", "2");
+            pkb.setConstant("3", "3");
+            pkb.setConstant("4", "4");
+            pkb.setConstant("5", "5");
+            pkb.setConstant("6", "6");
+            pkb.setConstant("8", "7");
+            pkb.setConstant("12", "8");
 
-            pkb.setStmt("2", "assign");
-            pkb.setAssignPattern("2", "x");
-            pkb.setVariable("y");
-            pkb.setUsesS("2", "x");
-            pkb.setModifiesS("2", "y");
-            pkb.setFollows("1", "2");
-            pkb.setFollowsT("1", "2");
-
-            pkb.setStmt("3", "if");
-            //pkb.setIfPattern("3", "(x y ==)");
-            pkb.setUsesS("3", "x");
-            pkb.setUsesS("3", "y");
-            pkb.setModifiesS("3", "z");
-            pkb.setFollows("2", "3");
-            pkb.setFollowsT("1", "3");
-            pkb.setFollowsT("2", "3");
-
-            pkb.setStmt("4", "assign");
-            pkb.setAssignPattern("4", "0");
-            pkb.setVariable("z");
-            pkb.setConstant("4", "0");
-            pkb.setModifiesS("4", "z");
-            pkb.setParent("3", "4");
-            pkb.setParentT("3", "4");
-
-            pkb.setStmt("5", "assign");
-            pkb.setAssignPattern("5", "1");
-            pkb.setConstant("5", "1");
-            pkb.setModifiesS("5", "z");
-            pkb.setParent("3", "5");
-            pkb.setParentT("3", "5");
-
-            pkb.setStmt("6", "while");
-            //pkb.setWhilePattern("6", "(x 0 >)");
-            pkb.setUsesS("6", "x");
-            pkb.setModifiesS("6", "x");
-            pkb.setFollows("3", "6");
-            pkb.setFollowsT("1", "6");
-            pkb.setFollowsT("2", "6");
-            pkb.setFollowsT("3", "6");
-
+            pkb.setStmt("1", "assign");
+            pkb.setStmt("2", "if");
+            pkb.setStmt("3", "while");
+            pkb.setStmt("4", "while");
+            pkb.setStmt("5", "if");
+            pkb.setStmt("6", "if");
             pkb.setStmt("7", "read");
-            pkb.setRead("7", "x");
-            pkb.setModifiesS("7", "x");
-            pkb.setParent("6", "7");
-            pkb.setParentT("6", "7");
+            pkb.setStmt("8", "while");
+            pkb.setStmt("9", "call");
+            pkb.setStmt("10", "read");
+            pkb.setStmt("11", "print");
+            pkb.setStmt("12", "assign");
+            pkb.setStmt("13", "assign");
 
-            pkb.setStmt("8", "print");
-            pkb.setPrint("8", "x");
-            pkb.setUsesS("8", "x");
+            pkb.setCallStmt("9", "sub");
+
+            pkb.setRead("7", "g");
+            pkb.setRead("10", "i");
+
+            pkb.setPrint("11", "j");
+
+            pkb.setUsesP("main", "a");
+            pkb.setUsesP("main", "b");
+            pkb.setUsesP("main", "c");
+            pkb.setUsesP("main", "d");
+            pkb.setUsesP("main", "e");
+            pkb.setUsesP("main", "f");
+            pkb.setUsesP("main", "h");
+            pkb.setUsesP("main", "j");
+            pkb.setUsesP("sub", "a");
+
+            pkb.setUsesS("2", "a");
+            pkb.setUsesS("2", "b");
+            pkb.setUsesS("2", "c");
+            pkb.setUsesS("2", "d");
+            pkb.setUsesS("2", "e");
+            pkb.setUsesS("2", "f");
+            pkb.setUsesS("2", "h");
+            pkb.setUsesS("2", "j");
+            pkb.setUsesS("3", "a");
+            pkb.setUsesS("3", "c");
+            pkb.setUsesS("3", "d");
+            pkb.setUsesS("3", "e");
+            pkb.setUsesS("3", "f");
+            pkb.setUsesS("3", "h");
+            pkb.setUsesS("4", "a");
+            pkb.setUsesS("4", "d");
+            pkb.setUsesS("4", "e");
+            pkb.setUsesS("4", "f");
+            pkb.setUsesS("4", "h");
+            pkb.setUsesS("5", "a");
+            pkb.setUsesS("5", "e");
+            pkb.setUsesS("5", "f");
+            pkb.setUsesS("5", "h");
+            pkb.setUsesS("6", "a");
+            pkb.setUsesS("6", "f");
+            pkb.setUsesS("6", "g");
+            pkb.setUsesS("8", "a");
+            pkb.setUsesS("8", "h");
+            pkb.setUsesS("9", "a");
+            pkb.setUsesS("11", "j");
+            pkb.setUsesS("13", "a");
+
+            pkb.setModifiesP("main", "a");
+            pkb.setModifiesP("main", "g");
+            pkb.setModifiesP("main", "i");
+            pkb.setModifiesP("sub", "a");
+            pkb.setModifiesP("sub", "b");
+
+            pkb.setModifiesS("1", "a");
+            pkb.setModifiesS("2", "a");
+            pkb.setModifiesS("2", "b");
+            pkb.setModifiesS("2", "g");
+            pkb.setModifiesS("2", "i");
+            pkb.setModifiesS("3", "a");
+            pkb.setModifiesS("3", "b");
+            pkb.setModifiesS("3", "g");
+            pkb.setModifiesS("3", "i");
+            pkb.setModifiesS("4", "a");
+            pkb.setModifiesS("4", "b");
+            pkb.setModifiesS("4", "g");
+            pkb.setModifiesS("4", "i");
+            pkb.setModifiesS("5", "a");
+            pkb.setModifiesS("5", "b");
+            pkb.setModifiesS("5", "g");
+            pkb.setModifiesS("5", "i");
+            pkb.setModifiesS("6", "a");
+            pkb.setModifiesS("6", "b");
+            pkb.setModifiesS("6", "g");
+            pkb.setModifiesS("7", "g");
+            pkb.setModifiesS("8", "a");
+            pkb.setModifiesS("8", "b");
+            pkb.setModifiesS("9", "a");
+            pkb.setModifiesS("9", "b");
+            pkb.setModifiesS("10", "i");
+            pkb.setModifiesS("12", "a");
+            pkb.setModifiesS("13", "b");
+
+            pkb.setCallProc("main", "sub");
+
+            pkb.setCallT("main", "sub");
+
+            pkb.setFollows("1", "2");
+            pkb.setFollows("12", "13");
+
+            pkb.setFollowsT("1", "2");
+            pkb.setFollowsT("12", "13");
+
+            pkb.setParent("2", "3");
+            pkb.setParent("2", "11");
+            pkb.setParent("3", "4");
+            pkb.setParent("4", "5");
+            pkb.setParent("5", "6");
+            pkb.setParent("5", "10");
+            pkb.setParent("6", "7");
             pkb.setParent("6", "8");
+            pkb.setParent("8", "9");
+
+            pkb.setParentT("2", "3");
+            pkb.setParentT("2", "4");
+            pkb.setParentT("2", "5");
+            pkb.setParentT("2", "6");
+            pkb.setParentT("2", "7");
+            pkb.setParentT("2", "8");
+            pkb.setParentT("2", "9");
+            pkb.setParentT("2", "10");
+            pkb.setParentT("2", "11");
+            pkb.setParentT("3", "4");
+            pkb.setParentT("3", "5");
+            pkb.setParentT("3", "6");
+            pkb.setParentT("3", "7");
+            pkb.setParentT("3", "8");
+            pkb.setParentT("3", "9");
+            pkb.setParentT("3", "10");
+            pkb.setParentT("4", "5");
+            pkb.setParentT("4", "6");
+            pkb.setParentT("4", "7");
+            pkb.setParentT("4", "8");
+            pkb.setParentT("4", "9");
+            pkb.setParentT("4", "10");
+            pkb.setParentT("5", "6");
+            pkb.setParentT("5", "7");
+            pkb.setParentT("5", "8");
+            pkb.setParentT("5", "9");
+            pkb.setParentT("5", "10");
+            pkb.setParentT("6", "7");
             pkb.setParentT("6", "8");
-            pkb.setFollows("7", "8");
-            pkb.setFollowsT("7", "8");
+            pkb.setParentT("6", "9");
+            pkb.setParentT("8", "9");
+
+            pkb.setNext("1", "2");
+            pkb.setNext("2", "3");
+            pkb.setNext("2", "11");
+            pkb.setNext("3", "4");
+            pkb.setNext("4", "5");
+            pkb.setNext("5", "6");
+            pkb.setNext("5", "10");
+            pkb.setNext("6", "7");
+            pkb.setNext("6", "8");
+            pkb.setNext("8", "9");
+            pkb.setNext("12", "13");
+
+            pkb.setAssignPattern("1", " 1 ");
+            pkb.setAssignPattern("12", " 8 ");
+            pkb.setAssignPattern("13", " a ");
+
+            pkb.setIfPattern("2", " b 2 == ");
+            pkb.setIfPattern("5", " e 5 == ");
+            pkb.setIfPattern("6", " f 6 == ");
+
+            pkb.setWhilePattern("3", " c 3 == ");
+            pkb.setWhilePattern("4", " d 4 == ");
+            pkb.setWhilePattern("8", " h 7 == ");
 		}
-        TEST_METHOD(evaluatorNoClause)
+        TEST_METHOD(testNoClause)
         {
             unordered_map<string, string> decl = { {"s", "stmt"},
                                                    {"r", "read"},
                                                    {"p", "print"},
+                                                   {"c", "call"},
                                                    {"w", "while"},
                                                    {"i", "if"},
                                                    {"a", "assign"},
                                                    {"v", "variable"},
-                                                   {"C", "constant"},
-                                                   {"P", "procedure"} };
+                                                   {"cons", "constant"},
+                                                   {"n", "prog_line"},
+                                                   {"proc", "procedure"} };
             list<string> expected;
             list<string> actual;
-
-            expected = { "1", "2", "3", "4", "5", "6", "7", "8" };
-			actual = Evaluator::evaluate(Query(decl, "s", {}));
-            actual.sort();
-            Assert::IsTrue(expected == actual);
-
-            expected = { "7" };
-            actual = Evaluator::evaluate(Query(decl, "r", {}));
-            actual.sort();
-            Assert::IsTrue(expected == actual);
-
-            expected = { "8" };
-            actual = Evaluator::evaluate(Query(decl, "p", {}));
-            actual.sort();
-            Assert::IsTrue(expected == actual);
-
-            expected = { "6" };
-            actual = Evaluator::evaluate(Query(decl, "w", {}));
-            actual.sort();
-            Assert::IsTrue(expected == actual);
-
-            expected = { "3" };
-            actual = Evaluator::evaluate(Query(decl, "i", {}));
-            actual.sort();
-            Assert::IsTrue(expected == actual);
-
-            expected = { "1", "2", "4", "5" };
-            actual = Evaluator::evaluate(Query(decl, "a", {}));
-            actual.sort();
-            Assert::IsTrue(expected == actual);
-
-            expected = { "x", "y", "z" };
-            actual = Evaluator::evaluate(Query(decl, "v", {}));
-            actual.sort();
-            Assert::IsTrue(expected == actual);
-
-            expected = { "0", "1" };
-            actual = Evaluator::evaluate(Query(decl, "C", {}));
-            actual.sort();
-            Assert::IsTrue(expected == actual);
-
-            expected = { "main" };
-            actual = Evaluator::evaluate(Query(decl, "P", {}));
-            actual.sort();
-            Assert::IsTrue(expected == actual);
         }
-        TEST_METHOD(evaluatorUsesModifies)
+        TEST_METHOD(testOneSuchThatClause)
         {
             /**
                To test:
@@ -171,72 +271,6 @@ namespace IntegrationTesting
                8. Select C such that Uses(2, "x");
                9. Select P such that Modifies(P, "z");
             */
-            unordered_map<string, string> decl = { {"s", "stmt"},
-                                                   {"r", "read"},
-                                                   {"p", "print"},
-                                                   {"w", "while"},
-                                                   {"i", "if"},
-                                                   {"a", "assign"},
-                                                   {"v", "variable"},
-                                                   {"C", "constant"},
-                                                   {"P", "procedure"} };
-            list<string> expected;
-            list<string> actual;
-
-            expected = {"2", "3", "6", "8"};
-            actual = Evaluator::evaluate(Query(decl, "s",
-                                                { Clause("such that", {"Uses", "s", "v"}) }));
-            actual.sort();
-            Assert::IsTrue(expected == actual);
- 
-            expected = {"7"};
-			actual = Evaluator::evaluate(Query(decl, "r",
-                                                { Clause("such that", {"Modifies", "r", "v"}) }));
-            actual.sort();
-            Assert::IsTrue(expected == actual);
-
-            expected = {"8"};
-			actual = Evaluator::evaluate(Query(decl, "p",
-                                                { Clause("such that", {"Uses", "p", "v"}) }));
-            actual.sort();
-            Assert::IsTrue(expected == actual);
-
-            expected = {"6"};
-            actual = Evaluator::evaluate(Query(decl, "w",
-                                                { Clause("such that", {"Uses", "w", "v"}) }));
-            actual.sort();
-            Assert::IsTrue(expected == actual);
-
-            expected = {};
-            actual = Evaluator::evaluate(Query(decl, "i",
-                                                { Clause("such that", {"Uses", "i", "\"z\""}) }));
-            actual.sort();
-            Assert::IsTrue(expected == actual);
- 
-            expected = {"1"};
-            actual = Evaluator::evaluate(Query(decl, "a",
-                                                { Clause("such that", {"Modifies", "a", "\"x\""}) }));
-            actual.sort();
-            Assert::IsTrue(expected == actual);
-
-            expected = {"x"};
-            actual = Evaluator::evaluate(Query(decl, "v",
-                                                { Clause("such that", {"Uses", "2", "v"}) }));
-            actual.sort();
-            Assert::IsTrue(expected == actual);
-
-            expected = {"0", "1"};
-            actual = Evaluator::evaluate(Query(decl, "C",
-                                                { Clause("such that", {"Uses", "2", "\"x\""}) }));
-            actual.sort();
-            Assert::IsTrue(expected == actual);
-
-            //expected = {"main"};
-            //actual = Evaluator::evaluate(Query(decl, "P", { {"Modifies", {"P", "z"}} }));
-            //Assert::IsTrue(expected == actual);
-        }
-        TEST_METHOD(evaluatorFollowsParent)
-        {
             /**
                1. Select s such that Follows(1, s);
                2. Select s such that Follows(s, 6);
@@ -249,79 +283,8 @@ namespace IntegrationTesting
                9. Select p such that Parent*(w, p);
                10.Select a such that Parent*(s, a);
              */
-            unordered_map<string, string> decl = { {"s", "stmt"},
-                                                   {"r", "read"},
-                                                   {"p", "print"},
-                                                   {"w", "while"},
-                                                   {"i", "if"},
-                                                   {"a", "assign"},
-                                                   {"v", "variable"},
-                                                   {"C", "constant"},
-                                                   {"P", "procedure"} };
-            list<string> expected;
-            list<string> actual;
-            
-            expected = {"2"};
-            actual = Evaluator::evaluate(Query(decl, "s",
-                                                { Clause("such that", {"Follows", "1", "s"}) }));
-            actual.sort();
-            Assert::IsTrue(expected == actual);
-
-            expected = {"3"};
-            actual = Evaluator::evaluate(Query(decl, "s",
-                                                { Clause("such that", {"Follows", "s", "6"}) }));
-            actual.sort();
-            Assert::IsTrue(expected == actual);
-
-            expected = {"2", "3", "6"};
-            actual = Evaluator::evaluate(Query(decl, "s",
-                                                { Clause("such that", {"Follows*", "1", "s"}) }));
-            actual.sort();
-            Assert::IsTrue(expected == actual);
-
-            expected = {"7"};
-            actual = Evaluator::evaluate(Query(decl, "r",
-                                                { Clause("such that", {"Follows", "r", "p"}) }));
-            actual.sort();
-            Assert::IsTrue(expected == actual);
-
-            expected = {"1", "2"};
-            actual = Evaluator::evaluate(Query(decl, "a",
-                                                { Clause("such that", {"Follows*", "a", "w"}) }));
-            actual.sort();
-            Assert::IsTrue(expected == actual);
-
-            expected = {"4", "5"};
-            actual = Evaluator::evaluate(Query(decl, "s",
-                                                { Clause("such that", {"Parent", "3", "s"}) }));
-            actual.sort();
-            Assert::IsTrue(expected == actual);
-
-            expected = {"4", "5"};
-            actual = Evaluator::evaluate(Query(decl, "a",
-                                                { Clause("such that", {"Parent", "i", "a"}) }));
-            actual.sort();
-            Assert::IsTrue(expected == actual);
-
-            expected = {};
-            actual = Evaluator::evaluate(Query(decl, "s",
-                                                { Clause("such that", {"Parent", "4", "s"}) }));
-            actual.sort();
-            Assert::IsTrue(expected == actual);
-
-            expected = {"8"};
-            actual = Evaluator::evaluate(Query(decl, "p",
-                                                { Clause("such that", {"Parent*", "w", "p"}) }));
-            actual.sort();
-            Assert::IsTrue(expected == actual);
-
-            expected = {"4", "5"};
-            actual = Evaluator::evaluate(Query(decl, "a",
-                                                { Clause("such that", {"Parent*", "s", "a"}) }));
-            actual.sort();
-            Assert::IsTrue(expected == actual);
         }
-        TEST_METHOD(evaluatorPattern)
+        TEST_METHOD(testOnePatternClause)
         {
             /**
                1. Select a pattern a(_, _)
@@ -329,41 +292,15 @@ namespace IntegrationTesting
                3. Select a pattern a(_, 1)
                4. Select a pattern a(z, 0)
              */
-            unordered_map<string, string> decl = { {"s", "stmt"},
-                                                   {"r", "read"},
-                                                   {"p", "print"},
-                                                   {"w", "while"},
-                                                   {"i", "if"},
-                                                   {"a", "assign"},
-                                                   {"v", "variable"},
-                                                   {"C", "constant"},
-                                                   {"P", "procedure"} };
-            list<string> expected;
-            list<string> actual;
-
-            expected = {"1", "2", "4", "5"};
-            actual = Evaluator::evaluate(Query(decl, "a",
-                                                { Clause("pattern", {"a", "_", "_"}) }));
-            actual.sort();
-            Assert::IsTrue(expected == actual);
-
-            expected = {"1"};
-            actual = Evaluator::evaluate(Query(decl, "a",
-                                                { Clause("pattern", {"a", "\"x\"", "_"}) }));
-            actual.sort();
-            Assert::IsTrue(expected == actual);
-
-            expected = {"1", "5"};
-            actual = Evaluator::evaluate(Query(decl, "a",
-                                                { Clause("pattern", {"a", "_", "1"}) }));
-            actual.sort();
-            Assert::IsTrue(expected == actual);
-
-            expected = {"4"};
-            actual = Evaluator::evaluate(Query(decl, "a",
-                                                { Clause("pattern", {"a", "\"z\"", "0"}) }));
-            actual.sort();
-            Assert::IsTrue(expected == actual);
+        }
+        TEST_METHOD(testOneWithClause)
+        {
+        }
+        TEST_METHOD(testOneClauseEach)
+        {
+        }
+        TEST_METHOD(testMultiClauses)
+        {
         }
 	};
 }
