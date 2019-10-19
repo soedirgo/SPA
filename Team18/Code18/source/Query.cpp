@@ -6,7 +6,7 @@
 using namespace std;
 
 Query::Query(unordered_map<string, string> decl,
-	string syn,
+	vector<string> syn,
 	vector<Clause> cls)
 	: declarations(decl),
 	selectSynonym(syn),
@@ -16,7 +16,7 @@ unordered_map<string, string> Query::getDeclarations() const {
     return this->declarations;
 }
 
-string Query::getSelectSynonym() const {
+vector<string> Query::getSelectSynonym() const {
     return this->selectSynonym;
 }
 

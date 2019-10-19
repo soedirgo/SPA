@@ -74,4 +74,4 @@ namespace Evaluator {
             selectResults.push_back(result);
         return (selectResults);
     }
-} // namespace Evaluator
+} // namespace Evaluator 
