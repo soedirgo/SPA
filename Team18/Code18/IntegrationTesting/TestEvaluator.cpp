@@ -677,7 +677,7 @@ namespace IntegrationTesting
             expected = { "2 3 5", "2 3 6" };
             actual = Evaluator::evaluate
                 (Query(decl, {"i1", "i2", "w"}, { {"such that", {"Parent", "i1", "w"}},
-                                                  {"such that", {"Parent*", "w", "i2"} }}));
+                                                  {"such that", {"Parent*", "w", "i2"}} }));
             expected.sort();
             actual.sort();
             Assert::IsTrue(expected == actual);
