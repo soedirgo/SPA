@@ -17,7 +17,7 @@ namespace Evaluator {
     list<string> evaluate(Query q) {
         // extract info from query object
         unordered_map<string, string> declarations = q.getDeclarations();
-        string selectSyn = q.getSelectSynonym();
+        vector<string> selSyns = q.getSelectSynonyms();
         vector<Clause> clauses = q.getClauses();
         vector<Result> intermediateResults;
 
@@ -30,30 +30,30 @@ namespace Evaluator {
         // select clause as the starting intermediate result
         vector<string> initResults;
         TABLE initTable;
-        if (declarations[selectSyn] == "stmt") {
+        if (declarations[selSyns[0]] == "stmt") {
             initTable = PKB::getStmts();
-        } else if (declarations[selectSyn] == "read") {
+        } else if (declarations[selSyns[0]] == "read") {
             initTable = PKB::getReads();
-        } else if (declarations[selectSyn] == "print") {
+        } else if (declarations[selSyns[0]] == "print") {
             initTable = PKB::getPrints();
-        } else if (declarations[selectSyn] == "call") {
+        } else if (declarations[selSyns[0]] == "call") {
             initTable = PKB::getCalls();
-        } else if (declarations[selectSyn] == "while") {
+        } else if (declarations[selSyns[0]] == "while") {
             initTable = PKB::getWhiles();
-        } else if (declarations[selectSyn] == "if") {
+        } else if (declarations[selSyns[0]] == "if") {
             initTable = PKB::getIfs();
-        } else if (declarations[selectSyn] == "assign") {
+        } else if (declarations[selSyns[0]] == "assign") {
             initTable = PKB::getAssigns();
-        } else if (declarations[selectSyn] == "variable") {
+        } else if (declarations[selSyns[0]] == "variable") {
             initTable = PKB::getVariables();
-        } else if (declarations[selectSyn] == "constant") {
+        } else if (declarations[selSyns[0]] == "constant") {
             initTable = PKB::getConstants();
-        } else if (declarations[selectSyn] == "prog_line") {
+        } else if (declarations[selSyns[0]] == "prog_line") {
             initTable = PKB::getProgLines();
-        } else if (declarations[selectSyn] == "procedure") {
+        } else if (declarations[selSyns[0]] == "procedure") {
             initTable = PKB::getProcedures();
         }        
-        Result currentResult = Result(true, {{selectSyn, 0}}, initTable);
+        Result currentResult = Result(true, {{selSyns[0], 0}}, initTable);
 
         // merge everything in intermediateResults
         for (auto& otherResult : intermediateResults) {
@@ -66,9 +66,9 @@ namespace Evaluator {
         // return results (projection)
         TABLE finalResults = currentResult.getResults();
         set<string> selectResultsSet;
-        int selectSynIdx = currentResult.getSynonyms()[selectSyn];
+        int selSynIdx = currentResult.getSynonyms()[selSyns[0]];
         for (const auto& result : finalResults)
-            selectResultsSet.insert(result[selectSynIdx]);
+            selectResultsSet.insert(result[selSynIdx]);
         list<string> selectResults;
         for (const auto& result : selectResultsSet)
             selectResults.push_back(result);
