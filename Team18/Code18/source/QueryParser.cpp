@@ -493,10 +493,10 @@ string QueryParser::selectVariablesValidation(unordered_map<string, string> decl
 
 	string resultString = "Okay";
 
-	unordered_set<string> intTypeRefStmtNum = { "stmt", "read", "print", "while", "if", "assign", "call" };
-	unordered_set<string> intTypeRefValue = { "constant" };
-	unordered_set<string> stringTypeRefProcName = { "procedure", "call" };
-	unordered_set<string> stringTypeRefVarName = { "variable", "read", "print" };
+	unordered_set<string> typesForProcName = { "call", "procedure" };
+	unordered_set<string> typesForVarName = { "variable", "read", "print" };
+	unordered_set<string> typesForValue = { "constant" };
+	unordered_set<string> typesForStmtNum = { "stmt", "assign", "while", "read", "print", "if", "call" };
 
 	//No variables to select
 	if (selectVars.empty()) {
@@ -525,22 +525,26 @@ string QueryParser::selectVariablesValidation(unordered_map<string, string> decl
 
 			string synonymType = declerationVariables.find(left)->second;
 
-			if (right == "stmt#" && (intTypeRefStmtNum.find(synonymType) != intTypeRefStmtNum.end())) {
-				// valid stmt# attribute
+			//Checks for validity
+			//attrName can be "procName", "varName", "value","stmt#"
+			//procName seems to accept only procedure and call
+			if (right == "procName" && (typesForProcName.find(synonymType) != typesForProcName.end())) {
 				continue;
 			}
-			else if (right == "value" && (intTypeRefValue.find(synonymType) != intTypeRefValue.end())) {
-				// valid value attribute
+			else if (right == "varName" && (typesForVarName.find(synonymType) != typesForVarName.end())) {
 				continue;
 			}
-			else if (right == "procName" && (stringTypeRefProcName.find(synonymType) != stringTypeRefProcName.end())) {
-				// valid procName attribute
+			
+			//Seems to accept constant
+			else if (right == "value" && (typesForValue.find(synonymType) != typesForValue.end())) {
 				continue;
 			}
-			else if (right == "varName" && (stringTypeRefVarName.find(synonymType) != stringTypeRefVarName.end())) {
-				// valid varName attribute
+			
+			//Seems to accept statement, assign and the like
+			else if (right == "stmt#" && (typesForStmtNum.find(synonymType) != typesForStmtNum.end())) {
 				continue;
 			}
+			
 			else {
 				resultString = "Invalid";
 				return resultString;
@@ -561,7 +565,6 @@ string QueryParser::selectVariablesValidation(unordered_map<string, string> decl
 			}
 		}
 
-		// select type: synonym
 		if (selectVars[i] != "BOOLEAN" &&
 			declerationVariables.find(selectVars[i]) == declerationVariables.end()) {
 			resultString = "Invalid";
