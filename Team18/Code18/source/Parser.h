@@ -4,7 +4,9 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <regex>
 #include "NestedResult.h"
+#include "PatternProcessor.h"
 
 using namespace std;
 
@@ -13,9 +15,12 @@ using namespace std;
 class Parser {
 public:
 	Parser();
+	regex name;
+	regex number;
 	int Parse(std::string filename);
 	int count(std::string s, char c);
 	string parseProc(std::string line);
+	string parseCall(std::string line);
 	string parseRead(std::string line);
 	string parsePrint(std::string line);
 	string parseAssignInit(std::string line);
@@ -29,7 +34,11 @@ public:
 	string removeOuterBrackets(std::string line);
 private:
 	PKB pkb;
+	PatternProcessor patternProcessor;
 	ifstream programFile;
+	vector<NestedResult> procedures;
+	NestedResult currProc;
+	vector<pair<int, std::string>> callStmts;
 	int nestingLevel;
 	int stmtNo;
 };

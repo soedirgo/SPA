@@ -3,35 +3,29 @@
 #include <unordered_map>
 #include "Query.h"
 #include "Clause.h"
-using namespace std;
 
+using namespace std;
 Query::Query(unordered_map<string, string> decl,
-	string syn,
-	vector<pair<string, pair<string, string>>> suchcl, vector<pair<string, pair<string, string>>> patterncl)
-	: declarations(decl),
-	selectSynonym(syn),
-	clauses(suchcl),
-	patternclauses(patterncl) {}
+             vector<string> syn,
+             vector<Clause> cls)
+    : declarations(decl)
+    , selectSynonyms(syn)
+    , clauses(cls) {}
 
 unordered_map<string, string> Query::getDeclarations() const {
-	return this->declarations;
+    return this->declarations;
 }
 
-string Query::getSelectSynonym() const {
-	return this->selectSynonym;
+vector<string> Query::getSelectSynonyms() const {
+    return this->selectSynonyms;
 }
 
-vector<pair<string, pair<string, string>>> Query::getClauses() const {
+vector<Clause> Query::getClauses() const {
 	return this->clauses;
 }
 
-vector<pair<string, pair<string, string>>> Query::getPatternClauses() const {
-	return this->patternclauses;
-}
-
 bool Query::operator== (const Query& other) const {
-    return getDeclarations() == other.getDeclarations()
-        && getSelectSynonym() == other.getSelectSynonym()
-        && getClauses() == other.getClauses()
-        && getPatternClauses() == other.getPatternClauses();
+	return this->declarations == other.getDeclarations()
+		&& this->selectSynonyms == other.getSelectSynonyms()
+		&& this->clauses == other.getClauses();
 }

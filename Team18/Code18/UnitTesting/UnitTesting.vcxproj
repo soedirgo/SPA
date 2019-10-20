@@ -162,19 +162,27 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="TestDesignExtractor.cpp" />
-    <ClCompile Include="TestPKBFollow.cpp" />
+    <ClCompile Include="TestPKBAffects.cpp" />
+    <ClCompile Include="TestPKBCall.cpp" />
+    <ClCompile Include="TestPKBConstant.cpp" />
+    <ClCompile Include="TestPKBFollows.cpp" />
+    <ClCompile Include="TestPKBModifies.cpp" />
+    <ClCompile Include="TestPKBNext.cpp" />
     <ClCompile Include="TestPKBParent.cpp" />
-    <ClCompile Include="TestPKBUses.cpp" />
-    <ClCompile Include="TestPKBVarTable.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="TestAST.cpp" />
-    <ClCompile Include="TestPKBWrappers.cpp" />
+    <ClCompile Include="TestPKBPattern.cpp" />
+    <ClCompile Include="TestPKBPrint.cpp" />
+    <ClCompile Include="TestPKBProcedure.cpp" />
+    <ClCompile Include="TestPKBRead.cpp" />
+    <ClCompile Include="TestPKBStmt.cpp" />
+    <ClCompile Include="TestPKBUses.cpp" />
+    <ClCompile Include="TestPKBUsesProc.cpp" />
+    <ClCompile Include="TestPKBVariable.cpp" />
     <ClCompile Include="TestProgramParser.cpp" />
     <ClCompile Include="TestQueryParser.cpp" />
     <ClCompile Include="TestPreprocessor.cpp" />

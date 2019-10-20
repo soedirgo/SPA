@@ -4,5 +4,5 @@
 
 namespace Preprocessor {
     bool isValid(std::string& input);
-	Query preprocess(std::string input);
+	//Query preprocess(std::string input);
 }

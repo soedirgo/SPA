@@ -4,18 +4,20 @@
 #include "Query.h"
 #include "Clause.h"
 #include "PKB.h"
+#include "PatternProcessor.h"
 
 using namespace std;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace UnitTesting
 {
+	
 	TEST_CLASS(TestQueryParser)
 	{
 	public:
+		/*
         TEST_METHOD_INITIALIZE(queryParserInit)
         {
-            /**
                SIMPLE program:
                _   procedure main {
                1.      x = 1
@@ -30,82 +32,84 @@ namespace UnitTesting
                8.          print x;
 			   9.		   x = x + 1;
                _       }
-            */
-
+            
+			
             PKB pkb;
 
             pkb.clear();
 
-            pkb.setProc("main");
+            pkb.setProcedure("main");
 
             pkb.setStmt(1, Assign);
             pkb.setAssignStmt(1, "x");
-            pkb.setVar("x");
+            pkb.setVariable("x");
             pkb.setConstant("1", 1);
-            pkb.setModifiesVarByStmt(1, "x");
+            //pkb.setModifiesVarByStmt(1, "x");
 
             pkb.setStmt(2, Assign);
             pkb.setAssignStmt(2, "y");
-            pkb.setVar("y");
+            pkb.setVariable("y");
             pkb.setUsesVarByStmt(2, "x");
-            pkb.setModifiesVarByStmt(2, "y");
-            pkb.insertFollowRelation(1, 2);
-            pkb.insertFollowStarRelation(1, 2);
+            //pkb.setModifiesVarByStmt(2, "y");
+            pkb.setFollows(1, 2);
+            pkb.setFollowsT(1, 2);
 
             pkb.setStmt(3, If);
-            pkb.setIfStmt(3);
+            //pkb.setIfStmt(3);
             pkb.setUsesVarByStmt(3, "x");
             pkb.setUsesVarByStmt(3, "y");
-            pkb.setModifiesVarByStmt(3, "z");
-            pkb.insertFollowRelation(2, 3);
-            pkb.insertFollowStarRelation(1, 3);
-            pkb.insertFollowStarRelation(2, 3);
+            //pkb.setModifiesVarByStmt(3, "z");
+            pkb.setFollows(2, 3);
+            pkb.setFollowsT(1, 3);
+            pkb.setFollowsT(2, 3);
 
             pkb.setStmt(4, Assign);
             pkb.setAssignStmt(4, "z");
-            pkb.setVar("z");
+            pkb.setVariable("z");
             pkb.setConstant("0", 4);
-            pkb.setModifiesVarByStmt(4, "z");
-            pkb.insertParentRelation(3, 4);
-            pkb.insertParentStarRelation(3, 4);
+            //pkb.setModifiesVarByStmt(4, "z");
+            pkb.setParent(3, 4);
+            pkb.setParentT(3, 4);
 
             pkb.setStmt(5, Assign);
             pkb.setAssignStmt(5, "z");
-            pkb.setModifiesVarByStmt(5, "z");
-            pkb.insertParentRelation(3, 5);
-            pkb.insertParentStarRelation(3, 5);
+            //pkb.setModifiesVarByStmt(5, "z");
+            pkb.setParent(3, 5);
+            pkb.setParentT(3, 5);
 
             pkb.setStmt(6, While);
-            pkb.setWhileStmt(6);
+            //pkb.setWhileStmt(6);
             pkb.setUsesVarByStmt(6, "x");
-            pkb.setModifiesVarByStmt(6, "x");
-            pkb.insertFollowRelation(3, 6);
-            pkb.insertFollowStarRelation(1, 6);
-            pkb.insertFollowStarRelation(2, 6);
-            pkb.insertFollowStarRelation(3, 6);
+            //pkb.setModifiesVarByStmt(6, "x");
+            pkb.setFollows(3, 6);
+            pkb.setFollowsT(1, 6);
+            pkb.setFollowsT(2, 6);
+            pkb.setFollowsT(3, 6);
 
             pkb.setStmt(7, Read);
-            pkb.setReadStmt(7, "x");
-            pkb.setModifiesVarByStmt(7, "x");
-            pkb.insertParentRelation(6, 7);
-            pkb.insertParentStarRelation(6, 7);
+            pkb.setRead(7, "x");
+            //pkb.setModifiesVarByStmt(7, "x");
+            pkb.setParent(6, 7);
+            pkb.setParentT(6, 7);
 
             pkb.setStmt(8, Print);
-            pkb.setPrintStmt(8, "x");
+            pkb.setPrint(8, "x");
             pkb.setUsesVarByStmt(8, "x");
-            pkb.insertParentRelation(6, 8);
-            pkb.insertParentStarRelation(6, 8);
-            pkb.insertFollowRelation(7, 8);
-            pkb.insertFollowStarRelation(7, 8);
+            pkb.setParent(6, 8);
+            pkb.setParentT(6, 8);
+            pkb.setFollows(7, 8);
+            pkb.setFollowsT(7, 8);
 
 			pkb.setStmt(9, Assign);
 			pkb.setAssignStmt(9, "x");
-			pkb.setVar("x");
-			pkb.insertUsesRelation(9, "x");
-			pkb.insertModifiesRelation(9, "x");
-			pkb.insertFollowRelation(8, 9);
-			pkb.insertFollowStarRelation(8, 9);
+			pkb.setVariable("x");
+			pkb.setUsesS(9, "x");
+			pkb.setModifiesS(9, "x");
+			pkb.setFollows(8, 9);
+			pkb.setFollowsT(8, 9);
+			
 		}
+		
         TEST_METHOD(validQueries)
         {
             list<string> expected;
@@ -206,6 +210,7 @@ namespace UnitTesting
 			actual = QueryParser::parse("stmt s; variable v; Select s such that Modifies(v, v)");
 			Assert::IsTrue(expected == actual);
         }
+		*/
 
 		TEST_METHOD(findInitialDecleration)
 		{
@@ -225,8 +230,8 @@ namespace UnitTesting
 
 		TEST_METHOD(splitSelect)
 		{
-			string actual = QueryParser::splitSelect("Select v2");
-			string expected{ "v2" };
+			vector<string> actual = QueryParser::splitSelect("Select v2");
+			vector<string> expected{ "v2" };
 			Assert::AreEqual(actual == expected, true);
 		}
 
@@ -250,10 +255,20 @@ namespace UnitTesting
 			vector<pair<string, pair<string, string>>> expected{ {"a", {"_", "_"}} };
 			Assert::AreEqual(actual == expected, true);
 			
-			vector<string> input2 = { "pattern a(_, _\"a+b*c\"_)" };
+			vector<string> input2 = { "pattern a(_, a+b*c)" };
 			vector<pair<string, pair<string, string>>> actual2 = QueryParser::splitPattern(input2);
-			vector<pair<string, pair<string, string>>> expected2{ {"a", {"_", "\"a+b*c\""}} };
+			vector<pair<string, pair<string, string>>> expected2{ {"a", {"_", "abc*+"}} };
 			Assert::AreEqual(actual2 == expected2, true);
+
+			vector<string> input3 = { "pattern a(_, _\"a+b*c\"_)" };
+			vector<pair<string, pair<string, string>>> actual3 = QueryParser::splitPattern(input3);
+			vector<pair<string, pair<string, string>>> expected3{ {"a", {"_", "_abc*+_"}} };
+			Assert::AreEqual(actual3 == expected3, true);
+
+			vector<string> input4 = { "pattern a(_, _  \"  a+b*c  \"  _)" };
+			vector<pair<string, pair<string, string>>> actual4 = QueryParser::splitPattern(input4);
+			vector<pair<string, pair<string, string>>> expected4{ {"a", {"_", "_abc*+_"}} };
+			Assert::AreEqual(actual4 == expected4, true);
 		}
 
 		TEST_METHOD(initialValidation)
@@ -294,5 +309,36 @@ namespace UnitTesting
 			Assert::AreEqual(actual4 == expected4, true);
 		
 		}
+
+		TEST_METHOD(infixToRPNexpression)
+		{
+			string input = "a+b";
+			string actual = PatternProcessor::infixtoRPNexpression(input);
+			string expected = "ab+";
+			Assert::AreEqual(actual == expected, true);
+
+			string input2 = "a+b*c";
+			string actual2 = PatternProcessor::infixtoRPNexpression(input2);
+			string expected2 = "abc*+";
+			Assert::AreEqual(actual2 == expected2, true);
+
+			string input3 = "A+B*C";
+			string actual3 = PatternProcessor::infixtoRPNexpression(input3);
+			string expected3 = "ABC*+";
+			Assert::AreEqual(actual3 == expected3, true);
+
+			string input4 = "(A+B)*C";
+			string actual4 = PatternProcessor::infixtoRPNexpression(input4);
+			string expected4 = "AB+C*";
+			Assert::AreEqual(actual4 == expected4, true);
+
+			string input5 = "(A+B)*(C+D)";
+			string actual5 = PatternProcessor::infixtoRPNexpression(input5);
+			string expected5 = "AB+CD+*";
+			Assert::AreEqual(actual5 == expected5, true);
+
+		}
+		
 	};
+	
 }

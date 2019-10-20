@@ -42,7 +42,7 @@ void TestWrapper::parse(std::string filename) {
 		parser.Parse(filename);
 	}
 	catch (int e) {
-		cout << "line contains more than 1 ; at line: " << e;
+		cout << "Error at line: " << e;
 	}
 
 	DesignExtractor designExtractor = DesignExtractor();
@@ -54,19 +54,28 @@ void TestWrapper::parse(std::string filename) {
 void TestWrapper::evaluate(std::string query, std::list<std::string>& results){
 // call your evaluator to evaluate the query here
   // ...code to evaluate query...
-    if (!Preprocessor::isValid(query)) {
-        results = {};
-        return;
-    }
+    //if (!Preprocessor::isValid(query)) {
+        //results = {};
+        //return;
+    //}
+
 	QueryParser queryParser = QueryParser();
-	list<string> evResult = queryParser.parse(query);
+	Query queryObject = queryParser.parse(query);
+	if (queryObject.getSelectSynonyms()[0] == "Invalidd") {
+		results = {};
+		return;
+	}
 
-	//std::cout << evResult;
+	if (queryObject.getSelectSynonyms()[0] == "Semantic Invalidd") {
+		string results = "FALSE";
+		return;
+	}
 
+	results = Evaluator::evaluate(queryObject);
 
   // store the answers to the query in the results list (it is initially empty)
   // each result must be a string.
 
-	results = evResult;	
+	//results = evResult;	
 
 }
