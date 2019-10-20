@@ -17,7 +17,7 @@ public:
 
 	static std::unordered_map<std::string, std::string> splitVariablesInDeclerations(std::vector<std::string> declerations);
 
-	static std::string splitSelect(std::string s);
+	static std::vector<std::string> splitSelect(std::string s);
 
 	static std::vector<std::pair<std::string, std::pair<std::string, std::string>>> splitSuchThat(std::vector<std::string> suchThat);
 
@@ -35,7 +35,7 @@ public:
 
 	static std::string declarationsValidation(std::unordered_map<std::string, std::string> declerationVariables);
 
-	static std::string selectVariablesValidation(std::unordered_map<std::string, std::string> declerationVariables, std::string selectVars);
+	static std::string selectVariablesValidation(std::unordered_map<std::string, std::string> declerationVariables, std::vector<std::string> selectVars);
 
 	static std::string suchThatValidation(std::unordered_map<std::string, std::string> declerationVariables, std::vector<std::pair<std::string, std::pair<std::string, std::string>>> suchThat);
 };

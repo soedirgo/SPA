@@ -59,7 +59,7 @@ namespace Evaluator {
                     }
 
                     // cross-product new synonyms
-                    vector<string>& mergedResult = r1e;
+                    vector<string> mergedResult = r1e;
                     for (const auto& syn : newSynonyms) {
                         mergedResult.push_back(r2e[r2Synonyms[syn]]);
                     }

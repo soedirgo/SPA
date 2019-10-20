@@ -230,8 +230,8 @@ namespace UnitTesting
 
 		TEST_METHOD(splitSelect)
 		{
-			string actual = QueryParser::splitSelect("Select v2");
-			string expected{ "v2" };
+			vector<string> actual = QueryParser::splitSelect("Select v2");
+			vector<string> expected{ "v2" };
 			Assert::AreEqual(actual == expected, true);
 		}
 
@@ -265,10 +265,10 @@ namespace UnitTesting
 			vector<pair<string, pair<string, string>>> expected3{ {"a", {"_", "_abc*+_"}} };
 			Assert::AreEqual(actual3 == expected3, true);
 
-			//vector<string> input4 = { "pattern a(_, _  \"  a+b*c  \"  _)" };
-			//vector<pair<string, pair<string, string>>> actual4 = QueryParser::splitPattern(input4);
-			//vector<pair<string, pair<string, string>>> expected4{ {"a", {"_", "_abc*+_"}} };
-			//Assert::AreEqual(actual4 == expected4, true);
+			vector<string> input4 = { "pattern a(_, _  \"  a+b*c  \"  _)" };
+			vector<pair<string, pair<string, string>>> actual4 = QueryParser::splitPattern(input4);
+			vector<pair<string, pair<string, string>>> expected4{ {"a", {"_", "_abc*+_"}} };
+			Assert::AreEqual(actual4 == expected4, true);
 		}
 
 		TEST_METHOD(initialValidation)
