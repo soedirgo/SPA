@@ -251,7 +251,7 @@ vector<string> QueryParser::splitSelect(string statements) {
 	string variableName;
 
 	if (firstSpace != -1) {
-		variableName = removeSpaces(statements.substr(firstSpace), whitespace);
+		variableName = removeWhiteSpaces(statements.substr(firstSpace),whitespacech);
 	}
 
 	//To handle Tuple
@@ -290,10 +290,10 @@ vector<pair<string, pair<string, string>>> QueryParser::splitSuchThat(vector<str
 		}
 
 		if (suchThat[i].find("such") != -1) {
-			clauseType = removeSpaces(suchThat[i].substr(9, posOfOpenBracket - 9), whitespace);
+			clauseType = removeWhiteSpaces(suchThat[i].substr(9, posOfOpenBracket - 9), whitespacech);
 		}
 		else {
-			clauseType = removeSpaces(suchThat[i].substr(3, posOfOpenBracket - 3), whitespace);
+			clauseType = removeWhiteSpaces(suchThat[i].substr(3, posOfOpenBracket - 3), whitespacech);
 		}
 
 		string firstVar;
@@ -303,14 +303,14 @@ vector<pair<string, pair<string, string>>> QueryParser::splitSuchThat(vector<str
 			firstVar = "";
 		}
 		else {
-			firstVar = removeSpaces(suchThat[i].substr(posOfOpenBracket + 1, posOfComma - posOfOpenBracket - 1), whitespace);
+			firstVar = removeWhiteSpaces(suchThat[i].substr(posOfOpenBracket + 1, posOfComma - posOfOpenBracket - 1), whitespacech);
 		}
 
 		if ((posOfCloseBracket - posOfComma - 1) < 0) {
 			secondVar = "";
 		}
 		else {
-			secondVar = removeSpaces(suchThat[i].substr(posOfComma + 1, posOfCloseBracket - posOfComma - 1), whitespace);
+			secondVar = removeWhiteSpaces(suchThat[i].substr(posOfComma + 1, posOfCloseBracket - posOfComma - 1), whitespacech);
 		}
 
 		s.push_back(make_pair(clauseType, make_pair(firstVar, secondVar)));
@@ -342,7 +342,7 @@ vector<pair<string, pair<string, string>>> QueryParser::splitPattern(vector<stri
 
 		//Don't include _
 		string firstVar = trim(pattern[i].substr(posOfOpenBracket + 1, posOfComma - posOfOpenBracket-1),whitespace);
-		string second = removeSpaces(pattern[i].substr(posOfComma + 1, posOfCloseBracket - posOfComma-1),whitespace);
+		string second = removeSpaces(pattern[i].substr(posOfComma + 1, posOfCloseBracket - posOfComma-1));
 		int flag = (second.find("_") != -1);
 		int flag2 = (second.length() > 1);
 		if (flag && flag2) {
@@ -385,9 +385,8 @@ string QueryParser::trim(string str, string whitespace) {
 }
 
 //Removes all the whitespace in the given string
-string QueryParser::removeSpaces(string s, string whitespace) {
-	s.erase(0, s.find_first_not_of(whitespace));
-	s.erase(s.find_last_not_of(whitespace) + 1);
+string QueryParser::removeSpaces(string s) {
+	s.erase(remove_if(s.begin(), s.end(), isspace), s.end());
 	return s;
 }
 
@@ -396,6 +395,7 @@ string QueryParser::removeWhiteSpaces(string s, char whitespace) {
 	while (a < s.length()) {
 		if (s[a] == whitespacech || s[a] == whitespacech2) {
 			s.erase(a,1);
+			continue;
 		}
 		a++;
 	}
