@@ -179,6 +179,50 @@ namespace UnitTesting
 			Assert::AreEqual(actual9 == expected9, true);
 		}
 
+		TEST_METHOD(suchThatValidation)
+		{
+			unordered_map<string, string> declerationVariables1 = { {"a", "assign"}, {"v", "variable"} };
+			vector<pair<string,pair<string,string>>> suchThat1 { {"Modifiess", { "a", "v" }} };
+			string actual1 = QueryParser::suchThatValidation(declerationVariables1, suchThat1);
+			string expected1 = "Invalid";
+			Assert::AreEqual(actual1 == expected1, true);
+
+			unordered_map<string, string> declerationVariables2 = { {"a", "assign"}, {"v", "variable"} };
+			vector<pair<string, pair<string, string>>> suchThat2{ {"", { "a", "v" }} };
+			string actual2 = QueryParser::suchThatValidation(declerationVariables2, suchThat2);
+			string expected2 = "Invalid";
+			Assert::AreEqual(actual2 == expected2, true);
+
+			unordered_map<string, string> declerationVariables3 = { {"a", "assign"}, {"v", "variable"} };
+			vector<pair<string, pair<string, string>>> suchThat3{ {"Parent*", { "a-", "2" }} };
+			string actual3 = QueryParser::suchThatValidation(declerationVariables3, suchThat3);
+			string expected3 = "Semantic Invalid";
+			Assert::AreEqual(actual3 == expected3, true);
+
+			unordered_map<string, string> declerationVariables4 = { {"a", "assign"}, {"v", "variable"} };
+			vector<pair<string, pair<string, string>>> suchThat4{ {"Next*", { "2", "v" }} };
+			string actual4 = QueryParser::suchThatValidation(declerationVariables4, suchThat4);
+			string expected4 = "Semantic Invalid";
+			Assert::AreEqual(actual4 == expected4, true);
+
+			unordered_map<string, string> declerationVariables5 = { {"a", "assign"}, {"v", "variable"} };
+			vector<pair<string, pair<string, string>>> suchThat5{ {"Uses", { "a*", "v" }} };
+			string actual5 = QueryParser::suchThatValidation(declerationVariables5, suchThat5);
+			string expected5 = "Semantic Invalid";
+			Assert::AreEqual(actual5 == expected5, true);
+
+			unordered_map<string, string> declerationVariables6 = { {"a", "assign"}, {"v", "variable"} };
+			vector<pair<string, pair<string, string>>> suchThat6{ {"Modifies", { "v", "v" }} };
+			string actual6 = QueryParser::suchThatValidation(declerationVariables6, suchThat6);
+			string expected6 = "Semantic Invalid";
+			Assert::AreEqual(actual6 == expected6, true);
+
+			unordered_map<string, string> declerationVariables7 = { {"a", "procedure"}, {"v", "variable"} };
+			vector<pair<string, pair<string, string>>> suchThat7{ {"Calls", { "a", "v" }} };
+			string actual7 = QueryParser::suchThatValidation(declerationVariables7, suchThat7);
+			string expected7 = "Semantic Invalid";
+			Assert::AreEqual(actual7 == expected7, true);
+		}
 
 		TEST_METHOD(infixToRPNexpression)
 		{
