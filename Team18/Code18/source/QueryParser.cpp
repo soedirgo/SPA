@@ -342,7 +342,6 @@ vector<pair<string, pair<string, string>>> QueryParser::splitPattern(vector<stri
 
 		//Don't include _
 		string firstVar = trim(pattern[i].substr(posOfOpenBracket + 1, posOfComma - posOfOpenBracket-1),whitespace);
-		//cout << pattern[i].substr(posOfComma + 1, posOfCloseBracket - posOfComma - 1) << '\n';
 		string second = removeSpaces(pattern[i].substr(posOfComma + 1, posOfCloseBracket - posOfComma-1),whitespace);
 		int flag = (second.find("_") != -1);
 		int flag2 = (second.length() > 1);
@@ -352,7 +351,7 @@ vector<pair<string, pair<string, string>>> QueryParser::splitPattern(vector<stri
 				second = second.erase(index, index + 1);
 			}
 		}
-		//cout << second << '\n';
+
 		second = removeWhiteSpaces(second, whitespacech);
 		//Check if the second parameter is just "_"
 		second.erase(remove_if(second.begin(), second.end(), isspace), second.end());
@@ -360,13 +359,10 @@ vector<pair<string, pair<string, string>>> QueryParser::splitPattern(vector<stri
 		if (!(second.size() == 1 && second.at(0) == '_')) {
 			secondVar = PatternProcessor::infixtoRPNexpression(second);
 		}
-		//string secondVar = infixtoRPNexpression(second);
-		//cout << secondVar << '\n';
 
 		if (flag && flag2) {
 			secondVar.insert(0,"_");
 			secondVar.insert(secondVar.length(),"_");
-			cout << secondVar << '\n';
 		}
 
 		s.push_back(make_pair(clauseType, make_pair(firstVar, secondVar)));
