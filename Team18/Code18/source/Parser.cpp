@@ -75,7 +75,7 @@ int Parser::Parse(string filename) {
 				}
 				else {
 					pkb.setVariable(var);
-					currProc.addModifies(var);
+					currProc.addUses(var);
 					pkb.setUsesS(to_string(stmtNo), var);
 				}
 			}
