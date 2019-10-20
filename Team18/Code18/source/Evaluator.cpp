@@ -21,57 +21,73 @@ namespace Evaluator {
         vector<Clause> clauses = q.getClauses();
         vector<Result> intermediateResults;
 
-        // for every clause, get results and store in
-        // intermediate results
+        // for every clause, get results and store in intermediate
+        // results
         for (auto& clause : clauses) {
             intermediateResults.push_back(dispatch(clause, declarations));
         }
 
-        // select clause as the starting intermediate result
-        vector<string> initResults;
-        TABLE initTable;
-        if (declarations[selSyns[0]] == "stmt") {
-            initTable = PKB::getStmts();
-        } else if (declarations[selSyns[0]] == "read") {
-            initTable = PKB::getReads();
-        } else if (declarations[selSyns[0]] == "print") {
-            initTable = PKB::getPrints();
-        } else if (declarations[selSyns[0]] == "call") {
-            initTable = PKB::getCalls();
-        } else if (declarations[selSyns[0]] == "while") {
-            initTable = PKB::getWhiles();
-        } else if (declarations[selSyns[0]] == "if") {
-            initTable = PKB::getIfs();
-        } else if (declarations[selSyns[0]] == "assign") {
-            initTable = PKB::getAssigns();
-        } else if (declarations[selSyns[0]] == "variable") {
-            initTable = PKB::getVariables();
-        } else if (declarations[selSyns[0]] == "constant") {
-            initTable = PKB::getConstants();
-        } else if (declarations[selSyns[0]] == "prog_line") {
-            initTable = PKB::getProgLines();
-        } else if (declarations[selSyns[0]] == "procedure") {
-            initTable = PKB::getProcedures();
-        }        
-        Result currentResult = Result(true, {{selSyns[0], 0}}, initTable);
+        // evaluate select clause
+        for (auto syn : selSyns) {
+            TABLE initTable;
+            if (syn == "BOOLEAN") {}
+            else if (declarations[syn] == "stmt")
+                initTable = PKB::getStmts();
+            else if (declarations[syn] == "read")
+                initTable = PKB::getReads();
+            else if (declarations[syn] == "print")
+                initTable = PKB::getPrints();
+            else if (declarations[syn] == "call")
+                initTable = PKB::getCalls();
+            else if (declarations[syn] == "while")
+                initTable = PKB::getWhiles();
+            else if (declarations[syn] == "if")
+                initTable = PKB::getIfs();
+            else if (declarations[syn] == "assign")
+                initTable = PKB::getAssigns();
+            else if (declarations[syn] == "variable")
+                initTable = PKB::getVariables();
+            else if (declarations[syn] == "constant")
+                initTable = PKB::getConstants();
+            else if (declarations[syn] == "prog_line")
+                initTable = PKB::getProgLines();
+            else if (declarations[syn] == "procedure")
+                initTable = PKB::getProcedures();
+            intermediateResults.push_back(Result(true, {{syn, 0}}, initTable));
+        }
 
         // merge everything in intermediateResults
+        Result currentResult = Result(true, {}, {});
         for (auto& otherResult : intermediateResults) {
             currentResult = Result::merge(currentResult, otherResult);
         }
 
-        if (!currentResult.hasResults())
-            return {};
-
         // return results (projection)
-        TABLE finalResults = currentResult.getResults();
-        set<string> selectResultsSet;
-        int selSynIdx = currentResult.getSynonyms()[selSyns[0]];
-        for (const auto& result : finalResults)
-            selectResultsSet.insert(result[selSynIdx]);
         list<string> selectResults;
-        for (const auto& result : selectResultsSet)
-            selectResults.push_back(result);
-        return (selectResults);
+
+        // case Select BOOLEAN
+        if (selSyns[0] == "BOOLEAN") {
+            selectResults.push_back(currentResult.hasResults() ? "TRUE" : "FALSE");
+            return selectResults;
+        }
+
+        // otherwise project select synonyms
+        TABLE finalResults = currentResult.getResults();
+        unordered_map<string, int> finalResultSyns = currentResult.getSynonyms();
+        for (auto res : finalResults) {
+            string projectedResult;
+            bool isFirstSyn;
+            for (auto syn : selSyns) {
+                if (isFirstSyn)
+                    isFirstSyn = true;
+                else
+                    projectedResult.append(" ");
+                projectedResult.append(res[finalResultSyns[syn]]);
+            }
+            selectResults.push_back(projectedResult);
+        }
+        selectResults.sort();
+        selectResults.unique();
+        return selectResults;
     }
 } // namespace Evaluator

@@ -636,12 +636,20 @@ namespace IntegrationTesting
             list<string> actual;
 
             /**
+             * Select BOOLEAN
              * Select BOOLEAN such that Calls("main", "sub")
              * Select BOOLEAN with p.procName = "foo"
              * Select <s, v> such that Modifies(s, v)
              * Select <p, r> such that Parent*(i, p) and Parent*(i, r)
              * Select <i1, i2, w> such that Parent(i1, w) and Parent*(w, i2)
              */
+
+            expected = { "TRUE" };
+            actual = Evaluator::evaluate
+                (Query(decl, {"BOOLEAN"}, {} }));
+            expected.sort();
+            actual.sort();
+            Assert::IsTrue(expected == actual);
 
             expected = { "TRUE" };
             actual = Evaluator::evaluate
