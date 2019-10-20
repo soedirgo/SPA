@@ -72,14 +72,17 @@ namespace Evaluator {
         }
 
         // otherwise project select synonyms
+        if (!currentResult.hasResults())
+            return {};
+
         TABLE finalResults = currentResult.getResults();
         unordered_map<string, int> finalResultSyns = currentResult.getSynonyms();
         for (auto res : finalResults) {
             string projectedResult;
-            bool isFirstSyn;
+            bool isFirstSyn = true;
             for (auto syn : selSyns) {
                 if (isFirstSyn)
-                    isFirstSyn = true;
+                    isFirstSyn = false;
                 else
                     projectedResult.append(" ");
                 projectedResult.append(res[finalResultSyns[syn]]);
