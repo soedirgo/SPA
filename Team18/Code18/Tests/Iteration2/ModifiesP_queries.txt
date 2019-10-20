@@ -140,7 +140,7 @@ A, B, C, D, F, H, I, J, K, L
 5000
 29 - Relation, Select all variable that is modified
 procedure pr; variable v;
-Select pr such that Modifies(pr, v)
+Select v such that Modifies(pr, v)
 x, y, j, k, i, rainbow, green, purple, black, Sat, Fri, Thu, mod1, mod2, apple, pear, banana, pineapple
 5000
 30 - Relation, Select all procedures that modifies a specific variable 1
@@ -200,7 +200,7 @@ F, H
 5000
 41 - Relation, Procedure modifies a variable due to call definition of modifies 2
 procedure pr;
-Select pr such that Modifies(pr, "h")
+Select pr such that Modifies(pr, "i")
 B, J, K, L
 5000
 42 - Relation, Procedure modifies a variable due to procedure definition of modifies 1
