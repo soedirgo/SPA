@@ -17,6 +17,8 @@ Parser::Parser() {
 	this->patternProcessor = PatternProcessor();
 	this->stmtNo = 1;
 	this->nestingLevel = 0;
+	this->name = "^([a-zA-Z])([a-zA-Z0-9])*";
+	this->number = "^([0-9])*";
 	this->currProc = NestedResult();
 }
 
@@ -52,6 +54,9 @@ int Parser::Parse(string filename) {
 				prevWhile = false;
 			}
 			string header = parseProc(line);
+			if (!(regex_match(header, name))) {
+				throw stmtNo;
+			}
 			//Calls PKB API to set procedure name
 			currProc.setProcName(header);
 			pkb.setProcedure(header);
@@ -162,6 +167,9 @@ int Parser::Parse(string filename) {
 			//Splits the assign statement by the = sign and get LHS and RHS
 			int index = assign.find("=");
 			string varMod = assign.substr(0, index);
+			if (!(regex_match(varMod, name))) {
+				throw stmtNo;
+			}
 			pkb.setVariable(varMod);
 			pkb.setModifiesS(to_string(stmtNo), varMod);
 			currProc.addModifies(varMod);
@@ -363,6 +371,9 @@ string Parser::parseProc(string line) {
 	//Removes the stmt line open bracket: { from header
 	int i = header.find(keyword);
 	header.erase(i, keyword.size());
+	if (!regex_match(header,name)) {
+		throw stmtNo;
+	}
 	return header;
 }
 
@@ -374,6 +385,9 @@ string Parser::parseCall(string line) {
 	header.erase(std::remove(header.begin(), header.end(), ';'), header.end());
 	int i = header.find(keyword);
 	header.erase(i, keyword.size());
+	if (!regex_match(header, name)) {
+		throw stmtNo;
+	}
 	return header;
 }
 
@@ -388,7 +402,9 @@ string Parser::parseRead(string line) {
 	readStmt.erase(i, keyword.size());
 	//Removes ; from readStmt
 	readStmt.erase(std::remove(readStmt.begin(), readStmt.end(), ';'), readStmt.end());
-
+	if (!regex_match(readStmt, name)) {
+		throw stmtNo;
+	}
 	return readStmt;
 }
 
@@ -403,7 +419,9 @@ string Parser::parsePrint(string line) {
 	printStmt.erase(i, keyword.size());
 	//Removes ; from print statement
 	printStmt.erase(std::remove(printStmt.begin(), printStmt.end(), ';'), printStmt.end());
-
+	if (!regex_match(printStmt, name)) {
+		throw stmtNo;
+	}
 	return printStmt;
 }
 
@@ -455,11 +473,17 @@ vector<string> Parser::parseAssignRHS(string varUse) {
 				}
 			}
 			var = patternRHS.substr(0, i);
+			if (!(regex_match(var, name) || regex_match(var, number))) {
+				throw stmtNo;
+			}
 			result.push_back(var);
 			patternRHS = patternRHS.substr(i + 1);
 		}
 		else {
 			var = patternRHS;
+			if (!(regex_match(var, name) || regex_match(var, number))) {
+				throw stmtNo;
+			}
 			result.push_back(var);
 			break;
 		}
@@ -687,6 +711,9 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 			//Splits the assign statement by the = sign and get LHS and RHS
 			int index = assign.find("=");
 			string varMod = assign.substr(0, index);
+			if (!(regex_match(varMod, name))) {
+				throw stmtNo;
+			}
 			pkb.setVariable(varMod);
 			pkb.setModifiesS(to_string(currStmtNo), varMod);
 			result.addModifies(varMod);
@@ -1219,6 +1246,9 @@ NestedResult Parser::parseIfNestedInThen(string ifLine, int parentStmtNo) {
 			//Splits the assign statement by the = sign and get LHS and RHS
 			int index = assign.find("=");
 			string varMod = assign.substr(0, index);
+			if (!(regex_match(varMod, name))) {
+				throw stmtNo;
+			}
 			pkb.setVariable(varMod);
 			pkb.setModifiesS(to_string(currStmtNo), varMod);
 			result.addModifies(varMod);
@@ -1689,6 +1719,9 @@ NestedResult Parser::parseWhileNestedInThen(string whileLine, int parentStmtNo) 
 			//Splits the assign statement by the = sign and get LHS and RHS
 			int index = assign.find("=");
 			string varMod = assign.substr(0, index);
+			if (!(regex_match(varMod, name))) {
+				throw stmtNo;
+			}
 			pkb.setVariable(varMod);
 			pkb.setModifiesS(to_string(currStmtNo), varMod);
 			result.addModifies(varMod);
@@ -2048,6 +2081,9 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 			//Splits the assign statement by the = sign and get LHS and RHS
 			int index = assign.find("=");
 			string varMod = assign.substr(0, index);
+			if (!(regex_match(varMod, name))) {
+				throw stmtNo;
+			}
 			pkb.setVariable(varMod);
 			pkb.setModifiesS(to_string(currStmtNo), varMod);
 			result.addModifies(varMod);
@@ -2264,6 +2300,9 @@ vector<string> Parser::parseCondStmt(string line) {
 			if (var.find('!') != string::npos) {
 				var = var.substr(1);
 			}
+			if (!(regex_match(var, name) || regex_match(var, number))) {
+				throw stmtNo;
+			}
 			result.push_back(var);
 		}
 	}
@@ -2281,6 +2320,9 @@ vector<string> Parser::parseCondStmt(string line) {
 						if (var.find('!') != string::npos) {
 							var = var.substr(1);
 						}
+						if (!(regex_match(var, name) || regex_match(var, number))) {
+							throw stmtNo;
+						}
 						result.push_back(var);
 					}
 				}
@@ -2292,6 +2334,9 @@ vector<string> Parser::parseCondStmt(string line) {
 						if (var.find('!') != string::npos) {
 							var = var.substr(1);
 						}
+						if (!(regex_match(var, name) || regex_match(var, number))) {
+							throw stmtNo;
+						}
 						result.push_back(var);
 					}
 				}
@@ -2302,6 +2347,9 @@ vector<string> Parser::parseCondStmt(string line) {
 				for (string var : subresult) {
 					if (var.find('!') != string::npos) {
 						var = var.substr(1);
+					}
+					if (!(regex_match(var, name) || regex_match(var, number))) {
+						throw stmtNo;
 					}
 					result.push_back(var);
 				}

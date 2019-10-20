@@ -276,6 +276,42 @@ namespace UnitTesting
 			int actual = parser.count(input, '}');
 			Assert::AreEqual(expected, actual);
 		}
+
+		TEST_METHOD(regex1)
+		{
+			Parser parser = Parser();
+			string input = "1234";
+			int expected = true;
+			int actual = regex_match(input, parser.number);
+			Assert::AreEqual(expected, actual);
+		}
+
+		TEST_METHOD(regex2)
+		{
+			Parser parser = Parser();
+			string input = "A0156672X";
+			int expected = true;
+			int actual = regex_match(input, parser.name);
+			Assert::AreEqual(expected, actual);
+		}
+
+		TEST_METHOD(regex3)
+		{
+			Parser parser = Parser();
+			string input = "n1234";
+			int expected = false;
+			int actual = regex_match(input, parser.number);
+			Assert::AreEqual(expected, actual);
+		}
+
+		TEST_METHOD(regex4)
+		{
+			Parser parser = Parser();
+			string input = "*A0156672X";
+			int expected = false;
+			int actual = regex_match(input, parser.name);
+			Assert::AreEqual(expected, actual);
+		}
 	};
 	
 }

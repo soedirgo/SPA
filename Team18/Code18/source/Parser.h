@@ -4,6 +4,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <regex>
 #include "NestedResult.h"
 #include "PatternProcessor.h"
 
@@ -14,6 +15,8 @@ using namespace std;
 class Parser {
 public:
 	Parser();
+	regex name;
+	regex number;
 	int Parse(std::string filename);
 	int count(std::string s, char c);
 	string parseProc(std::string line);
