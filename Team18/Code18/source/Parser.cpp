@@ -54,6 +54,9 @@ int Parser::Parse(string filename) {
 				prevWhile = false;
 			}
 			string header = parseProc(line);
+			if (!(regex_match(header, name))) {
+				throw stmtNo;
+			}
 			//Calls PKB API to set procedure name
 			currProc.setProcName(header);
 			pkb.setProcedure(header);
