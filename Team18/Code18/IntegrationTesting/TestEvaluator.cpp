@@ -393,7 +393,7 @@ namespace IntegrationTesting
 
             expected = { "sub" };
             actual = Evaluator::evaluate
-                (Query(decl, {"p"}, { {"such that", {"Calls*", "\"main\"", "p"}} }));
+                (Query(decl, {"proc"}, { {"such that", {"Calls*", "\"main\"", "proc"}} }));
             expected.sort();
             actual.sort();
             Assert::IsTrue(expected == actual);
@@ -433,12 +433,12 @@ namespace IntegrationTesting
             actual.sort();
             Assert::IsTrue(expected == actual);
 
-            expected = { "1", "12", "13" };
-            actual = Evaluator::evaluate
-                (Query(decl, {"a"}, { {"such that", {"Next*", "n", "11"}} }));
-            expected.sort();
-            actual.sort();
-            Assert::IsTrue(expected == actual);
+            //expected = { "1", "12", "13" };
+            //actual = Evaluator::evaluate
+            //    (Query(decl, {"a"}, { {"such that", {"Next*", "n", "11"}} }));
+            //expected.sort();
+            //actual.sort();
+            //Assert::IsTrue(expected == actual);
         }
         TEST_METHOD(testOnePatternClause)
         {
@@ -685,7 +685,7 @@ namespace IntegrationTesting
             expected = { "2 3 5", "2 3 6" };
             actual = Evaluator::evaluate
                 (Query(decl, {"i1", "i2", "w"}, { {"such that", {"Parent", "i1", "w"}},
-                                                  {"such that", {"Parent*", "w", "i2"} }}));
+                                                  {"such that", {"Parent*", "w", "i2"}} }));
             expected.sort();
             actual.sort();
             Assert::IsTrue(expected == actual);

@@ -439,11 +439,11 @@ namespace Evaluator {
          {"while",
           [](string lhs, string rhs) {
               if (isUnderscore(lhs))
-                  return PKB::getPatternIfAny();
+                  return PKB::getPatternWhileAny();
               else if (isIdentifier(lhs))
-                  return PKB::getPatternIfIdent(trimEnds(lhs));
+                  return PKB::getPatternWhileIdent(trimEnds(lhs));
               else
-                  return PKB::getPatternIfEnt();
+                  return PKB::getPatternWhileEnt();
           }}};
     }
 
@@ -459,7 +459,7 @@ namespace Evaluator {
         for (const auto& field : fields)
             if (type == "such that" && field == fields[0])
                 continue;
-            else if (!isIdentifier(field) && field.front() != '_')
+            else if (!isIdentifier(field) && !isUnderscore(field) && field.front() != ' ')
                 synonyms[field] = synonyms.size();
         
         if (type == "such that")
