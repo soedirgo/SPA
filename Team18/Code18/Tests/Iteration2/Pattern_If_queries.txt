@@ -1,0 +1,205 @@
+1 - Set 1 - Test syntax of Pattern if (Positive/Negative tests). Pattern if syntax, LHS synonym MID wildcard RHS wildcard
+if ifs; variable v;
+Select v pattern ifs(v, _, _)
+x, y, one1, two2, red, yellow, sky, blue, fact, fiction
+5000
+2 - Pattern if syntax, LHS invalid synonym MID wildcard RHS wildcard
+if ifs; assign a;
+Select ifs pattern ifs(a, _, _)
+none
+5000
+3 - Pattern if syntax, LHS Ident MID wildcard RHS wildcard
+if ifs;
+Select ifs pattern ifs("red", _, _)
+19, 20
+5000
+4 - Pattern if syntax, LHS invalid Ident MID wildcard RHS wildcard
+if ifs;
+Select ifs pattern ifs("nonexist", _, _)
+none
+5000
+5 - Pattern if syntax, LHS wildcard MID wildcard RHS wildcard
+if ifs;
+Select ifs pattern ifs(_, _, _)
+1, 10, 19, 20, 31, 35
+5000
+6 - Pattern if syntax, LHS Integer MID wildcard RHS wildcard
+if ifs;
+Select ifs pattern ifs(1, _, _)
+none
+5000
+7 - Pattern if syntax, LHS synonym MID synonym RHS wildcard
+if ifs; variable v; stmt s;
+Select ifs pattern ifs(v, s, _)
+none
+5000
+8 - Pattern if syntax, LHS synonym MID wildcard RHS synonym
+if ifs; variable v; prog_line n;
+Select v pattern ifs(v, _, n)
+none
+5000
+9 - Pattern if syntax, LHS synonym MID synonym RHS synonym
+if ifs; variable v, v1; constant c;
+Select ifs pattern ifs(v, v1, c)
+none
+5000
+10 - Pattern if syntax, LHS synonym MID Ident RHS wildcard
+if ifs; variable v;
+Select v pattern ifs(v, "q", _)
+none
+5000
+11 - Pattern if syntax, LHS synonym MID wildcard RHS Ident
+if ifs; variable v;
+Select ifs pattern ifs(v, _, "fact")
+none
+5000
+12 - Pattern if syntax, LHS synonym MID Ident RHS Ident
+if ifs; variable v;
+Select ifs pattern ifs(v, "red", "wrong")
+none
+5000
+13 - Pattern if syntax, LHS synonym MID Integer RHS wildcard
+if ifs; variable v;
+Select v pattern ifs(v, 20, _)
+none
+5000
+14 - Pattern if syntax, LHS synonym MID wildcard RHS Integer
+if ifs; variable v;
+Select ifs pattern ifs(v, _, 31)
+none
+5000
+15 - Pattern if syntax, LHS synonym MID Integer RHS Integer
+if ifs; variable v;
+Select ifs pattern ifs(v, 1, 24)
+none
+5000
+16 - Set 2 - Pattern if at different nesting levels (Algorithmic Tests). Pattern if nesting, Not nested 1
+if ifs;
+Select ifs pattern ifs("x", _, _)
+1
+5000
+17 - Pattern if nesting, Not nested 2
+if ifs;
+Select ifs pattern ifs("sky", _, _)
+19
+5000
+18 - Pattern if nesting, Nested in if 1
+if ifs;
+Select ifs pattern ifs("yellow", _, _)
+19, 20
+5000
+19 - Pattern if nesting, Nested in if 2
+if ifs;
+Select ifs pattern ifs("left", _, _)
+35
+5000
+20 - Pattern if nesting, Nested in while 1
+if ifs;
+Select ifs pattern ifs("one1", _, _)
+10
+5000
+21 - Pattern if nesting, Nested in while 2
+if ifs;
+Select ifs pattern ifs("fact", _, _)
+31
+5000
+22 - Pattern if nesting, Multiple nested 1
+if ifs;
+Select ifs pattern ifs("fiction", _, _)
+31
+5000
+23 - Pattern if nesting, Multiple nested 2
+if ifs;
+Select ifs pattern ifs("right", _, _)
+35
+5000
+24 - Set 3 - Relation tests for Pattern if (Algorithmic Tests). Relation, Select all if that has variable in condition
+if ifs; variable v;
+Select ifs pattern ifs(v, _, _)
+1, 10, 19, 20, 31, 35
+5000
+25 - Relation, Select all variable that is in if condition
+if ifs; variable v;
+Select ifs pattern ifs(v, _, _)
+x, y, one1, two2, red, yellow, sky, blue, fact, fiction
+5000
+26 - Relation, Select all if that has a specific variable in condition 1
+if ifs;
+Select ifs pattern ifs("y", _, _)
+1
+5000
+27 - Relation, Select all if that has a specific variable in condition 2
+if ifs;
+Select ifs pattern ifs("red", _, _)
+19, 20
+5000
+28 - Relation, Select all if that has a specific variable in condition 3
+if ifs;
+Select ifs pattern ifs("fact", _, _)
+31
+5000
+29 - Relation, Variable that is in if condition but not while 1
+if ifs;
+Select ifs pattern ifs("blue", _, _)
+19
+5000
+30 - Relation, Variable that is in if condition but not while 2
+if ifs;
+Select ifs pattern ifs("right", _, _)
+35
+5000
+31 - Relation, Variable that is in while condition but not if 1
+if ifs;
+Select ifs pattern ifs("pear", _, _)
+none
+5000
+32 - Relation, variable that is in while condition but not if 2
+if ifs;
+Select ifs pattern ifs("rain", _, _)
+none
+5000
+33 - Relation, Variable that is in if and while condition 1
+if ifs;
+Select ifs pattern ifs("x", _, _)
+1
+5000
+34 - Relation, Variable that is in if and while condition 2
+if ifs;
+Select ifs pattern ifs("yellow", _, _)
+19, 20
+5000
+35 - Relation, Variable that is not in if or while condition 1
+if ifs;
+Select ifs pattern ifs("q", _, _)
+none
+5000
+36 - Relation, Variable that is not in if or while condition 2
+if ifs;
+Select ifs pattern ifs("t", _, _)
+none
+5000
+37 - Relation, Variable that is not nested and not in if condition 1
+if ifs;
+Select ifs pattern ifs("out", _, _)
+none
+5000
+38 - Relation, Variable that is not nested and not in if condition 1
+if ifs;
+Select ifs pattern ifs("end", _, _)
+none
+5000
+39 - Relation, Variable that is nested but not in if condition 1
+if ifs;
+Select ifs pattern ifs("i", _, _)
+none
+5000
+40 - Relation, Variable that is nested but not in if condition 2
+if ifs;
+Select ifs pattern ifs("black", _, _)
+none
+5000
+41 - Set 4 - Boundary tests for Pattern if (Boundary tests). Boundary, Non-existent variable
+if ifs;
+Select ifs pattern ifs("oasis", _, _)
+none
+5000

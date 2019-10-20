@@ -1,0 +1,175 @@
+1 - Set 1 - Test syntax of Pattern while (Positive/Negative tests). Pattern while syntax, LHS synonym RHS wildcard
+while w; variable v;
+Select v pattern w(v, _)
+x, j, one1, two2, apple, pear, mango, red, black, cont, yes, yellow, rainbow, rain, fact, fiction
+5000
+2 - Pattern while syntax, LHS invalid synonym RHS wildcard
+while w; assign a;
+Select w pattern w(a, _)
+none
+5000
+3 - Pattern while syntax, LHS Ident RHS wildcard
+while w;
+Select w pattern w("mango", _)
+11
+5000
+4 - Pattern while syntax, LHS invalid Ident RHS wildcard
+while w;
+Select w pattern w("notalive", _)
+none
+5000
+5 - Pattern while syntax, LHS wildcard RHS wildcard
+while w;
+Select w pattern w(_, _)
+5, 8, 11, 21, 24, 26, 30
+5000
+6 - Pattern while syntax, LHS Integer RHS wildcard
+while w;
+Select w pattern w(21, _)
+none
+5000
+7 - Pattern while syntax, LHS synonym RHS synonym
+while w; variable v, v1;
+Select v pattern w(v, v1)
+none
+5000
+8 - Pattern while syntax, LHS synonym RHS Ident
+while w; variable v;
+Select v pattern w(v, "black")
+none
+5000
+9 - Pattern while syntax, LHS synonym RHS Integer
+while w; variable v;
+Select w pattern w(v, 30)
+none
+5000
+10 - Set 2 - Pattern while at different nesting levels (Algorithmic Tests). Pattern while nesting, Not nested 1
+while w;
+Select w pattern w("j", _)
+5
+5000
+11 - Pattern while nesting, Not nested 2
+while w;
+Select w pattern w("two2", _)
+8
+5000
+12 - Pattern while nesting, Nested in if 1
+while w;
+Select w pattern w("red", _)
+21
+5000
+13 - Pattern while nesting, Nested in if 2
+while w;
+Select w pattern w("yes", _)
+24
+5000
+14 - Pattern while nesting, Nested in while 1
+while w;
+Select w pattern w("apple", _)
+11
+5000
+15 - Pattern while nesting, Nested in while 2
+while w;
+Select w pattern w("rainbow", _)
+26
+5000
+16 - Pattern while nesting, Multiple nested 1
+while w;
+Select w pattern w("black", _)
+21
+5000
+17 - Pattern while nesting, Multiple nested 2
+while w;
+Select w pattern w("rain", _)
+26
+5000
+18 - Set 3 - Relation tests for Pattern while (Algorithmic Tests). Relation, Select all while that has variable in condition
+while w; variable v;
+Select w pattern w(v, _)
+5, 8, 11, 21, 24, 26, 30
+5000
+19 - Relation, Select all variable that is in while condition
+while w; variable v;
+Select v pattern w(v, _)
+x, j, one1, two2, apple, pear, mango, red, black, cont, yes, yellow, rainbow, rain, fact, fiction
+5000
+20 - Relation, Select all while that has a specific variable in condition 1
+while w;
+Select w pattern w("j", _)
+5
+5000
+21 - Relation, Select all while that has a specific variable in condition 2
+while w;
+Select w pattern w("red", _)
+21
+5000
+22 - Relation, Select all while that has a specific variable in condition 3
+while w;
+Select w pattern w("fiction", _)
+30
+5000
+23 - Relation, Variable that is in if condition but not while 1
+while w;
+Select w pattern w("y", _)
+none
+5000
+24 - Relation, Variable that is in if condition but not while 2
+while w;
+Select w pattern w("blue", _)
+none
+5000
+25 - Relation, Variable that is in while condition but not if 1
+while w;
+Select w pattern w("mango", _)
+11
+5000
+26 - Relation, Variable that is in while condition but not if 2
+while w;
+Select w pattern w("cont", _)
+24
+5000
+27 - Relation, Variable that is in if and while condition 1
+while w;
+Select w pattern w("one1", _)
+8
+5000
+28 - Relation, Variable that is in if and while condition 2
+while w;
+Select w pattern w("fact", _)
+30
+5000
+29 - Relation, Variable that is not in if or while condition 1
+while w;
+Select w pattern w("num", _)
+none
+5000
+30 - Relation, Variable that is not in if or while condition 2
+while w;
+Select w pattern w("gone", _)
+none
+5000
+31 - Relation, Variable that is not nested and not in while condition 1
+while w;
+Select w pattern w("die", _)
+none
+5000
+32 - Relation, Variable that is not nested and not in while condition 2
+while w;
+Select w pattern w("end", _)
+none
+5000
+33 - Relation, Variable that is nested but not in while condition 1
+while w;
+Select w pattern w("k", _)
+none
+5000
+34 - Relation, Variable that is nested but not in while condition 2
+while w;
+Select w pattern w("t", _)
+none
+5000
+35 - Set 4 - Boundary tests for Pattern while (Boundary tests). Boundary, Non-existent variable
+while w;
+Select w pattern w("sos", _)
+none
+5000
