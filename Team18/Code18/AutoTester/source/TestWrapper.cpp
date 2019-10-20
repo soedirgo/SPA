@@ -42,7 +42,7 @@ void TestWrapper::parse(std::string filename) {
 		parser.Parse(filename);
 	}
 	catch (int e) {
-		cout << "line contains more than 1 ; at line: " << e;
+		cout << "Error at line: " << e;
 	}
 
 	DesignExtractor designExtractor = DesignExtractor();

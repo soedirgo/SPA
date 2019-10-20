@@ -164,6 +164,9 @@ int Parser::Parse(string filename) {
 			//Splits the assign statement by the = sign and get LHS and RHS
 			int index = assign.find("=");
 			string varMod = assign.substr(0, index);
+			if (!(regex_match(varMod, name))) {
+				throw stmtNo;
+			}
 			pkb.setVariable(varMod);
 			pkb.setModifiesS(to_string(stmtNo), varMod);
 			currProc.addModifies(varMod);
@@ -705,6 +708,9 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 			//Splits the assign statement by the = sign and get LHS and RHS
 			int index = assign.find("=");
 			string varMod = assign.substr(0, index);
+			if (!(regex_match(varMod, name))) {
+				throw stmtNo;
+			}
 			pkb.setVariable(varMod);
 			pkb.setModifiesS(to_string(currStmtNo), varMod);
 			result.addModifies(varMod);
@@ -1237,6 +1243,9 @@ NestedResult Parser::parseIfNestedInThen(string ifLine, int parentStmtNo) {
 			//Splits the assign statement by the = sign and get LHS and RHS
 			int index = assign.find("=");
 			string varMod = assign.substr(0, index);
+			if (!(regex_match(varMod, name))) {
+				throw stmtNo;
+			}
 			pkb.setVariable(varMod);
 			pkb.setModifiesS(to_string(currStmtNo), varMod);
 			result.addModifies(varMod);
@@ -1707,6 +1716,9 @@ NestedResult Parser::parseWhileNestedInThen(string whileLine, int parentStmtNo) 
 			//Splits the assign statement by the = sign and get LHS and RHS
 			int index = assign.find("=");
 			string varMod = assign.substr(0, index);
+			if (!(regex_match(varMod, name))) {
+				throw stmtNo;
+			}
 			pkb.setVariable(varMod);
 			pkb.setModifiesS(to_string(currStmtNo), varMod);
 			result.addModifies(varMod);
@@ -2066,6 +2078,9 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 			//Splits the assign statement by the = sign and get LHS and RHS
 			int index = assign.find("=");
 			string varMod = assign.substr(0, index);
+			if (!(regex_match(varMod, name))) {
+				throw stmtNo;
+			}
 			pkb.setVariable(varMod);
 			pkb.setModifiesS(to_string(currStmtNo), varMod);
 			result.addModifies(varMod);
