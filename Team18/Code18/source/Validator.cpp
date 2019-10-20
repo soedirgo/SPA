@@ -1,6 +1,6 @@
 #include <algorithm>
 #include <cctype>
-#include <regex> // Now you have two problems ;)
+#include <regex>
 #include <string>
 #include <sstream>
 #include <vector>
@@ -39,9 +39,116 @@ namespace Validator {
             results.push_back(s);
         }
 
-        bool areDeclarationsValid(string& decl) {}
+        unordered_map<string, string> synonymMap;
 
-        bool isSelectValid(string& selectCl) {}
+        bool areDeclarationsValid(string decl) {
+            // ex: stmt s1 , s2 , s3 ; assign a ; variable a ;
+            // whole declaration regex
+            regex declsRe("("
+                          "\\s*" // single decl starts here
+                          "(stmt|read|print|call|while|if|assign"
+                          "|variable|constant|prog_line|procedure)" // entity
+                          "\\s+"
+                          "(" // synonyms start here
+                          "[[:alpha:]][[:alnum:]]*" // compulsory first synonym
+                          "(" // additional synonyms start here
+                          "\\s*"
+                          ","
+                          "\\s*"
+                          "[[:alpha:]][[:alnum:]]*"
+                          ")*" // additional synonyms end here
+                          ")" // synonyms end here
+                          "\\s*"
+                          ";"
+                          "\\s*" // single decl ends here
+                          ")*");
+            // check syntax
+            if (!regex_match(decl, declsRe))
+                return false;
+
+            // single declaration regex
+            regex declRe("(stmt|read|print|call|while|if|assign"
+                         "|variable|constant|prog_line|procedure)" // entity
+                         "\\s+"
+                         "(" // synonyms start here
+                         "[[:alpha:]][[:alnum:]]*" // compulsory first synonym
+                         "(" // additional synonyms start here
+                         "\\s*"
+                         ","
+                         "\\s*"
+                         "[[:alpha:]][[:alnum:]]*"
+                         ")*" // additional synonyms end here
+                         ")" // synonyms end here
+                         "\\s*"
+                         ";");
+            // single synonym regex
+            regex synRe("[[:alpha:]][[:alnum:]]*");
+
+            // map synonyms to entities
+            auto declBegin = sregex_iterator(decl.begin(), decl.end(), declRe);
+            auto reItEnd = sregex_iterator();
+
+            for (sregex_iterator declIt = declBegin; declIt != reItEnd; ++declIt) {
+                smatch sm = *declIt;
+                string syns = sm[2];
+                auto synBegin = sregex_iterator(syns.begin(), syns.end(), synRe);
+                for (sregex_iterator synIt = synBegin; synIt != reItEnd; ++synIt) {
+                    string syn = (*synIt).str();
+                    if (synonymMap.count(syn))
+                        return false;
+                    synonymMap[syn] = sm[1];
+                }
+            }
+
+            return true;
+        }
+
+        bool isSelectValid(string selectCl) {
+            // ex: < s1 , s2 , s3 >
+            // select synonyms regex
+            regex selectRe("\\s*"
+                           "(BOOLEAN|[[:alpha:]][[:alnum:]]*|" // non-tuple
+                           "<" // start of tuple
+                           "\\s*"
+                           "[[:alpha:]][[:alnum:]]*" // compulsory first synonym
+                           "("
+                           "\\s*"
+                           ","
+                           "\\s*"
+                           "[[:alpha:]][[:alnum:]]*" // other synonyms in tuple
+                           ")*"
+                           "\\s*"
+                           ">" // end of tuple
+                           ")"
+                           "\\s*");
+            smatch sm;
+            if (!regex_match(selectCl, sm, selectRe))
+                return false;
+
+            // BOOLEAN or single synonym
+            string syn = sm[0];
+            if (syn == "BOOLEAN")
+                return true;
+            else if (syn.front() != '<') {
+                if (synonymMap.count(syn))
+                    return true;
+                else
+                    return false;
+            }
+
+            // single synonym regex
+            regex synRe("[[:alpha:]][[:alnum:]]*");
+            auto synBegin = sregex_iterator(syn.begin(), syn.end(), synRe);
+            auto reItEnd = sregex_iterator();
+
+            for (sregex_iterator synIt = synBegin; synIt != reItEnd; ++synIt) {
+                string synStr = (*synIt).str();
+                if (!synonymMap.count(synStr))
+                    return false;
+            }
+
+            return true;
+        }
 
         bool isSuchThatValid(string& suchThatCl) {}
 
@@ -50,14 +157,12 @@ namespace Validator {
         bool isWithValid(string& withCl) {}
 
         bool areClausesValid(string& clauses) {}
-
-        unordered_map<string, string> declarations;
     }
 
     bool isValid(string& input) {
         smatch wholeMatch;
         regex wholeRe("\\s*"
-                      "(.*;)" // declaration
+                      "(.*;)?" // declaration
                       "\\s*"
                       "Select"
                       "\\s+"
