@@ -15,203 +15,6 @@ namespace UnitTesting
 	TEST_CLASS(TestQueryParser)
 	{
 	public:
-		/*
-        TEST_METHOD_INITIALIZE(queryParserInit)
-        {
-               SIMPLE program:
-               _   procedure main {
-               1.      x = 1
-               2.      y = x
-               3.      if (x == y) then {
-               4.          z = 0;
-               _       } else {
-               5.          z = 1;
-               _       }
-               6.      while (x > 0) {
-               7.          read x;
-               8.          print x;
-			   9.		   x = x + 1;
-               _       }
-            
-			
-            PKB pkb;
-
-            pkb.clear();
-
-            pkb.setProcedure("main");
-
-            pkb.setStmt(1, Assign);
-            pkb.setAssignStmt(1, "x");
-            pkb.setVariable("x");
-            pkb.setConstant("1", 1);
-            //pkb.setModifiesVarByStmt(1, "x");
-
-            pkb.setStmt(2, Assign);
-            pkb.setAssignStmt(2, "y");
-            pkb.setVariable("y");
-            pkb.setUsesVarByStmt(2, "x");
-            //pkb.setModifiesVarByStmt(2, "y");
-            pkb.setFollows(1, 2);
-            pkb.setFollowsT(1, 2);
-
-            pkb.setStmt(3, If);
-            //pkb.setIfStmt(3);
-            pkb.setUsesVarByStmt(3, "x");
-            pkb.setUsesVarByStmt(3, "y");
-            //pkb.setModifiesVarByStmt(3, "z");
-            pkb.setFollows(2, 3);
-            pkb.setFollowsT(1, 3);
-            pkb.setFollowsT(2, 3);
-
-            pkb.setStmt(4, Assign);
-            pkb.setAssignStmt(4, "z");
-            pkb.setVariable("z");
-            pkb.setConstant("0", 4);
-            //pkb.setModifiesVarByStmt(4, "z");
-            pkb.setParent(3, 4);
-            pkb.setParentT(3, 4);
-
-            pkb.setStmt(5, Assign);
-            pkb.setAssignStmt(5, "z");
-            //pkb.setModifiesVarByStmt(5, "z");
-            pkb.setParent(3, 5);
-            pkb.setParentT(3, 5);
-
-            pkb.setStmt(6, While);
-            //pkb.setWhileStmt(6);
-            pkb.setUsesVarByStmt(6, "x");
-            //pkb.setModifiesVarByStmt(6, "x");
-            pkb.setFollows(3, 6);
-            pkb.setFollowsT(1, 6);
-            pkb.setFollowsT(2, 6);
-            pkb.setFollowsT(3, 6);
-
-            pkb.setStmt(7, Read);
-            pkb.setRead(7, "x");
-            //pkb.setModifiesVarByStmt(7, "x");
-            pkb.setParent(6, 7);
-            pkb.setParentT(6, 7);
-
-            pkb.setStmt(8, Print);
-            pkb.setPrint(8, "x");
-            pkb.setUsesVarByStmt(8, "x");
-            pkb.setParent(6, 8);
-            pkb.setParentT(6, 8);
-            pkb.setFollows(7, 8);
-            pkb.setFollowsT(7, 8);
-
-			pkb.setStmt(9, Assign);
-			pkb.setAssignStmt(9, "x");
-			pkb.setVariable("x");
-			pkb.setUsesS(9, "x");
-			pkb.setModifiesS(9, "x");
-			pkb.setFollows(8, 9);
-			pkb.setFollowsT(8, 9);
-			
-		}
-		
-        TEST_METHOD(validQueries)
-        {
-            list<string> expected;
-            list<string> actual;
-
-            expected = { "1", "2", "3", "4", "5", "6", "7", "8" , "9"};
-            actual = QueryParser::parse("stmt s; Select s");
-            Assert::IsTrue(expected == actual);
-            
-            expected = { "1", "2", "3", "4", "5", "6", "7", "8" ,"9"};
-            actual = QueryParser::parse("stmt s123; Select s123");
-            Assert::IsTrue(expected == actual);
-            
-            expected = {};
-            actual = QueryParser::parse("variable v; Select v such that Uses(1, v)");
-            Assert::IsTrue(expected == actual);
-            
-            expected = { "1", "2", "3", "7" ,"8"};
-            actual = QueryParser::parse("stmt s1,   s2; Select     s1 such that Follows  (s1   ,   s2)");
-            Assert::IsTrue(expected == actual);
-
-            expected = { "1", "6", "7","9" };
-			actual = QueryParser::parse("stmt    s;   Select  s  such that  Modifies(  s, \"x\")");
-			Assert::IsTrue(expected == actual);
-
-			expected = { "1", "2", "3", "4", "5", "6", "7", "8" ,"9" };
-			actual = QueryParser::parse("stmt s; assign a; Select s pattern a(_, _\"x\"_)");
-			Assert::IsTrue(expected == actual);
-        }
-        TEST_METHOD(invalidQueries)
-        {
-            list<string> expected;
-            list<string> actual;
-
-            actual = QueryParser::parse("");
-            Assert::IsTrue(expected == actual);
-
-            actual = QueryParser::parse("foo");
-            Assert::IsTrue(expected == actual);
-
-            actual = QueryParser::parse("Select");
-            Assert::IsTrue(expected == actual);
-
-            actual = QueryParser::parse("Select 1");
-            Assert::IsTrue(expected == actual);
-
-            actual = QueryParser::parse("Select s");
-            Assert::IsTrue(expected == actual);
-
-            actual = QueryParser::parse("stmt s; Selct s");
-            Assert::IsTrue(expected == actual);
-
-            actual = QueryParser::parse("stmt s; select s");
-            Assert::IsTrue(expected == actual);
-
-            actual = QueryParser::parse("stmt s Select s");
-            Assert::IsTrue(expected == actual);
-
-            actual = QueryParser::parse("foo s; Select s");
-            Assert::IsTrue(expected == actual);
-
-            actual = QueryParser::parse("stmt s 1; Select s");
-            Assert::IsTrue(expected == actual);
-
-            actual = QueryParser::parse("stmt s*; Select s*");
-            Assert::IsTrue(expected == actual);
-
-            actual = QueryParser::parse("stmt s, Select s");
-            Assert::IsTrue(expected == actual);
-
-            actual = QueryParser::parse("assign a; Select a such that Uses(a)");
-            Assert::IsTrue(expected == actual);
-
-            actual = QueryParser::parse("stmt s; Select s suchthat Uses(s, \"x\")");
-            Assert::IsTrue(expected == actual);
-
-            actual = QueryParser::parse("stmt s; variable v; Select s Uses(s, v)");
-            Assert::IsTrue(expected == actual);
-
-            actual = QueryParser::parse("stmt s1, s2; Select s such that Foo(s1, s2)");
-            Assert::IsTrue(expected == actual);
-
-			actual = QueryParser::parse("stmt    s;   Select  s  such that  Modifies(  s, _\"x\"_)");
-			Assert::IsTrue(expected == actual);
-
-            //actual = QueryParser::parse("stmt s; variable v; Select s such that Uses(s, v) pattern (v, _)");
-            //Assert::IsTrue(expected == actual);
-
-            //actual = QueryParser::parse("assign a; variable v; Select a such that Uses(a, v) and pattern a(v, _)");
-            //Assert::IsTrue(expected == actual);
-
-            actual = QueryParser::parse("stmt s; variable v; Select s such that Uses(v, s)");
-            Assert::IsTrue(expected == actual);
-
-			actual = QueryParser::parse("stmt v; variable s; Select s such that Uses(s, v)");
-			Assert::IsTrue(expected == actual);
-
-			actual = QueryParser::parse("stmt s; variable v; Select s such that Modifies(v, v)");
-			Assert::IsTrue(expected == actual);
-        }
-		*/
-
 		TEST_METHOD(findInitialDecleration)
 		{
 			vector<string> actual = QueryParser::findInitialDecleration("assign a; variable v;Select a such that Uses(a,v)");
@@ -257,17 +60,17 @@ namespace UnitTesting
 			
 			vector<string> input2 = { "pattern a(_, a+b*c)" };
 			vector<pair<string, pair<string, string>>> actual2 = QueryParser::splitPattern(input2);
-			vector<pair<string, pair<string, string>>> expected2{ {"a", {"_", "abc*+"}} };
+			vector<pair<string, pair<string, string>>> expected2{ {"a", {"_", "_a__b__c_*+"}} };
 			Assert::AreEqual(actual2 == expected2, true);
 
 			vector<string> input3 = { "pattern a(_, _\"a+b*c\"_)" };
 			vector<pair<string, pair<string, string>>> actual3 = QueryParser::splitPattern(input3);
-			vector<pair<string, pair<string, string>>> expected3{ {"a", {"_", "_abc*+_"}} };
+			vector<pair<string, pair<string, string>>> expected3{ {"a", {"_", "__a__b__c_*+_"}} };
 			Assert::AreEqual(actual3 == expected3, true);
 
 			vector<string> input4 = { "pattern a(_, _  \"  a+b*c  \"  _)" };
 			vector<pair<string, pair<string, string>>> actual4 = QueryParser::splitPattern(input4);
-			vector<pair<string, pair<string, string>>> expected4{ {"a", {"_", "_abc*+_"}} };
+			vector<pair<string, pair<string, string>>> expected4{ {"a", {"_", "__a__b__c_*+_"}} };
 			Assert::AreEqual(actual4 == expected4, true);
 		}
 
@@ -310,31 +113,98 @@ namespace UnitTesting
 		
 		}
 
+		TEST_METHOD(selectVariablesValidation)
+		{
+			unordered_map<string, string> declerationVariables1 
+				= {{"v","variable"}, {"a","assign"}};
+			vector<string> selectVars1 {"hihiih"};
+			string actual1 = QueryParser::selectVariablesValidation(declerationVariables1, selectVars1);
+			string expected1 = "Invalid";
+			Assert::AreEqual(actual1 == expected1, true);
+
+			unordered_map<string, string> declerationVariables2
+				= { {"v","variable"}, {"a","assign"} };
+			vector<string> selectVars2{ "v","a","BOOLEAN" };
+			string actual2 = QueryParser::selectVariablesValidation(declerationVariables2, selectVars2);
+			string expected2 = "Invalid";
+			Assert::AreEqual(actual2 == expected2, true);
+
+			unordered_map<string, string> declerationVariables3
+				= { {"c","call"}, {"p","procedure"}, {"a","assign"} };
+			vector<string> selectVars3{ "p.procName","c.procName","a.procName" };
+			string actual3 = QueryParser::selectVariablesValidation(declerationVariables3, selectVars3);
+			string expected3 = "Invalid";
+			Assert::AreEqual(actual3 == expected3, true);
+
+			unordered_map<string, string> declerationVariables4
+				= { {"c","call"}, {"p","procedure"}};
+			vector<string> selectVars4{ "p.procName","c.procName"};
+			string actual4 = QueryParser::selectVariablesValidation(declerationVariables4, selectVars4);
+			string expected4 = "Okay";
+			Assert::AreEqual(actual4 == expected4, true);
+
+			unordered_map<string, string> declerationVariables5
+				= { {"v","variable"}, {"r","read"}, {"pr","print"},{"a","assign"} };
+			vector<string> selectVars5{ "v.varName","r.varName","pr.varName", "a.varName" };
+			string actual5 = QueryParser::selectVariablesValidation(declerationVariables5, selectVars5);
+			string expected5 = "Invalid";
+			Assert::AreEqual(actual5 == expected5, true);
+
+			unordered_map<string, string> declerationVariables6
+				= { {"v","variable"}, {"r","read"}, {"pr","print"} };
+			vector<string> selectVars6{ "v.varName","r.varName","pr.varName" };
+			string actual6 = QueryParser::selectVariablesValidation(declerationVariables6, selectVars6);
+			string expected6 = "Okay";
+			Assert::AreEqual(actual6 == expected6, true);
+
+			unordered_map<string, string> declerationVariables7
+				= { {"r","constant"}, {"c","read"} };
+			vector<string> selectVars7{ "r.value","c.value" };
+			string actual7 = QueryParser::selectVariablesValidation(declerationVariables7, selectVars7);
+			string expected7 = "Invalid";
+			Assert::AreEqual(actual7 == expected7, true);
+
+			unordered_map<string, string> declerationVariables8
+				= { {"r","constant"}};
+			vector<string> selectVars8{ "r.value"};
+			string actual8 = QueryParser::selectVariablesValidation(declerationVariables8, selectVars8);
+			string expected8 = "Okay";
+			Assert::AreEqual(actual8 == expected8, true);
+
+			unordered_map<string, string> declerationVariables9
+				= { {"r","variable"} };
+			vector<string> selectVars9{ "r.stmt#" };
+			string actual9 = QueryParser::selectVariablesValidation(declerationVariables9, selectVars9);
+			string expected9 = "Invalid";
+			Assert::AreEqual(actual9 == expected9, true);
+		}
+
+
 		TEST_METHOD(infixToRPNexpression)
 		{
 			string input = "a+b";
 			string actual = PatternProcessor::infixtoRPNexpression(input);
-			string expected = "ab+";
+			string expected = "_a__b_+";
 			Assert::AreEqual(actual == expected, true);
 
 			string input2 = "a+b*c";
 			string actual2 = PatternProcessor::infixtoRPNexpression(input2);
-			string expected2 = "abc*+";
+			string expected2 = "_a__b__c_*+";
 			Assert::AreEqual(actual2 == expected2, true);
 
 			string input3 = "A+B*C";
 			string actual3 = PatternProcessor::infixtoRPNexpression(input3);
-			string expected3 = "ABC*+";
+			string expected3 = "_A__B__C_*+";
 			Assert::AreEqual(actual3 == expected3, true);
 
 			string input4 = "(A+B)*C";
 			string actual4 = PatternProcessor::infixtoRPNexpression(input4);
-			string expected4 = "AB+C*";
+			string expected4 = "_A__B_+_C_*";
 			Assert::AreEqual(actual4 == expected4, true);
 
 			string input5 = "(A+B)*(C+D)";
 			string actual5 = PatternProcessor::infixtoRPNexpression(input5);
-			string expected5 = "AB+CD+*";
+			string expected5 = "_A__B_+_C__D_+*";
 			Assert::AreEqual(actual5 == expected5, true);
 
 		}

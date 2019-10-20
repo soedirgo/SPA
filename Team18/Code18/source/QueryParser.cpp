@@ -507,7 +507,7 @@ string QueryParser::selectVariablesValidation(unordered_map<string, string> decl
 	for (int i = 0; i < selectVars.size(); i++) {
 
 		//Select Boolean can't have other select variables inside tuple of selects
-		if (selectVars[i] == "Boolean" && selectVars.size() != 1) {
+		if (selectVars[i] == "BOOLEAN" && selectVars.size() != 1) {
 			resultString = "Invalid";
 			return resultString;
 		}
