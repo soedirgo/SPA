@@ -288,4 +288,133 @@ procedure p; variable v;
 Select BOOLEAN such that Modifies(p, v)
 TRUE
 5000	
-
+4 - Calls -  IDENT IDENT - TRUE
+procedure p; 
+Select BOOLEAN such that Calls("B" , "C")
+TRUE
+5000
+4 - Calls -  IDENT IDENT - FALSE
+procedure p; 
+Select BOOLEAN such that Calls("A" , "B")
+FALSE
+5000	
+4 - Calls -  IDENT SYN - TRUE
+procedure p; 
+Select BOOLEAN such that Calls("B" , p)
+TRUE
+5000	
+4 - Calls -  IDENT SYN - FALSE
+procedure p; 
+Select BOOLEAN such that Calls("A" , p)
+FALSE
+5000
+4 - Calls -  SYN IDENT - TRUE
+procedure p; 
+Select BOOLEAN such that Calls(p , "A")
+TRUE
+5000	
+4 - Calls -  SYN IDENT - FALSE
+procedure p; 
+Select BOOLEAN such that Calls(p, "E")
+FALSE
+5000	
+4 - Calls -  SYN SYN - TRUE
+procedure p , q; 
+Select BOOLEAN such that Calls(p, q)
+TRUE
+5000	
+4 - Calls* -  IDENT IDENT - TRUE
+procedure p; 
+Select BOOLEAN such that Calls*("B" , "A")
+TRUE
+5000
+4 - Calls* -  IDENT IDENT - FALSE
+procedure p; 
+Select BOOLEAN such that Calls*("A" , "B")
+FALSE
+5000	
+4 - Calls* -  IDENT SYN - TRUE
+procedure p; 
+Select BOOLEAN such that Calls*("B" , p)
+TRUE
+5000	
+4 - Calls* -  IDENT SYN - FALSE
+procedure p; 
+Select BOOLEAN such that Calls*("A" , p)
+FALSE
+5000
+4 - Calls* -  SYN IDENT - TRUE
+procedure p; 
+Select BOOLEAN such that Calls*(p , "A")
+TRUE
+5000	
+4 - Calls* -  SYN IDENT - FALSE
+procedure p; 
+Select BOOLEAN such that Calls*(p, "E")
+FALSE
+5000	
+4 - Calls* -  SYN SYN - TRUE
+procedure p , q; 
+Select BOOLEAN such that Calls*(p, q)
+TRUE
+5000
+4 - Next -  IDENT IDENT- TRUE
+stmt s; 
+Select BOOLEAN such that Next(2,3)
+TRUE
+5000
+4 - Next -  IDENT IDENT- TRUE
+stmt s; 
+Select BOOLEAN such that Next(12,8)
+TRUE
+5000
+4 - Next -  IDENT IDENT- TRUE
+stmt s; 
+Select BOOLEAN such that Next(19,15)
+TRUE
+5000
+4 - Next -  IDENT IDENT- FALSE
+stmt s; 
+Select BOOLEAN such that Next(8,8)
+FALSE
+5000
+4 - Next -  IDENT IDENT- FALSE
+stmt s; 
+Select BOOLEAN such that Next(19,20)
+FALSE
+5000
+4 - Next -  IDENT IDENT- FALSE
+stmt s; 
+Select BOOLEAN such that Next(4,5)
+FALSE
+5000
+4 - Next -  IDENT IDENT- FALSE
+stmt s; 
+Select BOOLEAN such that Next(7,8)
+FALSE
+5000
+4 - Next -  SYN IDENT- TRUE
+stmt s; 
+Select BOOLEAN such that Next(s,3)
+TRUE
+5000
+4 - Next -  SYN IDENT- FALSE
+stmt s; 
+Select BOOLEAN such that Next(s,24)
+FALSE
+5000
+4 - Next -  IDENT SYN- TRUE
+stmt s; 
+Select BOOLEAN such that Next(4,s)
+TRUE
+5000
+4 - Next -  IDENT SYN- FALSE
+stmt s; 
+Select BOOLEAN such that Next(7,s)
+FALSE
+5000
+4 - Next -  SYN SYN- TRUE
+stmt s,s1; 
+Select BOOLEAN such that Next(s1,s)
+TRUE
+5000
