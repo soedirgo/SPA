@@ -15,9 +15,6 @@ using namespace std;
 
 void DesignExtractor::extractDesign()
 {
-
-	TABLE test = PKBModifies::getModifiesPEntEnt();
-	int i = test.size();
 	extractFollowsT();
 	extractParentT();
 	extractCallsT();

@@ -81,17 +81,17 @@ namespace UnitTesting
 			
 			vector<string> input2 = { "pattern a(_, a+b*c)" };
 			vector<pair<string, pair<string, string>>> actual2 = QueryParser::splitPattern(input2);
-			vector<pair<string, pair<string, string>>> expected2{ {"a", {"_", "_a__b__c_*+"}} };
+			vector<pair<string, pair<string, string>>> expected2{ {"a", {"_", " a  b  c *+"}} };
 			Assert::AreEqual(actual2 == expected2, true);
 
 			vector<string> input3 = { "pattern a(_, _\"a+b*c\"_)" };
 			vector<pair<string, pair<string, string>>> actual3 = QueryParser::splitPattern(input3);
-			vector<pair<string, pair<string, string>>> expected3{ {"a", {"_", "__a__b__c_*+_"}} };
+			vector<pair<string, pair<string, string>>> expected3{ {"a", {"_", "_ a  b  c *+_"}} };
 			Assert::AreEqual(actual3 == expected3, true);
 
 			vector<string> input4 = { "pattern a(_, _  \"  a+b*c  \"  _)" };
 			vector<pair<string, pair<string, string>>> actual4 = QueryParser::splitPattern(input4);
-			vector<pair<string, pair<string, string>>> expected4{ {"a", {"_", "__a__b__c_*+_"}} };
+			vector<pair<string, pair<string, string>>> expected4{ {"a", {"_", "_ a  b  c *+_"}} };
 			Assert::AreEqual(actual4 == expected4, true);
 		}
 
