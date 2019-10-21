@@ -25,7 +25,7 @@ public:
 
 	static std::string trim(std::string str, std::string whitespace);
 
-	static std::string removeSpaces(std::string s, std::string whitespace);
+	static std::string removeSpaces(std::string s);
 
 	static std::string removeWhiteSpaces(std::string s, char whitespace);
 
