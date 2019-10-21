@@ -16,7 +16,7 @@ Select <w, ifs>
 4 - Relation, 0 clause Select assign/variable
 assign a; variable v;
 Select <a, v>
-4 x, 4 y, 4 i, 4 j, 4 inc, 4 target, 4 k, 4 input, 4 num 5 x, 5 y, 5 i, 5 j, 5 inc, 5 target, 5 k, 5 input, 5 num 11 x, 11 y, 11 i, 11 j, 11 inc, 11 target, 11 k, 11 input, 11 num 12 x, 12 y, 12 i, 12 j, 12 inc, 12 target, 12 k, 12 input, 12 num 21 x, 21 y, 21 i, 21 j, 21 inc, 21 target, 21 k, 21 input, 21 num 22 x, 22 y, 22 i, 22 j, 22 inc, 22 target, 22 k, 22 input, 22 num 26 x, 26 y, 26 i, 26 j, 26 inc, 26 target, 26 k, 26 input, 26 num
+4 x, 4 y, 4 i, 4 j, 4 inc, 4 target, 4 k, 4 input, 4 num, 5 x, 5 y, 5 i, 5 j, 5 inc, 5 target, 5 k, 5 input, 5 num, 11 x, 11 y, 11 i, 11 j, 11 inc, 11 target, 11 k, 11 input, 11 num, 12 x, 12 y, 12 i, 12 j, 12 inc, 12 target, 12 k, 12 input, 12 num, 21 x, 21 y, 21 i, 21 j, 21 inc, 21 target, 21 k, 21 input, 21 num, 22 x, 22 y, 22 i, 22 j, 22 inc, 22 target, 22 k, 22 input, 22 num, 26 x, 26 y, 26 i, 26 j, 26 inc, 26 target, 26 k, 26 input, 26 num
 5000
 5 - Relation, 0 clause Select constant/prog_line
 constant c; prog_line n;
@@ -31,7 +31,7 @@ A 16, B 16, C 16, D 16, A 19, B 19, C 19, D 19, A 24, B 24, C 24, D 24
 7 - Relation, 0 clause Select 2 elem of the same synonym 1
 read r;
 Select <r, r>
-1 1, 1 2, 1 9, 1 13, 1 25, 2 1, 2 2, 2 9, 2 13, 2 25, 9 1, 9 2, 9 9, 9 13, 9 25, 13 1, 13 2, 13 9, 13 13, 13 25, 25 1, 25 2, 25 9, 25 13, 25 25
+1 1, 2 2, 9 9, 13 13, 25 25
 5000
 8 - Relation, 0 clause Select 2 elem of the same synonym 2
 procedure pr, pr1;
