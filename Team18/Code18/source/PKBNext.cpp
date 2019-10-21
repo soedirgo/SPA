@@ -1,5 +1,6 @@
 #include "PKBNext.h"
 #include "PKBStmt.h"
+#include "DesignExtractor.h"
 #include <system_error>
 
 using namespace std;
@@ -74,25 +75,52 @@ bool PKBNext::isNextIdentIdent(PROG_LINE currentLine, PROG_LINE nextLine) {
 }
 
 bool PKBNext::isNextTAnyAny() {
-	return !nextTTable.empty();
+	clearNextT();
+	DesignExtractor::extractNextT();
+	bool status = !nextTTable.empty();
+	clearNextT();
+	return status;
 }
 bool PKBNext::isNextTAnyIdent(PROG_LINE nextLine) {
+	clearNextT();
+	DesignExtractor::extractNextT();
 	for (auto vectorIter : nextTTable) {
 		if (vectorIter.back() == nextLine) {
+			clearNextT();
 			return true;
 		}
 	}
+	clearNextT();
 	return false;
 }
 bool PKBNext::isNextTIdentAny(PROG_LINE currentLine) {
+	clearNextT();
+	DesignExtractor::extractNextT();
 	for (auto vectorIter : nextTTable) {
 		if (vectorIter.front() == currentLine) {
+			clearNextT();
 			return true;
 		}
 	}
+	clearNextT();
 	return false;
 }
 bool PKBNext::isNextTIdentIdent(PROG_LINE currentLine, PROG_LINE nextLine) {
+	clearNextT();
+	DesignExtractor::extractNextT();
+	for (auto vectorIter : nextTTable) {
+		if (vectorIter.front() == currentLine) {
+			if (vectorIter.back() == nextLine) {
+				clearNextT();
+				return true;
+			}
+		}
+	}
+	clearNextT();
+	return false;
+}
+
+bool PKBNext::isNextTInserted(PROG_LINE currentLine, PROG_LINE nextLine) {
 	for (auto vectorIter : nextTTable) {
 		if (vectorIter.front() == currentLine) {
 			if (vectorIter.back() == nextLine) {
@@ -105,6 +133,10 @@ bool PKBNext::isNextTIdentIdent(PROG_LINE currentLine, PROG_LINE nextLine) {
 
 bool PKBNext::clear() {
 	nextTable.clear();
+	return true;
+}
+
+bool PKBNext::clearNextT() {
 	nextTTable.clear();
 	return true;
 }
@@ -242,6 +274,8 @@ TABLE PKBNext::getNextEntEnt(STMT_TYPE type1, STMT_TYPE type2) {
 }
 
 TABLE PKBNext::getNextTAnyEnt(STMT_TYPE type) {
+	clearNextT();
+	DesignExtractor::extractNextT();
 	TABLE resultTable;
 	STMT_LIST list;
 	STMT_NO s;
@@ -261,10 +295,13 @@ TABLE PKBNext::getNextTAnyEnt(STMT_TYPE type) {
 			}
 		}
 	}
+	clearNextT();
 	return resultTable;
 }
 
 TABLE PKBNext::getNextTEntAny(STMT_TYPE type) {
+	clearNextT();
+	DesignExtractor::extractNextT();
 	TABLE resultTable;
 	STMT_LIST list;
 	STMT_NO s;
@@ -284,10 +321,13 @@ TABLE PKBNext::getNextTEntAny(STMT_TYPE type) {
 			}
 		}
 	}
+	clearNextT();
 	return resultTable;
 }
 
 TABLE PKBNext::getNextTIdentEnt(PROG_LINE stmtNo, STMT_TYPE type) {
+	clearNextT();
+	DesignExtractor::extractNextT();
 	TABLE resultTable;
 	STMT_LIST list;
 	STMT_NO s;
@@ -307,10 +347,13 @@ TABLE PKBNext::getNextTIdentEnt(PROG_LINE stmtNo, STMT_TYPE type) {
 			}
 		}
 	}
+	clearNextT();
 	return resultTable;
 }
 
 TABLE PKBNext::getNextTEntIdent(STMT_TYPE type, PROG_LINE stmtNo) {
+	clearNextT();
+	DesignExtractor::extractNextT();
 	TABLE resultTable;
 	STMT_LIST list;
 	STMT_NO s;
@@ -330,10 +373,13 @@ TABLE PKBNext::getNextTEntIdent(STMT_TYPE type, PROG_LINE stmtNo) {
 			}
 		}
 	}
+	clearNextT();
 	return resultTable;
 }
 
 TABLE PKBNext::getNextTEntEnt(STMT_TYPE type1, STMT_TYPE type2) {
+	clearNextT();
+	DesignExtractor::extractNextT();
 	TABLE resultTable;
 	if (type1 == "stmt" && type2 == "stmt") {
 		return nextTTable;
@@ -368,11 +414,13 @@ TABLE PKBNext::getNextTEntEnt(STMT_TYPE type1, STMT_TYPE type2) {
 			}
 		}
 	}
-
+	clearNextT();
 	return resultTable;
 }
 
 TABLE PKBNext::getNextTSelf(STMT_TYPE type) {
+	clearNextT();
+	DesignExtractor::extractNextT();
 	PROC_LIST resultTable;
 	LINE_LIST list;
 	PROG_LINE n;
@@ -392,6 +440,7 @@ TABLE PKBNext::getNextTSelf(STMT_TYPE type) {
 			}
 		}
 	}
+	clearNextT();
 	return resultTable;
 }
 

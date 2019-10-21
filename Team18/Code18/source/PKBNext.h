@@ -14,6 +14,9 @@ public:
 	static TABLE getNextTable();
 	static TABLE getNextTTable();
 
+	//Helper
+	static bool isNextTInserted(PROG_LINE n1, PROG_LINE n2);
+
 	//Bool Evaluation
 	static bool isNextAnyAny();
 	static bool isNextAnyIdent(PROG_LINE n2);
@@ -41,6 +44,9 @@ public:
 
 	// Clear
 	static bool clear();
+
+	// Clear Next*
+	static bool clearNextT();
 
 private:
 	static TABLE nextTable;

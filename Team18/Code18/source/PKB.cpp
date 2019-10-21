@@ -30,13 +30,13 @@ bool PKB::clear()
 	PKBModifies::clear();
 	PKBNext::clear();
 	PKBParent::clear();
+	PKBPattern::clear();
 	PKBPrint::clear();
 	PKBProcedure::clear();
 	PKBRead::clear();
 	PKBStmt::clear();
 	PKBUses::clear();
 	PKBVariable::clear();
-	PKBPattern::clear();
 
 	return true;
 }
