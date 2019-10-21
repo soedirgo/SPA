@@ -150,13 +150,100 @@ namespace Validator {
             return true;
         }
 
-        bool isSuchThatValid(string& suchThatCl) {}
+        bool isSuchThatValid(string suchThatCl) {}
 
-        bool isPatternValid(string& patternCl) {}
+        bool isPatternValid(string patternCl) {}
 
-        bool isWithValid(string& withCl) {}
+        bool isWithValid(string withCl) {}
 
-        bool areClausesValid(string& clauses) {}
+        bool areClausesValid(string clauses) {
+            // ex: such that Uses ( "main" , x ) and Calls ( _ , _ )
+            // pattern a ( v , " a + b " ) with s.stmt# = c.value
+            regex clausesRe("(" // start of clause
+                            "\\s*"
+                            "such\\s+that" // start of such that
+                            "[^\\)]+"
+                            "\\)"
+                            "(" // start of optional ``and''s
+                            "\\s*"
+                            "and"
+                            "[^\\)]+"
+                            "\\)"
+                            ")*" // end of optional ``and''s
+                            "|" // end of such that
+                            "\\s*"
+                            "pattern" // start of pattern
+                            "[^\\)]+"
+                            "\\)"
+                            "(" // start of optional ``and''s
+                            "\\s*"
+                            "and"
+                            "[^\\)]+"
+                            "\\)"
+                            ")*" // end of optional ``and''s
+                            "|" // end of pattern
+                            "\\s*"
+                            "with" // start of with
+                            "[^=]+"
+                            "="
+                            "\\s*"
+                            "[^ ]+"
+                            "(" // start of optional ``and''s
+                            "\\s*"
+                            "and"
+                            "[^=]+"
+                            "="
+                            "\\s*"
+                            "[^ ]+"
+                            ")*" // end of optional ``and''s
+                            ")*" // end of with and clause
+                            "\\s*");
+            if (!regex_match(clauses, clausesRe))
+                return false;
+
+            regex clauseRe("(" // start of clause
+                           "(such\\s+that)" // start of such that
+                           "[^\\)]+"
+                           "\\)"
+                           "(" // start of optional ``and''s
+                           "\\s*"
+                           "and"
+                           "[^\\)]+"
+                           "\\)"
+                           ")*" // end of optional ``and''s
+                           "|" // end of such that
+                           "(pattern)" // start of pattern
+                           "[^\\)]+"
+                           "\\)"
+                           "(" // start of optional ``and''s
+                           "\\s*"
+                           "and"
+                           "[^\\)]+"
+                           "\\)"
+                           ")*" // end of optional ``and''s
+                           "|" // end of pattern
+                           "(with)" // start of with
+                           "[^=]+"
+                           "="
+                           "\\s*"
+                           "[^ ]+"
+                           "(" // start of optional ``and''s
+                           "\\s*"
+                           "and"
+                           "[^=]+"
+                           "="
+                           "\\s*"
+                           "[^ ]+"
+                           ")*" // end of optional ``and''s
+                           ")"); // end of with and clause
+
+            auto clauseBegin = sregex_iterator(clauses.begin(), clauses.end(), clauseRe);
+            auto reItEnd = sregex_iterator();
+
+            for (sregex_iterator clauseIt = clauseBegin; clauseIt != reItEnd; ++clauseIt) {
+                
+            }
+        }
     }
 
     bool isValid(string& input) {
@@ -167,17 +254,19 @@ namespace Validator {
                       "Select"
                       "\\s+"
                       "(BOOLEAN|[[:alpha:]][[:alnum:]]*|<.*>)" // select
+                      "("
                       "\\s+"
-                      "(.*?)?" // clauses
+                      "(.*?)" // clauses
+                      ")?" // clauses may or may not exist
                       "\\s*");
         if (!regex_match(input, wholeMatch, wholeRe))
             return false;
 
-        if (!areDeclarationsValid(wholeMatch[1])
-            || !isSelectValid(wholeMatch[2])
-            || !areClausesValid(wholeMatch[3]))
+        if (areDeclarationsValid(wholeMatch[1])
+            && isSelectValid(wholeMatch[2])
+            && areClausesValid(wholeMatch[4]))
+            return true;
+        else
             return false;
-
-        return true;
     }
 }
