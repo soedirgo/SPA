@@ -30,7 +30,7 @@ TRUE
 5000
 4 - Follows -  IDENT SYN- FALSE 
 stmt s;
-Select BOOLEAN such that Follows(23, s)
+Select BOOLEAN such that Follows(23, s) ERROR
 FALSE
 5000
 4 - Follows* -  IDENT IDENT - TRUE 
@@ -133,26 +133,24 @@ stmt s;
 Select BOOLEAN such that Uses(2,"x")
 FALSE
 5000
-
-
 3 - UsesS -  SYN IDENT - TRUE 
 stmt s;
-Select BOOLEAN such that UsesS(s,2)
+Select BOOLEAN such that Uses(s,"x")
 TRUE
 5000
 3 - UsesS -  SYN IDENT - FALSE 
 stmt s;
-Select BOOLEAN such that UsesS(s,5)
+Select BOOLEAN such that Uses(s,"z")
 FALSE
 5000
 4 - UsesS -  IDENT SYN- TRUE 
 stmt s;
-Select BOOLEAN such that UsesS(2, s)
+Select BOOLEAN such that Uses(6,"x" )
 TRUE
 5000
 4 - UsesS -  IDENT SYN- FALSE 
 stmt s;
-Select BOOLEAN such that UsesS(23, s)
+Select BOOLEAN such that Uses(1, "x")
 FALSE
 5000
 
