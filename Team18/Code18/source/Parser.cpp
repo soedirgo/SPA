@@ -1001,8 +1001,8 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 		}
 		else {
 			if (passedElse) {
-				if (line.find("}") != string::npos) {
-					nestingLevel--;
+				if (line.find("}") != string::npos && passedElse) {
+					nestingLevel = nestingLevel - count(line, '}');
 					break;
 				}
 			}
@@ -2259,10 +2259,10 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 			}
 		}
 		else {
-			if (line.find("}") != string::npos) {
-				nestingLevel--;
-				break;
-			}
+		if (line.find("}") != string::npos) {
+			nestingLevel = nestingLevel - count(line, '}');
+			break;
+		}
 		}
 	}
 	if (prevIf) {
