@@ -1,0 +1,46 @@
+procedure A {
+  read x;
+  read y;
+  if (x > y) then {
+    y = x; }
+  else {
+    x = y; }
+  print x;
+  print y;
+}
+
+procedure B {	  
+  while (i < j) {
+    read inc;
+    while (inc < 0) {
+      inc = inc + 1; }
+    i = i + inc; }
+  read target;
+  if (i < target) then {
+    while (i < target) {
+      call C;
+      print i;
+      if (i = target) then{
+        call C;
+        }
+        else{
+        call C;
+        } } }
+  else {
+    print i;
+    call D; }
+  print target;
+}
+
+procedure C {
+  k = k + 2;
+  i = i + k;
+  print k;
+}
+
+procedure D {
+  call A;
+  read input;
+  num = num + input + i * (x - y % (target / inc) );
+  print num;
+}

@@ -1,0 +1,159 @@
+1 - No constaints
+stmt s;
+Select BOOLEAN
+TRUE
+5000
+2 - Follows -  IDENT IDENT - TRUE 
+stmt s;
+Select BOOLEAN such that Follows(1,2)
+TRUE
+5000
+3 - Follows - IDENT IDENT - FALSE 
+stmt s;
+Select BOOLEAN such that Follows(2,1)
+FALSE
+5000
+3 - Follows -  SYN IDENT - TRUE 
+stmt s;
+Select BOOLEAN such that Follows(s,2)
+TRUE
+5000
+3 - Follows -  SYN IDENT - FALSE 
+stmt s;
+Select BOOLEAN such that Follows(s,5)
+FALSE
+5000
+4 - Follows -  IDENT SYN- TRUE 
+stmt s;
+Select BOOLEAN such that Follows(2, s)
+TRUE
+5000
+4 - Follows -  IDENT SYN- FALSE 
+stmt s;
+Select BOOLEAN such that Follows(23, s)
+FALSE
+5000
+4 - Follows* -  IDENT IDENT - TRUE 
+stmt s;
+Select BOOLEAN such that Follows*(1,3)
+TRUE
+5000
+4 - Follows* -  IDENT IDENT - FALSE 
+stmt s;
+Select BOOLEAN such that Follows*(14,15)
+FALSE
+5000
+5 - Follows* - SYN IDENT  - TRUE 
+stmt s;
+Select BOOLEAN such that Follows*(s,3)
+TRUE
+5000
+5 - Follows* - SYN IDENT  - FALSE 
+stmt s;
+Select BOOLEAN such that Follows*(s,1)
+FALSE
+5000
+5 - Follows* -  IDENT SYN - TRUE 
+stmt s;
+Select BOOLEAN such that Follows*(1,s)
+TRUE
+5000
+5 - Follows* -  IDENT SYN - FALSE 
+stmt s;
+Select BOOLEAN such that Follows*(7,s)
+FALSE
+5000
+6 - Parent -  Single nesting - IDENT IDENT - TRUE 
+stmt s;
+Select BOOLEAN such that Parent(3,4)
+TRUE
+5000
+7 - Parent -  Single nesting - IDENT IDENT - FALSE 
+stmt s;
+Select BOOLEAN such that Parent(6,7)
+FALSE
+5000
+10 - Parent* - Single nesting - IDENT IDENT - TRUE 
+stmt s;
+Select BOOLEAN such that Parent*(8,9)
+TRUE
+5000
+10 - Parent* - Single nesting - IDENT IDENT - FALSE 
+stmt s;
+Select BOOLEAN such that Parent*(8,13)
+FALSE
+5000
+9 - Parent* - Double nesting - IDENT IDENT - TRUE 
+stmt s;
+Select BOOLEAN such that Parent*(8,11)
+TRUE
+5000
+1 - Parent* - Double nesting - IDENT IDENT - TRUE 
+stmt s;
+Select BOOLEAN such that Parent*(14,16)
+TRUE	
+5000
+1 - Parent* - Triple nesting - IDENT IDENT - TRUE 
+stmt s;
+Select BOOLEAN such that Parent*(14,19)
+TRUE	
+5000
+1 - Parent* - IDENT IDENT - FALSE
+stmt s;
+Select BOOLEAN such that Parent*(19,19)
+FALSE	
+5000
+1 - Parent* -  SYN IDENT - TRUE
+stmt s;
+Select BOOLEAN such that Parent*(s,19)
+TRUE	
+5000
+1- Parent* -  SYN IDENT - FALSE
+stmt s;
+Select BOOLEAN such that Parent*(s,14)
+FALSE	
+5000
+1 - Parent* - IDENT SYN- TRUE
+stmt s;
+Select BOOLEAN such that Parent*(14,s)
+TRUE	
+5000
+1 - Parent* - IDENT SYN - FALSE
+stmt s;
+Select BOOLEAN such that Parent*(13,14)
+FALSE	
+5000
+2 - UsesS -  IDENT IDENT - TRUE 
+stmt s;
+Select BOOLEAN such that Uses(4,"x")
+TRUE
+5000
+3 - UsesS - IDENT IDENT - FALSE 
+stmt s;
+Select BOOLEAN such that Uses(2,"x")
+FALSE
+5000
+
+
+3 - UsesS -  SYN IDENT - TRUE 
+stmt s;
+Select BOOLEAN such that UsesS(s,2)
+TRUE
+5000
+3 - UsesS -  SYN IDENT - FALSE 
+stmt s;
+Select BOOLEAN such that UsesS(s,5)
+FALSE
+5000
+4 - UsesS -  IDENT SYN- TRUE 
+stmt s;
+Select BOOLEAN such that UsesS(2, s)
+TRUE
+5000
+4 - UsesS -  IDENT SYN- FALSE 
+stmt s;
+Select BOOLEAN such that UsesS(23, s)
+FALSE
+5000
+
+
