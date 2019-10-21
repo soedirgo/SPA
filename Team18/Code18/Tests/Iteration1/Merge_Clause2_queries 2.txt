@@ -1,0 +1,1300 @@
+1 - Queries 1 - 24 - Test selecting result that is not related to s.t. or p.a. clause. Select result not related, Follows and pattern assign - TT
+stmt s; assign a; constant c; variable v;
+Select c such that Follows(s, _) pattern a(v, _)
+1, 2, 5, 10
+5000
+2 - Select result not related, Follows and pattern assign - TF
+stmt s; assign a; constant c; variable v;
+Select c such that Follows(s, 13) pattern a("false", _"x"_)
+none
+5000
+3 - Select result not related, Follows and pattern assign - FT
+stmt s; assign a; constant c; variable v;
+select c such that Follows(s, s) pattern a(v, _)
+none
+5000
+4 - Select result not related, Follows and pattern assign - FF
+read r; assign a; constant c;
+Select c such that Follows(20, r) pattern a("not", _)
+none
+5000
+5 - Select result not related, Follows* and pattern assign - TT
+procedure proc; assign a; read r; print pn; 
+Select proc such that Follows*(r, pn) pattern a("x", _)
+Clause2
+5000
+6 - Select result not related, Follows* and pattern assign - TF
+procedure proc; assign a; read r;
+Select proc such that Follows*(1, r) pattern a(_, _"lie"_)
+none
+5000
+7 - Select result not related, Follows* and pattern assign - FT
+procedure proc; assign a;
+Select proc such that Follows*(21, _) pattern a(_, _)
+none
+5000
+8 - Select result not related, Follows* and pattern assign - FF
+procedure proc; assign a; while w;
+Select proc such that Follows*(w, 12) pattern a("second", _)
+none
+5000
+9 - Select result not related, Parent and pattern assign - TT
+read r; assign a; if ifs;
+Select r such that Parent(ifs, 6) pattern a("first", _"first"_)
+3, 12, 13, 15
+5000
+10 - Select result not related, Parent and pattern assign - TF
+read r; assign a; if ifs, if ifs1;
+Select r such that Parent(ifs, ifs1) pattern a("add", _"first"_)
+none
+5000
+11 - Select result not related, Parent and pattern assign - FT
+read r; assign a; while w;
+Select r such that Parent(w, w) pattern a(_, _"i"_)
+none
+5000
+12 - Select result not related, Parent and pattern assign - FF
+read r; assign a; print pn; stmt s;
+Select r such that Parent(pn, s) pattern a("no", _"yes"_)
+none
+5000
+13 - Select result not related, Parent* and pattern assign - TT
+stmt s; assign a;
+Select s such that Parent*(14, 17) pattern a("z", _"y"_)
+1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21
+5000
+14 - Select result not related, Parent* and pattern assign - TF
+stmt s; assign a; while w; print pn;
+Select s such that Parent*(w, pn) pattern a(_, _"point"_)
+none
+5000
+15 - Select result not related, Parent* and pattern assign - FT
+stmt s; assign a; variable v; read r;
+Select s such that Parent*(4, r) pattern a(v, _)
+none
+5000
+16 - Select result not related, Parent* and pattern assign - FF
+stmt s; assign a, a1;
+Select s such that Parent*(a1, _) pattern a("old", _)
+none
+5000
+17 - Select result not related, Uses and pattern assign - TT
+assign a, a1, a2;
+Select a1 such that Uses(a2, "add") pattern a(_, _)
+1, 2, 7, 11, 17, 19
+5000
+18 - Select result not related, Uses and pattern assign - TF
+assign a, a1; while w; variable v;
+Select a1 such that Uses(w, "second") pattern a(v, _"left"_)
+none
+5000
+19 - Select result not related, Uses and pattern assign - FT
+assign a, a1; print pn; variable v;
+Select a1 such that Uses(pn, "right") pattern a(v, _)
+none
+5000
+20 - Select result not related, Uses and pattern assign - FF
+assign a, a1; variable v;
+Select a1 such that Uses(15, v) pattern a("x", _"z"_)
+none
+5000
+21 - Select result not related, Modifies and pattern assign - TT
+assign assign; variable v; stmt s;
+Select v such that Modifies(s, _) pattern assign(_, _)
+x, y, z, i, first, second, add
+5000
+22 - Select result not related, Modifies and pattern assign - TF
+assign assign; variable v;
+Select v such that Modifies(3, "z") pattern assign("y", _"x"_)
+none
+5000
+23 - Select result not related, Modifies and pattern assign - FT
+assign assign; variable v; print pn;
+Select v such that Modifies(pn, _) pattern assign("add", _)
+none
+5000
+24 - Select result not related, Modifies and pattern assign - FF
+assign assign; variable v; while w;
+Select v such that Modifies(w, "second") pattern assign("third", _)
+none
+5000
+25 - Queries 25 - 48 - Test selecting result that is related to s.t. clause only. Select result related to s.t., Follows and pattern assign - TT
+assign a; stmt s; read r;
+Select s such that Follows(s, r) pattern a("first", _"add"_)
+2, 4, 12
+5000
+26 - Select result related to s.t., Follows and pattern assign - TF
+assign a; stmt s; if ifs;
+Select s such that Follows(ifs, s) pattern a("first", _"second"_)
+none
+5000
+27 - Select result related to s.t., Follows and pattern assign - FT
+assign a; stmt s;
+Select s such that Follows(21, s) pattern a("z", _)
+none
+5000
+28 - Select result related to s.t., Follows and pattern assign - FF
+assign a; stmt s; variable v;
+Select s such that Follows(s, 19) pattern a(v, _"jack"_)
+none
+5000
+29 - Select result related to s.t., Follows* and pattern assign - TT
+assign a; read r; variable v;
+Select r such that Follows*(r, 20) pattern a(v, _)
+3, 12, 13
+5000
+30 - Select result related to s.t., Follows* and pattern assign - TF
+assign a; read r; variable v;
+Select r such that Follows*(1, r) pattern a(v, _"queen"_)
+none
+5000
+31 - Select result related to s.t., Follows* and pattern assign - FT
+assign a; read r; print pn;
+Select r such that Follows*(pn, r) pattern a(_, _"x"_)
+none
+5000
+32 - Select result related to s.t., Follows* and pattern assign - FF
+assign a; read r;
+Select r such that Follows*(r, r) pattern a("king", _)
+none
+5000
+33 - Select result related to s.t., Parent and pattern assign - TT
+assign a; if ifs; while w;
+Select ifs such that Parent(ifs, w) pattern a(_, _)
+4
+5000
+34 - Select result related to s.t., Parent and pattern assign - TF
+assign a; if ifs, if;
+Select ifs such that Parent(ifs, if) pattern a("ace", _)
+none
+5000
+35 - Select result related to s.t., Parent and pattern assign - FT
+assign a; if ifs; read r; variable v;
+Select ifs such that Parent(ifs, r) pattern a(v, _)
+none
+5000
+36 - Select result related to s.t., Parent and pattern assign - FF
+assign a; if ifs;
+Select ifs such that Parent(ifs, ifs) pattern a(_, "pot")
+none
+5000
+37 - Select result related to s.t., Parent* and pattern assign - TT
+assign a; stmt s;
+Select s such that Parent*(s, 7) pattern a(_, _)
+4, 6
+5000
+38 - Select result related to s.t., Parent* and pattern assign - TF
+assign a; stmt s;
+Select s such that Parent*(14, s) pattern a("kettle", _)
+none
+5000
+39 - Select result related to s.t., Parent* and pattern assign - FT
+assign a; stmt s;
+Select s such that Parent*(s, s) pattern a(_, _"add"_)
+none
+5000
+40 - Select result related to s.t., Parent* and pattern assign - FF
+assign a, a1; stmt s;
+Select s such that Parent*(0, s) pattern a(_, _"black"_)
+none
+5000
+41 - Select result related to s.t., Uses and pattern assign - TT
+assign a, ares;
+Select ares such that Uses(ares, _) pattern a(_, _)
+7, 11, 19
+5000
+42 - Select result related to s.t., Uses and pattern assign - TF
+assign a, ares; variable v;
+Select ares such that Uses(ares, v) pattern a(v, _"rock"_)
+none
+5000
+43 - Select result related to s.t., Uses and pattern assign - FT
+assign a, ares;
+Select ares such that Uses(ares, "second") pattern a(_, _)
+none
+5000
+44 - Select result related to s.t., Uses and pattern assign - FF
+assign a, ares;
+Select ares such that Uses(ares, "paper") pattern a("scissor", _)
+none
+5000
+45 - Select result related to s.t., Modifies and pattern assign - TT
+assign assign; read r;
+Select r such that Modifies(r, _) pattern assign(_, _"y"_)
+3, 12, 13, 15
+5000
+46 - Select result related to s.t., Modifies and pattern assign - TF
+assign assign; read r;
+Select r such that Modifies(r, "first") pattern assign(_, _"t35t"_)
+none
+5000
+47 - Select result related to s.t., Modifies and pattern assign - FT
+assign assign; read r; variable v;
+Select r such that Modifies(r, "x") pattern assign(v, _)
+none
+5000
+48 - Select result related to s.t., Modifies and pattern assign - FF
+assign assign; read r;
+Select r such that Modifies(r, r) pattern assign("fake", _)
+none
+5000
+49 - Queries 49 - 72 - Test Selecting result that is related to p.a. clause only. Select result related to p.a., Follows and pattern assign - TT
+assign a;
+Select a such that Follows(1, 2) pattern a(_, _)
+1, 2, 7, 11, 17, 19
+5000
+50 - Select result related to p.a., Follows and pattern assign - TF
+assign a; stmt s;
+Select a such that Follows(5, s) pattern a(_, _"another"_)
+none
+5000
+51 - Select result related to p.a., Follows and pattern assign - FT
+assign a;
+Select a such that Follows(4, 5) pattern a("first", _)
+none
+5000
+52 - Select result related to p.a., Follows and pattern assign - FF
+assign a;
+Select a such that Follows(21, 20) pattern a("one", _)
+none
+5000
+53 - Select result related to p.a., Follows* and pattern assign - TT
+assign a; variable v;
+Select v such that Follows*(1, 21) pattern a(v, _)
+x, y, i, z, add, first
+5000
+54 - Select result related to p.a., Follows* and pattern assign - TF
+assign a; variable v; stmt s; while w;
+Select v such that Follows*(s, w) pattern a(v, _"bites"_)
+none
+5000
+55 - Select result related to p.a., Follows* and pattern assign - FT
+assign a; variable v; while w;
+Select v such that Follows*(16, w) pattern a(v, _"add"_)
+none
+5000
+56 - Select result related to p.a., Follows* and pattern assign - FF
+assign a, a1; variable v;
+Select v such that Follows*(a1, 39) pattern a(v, _"the"_)
+none
+5000
+57 - Select result related to p.a., Parent and pattern assign - TT
+assign a; if ifs;
+Select a such that Parent(ifs, _) pattern a(_, _"x"_)
+11
+5000
+58 - Select result related to p.a., Parent and pattern assign - TF
+assign a; if ifs;
+Select a such that Parent(4, ifs) pattern a(_, _"dust"_)
+none
+5000
+59 - Select result related to p.a., Parent and pattern assign - FT
+assign a; if ifs;
+Select a such that Parent(9, ifs) pattern a(_, _)
+none
+5000
+60 - Select result related to p.a., Parent and pattern assign - FF
+assign a; print pn;
+Select a such that Parent(pn, _) pattern a("xyz", _)
+none
+5000
+61 - Select result related to p.a., Parent* and pattern assign - TT
+assign print; while w; variable v;
+Select print such that Parent*(14, w) pattern print(v, _)
+1, 2, 7, 11, 17, 19
+5000
+62 - Select result related to p.a., Parent* and pattern assign - TF
+assign print;
+Select print such that Parent*(14, 18) pattern print("enemy", _)
+none
+5000
+63 - Select result related to p.a., Parent* and pattern assign - FT
+assign print;
+Select print such that Parent*(6, 10) pattern print(_, _)
+none
+5000
+64 - Select result related to p.a., Parent* and pattern assign - FF
+assign print;
+Select print such that Parent*(17, 16) pattern print(_, _"stand"_)
+none
+5000
+65 - Select result related to p.a., Uses and pattern assign - TT
+assign a; variable v;
+Select v such that Uses(11, "y") pattern a(v, _)
+x, y, i, z, add, first
+5000
+66 - Select result related to p.a., Uses and pattern assign - TF
+assign a, a1; variable v;
+Select v such that Uses(a1, _) pattern a(v, _"second"_)
+none
+5000
+67 - Select result related to p.a., Uses and pattern assign - FT
+assign a; variable v; while w;
+Select v such that Uses(w, "z") pattern a(v, _"first"_)
+none
+5000
+68 - Select result related to p.a., Uses and pattern assign - FF
+assign a; variable v, v1; read r;
+Select v such that Uses(r, v1) pattern a(v, _"fourth"_)
+none
+5000
+69 - Select result related to p.a., Modifies and pattern assign - TT
+assign a; read r; variable v;
+Select a such that Modifies(r, v) pattern a("first", _)
+19
+5000
+70 - Select result related to p.a., Modifies and pattern assign - TF
+assign a, a1; variable v;
+Select a such that Modifies(a1, _) pattern a(v, _"z"_)
+none
+5000
+71 - Select result related to p.a., Modifies and pattern assign - FT
+assign a; variable v; stmt s;
+Select a such that Modifies(s, "fifth") pattern a(v, _"i"_)
+none
+5000
+72 - Select result related to p.a., Modifies and pattern assign - FF
+assign a; variable v; print pn;
+Select a such that Modifies(pn, v) pattern a(_, _"sixth"_)
+none
+5000
+73 - Queries 73 - 96 - Test Selecting result that is related to both s.t. and p.a. clauses. Select result related to both, Follows and pattern assign - TT
+assign a, a1;
+Select a such that Follows(a, a1) pattern a(_, _)
+1
+5000
+74 - Select result related to both, Follows and pattern assign - TF
+assign a; stmt s;
+Select a such that Follows(a, s) pattern a("jelly", _)
+none
+5000
+75 - Select result related to both, Follows and pattern assign - FT
+assign a; variable v;
+Select a such that Follows(0, a) pattern a(v, _)
+none
+5000
+76 - Select result related to both, Follows and pattern assign - FF
+assign a; variable v;
+Select a such that Follows(a, 11) pattern a(v, _"second"_)
+none
+5000
+77 - Select result related to both, Follows* and pattern assign - TT
+assign a;
+Select a such that Follows*(a, 21) pattern a("y", _)
+2
+5000
+78 - Select result related to both, Follows* and pattern assign - TF
+assign a; stmt s;
+Select a such that Follows*(a, s) pattern a(_, _"apple"_)
+none
+5000
+79 - Select result related to both, Follows* and pattern assign - FT
+assign a; print pn;
+Select a such that Follows*(pn, a) pattern a(_, _)
+none
+5000
+80 - Select result related to both, Follows* and pattern assign - FF
+assign a;
+Select a such that Follows*(a, a) pattern a("orange", _)
+none
+5000
+81 - Select result related to both, Parent and pattern assign - TT
+assign a;
+Select a such that Parent(16, a) pattern a(_, _)
+17
+5000
+82 - Select result related to both, Parent and pattern assign - TF
+assign a; while w;
+Select a such that Parent(w, a) pattern a("low", _"high"_)
+none
+5000
+83 - Select result related to both, Parent and pattern assign - FT
+assign a; read r; variable v;
+Select a such that Parent(r, a) pattern a(v, _"first"_)
+none
+5000
+84 - Select result related to both, Parent and pattern assign - FF
+assign a;
+Select a such that Parent(a, a) pattern a("second", _)
+none
+5000
+85 - Select result related to both, Parent* and pattern assign - TT
+assign a;
+Select a such that Parent*(14, a) pattern a(_, _)
+17, 19
+5000
+86 - Select result related to both, Parent* and pattern assign - TF
+assign a;
+Select a such that Parent*(4, a) pattern a(_, _"hmm"_)
+none
+5000
+87 - Select result related to both, Parent* and pattern assign - FT
+assign a; variable v; stmt s;
+Select a such that Parent*(a, s) pattern a(v, _)
+none
+5000
+88 - Select result related to both, Parent* and pattern assign - FT
+assign a; variable v;
+Select a such that Parent*(a, a) pattern a(v, _"pear"_)
+none
+5000
+89 - Select result related to both, Uses and pattern assign - TT
+assign a; variable v;
+Select a such that Uses(a, v) pattern a(_, _)
+7, 11, 19
+5000
+90 - Select result related to both, Uses and pattern assign - TF
+assign a;
+Select a such that Uses(a, "i") pattern a("mix", _"match"_)
+none
+5000
+91 - Select result related to both, Uses and pattern assign - FT
+assign a; variable v; read r;
+Select v such that Uses(r, v) pattern a(v, _)
+none
+5000
+92 - Select result related to both, Uses and pattern assign - FF
+assign a; variable v;
+Select v such that Uses(2, v) pattern a(v, _"fiction"_)
+none
+5000
+93 - Select result related to both, Modifies and pattern assign - TT
+assign a; variable v; stmt s;
+Select v such that Modifies(s, v) pattern a(v, _)
+x, y, i, z, add, first
+5000
+94 - Select result related to both, Modifies and pattern assign - TF
+assign a; variable v; stmt s;
+Select v such that Modifies(s, v) pattern a(v, _"fact"_)
+none
+5000
+95 - Select result related to both, Modifies and pattern assign - FT
+assign a;
+Select a such that Modifies(a, "second") pattern a(_, _)
+none
+5000
+96 - Select result related to both, Modifies and pattern assign - FF
+assign a;
+Select a such that Modifies(a, "third") pattern a("fail", _)
+none
+5000
+97 - Queries 97 - 108 - Test merging of Select result from both clauses, both clauses will return a result and the merge will be a result or empty. Follows and pattern assign merge result - result
+assign a; print pn;
+Select a such that Follows(a, pn) pattern a(_, _)
+17
+5000
+98 - Follows and pattern assign merge result - none
+assign a;
+Select a such that Follows(16, a) pattern a("add", _)
+none
+5000
+99 - Follows* and pattern assign merge result - result
+assign a;
+Select a such that Follows*(a, _) pattern a("y", _)
+2
+5000
+100 - Follows* and pattern assign merge result - none
+assign a;
+Select a such that Follows*(_, a) pattern a(_, _"y"_)
+none
+5000
+101 - Parent and pattern assign merge result - result
+assign a; if ifs;
+Select a such that Parent(ifs, a) pattern a(_, _)
+11
+5000
+102 - Parent and pattern assign merge result - none
+assign a; if ifs;
+Select a such that Parent(ifs, a) pattern a("first", _"add"_)
+none
+5000
+103 - Parent* and pattern assign merge result - result
+assign a; while w;
+Select a such that Parent*(w, a) pattern a("add", _)
+17
+5000
+104 - Parent* and pattern assign merge result - none
+assign a;
+Select a such that Parent*(14, a) pattern a(_, _"i"_)
+none
+5000
+105 - Uses and pattern assign merge result - result
+assign a; variable v;
+Select v such that Uses(a, v) pattern a("z", v)
+none
+5000
+106 - Uses and pattern assign merge result - none
+assign a; variable v;
+Select a such that Uses(a, v) pattern a("x", _)
+none
+5000
+107 - Modifies and pattern assign merge result - result
+assign a;
+Select a such that Modifies(a, "first") pattern a(_, _)
+19
+5000
+108 - Modifies and pattern assign merge result - none
+assign a;
+Select a such that Modifies(a, "add") pattern a(_, _"i"_)
+none
+5000
+109 - Queries 109 - 120 - Reverse the order of clauses for set 5 to test clause order, answers should be the same. Reverse clause order of query 97
+assign a; print pn;
+Select a pattern a(_, _) such that Follows(a, pn)
+17
+5000
+110 - Reverse clause order of query 98
+assign a;
+Select a pattern a("add", _) such that Follows(16, a)
+none
+5000
+111 - Reverse clause order of query 99
+assign a;
+Select a pattern a("y", _) such that Follows*(a, _)
+2
+5000
+112 - Reverse clause order of query 100
+assign a;
+Select a pattern a(_, _"y"_) such that Follows*(_, a)
+none
+5000
+113 - Reverse clause order of query 101
+assign a; if ifs;
+Select a pattern a(_, _) such that Parent(ifs, a)
+11
+5000
+114 - Reverse clause order of query 102
+assign a; if ifs;
+Select a pattern a("first", _"add"_) such that Parent(ifs, a)
+none
+5000
+115 - Reverse clause order of query 103
+assign a; while w;
+Select a pattern a("add", _) such that Parent*(w, a)
+17
+5000
+116 - Reverse clause order of query 104
+assign a;
+Select a pattern a(_, _"i"_) such that Parent*(14, a)
+none
+5000
+117 - Reverse clause order of query 105
+assign a; variable v;
+Select v pattern a("z", v) such that Uses(a, v)
+none
+5000
+118 - Reverse clause order of query 106
+assign a; variable v;
+Select a pattern a("x", _) such that Uses(a, v)
+none
+5000
+119 - Reverse clause order of query 107
+assign a;
+Select a pattern a(_, _) such that Modifies(a, "first")
+19
+5000
+120 - Reverse clause order of query 108
+assign a;
+Select a pattern a(_, _"i"_) such that Modifies(a, "add")
+none
+5000
+121 - Queries 121 - 150 - Additional merge test for Follows. Select s, pattern LHS variable RHS wildcard
+stmt s; assign a; variable v;
+Select s such that Follows(s, a) pattern a(v, _)
+1, 16
+5000
+122 - Select a, pattern LHS variable RHS wildcard
+stmt s; assign a; variable v;
+Select a such that Follows(s, a) pattern a(v, _)
+2, 19
+5000
+123 - Select a, pattern LHS variable RHS wildcard
+stmt s; assign a; variable v;
+Select v such that Follows(s, a) pattern a(v, _)
+y, first
+5000
+124 - Select a1, pattern LHS variable RHS wildcard
+assign a, a1; variable v;
+Select a1 such that Follows(a1, a) pattern a(v, _)
+1
+5000
+125 - Select a, pattern LHS variable RHS wildcard
+assign a, a1; variable v;
+Select a such that Follows(a1, a) pattern a(v, _)
+2
+5000
+126 - Select v, pattern LHS variable RHS wildcard
+assign a, a1; variable v;
+Select v such that Follows(a1, a) pattern a(v, _)
+y
+5000
+127 - Select r, pattern LHS variable RHS Ident
+read r; assign a; variable v;
+Select r such that Follows(r, a) pattern a(v, _"first"_)
+none
+5000
+128 - Select a, pattern LHS variable RHS Ident
+read r; assign a; variable v;
+Select a such that Follows(r, a) pattern a(v, _"first"_)
+none
+5000
+129 - Select v, pattern LHS variable RHS Ident
+read r; assign a; variable v;
+Select v such that Follows(r, a) pattern a(v, _"first"_)
+none
+5000
+130 - Select w, pattern LHS variable RHS Ident
+while w; assign a; variable v;
+Select w such that Follows(w, a) pattern a(v, _"add"_)
+16
+5000
+131 - Select a, pattern LHS variable RHS Ident
+while w; assign a; variable v;
+Select a such that Follows(w, a) pattern a(v, _"add"_)
+19
+5000
+132 - Select v, pattern LHS variable RHS Ident
+while w; assign a; variable v;
+Select v such that Follows(w, a) pattern a(v, _"add"_)
+first
+5000
+133 - Select a, pattern LHS wildcard RHS wildcard
+assign a;
+Select a such that Follows(16, a) pattern a(_, _)
+19
+5000
+134 - Select a, pattern LHS wildcard RHS wildcard
+assign a; print pn;
+Select a Follows(pn, a) pattern a(_, _)
+none
+5000
+135 - Select a, pattern LHS wildcard RHS Ident
+assign a;
+Select a such that Follows(16, a) pattern a(_, _"add"_)
+19
+5000
+136 - Select pn, pattern LHS variable RHS wildcard
+assign a; print pn; variable v;
+Select pn such that Follows(a, pn) pattern a(v, _)
+18
+5000
+137 - Select a, pattern LHS variable RHS wildcard
+assign a; print pn; variable v;
+Select a such that Follows(a, pn) pattern a(v, _)
+17
+5000
+138 - Select v, pattern LHS variable RHS wildcard
+assign a; print pn; variable v;
+Select v such that Follows(a, pn) pattern a(v, _)
+add
+5000
+139 - Select a, pattern LHS variable RHS Ident
+assign a; variable v;
+Select a such that Follows(a, 2) pattern a(v, _"first"_)
+none
+5000
+140 - Select a, pattern LHS wildcard RHS wildcard
+assign a; read r; variable v;
+Select a such that Follows(a, r) pattern a(v, _)
+2
+5000
+141 - Select r, pattern LHS wildcard RHS wildcard
+assign a; read r; variable v;
+Select r such that Follows(a, r) pattern a(v, _)
+3
+5000
+142 - Select v, pattern LHS wildcard RHS wildcard
+assign a; read r; variable v;
+Select v such that Follows(a, r) pattern a(v, _)
+y
+5000
+143 - Select a, pattern LHS wildcard RHS wildcard
+assign a; stmt s;
+Select a such that Follows(a, s) pattern a(_, _)
+1, 2, 17
+5000
+144 - Select s, pattern LHS wildcard RHS wildcard
+assign a; stmt s;
+Select s such that Follows(a, s) pattern a(_, _)
+2, 3, 18
+5000
+145 - Select a, pattern LHS wildcard RHS Ident
+assign a; if ifs;
+Select a such that Follows(a, ifs) pattern a(_, _"i"_)
+none
+5000
+146 - Select if, pattern LHS wildcard RHS Ident
+assign a; if ifs;
+Select ifs such that Follows(a, ifs) pattern a(_, _"i"_)
+none
+5000
+147 - Select a, pattern LHS variable RHS wildcard
+assign a; variable v;
+Select a such that Follows(a, 11) pattern a(v, _)
+none
+5000
+148 - Select v, pattern LHS variable RHS wildcard
+assign a; variable v;
+Select v such that Follows(a, 11) pattern a(v, _)
+none
+5000
+149 - Select a, pattern LHS variable RHS Ident
+assign a; variable v;
+Select a such that Follows(a, 18) pattern a(v, _"add"_)
+none
+5000
+150 - Select v, pattern LHS variable RHS Ident
+assign a; variable v;
+Select v such that Follows(a, 18) pattern a(v, _"add"_)
+none
+5000
+151 - Additional merge test for Follows*. Select s, pattern LHS variable RHS wildcard
+assign a; stmt s; variable v;
+Select s such that Follows*(s, a) pattern a(v, _)
+1, 15, 16
+5000
+152 - Select a, pattern LHS variable RHS wildcard
+assign a; stmt s; variable v;
+Select a such that Follows*(s, a) pattern a(v, _)
+2, 19
+5000
+153 - Select v, pattern LHS variable RHS wildcard
+assign a; stmt s; variable v;
+Select v such that Follows*(s, a) pattern a(v, _)
+y, first
+5000
+154 - Select a, pattern LHS variable RHS wildcard
+assign a; read r; variable v;
+Select a such that Follows*(r, a) pattern a(v, _)
+19
+5000
+155 - Select r, pattern LHS variable RHS wildcard
+assign a; read r; variable v;
+Select r such that Follows*(r, a) pattern a(v, _)
+15
+5000
+156 - Select v, pattern LHS variable RHS wildcard
+assign a; read r; variable v;
+Select v such that Follows*(r, a) pattern a(v, _)
+first
+5000
+157 - Select a, pattern LHS variable RHS Ident
+assign a; variable v;
+Select a such that Follows*(a, 1) pattern a(v, _"z"_)
+none
+5000
+158 - Select v, pattern LHS variable RHS Ident
+assign a; variable v;
+Select v such that Follows*(a, 1) pattern a(v, _"z"_)
+none
+5000
+159 - Select a, pattern LHS wild card RHS wildcard
+assign a; while w;
+Select a such that Follows*(a, w) pattern a(_, _)
+1, 2
+5000
+160 - Select w, pattern LHS wild card RHS wildcard
+assign a; while w;
+Select w such that Follows*(a, w) pattern a(_, _)
+14
+5000
+161 - Select a, pattern LHS wild card RHS wildcard
+assign a;
+Select a such that Follows*(a, 13) pattern a(_, _)
+1, 2
+5000
+162 - Select a, pattern LHS wild card RHS Ident
+assign a;
+Select a such that Follows*(a, 13) pattern a(_, _"x"_)
+none
+5000
+163 - Select a, pattern LHS wild card RHS Ident
+assign a;
+Select a such that Follows*(a, 20) pattern a(_, _"i"_)
+none
+5000
+164 - Select a, pattern LHS wildcard RHS Ident
+assign a, a1;
+Select a such that Follows*(a, a1) pattern a(_, _)
+1
+5000
+165 - Select a1, pattern LHS wildcard RHS Ident
+assign a, a1;
+Select a1 such that Follows*(a, a1) pattern a(_, _)
+2
+5000
+166 - Select a, pattern LHS variable RHS wildcard
+assign a; print pn; variable v;
+Select a such that Follows*(a, pn) pattern a(v, _)
+1, 2, 17
+5000
+167 - Select pn, pattern LHS variable RHS wildcard
+assign a; print pn; variable v;
+Select pn such that Follows*(a, pn) pattern a(v, _)
+18, 20, 21
+5000
+168 - Select v, pattern LHS variable RHS wildcard
+assign a; print pn; variable v;
+Select v such that Follows*(a, pn) pattern a(v, _)
+x, y, add
+5000
+169 - Select a, pattern LHS variable RHS wildcard
+assign a; variable v;
+Select a such that Follows*(a, 19) pattern a(v, _)
+none
+5000
+170 - Select v, pattern LHS variable RHS wildcard
+assign a; variable v;
+Select v such that Follows*(a, 19) pattern a(v, _)
+none
+5000
+171 - Select a, pattern LHS variable RHS wildcard
+assign a; variable v;
+Select a such that Follows*(a, 11) pattern a(v, _)
+none
+5000
+172 - Select v, pattern LHS variable RHS wildcard
+assign a; variable v;
+Select v such that Follows*(a, 11) pattern a(v, _)
+none
+5000
+173 - Select a, pattern LHS variable RHS Ident
+assign a; variable v; while w;
+Select a such that Follows*(a, w) pattern a(v, _"x"_)
+none
+5000
+174 - Select w, pattern LHS variable RHS Ident
+assign a; variable v; while w;
+Select w such that Follows*(a, w) pattern a(v, _"x"_)
+none
+5000
+175 - Select v, pattern LHS variable RHS Ident
+assign a; variable v; while w;
+Select v such that Follows*(a, w) pattern a(v, _"x"_)
+none
+5000
+176 - Select a, pattern LHS wildcard RHS wildcard
+assign a; stmt s;
+Select a such that Follows*(a, s) pattern a(_, _)
+1, 2, 17
+5000
+177 - Select s, pattern LHS wildcard RHS wildcard
+assign a; stmt s;
+Select s such that Follows*(a, s) pattern a(_, _)
+2, 3, 4, 12, 13, 14, 18, 20, 21
+5000
+178 - Select a, pattern LHS wildcard RHS Ident
+assign a; stmt s;
+Select a such that Follows*(a, s) pattern a(_, _"first"_)
+none
+5000
+179 - Select s, pattern LHS wildcard RHS Ident
+assign a; stmt s;
+Select s such that Follows*(a, s) pattern a(_, _"first"_)
+none
+5000
+180 - Select a, pattern LHS wildcard RHS Ident
+assign a;
+Select a such that Follows*(a, 1) pattern a(_, _"x"_)
+none
+5000
+181 - Queries 181 - 200 - Additional merge test for Parent. Select s, pattern LHS variable RHS wildcard
+stmt s; assign a; variable v;
+Select s such that Parent(s, a) pattern a(v, _)
+6, 9, 14, 16
+5000
+182 - Select a, pattern LHS variable RHS wildcard
+stmt s; assign a; variable v;
+Select a such that Parent(s, a) pattern a(v, _)
+7, 11, 17, 19
+5000
+183 - Select v, pattern LHS variable RHS wildcard
+stmt s; assign a; variable v;
+Select v such that Parent(s, a) pattern a(v, _)
+i, z, add, first
+5000
+184 - Select a, pattern LHS variable RHS wildcard
+if ifs; assign a; variable v;
+Select a such that Parent(ifs, a) pattern a(v, _)
+11
+5000
+185 - Select if, pattern LHS variable RHS wildcard
+if ifs; assign a; variable v;
+Select ifs such that Parent(ifs, a) pattern a(v, _)
+9
+5000
+186 - Select v, pattern LHS variable RHS wildcard
+if ifs; assign a; variable v;
+Select v such that Parent(ifs, a) pattern a(v, _)
+z
+5000
+187 - Select a, pattern LHS variable RHS Ident
+assign a; while w;
+Select a such that Parent(w, a) pattern a(v, _"i"_)
+7
+5000
+188 - Select w, pattern LHS variable RHS Ident
+assign a; while w;
+Select w such that Parent(w, a) pattern a(v, _"i"_)
+6
+5000
+189 - Select v, pattern LHS variable RHS Ident
+assign a; while w; variable v;
+Select v such that Parent(w, a) pattern a(v, _"i"_)
+i
+5000
+190 - Select a, pattern LHS wildcard RHS wildcard
+assign a;
+Select a such that Parent(14, a) pattern a(_, _)
+19
+5000
+191 - Select a, pattern LHS wildcard RHS wildcard
+assign a;
+Select a such that Parent(4, a) pattern a(_, _)
+none
+5000
+192 - Select a, pattern LHS wildcard RHS wildcard
+assign a; read r;
+Select a such that Parent(r, a) pattern a(_, _)
+none
+5000
+193 - Select r, pattern LHS wildcard RHS wildcard
+assign a; read r;
+Select r such that Parent(r, a) pattern a(_, _)
+none
+5000
+194 - Select a, pattern LHS wildcard RHS Ident
+assign a;
+Select a such that Parent(14, a) pattern a(_, _"add"_)
+19
+5000
+195 - Select a, pattern LHS wildcard RHS Ident
+assign a; stmt s;
+Select a such that Parent(s, a) pattern a(_, _"y"_)
+11
+5000
+196 - Select s, pattern LHS wildcard RHS Ident
+assign a; stmt s;
+Select s such that Parent(s, a) pattern a(_, _"y"_)
+9
+5000
+197 - Select a, pattern LHS wildcard RHS Ident
+assign a; stmt s;
+Select a such that Parent(s, a) pattern a(_, _"x"_)
+11
+5000
+198 - Select s, pattern LHS wildcard RHS Ident
+assign a; stmt s;
+Select s such that Parent(s, a) pattern a(_, _"x"_)
+9
+5000
+199 - Select a, pattern LHS wildcard RHS wildcard
+assign a; stmt s;
+Select a such that Parent(a, s) pattern a(_, _)
+none
+5000
+200 - Select s, pattern LHS wildcard RHS wildcard
+assign a; stmt s;
+Select s such that Parent(a, s) pattern a(_, _)
+none
+5000
+201 - Queries 201 - 220 - Additional merge test for Parent*. Select s, pattern LHS variable RHS wildcard
+assign a; stmt s; variable v;
+Select s such that Parent*(s, a) pattern a(v, _)
+4, 6, 9, 14, 16
+5000
+202 - Select a, pattern LHS variable RHS wildcard
+assign a; stmt s; variable v;
+Select a such that Parent*(s, a) pattern a(v, _)
+7, 11, 17, 19
+5000
+203 - Select v, pattern LHS variable RHS wildcard
+assign a; stmt s; variable v;
+Select v such that Parent*(s, a) pattern a(v, _)
+i, z, add, first
+5000
+204 - Select a, pattern LHS variable RHS wildcard
+assign a; if ifs; variable v;
+Select a such that Parent*(ifs, a) pattern a(v, _)
+7, 11
+5000
+205 - Select if, pattern LHS variable RHS wildcard
+assign a; if ifs; variable v;
+Select ifs such that Parent*(ifs, a) pattern a(v, _)
+4, 9
+5000
+206 - Select v, pattern LHS variable RHS wildcard
+assign a; if ifs; variable v;
+Select v such that Parent*(ifs, a) pattern a(v, _)
+i, z
+5000
+207 - Select a, pattern LHS variable RHS Ident
+assign a; variable v;
+Select a such that Parent*(14, a) pattern a(v, _"add"_)
+19
+5000
+208 - Select v, pattern LHS variable RHS Ident
+assign a; variable v;
+Select v such that Parent*(14, a) pattern a(v, _"add"_)
+first
+5000
+209 - Select a, pattern LHS variable RHS Ident
+assign a; variable v; stmt s;
+Select a such that Parent*(s, a) pattern a(v, _"x"_)
+11
+5000
+210 - Select s, pattern LHS variable RHS Ident
+assign a; variable v; stmt s;
+Select s such that Parent*(s, a) pattern a(v, _"x"_)
+4, 9
+5000
+211 - Select v, pattern LHS variable RHS Ident
+assign a; variable v; stmt s;
+Select v such that Parent*(s, a) pattern a(v, _"x"_)
+z
+5000
+212 - Select a, pattern LHS wildcard RHS wildcard
+assign a; print pn;
+Select a such that Parent*(pn, a) pattern a(_, _)
+none
+5000
+213 - Select pn, pattern LHS wildcard RHS wildcard
+assign a; print pn;
+Select pn such that Parent*(pn, a) pattern a(_, _)
+none
+5000
+214 - Select a, pattern LHS wildcard RHS wildcard
+assign a;
+Select a such that Parent*(a, _) pattern a(_, _)
+none
+5000
+215 - Select a, pattern LHS wildcard RHS wildcard
+assign a;
+Select a such that Parent*(_, a) pattern a(_, _)
+7, 11, 17, 19
+5000
+216 - Select a, pattern LHS wildcard RHS Ident
+assign a;
+Select a such that Parent*(_, a) pattern a(_, _"first"_)
+19
+5000
+217 - Select a, pattern LHS wildcard RHS Ident
+assign a;
+Select a such that Parent*(4, a) pattern a(_, _"i"_)
+7
+5000
+218 - Select a, pattern LHS wildcard RHS Ident
+assign a; while w;
+Select a such that Parent*(w, a) pattern a(_, _"add"_)
+19
+5000
+219 - Select w, pattern LHS wildcard RHS Ident
+assign a; while w;
+Select w such that Parent*(w, a) pattern a(_, _"add"_)
+14
+5000
+220 - Select a, pattern LHS wildcard RHS Ident
+assign a;
+Select a such that Parent*(4, a) pattern a(_, _"y"_)
+11
+5000
+221 - Queries 221 - 240 - Additional merge test for Uses. Select s, pattern LHS variable RHS wildcard
+assign a; stmt s; variable v;
+Select s such that Uses(s, v) pattern a(v, _)
+4, 5, 6, 7, 8, 9, 10, 11, 14, 16, 18, 19, 20
+5000
+222 - Select a, pattern LHS variable RHS wildcard
+assign a; stmt s; variable v;
+Select a such that Uses(s, v) pattern a(v, _)
+1, 2, 7, 11, 17, 19
+5000
+223 - Select v, pattern LHS variable RHS wildcard
+assign a; stmt s; variable v;
+Select v such that Uses(s, v) pattern a(v, _)
+x, y, i, z, add, first
+5000
+224 - Select pn, pattern LHS variable RHS wildcard
+assign a; print pn; variable v;
+Select pn such that Uses(pn, v) pattern a(v, _)
+5, 8, 10, 18, 20
+5000
+225 - Select a, pattern LHS variable RHS wildcard
+assign a; print pn; variable v;
+Select a such that Uses(pn, v) pattern a(v, _)
+1, 2, 11, 17, 19
+5000
+226 - Select v, pattern LHS variable RHS wildcard
+assign a; print pn; variable v;
+Select v such that Uses(pn, v) pattern a(v, _)
+x, y, z, add, first
+5000
+227 - Select a, pattern LHS variable RHS wildcard
+assign a; if ifs; variable v;
+Select a such that Uses(ifs, v) pattern a(v, _)
+1, 2, 7, 11
+5000
+228 - Select if, pattern LHS variable RHS wildcard
+assign a; if ifs; variable v;
+Select ifs such that Uses(ifs, v) pattern a(v, _)
+4, 9
+5000
+229 - Select v, pattern LHS variable RHS wildcard
+assign a; if ifs; variable v;
+Select v such that Uses(ifs, v) pattern a(v, _)
+x, z, i, y
+5000
+230 - Select a, pattern LHS variable RHS wildcard
+assign a; while w; variable v;
+Select a such that Uses(w, v) pattern a(v, _)
+7, 17, 19
+5000
+231 - Select w, pattern LHS variable RHS wildcard
+assign a; while w; variable v;
+Select w such that Uses(w, v) pattern a(v, _)
+6, 14, 16
+5000
+232 - Select v, pattern LHS variable RHS wildcard
+assign a; while w; variable v;
+Select v such that Uses(w, v) pattern a(v, _)
+i, first, add
+5000
+233 - Select a, pattern LHS variable RHS Ident
+assign a; variable v;
+Select a such that Uses(4, v) pattern a(v, _"y"_)
+11
+5000
+234 - Select v, pattern LHS variable RHS Ident
+assign a; variable v;
+Select v such that Uses(4, v) pattern a(v, _"y"_)
+z
+5000
+235 - Select a, pattern LHS Ident RHS Ident
+assign a;
+Select a such that Uses(a, "add") pattern a("first", _"first"_)
+19
+5000
+236  - Select a, pattern LHS wildcard RHS wildcard
+assign a; variable v;
+Select a such that Uses(a, v) pattern a(_, _)
+7, 11, 19
+5000
+237 - Select v, pattern LHS wildcard RHS wildcard
+assign a; variable v;
+Select v such that Uses(a, v) pattern a(_, _)
+i, x, y, first, add
+5000
+238 - Select a, pattern LHS wildcard RHS Ident
+assign a; variable v;
+Select a such that Uses(a, v) pattern a(_, _"x"_)
+11
+5000
+239 - Select v, pattern LHS wildcard RHS Ident
+assign a; variable v;
+Select v such that Uses(a, v) pattern a(_, _"x"_)
+x, y
+5000
+240 - Select a, pattern LHS wildcard RHS Ident
+assign a;
+Select a such that Uses(a, "i") pattern a(_, _"x"_)
+none
+5000
+241 - Queries 241 - 260 - Additional merge test for Modifies. Select s, pattern LHS variable RHS wildcard
+assign a; variable v; stmt s;
+Select s such that Modifies(s, v) pattern a(v, _)
+1, 2, 3, 4, 6, 7, 9, 11, 12, 14, 15, 16, 17, 19
+5000
+242 - Select a, pattern LHS variable RHS wildcard
+assign a; variable v; stmt s;
+Select a such that Modifies(s, v) pattern a(v, _)
+1, 2, 7, 11, 17, 19
+5000
+243 - Select v, pattern LHS variable RHS wildcard
+assign a; variable v; stmt s;
+Select v such that Modifies(s, v) pattern a(v, _)
+x, y, i, z, add, first
+5000
+244 - Select a, pattern LHS variable RHS wildcard
+assign a; variable v; read r;
+Select a such that Modifies(r, v) pattern a(v, _)
+11, 17, 19
+5000
+245 - Select r, pattern LHS variable RHS wildcard
+assign a; variable v; read r;
+Select r such that Modifies(r, v) pattern a(v, _)
+3, 12, 15
+5000
+246 - Select v, pattern LHS variable RHS wildcard
+assign a; variable v; read r;
+Select v such that Modifies(r, v) pattern a(v, _)
+z, first, add
+5000
+247 - Select a, pattern LHS variable RHS wildcard
+assign a; variable v; if ifs;
+Select a such that Modifies(ifs, v) pattern a(v, _)
+7, 11
+5000
+248 - Select if, pattern LHS variable RHS wildcard
+assign a; variable v; if ifs;
+Select ifs such that Modifies(ifs, v) pattern a(v, _)
+4, 9
+5000
+249 - Select v, pattern LHS variable RHS wildcard
+assign a; variable v; if ifs;
+Select v such that Modifies(ifs, v) pattern a(v, _)
+i, z
+5000
+250 - Select a, pattern LHS variable RHS wildcard
+assign a; variable v; while w;
+Select a such that Modifies(w, v) pattern a(v, _)
+7, 17, 19
+5000
+251 - Select w, pattern LHS variable RHS wildcard
+assign a; variable v; while w;
+Select w such that Modifies(w, v) pattern a(v, _)
+6, 14, 16
+5000
+252 - Select v, pattern LHS variable RHS wildcard
+assign a; variable v; while w;
+Select v such that Modifies(w, v) pattern a(v, _)
+i, add, first
+5000
+253 - Select a, pattern LHS variable RHS Ident
+assign a; variable v;
+Select a such that Modifies(14, v) pattern a(v, _"add"_)
+19
+5000
+254 - Select v, pattern LHS variable RHS Ident
+assign a; variable v;
+Select v such that Modifies(14, v) pattern a(v, _"add"_)
+first
+5000
+255 - Select a, pattern LHS Ident RHS Ident
+assign a;
+Select a such that Modifies(a, "z") pattern a("z", _"y"_)
+11
+5000
+256 - Select a, pattern LHS wildcard RHS wildcard
+assign a; variable v;
+Select a such that Modifies(a, v) pattern a(_, _)
+1, 2, 7, 11, 17, 19
+5000
+257 - Select v, pattern LHS wildcard RHS wildcard
+assign a; variable v;
+Select v such that Modifies(a, v) pattern a(_, _)
+x, y, i, z, add, first
+5000
+258 - Select a, pattern LHS wildcard RHS Ident
+assign a; variable v;
+Select a such that Modifies(a, v) pattern a(_, _"first"_)
+19
+5000
+259 - Select v, pattern LHS wildcard RHS Ident
+assign a; variable v;
+Select v such that Modifies(a, v) pattern a(_, _"first"_)
+first
+5000
+260 - Select a, pattern LHS wildcard RHS Ident
+assign a;
+Select a such that Modifies(a, "i") pattern a(_, _"i"_)
+7
+5000
