@@ -152,7 +152,11 @@ Query QueryParser::parse(string query) {
 		return invalidQ;
 	}
 
-	if (resultString == "Semantic Invalid") {
+	if (resultString == "Semantic Invalid" && selectBoolean == false) {
+		return invalidQ;
+	}
+
+	if (resultString == "Semantic Invalid" && selectBoolean == true) {
 		return semanticInvalidQ;
 	}
 
