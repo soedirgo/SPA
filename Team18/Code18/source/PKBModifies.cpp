@@ -75,7 +75,7 @@ bool PKBModifies::isModifiesPIdentIdent(PROC_NAME procName, VAR_NAME varName) {
 //Modifies(s1,__) , Modifies(a1, _ ), Modifies(ifs , _ ) 
 STMT_LIST PKBModifies::getModifiesSEntAny(STMT_TYPE type) {
 	STMT_LIST result;
-	if (type == "stmt") {
+	if (type == "stmt" || type == "prog_line") {
 		for (auto iter : modifiesStmtTable) {
 			vector<string> myVector = vector<string>();
 			myVector.push_back(iter.front());
@@ -103,7 +103,7 @@ STMT_LIST PKBModifies::getModifiesSEntAny(STMT_TYPE type) {
 // e.g. Modifies(s1, "x" ) , Modifies(a1, "x" ), Modifies(ifs ,"x" ) 
 STMT_LIST PKBModifies::getModifiesSEntIdent(STMT_TYPE type, VAR_NAME varName) {
 	STMT_LIST result;
-	if (type == "stmt") {
+	if (type == "stmt" || type == "prog_line") {
 		for (auto ModifiesStmt : modifiesStmtTable) {
 			if (ModifiesStmt.back() == varName) {
 				vector<string> myVector = vector<string>();
@@ -151,7 +151,7 @@ VAR_LIST PKBModifies::getModifiesSIdentEnt(STMT_NO stmtNo) {
 //RHS is a var syn
 TABLE PKBModifies::getModifiesSEntEnt(STMT_TYPE type) {
 	TABLE resultTable;
-	if (type == "stmt") {
+	if (type == "stmt" || type == "prog_line") {
 		return modifiesStmtTable;
 	}
 	else {

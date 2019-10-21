@@ -120,8 +120,8 @@ Select ifs pattern ifs(v, _, _)
 5000
 25 - Relation, Select all variable that is in if condition
 if ifs; variable v;
-Select ifs pattern ifs(v, _, _)
-x, y, one1, two2, red, yellow, sky, blue, fact, fiction
+Select v pattern ifs(v, _, _)
+x, y, one1, two2, red, yellow, sky, blue, fact, fiction, left, right
 5000
 26 - Relation, Select all if that has a specific variable in condition 1
 if ifs;
