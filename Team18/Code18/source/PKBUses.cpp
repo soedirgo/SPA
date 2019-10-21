@@ -91,7 +91,7 @@ bool PKBUses::isUsesPIdentIdent(PROC_NAME procName, VAR_NAME varName) {
 //Uses(s1,__) , Uses(a1, _ ), Uses(ifs , _ ) 
 STMT_LIST PKBUses::getUsesSEntAny(STMT_TYPE type) {
 	STMT_LIST result; 
-	if (type == "stmt") { 
+	if (type == "stmt" || type == "prog_line") {
 		for (auto iter : usesStmtTable) {
 			vector<string> myVector = vector<string>();
 			myVector.push_back(iter.front());
@@ -119,7 +119,7 @@ STMT_LIST PKBUses::getUsesSEntAny(STMT_TYPE type) {
 // e.g. Uses(s1, "x" ) , Uses(a1, "x" ), Uses(ifs ,"x" ) 
 STMT_LIST PKBUses::getUsesSEntIdent(STMT_TYPE type, VAR_NAME varName) {
 	STMT_LIST result;
-	if (type == "stmt") {
+	if (type == "stmt" || type == "prog_line") {
 		for (auto usesStmt : usesStmtTable) {
 			if (usesStmt.back() == varName) {
 				vector<string> myVector = vector<string>();
@@ -167,7 +167,7 @@ VAR_LIST PKBUses::getUsesSIdentEnt(STMT_NO stmtNo) {
 //RHS is a var syn
 TABLE PKBUses::getUsesSEntEnt(STMT_TYPE type) {
 	TABLE resultTable;
-	if (type == "stmt") {
+	if (type == "stmt" || type == "prog_line") {
 		return usesStmtTable; 
 	}
 	else{

@@ -36,8 +36,8 @@ PROC_NAME PKBCall::getCallProcByStmt(STMT_NO stmtNo) {
 
 PROC_LIST PKBCall::getCallerProc(PROC_NAME callee) {
 	PROC_LIST list;
-	vector<string> tuple = vector<string>();
 	for (auto vectorIter : callsProcTable) {
+		vector<string> tuple = vector<string>();
 		if (vectorIter.back() == callee) {
 			tuple.push_back(vectorIter.front());
 			list.emplace(tuple);
@@ -48,8 +48,8 @@ PROC_LIST PKBCall::getCallerProc(PROC_NAME callee) {
 
 PROC_LIST PKBCall::getCalleeProc(PROC_NAME caller) {
 	PROC_LIST list;
-	vector<string> tuple = vector<string>();
 	for (auto vectorIter : callsProcTable) {
+		vector<string> tuple = vector<string>();
 		if (vectorIter.front() == caller) {
 			tuple.push_back(vectorIter.back());
 			list.emplace(tuple);
@@ -60,8 +60,8 @@ PROC_LIST PKBCall::getCalleeProc(PROC_NAME caller) {
 
 PROC_LIST PKBCall::getAllCallProc() {
 	PROC_LIST list;
-	vector<string> tuple = vector<string>();
 	for (auto vectorIter : callsProcTable) {
+		vector<string> tuple = vector<string>();
 		tuple.push_back(vectorIter.front());
 		list.emplace(tuple);
 	}

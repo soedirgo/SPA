@@ -125,7 +125,7 @@ Query QueryParser::parse(string query) {
 			currentIndex = currentIndex + 1;
 		}
 
-		string currentClause = select.substr(0, suchThatIndex);
+		string currentClause = select.substr(0, currentIndex);
 		if (currentClause.find("such that ") != -1 || (currentClause.find("and ") != -1 && previousClause == "such that")) {
 			previousClause = "such that";
 			suchThatClauses.push_back(currentClause);
@@ -251,7 +251,7 @@ vector<string> QueryParser::splitSelect(string statements) {
 	string variableName;
 
 	if (firstSpace != -1) {
-		variableName = removeSpaces(statements.substr(firstSpace), whitespace);
+		variableName = removeWhiteSpaces(statements.substr(firstSpace),whitespacech);
 	}
 
 	//To handle Tuple
@@ -342,7 +342,6 @@ vector<pair<string, pair<string, string>>> QueryParser::splitPattern(vector<stri
 
 		//Don't include _
 		string firstVar = trim(pattern[i].substr(posOfOpenBracket + 1, posOfComma - posOfOpenBracket-1),whitespace);
-		//cout << pattern[i].substr(posOfComma + 1, posOfCloseBracket - posOfComma - 1) << '\n';
 		string second = removeSpaces(pattern[i].substr(posOfComma + 1, posOfCloseBracket - posOfComma-1),whitespace);
 		int flag = (second.find("_") != -1);
 		int flag2 = (second.length() > 1);
@@ -352,7 +351,7 @@ vector<pair<string, pair<string, string>>> QueryParser::splitPattern(vector<stri
 				second = second.erase(index, index + 1);
 			}
 		}
-		//cout << second << '\n';
+
 		second = removeWhiteSpaces(second, whitespacech);
 		//Check if the second parameter is just "_"
 		second.erase(remove_if(second.begin(), second.end(), isspace), second.end());
@@ -360,13 +359,10 @@ vector<pair<string, pair<string, string>>> QueryParser::splitPattern(vector<stri
 		if (!(second.size() == 1 && second.at(0) == '_')) {
 			secondVar = PatternProcessor::infixtoRPNexpression(second);
 		}
-		//string secondVar = infixtoRPNexpression(second);
-		//cout << secondVar << '\n';
 
 		if (flag && flag2) {
 			secondVar.insert(0,"_");
 			secondVar.insert(secondVar.length(),"_");
-			cout << secondVar << '\n';
 		}
 
 		s.push_back(make_pair(clauseType, make_pair(firstVar, secondVar)));
@@ -400,6 +396,7 @@ string QueryParser::removeWhiteSpaces(string s, char whitespace) {
 	while (a < s.length()) {
 		if (s[a] == whitespacech || s[a] == whitespacech2) {
 			s.erase(a,1);
+			continue;
 		}
 		a++;
 	}
@@ -433,8 +430,8 @@ string QueryParser::initialValidation(string query) {
 		return resultString;
 	}
 
-	//Select is at the start of the query, no declarations
-	else if (query.find("Select") == 0) {
+	//Select is at the start of the query, no declarations and it's not select BOOLEAN
+	else if (query.find("Select") == 0 && query.find("BOOLEAN") == -1) {
 		resultString = "None";
 		return resultString;
 	}
@@ -452,10 +449,7 @@ string QueryParser::declarationsValidation(unordered_map<string, string> declera
 	//unordered_set<string> validTypes = { "stmt", "variable", "assign", "constant", "read", "while", "if", "print", "procedure" };
 
 	string resultString = "Okay";
-	if (declerationVariables.empty()) {
-		resultString = "Invalid";
-		return resultString;
-	}
+
 	//Iterate through the map of declaration variables and see if there's anything invalid
 	for (auto iterator : declerationVariables) {
 		//Not a valid type/Typos in declaration Type
@@ -507,7 +501,7 @@ string QueryParser::selectVariablesValidation(unordered_map<string, string> decl
 	for (int i = 0; i < selectVars.size(); i++) {
 
 		//Select Boolean can't have other select variables inside tuple of selects
-		if (selectVars[i] == "Boolean" && selectVars.size() != 1) {
+		if (selectVars[i] == "BOOLEAN" && selectVars.size() != 1) {
 			resultString = "Invalid";
 			return resultString;
 		}

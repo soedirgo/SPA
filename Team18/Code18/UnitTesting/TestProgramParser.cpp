@@ -244,7 +244,16 @@ namespace UnitTesting
 		TEST_METHOD(IfCondStmtTest3)
 		{
 			Parser parser = Parser();
-			string input = "if !((x == 1) || (a != b) && (c <= d) || (e >= f) || !(g < h) && (i > j)) then {";
+			string input = "if (!((x == 1) || (a != b) && (c <= d) || (e >= f) || !(g < h) && (i > j))) then {";
+			vector<string> expected{ "x", "1", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j" };
+			vector<string> actual = parser.parseCondStmt(input);
+			Assert::AreEqual(expected == actual, true);
+		}
+
+		TEST_METHOD(IfCondStmtTest4)
+		{
+			Parser parser = Parser();
+			string input = "if ((!(x == 1) || !(a != b) && (c <= d) || (e >= f) || !(g < h) && (i > j))) then {";
 			vector<string> expected{ "x", "1", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j" };
 			vector<string> actual = parser.parseCondStmt(input);
 			Assert::AreEqual(expected == actual, true);
@@ -274,6 +283,42 @@ namespace UnitTesting
 			string input = "read x;}}}}}}}}}";
 			int expected = 9;
 			int actual = parser.count(input, '}');
+			Assert::AreEqual(expected, actual);
+		}
+
+		TEST_METHOD(regex1)
+		{
+			Parser parser = Parser();
+			string input = "1234";
+			int expected = true;
+			int actual = regex_match(input, parser.number);
+			Assert::AreEqual(expected, actual);
+		}
+
+		TEST_METHOD(regex2)
+		{
+			Parser parser = Parser();
+			string input = "A0156672X";
+			int expected = true;
+			int actual = regex_match(input, parser.name);
+			Assert::AreEqual(expected, actual);
+		}
+
+		TEST_METHOD(regex3)
+		{
+			Parser parser = Parser();
+			string input = "n1234";
+			int expected = false;
+			int actual = regex_match(input, parser.number);
+			Assert::AreEqual(expected, actual);
+		}
+
+		TEST_METHOD(regex4)
+		{
+			Parser parser = Parser();
+			string input = "*A0156672X";
+			int expected = false;
+			int actual = regex_match(input, parser.name);
 			Assert::AreEqual(expected, actual);
 		}
 	};

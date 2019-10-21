@@ -7,16 +7,16 @@
 class DesignExtractor {
 public:
 	static void extractDesign();
+	static void extractNextT();
+	static void extractAffects();
+	static void extractAffectsT();
 
 private:
 	static void extractFollowsT();
 	static void extractParentT();
 	static void extractCallsT();
-	static void extractNextT();
 	static void extractModifiesP();
 	static void extractUsesP();
-	static void extractAffects();
-	static void extractAffectsT();
 	static void extractUsesS();
 	static void extractModifiesS();
 
