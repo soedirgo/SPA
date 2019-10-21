@@ -125,7 +125,7 @@ Query QueryParser::parse(string query) {
 			currentIndex = currentIndex + 1;
 		}
 
-		string currentClause = select.substr(0, suchThatIndex);
+		string currentClause = select.substr(0, currentIndex);
 		if (currentClause.find("such that ") != -1 || (currentClause.find("and ") != -1 && previousClause == "such that")) {
 			previousClause = "such that";
 			suchThatClauses.push_back(currentClause);
@@ -152,7 +152,11 @@ Query QueryParser::parse(string query) {
 		return invalidQ;
 	}
 
-	if (resultString == "Semantic Invalid" && selectBoolean) {
+	if (resultString == "Semantic Invalid" && selectBoolean == false) {
+		return invalidQ;
+	}
+
+	if (resultString == "Semantic Invalid" && selectBoolean == true) {
 		return semanticInvalidQ;
 	}
 
@@ -290,10 +294,10 @@ vector<pair<string, pair<string, string>>> QueryParser::splitSuchThat(vector<str
 		}
 
 		if (suchThat[i].find("such") != -1) {
-			clauseType = removeWhiteSpaces(suchThat[i].substr(9, posOfOpenBracket - 9), whitespacech);
+			clauseType = removeSpaces(suchThat[i].substr(9, posOfOpenBracket - 9), whitespace);
 		}
 		else {
-			clauseType = removeWhiteSpaces(suchThat[i].substr(3, posOfOpenBracket - 3), whitespacech);
+			clauseType = removeSpaces(suchThat[i].substr(3, posOfOpenBracket - 3), whitespace);
 		}
 
 		string firstVar;
@@ -303,14 +307,14 @@ vector<pair<string, pair<string, string>>> QueryParser::splitSuchThat(vector<str
 			firstVar = "";
 		}
 		else {
-			firstVar = removeWhiteSpaces(suchThat[i].substr(posOfOpenBracket + 1, posOfComma - posOfOpenBracket - 1), whitespacech);
+			firstVar = removeSpaces(suchThat[i].substr(posOfOpenBracket + 1, posOfComma - posOfOpenBracket - 1), whitespace);
 		}
 
 		if ((posOfCloseBracket - posOfComma - 1) < 0) {
 			secondVar = "";
 		}
 		else {
-			secondVar = removeWhiteSpaces(suchThat[i].substr(posOfComma + 1, posOfCloseBracket - posOfComma - 1), whitespacech);
+			secondVar = removeSpaces(suchThat[i].substr(posOfComma + 1, posOfCloseBracket - posOfComma - 1), whitespace);
 		}
 
 		s.push_back(make_pair(clauseType, make_pair(firstVar, secondVar)));
@@ -342,7 +346,7 @@ vector<pair<string, pair<string, string>>> QueryParser::splitPattern(vector<stri
 
 		//Don't include _
 		string firstVar = trim(pattern[i].substr(posOfOpenBracket + 1, posOfComma - posOfOpenBracket-1),whitespace);
-		string second = removeSpaces(pattern[i].substr(posOfComma + 1, posOfCloseBracket - posOfComma-1));
+		string second = removeSpaces(pattern[i].substr(posOfComma + 1, posOfCloseBracket - posOfComma-1),whitespace);
 		int flag = (second.find("_") != -1);
 		int flag2 = (second.length() > 1);
 		if (flag && flag2) {
@@ -385,8 +389,9 @@ string QueryParser::trim(string str, string whitespace) {
 }
 
 //Removes all the whitespace in the given string
-string QueryParser::removeSpaces(string s) {
-	s.erase(remove_if(s.begin(), s.end(), isspace), s.end());
+string QueryParser::removeSpaces(string s, string whitespace) {
+	s.erase(0, s.find_first_not_of(whitespace));
+	s.erase(s.find_last_not_of(whitespace) + 1);
 	return s;
 }
 
@@ -429,8 +434,8 @@ string QueryParser::initialValidation(string query) {
 		return resultString;
 	}
 
-	//Select is at the start of the query, no declarations
-	else if (query.find("Select") == 0) {
+	//Select is at the start of the query, no declarations and it's not select BOOLEAN
+	else if (query.find("Select") == 0 && query.find("BOOLEAN") == -1) {
 		resultString = "None";
 		return resultString;
 	}
@@ -448,10 +453,7 @@ string QueryParser::declarationsValidation(unordered_map<string, string> declera
 	//unordered_set<string> validTypes = { "stmt", "variable", "assign", "constant", "read", "while", "if", "print", "procedure" };
 
 	string resultString = "Okay";
-	if (declerationVariables.empty()) {
-		resultString = "Invalid";
-		return resultString;
-	}
+
 	//Iterate through the map of declaration variables and see if there's anything invalid
 	for (auto iterator : declerationVariables) {
 		//Not a valid type/Typos in declaration Type

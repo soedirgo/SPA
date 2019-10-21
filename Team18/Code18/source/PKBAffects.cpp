@@ -30,32 +30,43 @@ bool PKBAffects::setAffectsT(STMT_NO a1, STMT_NO a2) {
 }
 
 bool PKBAffects::isAffectsAnyAny() {
-	return !affectsTable.empty();
+	bool status = !affectsTable.empty();
+	clear();
+	return status;
 }
 bool PKBAffects::isAffectsAnyIdent(STMT_NO stmtNo) {
+	clear();
 	for (auto vectorIter : affectsTable) {
 		if (vectorIter.back() == stmtNo) {
+			clear();
 			return true;
 		}
 	}
+	clear();
 	return false;
 }
 bool PKBAffects::isAffectsIdentAny(STMT_NO stmtNo) {
+	clear();
 	for (auto vectorIter : affectsTable) {
 		if (vectorIter.front() == stmtNo) {
+			clear();
 			return true;
 		}
 	}
+	clear();
 	return false;
 }
 bool PKBAffects::isAffectsIdentIdent(STMT_NO a1, STMT_NO a2) {
+	clear();
 	for (auto vectorIter : affectsTable) {
 		if (vectorIter.front() == a1) {
 			if (vectorIter.back() == a2) {
+				clear();
 				return true;
 			}
 		}
 	}
+	clear();
 	return false;
 }
 
@@ -91,6 +102,7 @@ bool PKBAffects::isAffectsTIdentIdent(STMT_NO a1, STMT_NO a2) {
 
 //NEW EVALUATION API
 TABLE PKBAffects::getAffectsAnyEnt() {
+	clear();
 	PROC_LIST resultTable;
 	LINE_LIST list;
 	PROG_LINE n;
@@ -105,10 +117,12 @@ TABLE PKBAffects::getAffectsAnyEnt() {
 			}
 		}
 	}
+	clear();
 	return resultTable;
 }
 
 TABLE PKBAffects::getAffectsEntAny() {
+	clear();
 	PROC_LIST resultTable;
 	LINE_LIST list;
 	PROG_LINE n;
@@ -123,10 +137,12 @@ TABLE PKBAffects::getAffectsEntAny() {
 			}
 		}
 	}
+	clear();
 	return resultTable;
 }
 
 TABLE PKBAffects::getAffectsIdentEnt(STMT_NO stmtNo) {
+	clear();
 	PROC_LIST resultTable;
 	LINE_LIST list;
 	PROG_LINE n;
@@ -141,10 +157,12 @@ TABLE PKBAffects::getAffectsIdentEnt(STMT_NO stmtNo) {
 			}
 		}
 	}
+	clear();
 	return resultTable;
 }
 
 TABLE PKBAffects::getAffectsEntIdent(STMT_NO stmtNo) {
+	clear();
 	PROC_LIST resultTable;
 	LINE_LIST list;
 	PROG_LINE n;
@@ -159,14 +177,18 @@ TABLE PKBAffects::getAffectsEntIdent(STMT_NO stmtNo) {
 			}
 		}
 	}
+	clear();
 	return resultTable;
 }
 
 TABLE PKBAffects::getAffectsEntEnt() {
-	return affectsTable;
+	TABLE resultTable = affectsTable;
+	clear();
+	return resultTable;
 }
 
 TABLE PKBAffects::getAffectsSelf() {
+	clear();
 	STMT_LIST resultTable;
 	STMT_LIST list;
 	STMT_NO s;
@@ -181,6 +203,7 @@ TABLE PKBAffects::getAffectsSelf() {
 			}
 		}
 	}
+	clear();
 	return resultTable;
 }
 
