@@ -58,7 +58,7 @@ namespace UnitTesting
 		{
 			vector<string> suchThatString = { "such that Modifies(2,\"x\")" };
 			vector<pair<string, pair<string, string>>> actual = QueryParser::splitSuchThat(suchThatString);
-			vector<pair<string, pair<string, string>>> expected = { {"Modifies", {"2","x"}} };
+			vector<pair<string, pair<string, string>>> expected = { {"Modifies", {"2","\"x\""}} };
 			Assert::AreEqual(actual == expected, true);
 
 			vector<string> suchThatString2 = { "such that Modifies(2,x)" };
