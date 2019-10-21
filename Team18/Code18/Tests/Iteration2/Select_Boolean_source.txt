@@ -44,3 +44,12 @@ procedure D {
   num = num + input + i * (x - y % (target / inc) );
   print num;
 }
+
+procedure E {
+    read e;
+    read f;
+}
+
+procedure F {
+    print f;
+}

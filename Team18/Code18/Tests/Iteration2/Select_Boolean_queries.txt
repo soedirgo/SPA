@@ -30,7 +30,7 @@ TRUE
 5000
 4 - Follows -  IDENT SYN- FALSE 
 stmt s;
-Select BOOLEAN such that Follows(23, s) ERROR
+Select BOOLEAN such that Follows(23, s)
 FALSE
 5000
 4 - Follows* -  IDENT IDENT - TRUE 
@@ -128,6 +128,11 @@ stmt s;
 Select BOOLEAN such that Uses(4,"x")
 TRUE
 5000
+2 - UsesS -  IDENT IDENT - TRUE 
+stmt s;
+Select BOOLEAN such that Uses(16,"k")
+TRUE
+5000
 3 - UsesS - IDENT IDENT - FALSE 
 stmt s;
 Select BOOLEAN such that Uses(2,"x")
@@ -144,8 +149,8 @@ Select BOOLEAN such that Uses(s,"z")
 FALSE
 5000
 4 - UsesS -  IDENT SYN- TRUE 
-stmt s;
-Select BOOLEAN such that Uses(6,"x" )
+variable v;
+Select BOOLEAN such that Uses(6,v )
 TRUE
 5000
 4 - UsesS -  IDENT SYN- FALSE 
@@ -153,5 +158,134 @@ stmt s;
 Select BOOLEAN such that Uses(1, "x")
 FALSE
 5000
-
+4 - UsesS -  SYN SYN- TRUE 
+stmt s; variable v; 
+Select BOOLEAN such that Uses(s, v)
+TRUE
+5000
+2 - UsesP -  IDENT IDENT - TRUE 
+stmt s;
+Select BOOLEAN such that Uses("A","x")
+TRUE
+5000
+2 - UsesP -  IDENT IDENT - TRUE 
+stmt s;
+Select BOOLEAN such that Uses("B","k")
+TRUE
+5000
+3 - UsesP - IDENT IDENT - FALSE 
+stmt s;
+Select BOOLEAN such that Uses("C","x")
+FALSE
+5000
+3 - UsesP -  SYN IDENT - TRUE 
+procedure p;
+Select BOOLEAN such that Uses(p,"x")
+TRUE
+5000
+3 - UsesP -  SYN IDENT - FALSE 
+procedure p;
+Select BOOLEAN such that Uses(p,"w")
+FALSE
+5000
+4 - UsesP -  IDENT SYN- TRUE 
+variable v; 
+Select BOOLEAN such that Uses("A", v)
+TRUE
+5000
+4 - UsesP -  IDENT SYN- FALSE 
+variable v;
+Select BOOLEAN such that Uses("E", v)
+FALSE
+5000
+4 - UsesP -  SYN SYN- TRUE 
+procedure p; variable v; 
+Select BOOLEAN such that Uses(p, v)
+TRUE
+5000	
+2 - ModifiesS -  IDENT IDENT - TRUE 
+stmt s;
+Select BOOLEAN such that Modifies(4,"y")
+TRUE
+5000
+2 - ModifiesS -  IDENT IDENT - TRUE 
+stmt s;
+Select BOOLEAN such that Modifies(22,"y")
+TRUE
+5000
+2 - ModifiesS -  IDENT IDENT - TRUE 
+stmt s;
+Select BOOLEAN such that Modifies(19,"k")
+TRUE
+5000
+3 - ModifiesS - IDENT IDENT - FALSE 
+stmt s;
+Select BOOLEAN such that Modifies(25,"k")
+FALSE
+5000
+3 - ModifiesS -  SYN IDENT - TRUE 
+stmt s;
+Select BOOLEAN such that Modifies(s,"x")
+TRUE
+5000
+3 - ModifiesS -  SYN IDENT - FALSE 
+stmt s;
+Select BOOLEAN such that Modifies(s,"z")
+FALSE
+5000
+4 - ModifiesS -  IDENT SYN- TRUE 
+variable v;
+Select BOOLEAN such that Modifies(31,v )
+TRUE
+5000
+4 - ModifiesS -  IDENT SYN- FALSE 
+variable v; 
+Select BOOLEAN such that Modifies(21, v)
+FALSE
+5000
+4 - ModifiesS -  SYN SYN- TRUE 
+stmt s; variable v; 
+Select BOOLEAN such that Modifies(s, v)
+TRUE
+5000
+2 - ModifiesP -  IDENT IDENT - TRUE 
+stmt s;
+Select BOOLEAN such that Modifies("A","x")
+TRUE
+5000
+2 - ModifiesP -  IDENT IDENT - TRUE 
+stmt s;
+Select BOOLEAN such that Modifies("B","k")
+TRUE
+5000
+3 - ModifiesP - IDENT IDENT - FALSE 
+stmt s;
+Select BOOLEAN such that Modifies("C","x")
+FALSE
+5000
+3 - ModifiesP -  SYN IDENT - TRUE 
+procedure p;
+Select BOOLEAN such that Modifies(p,"x")
+TRUE
+5000
+3 - ModifiesP -  SYN IDENT - FALSE 
+procedure p;
+Select BOOLEAN such that Modifies(p,"w")
+FALSE
+5000
+4 - ModifiesP -  IDENT SYN- TRUE 
+variable v; 
+Select BOOLEAN such that Modifies("A", v)
+TRUE
+5000
+4 - ModifiesP -  IDENT SYN- FALSE 
+variable v;
+Select BOOLEAN such that Modifies("F", v)
+FALSE
+5000
+4 - ModifiesP -  SYN SYN- TRUE 
+procedure p; variable v; 
+Select BOOLEAN such that Modifies(p, v)
+TRUE
+5000	
 
