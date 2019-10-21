@@ -1,13 +1,8 @@
-#include <algorithm>
-#include <cctype>
 #include <regex>
 #include <string>
-#include <sstream>
 #include <vector>
 #include <unordered_map>
-#include <unordered_set>
 #include "Validator.h"
-#include "Query.h"
 
 using namespace std;
 namespace Validator {
