@@ -2298,7 +2298,7 @@ vector<string> Parser::parseCondStmt(string line) {
 		vector<string> subresult = parseCondition(curr);
 		for (string var : subresult) {
 			if (var.find('!') != string::npos) {
-				var = var.substr(1);
+				var.erase(std::remove(var.begin(), var.end(), '!'), var.end());
 			}
 			if (!(regex_match(var, name) || regex_match(var, number))) {
 				throw stmtNo;
@@ -2318,7 +2318,7 @@ vector<string> Parser::parseCondStmt(string line) {
 					vector<string> subresult = parseCondition(curr);
 					for (string var : subresult) {
 						if (var.find('!') != string::npos) {
-							var = var.substr(1);
+							var.erase(std::remove(var.begin(), var.end(), '!'), var.end());
 						}
 						if (!(regex_match(var, name) || regex_match(var, number))) {
 							throw stmtNo;
@@ -2332,7 +2332,7 @@ vector<string> Parser::parseCondStmt(string line) {
 					vector<string> subresult = parseCondition(curr);
 					for (string var : subresult) {
 						if (var.find('!') != string::npos) {
-							var = var.substr(1);
+							var.erase(std::remove(var.begin(), var.end(), '!'), var.end());
 						}
 						if (!(regex_match(var, name) || regex_match(var, number))) {
 							throw stmtNo;
@@ -2399,14 +2399,81 @@ vector<string> Parser::parseCondition(string condition) {
 		}
 	}
 
-	vector<string> subresultFirst = parseAssignRHS(first);
+	vector<string> subresultFirst = parseCond(first);
 	for (string element : subresultFirst) {
+		if (element.find('!') != string::npos) {
+			element.erase(std::remove(element.begin(), element.end(), '!'), element.end());
+		}
 		result.push_back(element);
 	}
 
-	vector<string> subresultSecond = parseAssignRHS(second);
+	vector<string> subresultSecond = parseCond(second);
 	for (string element : subresultSecond) {
+		if (element.find('!') != string::npos) {
+			element.erase(std::remove(element.begin(), element.end(), '!'), element.end());
+		}
 		result.push_back(element);
+	}
+	return result;
+}
+
+vector<string> Parser::parseCond(string varUse) {
+	string patternRHS = varUse;
+	patternRHS.erase(std::remove(patternRHS.begin(), patternRHS.end(), ')'), patternRHS.end());
+	patternRHS.erase(std::remove(patternRHS.begin(), patternRHS.end(), '('), patternRHS.end());
+	string var = "";
+	vector<string> result;
+	int i = INT_MAX;
+	while (patternRHS.size() > 0) {
+		i = INT_MAX;
+		if (patternRHS.find("+") != string::npos || patternRHS.find("-") != string::npos || patternRHS.find("*") != string::npos ||
+			patternRHS.find("/") != string::npos || patternRHS.find("%") != string::npos) {
+			if (patternRHS.find("+") != string::npos) {
+				if (patternRHS.find("+") < i) {
+					i = patternRHS.find("+");
+				}
+			}
+			if (patternRHS.find("-") != string::npos) {
+				if (patternRHS.find("-") < i) {
+					i = patternRHS.find("-");
+				}
+			}
+			if (patternRHS.find("*") != string::npos) {
+				if (patternRHS.find("*") < i) {
+					i = patternRHS.find("*");
+				}
+			}
+			if (patternRHS.find("%") != string::npos) {
+				if (patternRHS.find("%") < i) {
+					i = patternRHS.find("%");
+				}
+			}
+			if (patternRHS.find("/") != string::npos) {
+				if (patternRHS.find("/") < i) {
+					i = patternRHS.find("/");
+				}
+			}
+			var = patternRHS.substr(0, i);
+			if (var.find('!') != string::npos) {
+				var.erase(std::remove(var.begin(), var.end(), '!'), var.end());
+			}
+			if (!(regex_match(var, name) || regex_match(var, number))) {
+				throw stmtNo;
+			}
+			result.push_back(var);
+			patternRHS = patternRHS.substr(i + 1);
+		}
+		else {
+			var = patternRHS;
+			if (var.find('!') != string::npos) {
+				var.erase(std::remove(var.begin(), var.end(), '!'), var.end());
+			}
+			if (!(regex_match(var, name) || regex_match(var, number))) {
+				throw stmtNo;
+			}
+			result.push_back(var);
+			break;
+		}
 	}
 	return result;
 }

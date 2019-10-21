@@ -25,6 +25,7 @@ public:
 	string parsePrint(std::string line);
 	string parseAssignInit(std::string line);
 	vector<string> parseAssignRHS(std::string varUse);
+	vector<string> parseCond(std::string varUse);
 	NestedResult parseIf(std::string ifLine, int parentStmtNo);
 	NestedResult parseIfNestedInThen(std::string ifLine, int parentStmtNo);
 	NestedResult parseWhile(std:: string whileLine, int parentStmtNo);
