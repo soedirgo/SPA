@@ -63,9 +63,9 @@ string PatternProcessor::infixtoRPNexpression(string infix) {
 		//If is number, append to output
 		if (precedenceWeight == 1) {
 
-			rpnExpression.append("_");
+			rpnExpression.append(" ");
 			rpnExpression.append(tempStr);
-			rpnExpression.append("_");
+			rpnExpression.append(" ");
 
 		}
 		else {

@@ -256,27 +256,27 @@ namespace UnitTesting
 		{
 			string input = "a+b";
 			string actual = PatternProcessor::infixtoRPNexpression(input);
-			string expected = "_a__b_+";
+			string expected = " a  b +";
 			Assert::AreEqual(actual == expected, true);
 
 			string input2 = "a+b*c";
 			string actual2 = PatternProcessor::infixtoRPNexpression(input2);
-			string expected2 = "_a__b__c_*+";
+			string expected2 = " a  b  c *+";
 			Assert::AreEqual(actual2 == expected2, true);
 
 			string input3 = "A+B*C";
 			string actual3 = PatternProcessor::infixtoRPNexpression(input3);
-			string expected3 = "_A__B__C_*+";
+			string expected3 = " A  B  C *+";
 			Assert::AreEqual(actual3 == expected3, true);
 
 			string input4 = "(A+B)*C";
 			string actual4 = PatternProcessor::infixtoRPNexpression(input4);
-			string expected4 = "_A__B_+_C_*";
+			string expected4 = " A  B + C *";
 			Assert::AreEqual(actual4 == expected4, true);
 
 			string input5 = "(A+B)*(C+D)";
 			string actual5 = PatternProcessor::infixtoRPNexpression(input5);
-			string expected5 = "_A__B_+_C__D_+*";
+			string expected5 = " A  B + C  D +*";
 			Assert::AreEqual(actual5 == expected5, true);
 
 		}

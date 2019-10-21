@@ -190,6 +190,7 @@ namespace UnitTesting
 
 			
 		}
+		/*
 		TEST_METHOD(AffectsRelationship)
 		{
 			
@@ -215,7 +216,7 @@ namespace UnitTesting
 			Assert::IsTrue(PKB.isAffectsIdentIdent("16", "17"));
 			
 		}
-		/*
+		
 		TEST_METHOD(AffectsTRelationship)
 		{
 			PKBAffects PKB;

@@ -182,7 +182,7 @@ namespace UnitTesting
 			
 
 			PKBUses PKB;
-
+			/*
 			Assert::IsTrue(PKB.isUsesPIdentIdent("First", "a"));
 			Assert::IsTrue(PKB.isUsesPIdentIdent("First", "b"));
 			Assert::IsTrue(PKB.isUsesPIdentIdent("First", "c"));
@@ -191,6 +191,7 @@ namespace UnitTesting
 			Assert::IsTrue(PKB.isUsesPIdentIdent("First", "y"));
 			Assert::IsTrue(PKB.isUsesPIdentIdent("First", "z"));
 			Assert::IsTrue(PKB.isUsesPIdentIdent("First", "i"));
+			
 
 			Assert::IsTrue(PKB.isUsesPIdentIdent("Second", "a"));
 			Assert::IsTrue(PKB.isUsesPIdentIdent("Second", "b"));
@@ -200,7 +201,7 @@ namespace UnitTesting
 			Assert::IsTrue(PKB.isUsesPIdentIdent("Second", "y"));
 			Assert::IsTrue(PKB.isUsesPIdentIdent("Second", "z"));
 			Assert::IsTrue(PKB.isUsesPIdentIdent("Second", "i"));
-			
+			*/
 			Assert::IsTrue(PKB.isUsesPIdentIdent("Third", "z"));
 			Assert::IsTrue(PKB.isUsesPIdentIdent("Third", "a"));
 			Assert::IsTrue(PKB.isUsesPIdentIdent("Third", "b"));
