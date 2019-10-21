@@ -1,0 +1,43 @@
+procedure ParentTNest2 {
+  x = 1;
+  if (x < 5) then {
+    read y;
+    z = y;
+    if (x >= z) then {
+      z = x;
+      read i; }
+    else {
+      x = z;
+      read j; } }
+  else {
+    print y;
+    read k; }
+  read t3st;
+  while (t3st < 20) {
+    t3st = t3st + 4;
+    if (z < k) then {
+      t3st = t3st - ( z / k );
+      apple = orange;
+      print apple; }
+    else {
+      apple = pear; }
+    print t3st; }
+  read circle;
+  print circle;
+  circle = circle * 5000;
+  square = 2;
+  while (square <= (circle * circle) ) {
+    square = square * factor;
+    while(factor < 100) {
+      factor = factor * factor;
+      print factor; } 
+    print square; }
+  if (t3st < square) then {
+    diff = square - t3st;
+    read target;
+    while (diff - target > 30) {
+      diff = diff % target; } }
+  else {
+    print t3st;
+    read why; }
+}
