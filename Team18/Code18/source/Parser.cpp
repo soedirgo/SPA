@@ -499,6 +499,7 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 	int prevStmtNo = parentStmtNo;
 	bool passedElse = false;
 	int currNestingLevel = nestingLevel;
+	nestingLevel++;
 	NestedResult result;
 
 	bool prevIf = false;
@@ -526,12 +527,12 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 			pkb.setParent(to_string(startStmtNo), to_string(currStmtNo));
 			nestingLevel++;
 			NestedResult results;
-			if (passedElse) {
+			//if (passedElse) {
 				results = parseWhile(line, currStmtNo);
-			}
-			else {
-				results = parseWhileNestedInThen(line, currStmtNo);
-			}
+			//}
+			//else {
+			//	results = parseWhileNestedInThen(line, currStmtNo);
+			//}
 			vector<string> modifies = results.getModifies();
 			vector<string> uses = results.getUses();
 			int stmt = results.getPrevWhileStmt();
@@ -605,7 +606,7 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 			prevWhileStmtNo = stmt;
 			prevStmtNo = currStmtNo;
 			currStmtNo = results.lastStmtNo;
-			if (nestingLevel != currNestingLevel) {
+			if (nestingLevel < currNestingLevel) {
 				break;
 			}
 		}
@@ -614,12 +615,12 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 			pkb.setParent(to_string(startStmtNo), to_string(currStmtNo));
 			nestingLevel++;
 			NestedResult results;
-			if (passedElse) {
-				results = parseIf(line, currStmtNo);
-			}
-			else {
-				results = parseIfNestedInThen(line, currStmtNo);
-			}
+			//if (passedElse) {
+			results = parseIf(line, currStmtNo);
+			//}
+			//else {
+			//	results = parseWhileNestedInThen(line, currStmtNo);
+			//}
 			vector<string> modifies = results.getModifies();
 			vector<string> uses = results.getUses();
 			vector<int> stmt = results.getPrevIfStmt();
@@ -693,7 +694,7 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 			prevIfStmtNo = stmt;
 			prevStmtNo = currStmtNo;
 			currStmtNo = results.lastStmtNo;
-			if (nestingLevel != currNestingLevel) {
+			if (nestingLevel < currNestingLevel) {
 				break;
 			}
 		}
@@ -783,7 +784,7 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 			}
 			prevStmtNo = currStmtNo;
 			currStmtNo++;
-			if (nestingLevel != currNestingLevel) {
+			if (nestingLevel < currNestingLevel) {
 				break;
 			}
 		}
@@ -849,7 +850,7 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 			}
 			prevStmtNo = currStmtNo;
 			currStmtNo++;
-			if (nestingLevel != currNestingLevel) {
+			if (nestingLevel < currNestingLevel) {
 				break;
 			}
 		}
@@ -915,7 +916,7 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 			}
 			prevStmtNo = currStmtNo;
 			currStmtNo++;
-			if (nestingLevel != currNestingLevel) {
+			if (nestingLevel < currNestingLevel) {
 				break;
 			}
 		}
@@ -977,7 +978,7 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 
 			prevStmtNo = currStmtNo;
 			currStmtNo++;
-			if (nestingLevel != currNestingLevel) {
+			if (nestingLevel < currNestingLevel) {
 				break;
 			}
 		}
@@ -1000,11 +1001,9 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 			continue;
 		}
 		else {
-			if (passedElse) {
-				if (line.find("}") != string::npos && passedElse) {
-					nestingLevel = nestingLevel - count(line, '}');
-					break;
-				}
+			if (line.find("}") != string::npos) {
+				nestingLevel = nestingLevel - count(line, '}');
+				break;
 			}
 		}
 	}
@@ -2004,7 +2003,7 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 			prevWhileStmtNo = stmt;
 			prevStmtNo = currStmtNo;
 			currStmtNo = results.lastStmtNo;
-			if (nestingLevel != currNestingLevel) {
+			if (nestingLevel < currNestingLevel) {
 				break;
 			}
 		}
@@ -2063,7 +2062,7 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 			prevIfStmtNo = stmt;
 			prevStmtNo = currStmtNo;
 			currStmtNo = results.lastStmtNo;
-			if (nestingLevel != currNestingLevel) {
+			if (nestingLevel < currNestingLevel) {
 				break;
 			}
 		}
@@ -2130,7 +2129,7 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 			}
 			prevStmtNo = currStmtNo;
 			currStmtNo++;
-			if (nestingLevel != currNestingLevel) {
+			if (nestingLevel < currNestingLevel) {
 				break;
 			}
 		}
@@ -2173,7 +2172,7 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 			}
 			prevStmtNo = currStmtNo;
 			currStmtNo++;
-			if (nestingLevel != currNestingLevel) {
+			if (nestingLevel < currNestingLevel) {
 				break;
 			}
 		}
@@ -2216,7 +2215,7 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 			}
 			prevStmtNo = currStmtNo;
 			currStmtNo++;
-			if (nestingLevel != currNestingLevel) {
+			if (nestingLevel < currNestingLevel) {
 				break;
 			}
 		}
@@ -2254,7 +2253,7 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 			}
 			prevStmtNo = currStmtNo;
 			currStmtNo++;
-			if (nestingLevel != currNestingLevel) {
+			if (nestingLevel < currNestingLevel) {
 				break;
 			}
 		}
