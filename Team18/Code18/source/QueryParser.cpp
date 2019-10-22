@@ -193,10 +193,12 @@ Query QueryParser::parse(string query) {
 				patternStr[x] = patternStr[x].erase(index, 1);
 			}
 		}
+
+		Clause patternC = Clause("pattern", patternStr);
+		clausesVector.push_back(patternC);
 	}
 	
-	Clause patternC = Clause("pattern", patternStr);
-	clausesVector.push_back(patternC);
+	
 
 	Query q = Query(declerationVariables, selectVars, clausesVector);
 	return q;
