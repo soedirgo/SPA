@@ -209,12 +209,12 @@ Select <a, ifs, a> such that Calls*(pr, pr1) and Next(a, 8) pattern a("i", _) an
 12 3 12, 12 14 12
 5000
 43 - Relation, At least 3 clause all Select synonym dependent 1
-procedure pr; variable v; while;
+procedure pr; variable v; while w;
 Select <pr, v> such that Calls(_, pr) and Modifies(pr, v) and Uses(pr, v) pattern w(v, _)
-C i, D i
+C i
 5000
 44 - Relation, At least 3 clause all Select synonym dependent 2
-assign a; stmt s; print pn; while w;
+assign a; stmt s; print pn; while w; variable v;
 Select <v, s, pn> such that Next(s, pn) pattern a(v, _"inc"_) such that Parent(14, s) pattern w(v, _)
-i 15 17, i 15 20, i 16 17, i 16 20, i 19 17, i 19 20, inc 15 17, inc 15 20, inc 16 17, inc 16 20, inc 19 17, inc 19 20
+i 15 20,i 19 20, inc 15 20, inc 19 20
 5000
