@@ -10,7 +10,7 @@ none
 5000
 3 - Pattern assign syntax, LHS synonym RHS invalid expr
 assign a; variable v;
-Select a pattern a(v, "")
+Select a pattern a(v, "a")
 none
 5000
 4 - Pattern assign syntax, LHS invalid synonym RHS invalid expr
@@ -95,7 +95,7 @@ Select a pattern a("c", _)
 5000
 20 - Pattern assign syntax, LHS invalid Ident RHS wildcard
 assign a;
-Select a pattern a( , _)
+Select a pattern a(a , _)
 none
 5000
 21 - Pattern assign syntax, LHS wildcard RHS expr

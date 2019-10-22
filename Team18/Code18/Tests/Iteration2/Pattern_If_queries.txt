@@ -1,7 +1,7 @@
 1 - Set 1 - Test syntax of Pattern if (Positive/Negative tests). Pattern if syntax, LHS synonym MID wildcard RHS wildcard
 if ifs; variable v;
 Select v pattern ifs(v, _, _)
-x, y, one1, two2, red, yellow, sky, blue, fact, fiction
+x, y, one1, two2, red, yellow, sky, blue, fact, fiction, left, right
 5000
 2 - Pattern if syntax, LHS invalid synonym MID wildcard RHS wildcard
 if ifs; assign a;

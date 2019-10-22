@@ -23,7 +23,7 @@ void DesignExtractor::extractDesign()
 	extractUsesP();
 	extractUsesS();
 	
-	//TABLE test = PKBModifies::getModifiesPEntEnt();
+	//TABLE test = PKBPattern::getPa();
 	//int i = test.size();
 	//TABLE test = PKBUses::getUsesPTable();
 	//int i = test.size();
