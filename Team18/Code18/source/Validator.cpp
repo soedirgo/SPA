@@ -478,7 +478,7 @@ namespace Validator {
 
         regex synRe("[[:alpha:]][[:alnum:]]*");
         regex lhsRe("(_|[[:alpha:]][[:alnum:]]*|\"[[:alpha:]][[:alnum:]]*\")");
-        regex rhsRe("(_|\"[^\"]+\")");
+        regex rhsRe("(_|_\\s*,\\s*_|\"[^\"]+\"|_\"[^\"]+\"_)");
 
         string syn = fields[0];
         string lhs = fields[1];
@@ -505,13 +505,25 @@ namespace Validator {
         if (lhs != "_" && lhs.front() != '\"' && !declMap.count(lhs))
             return false;
 
+		// false if lhs is syn that is not a variable
+		if (lhs != "_" && lhs.front() != '\"'
+			&& declMap[lhs] != "variable")
+			return false;
+
         // false if pattern synonym is not assign/if/while
         if (declMap[syn] != "assign" && declMap[syn] != "if" && declMap[syn] != "while")
             return false;
 
-        // false if pattern synonym is if and 2nd and 3rd parameter is not _
-        if (declMap[syn] == "if" && (fields[2] != "_" || fields[3] != "_"))
-            return false;
+		// false if pattern synonym is not if and 2nd and 3rd parameter is _
+		if (declMap[syn] != "if") {
+			if (regex_match(rhs, regex("_\\s*,\\s*_")))
+				return false;
+		}
+		// false if pattern synonym is if and 2nd and 3rd parameter is not _
+        if (declMap[syn] == "if") {
+			if (!regex_match(rhs, regex("_\\s*,\\s*_")))
+			    return false;
+		}
         // false if pattern synonym is while and 2nd parameter is not _
         if (declMap[syn] == "while" && fields[2] != "_")
             return false;
