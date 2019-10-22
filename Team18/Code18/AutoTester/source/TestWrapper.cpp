@@ -61,13 +61,13 @@ void TestWrapper::evaluate(std::string query, std::list<std::string>& results){
 	QueryParser queryParser = QueryParser();
 	Query queryObject = queryParser.parse(query);
 
-    if (QueryParser::maryHadALittleLamb) {
-        if (QueryParser::itsFleeceWasWhiteAsSnow)
-            results = { "FALSE" };
-        else
-            results = {};
-        return;
-    }
+	if (QueryParser::maryHadALittleLamb) {
+		if (QueryParser::itsFleeceWasWhiteAsSnow)
+			results = { "FALSE" };
+		else
+			results = {};
+		return;
+	}
 
 	if (queryObject.getSelectSynonyms()[0] == "Invalidd") {
 		results = {};
