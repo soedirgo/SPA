@@ -20,7 +20,7 @@ procedure B {
     while (i < target) {
       call C;
       print i;
-      if (i = target) then {
+      if (i == target) then {
         call C;
         }
         else{

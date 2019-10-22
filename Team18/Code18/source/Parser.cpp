@@ -499,6 +499,7 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 	int prevStmtNo = parentStmtNo;
 	bool passedElse = false;
 	int currNestingLevel = nestingLevel;
+	nestingLevel++;
 	NestedResult result;
 
 	bool prevIf = false;
@@ -526,12 +527,7 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 			pkb.setParent(to_string(startStmtNo), to_string(currStmtNo));
 			nestingLevel++;
 			NestedResult results;
-			if (passedElse) {
-				results = parseWhile(line, currStmtNo);
-			}
-			else {
-				results = parseWhileNestedInThen(line, currStmtNo);
-			}
+			results = parseWhile(line, currStmtNo);
 			vector<string> modifies = results.getModifies();
 			vector<string> uses = results.getUses();
 			int stmt = results.getPrevWhileStmt();
@@ -605,7 +601,7 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 			prevWhileStmtNo = stmt;
 			prevStmtNo = currStmtNo;
 			currStmtNo = results.lastStmtNo;
-			if (nestingLevel != currNestingLevel) {
+			if (nestingLevel < currNestingLevel) {
 				break;
 			}
 		}
@@ -614,12 +610,7 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 			pkb.setParent(to_string(startStmtNo), to_string(currStmtNo));
 			nestingLevel++;
 			NestedResult results;
-			if (passedElse) {
-				results = parseIf(line, currStmtNo);
-			}
-			else {
-				results = parseIfNestedInThen(line, currStmtNo);
-			}
+			results = parseIf(line, currStmtNo);
 			vector<string> modifies = results.getModifies();
 			vector<string> uses = results.getUses();
 			vector<int> stmt = results.getPrevIfStmt();
@@ -693,14 +684,14 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 			prevIfStmtNo = stmt;
 			prevStmtNo = currStmtNo;
 			currStmtNo = results.lastStmtNo;
-			if (nestingLevel != currNestingLevel) {
+			if (nestingLevel < currNestingLevel) {
 				break;
 			}
 		}
 		else if (line.find("=") != string::npos) {
 			//Initial processing of stmt
 			string assign = line;
-			if (assign.find("}") != string::npos && passedElse) {
+			if (assign.find("}") != string::npos) {
 				nestingLevel = nestingLevel - count(line, '}');
 				assign.erase(std::remove(assign.begin(), assign.end(), '}'), assign.end());
 			}
@@ -783,14 +774,14 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 			}
 			prevStmtNo = currStmtNo;
 			currStmtNo++;
-			if (nestingLevel != currNestingLevel) {
+			if (nestingLevel < currNestingLevel) {
 				break;
 			}
 		}
 		else if (line.find("read") != string::npos) {
 			//Gets the variable used in read stmt into readArg
 			string readArg = line;
-			if (readArg.find("}") != string::npos && passedElse) {
+			if (readArg.find("}") != string::npos) {
 				nestingLevel = nestingLevel - count(readArg, '}');
 				readArg.erase(std::remove(readArg.begin(), readArg.end(), '}'), readArg.end());
 			}
@@ -849,14 +840,14 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 			}
 			prevStmtNo = currStmtNo;
 			currStmtNo++;
-			if (nestingLevel != currNestingLevel) {
+			if (nestingLevel < currNestingLevel) {
 				break;
 			}
 		}
 		else if (line.find("print") != string::npos) {
 			//Gets the variable used in print stmt into printArg
 			string printArg = line;
-			if (printArg.find("}") != string::npos && passedElse) {
+			if (printArg.find("}") != string::npos) {
 				nestingLevel = nestingLevel - count(printArg, '}');
 				printArg.erase(std::remove(printArg.begin(), printArg.end(), '}'), printArg.end());
 			}
@@ -915,13 +906,13 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 			}
 			prevStmtNo = currStmtNo;
 			currStmtNo++;
-			if (nestingLevel != currNestingLevel) {
+			if (nestingLevel < currNestingLevel) {
 				break;
 			}
 		}
 		else if (line.find("call") != string::npos) {
 			string callArg = line;
-			if (callArg.find("}") != string::npos && passedElse) {
+			if (callArg.find("}") != string::npos) {
 				nestingLevel = nestingLevel - count(line, '}');
 				callArg.erase(std::remove(callArg.begin(), callArg.end(), '}'), callArg.end());
 			}
@@ -977,7 +968,7 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 
 			prevStmtNo = currStmtNo;
 			currStmtNo++;
-			if (nestingLevel != currNestingLevel) {
+			if (nestingLevel < currNestingLevel) {
 				break;
 			}
 		}
@@ -998,926 +989,30 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 				result.addPrevIfStmt(currStmtNo - 1);
 			}
 			continue;
-		}
-		else {
-			if (passedElse) {
-				if (line.find("}") != string::npos && passedElse) {
-					nestingLevel = nestingLevel - count(line, '}');
-					break;
-				}
-			}
-		}
-	}
-	if (prevIf) {
-		for (int stmt : prevIfStmtNo) {
-			result.addPrevIfStmt(stmt);
-		}
-		prevIf = false;
-	}
-	else if (prevWhile) {
-		result.addPrevIfStmt(prevWhileStmtNo);
-		prevWhile = false;
-	}
-	else {
-		result.addPrevIfStmt(currStmtNo - 1);
-	}
-
-	result.lastStmtNo = currStmtNo;
-	return result;
-}
-
-NestedResult Parser::parseIfNestedInThen(string ifLine, int parentStmtNo) {
-
-	int currStmtNo = parentStmtNo + 1;
-	int startStmtNo = parentStmtNo;
-	int elseStmtNo = 0;
-	int prevStmtNo = parentStmtNo;
-	bool passedElse = false;
-	int currNestingLevel = nestingLevel;
-	NestedResult result;
-
-	bool prevIf = false;
-	bool prevWhile = false;
-	vector<int> prevIfStmtNo;
-	int prevWhileStmtNo = 0;
-
-	string line;
-
-	vector<string> toAdd = parseCondStmt(ifLine);
-	for (string var : toAdd) {
-		result.addUses(var);
-		if (!isdigit(var.at(0))) {
-			currProc.addUses(var);
-			result.addCondExpr(var);
-		}
-	}
-	while (getline(programFile, line)) {
-		if (count(line, ';') > 1) {
-			throw currStmtNo;
-		}
-		//Process to parse each line
-		if (line.find("while") != string::npos && line.find('{') != string::npos) {
-			pkb.setStmt(to_string(currStmtNo), "while");
-			pkb.setParent(to_string(startStmtNo), to_string(currStmtNo));
-			nestingLevel++;
-			NestedResult results;
-			if (passedElse) {
-				results = parseWhile(line, currStmtNo);
-			}
-			else {
-				results = parseWhileNestedInThen(line, currStmtNo);
-			}
-			vector<string> modifies = results.getModifies();
-			vector<string> uses = results.getUses();
-			int stmt = results.getPrevWhileStmt();
-			for (string var : modifies) {
-				pkb.setVariable(var);
-				pkb.setModifiesS(to_string(currStmtNo), var);
-				result.addModifies(var);
-				currProc.addModifies(var);
-			}
-			for (string var : uses) {
-				if (isdigit(var.at(0))) {
-					pkb.setConstant(to_string(currStmtNo),var);
-					result.addUses(var);
-				}
-				else {
-					pkb.setVariable(var);
-					pkb.setUsesS(to_string(currStmtNo), var);
-					result.addUses(var);
-					currProc.addUses(var);
-				}
-			}
-
-			vector<string> condExpr = results.getCondExpr();
-			for (string var : condExpr) {
-				pkb.setWhilePattern(to_string(currStmtNo), var);
-			}
-			if (currStmtNo != (startStmtNo + 1)) {
-				if (passedElse) {
-					if (currStmtNo != elseStmtNo) {
-						pkb.setFollows(to_string(prevStmtNo), to_string(currStmtNo));
-						if (prevIf) {
-							for (int stmt : prevIfStmtNo) {
-								pkb.setNext(to_string(stmt), to_string(currStmtNo));
-							}
-							prevIf = false;
-						}
-						else if (prevWhile) {
-							pkb.setNext(to_string(prevWhileStmtNo), to_string(currStmtNo));
-							prevWhile = false;
-						}
-						else {
-							pkb.setNext(to_string(prevStmtNo), to_string(currStmtNo));
-						}
-					}
-					else {
-						pkb.setNext(to_string(startStmtNo), to_string(currStmtNo));
-					}
-				}
-				else {
-					pkb.setFollows(to_string(prevStmtNo), to_string(currStmtNo));
-					if (prevIf) {
-						for (int stmt : prevIfStmtNo) {
-							pkb.setNext(to_string(stmt), to_string(currStmtNo));
-						}
-						prevIf = false;
-					}
-					else if (prevWhile) {
-						pkb.setNext(to_string(prevWhileStmtNo), to_string(currStmtNo));
-						prevWhile = false;
-					}
-					else {
-						pkb.setNext(to_string(prevStmtNo), to_string(currStmtNo));
-					}
-				}
-			}
-			else {
-				pkb.setNext(to_string(startStmtNo), to_string(currStmtNo));
-			}
-
-			prevWhile = true;
-			prevWhileStmtNo = stmt;
-			prevStmtNo = currStmtNo;
-			currStmtNo = results.lastStmtNo;
-			if (nestingLevel != currNestingLevel) {
-				break;
-			}
-		}
-		else if (line.find("if") != string::npos && line.find('{') != string::npos) {
-			pkb.setStmt(to_string(currStmtNo), "if");
-			pkb.setParent(to_string(startStmtNo), to_string(currStmtNo));
-			nestingLevel++;
-			NestedResult results;
-			if (passedElse) {
-				results = parseIf(line, currStmtNo);
-			}
-			else {
-				results = parseIfNestedInThen(line, currStmtNo);
-			}
-			vector<string> modifies = results.getModifies();
-			vector<string> uses = results.getUses();
-			vector<int> stmt = results.getPrevIfStmt();
-			for (string var : modifies) {
-				pkb.setVariable(var);
-				pkb.setModifiesS(to_string(currStmtNo), var);
-				result.addModifies(var);
-				currProc.addModifies(var);
-			}
-			for (string var : uses) {
-				if (isdigit(var.at(0))) {
-					pkb.setConstant(to_string(currStmtNo),var);
-					result.addUses(var);
-				}
-				else {
-					pkb.setVariable(var);
-					pkb.setUsesS(to_string(currStmtNo), var);
-					result.addUses(var);
-					currProc.addUses(var);
-				}
-			}
-
-			vector<string> condExpr = results.getCondExpr();
-			for (string var : condExpr) {
-				pkb.setIfPattern(to_string(currStmtNo), var);
-			}
-			if (currStmtNo != (startStmtNo + 1)) {
-				if (passedElse) {
-					if (currStmtNo != elseStmtNo) {
-						pkb.setFollows(to_string(prevStmtNo), to_string(currStmtNo));
-						if (prevIf) {
-							for (int stmt : prevIfStmtNo) {
-								pkb.setNext(to_string(stmt), to_string(currStmtNo));
-							}
-							prevIf = false;
-						}
-						else if (prevWhile) {
-							pkb.setNext(to_string(prevWhileStmtNo), to_string(currStmtNo));
-							prevWhile = false;
-						}
-						else {
-							pkb.setNext(to_string(prevStmtNo), to_string(currStmtNo));
-						}
-					}
-					else {
-						pkb.setNext(to_string(startStmtNo), to_string(currStmtNo));
-					}
-				}
-				else {
-					pkb.setFollows(to_string(prevStmtNo), to_string(currStmtNo));
-					if (prevIf) {
-						for (int stmt : prevIfStmtNo) {
-							pkb.setNext(to_string(stmt), to_string(currStmtNo));
-						}
-						prevIf = false;
-					}
-					else if (prevWhile) {
-						pkb.setNext(to_string(prevWhileStmtNo), to_string(currStmtNo));
-						prevWhile = false;
-					}
-					else {
-						pkb.setNext(to_string(prevStmtNo), to_string(currStmtNo));
-					}
-				}
-			}
-			else {
-				pkb.setNext(to_string(startStmtNo), to_string(currStmtNo));
-			}
-
-			prevIf = true;
-			prevIfStmtNo = stmt;
-			prevStmtNo = currStmtNo;
-			currStmtNo = results.lastStmtNo;
-			if (nestingLevel != currNestingLevel) {
-				break;
-			}
-		}
-		else if (line.find("=") != string::npos) {
-			//Initial processing of stmt
-			string assign = line;
-			if (assign.find("}") != string::npos && passedElse) {
-				nestingLevel = nestingLevel - 1;
-				assign.erase(std::remove(assign.begin(), assign.end(), '}'), assign.end());
-			}
-			assign = parseAssignInit(line);
-			pkb.setStmt(to_string(currStmtNo), "assign");
-			pkb.setParent(to_string(startStmtNo), to_string(currStmtNo));
-
-			//Splits the assign statement by the = sign and get LHS and RHS
-			int index = assign.find("=");
-			string varMod = assign.substr(0, index);
-			if (!(regex_match(varMod, name))) {
-				throw stmtNo;
-			}
-			pkb.setVariable(varMod);
-			pkb.setModifiesS(to_string(currStmtNo), varMod);
-			result.addModifies(varMod);
-			currProc.addModifies(varMod);
-
-			string varUse = assign.substr(index + 1);
-
-			//Calls to parse RHS of assign stmt
-			vector<string> results = parseAssignRHS(varUse);
-			string pattern = patternProcessor.infixtoRPNexpression(varUse);
-			pkb.setAssignPattern(to_string(currStmtNo), pattern);
-
-			for (string var : results) {
-				if (isdigit(var.at(0))) {
-					pkb.setConstant(to_string(currStmtNo),var);
-					result.addUses(var);
-				}
-				else {
-					pkb.setVariable(var);
-					pkb.setUsesS(to_string(currStmtNo), var);
-					result.addUses(var);
-					currProc.addUses(var);
-				}
-			}
-
-			if (currStmtNo != (startStmtNo + 1)) {
-				if (passedElse) {
-					if (currStmtNo != elseStmtNo) {
-						pkb.setFollows(to_string(prevStmtNo), to_string(currStmtNo));
-						if (prevIf) {
-							for (int stmt : prevIfStmtNo) {
-								pkb.setNext(to_string(stmt), to_string(currStmtNo));
-							}
-							prevIf = false;
-						}
-						else if (prevWhile) {
-							pkb.setNext(to_string(prevWhileStmtNo), to_string(currStmtNo));
-							prevWhile = false;
-						}
-						else {
-							pkb.setNext(to_string(prevStmtNo), to_string(currStmtNo));
-						}
-					}
-					else {
-						pkb.setNext(to_string(startStmtNo), to_string(currStmtNo));
-					}
-				}
-				else {
-					pkb.setFollows(to_string(prevStmtNo), to_string(currStmtNo));
-					if (prevIf) {
-						for (int stmt : prevIfStmtNo) {
-							pkb.setNext(to_string(stmt), to_string(currStmtNo));
-						}
-						prevIf = false;
-					}
-					else if (prevWhile) {
-						pkb.setNext(to_string(prevWhileStmtNo), to_string(currStmtNo));
-						prevWhile = false;
-					}
-					else {
-						pkb.setNext(to_string(prevStmtNo), to_string(currStmtNo));
-					}
-				}
-			}
-			else {
-				pkb.setNext(to_string(startStmtNo), to_string(currStmtNo));
-			}
-
-			prevStmtNo = currStmtNo;
-			currStmtNo++;
-			if (nestingLevel != currNestingLevel) {
-				break;
-			}
-		}
-		else if (line.find("read") != string::npos) {
-			//Gets the variable used in read stmt into readArg
-			string readArg = line;
-			if (readArg.find("}") != string::npos && passedElse) {
-				nestingLevel = nestingLevel - 1;
-				readArg.erase(std::remove(readArg.begin(), readArg.end(), '}'), readArg.end());
-			}
-			readArg = parseRead(readArg);
-			//Sets stmt information in PKB and then sets modifies variable for that stmt
-			pkb.setStmt(to_string(currStmtNo), "read");
-			pkb.setRead(to_string(currStmtNo), readArg);
-			pkb.setParent(to_string(startStmtNo), to_string(currStmtNo));
-
-			pkb.setModifiesS(to_string(currStmtNo), readArg);
-			pkb.setVariable(readArg);
-			result.addModifies(readArg);
-			currProc.addModifies(readArg);
-
-			if (currStmtNo != (startStmtNo + 1)) {
-				if (passedElse) {
-					if (currStmtNo != elseStmtNo) {
-						pkb.setFollows(to_string(prevStmtNo), to_string(currStmtNo));
-						if (prevIf) {
-							for (int stmt : prevIfStmtNo) {
-								pkb.setNext(to_string(stmt), to_string(currStmtNo));
-							}
-							prevIf = false;
-						}
-						else if (prevWhile) {
-							pkb.setNext(to_string(prevWhileStmtNo), to_string(currStmtNo));
-							prevWhile = false;
-						}
-						else {
-							pkb.setNext(to_string(prevStmtNo), to_string(currStmtNo));
-						}
-					}
-					else {
-						pkb.setNext(to_string(startStmtNo), to_string(currStmtNo));
-					}
-				}
-				else {
-					pkb.setFollows(to_string(prevStmtNo), to_string(currStmtNo));
-					if (prevIf) {
-						for (int stmt : prevIfStmtNo) {
-							pkb.setNext(to_string(stmt), to_string(currStmtNo));
-						}
-						prevIf = false;
-					}
-					else if (prevWhile) {
-						pkb.setNext(to_string(prevWhileStmtNo), to_string(currStmtNo));
-						prevWhile = false;
-					}
-					else {
-						pkb.setNext(to_string(prevStmtNo), to_string(currStmtNo));
-					}
-				}
-			}
-			else {
-				pkb.setNext(to_string(startStmtNo), to_string(currStmtNo));
-			}
-			prevStmtNo = currStmtNo;
-			currStmtNo++;
-			if (nestingLevel != currNestingLevel) {
-				break;
-			}
-		}
-		else if (line.find("print") != string::npos) {
-			//Gets the variable used in print stmt into printArg
-			string printArg = line;
-			if (printArg.find("}") != string::npos && passedElse) {
-				nestingLevel = nestingLevel - 1;
-				printArg.erase(std::remove(printArg.begin(), printArg.end(), '}'), printArg.end());
-			}
-			printArg = parsePrint(line);
-			//Sets stmt information in PKB and then sets modifies variable for that stmt
-			pkb.setStmt(to_string(currStmtNo), "print");
-			pkb.setPrint(to_string(currStmtNo), printArg);
-			pkb.setParent(to_string(startStmtNo), to_string(currStmtNo));
-
-			pkb.setUsesS(to_string(currStmtNo), printArg);
-			pkb.setVariable(printArg);
-			result.addUses(printArg);
-			currProc.addUses(printArg);
-
-			if (currStmtNo != (startStmtNo + 1)) {
-				if (passedElse) {
-					if (currStmtNo != elseStmtNo) {
-						pkb.setFollows(to_string(prevStmtNo), to_string(currStmtNo));
-						if (prevIf) {
-							for (int stmt : prevIfStmtNo) {
-								pkb.setNext(to_string(stmt), to_string(currStmtNo));
-							}
-							prevIf = false;
-						}
-						else if (prevWhile) {
-							pkb.setNext(to_string(prevWhileStmtNo), to_string(currStmtNo));
-							prevWhile = false;
-						}
-						else {
-							pkb.setNext(to_string(prevStmtNo), to_string(currStmtNo));
-						}
-					}
-					else {
-						pkb.setNext(to_string(startStmtNo), to_string(currStmtNo));
-					}
-				}
-				else {
-					pkb.setFollows(to_string(prevStmtNo), to_string(currStmtNo));
-					if (prevIf) {
-						for (int stmt : prevIfStmtNo) {
-							pkb.setNext(to_string(stmt), to_string(currStmtNo));
-						}
-						prevIf = false;
-					}
-					else if (prevWhile) {
-						pkb.setNext(to_string(prevWhileStmtNo), to_string(currStmtNo));
-						prevWhile = false;
-					}
-					else {
-						pkb.setNext(to_string(prevStmtNo), to_string(currStmtNo));
-					}
-				}
-			}
-			else {
-				pkb.setNext(to_string(startStmtNo), to_string(currStmtNo));
-			}
-			prevStmtNo = currStmtNo;
-			currStmtNo++;
-			if (nestingLevel != currNestingLevel) {
-				break;
-			}
-		}
-		else if (line.find("call") != string::npos) {
-			string callArg = line;
-			if (callArg.find("}") != string::npos && passedElse) {
-				nestingLevel = nestingLevel - 1;
-				callArg.erase(std::remove(callArg.begin(), callArg.end(), '}'), callArg.end());
-			}
-			string proc = parseCall(callArg);
-			pkb.setStmt(to_string(currStmtNo), "call");
-			pkb.setCallStmt(to_string(currStmtNo), proc);
-			pkb.setCallProc(currProc.getProcName(), proc);
-			pkb.setParent(to_string(startStmtNo), to_string(currStmtNo));
-			callStmts.push_back(make_pair(currStmtNo, proc));
-			currProc.addCalls(proc);
-			if (currStmtNo != (startStmtNo + 1)) {
-				if (passedElse) {
-					if (currStmtNo != elseStmtNo) {
-						pkb.setFollows(to_string(prevStmtNo), to_string(currStmtNo));
-						if (prevIf) {
-							for (int stmt : prevIfStmtNo) {
-								pkb.setNext(to_string(stmt), to_string(currStmtNo));
-							}
-							prevIf = false;
-						}
-						else if (prevWhile) {
-							pkb.setNext(to_string(prevWhileStmtNo), to_string(currStmtNo));
-							prevWhile = false;
-						}
-						else {
-							pkb.setNext(to_string(prevStmtNo), to_string(currStmtNo));
-						}
-					}
-					else {
-						pkb.setNext(to_string(startStmtNo), to_string(currStmtNo));
-					}
-				}
-				else {
-					pkb.setFollows(to_string(prevStmtNo), to_string(currStmtNo));
-					if (prevIf) {
-						for (int stmt : prevIfStmtNo) {
-							pkb.setNext(to_string(stmt), to_string(currStmtNo));
-						}
-						prevIf = false;
-					}
-					else if (prevWhile) {
-						pkb.setNext(to_string(prevWhileStmtNo), to_string(currStmtNo));
-						prevWhile = false;
-					}
-					else {
-						pkb.setNext(to_string(prevStmtNo), to_string(currStmtNo));
-					}
-				}
-			}
-			else {
-				pkb.setNext(to_string(startStmtNo), to_string(currStmtNo));
-			}
-			prevStmtNo = currStmtNo;
-			currStmtNo++;
-			if (nestingLevel != currNestingLevel) {
-				break;
-			}
-		}
-		else if (line.find("else") != string::npos) {
-			passedElse = true;
-			elseStmtNo = currStmtNo;
-			if (prevIf) {
-				for (int stmt : prevIfStmtNo) {
-					result.addPrevIfStmt(stmt);
-				}
-				prevIf = false;
-			}
-			else if (prevWhile) {
-				result.addPrevIfStmt(prevWhileStmtNo);
-				prevWhile = false;
-			}
-			else {
-				result.addPrevIfStmt(currStmtNo - 1);
-			}
-			continue;
-		}
-		else {
-			if (passedElse) {
-				if (line.find("}") != string::npos) {
-					nestingLevel--;
-					break;
-				}
-			}
-		}
-	}
-	if (prevIf) {
-		for (int stmt : prevIfStmtNo) {
-			result.addPrevIfStmt(stmt);
-		}
-		prevIf = false;
-	}
-	else if (prevWhile) {
-		result.addPrevIfStmt(prevWhileStmtNo);
-		prevWhile = false;
-	}
-	else {
-		result.addPrevIfStmt(currStmtNo - 1);
-	}
-	result.lastStmtNo = currStmtNo;
-	return result;
-}
-
-NestedResult Parser::parseWhileNestedInThen(string whileLine, int parentStmtNo) {
-	int currStmtNo = parentStmtNo + 1;
-	int startStmtNo = parentStmtNo;
-	int prevStmtNo = parentStmtNo;
-	int currNestingLevel = nestingLevel;
-	NestedResult result;
-
-	bool prevIf = false;
-	bool prevWhile = false;
-	vector<int> prevIfStmtNo;
-	int prevWhileStmtNo = 0;
-
-	string line;
-
-	vector<string> toAdd = parseCondStmt(whileLine);
-	for (string var : toAdd) {
-		result.addUses(var);
-		if (!isdigit(var.at(0))) {
-			currProc.addUses(var);
-			result.addCondExpr(var);
-		}
-	}
-	while (getline(programFile, line)) {
-		if (count(line, ';') > 1) {
-			throw currStmtNo;
-		}
-		//Process to parse each line
-		if (line.find("while") != string::npos && line.find('{') != string::npos) {
-			pkb.setStmt(to_string(currStmtNo), "while");
-			pkb.setParent(to_string(startStmtNo), to_string(currStmtNo));
-			nestingLevel++;
-			NestedResult results = parseWhile(line, currStmtNo);
-			vector<string> modifies = results.getModifies();
-			vector<string> uses = results.getUses();
-			int stmt = results.getPrevWhileStmt();
-			for (string var : modifies) {
-				pkb.setVariable(var);
-				pkb.setModifiesS(to_string(currStmtNo), var);
-				result.addModifies(var);
-				currProc.addModifies(var);
-			}
-			for (string var : uses) {
-				if (isdigit(var.at(0))) {
-					pkb.setConstant(to_string(currStmtNo),var);
-					result.addUses(var);
-				}
-				else {
-					pkb.setVariable(var);
-					pkb.setUsesS(to_string(currStmtNo), var);
-					result.addUses(var);
-					currProc.addUses(var);
-				}
-			}
-
-			vector<string> condExpr = results.getCondExpr();
-			for (string var : condExpr) {
-				pkb.setWhilePattern(to_string(currStmtNo), var);
-			}
-			if (currStmtNo != (startStmtNo + 1)) {
-				pkb.setFollows(to_string(prevStmtNo), to_string(currStmtNo));
-				if (prevIf) {
-					for (int stmt : prevIfStmtNo) {
-						pkb.setNext(to_string(stmt), to_string(currStmtNo));
-					}
-					prevIf = false;
-				}
-				else if (prevWhile) {
-					pkb.setNext(to_string(prevWhileStmtNo), to_string(currStmtNo));
-					prevWhile = false;
-				}
-				else {
-					pkb.setNext(to_string(prevStmtNo), to_string(currStmtNo));
-				}
-			}
-			else {
-				pkb.setNext(to_string(startStmtNo), to_string(currStmtNo));
-			}
-
-			prevWhile = true;
-			prevWhileStmtNo = stmt;
-			prevStmtNo = currStmtNo;
-			currStmtNo = results.lastStmtNo;
-			if (nestingLevel != currNestingLevel) {
-				break;
-			}
-		}
-		else if (line.find("if") != string::npos && line.find('{') != string::npos) {
-			pkb.setStmt(to_string(currStmtNo), "if");
-			pkb.setParent(to_string(startStmtNo), to_string(currStmtNo));
-			nestingLevel++;
-			NestedResult results = parseIf(line, currStmtNo);
-			vector<string> modifies = results.getModifies();
-			vector<string> uses = results.getUses();
-			vector<int> stmt = results.getPrevIfStmt();
-			for (string var : modifies) {
-				pkb.setVariable(var);
-				pkb.setModifiesS(to_string(currStmtNo), var);
-				result.addModifies(var);
-				currProc.addModifies(var);
-			}
-			for (string var : uses) {
-				if (isdigit(var.at(0))) {
-					pkb.setConstant(to_string(currStmtNo),var);
-					result.addUses(var);
-				}
-				else {
-					pkb.setVariable(var);
-					pkb.setUsesS(to_string(currStmtNo), var);
-					result.addUses(var);
-					currProc.addUses(var);
-				}
-			}
-
-			vector<string> condExpr = results.getCondExpr();
-			for (string var : condExpr) {
-				pkb.setIfPattern(to_string(currStmtNo), var);
-			}
-			if (currStmtNo != (startStmtNo + 1)) {
-				pkb.setFollows(to_string(prevStmtNo), to_string(currStmtNo));
-				if (prevIf) {
-					for (int stmt : prevIfStmtNo) {
-						pkb.setNext(to_string(stmt), to_string(currStmtNo));
-					}
-					prevIf = false;
-				}
-				else if (prevWhile) {
-					pkb.setNext(to_string(prevWhileStmtNo), to_string(currStmtNo));
-					prevWhile = false;
-				}
-				else {
-					pkb.setNext(to_string(prevStmtNo), to_string(currStmtNo));
-				}
-			}
-			else {
-				pkb.setNext(to_string(startStmtNo), to_string(currStmtNo));
-			}
-
-			prevIf = true;
-			prevIfStmtNo = stmt;
-			prevStmtNo = currStmtNo;
-			currStmtNo = results.lastStmtNo;
-			if (nestingLevel != currNestingLevel) {
-				break;
-			}
-		}
-		else if (line.find("=") != string::npos) {
-			//Initial processing of stmt
-			string assign = line;
-			if (assign.find("}") != string::npos) {
-				nestingLevel = nestingLevel - 1;
-				assign.erase(std::remove(assign.begin(), assign.end(), '}'), assign.end());
-			}
-			assign = parseAssignInit(line);
-			pkb.setStmt(to_string(currStmtNo), "assign");
-			pkb.setParent(to_string(startStmtNo), to_string(currStmtNo));
-
-			//Splits the assign statement by the = sign and get LHS and RHS
-			int index = assign.find("=");
-			string varMod = assign.substr(0, index);
-			if (!(regex_match(varMod, name))) {
-				throw stmtNo;
-			}
-			pkb.setVariable(varMod);
-			pkb.setModifiesS(to_string(currStmtNo), varMod);
-			result.addModifies(varMod);
-			currProc.addModifies(varMod);
-
-			string varUse = assign.substr(index + 1);
-
-			//Calls to parse RHS of assign stmt
-			vector<string> results = parseAssignRHS(varUse);
-			string pattern = patternProcessor.infixtoRPNexpression(varUse);
-			pkb.setAssignPattern(to_string(currStmtNo), pattern);
-
-			for (string var : results) {
-				if (isdigit(var.at(0))) {
-					pkb.setConstant(to_string(currStmtNo),var);
-					result.addUses(var);
-				}
-				else {
-					pkb.setVariable(var);
-					pkb.setUsesS(to_string(currStmtNo), var);
-					result.addUses(var);
-					currProc.addUses(var);
-				}
-			}
-
-			if (currStmtNo != (startStmtNo + 1)) {
-				pkb.setFollows(to_string(prevStmtNo), to_string(currStmtNo));
-				if (prevIf) {
-					for (int stmt : prevIfStmtNo) {
-						pkb.setNext(to_string(stmt), to_string(currStmtNo));
-					}
-					prevIf = false;
-				}
-				else if (prevWhile) {
-					pkb.setNext(to_string(prevWhileStmtNo), to_string(currStmtNo));
-					prevWhile = false;
-				}
-				else {
-					pkb.setNext(to_string(prevStmtNo), to_string(currStmtNo));
-				}
-			}
-			else {
-				pkb.setNext(to_string(startStmtNo), to_string(currStmtNo));
-			}
-			prevStmtNo = currStmtNo;
-			currStmtNo++;
-			if (nestingLevel != currNestingLevel) {
-				break;
-			}
-		}
-		else if (line.find("read") != string::npos) {
-			//Gets the variable used in read stmt into readArg
-			string readArg = line;
-			if (readArg.find("}") != string::npos) {
-				nestingLevel = nestingLevel - 1;
-				readArg.erase(std::remove(readArg.begin(), readArg.end(), '}'), readArg.end());
-			}
-			readArg = parseRead(readArg);
-			//Sets stmt information in PKB and then sets modifies variable for that stmt
-			pkb.setStmt(to_string(currStmtNo), "read");
-			pkb.setRead(to_string(currStmtNo), readArg);
-			pkb.setParent(to_string(startStmtNo), to_string(currStmtNo));
-
-			pkb.setModifiesS(to_string(currStmtNo), readArg);
-			pkb.setVariable(readArg);
-			result.addModifies(readArg);
-			currProc.addModifies(readArg);
-
-			if (currStmtNo != (startStmtNo + 1)) {
-				pkb.setFollows(to_string(prevStmtNo), to_string(currStmtNo));
-				if (prevIf) {
-					for (int stmt : prevIfStmtNo) {
-						pkb.setNext(to_string(stmt), to_string(currStmtNo));
-					}
-					prevIf = false;
-				}
-				else if (prevWhile) {
-					pkb.setNext(to_string(prevWhileStmtNo), to_string(currStmtNo));
-					prevWhile = false;
-				}
-				else {
-					pkb.setNext(to_string(prevStmtNo), to_string(currStmtNo));
-				}
-			}
-			else {
-				pkb.setNext(to_string(startStmtNo), to_string(currStmtNo));
-			}
-			prevStmtNo = currStmtNo;
-			currStmtNo++;
-			if (nestingLevel != currNestingLevel) {
-				break;
-			}
-		}
-		else if (line.find("print") != string::npos) {
-			//Gets the variable used in print stmt into printArg
-			string printArg = line;
-			if (printArg.find("}") != string::npos) {
-				nestingLevel = nestingLevel - 1;
-				printArg.erase(std::remove(printArg.begin(), printArg.end(), '}'), printArg.end());
-			}
-			printArg = parsePrint(line);
-			//Sets stmt information in PKB and then sets modifies variable for that stmt
-			pkb.setStmt(to_string(currStmtNo), "print");
-			pkb.setPrint(to_string(currStmtNo), printArg);
-			pkb.setParent(to_string(startStmtNo), to_string(currStmtNo));
-
-			pkb.setUsesS(to_string(currStmtNo), printArg);
-			pkb.setVariable(printArg);
-			result.addUses(printArg);
-			currProc.addUses(printArg);
-
-			if (currStmtNo != (startStmtNo + 1)) {
-				pkb.setFollows(to_string(prevStmtNo), to_string(currStmtNo));
-				if (prevIf) {
-					for (int stmt : prevIfStmtNo) {
-						pkb.setNext(to_string(stmt), to_string(currStmtNo));
-					}
-					prevIf = false;
-				}
-				else if (prevWhile) {
-					pkb.setNext(to_string(prevWhileStmtNo), to_string(currStmtNo));
-					prevWhile = false;
-				}
-				else {
-					pkb.setNext(to_string(prevStmtNo), to_string(currStmtNo));
-				}
-			}
-			else {
-				pkb.setNext(to_string(startStmtNo), to_string(currStmtNo));
-			}
-			prevStmtNo = currStmtNo;
-			currStmtNo++;
-			if (nestingLevel != currNestingLevel) {
-				break;
-			}
-		}
-		else if (line.find("call") != string::npos) {
-			string callArg = line;
-			if (callArg.find("}") != string::npos) {
-				nestingLevel = nestingLevel - 1;
-				callArg.erase(std::remove(callArg.begin(), callArg.end(), '}'), callArg.end());
-			}
-			string proc = parseCall(callArg);
-			pkb.setStmt(to_string(currStmtNo), "call");
-			pkb.setCallStmt(to_string(currStmtNo), proc);
-			pkb.setCallProc(currProc.getProcName(), proc);
-			pkb.setParent(to_string(startStmtNo), to_string(currStmtNo));
-			callStmts.push_back(make_pair(currStmtNo, proc));
-			currProc.addCalls(proc);
-			if (currStmtNo != (startStmtNo + 1)) {
-				pkb.setFollows(to_string(prevStmtNo), to_string(currStmtNo));
-				if (prevIf) {
-					for (int stmt : prevIfStmtNo) {
-						pkb.setNext(to_string(stmt), to_string(currStmtNo));
-					}
-					prevIf = false;
-				}
-				else if (prevWhile) {
-					pkb.setNext(to_string(prevWhileStmtNo), to_string(currStmtNo));
-					prevWhile = false;
-				}
-				else {
-					pkb.setNext(to_string(prevStmtNo), to_string(currStmtNo));
-				}
-			}
-			else {
-				pkb.setNext(to_string(startStmtNo), to_string(currStmtNo));
-			}
-			prevStmtNo = currStmtNo;
-			currStmtNo++;
-			if (nestingLevel != currNestingLevel) {
-				break;
-			}
 		}
 		else {
 			if (line.find("}") != string::npos) {
-				nestingLevel--;
+				nestingLevel = nestingLevel - count(line, '}');
+			}
+			if (nestingLevel < currNestingLevel) {
 				break;
 			}
 		}
 	}
 	if (prevIf) {
 		for (int stmt : prevIfStmtNo) {
-			pkb.setNext(to_string(stmt), to_string(startStmtNo));
+			result.addPrevIfStmt(stmt);
 		}
 		prevIf = false;
 	}
 	else if (prevWhile) {
-		pkb.setNext(to_string(prevWhileStmtNo), to_string(startStmtNo));
+		result.addPrevIfStmt(prevWhileStmtNo);
 		prevWhile = false;
 	}
 	else {
-		pkb.setNext(to_string(prevStmtNo), to_string(startStmtNo));
+		result.addPrevIfStmt(currStmtNo - 1);
 	}
 
-	result.setPrevWhileStmt(startStmtNo);
 	result.lastStmtNo = currStmtNo;
 	return result;
 }
@@ -2004,7 +1099,7 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 			prevWhileStmtNo = stmt;
 			prevStmtNo = currStmtNo;
 			currStmtNo = results.lastStmtNo;
-			if (nestingLevel != currNestingLevel) {
+			if (nestingLevel < currNestingLevel) {
 				break;
 			}
 		}
@@ -2063,7 +1158,7 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 			prevIfStmtNo = stmt;
 			prevStmtNo = currStmtNo;
 			currStmtNo = results.lastStmtNo;
-			if (nestingLevel != currNestingLevel) {
+			if (nestingLevel < currNestingLevel) {
 				break;
 			}
 		}
@@ -2130,7 +1225,7 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 			}
 			prevStmtNo = currStmtNo;
 			currStmtNo++;
-			if (nestingLevel != currNestingLevel) {
+			if (nestingLevel < currNestingLevel) {
 				break;
 			}
 		}
@@ -2173,7 +1268,7 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 			}
 			prevStmtNo = currStmtNo;
 			currStmtNo++;
-			if (nestingLevel != currNestingLevel) {
+			if (nestingLevel < currNestingLevel) {
 				break;
 			}
 		}
@@ -2216,7 +1311,7 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 			}
 			prevStmtNo = currStmtNo;
 			currStmtNo++;
-			if (nestingLevel != currNestingLevel) {
+			if (nestingLevel < currNestingLevel) {
 				break;
 			}
 		}
@@ -2254,15 +1349,17 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 			}
 			prevStmtNo = currStmtNo;
 			currStmtNo++;
-			if (nestingLevel != currNestingLevel) {
+			if (nestingLevel < currNestingLevel) {
 				break;
 			}
 		}
 		else {
-		if (line.find("}") != string::npos) {
-			nestingLevel = nestingLevel - count(line, '}');
-			break;
-		}
+			if (line.find("}") != string::npos) {
+				nestingLevel = nestingLevel - count(line, '}');
+			}
+			if (nestingLevel < currNestingLevel) {
+				break;
+			}
 		}
 	}
 	if (prevIf) {
