@@ -21,7 +21,7 @@ using namespace std;
 
 string whitespace = " ";
 char whitespacech = ' ';
-char whitespacech2 = '"';
+//char whitespacech2 = '"';
 int maxInt = numeric_limits<int>::max();
 unordered_set<string> validTypes = { "stmt", "variable", "assign", "constant", "read", "while", "if",
 "print", "call" , "prog_line" ,"procedure" };
@@ -424,7 +424,7 @@ string QueryParser::removeSpaces(string s, string whitespace) {
 string QueryParser::removeWhiteSpaces(string s, char whitespace) {
 	int a = 0;
 	while (a < s.length()) {
-		if (s[a] == whitespacech || s[a] == whitespacech2) {
+		if (s[a] == whitespacech) {
 			s.erase(a,1);
 			continue;
 		}
