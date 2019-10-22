@@ -21,7 +21,7 @@ public:
 
 	static std::vector<std::pair<std::string, std::pair<std::string, std::string>>> splitSuchThat(std::vector<std::string> suchThat);
 
-	static std::vector<std::pair<std::string, std::pair<std::string, std::string>>> splitPattern(std::vector<std::string> pattern);
+	static std::vector<std::pair<std::string, std::pair<std::string, std::string>>> splitPattern(std::vector<std::string> pattern, std::unordered_map<std::string, std::string> declerationVariables);
 
 	static std::string trim(std::string str, std::string whitespace);
 
