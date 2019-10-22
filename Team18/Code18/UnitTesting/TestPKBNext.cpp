@@ -123,6 +123,7 @@ namespace UnitTesting
 		TEST_METHOD(NextStarRelationship)
 		{
 			PKBNext PKB;
+			
 			Assert::IsTrue(PKB.isNextTIdentIdent("1", "2"));
 			Assert::IsTrue(PKB.isNextTIdentIdent("2", "3"));
 			Assert::IsTrue(PKB.isNextTIdentIdent("4", "5"));
@@ -140,7 +141,7 @@ namespace UnitTesting
 			Assert::IsTrue(PKB.isNextTIdentIdent("14", "15"));
 			Assert::IsTrue(PKB.isNextTIdentIdent("16", "17"));
 			Assert::IsTrue(PKB.isNextTIdentIdent("17", "18"));
-
+			
 			Assert::IsTrue(PKB.isNextTIdentIdent("1", "3"));
 			Assert::IsTrue(PKB.isNextTIdentIdent("4", "6"));
 			Assert::IsTrue(PKB.isNextTIdentIdent("4", "7"));

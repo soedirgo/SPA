@@ -244,7 +244,16 @@ namespace UnitTesting
 		TEST_METHOD(IfCondStmtTest3)
 		{
 			Parser parser = Parser();
-			string input = "if !((x == 1) || (a != b) && (c <= d) || (e >= f) || !(g < h) && (i > j)) then {";
+			string input = "if (!((x == 1) || (a != b) && (c <= d) || (e >= f) || !(g < h) && (i > j))) then {";
+			vector<string> expected{ "x", "1", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j" };
+			vector<string> actual = parser.parseCondStmt(input);
+			Assert::AreEqual(expected == actual, true);
+		}
+
+		TEST_METHOD(IfCondStmtTest4)
+		{
+			Parser parser = Parser();
+			string input = "if ((!(x == 1) || !(a != b) && (c <= d) || (e >= f) || !(g < h) && (i > j))) then {";
 			vector<string> expected{ "x", "1", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j" };
 			vector<string> actual = parser.parseCondStmt(input);
 			Assert::AreEqual(expected == actual, true);

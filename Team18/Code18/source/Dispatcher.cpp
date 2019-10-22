@@ -422,10 +422,10 @@ namespace Evaluator {
               else
                   if (isUnderscore(rhs))
                       return PKB::getPatternAssignEntAny();
-                  else if (isIdentifier(rhs))
-                      return PKB::getPatternAssignEntFull(rhs);
-                  else
+                  else if (isPartialPattern(rhs))
                       return PKB::getPatternAssignEntPartial(trimEnds(rhs));
+                  else
+                      return PKB::getPatternAssignEntFull(rhs);
           }},
          {"if",
           [](string lhs, string rhs) {
@@ -459,7 +459,8 @@ namespace Evaluator {
         for (const auto& field : fields)
             if (type == "such that" && field == fields[0])
                 continue;
-            else if (!isIdentifier(field) && !isUnderscore(field) && field.front() != ' ')
+            else if (!isIdentifier(field) && !isUnderscore(field)
+                     && !isPartialPattern(field) && field.front() != ' ')
                 synonyms[field] = synonyms.size();
         
         if (type == "such that")

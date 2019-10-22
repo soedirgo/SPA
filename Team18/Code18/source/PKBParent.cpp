@@ -126,7 +126,7 @@ TABLE PKBParent::getParentAnyEnt(STMT_TYPE type) {
 	TABLE resultTable;
 	STMT_LIST list;
 	STMT_NO s;
-	if (type == "stmt") {
+	if (type == "stmt" || type == "prog_line") {
 		list = PKBStmt::getAllStmt();
 	}
 	else {
@@ -149,7 +149,7 @@ TABLE PKBParent::getParentEntAny(STMT_TYPE type) {
 	TABLE resultTable;
 	STMT_LIST list;
 	STMT_NO s;
-	if (type == "stmt") {
+	if (type == "stmt" || type == "prog_line") {
 		list = PKBStmt::getAllStmt();
 	}
 	else {
@@ -172,7 +172,7 @@ TABLE PKBParent::getParentIdentEnt(STMT_NO stmtNo, STMT_TYPE type) {
 	TABLE resultTable;
 	STMT_LIST list;
 	STMT_NO s;
-	if (type == "stmt") {
+	if (type == "stmt" || type == "prog_line") {
 		list = PKBStmt::getAllStmt();
 	}
 	else {
@@ -195,7 +195,7 @@ TABLE PKBParent::getParentEntIdent(STMT_TYPE type, STMT_NO stmtNo) {
 	TABLE resultTable;
 	STMT_LIST list;
 	STMT_NO s;
-	if (type == "stmt") {
+	if (type == "stmt" || type == "prog_line") {
 		list = PKBStmt::getAllStmt();
 	}
 	else {
@@ -216,17 +216,18 @@ TABLE PKBParent::getParentEntIdent(STMT_TYPE type, STMT_NO stmtNo) {
 
 TABLE PKBParent::getParentEntEnt(STMT_TYPE type1, STMT_TYPE type2) {
 	TABLE resultTable;
-	if (type1 == "stmt" && type2 == "stmt") {
+	if ((type1 == "stmt" && type2 == "stmt") || (type1 == "prog_line" && type2 == "prog_line")
+		|| (type1 == "prog_line" && type2 == "stmt") || (type1 == "stmt" && type2 == "prog_line")) {
 		return parentTable;
 	}
 	STMT_LIST list1, list2;
-	if (type1 == "stmt") {
+	if (type1 == "stmt" || type1 == "prog_line") {
 		list1 = PKBStmt::getAllStmt();
 	}
 	else {
 		list1 = PKBStmt::getAllStmtByType(type1);
 	}
-	if (type2 == "stmt") {
+	if (type2 == "stmt" || type2 == "prog_line") {
 		list2 = PKBStmt::getAllStmt();
 	}
 	else {
@@ -257,7 +258,7 @@ TABLE PKBParent::getParentTAnyEnt(STMT_TYPE type) {
 	TABLE resultTable;
 	STMT_LIST list;
 	STMT_NO s;
-	if (type == "stmt") {
+	if (type == "stmt" || type == "prog_line") {
 		list = PKBStmt::getAllStmt();
 	}
 	else {
@@ -280,7 +281,7 @@ TABLE PKBParent::getParentTEntAny(STMT_TYPE type) {
 	TABLE resultTable;
 	STMT_LIST list;
 	STMT_NO s;
-	if (type == "stmt") {
+	if (type == "stmt" || type == "prog_line") {
 		list = PKBStmt::getAllStmt();
 	}
 	else {
@@ -303,7 +304,7 @@ TABLE PKBParent::getParentTIdentEnt(STMT_NO stmtNo, STMT_TYPE type) {
 	TABLE resultTable;
 	STMT_LIST list;
 	STMT_NO s;
-	if (type == "stmt") {
+	if (type == "stmt" || type == "prog_line") {
 		list = PKBStmt::getAllStmt();
 	}
 	else {
@@ -326,7 +327,7 @@ TABLE PKBParent::getParentTEntIdent(STMT_TYPE type, STMT_NO stmtNo) {
 	TABLE resultTable;
 	STMT_LIST list;
 	STMT_NO s;
-	if (type == "stmt") {
+	if (type == "stmt" || type == "prog_line") {
 		list = PKBStmt::getAllStmt();
 	}
 	else {
@@ -347,17 +348,18 @@ TABLE PKBParent::getParentTEntIdent(STMT_TYPE type, STMT_NO stmtNo) {
 
 TABLE PKBParent::getParentTEntEnt(STMT_TYPE type1, STMT_TYPE type2) {
 	TABLE resultTable;
-	if (type1 == "stmt" && type2 == "stmt") {
+	if ((type1 == "stmt" && type2 == "stmt") || (type1 == "prog_line" && type2 == "prog_line")
+		|| (type1 == "prog_line" && type2 == "stmt") || (type1 == "stmt" && type2 == "prog_line")) {
 		return parentTTable;
 	}
 	STMT_LIST list1, list2;
-	if (type1 == "stmt") {
+	if (type1 == "stmt" || type1 == "prog_line") {
 		list1 = PKBStmt::getAllStmt();
 	}
 	else {
 		list1 = PKBStmt::getAllStmtByType(type1);
 	}
-	if (type2 == "stmt") {
+	if (type2 == "stmt" || type2 == "prog_line") {
 		list2 = PKBStmt::getAllStmt();
 	}
 	else {

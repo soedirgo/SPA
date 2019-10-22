@@ -614,7 +614,7 @@ Select w pattern a("x" , _)
 27, 32, 35
 5000
 124 - Select all ifs if there is assign pattern LHS variable and RHS some variable
-if ifs; assign a;
+if ifs; assign a; variable v;
 Select ifs pattern a(v , _)
 8, 16, 19, 25, 33
 5000
