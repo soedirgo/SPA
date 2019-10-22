@@ -173,8 +173,9 @@ Query QueryParser::parse(string query) {
 		clausesVector.push_back(c);
 	}
 
-	vector<string> patternStr;
+	
 	for (int j = 0; j < pattern.size(); j++) {
+		vector<string> patternStr;
 		patternStr.push_back(pattern[j].first);
 		patternStr.push_back(pattern[j].second.first);
 		patternStr.push_back(pattern[j].second.second);
@@ -197,8 +198,6 @@ Query QueryParser::parse(string query) {
 		Clause patternC = Clause("pattern", patternStr);
 		clausesVector.push_back(patternC);
 	}
-	
-	
 
 	Query q = Query(declerationVariables, selectVars, clausesVector);
 	return q;
@@ -375,19 +374,23 @@ vector<pair<string, pair<string, string>>> QueryParser::splitPattern(vector<stri
 			string secondV = removeSpaces(pattern[i].substr(posOfComma + 1, posOfCloseBracket - posOfComma - 1), whitespace);
 			int flag = (secondV.find("_") != -1);
 			int flag2 = (secondV.length() > 1);
+			int countUnderScore = 0;
 			if (flag && flag2) {
 				while (secondV.find("_") != -1) {
 					int index = secondV.find("_");
 					secondV = secondV.erase(index,1);
+					countUnderScore = countUnderScore + 1;
 				}
 			}
 
 			int flag3 = (secondV.find('"') != -1);
 			int flag4 = (secondV.length() > 1);
+			int countQuote = 0;
 			if (flag3 && flag4) {
 				while (secondV.find('"') != -1) {
 					int index = secondV.find('"');
 					secondV = secondV.erase(index,1);
+					countQuote = countQuote + 1;
 				}
 			}
 
@@ -398,12 +401,12 @@ vector<pair<string, pair<string, string>>> QueryParser::splitPattern(vector<stri
 				secondVar = PatternProcessor::infixtoRPNexpression(secondV);
 			}
 
-			if (flag3 && flag4) {
+			if (flag3 && flag4 && countQuote == 2) {
 				secondVar.insert(0,1,'"');
 				secondVar.insert(secondVar.length(), 1,'"');
 			}
 
-			if (flag && flag2) {
+			if (flag && flag2 && countUnderScore == 2) {
 				secondVar.insert(0, "_");
 				secondVar.insert(secondVar.length(), "_");
 			}
