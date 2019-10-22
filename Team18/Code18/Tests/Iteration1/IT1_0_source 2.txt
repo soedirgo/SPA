@@ -1,9 +1,0 @@
-procedure IT10 {
-  x = 1;
-  y = 2;
-  read x;
-  z = 6;
-  y = z;
-  print y;
-  read i;
-}
