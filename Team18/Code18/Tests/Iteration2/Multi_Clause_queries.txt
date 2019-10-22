@@ -54,7 +54,7 @@ Select BOOLEAN such that Modifies(a, "i") pattern a(_, _"inc"_) such that Parent
 TRUE
 5000
 12 - Relation select boolean, At least 3 clause Select boolean clauses some related 3
-while w; if ifs; variable; assign a;
+while w; if ifs; variable v; assign a;
 Select BOOLEAN pattern w(v, _) and ifs(v, _, _) such that Parent(w, a) and Calls*("F", "A")
 TRUE
 5000
@@ -100,7 +100,7 @@ Select r such that Modifies(r, "inc") and Calls(pr, "C")
 5000
 21 - Relation select synonym, 2 clause Select synonym related to 1 clauses independent 3
 variable v, v1; while w; if ifs;
-Select v pattern w(v, _) and pattern ifs(v1, _, _)
+Select v pattern w(v, _) and ifs(v1, _, _)
 i, j, inc, target, low, high, game, state, objA, objB, objC
 5000
 22 - Relation select synonym, 2 clause Select synonym independent clauses related 1
@@ -110,12 +110,12 @@ A, B, C, D, E, F
 5000
 23 - Relation select synonym, 2 clause Select synonym independent clauses related 2
 constant c; while w;
-Select pattern w("game", _) such that Uses(w, "wrong")
+Select c pattern w("game", _) such that Uses(w, "wrong")
 0, 1, 2, 3, 4
 5000
 24 - Relation select synonym, 2 clause Select synonym independent clauses related 3
 call cl; if ifs;
-Select pattern ifs("num", _, _) and ifs("guess", _, _)
+Select cl pattern ifs("num", _, _) and ifs("guess", _, _)
 16, 19, 24, 54, 55
 5000
 25 - Relation select synonym, 2 clause Select synonym related clauses related 1
@@ -145,18 +145,18 @@ Select w pattern w1("objC", _) such that Follows(s, 39) pattern ifs(v, _, _)
 5000
 30 - Relation select synonym, At least 3 clause Select synonym independent clauses independent 3
 print pn; assign a, a1; while w, w1; variable v;
-Select pn such that pattern a("game", _) and a1("game", "state - 1") such that Parent(3, 5) pattern w(v, _) and w1("j", _)
+Select pn pattern a("game", _) and a1("game", "state - 1") such that Parent(3, 5) pattern w(v, _) and w1("j", _)
 6, 7, 17, 18, 20, 23, 27, 39
 5000
 31 - Relation select synonym, At least 3 clause Select synonym related to 1 clauses independent 1
 procedure pr; read r; while w;
-Select pr such that Uses(pr, "x") and Modifies("D", "num") and Next(r, 32) pattern w("i", _)
+Select pr such that Uses(pr, "x") and Modifies("D", "num") and Next(32, r) pattern w("i", _)
 A, B, D, F
 5000
 32 - Relation select synonym, At least 3 clause Select synonym related to 1 clauses independent 2
 variable v; while w; read r; print pn; if ifs;
 Select v pattern w(v, _) such that Modifies(r, "input") and Uses(pn, "target") pattern ifs("x", _, _)
-i, j, inc, target, low, high, objA, objB, objC
+i, j, inc, target, low, high, objA, objB, objC, game, state
 5000
 33 - Relation select synonym, At least 3 clause Select synonym related to 1 clauses independent 3
 while w, w1; if ifs; print pn; call cl;
