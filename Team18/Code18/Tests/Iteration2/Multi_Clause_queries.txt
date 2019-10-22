@@ -195,8 +195,8 @@ Select a pattern a("i", _) and w(v, _) such that Modifies(r, v) pattern ifs(_, _
 5000
 40 - Relation select synonym, At least 3 clause Select synonym some related clauses some related 1
 variable v, v1; while w; if ifs, ifs1;
-Select v pattern w(v, _) and ifs(v, _) pattern ifs1(v1, _, _)
-i, target, low, high, objA, objB, objC
+Select v pattern w(v, _) and ifs(v, _, _) and ifs1(v1, _, _)
+i, target, objA, objB, objC
 5000
 41 - Relation select synonym, At least 3 clause Select synonym some related clauses some related 2
 assign a; procedure pr; variable v; while w;
@@ -210,7 +210,7 @@ Select n pattern a(_, _"i"_) such that Parent(n, ifs) and Modifies(ifs, "game") 
 5000
 43 - Relation select synonym, At least 3 clause Select synonym independent clauses related 1
 procedure pr, pr1;
-Select pr such that Calls(pr1, _) and Modifies(pr1, "low") and Modifies(pr1, "x") and Uses(pr1, "j")
+Select pr such that Calls(pr1, _) and Modifies(pr1, "inc") and Modifies(pr1, "x") and Uses(pr1, "j")
 A, B, C, D, E, F
 5000
 44 - Relation select synonym, At least 3 clause Select synonym independent clauses related 2
@@ -219,8 +219,8 @@ Select c pattern a(_, _"inc"_) such that Parent(w, a) pattern w("inc", _)
 0, 1, 2, 3, 4
 5000
 45 - Relation select synonym, At least 3 clause Select synonym independent clauses related 3
-while w; procedure pr; variable v; if ifs; while w; print pn;
-Select w such that Uses(pr, v) pattern ifs(v, _, _) and w(v, _) such that Uses(pr, v)
+while w; procedure pr; variable v; if ifs; while w1; print pn;
+Select w such that Uses(pr, v) pattern ifs(v, _, _) and w1(v, _) such that Uses(pr, v)
 8, 10, 15, 28, 32, 51
 5000
 46 - Relation select synonym, At least 3 clause Select synonym related clauses related 1
@@ -231,7 +231,7 @@ i, target
 47 - Relation select synonym, At least 3 clause Select synonym related clauses related 2
 procedure pr; variable v; assign a;
 Select pr such that Calls(pr, "D") and Uses(pr, v) pattern a(v, _"inc"_)
-B
+B, F
 5000
 48 - Relation select synonym, At least 3 clause Select synonym related clauses related 3
 assign a; variable v; while w;
@@ -240,7 +240,7 @@ Select a such that Modifies(a, v) and Uses(w, v) pattern a(v, _"game"_)
 5000
 49 - Set 3 - Relation tests for Multiple clauses (Algorithmic Tests), Select tuple. Relation select tuple, 2 clause Select tuple independent clauses independent 1
 constant c; procedure pr; prog_line n;
-Select <c, pr> such that Uses(n, _) and Parent*(28, 36)
+Select <c, pr> such that Uses(n, _) and Parent*(28, 30)
 0 A, 1 A, 2 A, 3 A, 4 A, 0 B, 1 B, 2 B, 3 B, 4 B, 0 C, 1 C, 2 C, 3 C, 4 C, 0 D, 1 D, 2 D, 3 D, 4 D, 0 E, 1 E, 2 E, 3 E, 4 E, 0 F, 1 F, 2 F, 3 F, 4 F
 5000
 50 - Relation select tuple, 2 clause Select tuple independent clauses independent 2
@@ -249,7 +249,7 @@ Select <w, w> pattern a(v, _) such that Calls*("B", "A")
 8 8, 10 10, 15 15, 28 28, 32 32, 51 51
 5000
 51 - Relation select tuple, 2 clause Select tuple 1 related to 1 clauses independent 1
-procedure pr, pr1; assign a;
+procedure pr, pr1; assign a; variable v;
 Select <pr, pr1> such that Uses(pr, "msg") pattern a(v, _"high + low"_)
 E A, E B, E C, E D, E E, E F
 5000
@@ -269,8 +269,8 @@ Select <pn, r, c> such that Uses(pn, "j") and Modifies(r, "low")
 none
 5000
 55 - Relation select tuple, 2 clause Select tuple all related clauses independent 1
-procedure pr;
-Select <pr, pr> such that calls(pr, "D") pattern w(_, _)
+procedure pr; while w;
+Select <pr, pr> such that Calls(pr, "D") pattern w(_, _)
 B B, F F
 5000
 56 - Relation select tuple, 2 clause Select tuple all related clauses independent 2
