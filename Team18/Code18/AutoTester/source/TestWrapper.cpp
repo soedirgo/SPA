@@ -4,7 +4,6 @@
 #include "Evaluator.h"
 #include "QueryParser.h"
 #include "DesignExtractor.h"
-#include "Preprocessor.h"
 
 // implementation code of WrapperFactory - do NOT modify the next 5 lines
 AbstractWrapper* WrapperFactory::wrapper = 0;
