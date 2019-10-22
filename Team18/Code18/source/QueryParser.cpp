@@ -173,20 +173,30 @@ Query QueryParser::parse(string query) {
 		clausesVector.push_back(c);
 	}
 
+	vector<string> patternStr;
 	for (int j = 0; j < pattern.size(); j++) {
-		vector<string> patternStr;
 		patternStr.push_back(pattern[j].first);
 		patternStr.push_back(pattern[j].second.first);
 		patternStr.push_back(pattern[j].second.second);
+		int x = patternStr.size() - 1;
 
 		bool validationResult = Validator::isPatternValid(patternStr, declerationVariables);
 		if (validationResult == false) {
 			return semanticInvalidQ;
 		}
 
-		Clause patternC = Clause("pattern", patternStr);
-		clausesVector.push_back(patternC);
+		int flag3 = (patternStr[x].find('"') != -1);
+		int flag4 = (patternStr[x].length() > 1);
+		if (flag3 && flag4) {
+			while (patternStr[x].find('"') != -1) {
+				int index = patternStr[x].find('"');
+				patternStr[x] = patternStr[x].erase(index, 1);
+			}
+		}
 	}
+	
+	Clause patternC = Clause("pattern", patternStr);
+	clausesVector.push_back(patternC);
 
 	Query q = Query(declerationVariables, selectVars, clausesVector);
 	return q;
@@ -366,7 +376,16 @@ vector<pair<string, pair<string, string>>> QueryParser::splitPattern(vector<stri
 			if (flag && flag2) {
 				while (secondV.find("_") != -1) {
 					int index = secondV.find("_");
-					secondV = secondV.erase(index, index + 1);
+					secondV = secondV.erase(index,1);
+				}
+			}
+
+			int flag3 = (secondV.find('"') != -1);
+			int flag4 = (secondV.length() > 1);
+			if (flag3 && flag4) {
+				while (secondV.find('"') != -1) {
+					int index = secondV.find('"');
+					secondV = secondV.erase(index,1);
 				}
 			}
 
@@ -375,6 +394,11 @@ vector<pair<string, pair<string, string>>> QueryParser::splitPattern(vector<stri
 			secondVar = secondV;
 			if (!(secondV.size() == 1 && secondV.at(0) == '_')) {
 				secondVar = PatternProcessor::infixtoRPNexpression(secondV);
+			}
+
+			if (flag3 && flag4) {
+				secondVar.insert(0,1,'"');
+				secondVar.insert(secondVar.length(), 1,'"');
 			}
 
 			if (flag && flag2) {
