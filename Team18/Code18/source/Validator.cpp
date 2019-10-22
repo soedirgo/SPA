@@ -505,6 +505,11 @@ namespace Validator {
         if (lhs != "_" && lhs.front() != '\"' && !declMap.count(lhs))
             return false;
 
+		// false if pattern syn is assign and lhs is syn that is not a variable
+		if (declMap[syn] == "assign" && lhs != "_" && lhs.front() != '\"'
+			&& declMap[lhs] != "variable")
+			return false;
+
         // false if pattern synonym is not assign/if/while
         if (declMap[syn] != "assign" && declMap[syn] != "if" && declMap[syn] != "while")
             return false;
