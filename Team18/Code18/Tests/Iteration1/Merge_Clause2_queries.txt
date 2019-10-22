@@ -929,12 +929,12 @@ Select v such that Parent(ifs, a) pattern a(v, _)
 z
 5000
 187 - Select a, pattern LHS variable RHS Ident
-assign a; while w;
+assign a; while w; variable v;
 Select a such that Parent(w, a) pattern a(v, _"i"_)
 7
 5000
 188 - Select w, pattern LHS variable RHS Ident
-assign a; while w;
+assign a; while w; variable v;
 Select w such that Parent(w, a) pattern a(v, _"i"_)
 6
 5000
