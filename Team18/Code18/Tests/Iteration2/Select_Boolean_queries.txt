@@ -385,6 +385,11 @@ FALSE
 5000
 4 - Next -  IDENT IDENT- FALSE
 stmt s; 
+Select BOOLEAN such that Next(19,23)
+FALSE
+5000
+4 - Next -  IDENT IDENT- FALSE
+stmt s; 
 Select BOOLEAN such that Next(4,5)
 FALSE
 5000
