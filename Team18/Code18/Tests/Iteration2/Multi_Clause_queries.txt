@@ -159,7 +159,7 @@ Select v pattern w(v, _) such that Modifies(r, "input") and Uses(pn, "target") p
 i, j, inc, target, low, high, objA, objB, objC
 5000
 33 - Relation select synonym, At least 3 clause Select synonym related to 1 clauses independent 3
-while w, w1; if ifs; print pn; calls cl;
+while w, w1; if ifs; print pn; call cl;
 Select ifs pattern w("inc", _) and w1(_, _) and ifs("objB", _, _) such that Follows(pn, cl)
 44, 46
 5000
