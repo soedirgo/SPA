@@ -90,31 +90,31 @@ namespace UnitTesting
 			unordered_map<string, string> d3{ {"a", "assign"} };
 			vector<string> input3 = { "pattern a(_, _\"a+b*c\"_)" };
 			vector<pair<string, pair<string, string>>> actual3 = QueryParser::splitPattern(input3,d3);
-			vector<pair<string, pair<string, string>>> expected3{ {"a", {"_", "_\" a  b  c \"*+_"}} };
-			//Assert::AreEqual(actual3 == expected3, true);
+			vector<pair<string, pair<string, string>>> expected3{ {"a", {"_", "_\" a  b  c *+\"_"}} };
+			Assert::AreEqual(actual3 == expected3, true);
 
 			unordered_map<string, string> d4{ {"a", "assign"}};
 			vector<string> input4 = { "pattern a(_, _  \"  a+b*c  \"  _)" };
 			vector<pair<string, pair<string, string>>> actual4 = QueryParser::splitPattern(input4,d4);
-			vector<pair<string, pair<string, string>>> expected4{ {"a", {"_", "_\" a  b  c \"*+_"}} };
-			//Assert::AreEqual(actual4 == expected4, true);
+			vector<pair<string, pair<string, string>>> expected4{ {"a", {"_", "_\" a  b  c *+\"_"}} };
+			Assert::AreEqual(actual4 == expected4, true);
 
 			unordered_map<string, string> d5{ {"w", "while"}, };
-			vector<string> input5 = { "pattern w(\"x\",\'_\')" };
+			vector<string> input5 = { "pattern w(\"x\",'_')" };
 			vector<pair<string, pair<string, string>>> actual5 = QueryParser::splitPattern(input5,d5);
-			vector<pair<string, pair<string, string>>> expected5{ {"w", {"x", "_"}} };
+			vector<pair<string, pair<string, string>>> expected5{ {"w", {"\"x\"","'_'"}} };
 			Assert::AreEqual(actual5 == expected5, true);
 
 			unordered_map<string, string> d6{ {"ifs", "if"} };
-			vector<string> input6 = { "pattern if(x,\'_\',\'_\')" };
+			vector<string> input6 = { "pattern ifs(x,\'_\',\'_\')" };
 			vector<pair<string, pair<string, string>>> actual6 = QueryParser::splitPattern(input6,d6);
-			vector<pair<string, pair<string, string>>> expected6{ {"ifs", {"_", "\'_\',\'_\'"}} };
+			vector<pair<string, pair<string, string>>> expected6{ {"ifs", {"x","\'_\',\'_\'"}} };
 			Assert::AreEqual(actual6 == expected6, true);
 			
 			unordered_map<string, string> d7{ {"a", "assign"} };
 			vector<string> input7 = { "pattern a(\"x\",\"1\")" };
 			vector<pair<string, pair<string, string>>> actual7 = QueryParser::splitPattern(input7, d7);
-			vector<pair<string, pair<string, string>>> expected7{ {"a", {"x", "1"}} };
+			vector<pair<string, pair<string, string>>> expected7{ {"a", {"\"x\"", "\" 1 \""}} };
 			Assert::AreEqual(actual7 == expected7, true);
 		}
 
