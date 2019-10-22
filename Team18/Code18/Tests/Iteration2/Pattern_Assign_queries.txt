@@ -225,12 +225,12 @@ Select a pattern a(_, _"3"_)
 5000
 46 - Relation, Partial match true 3
 assign a; variable v;
-Select a pattern a(v, _"bus - seats"_)
+Select v pattern a(v, _"bus - seats"_)
 b
 5000
 47 - Relation, Partial match true 4
 assign a; variable v;
-Select a pattern a(v, _"(8 - 4) + (20 - (1 + 3) )"_)
+Select v pattern a(v, _"(8 - 4) + (20 - (1 + 3) )"_)
 a
 5000
 48 - Relation, Partial match false 1
@@ -296,7 +296,7 @@ Select a pattern a(_, _"car + bus - seats"_)
 60 - Relation, Pattern is made of factor 3
 assign a; variable v;
 Select v pattern a(v, _"(20 - (1 + 3)"_)
-20
+a
 5000
 61 - Relation, Pattern is made of 2 expr/term/factor 1
 assign a;
@@ -335,7 +335,7 @@ a
 5000
 68 - Relation, Pattern is made of at least 3 expr/term/factor 4
 assign a; variable v;
-Select a pattern a(v, _"10 % (20 / 4) + 2"_)
+Select v pattern a(v, _"10 % (20 / 4) + 2"_)
 cat
 5000
 69 - Set 4 - Boundary tests for Pattern assign (Boundary tests). Boundary, Non-existent pattern
