@@ -1,0 +1,220 @@
+1 - Set 1 - Relation tests for Selecting Tuple (Algorithmic Tests). Relation, 0 clause Select stmt/read
+assign a;
+Select a pattern a("i",_"a+b*c"_)
+1 1, 1 2, 1 9, 1 13, 1 25, 2 1, 2 2, 2 9, 2 13, 2 25, 3 1, 3 2, 3 9, 3 13, 3 25, 4 1, 4 2, 4 9, 4 13, 4 25, 5 1, 5 2, 5 9, 5 13, 5 25, 6 1, 6 2, 6 9, 6 13, 6 25, 7 1, 7 2, 7 9, 7 13, 7 25, 8 1, 8 2, 8 9, 8 13, 8 25, 9 1, 9 2, 9 9, 9 13, 9 25, 10 1, 10 2, 10 9, 10 13, 10 25, 11 1, 11 2, 11 9, 11 13, 11 25, 12 1, 12 2, 12 9, 12 13, 12 25, 13 1, 13 2, 13 9, 13 13, 13 25, 14 1, 14 2, 14 9, 14 13, 14 25, 15 1, 15 2, 15 9, 15 13, 15 25, 16 1, 16 2, 16 9, 16 13, 16 25, 17 1, 17 2, 17 9, 17 13, 17 25, 18 1, 18 2, 18 9, 18 13, 18 25, 19 1, 19 2, 19 9, 19 13, 19 25, 20 1, 20 2, 20 9, 20 13, 20 25, 21 1, 21 2, 21 9, 21 13, 21 25, 22 1, 22 2, 22 9, 22 13, 22 25, 23 1, 23 2, 23 9, 23 13, 23 25, 24 1, 24 2, 24 9, 24 13, 24 25, 25 1, 25 2, 25 9, 25 13, 25 25, 26 1, 26 2, 26 9, 26 13, 26 25, 27 1, 27 2, 27 9, 27 13, 27 25
+5000
+2 - Relation, 0 clause Select print/call
+print pn; call cl;
+Select <pn, cl>
+6 16, 6 19, 6 24, 7 16, 7 19, 7 24, 17 16, 17 19, 17 24, 18 16, 18 19, 18 24, 20 16, 20 19, 20 24, 23 16, 23 19, 23 24, 27 16, 27 19, 27 24
+5000
+3 - Relation, 0 clause Select while/if
+while w; if ifs;
+Select <w, ifs>
+8 3, 8 14, 10 3, 10 14, 15 3, 15 14
+5000
+4 - Relation, 0 clause Select assign/variable
+assign a; variable v;
+Select <a, v>
+4 x, 4 y, 4 i, 4 j, 4 inc, 4 target, 4 k, 4 input, 4 num, 5 x, 5 y, 5 i, 5 j, 5 inc, 5 target, 5 k, 5 input, 5 num, 11 x, 11 y, 11 i, 11 j, 11 inc, 11 target, 11 k, 11 input, 11 num, 12 x, 12 y, 12 i, 12 j, 12 inc, 12 target, 12 k, 12 input, 12 num, 21 x, 21 y, 21 i, 21 j, 21 inc, 21 target, 21 k, 21 input, 21 num, 22 x, 22 y, 22 i, 22 j, 22 inc, 22 target, 22 k, 22 input, 22 num, 26 x, 26 y, 26 i, 26 j, 26 inc, 26 target, 26 k, 26 input, 26 num
+5000
+5 - Relation, 0 clause Select constant/prog_line
+constant c; prog_line n;
+Select <c, n>
+0 1, 0 2, 0 3, 0 4, 0 5, 0 6, 0 7, 0 8, 0 9, 0 10, 0 11, 0 12, 0 13, 0 14, 0 15, 0 16, 0 17, 0 18, 0 19, 0 20, 0 21, 0 22, 0 23, 0 24, 0 25, 0 26, 0 27, 1 1, 1 2, 1 3, 1 4, 1 5, 1 6, 1 7, 1 8, 1 9, 1 10, 1 11, 1 12, 1 13, 1 14, 1 15, 1 16, 1 17, 1 18, 1 19, 1 20, 1 21, 1 22, 1 23, 1 24, 1 25, 1 26, 1 27, 2 1, 2 2, 2 3, 2 4, 2 5, 2 6, 2 7, 2 8, 2 9, 2 10, 2 11, 2 12, 2 13, 2 14, 2 15, 2 16, 2 17, 2 18, 2 19, 2 20, 2 21, 2 22, 2 23, 2 24, 2 25, 2 26, 2 27
+5000
+6 - Relation, 0 clause Select procedure/synonym
+procedure pr; call cl;
+Select <pr, cl>
+A 16, B 16, C 16, D 16, A 19, B 19, C 19, D 19, A 24, B 24, C 24, D 24
+5000
+7 - Relation, 0 clause Select 2 elem of the same synonym 1
+read r;
+Select <r, r>
+1 1, 2 2, 9 9, 13 13, 25 25
+5000
+8 - Relation, 0 clause Select 2 elem of the same synonym 2
+procedure pr, pr1;
+Select <pr, pr1>
+A A, A B, A C, A D, B A, B B, B C, B D, C A, C B, C C, C D, D A, D B, D C, D D
+5000
+9 - Relation, 0 clause Select 2 elem of different synonym 1
+variable v; constant c;
+Select <v, c>
+x 0, y 0, i 0, j 0, inc 0, target 0, k 0, input 0, num 0, x 1, y 1, i 1, j 1, inc 1, target 1, k 1, input 1, num 1, x 2, y 2, i 2, j 2, inc 2, target 2, k 2, input 2, num 2
+5000
+10 - Relation, 0 clause Select 2 elem of different synonym 2
+procedure pr; variable v;
+Select <pr, v>
+A x, A y, A i, A j, A inc, A target, A k, A input, A num, B x, B y, B i, B j, B inc, B target, B k, B input, B num, C x, C y, C i, C j, C inc, C target, C k, C input, C num, D x, D y, D i, D j, D inc, D target, D k, D input, D num
+5000
+11 - Relation, 0 clause Select at least 3 elem of different synonym 1
+read r; print pn; while w;
+Select <r, pn, w>
+1 6 8, 1 6 10, 1 6 15, 1 7 8, 1 7 10, 1 7 15, 1 17 8, 1 17 10, 1 17 15, 1 18 8, 1 18 10, 1 18 15, 1 20 8, 1 20 10, 1 20 15, 1 23 8, 1 23 10, 1 23 15, 1 27 8, 1 27 10, 1 27 15, 2 6 8, 2 6 10, 2 6 15, 2 7 8, 2 7 10, 2 7 15, 2 17 8, 2 17 10, 2 17 15, 2 18 8, 2 18 10, 2 18 15, 2 20 8, 2 20 10, 2 20 15, 2 23 8, 2 23 10, 2 23 15, 2 27 8, 2 27 10, 2 27 15, 9 6 8, 9 6 10, 9 6 15, 9 7 8, 9 7 10, 9 7 15, 9 17 8, 9 17 10, 9 17 15, 9 18 8, 9 18 10, 9 18 15, 9 20 8, 9 20 10, 9 20 15, 9 23 8, 9 23 10, 9 23 15, 9 27 8, 9 27 10, 9 27 15, 13 6 8, 13 6 10, 13 6 15, 13 7 8, 13 7 10, 13 7 15, 13 17 8, 13 17 10, 13 17 15, 13 18 8, 13 18 10, 13 18 15, 13 20 8, 13 20 10, 13 20 15, 13 23 8, 13 23 10, 13 23 15, 13 27 8, 13 27 10, 13 27 15, 25 6 8, 25 6 10, 25 6 15, 25 7 8, 25 7 10, 25 7 15, 25 17 8, 25 17 10, 25 17 15, 25 18 8, 25 18 10, 25 18 15, 25 20 8, 25 20 10, 25 20 15, 25 23 8, 25 23 10, 25 23 15, 25 27 8, 25 27 10, 25 27 15
+5000
+12 - Relation, 0 clause Select at least 3 elem of different synonym 2
+call cl; if ifs; constant c; procedure pr;
+Select <cl, ifs, c, pr>
+16 3 0 A, 16 3 0 B, 16 3 0 C, 16 3 0 D, 16 3 1 A, 16 3 1 B, 16 3 1 C, 16 3 1 D, 16 3 2 A, 16 3 2 B, 16 3 2 C, 16 3 2 D, 16 14 0 A, 16 14 0 B, 16 14 0 C, 16 14 0 D, 16 14 1 A, 16 14 1 B, 16 14 1 C, 16 14 1 D, 16 14 2 A, 16 14 2 B, 16 14 2 C, 16 14 2 D, 19 3 0 A, 19 3 0 B, 19 3 0 C, 19 3 0 D, 19 3 1 A, 19 3 1 B, 19 3 1 C, 19 3 1 D, 19 3 2 A, 19 3 2 B, 19 3 2 C, 19 3 2 D, 19 14 0 A, 19 14 0 B, 19 14 0 C, 19 14 0 D, 19 14 1 A, 19 14 1 B, 19 14 1 C, 19 14 1 D, 19 14 2 A, 19 14 2 B, 19 14 2 C, 19 14 2 D, 24 3 0 A, 24 3 0 B, 24 3 0 C, 24 3 0 D, 24 3 1 A, 24 3 1 B, 24 3 1 C, 24 3 1 D, 24 3 2 A, 24 3 2 B, 24 3 2 C, 24 3 2 D, 24 14 0 A, 24 14 0 B, 24 14 0 C, 24 14 0 D, 24 14 1 A, 24 14 1 B, 24 14 1 C, 24 14 1 D, 24 14 2 A, 24 14 2 B, 24 14 2 C, 24 14 2 D
+5000
+13 - Relation, 1 clause Follows
+stmt s; read r;
+Select <s, r> such that Follows(s, r)
+1 2, 8 13, 24 25
+5000
+14 - Relation, 1 clause Follows*
+print pn; if ifs;
+Select <ifs, pn> such that Follows*(ifs, pn)
+3 6, 3 7, 14 20
+5000
+15 - Relation, 1 clause Parent
+while w; assign a;
+Select <w, a> such that Parent(w, a)
+8 12, 10 11
+5000
+16 - Relation, 1 clause Parent*
+if ifs; call cl;
+Select <cl, ifs> such that Parent*(ifs, cl)
+16 14, 19 14
+5000
+17 - Relation, 1 clause UsesS
+assign a; variable v;
+Select <a, v> such that Uses(a, v)
+4 x, 5 y, 11 inc, 12 inc, 12 i, 21 k, 22 i, 22 k, 26 x, 26 y, 26 inc, 26 i, 26 num, 26 input, 26 target
+5000
+18 - Relation, 1 clause UsesP
+procedure pr; variable v;
+Select <pr, v> such that Uses(pr, v)
+A x, A y, B x, B y, B i, B j, B inc, B target, B k, B input, B num, C i, C k, D x, D y, D i, D inc, D target, D input, D num
+5000
+19 - Relation, 1 clause ModifiesS
+read r; variable v;
+Select <r, v> such that Modifies(r, v)
+1 x, 2 y, 9 inc, 13 target, 25 input
+5000
+20 - Relation, 1 clause ModifiesP
+procedure pr; variable v;
+Select <pr, v> such that Modifies(pr, v)
+A x, A y, B i, B inc, B target, B k, B input, B num, B x, B y, C i, C k, D x, D y, D input, D num
+5000
+21 - Relation, 1 clause Calls
+procedure pr, pr1;
+Select <pr, pr1> such that Calls(pr, pr1)
+B C, B D, D A
+5000
+22 - Relation, 1 clause Calls*
+procedure pr, pr1;
+Select <pr, pr1> such that Calls*(pr, pr1)
+B A, B C, B D, D A
+5000
+23 - Relation, 1 clause Next
+call cl; print pn;
+Select <cl, pn> such that Next(cl, pn)
+16 17, 19 20
+5000
+24 - Relation, 1 clause Pattern assign
+assign a; variable v;
+Select <a, v> pattern a(v, _"i"_)
+12 i, 22 i, 26 num
+5000
+25 - Relation, 1 clause Pattern if
+if ifs; variable v;
+Select <ifs, v> pattern ifs(v, _, _)
+3 x, 3 y, 14 i, 14 target
+5000
+26 - Relation, 1 clause Pattern while
+while w; variable v;
+Select <w, v> pattern w(v, _)
+8 i, 8 j, 10 inc, 15 i, 15 target
+5000
+27 - Relation, 1 clause all Select synonym independent 1
+procedure pr, pr1; constant c; call cl;
+Select <c, cl> such that Calls(pr, pr1)
+0 16, 0 19, 0 24, 1 16, 1 19, 1 24, 2 16, 2 19, 2 24
+5000
+28 - Relation, 1 clause all Select synonym independent 2
+assign a; if ifs;
+Select <ifs, ifs> pattern a(_, _)
+3 3, 14 14
+5000
+29 - Relation, 1 clause one Select synonym related 1
+procedure pr; constant c;
+Select <pr, c> such that Uses(pr, "k")
+B 0, B 1, B 2, C 0, C 1, C 2
+5000
+30 - Relation, 1 clause one Select synonym related 2
+while w; read r;
+Select <w, r> pattern w("j", _)
+8 1, 8 2, 8 9, 8 13, 8 25
+5000
+31 - Relation, 1 clause all Select synonym dependent 1
+print pn; variable v;
+Select <pn, v> such that Uses(pn, v)
+6 x, 7 y, 17 i, 18 i, 20 target, 23 k, 27 num
+5000
+32 - Relation, 1 clause all Select synonym dependent 2
+assign a; variable v;
+Select <a, v> pattern a(v, "x")
+4 y, 26 num
+5000
+33 - Relation, 2 clause all Select synonym independent 1
+stmt s; prog_line n; read r; if ifs; constant c;
+Select <c, c> such that Next(s, n) and Follows(r, ifs)
+0 0, 1 1, 2 2
+5000
+34 - Relation, 2 clause all Select synonym independent 2
+assign a, a1, a2; if ifs;
+Select <ifs, a2> pattern a(_, _) and a1(_, _"target"_)
+3 4, 3 5, 3 11, 3 12, 3 21, 3 22, 3 26, 14 4, 14 5, 14 11, 14 12, 14 21, 14 22, 14 26
+5000
+35 - Relation, 2 clause one Select synonym related 1
+assign a; variable v; while w;
+Select <a, w> pattern a("i", _) such that Uses(a, "i")
+12 8, 12 10, 12 15, 22 8, 22 10, 22 15
+5000
+36 - Relation, 2 clause one Select synonym related 2
+if ifs, ifs1; call cl; assign a; variable v;
+Select <ifs, ifs1> such that Parent(ifs, cl) pattern a(v, _)
+14 3, 14 14
+5000
+37 - Relation, 2 clause all Select synonym dependent 1
+procedure pr, pr1;
+Select <pr, pr1> such that Calls(pr, pr1) and Uses(pr, "j")
+B C, B D
+5000
+38 - Relation, 2 clause all Select synonym dependent 2
+while w; read r;
+Select <w, r> pattern w("i", _) such that Parent(w, r)
+8 9
+5000
+39 - Relation, At least 3 clause all Select synonym independent 1
+assign a; variable v; while w, w1; constant c;
+Select <w1, c> such that Follows*(8, 20) pattern a(v, "inc + 1") such that Next(a, w)
+8 0, 8 1, 8 2, 10 0, 10 1, 10 2, 15 0, 15 1, 15 2
+5000
+40 - Relation, At least 3 clause all Select synonym independent 2
+procedure pr, pr1; constant c;
+Select <pr1, c, c> such that Uses(12, "i") and Modifies(12, "i") and Uses(pr, "i")
+A 0 0, A 1 1, A 2 2, B 0 0, B 1 1, B 2 2, C 0 0, C 1 1, C 2 2, D 0 0, D 1 1, D 2 2
+5000
+41 - Relation, At least 3 clause some Select synonym related 1
+if ifs; while w; variable v; procedure pr;
+Select <ifs, pr> pattern ifs("target", _, _) and w("target", _) such that Modifies(ifs, v)
+14 A, 14 B, 14 C, 14 D
+5000
+42 - Relation, At least 3 clause some Select synonym related 2
+procedure pr, pr1; assign a; while w; if ifs;
+Select <a, ifs, a> such that Calls*(pr, p1) and Next(a, 8) pattern a("i", _) and w("i", _) such that Uses(a, "inc")
+12 3 12, 12 14 12
+5000
+43 - Relation, At least 3 clause all Select synonym dependent 1
+procedure pr; variable v; while w;
+Select <pr, v> such that Calls(_, pr) and Modifies(pr, v) and Uses(pr, v) pattern w(v, _)
+C i
+5000
+44 - Relation, At least 3 clause all Select synonym dependent 2
+assign a; stmt s; print pn; while w; variable v;
+Select <v, s, pn> such that Next(s, pn) pattern a(v, _"inc"_) such that Parent(14, s) pattern w(v, _)
+i 15 20, i 19 20, inc 15 20, inc 19 20
+5000

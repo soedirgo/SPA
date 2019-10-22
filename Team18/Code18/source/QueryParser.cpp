@@ -189,7 +189,7 @@ Query QueryParser::parse(string query) {
 		if (flag3 && flag4) {
 			while (patternStr[2].find('"') != -1) {
 				int index = patternStr[2].find('"');
-				patternStr[2] = patternStr[2].erase(index, index + 1);
+				patternStr[2] = patternStr[2].erase(index, index);
 			}
 		}
 	}
