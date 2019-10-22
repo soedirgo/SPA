@@ -1,0 +1,78 @@
+procedure A {
+  read x;
+  read y;
+  if (x > y) then {
+    y = x; }
+  else {
+    x = y; }
+  print x;
+  print y;
+}
+
+procedure B {	  
+  while (i < j) {
+    read inc;
+    while (inc < 0) {
+      inc = inc + 1; }
+    i = i + inc; }
+  read target;
+  if (i < target) then {
+    while (i < target) {
+      call C;
+      print i; } }
+  else {
+    print i;
+    call D; }
+  print target;
+}
+
+procedure C {
+  k = k + 2;
+  i = i + k;
+  print k;
+}
+
+procedure D {
+  call A;
+  read input;
+  num = num + input + i * (x - y % (target / inc) );
+  print num;
+}
+
+procedure E {
+  while ( (low >= high) || (high <= low) ) {
+    read low;
+    read high; }
+  num = ( (high + low) / 2) + offset;
+  while (game >= state) {
+    read guess;
+    if (guess != num) then {
+      msg = wrong;
+      game = game - 1; }
+    else {
+      msg = correct;
+      game = state - 1; }
+    print msg; }
+}
+
+procedure F {
+  read objA;
+  read objB;
+  read objC;
+  objD = ( ( objA + (objB / 3) % objC ) / 4) + 1;
+  if ( (objA > objB) && (objA > objC) ) then {
+    first = objA;
+    if (objB > objC) then {	      
+      second = objB;
+      third = objC; }
+    else {
+      second = objC;
+      third = objB;} }
+  else {
+    while ( ( !(objA > objB) ) || (objA < objC) ) {
+      objA = objA + objD;
+      if (objD == 1) then {
+        call C; }
+      else {
+        call D; } } }
+}
