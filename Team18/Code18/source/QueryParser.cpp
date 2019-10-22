@@ -21,7 +21,7 @@ using namespace std;
 
 string whitespace = " ";
 char whitespacech = ' ';
-//char whitespacech2 = '"';
+char whitespacech2 = '"';
 int maxInt = numeric_limits<int>::max();
 unordered_set<string> validTypes = { "stmt", "variable", "assign", "constant", "read", "while", "if",
 "print", "call" , "prog_line" ,"procedure" };
@@ -173,8 +173,8 @@ Query QueryParser::parse(string query) {
 		clausesVector.push_back(c);
 	}
 
+	vector<string> patternStr;
 	for (int j = 0; j < pattern.size(); j++) {
-		vector<string> patternStr;
 		patternStr.push_back(pattern[j].first);
 		patternStr.push_back(pattern[j].second.first);
 		patternStr.push_back(pattern[j].second.second);
@@ -184,9 +184,18 @@ Query QueryParser::parse(string query) {
 			return semanticInvalidQ;
 		}
 
-		Clause patternC = Clause("pattern", patternStr);
-		clausesVector.push_back(patternC);
+		int flag3 = (patternStr[2].find('"') != -1);
+		int flag4 = (patternStr[2].length() > 1);
+		if (flag3 && flag4) {
+			while (patternStr[2].find('"') != -1) {
+				int index = patternStr[2].find('"');
+				patternStr[2] = patternStr[2].erase(index, index + 1);
+			}
+		}
 	}
+	
+	Clause patternC = Clause("pattern", patternStr);
+	clausesVector.push_back(patternC);
 
 	Query q = Query(declerationVariables, selectVars, clausesVector);
 	return q;
@@ -370,11 +379,25 @@ vector<pair<string, pair<string, string>>> QueryParser::splitPattern(vector<stri
 				}
 			}
 
+			int flag3 = (secondV.find('"') != -1);
+			int flag4 = (secondV.length() > 1);
+			if (flag3 && flag4) {
+				while (secondV.find('"') != -1) {
+					int index = secondV.find('"');
+					secondV = secondV.erase(index, index + 1);
+				}
+			}
+
 			secondV = removeWhiteSpaces(secondV, whitespacech);
 			//Check if the second parameter is just "_"
 			secondVar = secondV;
 			if (!(secondV.size() == 1 && secondV.at(0) == '_')) {
 				secondVar = PatternProcessor::infixtoRPNexpression(secondV);
+			}
+
+			if (flag3 && flag4) {
+				secondVar.insert(0,1,'"');
+				secondVar.insert(secondVar.length(), 1,'"');
 			}
 
 			if (flag && flag2) {
@@ -424,7 +447,7 @@ string QueryParser::removeSpaces(string s, string whitespace) {
 string QueryParser::removeWhiteSpaces(string s, char whitespace) {
 	int a = 0;
 	while (a < s.length()) {
-		if (s[a] == whitespacech) {
+		if (s[a] == whitespacech || s[a] == whitespacech2) {
 			s.erase(a,1);
 			continue;
 		}
