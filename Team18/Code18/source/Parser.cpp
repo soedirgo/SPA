@@ -701,7 +701,7 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 		else if (line.find("=") != string::npos) {
 			//Initial processing of stmt
 			string assign = line;
-			if (assign.find("}") != string::npos && passedElse) {
+			if (assign.find("}") != string::npos) {
 				nestingLevel = nestingLevel - count(line, '}');
 				assign.erase(std::remove(assign.begin(), assign.end(), '}'), assign.end());
 			}
@@ -791,7 +791,7 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 		else if (line.find("read") != string::npos) {
 			//Gets the variable used in read stmt into readArg
 			string readArg = line;
-			if (readArg.find("}") != string::npos && passedElse) {
+			if (readArg.find("}") != string::npos) {
 				nestingLevel = nestingLevel - count(readArg, '}');
 				readArg.erase(std::remove(readArg.begin(), readArg.end(), '}'), readArg.end());
 			}
@@ -857,7 +857,7 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 		else if (line.find("print") != string::npos) {
 			//Gets the variable used in print stmt into printArg
 			string printArg = line;
-			if (printArg.find("}") != string::npos && passedElse) {
+			if (printArg.find("}") != string::npos) {
 				nestingLevel = nestingLevel - count(printArg, '}');
 				printArg.erase(std::remove(printArg.begin(), printArg.end(), '}'), printArg.end());
 			}
@@ -922,7 +922,7 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 		}
 		else if (line.find("call") != string::npos) {
 			string callArg = line;
-			if (callArg.find("}") != string::npos && passedElse) {
+			if (callArg.find("}") != string::npos) {
 				nestingLevel = nestingLevel - count(line, '}');
 				callArg.erase(std::remove(callArg.begin(), callArg.end(), '}'), callArg.end());
 			}
@@ -1003,6 +1003,8 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 		else {
 			if (line.find("}") != string::npos) {
 				nestingLevel = nestingLevel - count(line, '}');
+			}
+			if (nestingLevel < currNestingLevel) {
 				break;
 			}
 		}
@@ -2258,10 +2260,12 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 			}
 		}
 		else {
-		if (line.find("}") != string::npos) {
-			nestingLevel = nestingLevel - count(line, '}');
-			break;
-		}
+			if (line.find("}") != string::npos) {
+				nestingLevel = nestingLevel - count(line, '}');
+			}
+			if (nestingLevel < currNestingLevel) {
+				break;
+			}
 		}
 	}
 	if (prevIf) {
