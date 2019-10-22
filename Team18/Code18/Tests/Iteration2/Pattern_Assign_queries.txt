@@ -291,11 +291,11 @@ Select a pattern a(_, "end")
 59 - Relation, Pattern is made of factor 2
 assign a;
 Select a pattern a(_, _"car + bus - seats"_)
-21
+none
 5000
 60 - Relation, Pattern is made of factor 3
 assign a; variable v;
-Select v pattern a(v, _"(20 - (1 + 3)"_)
+Select v pattern a(v, _"(20 - (1 + 3))"_)
 a
 5000
 61 - Relation, Pattern is made of 2 expr/term/factor 1
