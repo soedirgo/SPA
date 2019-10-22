@@ -385,6 +385,11 @@ FALSE
 5000
 4 - Next -  IDENT IDENT- FALSE
 stmt s; 
+Select BOOLEAN such that Next(19,23)
+FALSE
+5000
+4 - Next -  IDENT IDENT- FALSE
+stmt s; 
 Select BOOLEAN such that Next(4,5)
 FALSE
 5000
@@ -403,6 +408,11 @@ stmt s;
 Select BOOLEAN such that Next(s,24)
 FALSE
 5000
+4 - Multi clauses
+assign a; 
+Select BOOLEAN such that Next(a,11)
+FALSE
+5000
 4 - Next -  IDENT SYN- TRUE
 stmt s; 
 Select BOOLEAN such that Next(4,s)
@@ -418,3 +428,30 @@ stmt s,s1;
 Select BOOLEAN such that Next(s1,s)
 TRUE
 5000
+4 - Pattern -  ANY ANY - TRUE
+assign a; 
+Select BOOLEAN pattern a(_,_) and Next(a,12)
+TRUE
+5000
+4 - Pattern -  IDENT IDENT - TRUE
+assign a; 
+Select a pattern a(_,"k2+") 
+TRUE
+5000
+4 - Pattern -  IDENT ANY - TRUE
+assign a; 
+Select BOOLEAN pattern a("k",_) 
+TRUE
+5000
+4 - Pattern -  Any IDENT - TRUE
+assign a; 
+Select BOOLEAN pattern a(_,"i+k") 
+TRUE
+5000
+5000
+4 - Pattern -  IF  - TRUE
+if ifs;   
+Select BOOLEAN pattern ifs(_,_,_) 
+TRUE
+5000
+
