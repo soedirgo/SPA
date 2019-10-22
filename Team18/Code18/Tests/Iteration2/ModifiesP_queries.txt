@@ -243,3 +243,58 @@ read r;
 Select r such that Modifies("L", "banana")
 2, 8, 11, 20, 25, 26, 30, 32
 5000
+50 - Relation, If Container statement in procedure that does not modifies variable but through call it does.
+read r;
+Select r such that Modifies(39, "Sat")
+2, 8, 11, 20, 25, 26, 30, 32
+5000
+51 - Relation, While Container statement in procedure that does not modifies variable but through call it does.
+print pn;
+Select pn such that Modifies(36, "Fri")
+4, 6, 12, 19, 21, 22, 27, 29, 37, 43
+5000
+52 - Relation, Get all modified variables through different procedure by calls (Last node)
+variable v;
+Select v such that Modifies(50, v)
+banana, apple, j, k, i
+5000
+53 - Relation, Get all modified variables through different procedure by calls (2nd Last node)
+variable v;
+Select v such that Modifies(49, v)
+banana, apple, j, k, i
+5000
+54 - Relation, Get all modified variables through different procedure by calls (3rd Last node)
+variable v;
+Select v such that Modifies(48, v)
+j, k, i
+5000
+55 - Relation, Get all modified variables (Last node)
+variable v;
+Select v such that Modifies(7, v)
+j, k
+5000
+56 - Relation, Get all modified variables through different procedure by calls in else (3rd Last node)
+variable v;
+Select v such that Modifies(44, v)
+none
+5000
+57 - Relation, Get all modified variables through different procedure by calls in if (2nd Last node)
+variable v;
+Select v such that Modifies(41, v)
+Sat, Fri, Thu
+5000
+58 - Relation, Get all modified variables through different procedure by calls
+variable v; call c;
+Select v such that Modifies(c, v)
+apple, banana, i, j, k, mod1, mod2, Fri, Sat, Thu
+5000
+59 - Relation, Get all call stmts that modifies v
+variable v; call c;
+Select c such that Modifies(c, v)
+34,41,48,49,50
+5000
+
+
+
+
+
