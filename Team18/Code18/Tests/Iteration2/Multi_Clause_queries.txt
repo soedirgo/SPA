@@ -193,3 +193,128 @@ assign a; while w; variable v; read r; if ifs;
 Select a pattern a("i", _) and w(v, _) such that Modifies(r, v) pattern ifs(_, _, _)
 12, 22
 5000
+40 - Relation select synonym, At least 3 clause Select synonym some related clauses some related 1
+variable v, v1; while w; if ifs, ifs1;
+Select v pattern w(v, _) and ifs(v, _) pattern ifs1(v1, _, _)
+i, target, low, high, objA, objB, objC
+5000
+41 - Relation select synonym, At least 3 clause Select synonym some related clauses some related 2
+assign a; procedure pr; variable v; while w;
+Select a such that Uses(a, "state") pattern a(_, "state - 1") such that Modifies(pr, v) pattern w(v, _)
+38
+5000
+42 - Relation select synonym, At least 3 clause Select synonym some related clauses some related 3
+prog_line n; assign a; if ifs;
+Select n pattern a(_, _"i"_) such that Parent(n, ifs) and Modifies(ifs, "game") and Modifies(a, "i")
+32
+5000
+43 - Relation select synonym, At least 3 clause Select synonym independent clauses related 1
+procedure pr, pr1;
+Select pr such that Calls(pr1, _) and Modifies(pr1, "low") and Modifies(pr1, "x") and Uses(pr1, "j")
+A, B, C, D, E, F
+5000
+44 - Relation select synonym, At least 3 clause Select synonym independent clauses related 2
+constant c; assign a; while w;
+Select c pattern a(_, _"inc"_) such that Parent(w, a) pattern w("inc", _)
+0, 1, 2, 3, 4
+5000
+45 - Relation select synonym, At least 3 clause Select synonym independent clauses related 3
+while w; procedure pr; variable v; if ifs; while w; print pn;
+Select w such that Uses(pr, v) pattern ifs(v, _, _) and w(v, _) such that Uses(pr, v)
+8, 10, 15, 28, 32, 51
+5000
+46 - Relation select synonym, At least 3 clause Select synonym related clauses related 1
+variable v; assign a; while w; if ifs;
+Select v such that Uses(a, v) pattern w(v, _) and ifs(v, _, _) such that Uses("B", v)
+i, target
+5000
+47 - Relation select synonym, At least 3 clause Select synonym related clauses related 2
+procedure pr; variable v; assign a;
+Select pr such that Calls(pr, "D") and Uses(pr, v) pattern a(v, _"inc"_)
+B
+5000
+48 - Relation select synonym, At least 3 clause Select synonym related clauses related 3
+assign a; variable v; while w;
+Select a such that Modifies(a, v) and Uses(w, v) pattern a(v, _"game"_)
+36
+5000
+49 - Set 3 - Relation tests for Multiple clauses (Algorithmic Tests), Select tuple. Relation select tuple, 2 clause Select tuple independent clauses independent 1
+constant c; procedure pr; prog_line n;
+Select <c, pr> such that Uses(n, _) and Parent*(28, 36)
+0 A, 1 A, 2 A, 3 A, 4 A, 0 B, 1 B, 2 B, 3 B, 4 B, 0 C, 1 C, 2 C, 3 C, 4 C, 0 D, 1 D, 2 D, 3 D, 4 D, 0 E, 1 E, 2 E, 3 E, 4 E, 0 F, 1 F, 2 F, 3 F, 4 F
+5000
+50 - Relation select tuple, 2 clause Select tuple independent clauses independent 2
+while w; assign a; variable v;
+Select <w, w> pattern a(v, _) such that Calls*("B", "A")
+8 8, 10 10, 15 15, 28 28, 32 32, 51 51
+5000
+51 - Relation select tuple, 2 clause Select tuple 1 related to 1 clauses independent 1
+procedure pr, pr1; assign a;
+Select <pr, pr1> such that Uses(pr, "msg") pattern a(v, _"high + low"_)
+E A, E B, E C, E D, E E, E F
+5000
+52 - Relation select tuple, 2 clause Select tuple 1 related to 1 clauses independent 2
+variable v; constant c; if ifs; assign a;
+Select <v, c> pattern ifs(_, _, _) and a(v, _"i"_)
+i 0, i 1, i 2, i 3, i 4, num 0, num 1, num 2, num 3, num 4
+5000
+53 - Relation select tuple, 2 clause Select tuple some related to 1 clauses independent 1
+while w; procedure pr; variable v; assign a;
+Select <w, pr, v> pattern w("low", _) and a(v, "k+2")
+28 A k, 28 B k, 28 C k, 28 D k, 28 E k, 28 F k 
+5000
+54 - Relation select tuple, 2 clause Select tuple some related to 1 clauses independent 2
+print pn; read r; constant c;
+Select <pn, r, c> such that Uses(pn, "j") and Modifies(r, "low")
+none
+5000
+55 - Relation select tuple, 2 clause Select tuple all related clauses independent 1
+procedure pr;
+Select <pr, pr> such that calls(pr, "D") pattern w(_, _)
+B B, F F
+5000
+56 - Relation select tuple, 2 clause Select tuple all related clauses independent 2
+assign a; if ifs; variable v;
+Select <a, a, a> pattern a("num", _"offset"_) and ifs(v, _, _)
+31 31 31
+5000
+57 - Relation select tuple, 2 clause Select tuple independent clauses related 1
+variable v; assign a, a1;
+Select <v, a> pattern a1(_, _"2"_) such that Modifies(a1, "j")
+none
+5000
+58 - Relation select tuple, 2 clause Select tuple independent clauses related 2
+procedure pr, pr1; prog_line n;
+Select <pr, pr1> such that Next(n, 15) and Follows(16, n)
+A A, A B, A C, A D, A E, A F, B A, B B, B C, B D, B E, B F, C A, C B, C C, C D, C E, C F, D A, D B, D C, D D, D E, D F, E A, E B, E C, E D, E E, E F, F A, F B, F C, F D, F E, F F
+5000
+59 - Relation select tuple, 2 clause Select tuple 1 related clauses related 1
+procedure pr; variable v; while w;
+Select <pr, v> such that Modifies(w, v) pattern w("low", _)
+A low, B low, C low, D low, E low, F low, A high, B high, C high, D high, E high, F high
+5000
+60 - Relation select tuple, 2 clause Select tuple 1 related clauses related 2
+call cl; assign a; variable v; if ifs;
+Select <cl, v> pattern a(v, _"low / 2"_) and ifs(v, _, _)
+none
+5000
+61 - Relation select tuple, 2 clause Select tuple some related clauses related 1
+constant c; procedure pr;
+Select <c, c, pr> such that Modifies(pr, "x") and Modifies(pr, "y")
+0 0 A, 1 1 A, 2 2 A, 3 3 A, 4 4 A, 0 0 B, 1 1 B, 2 2 B, 3 3 B, 4 4 B, 0 0 D, 1 1 D, 2 2 D, 3 3 D, 4 4 D, 0 0 F, 1 1 F, 2 2 F, 3 3 F, 4 4 F
+5000
+62 - Relation select tuple, 2 clause Select tuple some related clauses related 2
+print pn; variable v; constant c; assign a;
+Select <pn, v, c> Uses(pn, v) pattern a(v, _"guess"_)
+none
+5000
+63 - Relation select tuple, 2 clause Select tuple all related clauses related 1
+procedure pr; variable v;
+Select <pr, v> such that Calls(pr, "A") and Uses(pr, v)
+D num, D input, D i, D x, D y, D target, D inc
+5000
+64 - Relation select tuple, 2 clause Select tuple all related clauses related 2
+assign a; variable v; while w;
+Select <a, v> pattern a(v, _"objA"_) and w(v, _)
+52 objA
+5000
