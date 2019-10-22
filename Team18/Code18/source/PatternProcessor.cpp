@@ -181,7 +181,8 @@ string PatternProcessor::infixtoRPNexpression(string infix) {
 		}
 		i++;
 	}*/
-    rpnExpression.append(" ");
+    if (rpnExpression.size())
+        rpnExpression.append(" ");
 
 
 	return rpnExpression;
