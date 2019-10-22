@@ -49,6 +49,7 @@ string PatternProcessor::infixtoRPNexpression(string infix) {
 		//If is ), pop tokens from stack and append to output until ( is seen, then pop (
 		if (tempStr == ")") {
 			while (!workingStack.empty() && workingStack.top() != "(") {
+                rpnExpression += " ";
 				rpnExpression.append(workingStack.top());
 				workingStack.pop();
 
@@ -65,7 +66,6 @@ string PatternProcessor::infixtoRPNexpression(string infix) {
 
 			rpnExpression.append(" ");
 			rpnExpression.append(tempStr);
-			rpnExpression.append(" ");
 
 		}
 		else {
@@ -76,6 +76,7 @@ string PatternProcessor::infixtoRPNexpression(string infix) {
 				//If operator on the top of stack has greater precedence, pop the operator and append to output
 				//Brackets don't count
 				while (!workingStack.empty() && (workingStack.top() != "(") && precedenceWeight <= getPrecedenceWeight(workingStack.top())) {
+                    rpnExpression.append(" ");
 					rpnExpression.append(workingStack.top());
 					workingStack.pop();
 				}
@@ -88,6 +89,7 @@ string PatternProcessor::infixtoRPNexpression(string infix) {
 	//Once above is done, if there's tokens in the stack, append to output
 	while (!workingStack.empty())
 	{
+        rpnExpression.append(" ");
 		rpnExpression.append(workingStack.top());
 		workingStack.pop();
 	}
@@ -179,6 +181,8 @@ string PatternProcessor::infixtoRPNexpression(string infix) {
 		}
 		i++;
 	}*/
+    if (rpnExpression.size())
+        rpnExpression.append(" ");
 
 
 	return rpnExpression;

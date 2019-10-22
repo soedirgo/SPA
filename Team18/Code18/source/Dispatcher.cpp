@@ -422,10 +422,10 @@ namespace Evaluator {
               else
                   if (isUnderscore(rhs))
                       return PKB::getPatternAssignEntAny();
-                  else if (isIdentifier(rhs))
-                      return PKB::getPatternAssignEntFull(rhs);
-                  else
+                  else if (isPartialPattern(rhs))
                       return PKB::getPatternAssignEntPartial(trimEnds(rhs));
+                  else
+                      return PKB::getPatternAssignEntFull(rhs);
           }},
          {"if",
           [](string lhs, string rhs) {
