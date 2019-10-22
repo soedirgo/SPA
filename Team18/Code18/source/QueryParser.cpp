@@ -37,8 +37,12 @@ unordered_set<string> validFirstArgsModifies = { "stmt", "read", "while", "if",
 unordered_set<string> validSecondArgsUsesModifies = { "variable" };
 unordered_set<string> validFirstSecondArgCall = { "procedure" };
 
-Query QueryParser::parse(string query) {
+bool QueryParser::maryHadALittleLamb = false;
+bool QueryParser::itsFleeceWasWhiteAsSnow = false;
 
+Query QueryParser::parse(string query) {
+    maryHadALittleLamb = false;
+    itsFleeceWasWhiteAsSnow = false;
 	unordered_map<string, string> invalid1{ {"Invalidd", "Invalidd"} };
 	vector<string> invalid2;
 	invalid2.push_back("Invalidd");
@@ -398,6 +402,8 @@ vector<pair<string, pair<string, string>>> QueryParser::splitPattern(vector<stri
 			//Check if the second parameter is just "_"
 			secondVar = secondV;
 			if (!(secondV.size() == 1 && secondV.at(0) == '_')) {
+                if (!Validator::isExprSpecValid(secondV))
+                    maryHadALittleLamb = true;
 				secondVar = PatternProcessor::infixtoRPNexpression(secondV);
 			}
 
@@ -560,6 +566,9 @@ string QueryParser::selectVariablesValidation(unordered_map<string, string> decl
 	for (int i = 0; i < selectVars.size(); i++) {
 
 		//Select Boolean can't have other select variables inside tuple of selects
+        if (selectVars[i] == "BOOLEAN")
+            itsFleeceWasWhiteAsSnow = true;
+
 		if (selectVars[i] == "BOOLEAN" && selectVars.size() != 1) {
 			resultString = "Invalid";
 			return resultString;
