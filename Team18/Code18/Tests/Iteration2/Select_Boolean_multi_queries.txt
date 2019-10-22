@@ -88,3 +88,63 @@ print pr; if ifs;
 Select BOOLEAN such that Uses (pr, "i") and Parent*(ifs,pr)
 TRUE
 5000
+4 - Modifies Modifies 
+assign a; variable v;
+Select BOOLEAN pattern a (v, _) such that Modifies (12, "i") and Modifies(13, "target") 
+TRUE
+5000
+4 - Modifies Pattern 
+assign a; variable v;
+Select BOOLEAN such that Modifies (a, v) pattern a (v, _)
+TRUE
+5000
+4 - Modifies Follows 
+stmt s;
+Select BOOLEAN such that Modifies (s, "k") and Follows(s,25)
+TRUE
+5000
+4 -  Modifies Follows*
+stmt s; print pr;
+Select BOOLEAN such that Modifies (s, "k") and Follows*(s,pr)
+TRUE
+5000
+4 -  Modifies Parent
+stmt s; while w;
+Select BOOLEAN such that Modifies (s, "inc") and Parent(s,w)
+TRUE
+5000
+4 - Modifies Parent
+stmt s; while w;
+Select BOOLEAN such that Modifies (s, "inc") and Parent(w,s)
+TRUE
+5000
+4 - Modifies Parent*
+read rd; if ifs; print pr;
+Select BOOLEAN such that Modifies (rd, "target") and Parent*(ifs,pr)
+TRUE
+5000
+4 - Next Next FALSE
+stmt s,s1;
+Select BOOLEAN such that Next(s1,s) and Next(7,8)
+FALSE
+5000
+4 - Next Next TRUE
+stmt s,s1;
+Select BOOLEAN such that Next(s1,s) and Next(6,7)
+TRUE
+5000
+4 - Next Calls TRUE
+stmt s,s1;
+Select BOOLEAN such that Next(s1,s) and Calls("B","C")
+TRUE
+5000
+4 - Next Calls* TRUE
+stmt s,s1;
+Select BOOLEAN such that Next(s1,s) and Calls*("B","A")
+TRUE
+5000
+4 - Uses Calls* TRUE
+procedure p; 
+Select BOOLEAN such that Uses(p, "num") and Calls*(p,"A")
+TRUE
+5000
