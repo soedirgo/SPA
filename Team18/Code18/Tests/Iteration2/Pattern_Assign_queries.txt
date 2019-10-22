@@ -50,7 +50,7 @@ none
 5000
 11 - Pattern assign syntax, LHS Ident RHS expr
 assign a;
-Select a pattern a("b", "2 + a")
+Select a pattern a("b", "    b  -  (  2  +  a  )")
 3
 5000
 12 - Pattern assign syntax, LHS invalid Ident RHS expr
