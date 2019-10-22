@@ -12,6 +12,7 @@ using namespace std;
 #include "Query.h"
 #include "QueryParser.h"
 #include "Clause.h"
+#include "Validator.h"
 #include <algorithm>
 
 #include <iostream>
@@ -140,7 +141,7 @@ Query QueryParser::parse(string query) {
 	}
 
 	suchThat = splitSuchThat(suchThatClauses);
-	pattern = splitPattern(patternClauses);
+	pattern = splitPattern(patternClauses, declerationVariables);
 
 	bool selectBoolean = false;
 	if (selectVars.size() == 1 && selectVars[0] == "BOOLEAN") {
@@ -177,6 +178,11 @@ Query QueryParser::parse(string query) {
 		patternStr.push_back(pattern[j].first);
 		patternStr.push_back(pattern[j].second.first);
 		patternStr.push_back(pattern[j].second.second);
+
+		bool validationResult = Validator::isPatternValid(patternStr, declerationVariables);
+		if (validationResult == false) {
+			return semanticInvalidQ;
+		}
 
 		Clause patternC = Clause("pattern", patternStr);
 		clausesVector.push_back(patternC);
@@ -324,7 +330,7 @@ vector<pair<string, pair<string, string>>> QueryParser::splitSuchThat(vector<str
 }
 
 //Split by brackets
-vector<pair<string, pair<string, string>>> QueryParser::splitPattern(vector<string> pattern) {
+vector<pair<string, pair<string, string>>> QueryParser::splitPattern(vector<string> pattern, unordered_map<string, string> declerationVariables) {
 	vector<pair<string, pair<string, string>>> s;
 	int i = 0;
 	int posOfOpenBracket;
@@ -344,30 +350,50 @@ vector<pair<string, pair<string, string>>> QueryParser::splitPattern(vector<stri
 			clauseType = trim(pattern[i].substr(3, posOfOpenBracket - 3), whitespace);
 		}
 
-		//Don't include _
-		string firstVar = trim(pattern[i].substr(posOfOpenBracket + 1, posOfComma - posOfOpenBracket-1),whitespace);
-		string second = removeSpaces(pattern[i].substr(posOfComma + 1, posOfCloseBracket - posOfComma-1),whitespace);
-		int flag = (second.find("_") != -1);
-		int flag2 = (second.length() > 1);
-		if (flag && flag2) {
-			while (second.find("_") != -1) {
-				int index = second.find("_");
-				second = second.erase(index, index + 1);
+		string patternType;
+		if (declerationVariables.find(clauseType) != declerationVariables.end()) {
+			patternType = declerationVariables.find(clauseType)->second;
+		}
+
+		string firstVar;
+		string secondVar;
+		if (patternType == "assign") {
+			//Don't include _
+			firstVar = trim(pattern[i].substr(posOfOpenBracket + 1, posOfComma - posOfOpenBracket - 1), whitespace);
+			string secondV = removeSpaces(pattern[i].substr(posOfComma + 1, posOfCloseBracket - posOfComma - 1), whitespace);
+			int flag = (secondV.find("_") != -1);
+			int flag2 = (secondV.length() > 1);
+			if (flag && flag2) {
+				while (secondV.find("_") != -1) {
+					int index = secondV.find("_");
+					secondV = secondV.erase(index, index + 1);
+				}
+			}
+
+			secondV = removeWhiteSpaces(secondV, whitespacech);
+			//Check if the second parameter is just "_"
+			secondVar = secondV;
+			if (!(secondV.size() == 1 && secondV.at(0) == '_')) {
+				secondVar = PatternProcessor::infixtoRPNexpression(secondV);
+			}
+
+			if (flag && flag2) {
+				secondVar.insert(0, "_");
+				secondVar.insert(secondVar.length(), "_");
 			}
 		}
 
-		second = removeWhiteSpaces(second, whitespacech);
-		//Check if the second parameter is just "_"
-		second.erase(remove_if(second.begin(), second.end(), isspace), second.end());
-		string secondVar = second;
-		if (!(second.size() == 1 && second.at(0) == '_')) {
-			secondVar = PatternProcessor::infixtoRPNexpression(second);
+		else if (patternType == "while") {
+			firstVar = trim(pattern[i].substr(posOfOpenBracket + 1, posOfComma - posOfOpenBracket - 1), whitespace);
+			secondVar = removeSpaces(pattern[i].substr(posOfComma + 1, posOfCloseBracket - posOfComma - 1), whitespace);
 		}
 
-		if (flag && flag2) {
-			secondVar.insert(0,"_");
-			secondVar.insert(secondVar.length(),"_");
+		else if (patternType == "if") {
+			firstVar = trim(pattern[i].substr(posOfOpenBracket + 1, posOfComma - posOfOpenBracket - 1), whitespace);
+			secondVar = removeSpaces(pattern[i].substr(posOfComma + 1, posOfCloseBracket - posOfComma - 1), whitespace);
+			//From secondVar have to make a thirdVar out
 		}
+	
 
 		s.push_back(make_pair(clauseType, make_pair(firstVar, secondVar)));
 	}
@@ -606,7 +632,7 @@ string QueryParser::suchThatValidation(unordered_map<string, string> decleration
 				// valid first args
 			}
 
-			else if (isdigit(suchThat[0].second.first[0])) {
+			else if (isdigit(suchThat[i].second.first[0])) {
 				for (size_t j = 0; j < suchThat[i].second.first.length(); j++) {
 					if (!isdigit(suchThat[i].second.first[j])) {
 						resultString = "Semantic Invalid";
@@ -628,7 +654,7 @@ string QueryParser::suchThatValidation(unordered_map<string, string> decleration
 				// valid second args
 			}
 
-			else if (isdigit(suchThat[0].second.second[0])) {
+			else if (isdigit(suchThat[i].second.second[0])) {
 				for (size_t j = 0; j < suchThat[i].second.second.length(); j++) {
 					if (!isdigit(suchThat[i].second.second[j])) {
 						resultString = "Semantic Invalid";
@@ -653,7 +679,7 @@ string QueryParser::suchThatValidation(unordered_map<string, string> decleration
 				// valid first args
 			}
 
-			else if (isdigit(suchThat[0].second.first[0])) {
+			else if (isdigit(suchThat[i].second.first[0])) {
 				for (size_t j = 0; j < suchThat[i].second.first.length(); j++) {
 					if (!isdigit(suchThat[i].second.first[j])) {
 						resultString = "Semantic Invalid";
@@ -677,7 +703,7 @@ string QueryParser::suchThatValidation(unordered_map<string, string> decleration
 				// valid second args
 			}
 
-			else if (isdigit(suchThat[0].second.second[0])) {
+			else if (isdigit(suchThat[i].second.second[0])) {
 				for (size_t j = 0; j < suchThat[i].second.second.length(); j++) {
 					if (!isdigit(suchThat[i].second.second[j])) {
 						resultString = "Semantic Invalid";
@@ -698,7 +724,7 @@ string QueryParser::suchThatValidation(unordered_map<string, string> decleration
 		}
 		else if (suchThat[i].first == "Uses") {
 
-			if (isdigit(suchThat[0].second.first[0])) {
+			if (isdigit(suchThat[i].second.first[0])) {
 				for (size_t j = 0; j < suchThat[i].second.first.length(); j++) {
 					if (!isdigit(suchThat[i].second.first[j])) {
 						resultString = "Semantic Invalid";
@@ -754,7 +780,7 @@ string QueryParser::suchThatValidation(unordered_map<string, string> decleration
 				//valid
 			}
 
-			else if (isdigit(suchThat[0].second.second[0])) {
+			else if (isdigit(suchThat[i].second.second[0])) {
 				for (size_t j = 0; j < suchThat[i].second.second.length(); j++) {
 					if (!isdigit(suchThat[i].second.second[j])) {
 						resultString = "Semantic Invalid";
@@ -807,7 +833,7 @@ string QueryParser::suchThatValidation(unordered_map<string, string> decleration
 		}
 		else if (suchThat[i].first == "Modifies") {
 
-			if (isdigit(suchThat[0].second.first[0])) {
+			if (isdigit(suchThat[i].second.first[0])) {
 				for (size_t j = 0; j < suchThat[i].second.first.length(); j++) {
 					if (!isdigit(suchThat[i].second.first[j])) {
 						resultString = "Semantic Invalid";
@@ -861,7 +887,7 @@ string QueryParser::suchThatValidation(unordered_map<string, string> decleration
 				//valid
 			}
 
-			else if (isdigit(suchThat[0].second.second[0])) {
+			else if (isdigit(suchThat[i].second.second[0])) {
 				for (size_t j = 0; j < suchThat[i].second.second.length(); j++) {
 					if (!isdigit(suchThat[i].second.second[j])) {
 						resultString = "Semantic Invalid";
