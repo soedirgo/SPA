@@ -38,4 +38,7 @@ public:
 	static std::string selectVariablesValidation(std::unordered_map<std::string, std::string> declerationVariables, std::vector<std::string> selectVars);
 
 	static std::string suchThatValidation(std::unordered_map<std::string, std::string> declerationVariables, std::vector<std::pair<std::string, std::pair<std::string, std::string>>> suchThat);
+
+    static bool maryHadALittleLamb;
+    static bool itsFleeceWasWhiteAsSnow;
 };

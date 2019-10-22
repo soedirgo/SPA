@@ -19,7 +19,8 @@ namespace Validator {
             int depth = 1;
             size_t nextPos = pos;
             while (depth) {
-                nextPos = expr.substr(nextPos + 1, string::npos).find_first_of("()");
+                ++nextPos;
+                nextPos += expr.substr(nextPos + 1, string::npos).find_first_of("()");
                 if (nextPos == string::npos) {
                     return false;
                 } else if (expr[nextPos] == '(') {
