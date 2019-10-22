@@ -459,7 +459,8 @@ namespace Evaluator {
         for (const auto& field : fields)
             if (type == "such that" && field == fields[0])
                 continue;
-            else if (!isIdentifier(field) && !isUnderscore(field) && field.front() != ' ')
+            else if (!isIdentifier(field) && !isUnderscore(field)
+                     && !isPartialPattern(field) && field.front() != ' ')
                 synonyms[field] = synonyms.size();
         
         if (type == "such that")
