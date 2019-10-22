@@ -430,12 +430,12 @@ TRUE
 5000
 4 - Pattern -  ANY ANY - TRUE
 assign a; 
-Select BOOLEAN pattern a(_,_) and Next(a,12)
+Select BOOLEAN pattern a(_,_)
 TRUE
 5000
 4 - Pattern -  IDENT IDENT - TRUE
 assign a; 
-Select a pattern a(_,"k2+") 
+Select BOOLEAN pattern a("k","k + 2") 
 TRUE
 5000
 4 - Pattern -  IDENT ANY - TRUE
@@ -447,7 +447,6 @@ TRUE
 assign a; 
 Select BOOLEAN pattern a(_,"i+k") 
 TRUE
-5000
 5000
 4 - Pattern -  IF  - TRUE
 if ifs;   
