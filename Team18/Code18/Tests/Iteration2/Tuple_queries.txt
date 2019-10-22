@@ -205,7 +205,7 @@ Select <ifs, pr> pattern ifs("target", _, _) and w("target", _) such that Modifi
 5000
 42 - Relation, At least 3 clause some Select synonym related 2
 procedure pr, pr1; assign a; while w; if ifs;
-Select <a, ifs, a> such that Calls*(pr, p1) and Next(a, 8) pattern a("i", _) and w("i", _) such that Uses(a, "inc")
+Select <a, ifs, a> such that Calls*(pr, pr1) and Next(a, 8) pattern a("i", _) and w("i", _) such that Uses(a, "inc")
 12 3 12, 12 14 12
 5000
 43 - Relation, At least 3 clause all Select synonym dependent 1
