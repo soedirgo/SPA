@@ -1,0 +1,50 @@
+<?xml-stylesheet type="text/xsl" href="analysis.xsl"?>
+<test_results>
+<info>
+<name>Tests</name><parsing_time_taken>5.000000</parsing_time_taken>
+</info>
+<queries>
+<query>
+<id ReturnTuple="1" CondNum="1" RelNum="0" comment="Select all stmt">1</id><querystr><![CDATA[stmt s; Select s]]></querystr>
+<stuans>1,2,3,4,5,6,7</stuans>
+<correct>1,2,3,4,5,6,7</correct>
+<time_taken>45.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" CondNum="1" RelNum="0" comment="Select all assign">2</id><querystr><![CDATA[assign a; Select a]]></querystr>
+<stuans>1,2,4,5</stuans>
+<correct>1,2,4,5</correct>
+<time_taken>24.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" CondNum="1" RelNum="0" comment="Select all variable">3</id><querystr><![CDATA[variable v; Select v]]></querystr>
+<stuans>i,x,y,z</stuans>
+<correct>x,y,z,i</correct>
+<time_taken>29.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" CondNum="1" RelNum="0" comment="Select all print">4</id><querystr><![CDATA[print p; Select p]]></querystr>
+<stuans>6</stuans>
+<correct>6</correct>
+<time_taken>31.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" CondNum="1" RelNum="0" comment="Select all read">5</id><querystr><![CDATA[read r; Select r]]></querystr>
+<stuans>3,7</stuans>
+<correct>3,7</correct>
+<time_taken>26.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" CondNum="1" RelNum="0" comment="Select all constant">6</id><querystr><![CDATA[constant c; Select c]]></querystr>
+<stuans>1,2,6</stuans>
+<correct>1,2,6</correct>
+<time_taken>28.000000</time_taken>
+<passed/>
+</query>
+</queries>
+</test_results>

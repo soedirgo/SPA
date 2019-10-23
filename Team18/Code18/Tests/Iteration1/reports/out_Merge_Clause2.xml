@@ -1,0 +1,1828 @@
+<?xml-stylesheet type="text/xsl" href="analysis.xsl"?>
+<test_results>
+<info>
+<name>Tests</name><parsing_time_taken>36.000000</parsing_time_taken>
+</info>
+<queries>
+<query>
+<id ReturnTuple="1" Follows="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Queries 1 - 24 - Test selecting result that is not related to s.t. or p.a. clause. Select result not related, Follows and pattern assign - TT">1</id><querystr><![CDATA[stmt s; assign a; constant c; variable v; Select c such that Follows(s, _) pattern a(v, _)]]></querystr>
+<stuans>1,10,2,5</stuans>
+<correct>1,2,5,10</correct>
+<time_taken>95.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Follows="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select result not related, Follows and pattern assign - TF">2</id><querystr><![CDATA[stmt s; assign a; constant c; variable v; Select c such that Follows(s, 13) pattern a("false", _"x"_)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>34.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Follows="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select result not related, Follows and pattern assign - FT">3</id><querystr><![CDATA[stmt s; assign a; constant c; variable v; select c such that Follows(s, s) pattern a(v, _)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>27.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Follows="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select result not related, Follows and pattern assign - FF">4</id><querystr><![CDATA[read r; assign a; constant c; Select c such that Follows(20, r) pattern a("not", _)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>31.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Followsstar="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select result not related, Follows* and pattern assign - TT">5</id><querystr><![CDATA[procedure proc; assign a; read r; print pn;  Select proc such that Follows*(r, pn) pattern a("x", _)]]></querystr>
+<stuans>Clause2</stuans>
+<correct>Clause2</correct>
+<time_taken>43.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Followsstar="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Select result not related, Follows* and pattern assign - TF">6</id><querystr><![CDATA[procedure proc; assign a; read r; Select proc such that Follows*(1, r) pattern a(_, _"lie"_)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>36.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Followsstar="1" UnnamedVar="3" Pattern="1" SuchThat="1" CondNum="7" RelNum="1" comment="Select result not related, Follows* and pattern assign - FT">7</id><querystr><![CDATA[procedure proc; assign a; Select proc such that Follows*(21, _) pattern a(_, _)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>43.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Followsstar="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select result not related, Follows* and pattern assign - FF">8</id><querystr><![CDATA[procedure proc; assign a; while w; Select proc such that Follows*(w, 12) pattern a("second", _)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>44.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parent="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select result not related, Parent and pattern assign - TT">9</id><querystr><![CDATA[read r; assign a; if ifs; Select r such that Parent(ifs, 6) pattern a("first", _"first"_)]]></querystr>
+<stuans>12,13,15,3</stuans>
+<correct>3,12,13,15</correct>
+<time_taken>45.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parent="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select result not related, Parent and pattern assign - TF">10</id><querystr><![CDATA[read r; assign a; if ifs, if ifs1; Select r such that Parent(ifs, ifs1) pattern a("add", _"first"_)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>33.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parent="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Select result not related, Parent and pattern assign - FT">11</id><querystr><![CDATA[read r; assign a; while w; Select r such that Parent(w, w) pattern a(_, _"i"_)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>33.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parent="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select result not related, Parent and pattern assign - FF">12</id><querystr><![CDATA[read r; assign a; print pn; stmt s; Select r such that Parent(pn, s) pattern a("no", _"yes"_)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>48.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parentstar="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select result not related, Parent* and pattern assign - TT">13</id><querystr><![CDATA[stmt s; assign a; Select s such that Parent*(14, 17) pattern a("z", _"y"_)]]></querystr>
+<stuans>1,10,11,12,13,14,15,16,17,18,19,2,20,21,3,4,5,6,7,8,9</stuans>
+<correct>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21</correct>
+<time_taken>37.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parentstar="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Select result not related, Parent* and pattern assign - TF">14</id><querystr><![CDATA[stmt s; assign a; while w; print pn; Select s such that Parent*(w, pn) pattern a(_, _"point"_)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>39.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parentstar="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select result not related, Parent* and pattern assign - FT">15</id><querystr><![CDATA[stmt s; assign a; variable v; read r; Select s such that Parent*(4, r) pattern a(v, _)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>54.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parentstar="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Select result not related, Parent* and pattern assign - FF">16</id><querystr><![CDATA[stmt s; assign a, a1; Select s such that Parent*(a1, _) pattern a("old", _)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>36.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" UnnamedVar="2" Uses="1" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Select result not related, Uses and pattern assign - TT">17</id><querystr><![CDATA[assign a, a1, a2; Select a1 such that Uses(a2, "add") pattern a(_, _)]]></querystr>
+<stuans>1,11,17,19,2,7</stuans>
+<correct>1,2,7,11,17,19</correct>
+<time_taken>40.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" UnnamedVar="1" Uses="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select result not related, Uses and pattern assign - TF">18</id><querystr><![CDATA[assign a, a1; while w; variable v; Select a1 such that Uses(w, "second") pattern a(v, _"left"_)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>36.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" UnnamedVar="1" Uses="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select result not related, Uses and pattern assign - FT">19</id><querystr><![CDATA[assign a, a1; print pn; variable v; Select a1 such that Uses(pn, "right") pattern a(v, _)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>40.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" UnnamedVar="1" Uses="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select result not related, Uses and pattern assign - FF">20</id><querystr><![CDATA[assign a, a1; variable v; Select a1 such that Uses(15, v) pattern a("x", _"z"_)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>35.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Modifies="1" UnnamedVar="3" Pattern="1" SuchThat="1" CondNum="7" RelNum="1" comment="Select result not related, Modifies and pattern assign - TT">21</id><querystr><![CDATA[assign assign; variable v; stmt s; Select v such that Modifies(s, _) pattern assign(_, _)]]></querystr>
+<stuans>add,first,i,second,x,y,z</stuans>
+<correct>x,y,z,i,first,second,add</correct>
+<time_taken>140.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Modifies="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select result not related, Modifies and pattern assign - TF">22</id><querystr><![CDATA[assign assign; variable v; Select v such that Modifies(3, "z") pattern assign("y", _"x"_)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>35.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Modifies="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Select result not related, Modifies and pattern assign - FT">23</id><querystr><![CDATA[assign assign; variable v; print pn; Select v such that Modifies(pn, _) pattern assign("add", _)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>30.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Modifies="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select result not related, Modifies and pattern assign - FF">24</id><querystr><![CDATA[assign assign; variable v; while w; Select v such that Modifies(w, "second") pattern assign("third", _)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>34.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Follows="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Queries 25 - 48 - Test selecting result that is related to s.t. clause only. Select result related to s.t., Follows and pattern assign - TT">25</id><querystr><![CDATA[assign a; stmt s; read r; Select s such that Follows(s, r) pattern a("first", _"add"_)]]></querystr>
+<stuans>12,2,4</stuans>
+<correct>2,4,12</correct>
+<time_taken>46.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Follows="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select result related to s.t., Follows and pattern assign - TF">26</id><querystr><![CDATA[assign a; stmt s; if ifs; Select s such that Follows(ifs, s) pattern a("first", _"second"_)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>48.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Follows="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select result related to s.t., Follows and pattern assign - FT">27</id><querystr><![CDATA[assign a; stmt s; Select s such that Follows(21, s) pattern a("z", _)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>39.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Follows="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select result related to s.t., Follows and pattern assign - FF">28</id><querystr><![CDATA[assign a; stmt s; variable v; Select s such that Follows(s, 19) pattern a(v, _"jack"_)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>43.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Followsstar="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select result related to s.t., Follows* and pattern assign - TT">29</id><querystr><![CDATA[assign a; read r; variable v; Select r such that Follows*(r, 20) pattern a(v, _)]]></querystr>
+<stuans>12,13,3</stuans>
+<correct>3,12,13</correct>
+<time_taken>52.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Followsstar="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select result related to s.t., Follows* and pattern assign - TF">30</id><querystr><![CDATA[assign a; read r; variable v; Select r such that Follows*(1, r) pattern a(v, _"queen"_)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>37.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Followsstar="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Select result related to s.t., Follows* and pattern assign - FT">31</id><querystr><![CDATA[assign a; read r; print pn; Select r such that Follows*(pn, r) pattern a(_, _"x"_)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>41.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Followsstar="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select result related to s.t., Follows* and pattern assign - FF">32</id><querystr><![CDATA[assign a; read r; Select r such that Follows*(r, r) pattern a("king", _)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>47.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parent="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Select result related to s.t., Parent and pattern assign - TT">33</id><querystr><![CDATA[assign a; if ifs; while w; Select ifs such that Parent(ifs, w) pattern a(_, _)]]></querystr>
+<stuans>4</stuans>
+<correct>4</correct>
+<time_taken>36.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parent="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select result related to s.t., Parent and pattern assign - TF">34</id><querystr><![CDATA[assign a; if ifs, if; Select ifs such that Parent(ifs, if) pattern a("ace", _)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>34.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parent="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select result related to s.t., Parent and pattern assign - FT">35</id><querystr><![CDATA[assign a; if ifs; read r; variable v; Select ifs such that Parent(ifs, r) pattern a(v, _)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>35.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parent="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select result related to s.t., Parent and pattern assign - FF">36</id><querystr><![CDATA[assign a; if ifs; Select ifs such that Parent(ifs, ifs) pattern a(_, "pot")]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>32.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parentstar="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Select result related to s.t., Parent* and pattern assign - TT">37</id><querystr><![CDATA[assign a; stmt s; Select s such that Parent*(s, 7) pattern a(_, _)]]></querystr>
+<stuans>4,6</stuans>
+<correct>4,6</correct>
+<time_taken>44.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parentstar="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select result related to s.t., Parent* and pattern assign - TF">38</id><querystr><![CDATA[assign a; stmt s; Select s such that Parent*(14, s) pattern a("kettle", _)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>41.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parentstar="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Select result related to s.t., Parent* and pattern assign - FT">39</id><querystr><![CDATA[assign a; stmt s; Select s such that Parent*(s, s) pattern a(_, _"add"_)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>35.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parentstar="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Select result related to s.t., Parent* and pattern assign - FF">40</id><querystr><![CDATA[assign a, a1; stmt s; Select s such that Parent*(0, s) pattern a(_, _"black"_)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>29.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" UnnamedVar="3" Uses="1" Pattern="1" SuchThat="1" CondNum="7" RelNum="1" comment="Select result related to s.t., Uses and pattern assign - TT">41</id><querystr><![CDATA[assign a, ares; Select ares such that Uses(ares, _) pattern a(_, _)]]></querystr>
+<stuans>11,19,7</stuans>
+<correct>7,11,19</correct>
+<time_taken>39.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" UnnamedVar="1" Uses="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select result related to s.t., Uses and pattern assign - TF">42</id><querystr><![CDATA[assign a, ares; variable v; Select ares such that Uses(ares, v) pattern a(v, _"rock"_)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>35.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" UnnamedVar="2" Uses="1" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Select result related to s.t., Uses and pattern assign - FT">43</id><querystr><![CDATA[assign a, ares; Select ares such that Uses(ares, "second") pattern a(_, _)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>37.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" UnnamedVar="1" Uses="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select result related to s.t., Uses and pattern assign - FF">44</id><querystr><![CDATA[assign a, ares; Select ares such that Uses(ares, "paper") pattern a("scissor", _)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>35.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Modifies="1" UnnamedVar="3" Pattern="1" SuchThat="1" CondNum="7" RelNum="1" comment="Select result related to s.t., Modifies and pattern assign - TT">45</id><querystr><![CDATA[assign assign; read r; Select r such that Modifies(r, _) pattern assign(_, _"y"_)]]></querystr>
+<stuans>12,13,15,3</stuans>
+<correct>3,12,13,15</correct>
+<time_taken>38.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Modifies="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Select result related to s.t., Modifies and pattern assign - TF">46</id><querystr><![CDATA[assign assign; read r; Select r such that Modifies(r, "first") pattern assign(_, _"t35t"_)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>38.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Modifies="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select result related to s.t., Modifies and pattern assign - FT">47</id><querystr><![CDATA[assign assign; read r; variable v; Select r such that Modifies(r, "x") pattern assign(v, _)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>38.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Modifies="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select result related to s.t., Modifies and pattern assign - FF">48</id><querystr><![CDATA[assign assign; read r; Select r such that Modifies(r, r) pattern assign("fake", _)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>37.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Follows="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Queries 49 - 72 - Test Selecting result that is related to p.a. clause only. Select result related to p.a., Follows and pattern assign - TT">49</id><querystr><![CDATA[assign a; Select a such that Follows(1, 2) pattern a(_, _)]]></querystr>
+<stuans>1,11,17,19,2,7</stuans>
+<correct>1,2,7,11,17,19</correct>
+<time_taken>36.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Follows="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Select result related to p.a., Follows and pattern assign - TF">50</id><querystr><![CDATA[assign a; stmt s; Select a such that Follows(5, s) pattern a(_, _"another"_)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>37.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Follows="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select result related to p.a., Follows and pattern assign - FT">51</id><querystr><![CDATA[assign a; Select a such that Follows(4, 5) pattern a("first", _)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>32.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Follows="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select result related to p.a., Follows and pattern assign - FF">52</id><querystr><![CDATA[assign a; Select a such that Follows(21, 20) pattern a("one", _)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>37.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Followsstar="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select result related to p.a., Follows* and pattern assign - TT">53</id><querystr><![CDATA[assign a; variable v; Select v such that Follows*(1, 21) pattern a(v, _)]]></querystr>
+<stuans>add,first,i,x,y,z</stuans>
+<correct>x,y,i,z,add,first</correct>
+<time_taken>36.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Followsstar="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select result related to p.a., Follows* and pattern assign - TF">54</id><querystr><![CDATA[assign a; variable v; stmt s; while w; Select v such that Follows*(s, w) pattern a(v, _"bites"_)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>60.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Followsstar="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select result related to p.a., Follows* and pattern assign - FT">55</id><querystr><![CDATA[assign a; variable v; while w; Select v such that Follows*(16, w) pattern a(v, _"add"_)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>37.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Followsstar="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select result related to p.a., Follows* and pattern assign - FF">56</id><querystr><![CDATA[assign a, a1; variable v; Select v such that Follows*(a1, 39) pattern a(v, _"the"_)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>38.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parent="1" UnnamedVar="3" Pattern="1" SuchThat="1" CondNum="7" RelNum="1" comment="Select result related to p.a., Parent and pattern assign - TT">57</id><querystr><![CDATA[assign a; if ifs; Select a such that Parent(ifs, _) pattern a(_, _"x"_)]]></querystr>
+<stuans>11</stuans>
+<correct>11</correct>
+<time_taken>40.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parent="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Select result related to p.a., Parent and pattern assign - TF">58</id><querystr><![CDATA[assign a; if ifs; Select a such that Parent(4, ifs) pattern a(_, _"dust"_)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>34.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parent="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Select result related to p.a., Parent and pattern assign - FT">59</id><querystr><![CDATA[assign a; if ifs; Select a such that Parent(9, ifs) pattern a(_, _)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>33.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parent="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Select result related to p.a., Parent and pattern assign - FF">60</id><querystr><![CDATA[assign a; print pn; Select a such that Parent(pn, _) pattern a("xyz", _)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>32.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parentstar="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select result related to p.a., Parent* and pattern assign - TT">61</id><querystr><![CDATA[assign print; while w; variable v; Select print such that Parent*(14, w) pattern print(v, _)]]></querystr>
+<stuans>1,11,17,19,2,7</stuans>
+<correct>1,2,7,11,17,19</correct>
+<time_taken>35.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parentstar="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select result related to p.a., Parent* and pattern assign - TF">62</id><querystr><![CDATA[assign print; Select print such that Parent*(14, 18) pattern print("enemy", _)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>33.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parentstar="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Select result related to p.a., Parent* and pattern assign - FT">63</id><querystr><![CDATA[assign print; Select print such that Parent*(6, 10) pattern print(_, _)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>31.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parentstar="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Select result related to p.a., Parent* and pattern assign - FF">64</id><querystr><![CDATA[assign print; Select print such that Parent*(17, 16) pattern print(_, _"stand"_)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>34.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" UnnamedVar="1" Uses="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select result related to p.a., Uses and pattern assign - TT">65</id><querystr><![CDATA[assign a; variable v; Select v such that Uses(11, "y") pattern a(v, _)]]></querystr>
+<stuans>add,first,i,x,y,z</stuans>
+<correct>x,y,i,z,add,first</correct>
+<time_taken>37.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" UnnamedVar="2" Uses="1" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Select result related to p.a., Uses and pattern assign - TF">66</id><querystr><![CDATA[assign a, a1; variable v; Select v such that Uses(a1, _) pattern a(v, _"second"_)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>37.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" UnnamedVar="1" Uses="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select result related to p.a., Uses and pattern assign - FT">67</id><querystr><![CDATA[assign a; variable v; while w; Select v such that Uses(w, "z") pattern a(v, _"first"_)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>35.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" UnnamedVar="1" Uses="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select result related to p.a., Uses and pattern assign - FF">68</id><querystr><![CDATA[assign a; variable v, v1; read r; Select v such that Uses(r, v1) pattern a(v, _"fourth"_)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>33.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Modifies="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select result related to p.a., Modifies and pattern assign - TT">69</id><querystr><![CDATA[assign a; read r; variable v; Select a such that Modifies(r, v) pattern a("first", _)]]></querystr>
+<stuans>19</stuans>
+<correct>19</correct>
+<time_taken>37.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Modifies="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Select result related to p.a., Modifies and pattern assign - TF">70</id><querystr><![CDATA[assign a, a1; variable v; Select a such that Modifies(a1, _) pattern a(v, _"z"_)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>40.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Modifies="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select result related to p.a., Modifies and pattern assign - FT">71</id><querystr><![CDATA[assign a; variable v; stmt s; Select a such that Modifies(s, "fifth") pattern a(v, _"i"_)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>37.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Modifies="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Select result related to p.a., Modifies and pattern assign - FF">72</id><querystr><![CDATA[assign a; variable v; print pn; Select a such that Modifies(pn, v) pattern a(_, _"sixth"_)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>32.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Follows="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Queries 73 - 96 - Test Selecting result that is related to both s.t. and p.a. clauses. Select result related to both, Follows and pattern assign - TT">73</id><querystr><![CDATA[assign a, a1; Select a such that Follows(a, a1) pattern a(_, _)]]></querystr>
+<stuans>1</stuans>
+<correct>1</correct>
+<time_taken>36.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Follows="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select result related to both, Follows and pattern assign - TF">74</id><querystr><![CDATA[assign a; stmt s; Select a such that Follows(a, s) pattern a("jelly", _)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>51.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Follows="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select result related to both, Follows and pattern assign - FT">75</id><querystr><![CDATA[assign a; variable v; Select a such that Follows(0, a) pattern a(v, _)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>46.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Follows="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select result related to both, Follows and pattern assign - FF">76</id><querystr><![CDATA[assign a; variable v; Select a such that Follows(a, 11) pattern a(v, _"second"_)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>37.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Followsstar="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select result related to both, Follows* and pattern assign - TT">77</id><querystr><![CDATA[assign a; Select a such that Follows*(a, 21) pattern a("y", _)]]></querystr>
+<stuans>2</stuans>
+<correct>2</correct>
+<time_taken>36.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Followsstar="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Select result related to both, Follows* and pattern assign - TF">78</id><querystr><![CDATA[assign a; stmt s; Select a such that Follows*(a, s) pattern a(_, _"apple"_)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>78.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Followsstar="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Select result related to both, Follows* and pattern assign - FT">79</id><querystr><![CDATA[assign a; print pn; Select a such that Follows*(pn, a) pattern a(_, _)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>46.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Followsstar="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select result related to both, Follows* and pattern assign - FF">80</id><querystr><![CDATA[assign a; Select a such that Follows*(a, a) pattern a("orange", _)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>36.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parent="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Select result related to both, Parent and pattern assign - TT">81</id><querystr><![CDATA[assign a; Select a such that Parent(16, a) pattern a(_, _)]]></querystr>
+<stuans>17</stuans>
+<correct>17</correct>
+<time_taken>37.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parent="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select result related to both, Parent and pattern assign - TF">82</id><querystr><![CDATA[assign a; while w; Select a such that Parent(w, a) pattern a("low", _"high"_)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>40.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parent="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select result related to both, Parent and pattern assign - FT">83</id><querystr><![CDATA[assign a; read r; variable v; Select a such that Parent(r, a) pattern a(v, _"first"_)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>39.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parent="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select result related to both, Parent and pattern assign - FF">84</id><querystr><![CDATA[assign a; Select a such that Parent(a, a) pattern a("second", _)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>35.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parentstar="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Select result related to both, Parent* and pattern assign - TT">85</id><querystr><![CDATA[assign a; Select a such that Parent*(14, a) pattern a(_, _)]]></querystr>
+<stuans>17,19</stuans>
+<correct>17,19</correct>
+<time_taken>35.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parentstar="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Select result related to both, Parent* and pattern assign - TF">86</id><querystr><![CDATA[assign a; Select a such that Parent*(4, a) pattern a(_, _"hmm"_)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>37.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parentstar="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select result related to both, Parent* and pattern assign - FT">87</id><querystr><![CDATA[assign a; variable v; stmt s; Select a such that Parent*(a, s) pattern a(v, _)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>52.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parentstar="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select result related to both, Parent* and pattern assign - FT">88</id><querystr><![CDATA[assign a; variable v; Select a such that Parent*(a, a) pattern a(v, _"pear"_)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>35.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" UnnamedVar="2" Uses="1" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Select result related to both, Uses and pattern assign - TT">89</id><querystr><![CDATA[assign a; variable v; Select a such that Uses(a, v) pattern a(_, _)]]></querystr>
+<stuans>11,19,7</stuans>
+<correct>7,11,19</correct>
+<time_taken>37.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" UnnamedVar="1" Uses="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select result related to both, Uses and pattern assign - TF">90</id><querystr><![CDATA[assign a; Select a such that Uses(a, "i") pattern a("mix", _"match"_)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>42.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" UnnamedVar="1" Uses="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select result related to both, Uses and pattern assign - FT">91</id><querystr><![CDATA[assign a; variable v; read r; Select v such that Uses(r, v) pattern a(v, _)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>31.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" UnnamedVar="1" Uses="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select result related to both, Uses and pattern assign - FF">92</id><querystr><![CDATA[assign a; variable v; Select v such that Uses(2, v) pattern a(v, _"fiction"_)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>42.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Modifies="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select result related to both, Modifies and pattern assign - TT">93</id><querystr><![CDATA[assign a; variable v; stmt s; Select v such that Modifies(s, v) pattern a(v, _)]]></querystr>
+<stuans>add,first,i,x,y,z</stuans>
+<correct>x,y,i,z,add,first</correct>
+<time_taken>63.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Modifies="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select result related to both, Modifies and pattern assign - TF">94</id><querystr><![CDATA[assign a; variable v; stmt s; Select v such that Modifies(s, v) pattern a(v, _"fact"_)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>42.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Modifies="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Select result related to both, Modifies and pattern assign - FT">95</id><querystr><![CDATA[assign a; Select a such that Modifies(a, "second") pattern a(_, _)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>37.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Modifies="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select result related to both, Modifies and pattern assign - FF">96</id><querystr><![CDATA[assign a; Select a such that Modifies(a, "third") pattern a("fail", _)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>35.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Follows="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Queries 97 - 108 - Test merging of Select result from both clauses, both clauses will return a result and the merge will be a result or empty. Follows and pattern assign merge result - result">97</id><querystr><![CDATA[assign a; print pn; Select a such that Follows(a, pn) pattern a(_, _)]]></querystr>
+<stuans>17</stuans>
+<correct>17</correct>
+<time_taken>39.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Follows="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Follows and pattern assign merge result - none">98</id><querystr><![CDATA[assign a; Select a such that Follows(16, a) pattern a("add", _)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>42.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Followsstar="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Follows* and pattern assign merge result - result">99</id><querystr><![CDATA[assign a; Select a such that Follows*(a, _) pattern a("y", _)]]></querystr>
+<stuans>2</stuans>
+<correct>2</correct>
+<time_taken>36.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Followsstar="1" UnnamedVar="3" Pattern="1" SuchThat="1" CondNum="7" RelNum="1" comment="Follows* and pattern assign merge result - none">100</id><querystr><![CDATA[assign a; Select a such that Follows*(_, a) pattern a(_, _"y"_)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>37.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parent="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Parent and pattern assign merge result - result">101</id><querystr><![CDATA[assign a; if ifs; Select a such that Parent(ifs, a) pattern a(_, _)]]></querystr>
+<stuans>11</stuans>
+<correct>11</correct>
+<time_taken>35.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parent="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Parent and pattern assign merge result - none">102</id><querystr><![CDATA[assign a; if ifs; Select a such that Parent(ifs, a) pattern a("first", _"add"_)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>37.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parentstar="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Parent* and pattern assign merge result - result">103</id><querystr><![CDATA[assign a; while w; Select a such that Parent*(w, a) pattern a("add", _)]]></querystr>
+<stuans>17</stuans>
+<correct>17</correct>
+<time_taken>46.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parentstar="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Parent* and pattern assign merge result - none">104</id><querystr><![CDATA[assign a; Select a such that Parent*(14, a) pattern a(_, _"i"_)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>36.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Uses="1" Pattern="1" SuchThat="1" CondNum="4" RelNum="1" comment="Uses and pattern assign merge result - result">105</id><querystr><![CDATA[assign a; variable v; Select v such that Uses(a, v) pattern a("z", v)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>28.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" UnnamedVar="1" Uses="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Uses and pattern assign merge result - none">106</id><querystr><![CDATA[assign a; variable v; Select a such that Uses(a, v) pattern a("x", _)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>43.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Modifies="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Modifies and pattern assign merge result - result">107</id><querystr><![CDATA[assign a; Select a such that Modifies(a, "first") pattern a(_, _)]]></querystr>
+<stuans>19</stuans>
+<correct>19</correct>
+<time_taken>39.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Modifies="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Modifies and pattern assign merge result - none">108</id><querystr><![CDATA[assign a; Select a such that Modifies(a, "add") pattern a(_, _"i"_)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>31.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Follows="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Queries 109 - 120 - Reverse the order of clauses for set 5 to test clause order, answers should be the same. Reverse clause order of query 97">109</id><querystr><![CDATA[assign a; print pn; Select a pattern a(_, _) such that Follows(a, pn)]]></querystr>
+<stuans>17</stuans>
+<correct>17</correct>
+<time_taken>37.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Follows="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Reverse clause order of query 98">110</id><querystr><![CDATA[assign a; Select a pattern a("add", _) such that Follows(16, a)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>35.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Followsstar="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Reverse clause order of query 99">111</id><querystr><![CDATA[assign a; Select a pattern a("y", _) such that Follows*(a, _)]]></querystr>
+<stuans>2</stuans>
+<correct>2</correct>
+<time_taken>37.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Followsstar="1" UnnamedVar="3" Pattern="1" SuchThat="1" CondNum="7" RelNum="1" comment="Reverse clause order of query 100">112</id><querystr><![CDATA[assign a; Select a pattern a(_, _"y"_) such that Follows*(_, a)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>35.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parent="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Reverse clause order of query 101">113</id><querystr><![CDATA[assign a; if ifs; Select a pattern a(_, _) such that Parent(ifs, a)]]></querystr>
+<stuans>11</stuans>
+<correct>11</correct>
+<time_taken>35.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parent="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Reverse clause order of query 102">114</id><querystr><![CDATA[assign a; if ifs; Select a pattern a("first", _"add"_) such that Parent(ifs, a)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>41.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parentstar="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Reverse clause order of query 103">115</id><querystr><![CDATA[assign a; while w; Select a pattern a("add", _) such that Parent*(w, a)]]></querystr>
+<stuans>17</stuans>
+<correct>17</correct>
+<time_taken>36.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parentstar="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Reverse clause order of query 104">116</id><querystr><![CDATA[assign a; Select a pattern a(_, _"i"_) such that Parent*(14, a)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>37.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Uses="1" Pattern="1" SuchThat="1" CondNum="4" RelNum="1" comment="Reverse clause order of query 105">117</id><querystr><![CDATA[assign a; variable v; Select v pattern a("z", v) such that Uses(a, v)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>30.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" UnnamedVar="1" Uses="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Reverse clause order of query 106">118</id><querystr><![CDATA[assign a; variable v; Select a pattern a("x", _) such that Uses(a, v)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>35.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Modifies="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Reverse clause order of query 107">119</id><querystr><![CDATA[assign a; Select a pattern a(_, _) such that Modifies(a, "first")]]></querystr>
+<stuans>19</stuans>
+<correct>19</correct>
+<time_taken>34.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Modifies="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Reverse clause order of query 108">120</id><querystr><![CDATA[assign a; Select a pattern a(_, _"i"_) such that Modifies(a, "add")]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>38.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Follows="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Queries 121 - 150 - Additional merge test for Follows. Select s, pattern LHS variable RHS wildcard">121</id><querystr><![CDATA[stmt s; assign a; variable v; Select s such that Follows(s, a) pattern a(v, _)]]></querystr>
+<stuans>1,16</stuans>
+<correct>1,16</correct>
+<time_taken>62.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Follows="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select a, pattern LHS variable RHS wildcard">122</id><querystr><![CDATA[stmt s; assign a; variable v; Select a such that Follows(s, a) pattern a(v, _)]]></querystr>
+<stuans>19,2</stuans>
+<correct>2,19</correct>
+<time_taken>50.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Follows="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select a, pattern LHS variable RHS wildcard">123</id><querystr><![CDATA[stmt s; assign a; variable v; Select v such that Follows(s, a) pattern a(v, _)]]></querystr>
+<stuans>first,y</stuans>
+<correct>y,first</correct>
+<time_taken>48.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Follows="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select a1, pattern LHS variable RHS wildcard">124</id><querystr><![CDATA[assign a, a1; variable v; Select a1 such that Follows(a1, a) pattern a(v, _)]]></querystr>
+<stuans>1</stuans>
+<correct>1</correct>
+<time_taken>42.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Follows="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select a, pattern LHS variable RHS wildcard">125</id><querystr><![CDATA[assign a, a1; variable v; Select a such that Follows(a1, a) pattern a(v, _)]]></querystr>
+<stuans>2</stuans>
+<correct>2</correct>
+<time_taken>37.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Follows="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select v, pattern LHS variable RHS wildcard">126</id><querystr><![CDATA[assign a, a1; variable v; Select v such that Follows(a1, a) pattern a(v, _)]]></querystr>
+<stuans>y</stuans>
+<correct>y</correct>
+<time_taken>37.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Follows="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select r, pattern LHS variable RHS Ident">127</id><querystr><![CDATA[read r; assign a; variable v; Select r such that Follows(r, a) pattern a(v, _"first"_)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>39.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Follows="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select a, pattern LHS variable RHS Ident">128</id><querystr><![CDATA[read r; assign a; variable v; Select a such that Follows(r, a) pattern a(v, _"first"_)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>39.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Follows="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select v, pattern LHS variable RHS Ident">129</id><querystr><![CDATA[read r; assign a; variable v; Select v such that Follows(r, a) pattern a(v, _"first"_)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>38.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Follows="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select w, pattern LHS variable RHS Ident">130</id><querystr><![CDATA[while w; assign a; variable v; Select w such that Follows(w, a) pattern a(v, _"add"_)]]></querystr>
+<stuans>16</stuans>
+<correct>16</correct>
+<time_taken>39.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Follows="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select a, pattern LHS variable RHS Ident">131</id><querystr><![CDATA[while w; assign a; variable v; Select a such that Follows(w, a) pattern a(v, _"add"_)]]></querystr>
+<stuans>19</stuans>
+<correct>19</correct>
+<time_taken>37.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Follows="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select v, pattern LHS variable RHS Ident">132</id><querystr><![CDATA[while w; assign a; variable v; Select v such that Follows(w, a) pattern a(v, _"add"_)]]></querystr>
+<stuans>first</stuans>
+<correct>first</correct>
+<time_taken>39.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Follows="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Select a, pattern LHS wildcard RHS wildcard">133</id><querystr><![CDATA[assign a; Select a such that Follows(16, a) pattern a(_, _)]]></querystr>
+<stuans>19</stuans>
+<correct>19</correct>
+<time_taken>34.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Follows="1" UnnamedVar="2" Pattern="1" CondNum="5" RelNum="1" comment="Select a, pattern LHS wildcard RHS wildcard">134</id><querystr><![CDATA[assign a; print pn; Select a Follows(pn, a) pattern a(_, _)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>34.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Follows="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Select a, pattern LHS wildcard RHS Ident">135</id><querystr><![CDATA[assign a; Select a such that Follows(16, a) pattern a(_, _"add"_)]]></querystr>
+<stuans>19</stuans>
+<correct>19</correct>
+<time_taken>39.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Follows="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select pn, pattern LHS variable RHS wildcard">136</id><querystr><![CDATA[assign a; print pn; variable v; Select pn such that Follows(a, pn) pattern a(v, _)]]></querystr>
+<stuans>18</stuans>
+<correct>18</correct>
+<time_taken>42.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Follows="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select a, pattern LHS variable RHS wildcard">137</id><querystr><![CDATA[assign a; print pn; variable v; Select a such that Follows(a, pn) pattern a(v, _)]]></querystr>
+<stuans>17</stuans>
+<correct>17</correct>
+<time_taken>38.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Follows="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select v, pattern LHS variable RHS wildcard">138</id><querystr><![CDATA[assign a; print pn; variable v; Select v such that Follows(a, pn) pattern a(v, _)]]></querystr>
+<stuans>add</stuans>
+<correct>add</correct>
+<time_taken>42.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Follows="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select a, pattern LHS variable RHS Ident">139</id><querystr><![CDATA[assign a; variable v; Select a such that Follows(a, 2) pattern a(v, _"first"_)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>41.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Follows="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select a, pattern LHS wildcard RHS wildcard">140</id><querystr><![CDATA[assign a; read r; variable v; Select a such that Follows(a, r) pattern a(v, _)]]></querystr>
+<stuans>2</stuans>
+<correct>2</correct>
+<time_taken>44.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Follows="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select r, pattern LHS wildcard RHS wildcard">141</id><querystr><![CDATA[assign a; read r; variable v; Select r such that Follows(a, r) pattern a(v, _)]]></querystr>
+<stuans>3</stuans>
+<correct>3</correct>
+<time_taken>39.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Follows="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select v, pattern LHS wildcard RHS wildcard">142</id><querystr><![CDATA[assign a; read r; variable v; Select v such that Follows(a, r) pattern a(v, _)]]></querystr>
+<stuans>y</stuans>
+<correct>y</correct>
+<time_taken>41.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Follows="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Select a, pattern LHS wildcard RHS wildcard">143</id><querystr><![CDATA[assign a; stmt s; Select a such that Follows(a, s) pattern a(_, _)]]></querystr>
+<stuans>1,17,2</stuans>
+<correct>1,2,17</correct>
+<time_taken>48.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Follows="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Select s, pattern LHS wildcard RHS wildcard">144</id><querystr><![CDATA[assign a; stmt s; Select s such that Follows(a, s) pattern a(_, _)]]></querystr>
+<stuans>18,2,3</stuans>
+<correct>2,3,18</correct>
+<time_taken>63.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Follows="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Select a, pattern LHS wildcard RHS Ident">145</id><querystr><![CDATA[assign a; if ifs; Select a such that Follows(a, ifs) pattern a(_, _"i"_)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>34.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Follows="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Select if, pattern LHS wildcard RHS Ident">146</id><querystr><![CDATA[assign a; if ifs; Select ifs such that Follows(a, ifs) pattern a(_, _"i"_)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>33.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Follows="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select a, pattern LHS variable RHS wildcard">147</id><querystr><![CDATA[assign a; variable v; Select a such that Follows(a, 11) pattern a(v, _)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>31.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Follows="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select v, pattern LHS variable RHS wildcard">148</id><querystr><![CDATA[assign a; variable v; Select v such that Follows(a, 11) pattern a(v, _)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>36.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Follows="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select a, pattern LHS variable RHS Ident">149</id><querystr><![CDATA[assign a; variable v; Select a such that Follows(a, 18) pattern a(v, _"add"_)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>33.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Follows="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select v, pattern LHS variable RHS Ident">150</id><querystr><![CDATA[assign a; variable v; Select v such that Follows(a, 18) pattern a(v, _"add"_)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>35.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Followsstar="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Additional merge test for Follows*. Select s, pattern LHS variable RHS wildcard">151</id><querystr><![CDATA[assign a; stmt s; variable v; Select s such that Follows*(s, a) pattern a(v, _)]]></querystr>
+<stuans>1,15,16</stuans>
+<correct>1,15,16</correct>
+<time_taken>79.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Followsstar="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select a, pattern LHS variable RHS wildcard">152</id><querystr><![CDATA[assign a; stmt s; variable v; Select a such that Follows*(s, a) pattern a(v, _)]]></querystr>
+<stuans>19,2</stuans>
+<correct>2,19</correct>
+<time_taken>77.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Followsstar="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select v, pattern LHS variable RHS wildcard">153</id><querystr><![CDATA[assign a; stmt s; variable v; Select v such that Follows*(s, a) pattern a(v, _)]]></querystr>
+<stuans>first,y</stuans>
+<correct>y,first</correct>
+<time_taken>74.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Followsstar="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select a, pattern LHS variable RHS wildcard">154</id><querystr><![CDATA[assign a; read r; variable v; Select a such that Follows*(r, a) pattern a(v, _)]]></querystr>
+<stuans>19</stuans>
+<correct>19</correct>
+<time_taken>44.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Followsstar="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select r, pattern LHS variable RHS wildcard">155</id><querystr><![CDATA[assign a; read r; variable v; Select r such that Follows*(r, a) pattern a(v, _)]]></querystr>
+<stuans>15</stuans>
+<correct>15</correct>
+<time_taken>41.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Followsstar="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select v, pattern LHS variable RHS wildcard">156</id><querystr><![CDATA[assign a; read r; variable v; Select v such that Follows*(r, a) pattern a(v, _)]]></querystr>
+<stuans>first</stuans>
+<correct>first</correct>
+<time_taken>44.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Followsstar="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select a, pattern LHS variable RHS Ident">157</id><querystr><![CDATA[assign a; variable v; Select a such that Follows*(a, 1) pattern a(v, _"z"_)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>35.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Followsstar="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select v, pattern LHS variable RHS Ident">158</id><querystr><![CDATA[assign a; variable v; Select v such that Follows*(a, 1) pattern a(v, _"z"_)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>39.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Followsstar="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Select a, pattern LHS wild card RHS wildcard">159</id><querystr><![CDATA[assign a; while w; Select a such that Follows*(a, w) pattern a(_, _)]]></querystr>
+<stuans>1,2</stuans>
+<correct>1,2</correct>
+<time_taken>53.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Followsstar="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Select w, pattern LHS wild card RHS wildcard">160</id><querystr><![CDATA[assign a; while w; Select w such that Follows*(a, w) pattern a(_, _)]]></querystr>
+<stuans>14</stuans>
+<correct>14</correct>
+<time_taken>39.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Followsstar="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Select a, pattern LHS wild card RHS wildcard">161</id><querystr><![CDATA[assign a; Select a such that Follows*(a, 13) pattern a(_, _)]]></querystr>
+<stuans>1,2</stuans>
+<correct>1,2</correct>
+<time_taken>36.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Followsstar="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Select a, pattern LHS wild card RHS Ident">162</id><querystr><![CDATA[assign a; Select a such that Follows*(a, 13) pattern a(_, _"x"_)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>33.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Followsstar="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Select a, pattern LHS wild card RHS Ident">163</id><querystr><![CDATA[assign a; Select a such that Follows*(a, 20) pattern a(_, _"i"_)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>42.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Followsstar="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Select a, pattern LHS wildcard RHS Ident">164</id><querystr><![CDATA[assign a, a1; Select a such that Follows*(a, a1) pattern a(_, _)]]></querystr>
+<stuans>1</stuans>
+<correct>1</correct>
+<time_taken>45.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Followsstar="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Select a1, pattern LHS wildcard RHS Ident">165</id><querystr><![CDATA[assign a, a1; Select a1 such that Follows*(a, a1) pattern a(_, _)]]></querystr>
+<stuans>2</stuans>
+<correct>2</correct>
+<time_taken>43.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Followsstar="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select a, pattern LHS variable RHS wildcard">166</id><querystr><![CDATA[assign a; print pn; variable v; Select a such that Follows*(a, pn) pattern a(v, _)]]></querystr>
+<stuans>1,17,2</stuans>
+<correct>1,2,17</correct>
+<time_taken>46.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Followsstar="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select pn, pattern LHS variable RHS wildcard">167</id><querystr><![CDATA[assign a; print pn; variable v; Select pn such that Follows*(a, pn) pattern a(v, _)]]></querystr>
+<stuans>18,20,21</stuans>
+<correct>18,20,21</correct>
+<time_taken>47.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Followsstar="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select v, pattern LHS variable RHS wildcard">168</id><querystr><![CDATA[assign a; print pn; variable v; Select v such that Follows*(a, pn) pattern a(v, _)]]></querystr>
+<stuans>add,x,y</stuans>
+<correct>x,y,add</correct>
+<time_taken>48.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Followsstar="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select a, pattern LHS variable RHS wildcard">169</id><querystr><![CDATA[assign a; variable v; Select a such that Follows*(a, 19) pattern a(v, _)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>37.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Followsstar="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select v, pattern LHS variable RHS wildcard">170</id><querystr><![CDATA[assign a; variable v; Select v such that Follows*(a, 19) pattern a(v, _)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>39.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Followsstar="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select a, pattern LHS variable RHS wildcard">171</id><querystr><![CDATA[assign a; variable v; Select a such that Follows*(a, 11) pattern a(v, _)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>36.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Followsstar="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select v, pattern LHS variable RHS wildcard">172</id><querystr><![CDATA[assign a; variable v; Select v such that Follows*(a, 11) pattern a(v, _)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>42.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Followsstar="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select a, pattern LHS variable RHS Ident">173</id><querystr><![CDATA[assign a; variable v; while w; Select a such that Follows*(a, w) pattern a(v, _"x"_)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>43.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Followsstar="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select w, pattern LHS variable RHS Ident">174</id><querystr><![CDATA[assign a; variable v; while w; Select w such that Follows*(a, w) pattern a(v, _"x"_)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>45.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Followsstar="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select v, pattern LHS variable RHS Ident">175</id><querystr><![CDATA[assign a; variable v; while w; Select v such that Follows*(a, w) pattern a(v, _"x"_)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>40.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Followsstar="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Select a, pattern LHS wildcard RHS wildcard">176</id><querystr><![CDATA[assign a; stmt s; Select a such that Follows*(a, s) pattern a(_, _)]]></querystr>
+<stuans>1,17,2</stuans>
+<correct>1,2,17</correct>
+<time_taken>81.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Followsstar="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Select s, pattern LHS wildcard RHS wildcard">177</id><querystr><![CDATA[assign a; stmt s; Select s such that Follows*(a, s) pattern a(_, _)]]></querystr>
+<stuans>12,13,14,18,2,20,21,3,4</stuans>
+<correct>2,3,4,12,13,14,18,20,21</correct>
+<time_taken>87.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Followsstar="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Select a, pattern LHS wildcard RHS Ident">178</id><querystr><![CDATA[assign a; stmt s; Select a such that Follows*(a, s) pattern a(_, _"first"_)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>76.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Followsstar="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Select s, pattern LHS wildcard RHS Ident">179</id><querystr><![CDATA[assign a; stmt s; Select s such that Follows*(a, s) pattern a(_, _"first"_)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>74.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Followsstar="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Select a, pattern LHS wildcard RHS Ident">180</id><querystr><![CDATA[assign a; Select a such that Follows*(a, 1) pattern a(_, _"x"_)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>36.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parent="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Queries 181 - 200 - Additional merge test for Parent. Select s, pattern LHS variable RHS wildcard">181</id><querystr><![CDATA[stmt s; assign a; variable v; Select s such that Parent(s, a) pattern a(v, _)]]></querystr>
+<stuans>14,16,6,9</stuans>
+<correct>6,9,14,16</correct>
+<time_taken>72.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parent="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select a, pattern LHS variable RHS wildcard">182</id><querystr><![CDATA[stmt s; assign a; variable v; Select a such that Parent(s, a) pattern a(v, _)]]></querystr>
+<stuans>11,17,19,7</stuans>
+<correct>7,11,17,19</correct>
+<time_taken>47.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parent="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select v, pattern LHS variable RHS wildcard">183</id><querystr><![CDATA[stmt s; assign a; variable v; Select v such that Parent(s, a) pattern a(v, _)]]></querystr>
+<stuans>add,first,i,z</stuans>
+<correct>i,z,add,first</correct>
+<time_taken>56.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parent="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select a, pattern LHS variable RHS wildcard">184</id><querystr><![CDATA[if ifs; assign a; variable v; Select a such that Parent(ifs, a) pattern a(v, _)]]></querystr>
+<stuans>11</stuans>
+<correct>11</correct>
+<time_taken>42.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parent="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select if, pattern LHS variable RHS wildcard">185</id><querystr><![CDATA[if ifs; assign a; variable v; Select ifs such that Parent(ifs, a) pattern a(v, _)]]></querystr>
+<stuans>9</stuans>
+<correct>9</correct>
+<time_taken>36.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parent="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select v, pattern LHS variable RHS wildcard">186</id><querystr><![CDATA[if ifs; assign a; variable v; Select v such that Parent(ifs, a) pattern a(v, _)]]></querystr>
+<stuans>z</stuans>
+<correct>z</correct>
+<time_taken>35.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parent="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select a, pattern LHS variable RHS Ident">187</id><querystr><![CDATA[assign a; while w; variable v; Select a such that Parent(w, a) pattern a(v, _"i"_)]]></querystr>
+<stuans>7</stuans>
+<correct>7</correct>
+<time_taken>37.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parent="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select w, pattern LHS variable RHS Ident">188</id><querystr><![CDATA[assign a; while w; variable v; Select w such that Parent(w, a) pattern a(v, _"i"_)]]></querystr>
+<stuans>6</stuans>
+<correct>6</correct>
+<time_taken>42.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parent="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select v, pattern LHS variable RHS Ident">189</id><querystr><![CDATA[assign a; while w; variable v; Select v such that Parent(w, a) pattern a(v, _"i"_)]]></querystr>
+<stuans>i</stuans>
+<correct>i</correct>
+<time_taken>34.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parent="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Select a, pattern LHS wildcard RHS wildcard">190</id><querystr><![CDATA[assign a; Select a such that Parent(14, a) pattern a(_, _)]]></querystr>
+<stuans>19</stuans>
+<correct>19</correct>
+<time_taken>35.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parent="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Select a, pattern LHS wildcard RHS wildcard">191</id><querystr><![CDATA[assign a; Select a such that Parent(4, a) pattern a(_, _)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>37.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parent="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Select a, pattern LHS wildcard RHS wildcard">192</id><querystr><![CDATA[assign a; read r; Select a such that Parent(r, a) pattern a(_, _)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>40.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parent="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Select r, pattern LHS wildcard RHS wildcard">193</id><querystr><![CDATA[assign a; read r; Select r such that Parent(r, a) pattern a(_, _)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>46.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parent="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Select a, pattern LHS wildcard RHS Ident">194</id><querystr><![CDATA[assign a; Select a such that Parent(14, a) pattern a(_, _"add"_)]]></querystr>
+<stuans>19</stuans>
+<correct>19</correct>
+<time_taken>35.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parent="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Select a, pattern LHS wildcard RHS Ident">195</id><querystr><![CDATA[assign a; stmt s; Select a such that Parent(s, a) pattern a(_, _"y"_)]]></querystr>
+<stuans>11</stuans>
+<correct>11</correct>
+<time_taken>47.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parent="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Select s, pattern LHS wildcard RHS Ident">196</id><querystr><![CDATA[assign a; stmt s; Select s such that Parent(s, a) pattern a(_, _"y"_)]]></querystr>
+<stuans>9</stuans>
+<correct>9</correct>
+<time_taken>49.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parent="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Select a, pattern LHS wildcard RHS Ident">197</id><querystr><![CDATA[assign a; stmt s; Select a such that Parent(s, a) pattern a(_, _"x"_)]]></querystr>
+<stuans>11</stuans>
+<correct>11</correct>
+<time_taken>47.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parent="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Select s, pattern LHS wildcard RHS Ident">198</id><querystr><![CDATA[assign a; stmt s; Select s such that Parent(s, a) pattern a(_, _"x"_)]]></querystr>
+<stuans>9</stuans>
+<correct>9</correct>
+<time_taken>46.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parent="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Select a, pattern LHS wildcard RHS wildcard">199</id><querystr><![CDATA[assign a; stmt s; Select a such that Parent(a, s) pattern a(_, _)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>55.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parent="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Select s, pattern LHS wildcard RHS wildcard">200</id><querystr><![CDATA[assign a; stmt s; Select s such that Parent(a, s) pattern a(_, _)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>57.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parentstar="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Queries 201 - 220 - Additional merge test for Parent*. Select s, pattern LHS variable RHS wildcard">201</id><querystr><![CDATA[assign a; stmt s; variable v; Select s such that Parent*(s, a) pattern a(v, _)]]></querystr>
+<stuans>14,16,4,6,9</stuans>
+<correct>4,6,9,14,16</correct>
+<time_taken>57.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parentstar="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select a, pattern LHS variable RHS wildcard">202</id><querystr><![CDATA[assign a; stmt s; variable v; Select a such that Parent*(s, a) pattern a(v, _)]]></querystr>
+<stuans>11,17,19,7</stuans>
+<correct>7,11,17,19</correct>
+<time_taken>75.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parentstar="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select v, pattern LHS variable RHS wildcard">203</id><querystr><![CDATA[assign a; stmt s; variable v; Select v such that Parent*(s, a) pattern a(v, _)]]></querystr>
+<stuans>add,first,i,z</stuans>
+<correct>i,z,add,first</correct>
+<time_taken>59.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parentstar="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select a, pattern LHS variable RHS wildcard">204</id><querystr><![CDATA[assign a; if ifs; variable v; Select a such that Parent*(ifs, a) pattern a(v, _)]]></querystr>
+<stuans>11,7</stuans>
+<correct>7,11</correct>
+<time_taken>36.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parentstar="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select if, pattern LHS variable RHS wildcard">205</id><querystr><![CDATA[assign a; if ifs; variable v; Select ifs such that Parent*(ifs, a) pattern a(v, _)]]></querystr>
+<stuans>4,9</stuans>
+<correct>4,9</correct>
+<time_taken>36.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parentstar="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select v, pattern LHS variable RHS wildcard">206</id><querystr><![CDATA[assign a; if ifs; variable v; Select v such that Parent*(ifs, a) pattern a(v, _)]]></querystr>
+<stuans>i,z</stuans>
+<correct>i,z</correct>
+<time_taken>40.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parentstar="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select a, pattern LHS variable RHS Ident">207</id><querystr><![CDATA[assign a; variable v; Select a such that Parent*(14, a) pattern a(v, _"add"_)]]></querystr>
+<stuans>19</stuans>
+<correct>19</correct>
+<time_taken>39.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parentstar="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select v, pattern LHS variable RHS Ident">208</id><querystr><![CDATA[assign a; variable v; Select v such that Parent*(14, a) pattern a(v, _"add"_)]]></querystr>
+<stuans>first</stuans>
+<correct>first</correct>
+<time_taken>39.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parentstar="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select a, pattern LHS variable RHS Ident">209</id><querystr><![CDATA[assign a; variable v; stmt s; Select a such that Parent*(s, a) pattern a(v, _"x"_)]]></querystr>
+<stuans>11</stuans>
+<correct>11</correct>
+<time_taken>56.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parentstar="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select s, pattern LHS variable RHS Ident">210</id><querystr><![CDATA[assign a; variable v; stmt s; Select s such that Parent*(s, a) pattern a(v, _"x"_)]]></querystr>
+<stuans>4,9</stuans>
+<correct>4,9</correct>
+<time_taken>64.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parentstar="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select v, pattern LHS variable RHS Ident">211</id><querystr><![CDATA[assign a; variable v; stmt s; Select v such that Parent*(s, a) pattern a(v, _"x"_)]]></querystr>
+<stuans>z</stuans>
+<correct>z</correct>
+<time_taken>58.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parentstar="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Select a, pattern LHS wildcard RHS wildcard">212</id><querystr><![CDATA[assign a; print pn; Select a such that Parent*(pn, a) pattern a(_, _)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>40.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parentstar="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Select pn, pattern LHS wildcard RHS wildcard">213</id><querystr><![CDATA[assign a; print pn; Select pn such that Parent*(pn, a) pattern a(_, _)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>43.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parentstar="1" UnnamedVar="3" Pattern="1" SuchThat="1" CondNum="7" RelNum="1" comment="Select a, pattern LHS wildcard RHS wildcard">214</id><querystr><![CDATA[assign a; Select a such that Parent*(a, _) pattern a(_, _)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>37.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parentstar="1" UnnamedVar="3" Pattern="1" SuchThat="1" CondNum="7" RelNum="1" comment="Select a, pattern LHS wildcard RHS wildcard">215</id><querystr><![CDATA[assign a; Select a such that Parent*(_, a) pattern a(_, _)]]></querystr>
+<stuans>11,17,19,7</stuans>
+<correct>7,11,17,19</correct>
+<time_taken>38.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parentstar="1" UnnamedVar="3" Pattern="1" SuchThat="1" CondNum="7" RelNum="1" comment="Select a, pattern LHS wildcard RHS Ident">216</id><querystr><![CDATA[assign a; Select a such that Parent*(_, a) pattern a(_, _"first"_)]]></querystr>
+<stuans>19</stuans>
+<correct>19</correct>
+<time_taken>33.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parentstar="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Select a, pattern LHS wildcard RHS Ident">217</id><querystr><![CDATA[assign a; Select a such that Parent*(4, a) pattern a(_, _"i"_)]]></querystr>
+<stuans>7</stuans>
+<correct>7</correct>
+<time_taken>35.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parentstar="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Select a, pattern LHS wildcard RHS Ident">218</id><querystr><![CDATA[assign a; while w; Select a such that Parent*(w, a) pattern a(_, _"add"_)]]></querystr>
+<stuans>19</stuans>
+<correct>19</correct>
+<time_taken>37.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parentstar="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Select w, pattern LHS wildcard RHS Ident">219</id><querystr><![CDATA[assign a; while w; Select w such that Parent*(w, a) pattern a(_, _"add"_)]]></querystr>
+<stuans>14</stuans>
+<correct>14</correct>
+<time_taken>36.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parentstar="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Select a, pattern LHS wildcard RHS Ident">220</id><querystr><![CDATA[assign a; Select a such that Parent*(4, a) pattern a(_, _"y"_)]]></querystr>
+<stuans>11</stuans>
+<correct>11</correct>
+<time_taken>34.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" UnnamedVar="1" Uses="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Queries 221 - 240 - Additional merge test for Uses. Select s, pattern LHS variable RHS wildcard">221</id><querystr><![CDATA[assign a; stmt s; variable v; Select s such that Uses(s, v) pattern a(v, _)]]></querystr>
+<stuans>10,11,14,16,18,19,20,4,5,6,7,8,9</stuans>
+<correct>4,5,6,7,8,9,10,11,14,16,18,19,20</correct>
+<time_taken>56.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" UnnamedVar="1" Uses="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select a, pattern LHS variable RHS wildcard">222</id><querystr><![CDATA[assign a; stmt s; variable v; Select a such that Uses(s, v) pattern a(v, _)]]></querystr>
+<stuans>1,11,17,19,2,7</stuans>
+<correct>1,2,7,11,17,19</correct>
+<time_taken>48.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" UnnamedVar="1" Uses="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select v, pattern LHS variable RHS wildcard">223</id><querystr><![CDATA[assign a; stmt s; variable v; Select v such that Uses(s, v) pattern a(v, _)]]></querystr>
+<stuans>add,first,i,x,y,z</stuans>
+<correct>x,y,i,z,add,first</correct>
+<time_taken>49.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" UnnamedVar="1" Uses="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select pn, pattern LHS variable RHS wildcard">224</id><querystr><![CDATA[assign a; print pn; variable v; Select pn such that Uses(pn, v) pattern a(v, _)]]></querystr>
+<stuans>10,18,20,5,8</stuans>
+<correct>5,8,10,18,20</correct>
+<time_taken>39.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" UnnamedVar="1" Uses="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select a, pattern LHS variable RHS wildcard">225</id><querystr><![CDATA[assign a; print pn; variable v; Select a such that Uses(pn, v) pattern a(v, _)]]></querystr>
+<stuans>1,11,17,19,2</stuans>
+<correct>1,2,11,17,19</correct>
+<time_taken>39.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" UnnamedVar="1" Uses="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select v, pattern LHS variable RHS wildcard">226</id><querystr><![CDATA[assign a; print pn; variable v; Select v such that Uses(pn, v) pattern a(v, _)]]></querystr>
+<stuans>add,first,x,y,z</stuans>
+<correct>x,y,z,add,first</correct>
+<time_taken>38.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" UnnamedVar="1" Uses="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select a, pattern LHS variable RHS wildcard">227</id><querystr><![CDATA[assign a; if ifs; variable v; Select a such that Uses(ifs, v) pattern a(v, _)]]></querystr>
+<stuans>1,11,2,7</stuans>
+<correct>1,2,7,11</correct>
+<time_taken>36.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" UnnamedVar="1" Uses="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select if, pattern LHS variable RHS wildcard">228</id><querystr><![CDATA[assign a; if ifs; variable v; Select ifs such that Uses(ifs, v) pattern a(v, _)]]></querystr>
+<stuans>4,9</stuans>
+<correct>4,9</correct>
+<time_taken>39.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" UnnamedVar="1" Uses="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select v, pattern LHS variable RHS wildcard">229</id><querystr><![CDATA[assign a; if ifs; variable v; Select v such that Uses(ifs, v) pattern a(v, _)]]></querystr>
+<stuans>i,x,y,z</stuans>
+<correct>x,z,i,y</correct>
+<time_taken>39.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" UnnamedVar="1" Uses="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select a, pattern LHS variable RHS wildcard">230</id><querystr><![CDATA[assign a; while w; variable v; Select a such that Uses(w, v) pattern a(v, _)]]></querystr>
+<stuans>17,19,7</stuans>
+<correct>7,17,19</correct>
+<time_taken>36.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" UnnamedVar="1" Uses="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select w, pattern LHS variable RHS wildcard">231</id><querystr><![CDATA[assign a; while w; variable v; Select w such that Uses(w, v) pattern a(v, _)]]></querystr>
+<stuans>14,16,6</stuans>
+<correct>6,14,16</correct>
+<time_taken>41.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" UnnamedVar="1" Uses="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select v, pattern LHS variable RHS wildcard">232</id><querystr><![CDATA[assign a; while w; variable v; Select v such that Uses(w, v) pattern a(v, _)]]></querystr>
+<stuans>add,first,i</stuans>
+<correct>i,first,add</correct>
+<time_taken>38.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" UnnamedVar="1" Uses="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select a, pattern LHS variable RHS Ident">233</id><querystr><![CDATA[assign a; variable v; Select a such that Uses(4, v) pattern a(v, _"y"_)]]></querystr>
+<stuans>11</stuans>
+<correct>11</correct>
+<time_taken>36.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" UnnamedVar="1" Uses="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select v, pattern LHS variable RHS Ident">234</id><querystr><![CDATA[assign a; variable v; Select v such that Uses(4, v) pattern a(v, _"y"_)]]></querystr>
+<stuans>z</stuans>
+<correct>z</correct>
+<time_taken>41.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" UnnamedVar="1" Uses="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select a, pattern LHS Ident RHS Ident">235</id><querystr><![CDATA[assign a; Select a such that Uses(a, "add") pattern a("first", _"first"_)]]></querystr>
+<stuans>19</stuans>
+<correct>19</correct>
+<time_taken>34.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" UnnamedVar="2" Uses="1" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Select a, pattern LHS wildcard RHS wildcard">236</id><querystr><![CDATA[assign a; variable v; Select a such that Uses(a, v) pattern a(_, _)]]></querystr>
+<stuans>11,19,7</stuans>
+<correct>7,11,19</correct>
+<time_taken>39.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" UnnamedVar="2" Uses="1" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Select v, pattern LHS wildcard RHS wildcard">237</id><querystr><![CDATA[assign a; variable v; Select v such that Uses(a, v) pattern a(_, _)]]></querystr>
+<stuans>add,first,i,x,y</stuans>
+<correct>i,x,y,first,add</correct>
+<time_taken>36.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" UnnamedVar="2" Uses="1" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Select a, pattern LHS wildcard RHS Ident">238</id><querystr><![CDATA[assign a; variable v; Select a such that Uses(a, v) pattern a(_, _"x"_)]]></querystr>
+<stuans>11</stuans>
+<correct>11</correct>
+<time_taken>37.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" UnnamedVar="2" Uses="1" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Select v, pattern LHS wildcard RHS Ident">239</id><querystr><![CDATA[assign a; variable v; Select v such that Uses(a, v) pattern a(_, _"x"_)]]></querystr>
+<stuans>x,y</stuans>
+<correct>x,y</correct>
+<time_taken>35.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" UnnamedVar="2" Uses="1" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Select a, pattern LHS wildcard RHS Ident">240</id><querystr><![CDATA[assign a; Select a such that Uses(a, "i") pattern a(_, _"x"_)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>34.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Modifies="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Queries 241 - 260 - Additional merge test for Modifies. Select s, pattern LHS variable RHS wildcard">241</id><querystr><![CDATA[assign a; variable v; stmt s; Select s such that Modifies(s, v) pattern a(v, _)]]></querystr>
+<stuans>1,11,12,14,15,16,17,19,2,3,4,6,7,9</stuans>
+<correct>1,2,3,4,6,7,9,11,12,14,15,16,17,19</correct>
+<time_taken>50.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Modifies="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select a, pattern LHS variable RHS wildcard">242</id><querystr><![CDATA[assign a; variable v; stmt s; Select a such that Modifies(s, v) pattern a(v, _)]]></querystr>
+<stuans>1,11,17,19,2,7</stuans>
+<correct>1,2,7,11,17,19</correct>
+<time_taken>46.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Modifies="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select v, pattern LHS variable RHS wildcard">243</id><querystr><![CDATA[assign a; variable v; stmt s; Select v such that Modifies(s, v) pattern a(v, _)]]></querystr>
+<stuans>add,first,i,x,y,z</stuans>
+<correct>x,y,i,z,add,first</correct>
+<time_taken>45.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Modifies="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select a, pattern LHS variable RHS wildcard">244</id><querystr><![CDATA[assign a; variable v; read r; Select a such that Modifies(r, v) pattern a(v, _)]]></querystr>
+<stuans>11,17,19</stuans>
+<correct>11,17,19</correct>
+<time_taken>40.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Modifies="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select r, pattern LHS variable RHS wildcard">245</id><querystr><![CDATA[assign a; variable v; read r; Select r such that Modifies(r, v) pattern a(v, _)]]></querystr>
+<stuans>12,15,3</stuans>
+<correct>3,12,15</correct>
+<time_taken>36.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Modifies="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select v, pattern LHS variable RHS wildcard">246</id><querystr><![CDATA[assign a; variable v; read r; Select v such that Modifies(r, v) pattern a(v, _)]]></querystr>
+<stuans>add,first,z</stuans>
+<correct>z,first,add</correct>
+<time_taken>35.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Modifies="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select a, pattern LHS variable RHS wildcard">247</id><querystr><![CDATA[assign a; variable v; if ifs; Select a such that Modifies(ifs, v) pattern a(v, _)]]></querystr>
+<stuans>11,7</stuans>
+<correct>7,11</correct>
+<time_taken>113.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Modifies="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select if, pattern LHS variable RHS wildcard">248</id><querystr><![CDATA[assign a; variable v; if ifs; Select ifs such that Modifies(ifs, v) pattern a(v, _)]]></querystr>
+<stuans>4,9</stuans>
+<correct>4,9</correct>
+<time_taken>36.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Modifies="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select v, pattern LHS variable RHS wildcard">249</id><querystr><![CDATA[assign a; variable v; if ifs; Select v such that Modifies(ifs, v) pattern a(v, _)]]></querystr>
+<stuans>i,z</stuans>
+<correct>i,z</correct>
+<time_taken>37.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Modifies="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select a, pattern LHS variable RHS wildcard">250</id><querystr><![CDATA[assign a; variable v; while w; Select a such that Modifies(w, v) pattern a(v, _)]]></querystr>
+<stuans>17,19,7</stuans>
+<correct>7,17,19</correct>
+<time_taken>39.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Modifies="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select w, pattern LHS variable RHS wildcard">251</id><querystr><![CDATA[assign a; variable v; while w; Select w such that Modifies(w, v) pattern a(v, _)]]></querystr>
+<stuans>14,16,6</stuans>
+<correct>6,14,16</correct>
+<time_taken>37.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Modifies="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select v, pattern LHS variable RHS wildcard">252</id><querystr><![CDATA[assign a; variable v; while w; Select v such that Modifies(w, v) pattern a(v, _)]]></querystr>
+<stuans>add,first,i</stuans>
+<correct>i,add,first</correct>
+<time_taken>37.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Modifies="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select a, pattern LHS variable RHS Ident">253</id><querystr><![CDATA[assign a; variable v; Select a such that Modifies(14, v) pattern a(v, _"add"_)]]></querystr>
+<stuans>19</stuans>
+<correct>19</correct>
+<time_taken>34.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Modifies="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select v, pattern LHS variable RHS Ident">254</id><querystr><![CDATA[assign a; variable v; Select v such that Modifies(14, v) pattern a(v, _"add"_)]]></querystr>
+<stuans>first</stuans>
+<correct>first</correct>
+<time_taken>35.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Modifies="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select a, pattern LHS Ident RHS Ident">255</id><querystr><![CDATA[assign a; Select a such that Modifies(a, "z") pattern a("z", _"y"_)]]></querystr>
+<stuans>11</stuans>
+<correct>11</correct>
+<time_taken>35.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Modifies="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Select a, pattern LHS wildcard RHS wildcard">256</id><querystr><![CDATA[assign a; variable v; Select a such that Modifies(a, v) pattern a(_, _)]]></querystr>
+<stuans>1,11,17,19,2,7</stuans>
+<correct>1,2,7,11,17,19</correct>
+<time_taken>38.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Modifies="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Select v, pattern LHS wildcard RHS wildcard">257</id><querystr><![CDATA[assign a; variable v; Select v such that Modifies(a, v) pattern a(_, _)]]></querystr>
+<stuans>add,first,i,x,y,z</stuans>
+<correct>x,y,i,z,add,first</correct>
+<time_taken>37.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Modifies="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Select a, pattern LHS wildcard RHS Ident">258</id><querystr><![CDATA[assign a; variable v; Select a such that Modifies(a, v) pattern a(_, _"first"_)]]></querystr>
+<stuans>19</stuans>
+<correct>19</correct>
+<time_taken>40.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Modifies="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Select v, pattern LHS wildcard RHS Ident">259</id><querystr><![CDATA[assign a; variable v; Select v such that Modifies(a, v) pattern a(_, _"first"_)]]></querystr>
+<stuans>first</stuans>
+<correct>first</correct>
+<time_taken>36.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Modifies="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Select a, pattern LHS wildcard RHS Ident">260</id><querystr><![CDATA[assign a; Select a such that Modifies(a, "i") pattern a(_, _"i"_)]]></querystr>
+<stuans>7</stuans>
+<correct>7</correct>
+<time_taken>34.000000</time_taken>
+<passed/>
+</query>
+</queries>
+</test_results>
