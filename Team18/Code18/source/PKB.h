@@ -60,13 +60,11 @@ public:
 	static bool setProcedure(PROC_NAME procName);
 
 	//Print Functions
-	static bool setPrint(STMT_NO stmtNo, VAR_NAME varName);
-	static VAR_NAME getPrintVar(STMT_NO stmtNo);
+	static bool setPrint(VAR_NAME varName);
 	static VAR_LIST getAllPrintVar();
 
 	//Read Functions
-	static bool setRead(STMT_NO stmtNo, VAR_NAME varName);
-	static VAR_NAME getReadVar(STMT_NO stmtNo);
+	static bool setRead(VAR_NAME varName);
 	static VAR_LIST getAllReadVar();
 
 	//Constant Functions
@@ -220,21 +218,7 @@ public:
 	static bool isNextTAnyIdent(PROG_LINE n2);
 	static bool isNextTIdentAny(PROG_LINE n1);
 	static bool isNextTIdentIdent(PROG_LINE n1, PROG_LINE n2);
-	/*
-	//Next Table Evaluation
-	static TABLE getNextAnyEnt();
-	static TABLE getNextIdentEnt(PROG_LINE n1);
-	static TABLE getNextEntAny();
-	static TABLE getNextEntIdent(PROG_LINE n2);
-	static TABLE getNextEntEnt();
 
-	static TABLE getNextTAnyEnt();
-	static TABLE getNextTIdentEnt(PROG_LINE n1);
-	static TABLE getNextTEntAny();
-	static TABLE getNextTEntIdent(PROG_LINE n2);
-	static TABLE getNextTEntEnt();
-	static TABLE getNextTSelf();
-	*/
 	static TABLE getNextAnyEnt(STMT_TYPE stmtType);
 	static TABLE getNextIdentEnt(PROG_LINE n1, STMT_TYPE stmtType);
 	static TABLE getNextEntAny(STMT_TYPE stmtType);
@@ -299,6 +283,15 @@ public:
 	static TABLE getAffectsTEntIdent(STMT_NO a2);
 	static TABLE getAffectsTEntEnt();
 	static TABLE getAffectsTSelf();
+
+	
+
+	//with Clause
+	static STMT_LIST getWithIdentAttr(IDENT iden, ENT_TYPE ent, ATTR attr);
+	static STMT_LIST getWithIdentLine(IDENT iden);
+	static TABLE getWithAttrAttr(ENT_TYPE ent1, ATTR attr1, ENT_TYPE ent2, ATTR attr2);
+	static TABLE getWithAttrLine(ENT_TYPE ent, ATTR attr);
+	static TABLE getWithLineLine();
 
 private:
 	static std::unordered_map<int, std::string> assignStmtTable;
