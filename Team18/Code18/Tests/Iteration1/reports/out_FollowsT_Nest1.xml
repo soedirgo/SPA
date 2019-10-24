@@ -1,63 +1,63 @@
 <?xml-stylesheet type="text/xsl" href="analysis.xsl"?>
 <test_results>
 <info>
-<name>Tests</name><parsing_time_taken>30.000000</parsing_time_taken>
+<name>Tests</name><parsing_time_taken>79.000000</parsing_time_taken>
 </info>
 <queries>
 <query>
 <id ReturnTuple="1" Followsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Queries 1 - 10 - Test Follows*(s,_) relation by selecting different stmt type. Select stmt, input stmt and read">1</id><querystr><![CDATA[stmt s; read r; Select s such that Follows*(s, r)]]></querystr>
 <stuans>1,16,2,20,21,3,4,7,8,9</stuans>
 <correct>1,2,3,4,7,8,9,16,20,21</correct>
-<time_taken>78.000000</time_taken>
+<time_taken>124.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Followsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select read, input stmt and read">2</id><querystr><![CDATA[stmt s; read r; Select r such that Follows*(s, r)]]></querystr>
 <stuans>23,3,7</stuans>
 <correct>3,7,23</correct>
-<time_taken>73.000000</time_taken>
+<time_taken>67.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Followsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select stmt, input stmt and print">3</id><querystr><![CDATA[stmt s; print pn; Select s such that Follows*(s, pn)]]></querystr>
 <stuans>1,10,11,12,14,16,17,18,2,20,21,23,3,4,7,8,9</stuans>
 <correct>1,2,3,4,7,8,9,10,11,12,14,16,17,18,20,21,23</correct>
-<time_taken>108.000000</time_taken>
+<time_taken>165.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Followsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select print, input stmt and print">4</id><querystr><![CDATA[stmt s; print pn; Select pn such that Follows*(s, pn)]]></querystr>
 <stuans>13,15,19,24,8</stuans>
 <correct>8,13,15,19,24</correct>
-<time_taken>99.000000</time_taken>
+<time_taken>122.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Followsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select stmt, input stmt and while">5</id><querystr><![CDATA[stmt s; while w; Select s such that Follows*(s, w)]]></querystr>
 <stuans>1,16,2,20,3,4,7,8,9</stuans>
 <correct>1,2,3,4,7,8,9,16,20</correct>
-<time_taken>67.000000</time_taken>
+<time_taken>204.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Followsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select while, input stmt and while">6</id><querystr><![CDATA[stmt s; while w; Select w such that Follows*(s, w)]]></querystr>
 <stuans>16,21</stuans>
 <correct>16,21</correct>
-<time_taken>64.000000</time_taken>
+<time_taken>198.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Followsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select stmt, input stmt and if">7</id><querystr><![CDATA[stmt s; if ifs; Select s such that Follows*(s, ifs)]]></querystr>
 <stuans>1,2,3,4,7,8</stuans>
 <correct>1,2,3,4,7,8</correct>
-<time_taken>63.000000</time_taken>
+<time_taken>71.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Followsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select if, input stmt and if">8</id><querystr><![CDATA[stmt s; if ifs; Select ifs such that Follows*(s, ifs)]]></querystr>
 <stuans>4,9</stuans>
 <correct>4,9</correct>
-<time_taken>59.000000</time_taken>
+<time_taken>58.000000</time_taken>
 <passed/>
 </query>
 <query>
@@ -78,259 +78,259 @@
 <id ReturnTuple="1" Followsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Queries 11 - 20 Test Follows*(_,s) relation by selecting different stmt type. Select read, input read and stmt">11</id><querystr><![CDATA[read r; stmt s; Select r such that Follows*(r, s)]]></querystr>
 <stuans>23,3,7</stuans>
 <correct>3,7,23</correct>
-<time_taken>73.000000</time_taken>
+<time_taken>83.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Followsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select stmt, input read and stmt">12</id><querystr><![CDATA[read r; stmt s; Select s such that Follows*(r, s)]]></querystr>
 <stuans>16,20,21,23,24,4,7,8,9</stuans>
 <correct>4,7,8,9,16,20,21,23,24</correct>
-<time_taken>79.000000</time_taken>
+<time_taken>163.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Followsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select print, input print and stmt">13</id><querystr><![CDATA[print pn; stmt s; Select pn such that Follows*(pn, s)]]></querystr>
 <stuans>8</stuans>
 <correct>8</correct>
-<time_taken>94.000000</time_taken>
+<time_taken>120.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Followsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select stmt, input print and stmt">14</id><querystr><![CDATA[print pn; stmt s; Select s such that Follows*(pn, s)]]></querystr>
 <stuans>16,20,21,23,24,9</stuans>
 <correct>9,16,20,21,23,24</correct>
-<time_taken>93.000000</time_taken>
+<time_taken>110.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Followsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select while, input while and stmt">15</id><querystr><![CDATA[while w; stmt s; Select w such that Follows*(w, s)]]></querystr>
 <stuans>16,21</stuans>
 <correct>16,21</correct>
-<time_taken>56.000000</time_taken>
+<time_taken>64.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Followsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select stmt, input while and stmt">16</id><querystr><![CDATA[while w; stmt s; Select s such that Follows*(w, s)]]></querystr>
 <stuans>20,21,23,24</stuans>
 <correct>20,21,23,24</correct>
-<time_taken>59.000000</time_taken>
+<time_taken>109.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Followsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select if, input if and stmt">17</id><querystr><![CDATA[if ifs; stmt s; Select ifs such that Follows*(ifs, s)]]></querystr>
 <stuans>4,9</stuans>
 <correct>4,9</correct>
-<time_taken>59.000000</time_taken>
+<time_taken>102.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Followsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select stmt, input if and stmt">18</id><querystr><![CDATA[if ifs; stmt s; Select s such that Follows*(ifs, s)]]></querystr>
 <stuans>16,20,21,23,24,7,8,9</stuans>
 <correct>7,8,9,16,20,21,23,24</correct>
-<time_taken>66.000000</time_taken>
+<time_taken>161.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Followsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="input stmt# and stmt">19</id><querystr><![CDATA[stmt s; Select s such that Follows*(7, s)]]></querystr>
 <stuans>16,20,21,23,24,8,9</stuans>
 <correct>8,9,16,20,21,23,24</correct>
-<time_taken>50.000000</time_taken>
+<time_taken>117.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Followsstar="1" UnnamedVar="1" SuchThat="1" CondNum="4" RelNum="1" comment="input wildcard and stmt">20</id><querystr><![CDATA[stmt s; Select s such that Follows*(_, s)]]></querystr>
 <stuans>11,12,13,15,16,18,19,2,20,21,23,24,3,4,7,8,9</stuans>
 <correct>2,3,4,7,8,9,11,12,13,15,16,18,19,20,21,23,24</correct>
-<time_taken>56.000000</time_taken>
+<time_taken>97.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Followsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Queries 21 - 24 - Test Follows* with different stmt type. Select assign, input assign and while">21</id><querystr><![CDATA[assign a; while w; Select a such that Follows*(a, w)]]></querystr>
 <stuans>1,2,20</stuans>
 <correct>1,2,20</correct>
-<time_taken>47.000000</time_taken>
+<time_taken>66.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Followsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select while, input assign and while">22</id><querystr><![CDATA[assign a; while w; Select w such that Follows*(a, w)]]></querystr>
 <stuans>16,21</stuans>
 <correct>16,21</correct>
-<time_taken>44.000000</time_taken>
+<time_taken>101.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Followsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select print, input print and read">23</id><querystr><![CDATA[print pn; read r; Select pn such that Follows*(pn, r)]]></querystr>
 <stuans>8</stuans>
 <correct>8</correct>
-<time_taken>38.000000</time_taken>
+<time_taken>96.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Followsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select read, input print and read">24</id><querystr><![CDATA[print pn; read r; Select r such that Follows*(pn, r)]]></querystr>
 <stuans>23</stuans>
 <correct>23</correct>
-<time_taken>38.000000</time_taken>
+<time_taken>89.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Followsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Queries 25 - 28 - Test Follows* with different stmt# and stmt type. input stmt# and read">25</id><querystr><![CDATA[read r; Select r such that Follows*(3, r)]]></querystr>
 <stuans>23,7</stuans>
 <correct>7,23</correct>
-<time_taken>33.000000</time_taken>
+<time_taken>51.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Followsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="input read and stmt#">26</id><querystr><![CDATA[read r; Select r such that Follows*(r, 13)]]></querystr>
 <stuans></stuans>
 <correct></correct>
-<time_taken>33.000000</time_taken>
+<time_taken>49.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Followsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="input stmt# and if">27</id><querystr><![CDATA[if ifs; Select ifs such that Follows*(6, ifs)]]></querystr>
 <stuans></stuans>
 <correct></correct>
-<time_taken>32.000000</time_taken>
+<time_taken>49.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Followsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="input if and stmt#">28</id><querystr><![CDATA[if ifs; Select ifs such that Follows*(ifs, 7)]]></querystr>
 <stuans>4</stuans>
 <correct>4</correct>
-<time_taken>32.000000</time_taken>
+<time_taken>52.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Followsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Queries 29 - 36 Test sequential stmt#. Select procedure, input sequential stmt# - true">29</id><querystr><![CDATA[procedure proc; Select proc such that Follows*(1, 2)]]></querystr>
 <stuans>FollowsTNest1</stuans>
 <correct>FollowsTNest1</correct>
-<time_taken>31.000000</time_taken>
+<time_taken>51.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Followsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select procedure, input sequential stmt# - false">30</id><querystr><![CDATA[procedure proc; Select proc such that Follows*(24, 25)]]></querystr>
 <stuans></stuans>
 <correct></correct>
-<time_taken>30.000000</time_taken>
+<time_taken>48.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Followsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select procedure, input sequential stmt# - reverse">31</id><querystr><![CDATA[procedure proc; Select proc such that Follows*(2, 1)]]></querystr>
 <stuans></stuans>
 <correct></correct>
-<time_taken>32.000000</time_taken>
+<time_taken>49.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Followsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select variable, input sequential stmt# - nested, true">32</id><querystr><![CDATA[variable v; Select v such that Follows*(11, 12)]]></querystr>
 <stuans>i,ijk,j,k,mod,test,x,y,z</stuans>
 <correct>x,y,z,i,j,k,ijk,mod,test</correct>
-<time_taken>31.000000</time_taken>
+<time_taken>50.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Followsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select variable, input sequential stmt# - nested, false">33</id><querystr><![CDATA[variable v; Select v such that Follows*(13, 14)]]></querystr>
 <stuans></stuans>
 <correct></correct>
-<time_taken>30.000000</time_taken>
+<time_taken>87.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Followsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select variable, input sequential stmt# - nested, reverse">34</id><querystr><![CDATA[variable v; Select v such that Follows*(12, 11)]]></querystr>
 <stuans></stuans>
 <correct></correct>
-<time_taken>29.000000</time_taken>
+<time_taken>117.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Followsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select variable, input sequential stmt# - into nest">35</id><querystr><![CDATA[variable v; Select v such that Follows*(16, 17)]]></querystr>
 <stuans></stuans>
 <correct></correct>
-<time_taken>31.000000</time_taken>
+<time_taken>98.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Followsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select variable, input sequential stmt# - out of nest">36</id><querystr><![CDATA[variable v; Select v such that Follows*(15, 16)]]></querystr>
 <stuans></stuans>
 <correct></correct>
-<time_taken>31.000000</time_taken>
+<time_taken>46.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Followsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Queries 37 - 44 - Test distant stmt#. Select read, input distant stmt# - true">37</id><querystr><![CDATA[read r; Select r such that Follows*(9, 16)]]></querystr>
 <stuans>23,3,7</stuans>
 <correct>3,7,23</correct>
-<time_taken>31.000000</time_taken>
+<time_taken>37.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Followsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select read, input distant stmt# - false">38</id><querystr><![CDATA[read r; Select r such that Follows*(1, 25)]]></querystr>
 <stuans></stuans>
 <correct></correct>
-<time_taken>32.000000</time_taken>
+<time_taken>35.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Followsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select read, input distant stmt# - reverse">39</id><querystr><![CDATA[read r; Select r such that Follows*(16, 9)]]></querystr>
 <stuans></stuans>
 <correct></correct>
-<time_taken>32.000000</time_taken>
+<time_taken>33.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Followsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select print, input distant stmt# - nested, true">40</id><querystr><![CDATA[print pn; Select pn such that Follows*(17, 19)]]></querystr>
 <stuans>13,15,19,24,8</stuans>
 <correct>8,13,15,19,24</correct>
-<time_taken>32.000000</time_taken>
+<time_taken>70.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Followsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select print, input distant stmt# - nested, false">41</id><querystr><![CDATA[print pn; Select pn such that Follows*(17, 22)]]></querystr>
 <stuans></stuans>
 <correct></correct>
-<time_taken>31.000000</time_taken>
+<time_taken>80.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Followsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select print, input distant stmt# - nested, reverse">42</id><querystr><![CDATA[print pn; Select pn such that Follows*(19, 17)]]></querystr>
 <stuans></stuans>
 <correct></correct>
-<time_taken>31.000000</time_taken>
+<time_taken>51.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Followsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select print, input distant stmt# - into nest">43</id><querystr><![CDATA[print pn; Select pn such that Follows*(4, 11)]]></querystr>
 <stuans></stuans>
 <correct></correct>
-<time_taken>32.000000</time_taken>
+<time_taken>67.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Followsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select print, input distant stmt# - out of nest">44</id><querystr><![CDATA[print pn; Select pn such that Follows*(15, 21)]]></querystr>
 <stuans></stuans>
 <correct></correct>
-<time_taken>31.000000</time_taken>
+<time_taken>54.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Followsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Query 45 - Test stmt that follows itself">45</id><querystr><![CDATA[stmt s; Select s such that Follows*(s, s)]]></querystr>
 <stuans></stuans>
 <correct></correct>
-<time_taken>30.000000</time_taken>
+<time_taken>38.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Followsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Queries 46 - 49 - Test first stmt in if/while. input while first stmt# and stmt - true">46</id><querystr><![CDATA[stmt s; Select s such that Follows*(17, s)]]></querystr>
 <stuans>18,19</stuans>
 <correct>18,19</correct>
-<time_taken>44.000000</time_taken>
+<time_taken>46.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Followsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="input while first stmt# and stmt - false">47</id><querystr><![CDATA[stmt s; Select s such that Follows*(22, s)]]></querystr>
 <stuans></stuans>
 <correct></correct>
-<time_taken>46.000000</time_taken>
+<time_taken>43.000000</time_taken>
 <passed/>
 </query>
 <query>
@@ -344,105 +344,105 @@
 <id ReturnTuple="1" Followsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="input if first stmt# and stmt - false">49</id><querystr><![CDATA[stmt s; Select s such that Follows*(6, s)]]></querystr>
 <stuans></stuans>
 <correct></correct>
-<time_taken>54.000000</time_taken>
+<time_taken>45.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Followsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Queries 50 - 53 - Test last stmt in if/while. input stmt and while last stmt# - true">50</id><querystr><![CDATA[stmt s; Select s such that Follows*(s, 19)]]></querystr>
 <stuans>17,18</stuans>
 <correct>17,18</correct>
-<time_taken>47.000000</time_taken>
+<time_taken>70.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Followsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="input stmt and while last stmt# - false">51</id><querystr><![CDATA[stmt s; Select s such that Follows*(s, 22)]]></querystr>
 <stuans></stuans>
 <correct></correct>
-<time_taken>47.000000</time_taken>
+<time_taken>94.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Followsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="input stmt and if last stmt# - true">52</id><querystr><![CDATA[stmt s; Select s such that Follows*(s, 15)]]></querystr>
 <stuans>14</stuans>
 <correct>14</correct>
-<time_taken>45.000000</time_taken>
+<time_taken>67.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Followsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="input stmt and if last stmt# - false">53</id><querystr><![CDATA[stmt s; Select s such that Follows*(s, 6)]]></querystr>
 <stuans></stuans>
 <correct></correct>
-<time_taken>43.000000</time_taken>
+<time_taken>80.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Followsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Queries 54 - 57 - Test select all stmt that are nested (while/if) and followed by/follows stmt#. input stmt and stmt# nested in while">54</id><querystr><![CDATA[stmt s; Select s such that Follows*(s, 18)]]></querystr>
 <stuans>17</stuans>
 <correct>17</correct>
-<time_taken>46.000000</time_taken>
+<time_taken>70.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Followsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="input stmt# nested in while and stmt">55</id><querystr><![CDATA[stmt s; Select s such that Follows*(18, s)]]></querystr>
 <stuans>19</stuans>
 <correct>19</correct>
-<time_taken>46.000000</time_taken>
+<time_taken>73.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Followsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="input stmt and stmt# nested in if">56</id><querystr><![CDATA[stmt s; Select s such that Follows*(s, 11)]]></querystr>
 <stuans>10</stuans>
 <correct>10</correct>
-<time_taken>47.000000</time_taken>
+<time_taken>76.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Followsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="input stmt# nested in if and stmt">57</id><querystr><![CDATA[stmt s; Select s such that Follows*(11, s)]]></querystr>
 <stuans>12,13</stuans>
 <correct>12,13</correct>
-<time_taken>46.000000</time_taken>
+<time_taken>69.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Followsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Queries 58 - 59 - Test first stmt of procedure. input first stmt# and stmt">58</id><querystr><![CDATA[stmt s; Select s such that Follows*(1, s)]]></querystr>
 <stuans>16,2,20,21,23,24,3,4,7,8,9</stuans>
 <correct>2,3,4,7,8,9,16,20,21,23,24</correct>
-<time_taken>50.000000</time_taken>
+<time_taken>153.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Followsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="input stmt and first stmt#">59</id><querystr><![CDATA[stmt s; Select s such that Follows*(s, 1)]]></querystr>
 <stuans></stuans>
 <correct></correct>
-<time_taken>45.000000</time_taken>
+<time_taken>94.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Followsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Queries 60 - 61 - Test last stmt of procedure. input last stmt# and stmt">60</id><querystr><![CDATA[stmt s; Select s such that Follows*(24, s)]]></querystr>
 <stuans></stuans>
 <correct></correct>
-<time_taken>46.000000</time_taken>
+<time_taken>92.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Followsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="input stmt and last stmt#">61</id><querystr><![CDATA[stmt s; Select s such that Follows*(s, 24)]]></querystr>
 <stuans>1,16,2,20,21,23,3,4,7,8,9</stuans>
 <correct>1,2,3,4,7,8,9,16,20,21,23</correct>
-<time_taken>51.000000</time_taken>
+<time_taken>130.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Followsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Queries 62 - 63 Test select all stmt that are followed by/follows. Select stmt, input stmt and stmt1">62</id><querystr><![CDATA[stmt s, s1; Select s such that Follows*(s, s1)]]></querystr>
 <stuans>1,10,11,12,14,16,17,18,2,20,21,23,3,4,7,8,9</stuans>
 <correct>1,2,3,4,7,8,9,10,11,12,14,16,17,18,20,21,23</correct>
-<time_taken>95.000000</time_taken>
+<time_taken>143.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Followsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select stmt1, input stmt and stmt1">63</id><querystr><![CDATA[stmt s, s1; Select s1 such that Follows*(s, s1)]]></querystr>
 <stuans>11,12,13,15,16,18,19,2,20,21,23,24,3,4,7,8,9</stuans>
 <correct>2,3,4,7,8,9,11,12,13,15,16,18,19,20,21,23,24</correct>
-<time_taken>86.000000</time_taken>
+<time_taken>88.000000</time_taken>
 <passed/>
 </query>
 </queries>

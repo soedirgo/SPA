@@ -215,7 +215,7 @@ int Parser::Parse(string filename) {
 			string readArg = parseRead(line);
 			//Sets stmt information in PKB and then sets modifies variable for that stmt
 			pkb.setStmt(to_string(stmtNo), "read");
-			pkb.setRead(to_string(stmtNo), readArg);
+			pkb.setRead(readArg);
 			pkb.setModifiesS(to_string(stmtNo), readArg);
 			pkb.setVariable(readArg);
 			currProc.addModifies(readArg);
@@ -244,7 +244,7 @@ int Parser::Parse(string filename) {
 			string printArg = parsePrint(line);
 			//Sets stmt information in PKB and then sets modifies variable for that stmt
 			pkb.setStmt(to_string(stmtNo), "print");
-			pkb.setPrint(to_string(stmtNo), printArg);
+			pkb.setPrint(printArg);
 			pkb.setUsesS(to_string(stmtNo), printArg);
 			pkb.setVariable(printArg);
 			currProc.addUses(printArg);
@@ -788,7 +788,7 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 			readArg = parseRead(readArg);
 			//Sets stmt information in PKB and then sets modifies variable for that stmt
 			pkb.setStmt(to_string(currStmtNo), "read");
-			pkb.setRead(to_string(currStmtNo), readArg);
+			pkb.setRead(readArg);
 			pkb.setParent(to_string(startStmtNo), to_string(currStmtNo));
 
 			pkb.setModifiesS(to_string(currStmtNo), readArg);
@@ -854,7 +854,7 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 			printArg = parsePrint(line);
 			//Sets stmt information in PKB and then sets modifies variable for that stmt
 			pkb.setStmt(to_string(currStmtNo), "print");
-			pkb.setPrint(to_string(currStmtNo), printArg);
+			pkb.setPrint(printArg);
 			pkb.setParent(to_string(startStmtNo), to_string(currStmtNo));
 
 			pkb.setUsesS(to_string(currStmtNo), printArg);
@@ -1239,7 +1239,7 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 			readArg = parseRead(readArg);
 			//Sets stmt information in PKB and then sets modifies variable for that stmt
 			pkb.setStmt(to_string(currStmtNo), "read");
-			pkb.setRead(to_string(currStmtNo), readArg);
+			pkb.setRead(readArg);
 			pkb.setParent(to_string(startStmtNo), to_string(currStmtNo));
 
 			pkb.setModifiesS(to_string(currStmtNo), readArg);
@@ -1282,7 +1282,7 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 			printArg = parsePrint(line);
 			//Sets stmt information in PKB and then sets modifies variable for that stmt
 			pkb.setStmt(to_string(currStmtNo), "print");
-			pkb.setPrint(to_string(currStmtNo), printArg);
+			pkb.setPrint(printArg);
 			pkb.setParent(to_string(startStmtNo), to_string(currStmtNo));
 
 			pkb.setUsesS(to_string(currStmtNo), printArg);

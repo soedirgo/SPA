@@ -10,14 +10,15 @@ public:
 	static bool setCallProc(PROC_NAME caller, PROC_NAME callee);
 	static bool setCallTProc(PROC_NAME caller, PROC_NAME callee);
 
-	static PROC_NAME getCallProcByStmt(STMT_NO stmtNo); //not tested
+	static PROC_NAME getCallProcByStmt(STMT_NO stmtNo);
 	//	static STMT_LIST getCallStmtsByProc(STMT_NO stmtNo); //to be implemented
 	static TABLE getCallProcTable();
 	static TABLE getCallStmtTable();
 	static PROC_LIST getCalleeProc(PROC_NAME caller);
 	static PROC_LIST getCallerProc(PROC_NAME callee);
 	static PROC_LIST getAllCallProc();
-
+	static PROC_LIST getAllCalleeProc();
+	
 	//Bool Evaluation
 	static bool isCallsAnyAny();
 	static bool isCallsAnyIdent(PROC_NAME p2);

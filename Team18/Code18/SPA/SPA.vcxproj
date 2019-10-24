@@ -32,6 +32,7 @@
     <ClCompile Include="..\source\PKBStmt.cpp" />
     <ClCompile Include="..\source\PKBUses.cpp" />
     <ClCompile Include="..\source\PKBVariable.cpp" />
+    <ClCompile Include="..\source\PKBWith.cpp" />
     <ClCompile Include="..\source\Query.cpp" />
     <ClCompile Include="..\source\QueryParser.cpp" />
     <ClCompile Include="..\source\PatternProcessor.cpp" />
@@ -63,6 +64,7 @@
     <ClInclude Include="..\source\PKBStmt.h" />
     <ClInclude Include="..\source\PKBUses.h" />
     <ClInclude Include="..\source\PKBVariable.h" />
+    <ClInclude Include="..\source\PKBWith.h" />
     <ClInclude Include="..\source\Preprocessor.h" />
     <ClInclude Include="..\source\Query.h" />
     <ClInclude Include="..\source\QueryParser.h" />

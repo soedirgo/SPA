@@ -101,10 +101,10 @@ TABLE PKBFollows::getFollowsAnyEnt(STMT_TYPE type) {
 	STMT_LIST list;
 	STMT_NO s;
 	if (type == "stmt" || type == "prog_line") {
-		list = PKBStmt::getAllStmt();
+		list = PKBStmt::getStmts();
 	}
 	else {
-		list = PKBStmt::getAllStmtByType(type);
+		list = PKBStmt::getStmtsByType(type);
 	}
 	for (auto iter : list) {
 		s = iter.front();
@@ -124,10 +124,10 @@ TABLE PKBFollows::getFollowsEntAny(STMT_TYPE type) {
 	STMT_LIST list;
 	STMT_NO s;
 	if (type == "stmt" || type == "prog_line") {
-		list = PKBStmt::getAllStmt();
+		list = PKBStmt::getStmts();
 	}
 	else {
-		list = PKBStmt::getAllStmtByType(type);
+		list = PKBStmt::getStmtsByType(type);
 	}
 	for (auto iter : list) {
 		s = iter.front();
@@ -147,10 +147,10 @@ TABLE PKBFollows::getFollowsIdentEnt(STMT_NO stmtNo, STMT_TYPE type) {
 	STMT_LIST list;
 	STMT_NO s;
 	if (type == "stmt" || type == "prog_line") {
-		list = PKBStmt::getAllStmt();
+		list = PKBStmt::getStmts();
 	}
 	else {
-		list = PKBStmt::getAllStmtByType(type);
+		list = PKBStmt::getStmtsByType(type);
 	}
 	for (auto iter : list) {
 		s = iter.front();
@@ -170,10 +170,10 @@ TABLE PKBFollows::getFollowsEntIdent(STMT_TYPE type, STMT_NO stmtNo) {
 	STMT_LIST list;
 	STMT_NO s;
 	if (type == "stmt" || type == "prog_line") {
-		list = PKBStmt::getAllStmt();
+		list = PKBStmt::getStmts();
 	}
 	else {
-		list = PKBStmt::getAllStmtByType(type);
+		list = PKBStmt::getStmtsByType(type);
 	}
 	for (auto iter : list) {
 		s = iter.front();
@@ -196,16 +196,16 @@ TABLE PKBFollows::getFollowsEntEnt(STMT_TYPE type1, STMT_TYPE type2) {
 	}
 	STMT_LIST list1, list2;
 	if (type1 == "stmt" || type1 == "prog_line") {
-		list1 = PKBStmt::getAllStmt();
+		list1 = PKBStmt::getStmts();
 	}
 	else {
-		list1 = PKBStmt::getAllStmtByType(type1);
+		list1 = PKBStmt::getStmtsByType(type1);
 	}
 	if (type2 == "stmt" || type2 == "prog_line") {
-		list2 = PKBStmt::getAllStmt();
+		list2 = PKBStmt::getStmts();
 	}
 	else {
-		list2 = PKBStmt::getAllStmtByType(type2);
+		list2 = PKBStmt::getStmtsByType(type2);
 	}
 
 	STMT_NO s1;
@@ -233,10 +233,10 @@ TABLE PKBFollows::getFollowsTAnyEnt(STMT_TYPE type) {
 	STMT_LIST list;
 	STMT_NO s;
 	if (type == "stmt" || type == "prog_line") {
-		list = PKBStmt::getAllStmt();
+		list = PKBStmt::getStmts();
 	}
 	else {
-		list = PKBStmt::getAllStmtByType(type);
+		list = PKBStmt::getStmtsByType(type);
 	}
 	for (auto iter : list) {
 		s = iter.front();
@@ -256,10 +256,10 @@ TABLE PKBFollows::getFollowsTEntAny(STMT_TYPE type) {
 	STMT_LIST list;
 	STMT_NO s;
 	if (type == "stmt" || type == "prog_line") {
-		list = PKBStmt::getAllStmt();
+		list = PKBStmt::getStmts();
 	}
 	else {
-		list = PKBStmt::getAllStmtByType(type);
+		list = PKBStmt::getStmtsByType(type);
 	}
 	for (auto iter : list) {
 		s = iter.front();
@@ -279,10 +279,10 @@ TABLE PKBFollows::getFollowsTIdentEnt(STMT_NO stmtNo, STMT_TYPE type) {
 	STMT_LIST list;
 	STMT_NO s;
 	if (type == "stmt" || type == "prog_line") {
-		list = PKBStmt::getAllStmt();
+		list = PKBStmt::getStmts();
 	}
 	else {
-		list = PKBStmt::getAllStmtByType(type);
+		list = PKBStmt::getStmtsByType(type);
 	}
 	for (auto iter : list) {
 		s = iter.front();
@@ -302,10 +302,10 @@ TABLE PKBFollows::getFollowsTEntIdent(STMT_TYPE type, STMT_NO stmtNo) {
 	STMT_LIST list;
 	STMT_NO s;
 	if (type == "stmt" || type == "prog_line") {
-		list = PKBStmt::getAllStmt();
+		list = PKBStmt::getStmts();
 	}
 	else {
-		list = PKBStmt::getAllStmtByType(type);
+		list = PKBStmt::getStmtsByType(type);
 	}
 	for (auto iter : list) {
 		s = iter.front();
@@ -328,16 +328,16 @@ TABLE PKBFollows::getFollowsTEntEnt(STMT_TYPE type1, STMT_TYPE type2) {
 	}
 	STMT_LIST list1, list2;
 	if (type1 == "stmt" || type1 == "prog_line") {
-		list1 = PKBStmt::getAllStmt();
+		list1 = PKBStmt::getStmts();
 	}
 	else {
-		list1 = PKBStmt::getAllStmtByType(type1);
+		list1 = PKBStmt::getStmtsByType(type1);
 	}
 	if (type2 == "stmt" || type2 == "prog_line") {
-		list2 = PKBStmt::getAllStmt();
+		list2 = PKBStmt::getStmts();
 	}
 	else {
-		list2 = PKBStmt::getAllStmtByType(type2);
+		list2 = PKBStmt::getStmtsByType(type2);
 	}
 
 	STMT_NO s1;

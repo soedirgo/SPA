@@ -1,133 +1,133 @@
 <?xml-stylesheet type="text/xsl" href="analysis.xsl"?>
 <test_results>
 <info>
-<name>Tests</name><parsing_time_taken>56.000000</parsing_time_taken>
+<name>Tests</name><parsing_time_taken>132.000000</parsing_time_taken>
 </info>
 <queries>
 <query>
 <id ReturnBoolean="1" Follows="2" SuchThat="1" CondNum="4" RelNum="2" comment="Follows Follows - TRUE">1</id><querystr><![CDATA[read rd, rd2; if ifs; Select BOOLEAN such that Follows(rd,rd2) and Follows(rd2,ifs)]]></querystr>
 <stuans>TRUE</stuans>
 <correct>TRUE</correct>
-<time_taken>48.000000</time_taken>
+<time_taken>58.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnBoolean="1" Followsstar="3" SuchThat="1" CondNum="5" RelNum="3" comment="Follows* Follows* - TRUE">2</id><querystr><![CDATA[read rd, rd2; print pr1,pr2; Select BOOLEAN such that Follows*(rd,rd2) and Follows*(rd2,pr1) and Follows*(pr1,pr2)]]></querystr>
 <stuans>TRUE</stuans>
 <correct>TRUE</correct>
-<time_taken>73.000000</time_taken>
+<time_taken>128.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnBoolean="1" Follows="2" SuchThat="1" CondNum="4" RelNum="2" comment="Follows Follows - FALSE">3</id><querystr><![CDATA[read rd, rd2; print pr; Select BOOLEAN such that Follows(rd,rd2) and Follows(rd2,pr)]]></querystr>
 <stuans>FALSE</stuans>
 <correct>FALSE</correct>
-<time_taken>42.000000</time_taken>
+<time_taken>78.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnBoolean="1" Follows="1" Parent="1" SuchThat="1" CondNum="4" RelNum="2" comment="Follows Parent - TRUE">4</id><querystr><![CDATA[read rd; while w; if ifs; assign a; Select BOOLEAN such that Follows(rd,w) and Parent(w,a)]]></querystr>
 <stuans>TRUE</stuans>
 <correct>TRUE</correct>
-<time_taken>35.000000</time_taken>
+<time_taken>51.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnBoolean="1" Follows="1" Followsstar="1" Parent="1" SuchThat="1" CondNum="5" RelNum="3" comment="Follows* Parent - TRUE">5</id><querystr><![CDATA[while w; call cl; print pr; if ifs; Select BOOLEAN such that Parent(w,cl) and Follows(cl,pr) and Follows*(cl,ifs)]]></querystr>
 <stuans>TRUE</stuans>
 <correct>TRUE</correct>
-<time_taken>40.000000</time_taken>
+<time_taken>48.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnBoolean="1" Follows="1" Parent="1" SuchThat="1" CondNum="4" RelNum="2" comment="Follows Parent - FALSE">6</id><querystr><![CDATA[read rd, rd2; print pr; Select BOOLEAN such that Follows(rd,rd2) and Parent(rd2,pr)]]></querystr>
 <stuans>FALSE</stuans>
 <correct>FALSE</correct>
-<time_taken>47.000000</time_taken>
+<time_taken>51.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnBoolean="1" Next="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Multi clauses">7</id><querystr><![CDATA[assign a; while w;  Select BOOLEAN such that Next(w,11) pattern w("i", _)]]></querystr>
 <stuans>FALSE</stuans>
 <correct>FALSE</correct>
-<time_taken>32.000000</time_taken>
+<time_taken>38.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnBoolean="1" Next="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Multi clauses">8</id><querystr><![CDATA[assign a;  Select BOOLEAN such that Next(a,25) pattern a("k",_) ]]></querystr>
 <stuans>TRUE</stuans>
 <correct>TRUE</correct>
-<time_taken>36.000000</time_taken>
+<time_taken>37.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnBoolean="1" Next="1" SuchThat="1" CondNum="3" RelNum="1" comment="Multi clauses">9</id><querystr><![CDATA[assign a;  Select BOOLEAN such that Next(a,11)]]></querystr>
 <stuans>FALSE</stuans>
 <correct>FALSE</correct>
-<time_taken>33.000000</time_taken>
+<time_taken>32.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnBoolean="1" Next="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Multi clauses">10</id><querystr><![CDATA[assign a; while w;  Select BOOLEAN such that Next(w,11) pattern w(_,_)]]></querystr>
 <stuans>TRUE</stuans>
 <correct>TRUE</correct>
-<time_taken>32.000000</time_taken>
+<time_taken>34.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnBoolean="1" Follows="1" Followsstar="1" Parent="1" Parentstar="1" SuchThat="1" CondNum="6" RelNum="4" comment="Follows* Parent* - TRUE">11</id><querystr><![CDATA[while w; call cl; print pr; if ifs,ifs2; Select BOOLEAN such that Parent*(ifs2, cl) and Parent(w,cl) and Follows(cl,pr) and Follows*(cl,ifs)]]></querystr>
 <stuans>TRUE</stuans>
 <correct>TRUE</correct>
-<time_taken>50.000000</time_taken>
+<time_taken>45.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnBoolean="1" UnnamedVar="1" Uses="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="2" comment="Uses Uses">12</id><querystr><![CDATA[assign a; variable v; Select BOOLEAN pattern a (v, _) such that Uses (14, "i") and Uses(14, "target") ]]></querystr>
 <stuans>TRUE</stuans>
 <correct>TRUE</correct>
-<time_taken>46.000000</time_taken>
+<time_taken>65.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnBoolean="1" UnnamedVar="1" Uses="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Uses Pattern">13</id><querystr><![CDATA[assign a; variable v; Select BOOLEAN such that Uses (a, v) pattern a (v, _)]]></querystr>
 <stuans>TRUE</stuans>
 <correct>TRUE</correct>
-<time_taken>43.000000</time_taken>
+<time_taken>115.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnBoolean="1" Follows="1" Uses="1" SuchThat="1" CondNum="4" RelNum="2" comment="Uses Follows">14</id><querystr><![CDATA[stmt s; Select BOOLEAN such that Uses (s, "k") and Follows(s,25)]]></querystr>
 <stuans>TRUE</stuans>
 <correct>TRUE</correct>
-<time_taken>40.000000</time_taken>
+<time_taken>75.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnBoolean="1" Followsstar="1" Uses="1" SuchThat="1" CondNum="4" RelNum="2" comment="Uses Follows*">15</id><querystr><![CDATA[stmt s; print pr; Select BOOLEAN such that Uses (s, "k") and Follows*(s,pr)]]></querystr>
 <stuans>TRUE</stuans>
 <correct>TRUE</correct>
-<time_taken>103.000000</time_taken>
+<time_taken>171.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnBoolean="1" Parent="1" Uses="1" SuchThat="1" CondNum="4" RelNum="2" comment="Uses Parent">16</id><querystr><![CDATA[stmt s; while w; Select BOOLEAN such that Uses (s, "inc") and Parent(s,w)]]></querystr>
 <stuans>TRUE</stuans>
 <correct>TRUE</correct>
-<time_taken>44.000000</time_taken>
+<time_taken>56.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnBoolean="1" Parent="1" Uses="1" SuchThat="1" CondNum="4" RelNum="2" comment="Uses Parent">17</id><querystr><![CDATA[stmt s; while w; Select BOOLEAN such that Uses (s, "inc") and Parent(w,s)]]></querystr>
 <stuans>TRUE</stuans>
 <correct>TRUE</correct>
-<time_taken>47.000000</time_taken>
+<time_taken>62.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnBoolean="1" Parentstar="1" Uses="1" SuchThat="1" CondNum="4" RelNum="2" comment="Uses Parent*">18</id><querystr><![CDATA[print pr; if ifs; Select BOOLEAN such that Uses (pr, "i") and Parent*(ifs,pr)]]></querystr>
 <stuans>TRUE</stuans>
 <correct>TRUE</correct>
-<time_taken>38.000000</time_taken>
+<time_taken>43.000000</time_taken>
 <passed/>
 </query>
 <query>
@@ -141,7 +141,7 @@
 <id ReturnBoolean="1" Modifies="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Modifies Pattern">20</id><querystr><![CDATA[assign a; variable v; Select BOOLEAN such that Modifies (a, v) pattern a (v, _)]]></querystr>
 <stuans>TRUE</stuans>
 <correct>TRUE</correct>
-<time_taken>46.000000</time_taken>
+<time_taken>41.000000</time_taken>
 <passed/>
 </query>
 <query>
@@ -155,63 +155,63 @@
 <id ReturnBoolean="1" Followsstar="1" Modifies="1" SuchThat="1" CondNum="4" RelNum="2" comment="Modifies Follows*">22</id><querystr><![CDATA[stmt s; print pr; Select BOOLEAN such that Modifies (s, "k") and Follows*(s,pr)]]></querystr>
 <stuans>TRUE</stuans>
 <correct>TRUE</correct>
-<time_taken>110.000000</time_taken>
+<time_taken>85.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnBoolean="1" Modifies="1" Parent="1" SuchThat="1" CondNum="4" RelNum="2" comment="Modifies Parent">23</id><querystr><![CDATA[stmt s; while w; Select BOOLEAN such that Modifies (s, "inc") and Parent(s,w)]]></querystr>
 <stuans>TRUE</stuans>
 <correct>TRUE</correct>
-<time_taken>62.000000</time_taken>
+<time_taken>84.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnBoolean="1" Modifies="1" Parent="1" SuchThat="1" CondNum="4" RelNum="2" comment="Modifies Parent">24</id><querystr><![CDATA[stmt s; while w; Select BOOLEAN such that Modifies (s, "inc") and Parent(w,s)]]></querystr>
 <stuans>TRUE</stuans>
 <correct>TRUE</correct>
-<time_taken>52.000000</time_taken>
+<time_taken>118.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnBoolean="1" Modifies="1" Parentstar="1" SuchThat="1" CondNum="4" RelNum="2" comment="Modifies Parent*">25</id><querystr><![CDATA[read rd; if ifs; print pr; Select BOOLEAN such that Modifies (rd, "target") and Parent*(ifs,pr)]]></querystr>
 <stuans>TRUE</stuans>
 <correct>TRUE</correct>
-<time_taken>40.000000</time_taken>
+<time_taken>128.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnBoolean="1" Next="2" SuchThat="1" CondNum="4" RelNum="2" comment="Next Next FALSE">26</id><querystr><![CDATA[stmt s,s1; Select BOOLEAN such that Next(s1,s) and Next(7,8)]]></querystr>
 <stuans>FALSE</stuans>
 <correct>FALSE</correct>
-<time_taken>51.000000</time_taken>
+<time_taken>49.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnBoolean="1" Next="2" SuchThat="1" CondNum="4" RelNum="2" comment="Next Next TRUE">27</id><querystr><![CDATA[stmt s,s1; Select BOOLEAN such that Next(s1,s) and Next(6,7)]]></querystr>
 <stuans>TRUE</stuans>
 <correct>TRUE</correct>
-<time_taken>39.000000</time_taken>
+<time_taken>49.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnBoolean="1" Calls="1" Next="1" SuchThat="1" CondNum="4" RelNum="2" comment="Next Calls TRUE">28</id><querystr><![CDATA[stmt s,s1; Select BOOLEAN such that Next(s1,s) and Calls("B","C")]]></querystr>
 <stuans>TRUE</stuans>
 <correct>TRUE</correct>
-<time_taken>41.000000</time_taken>
+<time_taken>49.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnBoolean="1" Callsstar="1" Next="1" SuchThat="1" CondNum="4" RelNum="2" comment="Next Calls* TRUE">29</id><querystr><![CDATA[stmt s,s1; Select BOOLEAN such that Next(s1,s) and Calls*("B","A")]]></querystr>
 <stuans>TRUE</stuans>
 <correct>TRUE</correct>
-<time_taken>37.000000</time_taken>
+<time_taken>50.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnBoolean="1" Callsstar="1" Uses="1" SuchThat="1" CondNum="4" RelNum="2" comment="Uses Calls* TRUE">30</id><querystr><![CDATA[procedure p;  Select BOOLEAN such that Uses(p, "num") and Calls*(p,"A")]]></querystr>
 <stuans>TRUE</stuans>
 <correct>TRUE</correct>
-<time_taken>32.000000</time_taken>
+<time_taken>54.000000</time_taken>
 <passed/>
 </query>
 </queries>
