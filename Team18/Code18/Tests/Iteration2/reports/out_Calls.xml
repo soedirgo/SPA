@@ -1,42 +1,42 @@
 <?xml-stylesheet type="text/xsl" href="analysis.xsl"?>
 <test_results>
 <info>
-<name>Tests</name><parsing_time_taken>162.000000</parsing_time_taken>
+<name>Tests</name><parsing_time_taken>174.000000</parsing_time_taken>
 </info>
 <queries>
 <query>
 <id ReturnTuple="1" Calls="1" SuchThat="1" CondNum="3" RelNum="1" comment="Set 1 - Test syntax of calls. Calls syntax, LHS synonym RHS synonym">1</id><querystr><![CDATA[procedure pr, pr1; Select pr such that Calls(pr, pr1)]]></querystr>
 <stuans>A,C,D,E,H,I,J</stuans>
 <correct>A,C,D,E,H,I,J</correct>
-<time_taken>31.000000</time_taken>
+<time_taken>44.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Calls="1" SuchThat="1" CondNum="3" RelNum="1" comment="Calls syntax, LHS invalid synonym RHS synonym">2</id><querystr><![CDATA[procedure pr; stmt s; Select pr such that Calls(s, pr)]]></querystr>
 <stuans></stuans>
 <correct></correct>
-<time_taken>24.000000</time_taken>
+<time_taken>31.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Calls="1" SuchThat="1" CondNum="3" RelNum="1" comment="Calls syntax, LHS synonym RHS invalid synonym">3</id><querystr><![CDATA[procedure pr; assign a; Select pr such that Calls(pr, a)]]></querystr>
 <stuans></stuans>
 <correct></correct>
-<time_taken>25.000000</time_taken>
+<time_taken>39.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Calls="1" SuchThat="1" CondNum="3" RelNum="1" comment="Calls syntax, LHS invalid synonym RHS invalid synonym">4</id><querystr><![CDATA[print pn; variable v; Select pn such that Calls(pn, v)]]></querystr>
 <stuans></stuans>
 <correct></correct>
-<time_taken>26.000000</time_taken>
+<time_taken>66.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Calls="1" UnnamedVar="1" SuchThat="1" CondNum="4" RelNum="1" comment="Calls syntax, LHS synonym RHS wildcard">5</id><querystr><![CDATA[procedure procedure; Select procedure such that Calls(procedure, _)]]></querystr>
 <stuans>A,C,D,E,H,I,J</stuans>
 <correct>A,C,D,E,H,I,J</correct>
-<time_taken>32.000000</time_taken>
+<time_taken>56.000000</time_taken>
 <passed/>
 </query>
 <query>
@@ -50,273 +50,273 @@
 <id ReturnTuple="1" Calls="2" UnnamedVar="2" SuchThat="1" CondNum="6" RelNum="2" comment="Calls, syntax, LHS wildcard RHS wildcard">7</id><querystr><![CDATA[procedure Calls; Select Calls such that Calls(_, _)]]></querystr>
 <stuans>A,B,C,D,E,F,G,H,I,J</stuans>
 <correct>A,B,C,D,E,F,G,H,I,J</correct>
-<time_taken>29.000000</time_taken>
+<time_taken>34.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Calls="1" SuchThat="1" CondNum="3" RelNum="1" comment="Calls syntax, LHS synonym RHS Ident">8</id><querystr><![CDATA[procedure pr; Select pr such that Calls(pr, "E")]]></querystr>
 <stuans>C,D,H</stuans>
 <correct>C,D,H</correct>
-<time_taken>31.000000</time_taken>
+<time_taken>50.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Calls="1" SuchThat="1" CondNum="3" RelNum="1" comment="Calls syntax, LHS synonym RHS invalid Ident">9</id><querystr><![CDATA[procedure pr; Select pr such that Calls(pr, "K")]]></querystr>
 <stuans></stuans>
 <correct></correct>
-<time_taken>29.000000</time_taken>
+<time_taken>56.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Calls="1" SuchThat="1" CondNum="3" RelNum="1" comment="Calls syntax, LHS Ident RHS synonym">10</id><querystr><![CDATA[procedure pr; Select pr such that Calls("C", pr)]]></querystr>
 <stuans>D,E</stuans>
 <correct>D,E</correct>
-<time_taken>31.000000</time_taken>
+<time_taken>128.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Calls="1" SuchThat="1" CondNum="3" RelNum="1" comment="Calls syntax, LHS invalid Ident RHS synonym">11</id><querystr><![CDATA[procedure pr; Select pr such that Calls("A1", pr)]]></querystr>
 <stuans></stuans>
 <correct></correct>
-<time_taken>28.000000</time_taken>
+<time_taken>134.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Calls="1" SuchThat="1" CondNum="3" RelNum="1" comment="Calls syntax, LHS Ident RHS Ident">12</id><querystr><![CDATA[procedure pr; Select pr such that Calls("A", "B")]]></querystr>
 <stuans>A,B,C,D,E,F,G,H,I,J</stuans>
 <correct>A,B,C,D,E,F,G,H,I,J</correct>
-<time_taken>33.000000</time_taken>
+<time_taken>94.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Calls="1" SuchThat="1" CondNum="3" RelNum="1" comment="Calls syntax, LHS invalid Ident RHS Ident">13</id><querystr><![CDATA[variable v; Select v such that Calls("B", "G")]]></querystr>
 <stuans></stuans>
 <correct></correct>
-<time_taken>27.000000</time_taken>
+<time_taken>86.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Calls="1" SuchThat="1" CondNum="3" RelNum="1" comment="Calls syntax, LHS Ident RHS invalid Ident">14</id><querystr><![CDATA[constant c; Select c such that Calls("I", "F")]]></querystr>
 <stuans></stuans>
 <correct></correct>
-<time_taken>38.000000</time_taken>
+<time_taken>57.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Calls="1" SuchThat="1" CondNum="3" RelNum="1" comment="Calls syntax, LHS invalid Ident RHS invalid Ident">15</id><querystr><![CDATA[while w; Select w such that Calls("F", "J")]]></querystr>
 <stuans></stuans>
 <correct></correct>
-<time_taken>28.000000</time_taken>
+<time_taken>86.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Calls="1" SuchThat="1" CondNum="3" RelNum="1" comment="Set 2 - Test direct and indirect calls. Calls directness, Direct true 1">16</id><querystr><![CDATA[constant c; Select c such that Calls("A", "B")]]></querystr>
 <stuans>1</stuans>
 <correct>1</correct>
-<time_taken>29.000000</time_taken>
+<time_taken>109.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Calls="1" SuchThat="1" CondNum="3" RelNum="1" comment="Calls directness, Direct true 2">17</id><querystr><![CDATA[constant c; Select c such that Calls("C", "E")]]></querystr>
 <stuans>1</stuans>
 <correct>1</correct>
-<time_taken>41.000000</time_taken>
+<time_taken>90.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Calls="1" SuchThat="1" CondNum="3" RelNum="1" comment="Calls directness, Direct true 3">18</id><querystr><![CDATA[procedure pr; Select pr such that Calls("J", "H")]]></querystr>
 <stuans>A,B,C,D,E,F,G,H,I,J</stuans>
 <correct>A,B,C,D,E,F,G,H,I,J</correct>
-<time_taken>46.000000</time_taken>
+<time_taken>130.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Calls="1" SuchThat="1" CondNum="3" RelNum="1" comment="Calls directness, Direct false 1">19</id><querystr><![CDATA[procedure pr; Select pr such that Calls("A", "C")]]></querystr>
 <stuans></stuans>
 <correct></correct>
-<time_taken>34.000000</time_taken>
+<time_taken>82.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Calls="1" SuchThat="1" CondNum="3" RelNum="1" comment="Calls directness, Direct false 2">20</id><querystr><![CDATA[assign a; Select a such that Calls("B", "A")]]></querystr>
 <stuans></stuans>
 <correct></correct>
-<time_taken>29.000000</time_taken>
+<time_taken>127.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Calls="1" SuchThat="1" CondNum="3" RelNum="1" comment="Calls directness, Direct false 3">21</id><querystr><![CDATA[assign a; Select a such that Calls("E", "E")]]></querystr>
 <stuans></stuans>
 <correct></correct>
-<time_taken>29.000000</time_taken>
+<time_taken>99.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Calls="1" SuchThat="1" CondNum="3" RelNum="1" comment="Calls directness, Indirect 1">22</id><querystr><![CDATA[print pn; Select pn such that Calls("C", "G")]]></querystr>
 <stuans></stuans>
 <correct></correct>
-<time_taken>30.000000</time_taken>
+<time_taken>72.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Calls="1" SuchThat="1" CondNum="3" RelNum="1" comment="Calls directness, Indirect 2">23</id><querystr><![CDATA[read r; Select r such that Calls("I", "E")]]></querystr>
 <stuans></stuans>
 <correct></correct>
-<time_taken>30.000000</time_taken>
+<time_taken>61.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Calls="1" SuchThat="1" CondNum="3" RelNum="1" comment="Calls directness, Indirect 3">24</id><querystr><![CDATA[stmt s; Select s such that Calls("J", "D")]]></querystr>
 <stuans></stuans>
 <correct></correct>
-<time_taken>31.000000</time_taken>
+<time_taken>105.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Calls="1" SuchThat="1" CondNum="3" RelNum="1" comment="Set 3 - Test calls at different nesting. Calls nesting, In if 1">25</id><querystr><![CDATA[procedure pr; Select pr such that Calls("C", "D")]]></querystr>
 <stuans>A,B,C,D,E,F,G,H,I,J</stuans>
 <correct>A,B,C,D,E,F,G,H,I,J</correct>
-<time_taken>44.000000</time_taken>
+<time_taken>45.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Calls="1" SuchThat="1" CondNum="3" RelNum="1" comment="Calls nesting, In if 2">26</id><querystr><![CDATA[procedure pr; Select pr such that Calls("C", "E")]]></querystr>
 <stuans>A,B,C,D,E,F,G,H,I,J</stuans>
 <correct>A,B,C,D,E,F,G,H,I,J</correct>
-<time_taken>39.000000</time_taken>
+<time_taken>33.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Calls="1" SuchThat="1" CondNum="3" RelNum="1" comment="Calls nesting, In while 1">27</id><querystr><![CDATA[procedure pr; Select pr such that Calls("D", "E")]]></querystr>
 <stuans>A,B,C,D,E,F,G,H,I,J</stuans>
 <correct>A,B,C,D,E,F,G,H,I,J</correct>
-<time_taken>45.000000</time_taken>
+<time_taken>32.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Calls="1" SuchThat="1" CondNum="3" RelNum="1" comment="Calls nesting, In while 2">28</id><querystr><![CDATA[procedure pr; Select pr such that Calls("I", "H")]]></querystr>
 <stuans>A,B,C,D,E,F,G,H,I,J</stuans>
 <correct>A,B,C,D,E,F,G,H,I,J</correct>
-<time_taken>30.000000</time_taken>
+<time_taken>33.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Calls="1" SuchThat="1" CondNum="3" RelNum="1" comment="Calls nesting, In multiple nested 1">29</id><querystr><![CDATA[constant c; Select c such that Calls("E", "G")]]></querystr>
 <stuans>1</stuans>
 <correct>1</correct>
-<time_taken>29.000000</time_taken>
+<time_taken>33.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Calls="1" SuchThat="1" CondNum="3" RelNum="1" comment="Calls nesting, In multiple nested 2">30</id><querystr><![CDATA[constant c; Select c such that Calls("H", "G")]]></querystr>
 <stuans>1</stuans>
 <correct>1</correct>
-<time_taken>28.000000</time_taken>
+<time_taken>31.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Calls="1" SuchThat="1" CondNum="3" RelNum="1" comment="Set 4 - Relation tests for calls*. Relation, Calls itself">31</id><querystr><![CDATA[procedure pr; Select pr such that Calls(pr, pr)]]></querystr>
 <stuans></stuans>
 <correct></correct>
-<time_taken>31.000000</time_taken>
+<time_taken>33.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Calls="1" SuchThat="1" CondNum="3" RelNum="1" comment="Relation, Calls non-existent">32</id><querystr><![CDATA[procedure pr; Select pr such that Calls(pr, "N")]]></querystr>
 <stuans></stuans>
 <correct></correct>
-<time_taken>33.000000</time_taken>
+<time_taken>34.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Calls="1" SuchThat="1" CondNum="3" RelNum="1" comment="Relation, Called by non-existent">33</id><querystr><![CDATA[procedure pr; Select pr such that Calls("P", pr)]]></querystr>
 <stuans></stuans>
 <correct></correct>
-<time_taken>29.000000</time_taken>
+<time_taken>34.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Calls="1" SuchThat="1" CondNum="3" RelNum="1" comment="Relation, Reverse calls">34</id><querystr><![CDATA[variable v; Select v such that Calls("B", "A")]]></querystr>
 <stuans></stuans>
 <correct></correct>
-<time_taken>32.000000</time_taken>
+<time_taken>33.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Calls="1" SuchThat="1" CondNum="3" RelNum="1" comment="Relation, Select all caller">35</id><querystr><![CDATA[procedure pr, pr1; Select pr such that Calls(pr, pr1)]]></querystr>
 <stuans>A,C,D,E,H,I,J</stuans>
 <correct>A,C,D,E,H,I,J</correct>
-<time_taken>33.000000</time_taken>
+<time_taken>35.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Calls="1" SuchThat="1" CondNum="3" RelNum="1" comment="Relation, Select all callee">36</id><querystr><![CDATA[procedure pr, pr1; Select pr1 such that Calls(pr, pr1)]]></querystr>
 <stuans>B,D,E,G,H</stuans>
 <correct>B,D,E,G,H</correct>
-<time_taken>35.000000</time_taken>
+<time_taken>28.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Calls="1" SuchThat="1" CondNum="3" RelNum="1" comment="Relation, Select all callee of a specific caller 1">37</id><querystr><![CDATA[procedure pr; Select pr such that Calls("I", pr)]]></querystr>
 <stuans>H</stuans>
 <correct>H</correct>
-<time_taken>31.000000</time_taken>
+<time_taken>32.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Calls="1" SuchThat="1" CondNum="3" RelNum="1" comment="Relation, Select all callee of a specific caller 2">38</id><querystr><![CDATA[procedure pr; Select pr such that Calls("C", pr)]]></querystr>
 <stuans>D,E</stuans>
 <correct>D,E</correct>
-<time_taken>30.000000</time_taken>
+<time_taken>33.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Calls="1" SuchThat="1" CondNum="3" RelNum="1" comment="Relation, Select all caller of a specific callee 1">39</id><querystr><![CDATA[procedure pr; Select pr such that Calls(pr, "E")]]></querystr>
 <stuans>C,D,H</stuans>
 <correct>C,D,H</correct>
-<time_taken>43.000000</time_taken>
+<time_taken>33.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Calls="1" SuchThat="1" CondNum="3" RelNum="1" comment="Relation, Select all caller of a specific callee 2">40</id><querystr><![CDATA[procedure pr; Select pr such that Calls(pr, "G")]]></querystr>
 <stuans>E,H</stuans>
 <correct>E,H</correct>
-<time_taken>35.000000</time_taken>
+<time_taken>33.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Calls="1" SuchThat="1" CondNum="3" RelNum="1" comment="Relation, Select result not related">41</id><querystr><![CDATA[constant c; procedure pr; Select c such that Calls("A", pr)]]></querystr>
 <stuans>1</stuans>
 <correct>1</correct>
-<time_taken>32.000000</time_taken>
+<time_taken>34.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Calls="1" SuchThat="1" CondNum="3" RelNum="1" comment="Relation, Select all callee of a procedure that does not call 1">42</id><querystr><![CDATA[procedure pr; Select pr such that Calls("B", pr)]]></querystr>
 <stuans></stuans>
 <correct></correct>
-<time_taken>31.000000</time_taken>
+<time_taken>33.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Calls="1" SuchThat="1" CondNum="3" RelNum="1" comment="Relation, Select all callee of a procedure that does not call 2">43</id><querystr><![CDATA[procedure pr; Select pr such that Calls("F", pr)]]></querystr>
 <stuans></stuans>
 <correct></correct>
-<time_taken>32.000000</time_taken>
+<time_taken>73.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Calls="1" SuchThat="1" CondNum="3" RelNum="1" comment="Relation, Select all caller of a procedure that is not called 1">44</id><querystr><![CDATA[procedure pr; Select pr such that Calls(pr, "J")]]></querystr>
 <stuans></stuans>
 <correct></correct>
-<time_taken>30.000000</time_taken>
+<time_taken>95.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Calls="1" SuchThat="1" CondNum="3" RelNum="1" comment="Relation, Select all caller of a procedure that is not called 2">45</id><querystr><![CDATA[procedure pr; Select pr such that Calls(pr, "F")]]></querystr>
 <stuans></stuans>
 <correct></correct>
-<time_taken>32.000000</time_taken>
+<time_taken>102.000000</time_taken>
 <passed/>
 </query>
 </queries>

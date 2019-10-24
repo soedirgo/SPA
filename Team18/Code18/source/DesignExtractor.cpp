@@ -246,8 +246,8 @@ void DesignExtractor::recurseUses(PROC_NAME callee) {
 
 void DesignExtractor::extractAffects()
 {
-	TABLE assignStmtTable = PKBStmt::getAllStmtByType("assign");
-	TABLE callStmtTable = PKBStmt::getAllStmtByType("call");
+	TABLE assignStmtTable = PKBStmt::getStmtsByType("assign");
+	TABLE callStmtTable = PKBStmt::getStmtsByType("call");
 	TABLE nextTTable = PKBNext::getNextTable();
 
 	for (auto vectorIter3 : nextTTable) {
