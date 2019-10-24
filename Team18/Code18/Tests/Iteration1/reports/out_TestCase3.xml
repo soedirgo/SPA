@@ -1,0 +1,239 @@
+<?xml-stylesheet type="text/xsl" href="analysis.xsl"?>
+<test_results>
+<info>
+<name>Tests</name><parsing_time_taken>47.000000</parsing_time_taken>
+</info>
+<queries>
+<query>
+<id ReturnTuple="1" Follows="1" SuchThat="1" CondNum="3" RelNum="1" comment="Queries 1 - 3 - Test Follows relation. Nested stmt that is followed - true">1</id><querystr><![CDATA[stmt s; Select s such that Follows(s, 10)]]></querystr>
+<stuans>9</stuans>
+<correct>9</correct>
+<time_taken>65.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Follows="1" SuchThat="1" CondNum="3" RelNum="1" comment="Nested stmt that follows - true">2</id><querystr><![CDATA[stmt s; Select s such that Follows(16, s)]]></querystr>
+<stuans>18</stuans>
+<correct>18</correct>
+<time_taken>50.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Follows="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select all stmt that follows - true">3</id><querystr><![CDATA[stmt s, s1; Select s such that Follows(s1, s)]]></querystr>
+<stuans>10,11,12,13,14,16,18,19,2,3,5,7,8</stuans>
+<correct>2,3,5,7,8,10,11,12,13,14,16,18,19</correct>
+<time_taken>57.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Followsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Queries 4 - 6 - Test Follows* relation. Nested stmt that is followed* - true">4</id><querystr><![CDATA[stmt s; Select s such that Follows*(s, 8)]]></querystr>
+<stuans>6,7</stuans>
+<correct>6,7</correct>
+<time_taken>53.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Followsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Nest stmt that follows* - true">5</id><querystr><![CDATA[stmt s; Select s such that Follows*(15, s)]]></querystr>
+<stuans>16,18</stuans>
+<correct>16,18</correct>
+<time_taken>46.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Followsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select all stmt that followed* by - true">6</id><querystr><![CDATA[stmt s, s1; Select s such that Follows*(s, s1)]]></querystr>
+<stuans>1,11,12,13,14,15,16,2,3,4,6,7,9</stuans>
+<correct>1,2,3,4,6,7,9,11,12,13,14,15,16</correct>
+<time_taken>50.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parent="1" UnnamedVar="1" SuchThat="1" CondNum="4" RelNum="1" comment="Queries 7 - 9 - Test Parent relation. Select all parent stmt - true">7</id><querystr><![CDATA[stmt s; Select s such that Parent(s, _)]]></querystr>
+<stuans>14,16,3,5</stuans>
+<correct>3,5,14,16</correct>
+<time_taken>35.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parent="1" UnnamedVar="1" SuchThat="1" CondNum="4" RelNum="1" comment="Select all child stmt - true">8</id><querystr><![CDATA[stmt s; Select s such that Parent(_, s)]]></querystr>
+<stuans>10,15,16,17,18,4,5,6,7,8,9</stuans>
+<correct>4,5,6,7,8,9,10,15,16,17,18</correct>
+<time_taken>40.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parent="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select stmt type that is child of 0 nested parent - true">9</id><querystr><![CDATA[read r; Select r such that Parent(3, r)]]></querystr>
+<stuans>4</stuans>
+<correct>4</correct>
+<time_taken>85.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parentstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Queries 10 - 12 - Test Parent* relation. Select all parent* stmt of 2nd nested child* - true">10</id><querystr><![CDATA[stmt s; Select s such that Parent*(s, 17)]]></querystr>
+<stuans>14,16</stuans>
+<correct>14,16</correct>
+<time_taken>97.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parentstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select all child* stmt of 0 nested parent* - true">11</id><querystr><![CDATA[stmt s; Select s such that Parent*(14, s)]]></querystr>
+<stuans>15,16,17,18</stuans>
+<correct>15,16,17,18</correct>
+<time_taken>94.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parentstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select stmt type that is child* of 0 nested parent* - true">12</id><querystr><![CDATA[read r; Select r such that Parent*(3, r)]]></querystr>
+<stuans>4,7,9</stuans>
+<correct>4,7,9</correct>
+<time_taken>55.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Uses="1" SuchThat="1" CondNum="3" RelNum="1" comment="Queries 13 - 15 - Test Uses relation. assign modified and used - true">13</id><querystr><![CDATA[assign a; Select a such that Uses(a, "z")]]></querystr>
+<stuans>6</stuans>
+<correct>6</correct>
+<time_taken>83.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Uses="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select all stmt that uses a variable - true">14</id><querystr><![CDATA[stmt s; variable v; Select s such that Uses(s, v)]]></querystr>
+<stuans>10,12,14,15,16,17,18,3,5,6,8</stuans>
+<correct>3,5,6,8,10,12,14,15,16,17,18</correct>
+<time_taken>106.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Uses="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select all variable that is used - true">15</id><querystr><![CDATA[variable v; stmt s; Select v such that Uses(s, v)]]></querystr>
+<stuans>i,k,max,mid,start,x,y,z</stuans>
+<correct>x,y,z,i,k,max,start,mid</correct>
+<time_taken>67.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Modifies="1" SuchThat="1" CondNum="3" RelNum="1" comment="Queries 16 - 18 - Test Modifies relation. assign used and modified  - true">16</id><querystr><![CDATA[assign a; Select a such that Modifies(a, "z")]]></querystr>
+<stuans>6</stuans>
+<correct>6</correct>
+<time_taken>74.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Modifies="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select all stmt that modifies a variable - true">17</id><querystr><![CDATA[stmt s; variable v; Select s such that Modifies(s, v)]]></querystr>
+<stuans>1,11,12,13,14,15,16,17,19,2,3,4,5,6,7,9</stuans>
+<correct>1,2,3,4,5,6,7,9,11,12,13,14,15,16,17,19</correct>
+<time_taken>117.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Modifies="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select all variable that is modified - true">18</id><querystr><![CDATA[stmt s; variable v; Select v such that Modifies(s, v)]]></querystr>
+<stuans>end,i,k,max,mid,start,x,y,z</stuans>
+<correct>x,y,z,i,k,max,mid,start,end</correct>
+<time_taken>64.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" UnnamedVar="1" Pattern="1" CondNum="3" RelNum="0" comment="Queries 19 - 21 - Test pattern assign relation. Select any assign that fits - true">19</id><querystr><![CDATA[assign a; variable v; Select a pattern a(v, _)]]></querystr>
+<stuans>1,12,15,17,2,6</stuans>
+<correct>1,2,6,12,15,17</correct>
+<time_taken>38.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" UnnamedVar="1" Pattern="1" CondNum="3" RelNum="0" comment="Select all assign that fits - true">20</id><querystr><![CDATA[assign a; variable v; Select a pattern a(v, _"start"_)]]></querystr>
+<stuans>15,17</stuans>
+<correct>15,17</correct>
+<time_taken>52.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" UnnamedVar="1" Pattern="1" CondNum="3" RelNum="0" comment="Select variables that fit - false">21</id><querystr><![CDATA[assign a; variable v; Select v pattern a(v, _"why"_)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>52.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Follows="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Queries 22 - 33 - Test s.t. and p.a. combinations for each s.t. clause, Select result is related to both clauses, both return results but merge will be true or fail. Follows and pattern assign - merge true">22</id><querystr><![CDATA[assign a; stmt s; Select a such that Follows(s, a) pattern a(_, _)]]></querystr>
+<stuans>12,2</stuans>
+<correct>2,12</correct>
+<time_taken>53.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Follows="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Follows and pattern assign - merge fail">23</id><querystr><![CDATA[assign a; stmt s; Select a such that Follows(s, a) pattern a(_, _"start"_)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>57.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Followsstar="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Follows* and pattern assign - merge true">24</id><querystr><![CDATA[assign a; stmt s; Select a such that Follows*(a, s) pattern a("start", _)]]></querystr>
+<stuans>15</stuans>
+<correct>15</correct>
+<time_taken>66.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Followsstar="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Follows* and pattern assign - merge fail">25</id><querystr><![CDATA[assign a; read r; Select a such that Follows*(a, r) pattern a(_, _"mid"_)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>45.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parent="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Parent and pattern assign - merge true">26</id><querystr><![CDATA[assign a; while w; variable v; Select a such that Parent(w, a) pattern a(v, _)]]></querystr>
+<stuans>15,17</stuans>
+<correct>15,17</correct>
+<time_taken>37.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parent="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Parent and pattern assign - merge fail">27</id><querystr><![CDATA[assign a; while w; Select a such that Parent(w, a) pattern a("z", _)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>35.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parentstar="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Parent* and pattern assign - merge true">28</id><querystr><![CDATA[assign a; while w; Select a pattern a(_, _) such that Parent*(w, a)]]></querystr>
+<stuans>15,17,6</stuans>
+<correct>6,15,17</correct>
+<time_taken>38.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parentstar="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Parent* and pattern assign - merge fail">29</id><querystr><![CDATA[assign a; if ifs; Select a such that Parent*(ifs, a) pattern a("mid", _"max"_)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>35.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" UnnamedVar="1" Uses="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Uses and pattern assign - merge true">30</id><querystr><![CDATA[assign a; variable v; print pn; Select v such that Uses(pn, v) pattern a(v, _)]]></querystr>
+<stuans>start</stuans>
+<correct>start</correct>
+<time_taken>37.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" UnnamedVar="2" Uses="1" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Uses and pattern assign - merge fail">31</id><querystr><![CDATA[assign a; Select a pattern a(_, _"max"_) such that Uses(a, "z")]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>35.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Modifies="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Modifies and pattern assign - merge true">32</id><querystr><![CDATA[assign a; variable v; read r; Select v such that Modifies(r, v) pattern a(v, _)]]></querystr>
+<stuans>start,z</stuans>
+<correct>z,start</correct>
+<time_taken>39.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Modifies="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Modifies and pattern assign - merge fail">33</id><querystr><![CDATA[assign a; variable v; read r; Select v such that Modifies(r, v) pattern a(v, _"max"_)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>36.000000</time_taken>
+<passed/>
+</query>
+</queries>
+</test_results>

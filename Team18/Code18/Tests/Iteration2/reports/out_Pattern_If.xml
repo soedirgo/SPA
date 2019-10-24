@@ -1,0 +1,295 @@
+<?xml-stylesheet type="text/xsl" href="analysis.xsl"?>
+<test_results>
+<info>
+<name>Tests</name><parsing_time_taken>187.000000</parsing_time_taken>
+</info>
+<queries>
+<query>
+<id ReturnTuple="1" UnnamedVar="2" Pattern="1" CondNum="4" RelNum="0" comment="Set 1 - Test syntax of Pattern if (Positive/Negative tests). Pattern if syntax, LHS synonym MID wildcard RHS wildcard">1</id><querystr><![CDATA[if ifs; variable v; Select v pattern ifs(v, _, _)]]></querystr>
+<stuans>blue,fact,fiction,left,one1,red,right,sky,two2,x,y,yellow</stuans>
+<correct>x,y,one1,two2,red,yellow,sky,blue,fact,fiction,left,right</correct>
+<time_taken>46.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" UnnamedVar="2" Pattern="1" CondNum="4" RelNum="0" comment="Pattern if syntax, LHS invalid synonym MID wildcard RHS wildcard">2</id><querystr><![CDATA[if ifs; assign a; Select ifs pattern ifs(a, _, _)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>38.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" UnnamedVar="2" Pattern="1" CondNum="4" RelNum="0" comment="Pattern if syntax, LHS Ident MID wildcard RHS wildcard">3</id><querystr><![CDATA[if ifs; Select ifs pattern ifs("red", _, _)]]></querystr>
+<stuans>19,20</stuans>
+<correct>19,20</correct>
+<time_taken>59.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" UnnamedVar="2" Pattern="1" CondNum="4" RelNum="0" comment="Pattern if syntax, LHS invalid Ident MID wildcard RHS wildcard">4</id><querystr><![CDATA[if ifs; Select ifs pattern ifs("nonexist", _, _)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>50.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" UnnamedVar="3" Pattern="1" CondNum="5" RelNum="0" comment="Pattern if syntax, LHS wildcard MID wildcard RHS wildcard">5</id><querystr><![CDATA[if ifs; Select ifs pattern ifs(_, _, _)]]></querystr>
+<stuans>1,10,19,20,31,35</stuans>
+<correct>1,10,19,20,31,35</correct>
+<time_taken>46.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" UnnamedVar="2" Pattern="1" CondNum="4" RelNum="0" comment="Pattern if syntax, LHS Integer MID wildcard RHS wildcard">6</id><querystr><![CDATA[if ifs; Select ifs pattern ifs(1, _, _)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>33.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" UnnamedVar="1" Pattern="1" CondNum="3" RelNum="0" comment="Pattern if syntax, LHS synonym MID synonym RHS wildcard">7</id><querystr><![CDATA[if ifs; variable v; stmt s; Select ifs pattern ifs(v, s, _)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>33.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" UnnamedVar="2" Pattern="1" CondNum="4" RelNum="0" comment="Pattern if syntax, LHS synonym MID wildcard RHS synonym">8</id><querystr><![CDATA[if ifs; variable v; prog_line n; Select v pattern ifs(v, _, n)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>32.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Pattern="1" CondNum="2" RelNum="0" comment="Pattern if syntax, LHS synonym MID synonym RHS synonym">9</id><querystr><![CDATA[if ifs; variable v, v1; constant c; Select ifs pattern ifs(v, v1, c)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>34.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" UnnamedVar="1" Pattern="1" CondNum="3" RelNum="0" comment="Pattern if syntax, LHS synonym MID Ident RHS wildcard">10</id><querystr><![CDATA[if ifs; variable v; Select v pattern ifs(v, "q", _)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>32.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" UnnamedVar="1" Pattern="1" CondNum="3" RelNum="0" comment="Pattern if syntax, LHS synonym MID wildcard RHS Ident">11</id><querystr><![CDATA[if ifs; variable v; Select ifs pattern ifs(v, _, "fact")]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>30.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Pattern="1" CondNum="2" RelNum="0" comment="Pattern if syntax, LHS synonym MID Ident RHS Ident">12</id><querystr><![CDATA[if ifs; variable v; Select ifs pattern ifs(v, "red", "wrong")]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>31.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" UnnamedVar="1" Pattern="1" CondNum="3" RelNum="0" comment="Pattern if syntax, LHS synonym MID Integer RHS wildcard">13</id><querystr><![CDATA[if ifs; variable v; Select v pattern ifs(v, 20, _)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>32.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" UnnamedVar="1" Pattern="1" CondNum="3" RelNum="0" comment="Pattern if syntax, LHS synonym MID wildcard RHS Integer">14</id><querystr><![CDATA[if ifs; variable v; Select ifs pattern ifs(v, _, 31)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>31.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Pattern="1" CondNum="2" RelNum="0" comment="Pattern if syntax, LHS synonym MID Integer RHS Integer">15</id><querystr><![CDATA[if ifs; variable v; Select ifs pattern ifs(v, 1, 24)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>31.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" UnnamedVar="2" Pattern="1" CondNum="4" RelNum="0" comment="Set 2 - Pattern if at different nesting levels (Algorithmic Tests). Pattern if nesting, Not nested 1">16</id><querystr><![CDATA[if ifs; Select ifs pattern ifs("x", _, _)]]></querystr>
+<stuans>1</stuans>
+<correct>1</correct>
+<time_taken>33.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" UnnamedVar="2" Pattern="1" CondNum="4" RelNum="0" comment="Pattern if nesting, Not nested 2">17</id><querystr><![CDATA[if ifs; Select ifs pattern ifs("sky", _, _)]]></querystr>
+<stuans>19</stuans>
+<correct>19</correct>
+<time_taken>32.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" UnnamedVar="2" Pattern="1" CondNum="4" RelNum="0" comment="Pattern if nesting, Nested in if 1">18</id><querystr><![CDATA[if ifs; Select ifs pattern ifs("yellow", _, _)]]></querystr>
+<stuans>19,20</stuans>
+<correct>19,20</correct>
+<time_taken>33.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" UnnamedVar="2" Pattern="1" CondNum="4" RelNum="0" comment="Pattern if nesting, Nested in if 2">19</id><querystr><![CDATA[if ifs; Select ifs pattern ifs("left", _, _)]]></querystr>
+<stuans>35</stuans>
+<correct>35</correct>
+<time_taken>33.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" UnnamedVar="2" Pattern="1" CondNum="4" RelNum="0" comment="Pattern if nesting, Nested in while 1">20</id><querystr><![CDATA[if ifs; Select ifs pattern ifs("one1", _, _)]]></querystr>
+<stuans>10</stuans>
+<correct>10</correct>
+<time_taken>37.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" UnnamedVar="2" Pattern="1" CondNum="4" RelNum="0" comment="Pattern if nesting, Nested in while 2">21</id><querystr><![CDATA[if ifs; Select ifs pattern ifs("fact", _, _)]]></querystr>
+<stuans>31</stuans>
+<correct>31</correct>
+<time_taken>69.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" UnnamedVar="2" Pattern="1" CondNum="4" RelNum="0" comment="Pattern if nesting, Multiple nested 1">22</id><querystr><![CDATA[if ifs; Select ifs pattern ifs("fiction", _, _)]]></querystr>
+<stuans>31</stuans>
+<correct>31</correct>
+<time_taken>69.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" UnnamedVar="2" Pattern="1" CondNum="4" RelNum="0" comment="Pattern if nesting, Multiple nested 2">23</id><querystr><![CDATA[if ifs; Select ifs pattern ifs("right", _, _)]]></querystr>
+<stuans>35</stuans>
+<correct>35</correct>
+<time_taken>74.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" UnnamedVar="2" Pattern="1" CondNum="4" RelNum="0" comment="Set 3 - Relation tests for Pattern if (Algorithmic Tests). Relation, Select all if that has variable in condition">24</id><querystr><![CDATA[if ifs; variable v; Select ifs pattern ifs(v, _, _)]]></querystr>
+<stuans>1,10,19,20,31,35</stuans>
+<correct>1,10,19,20,31,35</correct>
+<time_taken>116.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" UnnamedVar="2" Pattern="1" CondNum="4" RelNum="0" comment="Relation, Select all variable that is in if condition">25</id><querystr><![CDATA[if ifs; variable v; Select v pattern ifs(v, _, _)]]></querystr>
+<stuans>blue,fact,fiction,left,one1,red,right,sky,two2,x,y,yellow</stuans>
+<correct>x,y,one1,two2,red,yellow,sky,blue,fact,fiction,left,right</correct>
+<time_taken>69.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" UnnamedVar="2" Pattern="1" CondNum="4" RelNum="0" comment="Relation, Select all if that has a specific variable in condition 1">26</id><querystr><![CDATA[if ifs; Select ifs pattern ifs("y", _, _)]]></querystr>
+<stuans>1</stuans>
+<correct>1</correct>
+<time_taken>52.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" UnnamedVar="2" Pattern="1" CondNum="4" RelNum="0" comment="Relation, Select all if that has a specific variable in condition 2">27</id><querystr><![CDATA[if ifs; Select ifs pattern ifs("red", _, _)]]></querystr>
+<stuans>19,20</stuans>
+<correct>19,20</correct>
+<time_taken>39.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" UnnamedVar="2" Pattern="1" CondNum="4" RelNum="0" comment="Relation, Select all if that has a specific variable in condition 3">28</id><querystr><![CDATA[if ifs; Select ifs pattern ifs("fact", _, _)]]></querystr>
+<stuans>31</stuans>
+<correct>31</correct>
+<time_taken>34.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" UnnamedVar="2" Pattern="1" CondNum="4" RelNum="0" comment="Relation, Variable that is in if condition but not while 1">29</id><querystr><![CDATA[if ifs; Select ifs pattern ifs("blue", _, _)]]></querystr>
+<stuans>19</stuans>
+<correct>19</correct>
+<time_taken>33.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" UnnamedVar="2" Pattern="1" CondNum="4" RelNum="0" comment="Relation, Variable that is in if condition but not while 2">30</id><querystr><![CDATA[if ifs; Select ifs pattern ifs("right", _, _)]]></querystr>
+<stuans>35</stuans>
+<correct>35</correct>
+<time_taken>70.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" UnnamedVar="2" Pattern="1" CondNum="4" RelNum="0" comment="Relation, Variable that is in while condition but not if 1">31</id><querystr><![CDATA[if ifs; Select ifs pattern ifs("pear", _, _)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>72.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" UnnamedVar="2" Pattern="1" CondNum="4" RelNum="0" comment="Relation, variable that is in while condition but not if 2">32</id><querystr><![CDATA[if ifs; Select ifs pattern ifs("rain", _, _)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>74.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" UnnamedVar="2" Pattern="1" CondNum="4" RelNum="0" comment="Relation, Variable that is in if and while condition 1">33</id><querystr><![CDATA[if ifs; Select ifs pattern ifs("x", _, _)]]></querystr>
+<stuans>1</stuans>
+<correct>1</correct>
+<time_taken>114.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" UnnamedVar="2" Pattern="1" CondNum="4" RelNum="0" comment="Relation, Variable that is in if and while condition 2">34</id><querystr><![CDATA[if ifs; Select ifs pattern ifs("yellow", _, _)]]></querystr>
+<stuans>19,20</stuans>
+<correct>19,20</correct>
+<time_taken>121.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" UnnamedVar="2" Pattern="1" CondNum="4" RelNum="0" comment="Relation, Variable that is not in if or while condition 1">35</id><querystr><![CDATA[if ifs; Select ifs pattern ifs("q", _, _)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>45.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" UnnamedVar="2" Pattern="1" CondNum="4" RelNum="0" comment="Relation, Variable that is not in if or while condition 2">36</id><querystr><![CDATA[if ifs; Select ifs pattern ifs("t", _, _)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>46.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" UnnamedVar="2" Pattern="1" CondNum="4" RelNum="0" comment="Relation, Variable that is not nested and not in if condition 1">37</id><querystr><![CDATA[if ifs; Select ifs pattern ifs("out", _, _)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>40.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" UnnamedVar="2" Pattern="1" CondNum="4" RelNum="0" comment="Relation, Variable that is not nested and not in if condition 1">38</id><querystr><![CDATA[if ifs; Select ifs pattern ifs("end", _, _)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>38.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" UnnamedVar="2" Pattern="1" CondNum="4" RelNum="0" comment="Relation, Variable that is nested but not in if condition 1">39</id><querystr><![CDATA[if ifs; Select ifs pattern ifs("i", _, _)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>38.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" UnnamedVar="2" Pattern="1" CondNum="4" RelNum="0" comment="Relation, Variable that is nested but not in if condition 2">40</id><querystr><![CDATA[if ifs; Select ifs pattern ifs("black", _, _)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>40.000000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" UnnamedVar="2" Pattern="1" CondNum="4" RelNum="0" comment="Set 4 - Boundary tests for Pattern if (Boundary tests). Boundary, Non-existent variable">41</id><querystr><![CDATA[if ifs; Select ifs pattern ifs("oasis", _, _)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>36.000000</time_taken>
+<passed/>
+</query>
+</queries>
+</test_results>

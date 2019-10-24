@@ -106,7 +106,7 @@ TABLE PKBAffects::getAffectsAnyEnt() {
 	PROC_LIST resultTable;
 	LINE_LIST list;
 	PROG_LINE n;
-	list = PKBStmt::getAllStmt();
+	list = PKBStmt::getStmts();
 	for (auto iter : list) {
 		n = iter.front();
 		for (auto vectorIter : affectsTable) {
@@ -126,7 +126,7 @@ TABLE PKBAffects::getAffectsEntAny() {
 	PROC_LIST resultTable;
 	LINE_LIST list;
 	PROG_LINE n;
-	list = PKBStmt::getAllStmt();
+	list = PKBStmt::getStmts();
 	for (auto iter : list) {
 		n = iter.front();
 		for (auto vectorIter : affectsTable) {
@@ -146,7 +146,7 @@ TABLE PKBAffects::getAffectsIdentEnt(STMT_NO stmtNo) {
 	PROC_LIST resultTable;
 	LINE_LIST list;
 	PROG_LINE n;
-	list = PKBStmt::getAllStmt();
+	list = PKBStmt::getStmts();
 	for (auto iter : list) {
 		n = iter.front();
 		for (auto vectorIter : affectsTable) {
@@ -166,7 +166,7 @@ TABLE PKBAffects::getAffectsEntIdent(STMT_NO stmtNo) {
 	PROC_LIST resultTable;
 	LINE_LIST list;
 	PROG_LINE n;
-	list = PKBStmt::getAllStmt();
+	list = PKBStmt::getStmts();
 	for (auto iter : list) {
 		n = iter.front();
 		for (auto vectorIter : affectsTable) {
@@ -192,7 +192,7 @@ TABLE PKBAffects::getAffectsSelf() {
 	STMT_LIST resultTable;
 	STMT_LIST list;
 	STMT_NO s;
-	list = PKBStmt::getAllStmt();
+	list = PKBStmt::getStmts();
 	for (auto iter1 : list) {
 		s = iter1.front();
 		for (auto vectorIter : affectsTable) {
@@ -211,7 +211,7 @@ TABLE PKBAffects::getAffectsTAnyEnt() {
 	PROC_LIST resultTable;
 	LINE_LIST list;
 	PROG_LINE n;
-	list = PKBStmt::getAllStmt();
+	list = PKBStmt::getStmts();
 	for (auto iter : list) {
 		n = iter.front();
 		for (auto vectorIter : affectsTTable) {
@@ -229,7 +229,7 @@ TABLE PKBAffects::getAffectsTEntAny() {
 	PROC_LIST resultTable;
 	LINE_LIST list;
 	PROG_LINE n;
-	list = PKBStmt::getAllStmt();
+	list = PKBStmt::getStmts();
 	for (auto iter : list) {
 		n = iter.front();
 		for (auto vectorIter : affectsTTable) {
@@ -247,7 +247,7 @@ TABLE PKBAffects::getAffectsTIdentEnt(STMT_NO stmtNo) {
 	PROC_LIST resultTable;
 	LINE_LIST list;
 	PROG_LINE n;
-	list = PKBStmt::getAllStmt();
+	list = PKBStmt::getStmts();
 	for (auto iter : list) {
 		n = iter.front();
 		for (auto vectorIter : affectsTTable) {
@@ -265,7 +265,7 @@ TABLE PKBAffects::getAffectsTEntIdent(STMT_NO stmtNo) {
 	PROC_LIST resultTable;
 	LINE_LIST list;
 	PROG_LINE n;
-	list = PKBStmt::getAllStmt();
+	list = PKBStmt::getStmts();
 	for (auto iter : list) {
 		n = iter.front();
 		for (auto vectorIter : affectsTTable) {
@@ -287,7 +287,7 @@ TABLE PKBAffects::getAffectsTSelf() {
 	STMT_LIST resultTable;
 	STMT_LIST list;
 	STMT_NO s;
-	list = PKBStmt::getAllStmt();
+	list = PKBStmt::getStmts();
 	for (auto iter1 : list) {
 		s = iter1.front();
 		for (auto vectorIter : affectsTTable) {

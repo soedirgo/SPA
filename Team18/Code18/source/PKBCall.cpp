@@ -58,6 +58,16 @@ PROC_LIST PKBCall::getCalleeProc(PROC_NAME caller) {
 	return list;
 }
 
+PROC_LIST PKBCall::getAllCalleeProc() {
+	PROC_LIST list;
+	for (auto vectorIter : callsProcTable) {
+		vector<string> tuple = vector<string>();
+		tuple.push_back(vectorIter.back());
+		list.emplace(tuple);
+	}
+	return list;
+}
+
 PROC_LIST PKBCall::getAllCallProc() {
 	PROC_LIST list;
 	for (auto vectorIter : callsProcTable) {
