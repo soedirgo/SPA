@@ -55,3 +55,40 @@ procedure  NestedIfSIfS{
   else {
 30    x = y; }
 }
+
+
+procedure  NestedIfSIfSEndS{
+31  if (x > y) then {
+32	  print x; 
+33	  if (x > y) then {
+34		y = x; 
+		}
+		else {
+35		 x = y;}}
+36	 print y; 
+  else {
+37    x = y; }
+38	print x; 
+}
+
+procedure NestedWhileWhile {
+39  while (k >= i) {
+40   while (k >= i) {
+41    i = k;} }
+}
+
+procedure NestedWhileSWhile {
+42  while (k >= i) {
+43		print k; 
+44		while (k >= i) {
+45			i = k;
+}}}
+
+procedure NestedWhileWhileS {
+46  while (k >= i) { 
+47	 while (k >= i) {
+48		i = k;
+	 } 
+49	 print k;
+   }
+}

@@ -78,11 +78,6 @@ prog_line n;
 Select n such that Next*(n,12)
 8, 9,10,11
 5000
-16 - Set 2.0 - Unested While 
-prog_line n; 
-Select n such that Next*(n,n) 
-9,10,11
-5000
 17 - Set 3.1 - NestedIfIf - Second If at start of First If
 prog_line n; 
 Select n such that Next*(13,n)
@@ -162,4 +157,159 @@ Select n such that Next*(n, 29)
 prog_line n; 
 Select n such that Next*(29,n)
 
+5000
+33 - Set 3.4 - NestedIfSIfSEndS - First if, stmt list, second if, stmt list, end stmt list 
+prog_line n; 
+Select n such that Next*(31,n)
+32,33,34,35,36,37,38
+5000
+34 - Set 3.4 - NestedIfSIfSEndS - First if, stmt list, second if, stmt list, end stmt list 
+prog_line n; 
+Select n such that Next*(32,n)
+33,34,35,36,38
+5000
+35 - Set 3.4 - NestedIfSIfSEndS - First if, stmt list, second if, stmt list, end stmt list 
+prog_line n; 
+Select n such that Next*(33,n)
+34,35,36,38
+5000
+36 - Set 3.4 - NestedIfSIfSEndS - First if, stmt list, second if, stmt list, end stmt list 
+prog_line n; 
+Select n such that Next*(n, 35)
+31,32,33
+5000
+37 - Set 3.4 - NestedIfSIfSEndS - First if, stmt list, second if, stmt list, end stmt list 
+prog_line n; 
+Select n such that Next*(n, 34)
+31,32,33
+5000
+38 - Set 3.4 - NestedIfSIfSEndS - First if, stmt list, second if, stmt list, end stmt list 
+prog_line n; 
+Select n such that Next*(n, 38)
+31,32,33,34,35,36,37
+5000
+39 - Set 3.4 - NestedIfSIfSEndS - First if, stmt list, second if, stmt list, end stmt list 
+prog_line n; 
+Select n such that Next*(38,n)
+
+5000
+40 - Set 3.5 - NestedWhileWhile - First while, followed by second while with no stmts in between
+prog_line n; 
+Select n such that Next*(39,n)
+39,40,41
+5000
+41 - Set 3.5 - NestedWhileWhile - First while, followed by second while with no stmts in between
+prog_line n; 
+Select n such that Next*(40,n)
+39,40,41
+5000
+42 - Set 3.5 - NestedWhileWhile - First while, followed by second while with no stmts in between
+prog_line n; 
+Select n such that Next*(41,n)
+39,40,41
+5000
+43 - Set 3.5 - NestedWhileWhile - First while, followed by second while with no stmts in between
+prog_line n; 
+Select n such that Next*(n,39)
+39,40,41
+5000
+44 - Set 3.5 - NestedWhileWhile - First while, followed by second while with no stmts in between
+prog_line n; 
+Select n such that Next*(n,40)
+39,40,41
+5000
+45 - Set 3.5 - NestedWhileWhile - First while, followed by second while with no stmts in between
+prog_line n; 
+Select n such that Next*(n,41)
+39,40,41
+5000
+46 - Set 3.5 - NestedWhileWhile - First while, followed by second while with no stmts in between
+prog_line n; 
+Select n such that Next*(41,42)
+
+5000
+47 - Set 4.2 - NestedWhileSWhile - First while, stmt list,  second while
+prog_line n; 
+Select n such that Next*(42,n)
+42,43,44,45
+5000
+48 - Set 4.2 - NestedWhileSWhile - First while, stmt list,  second while
+prog_line n; 
+Select n such that Next*(43,n)
+42,43,44,45
+5000
+49 - Set 4.2 - NestedWhileSWhile - First while, stmt list,  second while
+prog_line n; 
+Select n such that Next*(44,n)
+42,43,44,45
+5000
+50 - Set 4.2 - NestedWhileSWhile - First while, stmt list,  second while
+prog_line n; 
+Select n such that Next*(45,n)
+42,43,44,45
+5000
+51 - Set 4.2 -NestedWhileSWhile - First while, stmt list,  second while
+prog_line n; 
+Select n such that Next*(n,42)
+42,43,44,45
+5000
+52 - Set 4.2 - NestedWhileSWhile - First while, stmt list,  second while
+prog_line n; 
+Select n such that Next*(n,43)
+42,43,44,45
+5000
+53 - Set 4.2 - NestedWhileSWhile - First while, stmt list,  second while
+prog_line n; 
+Select n such that Next*(n,44)
+42,43,44,45
+5000
+54 - Set 4.2 - NestedWhileSWhile - First while, stmt list,  second while
+prog_line n; 
+Select n such that Next*(n,45)
+42,43,44,45
+5000
+55 - Set 4.2 - NestedWhileSWhile - First while, stmt list,  second while
+prog_line n; 
+Select n such that Next*(45,46)
+
+5000
+56 - Set 4.3 - NestedWhileWhileS - First while,  second while, stmt list
+prog_line n; 
+Select n such that Next*(46,n)
+46,47,48,49
+5000
+57 - Set 4.3 - NestedWhileWhileS - First while,  second while, stmt list
+prog_line n; 
+Select n such that Next*(47,n)
+46,47,48,49
+5000
+58 - Set 4.3 - NestedWhileWhileS - First while,  second while, stmt list
+prog_line n; 
+Select n such that Next*(48,n)
+46,47,48,49
+5000
+59 - Set 4.3 - NestedWhileWhileS - First while,  second while, stmt list
+prog_line n; 
+Select n such that Next*(49,n)
+46,47,48,49
+5000
+60 -Set 4.3 - NestedWhileWhileS - First while,  second while, stmt list
+prog_line n; 
+Select n such that Next*(n,46)
+46,47,48,49
+5000
+61 -Set 4.3 - NestedWhileWhileS - First while,  second while, stmt list
+prog_line n; 
+Select n such that Next*(n,47)
+46,47,48,49
+5000
+62 -Set 4.3 - NestedWhileWhileS - First while,  second while, stmt list
+prog_line n; 
+Select n such that Next*(n,48)
+46,47,48,49
+5000
+63 -Set 4.3 - NestedWhileWhileS - First while,  second while, stmt list
+prog_line n; 
+Select n such that Next*(n,49)
+46,47,48,49
 5000
