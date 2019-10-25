@@ -1,0 +1,58 @@
+procedure UnestedIf {
+  if (x > y) then {
+    y = x; 
+	z = x; }
+  else {
+    x = y;
+	y = z; }
+  read z; 
+  read y; 
+}
+
+procedure UnestedWhile {
+  k = i; 
+  while (k >= i) {
+    i = k;
+    read o; }
+  k = i; 
+}
+
+procedure  NestedIfIf{
+  if (x > y) then {
+	  if (x > y) then {
+		y = x; 
+		}
+		else {
+		 x = y;}}
+
+  else {
+    x = y; }
+}
+
+procedure  NestedIfSIf{
+  if (x > y) then {
+	  print x; 
+	  if (x > y) then {
+		y = x; 
+		}
+		else {
+		 x = y;}}
+
+  else {
+    x = y; }
+}
+
+procedure  NestedIfIfStmt{
+  if (x > y) then {
+	print y; 
+	  if (x > y) then {
+		y = x; 
+		}
+		else {
+		 x = y;}}
+
+  else {
+    x = y; }
+  read z; 
+  read y; 
+}
