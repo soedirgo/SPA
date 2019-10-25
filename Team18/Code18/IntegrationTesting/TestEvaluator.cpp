@@ -233,9 +233,9 @@ namespace IntegrationTesting
             pkb.setAssignPattern("12", " 8 ");
             pkb.setAssignPattern("13", " a ");
 
-            pkb.setIfPattern("2", " b 2 == ");
-            pkb.setIfPattern("5", " e 5 == ");
-            pkb.setIfPattern("6", " f 6 == ");
+            pkb.setIfPattern("2", "b");
+            pkb.setIfPattern("5", "e");
+            pkb.setIfPattern("6", "f");
 
             pkb.setWhilePattern("3", " c 3 == ");
             pkb.setWhilePattern("4", " d 4 == ");
@@ -565,7 +565,7 @@ namespace IntegrationTesting
             /**
              * Select v such that Follows*(s, a) pattern a(v, _)
              * Select c such that Calls(c, "sub") with c.procName = "main"
-             * Select s such that Uses("main", v) pattern i(v, _) with i.stmt# = 2
+             * Select s such that Uses("main", v) pattern i(v, _, _) with i.stmt# = 2
              * Select s4 such that Parent(s1, s2) and Parent*(s2, s3) and Parent(s3, s4)
              * Select i such that Parent*(i, w) pattern i(v, _, _) and a(v, "a")
              *   with i.stmt# = co.value such that Modifies(w, v)
@@ -591,7 +591,7 @@ namespace IntegrationTesting
                          "8", "9", "10", "11", "12", "13" };
             actual = Evaluator::evaluate
                 (Query(decl, {"s"}, { {"such that", {"Uses", "\"main\"", "v"}},
-                                      {"pattern", {"i", "v", "_"}},
+                                      {"pattern", {"i", "v", "_, _"}},
                                       {"with", {"i.stmt#", "2"}} }));
             expected.sort();
             actual.sort();
@@ -658,7 +658,7 @@ namespace IntegrationTesting
             actual.sort();
             Assert::IsTrue(expected == actual);
 
-            expected = {  };
+            expected = { "FALSE" };
             actual = Evaluator::evaluate
                 (Query(decl, {"BOOLEAN"}, { {"with", {"p.procName", "\"foo\""}} }));
             expected.sort();

@@ -503,10 +503,14 @@ namespace Evaluator {
         for (const auto& field : fields)
             if (type == "such that" && field == fields[0])
                 continue;
-            else if (!isIdentifier(field) && !isUnderscore(field)
-                     && !isPartialPattern(field) && field.front() != ' ')
+            else if (field.front() != ' ' && field.front() != '_' && field.front() != '\"'
+                     && !isdigit(field.front()) && field.find('.') == string::npos)
                 synonyms[field] = synonyms.size();
-        
+            else if (field.find('.') != string::npos) {
+                size_t pos = field.find('.');
+                synonyms[field.substr(0, pos)] = synonyms.size();
+            }
+
         if (type == "such that")
             if ((isUnderscore(fields[1]) || isIdentifier(fields[1]))
                 && (isUnderscore(fields[2]) || isIdentifier(fields[2])))
