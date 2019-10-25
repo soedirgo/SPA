@@ -34,6 +34,22 @@ void DesignExtractor::extractDesign()
 	//extractAffectsT();
 }
 
+void DesignExtractor::affectsAll() {
+	;
+}
+
+void DesignExtractor::affectedBy(STMT_NO a1) {
+	;
+}
+
+void DesignExtractor::isAffecting(STMT_NO a2) {
+	;
+}
+
+void DesignExtractor::isAffects(STMT_NO a1, STMT_NO a2) {
+	;
+}
+
 void DesignExtractor::extractAffectsT()
 {
 	TABLE affectsTable = PKBAffects::getAffectsEntEnt();
