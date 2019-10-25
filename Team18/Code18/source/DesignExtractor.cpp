@@ -47,7 +47,39 @@ void DesignExtractor::isAffecting(STMT_NO a2) {
 }
 
 void DesignExtractor::isAffects(STMT_NO a1, STMT_NO a2) {
-	;
+	bool affectsHold = false;
+	STMT_LIST assignStmtTable = PKB::getAssigns();
+	if (PKBStmt::getTypeByStmtNo(a1) == "assign" && PKBStmt::getTypeByStmtNo(a2) == "assign") {
+		// will only have 1 in varList
+		VAR_LIST varList1 = PKBModifies::getModifiesSIdentEnt(a1);
+		VAR_NAME varNameModified;
+		VAR_NAME varNameUses;
+		for (auto vectorIter4 : varList1) {
+			varNameModified = vectorIter4.front();
+		}
+		VAR_LIST varList2 = PKBUses::getUsesSIdentEnt(a2);
+		for (auto vectorIter4 : varList2) {
+			varNameUses = vectorIter4.front();
+		}
+		if (varNameModified == varNameUses) {
+			affectsHold = true;
+		}
+		vector<std::string> validAssigns;
+		for (auto stmt : assignStmtTable) {
+			STMT_NO stmtNo = stmt.front();
+			if (PKB::isModifiesSIdentIdent(stmtNo, varNameModified) && !(stmtNo == a1) && !(stmtNo == a2)) {
+				validAssigns.push_back(stmtNo);
+			}
+		}
+		for (auto stmt : validAssigns) {
+			if (PKB::isNextTIdentIdent(a1, stmt) && PKB::isNextTIdentIdent(stmt, a2)) {
+				affectsHold = false;
+			}
+		}
+	}
+	if (affectsHold == true) {
+		PKBAffects::setAffects(a1, a2);
+	}
 }
 
 void DesignExtractor::extractAffectsT()
