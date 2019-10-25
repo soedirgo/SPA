@@ -503,8 +503,9 @@ namespace Evaluator {
         for (const auto& field : fields)
             if (type == "such that" && field == fields[0])
                 continue;
-            else if (field.front() != ' ' && field.front() != '_' && field.front() != '\"'
-                     && !isdigit(field.front()) && field.find('.') == string::npos)
+            else if (field.front() != ' ' && field.front() != '_'
+                     && field.front() != '\"' && !isdigit(field.front())
+                     && !synonyms.count(field) && field.find('.') == string::npos)
                 synonyms[field] = synonyms.size();
             else if (field.find('.') != string::npos) {
                 size_t pos = field.find('.');

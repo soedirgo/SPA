@@ -41,3 +41,17 @@ procedure  NestedIfSIf{
   else {
 23    x = y; }
 }
+
+
+procedure  NestedIfSIfS{
+24  if (x > y) then {
+25	  print x; 
+26	  if (x > y) then {
+27		y = x; 
+		}
+		else {
+28		 x = y;}}
+29	 print y; 
+  else {
+30    x = y; }
+}

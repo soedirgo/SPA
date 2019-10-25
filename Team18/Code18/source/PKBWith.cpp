@@ -11,13 +11,13 @@ using namespace std;
 ENT_LIST PKBWith::getWithIdentAttr(IDENT iden, ENT_TYPE ent, ATTR attr) {
 	ENT_LIST resultTable;
 	TABLE list;
-	if (ent == "procedure") {
+	if (ent == "procedure" && attr == "procName") {
 		list = PKBProcedure::getProcedures();
 	}
 	else if (ent == "call" && attr == "procName") {
 		list = PKBCall ::getAllCalleeProc();
 	}
-	else if (ent == "variable") {
+	else if (ent == "variable" && attr == "varName") {
 		list = PKBVariable::getVariables();
 	}
 	else if (ent == "read" && attr == "varName") {
@@ -26,11 +26,11 @@ ENT_LIST PKBWith::getWithIdentAttr(IDENT iden, ENT_TYPE ent, ATTR attr) {
 	else if (ent == "print" && attr == "varName") {
 		list = PKBPrint::getAllPrintVar();
 	}
-	else if (ent == "constant") {
+	else if (ent == "constant" && attr == "value") {
 		list = PKBConstant::getConstants();
 	}
 	else {
-		if (ent == "stmt") {
+		if (ent == "stmt" && attr == "stmt#") {
 			list = PKBStmt::getStmts();
 		}
 		else if ((ent == "read" || ent == "print"  || ent == "call" || ent == "while" 
@@ -67,13 +67,13 @@ STMT_LIST PKBWith::getWithIdentLine(IDENT iden) {
 TABLE PKBWith::getWithAttrAttr(ENT_TYPE ent1, ATTR attr1, ENT_TYPE ent2, ATTR attr2) {
 	TABLE resultTable;
 	TABLE list1, list2;
-	if (ent1 == "procedure") {
+	if (ent1 == "procedure" && attr1 == "procName") {
 		list1 = PKBProcedure::getProcedures();
 	}
 	else if (ent1 == "call" && attr1 == "procName") {
 		list1 = PKBCall::getAllCalleeProc();
 	}
-	else if (ent1 == "variable") {
+	else if (ent1 == "variable" && attr1 == "varName") {
 		list1 = PKBVariable::getVariables();
 	}
 	else if (ent1 == "read" && attr1 == "varName") {
@@ -82,27 +82,28 @@ TABLE PKBWith::getWithAttrAttr(ENT_TYPE ent1, ATTR attr1, ENT_TYPE ent2, ATTR at
 	else if (ent1 == "print" && attr1 == "varName") {
 		list1 = PKBPrint::getAllPrintVar();
 	}
-	else if (ent1 == "constant") {
+	else if (ent1 == "constant" && attr1 == "value") {
 		list1 = PKBConstant::getConstants();
 	}
 	else {
-		if (ent1 == "stmt") {
+		if (ent1 == "stmt" && attr1 =="stmt#") {
 			list1 = PKBStmt::getStmts();
 		}
-		else if (attr1 == "stmt#") {
+		else if ((ent1 == "read" || ent1 == "print" || ent1 == "call" || ent1 == "while"
+			|| ent1 == "if" || ent1 == "assign") && attr1 == "stmt#") {
 			list1 = PKBStmt::getStmtsByType(ent1);
 		}
 		else {
 			return resultTable;
 		}
 	}
-	if (ent2 == "procedure") {
+	if (ent2 == "procedure" && attr2 == "procName") {
 		list2 = PKBProcedure::getProcedures();
 	}
 	else if (ent2 == "call" && attr2 == "procName") {
 		list2 = PKBCall::getAllCalleeProc();
 	}
-	else if (ent2 == "variable") {
+	else if (ent2 == "variable" && attr2 == "varName") {
 		list2 = PKBVariable::getVariables();
 	}
 	else if (ent2 == "read" && attr2 == "varName") {
@@ -111,14 +112,15 @@ TABLE PKBWith::getWithAttrAttr(ENT_TYPE ent1, ATTR attr1, ENT_TYPE ent2, ATTR at
 	else if (ent2 == "print" && attr2 == "varName") {
 		list2 = PKBPrint::getAllPrintVar();
 	}
-	else if (ent2 == "constant") {
+	else if (ent2 == "constant" && attr2 == "value") {
 		list2 = PKBConstant::getConstants();
 	}
 	else {
-		if (ent2 == "stmt") {
+		if (ent2 == "stmt" && attr2 == "stmt#") {
 			list2 = PKBStmt::getStmts();
 		}
-		else if (attr2 == "stmt#") {
+		else if ((ent2 == "read" || ent2 == "print" || ent2 == "call" || ent2 == "while"
+			|| ent2 == "if" || ent2 == "assign") && attr2 == "stmt#") {
 			list2 = PKBStmt::getStmtsByType(ent2);
 		}
 		else {
@@ -142,11 +144,11 @@ TABLE PKBWith::getWithAttrLine(ENT_TYPE ent, ATTR attr) {
 	TABLE resultTable;
 	TABLE list1, list2;
 	list2 = PKBStmt::getStmts();
-	if (ent == "constant") {
+	if (ent == "constant" && attr == "value") {
 		list1 = PKBConstant::getConstants();
 	}
 	else {
-		if (ent == "stmt") {
+		if (ent == "stmt" && attr == "stmt#") {
 			list1 = PKBStmt::getStmts();
 		}
 		else if ((ent == "read" || ent == "print" || ent == "call" || ent == "while"

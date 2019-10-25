@@ -78,10 +78,10 @@ prog_line n;
 Select n such that Next*(n,12)
 8, 9,10,11
 5000
-16 - Set 2.0 - Unested While Select n such that Next*(n,n) 8, 9,10,11
+16 - Set 2.0 - Unested While 
 prog_line n; 
-Select BOOLEAN such that Next(n,n)
-FALSE
+Select n such that Next*(n,n) 
+9,10,11
 5000
 17 - Set 3.1 - NestedIfIf - Second If at start of First If
 prog_line n; 
@@ -107,4 +107,59 @@ Select n such that Next*(n,14)
 prog_line n; 
 Select n such that Next*(n,17)
 13
+5000
+22 - Set 3.2 - NestedIfSIf - First if, stmt list, second if
+prog_line n; 
+Select n such that Next*(18,n)
+19,20,21,22,23
+5000
+23 - Set 3.2 - NestedIfSIf - First if, stmt list, second if
+prog_line n; 
+Select n such that Next*(19,n)
+20,21,22
+5000
+24 - Set 3.2 - NestedIfSIf - First if, stmt list, second if
+prog_line n; 
+Select n such that Next*(20,n)
+21,22
+5000
+25 - Set 3.2 - NestedIfSIf - First if, stmt list, second if
+prog_line n; 
+Select n such that Next*(n, 22)
+18,19,20
+5000
+26 - Set 3.2 - NestedIfSIf - First if, stmt list, second if
+prog_line n; 
+Select n such that Next*(n, 21)
+18,19,20
+5000
+27 - Set 3.2 - NestedIfSIfS - First if, stmt list, second if, stmt list
+prog_line n; 
+Select n such that Next*(24,n)
+25,26,30,27,28,29
+5000
+28 - Set 3.2 - NestedIfSIfS - First if, stmt list, second if, stmt list
+prog_line n; 
+Select n such that Next*(26,n)
+27,28,29
+5000
+29 - Set 3.2 - NestedIfSIfS - First if, stmt list, second if, stmt list
+prog_line n; 
+Select n such that Next*(n, 28)
+26,25,24
+5000
+30 - Set 3.2 - NestedIfSIfS - First if, stmt list, second if, stmt list
+prog_line n; 
+Select n such that Next*(n, 27)
+26,25,24
+5000
+31 - Set 3.2 - NestedIfSIfS - First if, stmt list, second if, stmt list
+prog_line n; 
+Select n such that Next*(n, 29)
+24,25,26,27,28
+5000
+32 - Set 3.2 - NestedIfSIfS - First if, stmt list, second if, stmt list
+prog_line n; 
+Select n such that Next*(29,n)
+
 5000

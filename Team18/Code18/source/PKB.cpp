@@ -18,13 +18,8 @@
 #include "PKBWith.h"
 using namespace std;
 
-unordered_map<int, string> PKB::assignStmtTable;
-unordered_map<string, unordered_set<int>> PKB::assignVarTable;
-
-
 bool PKB::clear()
 {
-	
 	PKBCall::clear();
 	PKBConstant::clear();
 	PKBFollows::clear();
@@ -38,22 +33,14 @@ bool PKB::clear()
 	PKBStmt::clear();
 	PKBUses::clear();
 	PKBVariable::clear();
-
 	return true;
 }
 
-int PKB::setProcToAST(PROC p, TNode* r) {
-	return 0;
+bool PKB::clearTempPKB()
+{
+	PKBNext::clearNextT();
+	return true;
 }
-
-TNode* PKB::getRootAST (PROC p){
-	return nullptr;
-}
-
-////////////////////////////////////
-// Higher order wrapper functions APIs
-////////////////////////////////////
-
 
 //Follows 
 bool PKB::setFollows(STMT_NO followedBy, STMT_NO follow) {
@@ -307,66 +294,6 @@ TABLE PKB::getUsesPEntEnt() {
 	return PKBUses::getUsesPEntEnt();
 }
 
-/*
-bool PKB::isConstUsedInAssign(STMT_NO assignStmtNo, string c) {
-	//STMT_LIST stmtList = getStmtByConst(c); 
-	STMT_LIST stmtList = PKBConstant::getAllConstantStmtByVal(c);
-	for (auto stmt : stmtList) {
-		if (stmt == assignStmtNo) {
-			return true;
-		}
-	}
-	return false; 
-}
-*/
-
-/*
-bool PKB::isVarUsedInAssign(STMT_NO assignStmtNo, string varName) {
-	STMT_LIST stmtList = PKBUses::getUsesStmt(varName);
-	STMT_LIST assignStmtList = getAllAssignStmt();
-	for (auto stmt : stmtList) {
-		if (stmt == assignStmtNo) {
-			for (auto assignStmt : assignStmtList) {
-				if (stmt == assignStmt) {
-					return true;
-				}
-			}
-			
-		}
-	}
-	return false;
-}
-*/
-
-
-
-
-/*
-bool PKB::insertAssignRelation(int stmtNo, string varModified, unordered_set<string> varUsed, unordered_set<string> constUsed) {
-	try {
-		setAssignStmt(stmtNo, varModified);
-		setAssignStmtByVar(stmtNo, varModified);
-		PKBModifies::setModifiesS(stmtNo, varModified);
-		if (!varUsed.empty()) {
-			for (string var : varUsed) {
-				setUsesS(stmtNo, var);
-				setUsesVarByStmt(stmtNo, var);
-			}
-		}
-		if (!constUsed.empty()) {
-			for (string c : constUsed) {
-				setConstant(c, stmtNo);
-			}
-		}
-		
-		return true; 
-	}
-	catch (errc) {
-		return false;
-	}
-};
-*/
-
 //Variable
 
 bool PKB::setVariable(VAR_NAME varName) {
@@ -379,15 +306,9 @@ VAR_LIST PKB::getVariables() {
 
 // constantTable APIs
 
-bool PKB::setConstant(STMT_NO stmtNo, CONST_VAL constantVal) {
-	return PKBConstant::setConstant(stmtNo, constantVal);
+bool PKB::setConstant(CONST_VAL constantVal) {
+	return PKBConstant::setConstant(constantVal);
 }
-
-/*
-CONST_VAL PKB::getConstantValByStmt(STMT_NO stmtNo) {
-	return PKBConstant::getConstantValByStmt(stmtNo);
-}
-*/
 
 CONST_LIST PKB::getConstants() {
 	return PKBConstant::getConstants();

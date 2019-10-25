@@ -75,14 +75,12 @@ bool PKBNext::isNextIdentIdent(PROG_LINE currentLine, PROG_LINE nextLine) {
 }
 
 bool PKBNext::isNextTAnyAny() {
-	clearNextT();
 	DesignExtractor::extractNextT();
 	bool status = !nextTTable.empty();
 	clearNextT();
 	return status;
 }
 bool PKBNext::isNextTAnyIdent(PROG_LINE nextLine) {
-	clearNextT();
 	DesignExtractor::extractNextT();
 	for (auto vectorIter : nextTTable) {
 		if (vectorIter.back() == nextLine) {
@@ -90,11 +88,9 @@ bool PKBNext::isNextTAnyIdent(PROG_LINE nextLine) {
 			return true;
 		}
 	}
-	clearNextT();
 	return false;
 }
 bool PKBNext::isNextTIdentAny(PROG_LINE currentLine) {
-	clearNextT();
 	DesignExtractor::extractNextT();
 	for (auto vectorIter : nextTTable) {
 		if (vectorIter.front() == currentLine) {
@@ -102,11 +98,9 @@ bool PKBNext::isNextTIdentAny(PROG_LINE currentLine) {
 			return true;
 		}
 	}
-	clearNextT();
 	return false;
 }
 bool PKBNext::isNextTIdentIdent(PROG_LINE currentLine, PROG_LINE nextLine) {
-	clearNextT();
 	DesignExtractor::extractNextT();
 	for (auto vectorIter : nextTTable) {
 		if (vectorIter.front() == currentLine) {
@@ -116,7 +110,6 @@ bool PKBNext::isNextTIdentIdent(PROG_LINE currentLine, PROG_LINE nextLine) {
 			}
 		}
 	}
-	clearNextT();
 	return false;
 }
 
@@ -269,12 +262,10 @@ TABLE PKBNext::getNextEntEnt(STMT_TYPE type1, STMT_TYPE type2) {
 			}
 		}
 	}
-
 	return resultTable;
 }
 
 TABLE PKBNext::getNextTAnyEnt(STMT_TYPE type) {
-	clearNextT();
 	DesignExtractor::extractNextT();
 	TABLE resultTable;
 	STMT_LIST list;
@@ -295,12 +286,10 @@ TABLE PKBNext::getNextTAnyEnt(STMT_TYPE type) {
 			}
 		}
 	}
-	clearNextT();
 	return resultTable;
 }
 
 TABLE PKBNext::getNextTEntAny(STMT_TYPE type) {
-	clearNextT();
 	DesignExtractor::extractNextT();
 	TABLE resultTable;
 	STMT_LIST list;
@@ -321,12 +310,10 @@ TABLE PKBNext::getNextTEntAny(STMT_TYPE type) {
 			}
 		}
 	}
-	clearNextT();
 	return resultTable;
 }
 
 TABLE PKBNext::getNextTIdentEnt(PROG_LINE stmtNo, STMT_TYPE type) {
-	clearNextT();
 	DesignExtractor::extractNextT();
 	TABLE resultTable;
 	STMT_LIST list;
@@ -347,12 +334,10 @@ TABLE PKBNext::getNextTIdentEnt(PROG_LINE stmtNo, STMT_TYPE type) {
 			}
 		}
 	}
-	clearNextT();
 	return resultTable;
 }
 
 TABLE PKBNext::getNextTEntIdent(STMT_TYPE type, PROG_LINE stmtNo) {
-	clearNextT();
 	DesignExtractor::extractNextT();
 	TABLE resultTable;
 	STMT_LIST list;
@@ -373,12 +358,10 @@ TABLE PKBNext::getNextTEntIdent(STMT_TYPE type, PROG_LINE stmtNo) {
 			}
 		}
 	}
-	clearNextT();
 	return resultTable;
 }
 
 TABLE PKBNext::getNextTEntEnt(STMT_TYPE type1, STMT_TYPE type2) {
-	clearNextT();
 	DesignExtractor::extractNextT();
 	TABLE resultTable;
 	if (type1 == "stmt" && type2 == "stmt") {
@@ -414,12 +397,10 @@ TABLE PKBNext::getNextTEntEnt(STMT_TYPE type1, STMT_TYPE type2) {
 			}
 		}
 	}
-	clearNextT();
 	return resultTable;
 }
 
 TABLE PKBNext::getNextTSelf(STMT_TYPE type) {
-	clearNextT();
 	DesignExtractor::extractNextT();
 	PROC_LIST resultTable;
 	LINE_LIST list;
@@ -440,7 +421,6 @@ TABLE PKBNext::getNextTSelf(STMT_TYPE type) {
 			}
 		}
 	}
-	clearNextT();
 	return resultTable;
 }
 

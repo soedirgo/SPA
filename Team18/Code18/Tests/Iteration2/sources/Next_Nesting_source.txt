@@ -42,17 +42,15 @@ procedure  NestedIfSIf{
     x = y; }
 }
 
-procedure  NestedIfIfStmt{
+procedure  NestedIfSIfS{
   if (x > y) then {
-	print y; 
+	  print x; 
 	  if (x > y) then {
 		y = x; 
 		}
 		else {
 		 x = y;}}
-
+	 print y; 
   else {
     x = y; }
-  read z; 
-  read y; 
 }

@@ -140,6 +140,15 @@ namespace UnitTesting
 		TEST_METHOD(getWithAttrAttr) {
 			PKBWith PKB;
 			TABLE actual, expected;
+
+			actual = PKB.getWithAttrAttr("procedure", "procName", "constant", "value");
+			Assert::IsTrue(actual == expected);
+
+			actual = PKB.getWithAttrAttr("procedure", "procName", "constant", "value");
+			Assert::IsTrue(actual == expected);
+
+			actual = PKB.getWithAttrAttr("procedure", "procName", "constant", "value");
+			Assert::IsTrue(actual == expected);
 			
 			actual = PKB.getWithAttrAttr("print", "varName", "print", "varName");
 			expected = { {"c","c"} };
