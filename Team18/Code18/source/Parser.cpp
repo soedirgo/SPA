@@ -76,7 +76,7 @@ int Parser::Parse(string filename) {
 			}
 			for (string var : uses) {
 				if (isdigit(var.at(0))) {
-					pkb.setConstant(to_string(stmtNo),var);
+					pkb.setConstant(var);
 				}
 				else {
 					pkb.setVariable(var);
@@ -125,7 +125,7 @@ int Parser::Parse(string filename) {
 			}
 			for (string var : uses) {
 				if (isdigit(var.at(0))) {
-					pkb.setConstant(to_string(stmtNo),var);
+					pkb.setConstant(var);
 				}
 				else {
 					pkb.setVariable(var);
@@ -182,7 +182,7 @@ int Parser::Parse(string filename) {
 
 			for (string var : results) {
 				if (isdigit(var.at(0))) {
-					pkb.setConstant(to_string(stmtNo),var);
+					pkb.setConstant(var);
 				}
 				else {
 					pkb.setVariable(var);
@@ -539,7 +539,7 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 			}
 			for (string var : uses) {
 				if (isdigit(var.at(0))) {
-					pkb.setConstant(to_string(currStmtNo),var);
+					pkb.setConstant(var);
 					result.addUses(var);
 				}
 				else {
@@ -622,7 +622,7 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 			}
 			for (string var : uses) {
 				if (isdigit(var.at(0))) {
-					pkb.setConstant(to_string(currStmtNo),var);
+					pkb.setConstant(var);
 					result.addUses(var);
 				}
 				else {
@@ -719,7 +719,7 @@ NestedResult Parser::parseIf(string ifLine, int parentStmtNo) {
 
 			for (string var : results) {
 				if (isdigit(var.at(0))) {
-					pkb.setConstant(to_string(currStmtNo),var);
+					pkb.setConstant(var);
 					result.addUses(var);
 				}
 				else {
@@ -1060,7 +1060,7 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 			}
 			for (string var : uses) {
 				if (isdigit(var.at(0))) {
-					pkb.setConstant(to_string(currStmtNo),var);
+					pkb.setConstant(var);
 					result.addUses(var);
 				}
 				else {
@@ -1119,7 +1119,7 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 			}
 			for (string var : uses) {
 				if (isdigit(var.at(0))) {
-					pkb.setConstant(to_string(currStmtNo),var);
+					pkb.setConstant(var);
 					result.addUses(var);
 				}
 				else {
@@ -1193,7 +1193,7 @@ NestedResult Parser::parseWhile(string whileLine, int parentStmtNo) {
 
 			for (string var : results) {
 				if (isdigit(var.at(0))) {
-					pkb.setConstant(to_string(currStmtNo),var);
+					pkb.setConstant(var);
 					result.addUses(var);
 				}
 				else {

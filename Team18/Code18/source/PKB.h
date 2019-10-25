@@ -1,44 +1,13 @@
 #pragma once
-#include <iostream>
-#include <string>
-#include <vector>
-#include <unordered_set>
-#include <unordered_map>
 #include "AbstractType.h"
-
-typedef short PROC;
-
-class TNode;
-
-//class VarTable;  // no need to #include "VarTable.h" as all I need is pointer
 
 class PKB {
 
 public:
 	
-	/////////////////////////////////
-	//Higher order wrapper functions
-	/////////////////////////////////
-
-	//static bool insertAssignRelation(STMT_NO stmtNo, std::string varModified, VAR_LIST varUsed, CONST_LIST constUsed);
-
-	static bool isConstUsedInAssign(STMT_NO stmtNo, std::string c);
-	static bool isVarUsedInAssign(STMT_NO stmtNo, std::string c);
-
-	//static bool setAssignStmt(STMT_NO stmtNo, std::string varModified);
-	//static std::string getVarModifiedByAssignStmt(STMT_NO stmtNo);
-	
-	//static STMT_LIST getAssignStmtByVar(std::string varName);
-	//static bool setAssignStmtByVar(STMT_NO stmtNo, std::string varName);
-
-	static int setProcToAST(PROC p, TNode* r);
-	static TNode* getRootAST(PROC p);
-
-
-	//UPDATED APIS//
-
 	// Clear PKB database
 	static bool clear();
+	static bool clearTempPKB();
 
 	//Variable Functions
 	static bool setVariable(VAR_NAME varName);
@@ -68,9 +37,8 @@ public:
 	static VAR_LIST getAllReadVar();
 
 	//Constant Functions
-	static bool setConstant(STMT_NO stmtNo, CONST_VAL constantVal);
+	static bool setConstant( CONST_VAL constantVal);
 	static CONST_LIST getConstants();
-	//static CONST_VAL getConstantValByStmt(STMT_NO stmtNo); 
 
 	//Follow Functions
 	static bool setFollows(STMT_NO followedBy, STMT_NO follow);
@@ -284,16 +252,10 @@ public:
 	static TABLE getAffectsTEntEnt();
 	static TABLE getAffectsTSelf();
 
-	
-
 	//with Clause
 	static STMT_LIST getWithIdentAttr(IDENT iden, ENT_TYPE ent, ATTR attr);
 	static STMT_LIST getWithIdentLine(IDENT iden);
 	static TABLE getWithAttrAttr(ENT_TYPE ent1, ATTR attr1, ENT_TYPE ent2, ATTR attr2);
 	static TABLE getWithAttrLine(ENT_TYPE ent, ATTR attr);
 	static TABLE getWithLineLine();
-
-private:
-	static std::unordered_map<int, std::string> assignStmtTable;
-	static std::unordered_map<std::string, std::unordered_set<int>> assignVarTable;
 };
