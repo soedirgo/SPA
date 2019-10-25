@@ -433,12 +433,12 @@ namespace IntegrationTesting
             actual.sort();
             Assert::IsTrue(expected == actual);
 
-            //expected = { "1", "12", "13" };
-            //actual = Evaluator::evaluate
-            //    (Query(decl, {"a"}, { {"such that", {"Next*", "n", "11"}} }));
-            //expected.sort();
-            //actual.sort();
-            //Assert::IsTrue(expected == actual);
+            expected = { "1", "12", "13" };
+            actual = Evaluator::evaluate
+               (Query(decl, {"a"}, { {"such that", {"Next*", "n", "11"}} }));
+            expected.sort();
+            actual.sort();
+            Assert::IsTrue(expected == actual);
         }
         TEST_METHOD(testOnePatternClause)
         {
@@ -491,57 +491,57 @@ namespace IntegrationTesting
             actual.sort();
             Assert::IsTrue(expected == actual);
         }
-        // TEST_METHOD(testOneWithClause)
-        // {
-        //     unordered_map<string, string> decl = { {"s", "stmt"},
-        //                                            {"r", "read"},
-        //                                            {"p", "print"},
-        //                                            {"c", "call"},
-        //                                            {"w", "while"},
-        //                                            {"i", "if"},
-        //                                            {"a", "assign"},
-        //                                            {"v", "variable"},
-        //                                            {"co", "constant"},
-        //                                            {"n", "prog_line"},
-        //                                            {"proc", "procedure"} };
-        //     list<string> expected;
-        //     list<string> actual;
+        TEST_METHOD(testOneWithClause)
+        {
+            unordered_map<string, string> decl = { {"s", "stmt"},
+                                                   {"r", "read"},
+                                                   {"p", "print"},
+                                                   {"c", "call"},
+                                                   {"w", "while"},
+                                                   {"i", "if"},
+                                                   {"a", "assign"},
+                                                   {"v", "variable"},
+                                                   {"co", "constant"},
+                                                   {"n", "prog_line"},
+                                                   {"proc", "procedure"} };
+            list<string> expected;
+            list<string> actual;
 
-        //     /**
-        //      * Select s with s.stmt# = 2
-        //      * Select c with c.procName = co.value
-        //      * Select v with v.varName = "h"
-        //      * Select n with n = co.value
-        //      */
+            /**
+             * Select s with s.stmt# = 2
+             * Select c with 1 = 1
+             * Select v with v.varName = "h"
+             * Select n with n = co.value
+             */
 
-        //     expected = { "2" };
-        //     actual = Evaluator::evaluate
-        //         (Query(decl, {"s"}, { {"with", {}} }));
-        //     expected.sort();
-        //     actual.sort();
-        //     Assert::IsTrue(expected == actual);
+            expected = { "2" };
+            actual = Evaluator::evaluate
+                (Query(decl, {"s"}, { {"with", {"s.stmt#", "2"}} }));
+            expected.sort();
+            actual.sort();
+            Assert::IsTrue(expected == actual);
 
-        //     expected = {};
-        //     actual = Evaluator::evaluate
-        //         (Query(decl, {"c"}, { {"with", {}} }));
-        //     expected.sort();
-        //     actual.sort();
-        //     Assert::IsTrue(expected == actual);
+            expected = { "9" };
+            actual = Evaluator::evaluate
+                (Query(decl, {"c"}, { {"with", {"1", "1"}} }));
+            expected.sort();
+            actual.sort();
+            Assert::IsTrue(expected == actual);
 
-        //     expected = { "h" };
-        //     actual = Evaluator::evaluate
-        //         (Query(decl, {"v"}, { {"with", {}} }));
-        //     expected.sort();
-        //     actual.sort();
-        //     Assert::IsTrue(expected == actual);
+            expected = { "h" };
+            actual = Evaluator::evaluate
+                (Query(decl, {"v"}, { {"with", {"v.varName", "\"h\""}} }));
+            expected.sort();
+            actual.sort();
+            Assert::IsTrue(expected == actual);
 
-        //     expected = { "1", "2", "3", "4", "5", "6", "7", "8" };
-        //     actual = Evaluator::evaluate
-        //         (Query(decl, {"n"}, { {"with", {}} }));
-        //     expected.sort();
-        //     actual.sort();
-        //     Assert::IsTrue(expected == actual);
-        // }
+            expected = { "1", "2", "3", "4", "5", "6", "7", "8" };
+            actual = Evaluator::evaluate
+                (Query(decl, {"n"}, { {"with", { "n", "co.value" }} }));
+            expected.sort();
+            actual.sort();
+            Assert::IsTrue(expected == actual);
+        }
         TEST_METHOD(testMultiClauses)
         {
             unordered_map<string, string> decl = { {"s", "stmt"},
@@ -579,23 +579,23 @@ namespace IntegrationTesting
             actual.sort();
             Assert::IsTrue(expected == actual);
 
-            // expected = {};
-            // actual = Evaluator::evaluate
-            //     (Query(decl, {"c"}, { {"such that", {"Calls", "c", "\"sub\""}},
-            //                           {"with", {}} }));
-            // expected.sort();
-            // actual.sort();
-            // Assert::IsTrue(expected == actual);
+            expected = {};
+            actual = Evaluator::evaluate
+                (Query(decl, {"c"}, { {"such that", {"Calls", "c", "\"sub\""}},
+                                      {"with", {"c.procName", "\"main\""}} }));
+            expected.sort();
+            actual.sort();
+            Assert::IsTrue(expected == actual);
 
-            // expected = { "1", "2", "3", "4", "5", "6", "7",
-            //              "8", "9", "10", "11", "12", "13" };
-            // actual = Evaluator::evaluate
-            //     (Query(decl, {"s"}, { {"such that", {"Uses", "\"main\"", "v"}},
-            //                           {"pattern", {"i", "v", "_"}},
-            //                           {"with", {}} }));
-            // expected.sort();
-            // actual.sort();
-            // Assert::IsTrue(expected == actual);
+            expected = { "1", "2", "3", "4", "5", "6", "7",
+                         "8", "9", "10", "11", "12", "13" };
+            actual = Evaluator::evaluate
+                (Query(decl, {"s"}, { {"such that", {"Uses", "\"main\"", "v"}},
+                                      {"pattern", {"i", "v", "_"}},
+                                      {"with", {"i.stmt#", "2"}} }));
+            expected.sort();
+            actual.sort();
+            Assert::IsTrue(expected == actual);
 
             expected = { "5", "6", "7", "8", "9", "10" };
             actual = Evaluator::evaluate
@@ -606,16 +606,16 @@ namespace IntegrationTesting
             actual.sort();
             Assert::IsTrue(expected == actual);
 
-            // expected = {};
-            // actual = Evaluator::evaluate
-            //     (Query(decl, {"i"}, { {"such that", {"Parent*", "i", "w"}},
-            //                           {"pattern", {"i", "v", "_", "_"}},
-            //                           {"pattern", {"a", "v", "\"a\""}},
-            //                           {"with", {}},
-            //                           {"such that", {"Modifies", "w", "v"}} }));
-            // expected.sort();
-            // actual.sort();
-            // Assert::IsTrue(expected == actual);
+            expected = {};
+            actual = Evaluator::evaluate
+                (Query(decl, {"i"}, { {"such that", {"Parent*", "i", "w"}},
+                                      {"pattern", {"i", "v", "_", "_"}},
+                                      {"pattern", {"a", "v", "\"a\""}},
+                                      {"with", {"i.stmt#", "co.value"}},
+                                      {"such that", {"Modifies", "w", "v"}} }));
+            expected.sort();
+            actual.sort();
+            Assert::IsTrue(expected == actual);
         }
         TEST_METHOD(testBooleanTuple)
         {
@@ -658,12 +658,12 @@ namespace IntegrationTesting
             actual.sort();
             Assert::IsTrue(expected == actual);
 
-            // expected = {  };
-            // actual = Evaluator::evaluate
-            //     (Query(decl, {"BOOLEAN"}, { {"with", {}} }));
-            // expected.sort();
-            // actual.sort();
-            // Assert::IsTrue(expected == actual);
+            expected = {  };
+            actual = Evaluator::evaluate
+                (Query(decl, {"BOOLEAN"}, { {"with", {"p.procName", "\"foo\""}} }));
+            expected.sort();
+            actual.sort();
+            Assert::IsTrue(expected == actual);
 
             expected = { "1 a", "2 a", "2 b", "2 g", "2 i", "3 a", "3 b", "3 g", "3 i",
                          "4 a", "4 b", "4 g", "4 i", "5 a", "5 b", "5 g", "5 i", "6 a",
