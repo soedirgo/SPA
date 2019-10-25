@@ -15,6 +15,7 @@
 #include "PKBConstant.h"
 #include "PKBPattern.h"
 #include "PKBAffects.h"
+#include "PKBWith.h"
 using namespace std;
 
 unordered_map<int, string> PKB::assignStmtTable;
@@ -399,65 +400,21 @@ bool PKB::setStmt(STMT_NO stmtNo, STMT_TYPE type) {
 }
 
 STMT_LIST PKB::getStmts() {
-	return PKBStmt::getAllStmt();
+	return PKBStmt::getStmts();
 }
 
 // assignStmtTable APIs
 
 STMT_LIST PKB::getAssigns() {
-	return PKBStmt::getAllStmtByType("assign");
+	return PKBStmt::getStmtsByType("assign");
 }
-
-/*
-bool PKB::setAssignStmt(STMT_NO stmtNo, string varModified) {
-	std::pair<int, string> entry(stmtNo, varModified);
-	try {
-		assignStmtTable.insert(entry);
-		
-		return true;
-	}
-	catch (errc) {
-		return false;
-	}
-};
-
-string PKB::getVarModifiedByAssignStmt(STMT_NO stmtNo) {
-	return assignStmtTable[stmtNo]; 
-}
-*/
-
-////////////////////////////////////
-// assignStmtByVarTable APIs
-////////////////////////////////////
-
-/*
-STMT_LIST PKB::getAssignStmtByVar(string varName) {
-	return assignVarTable[varName];
-}
-
-
-bool PKB::setAssignStmtByVar(STMT_NO stmtNo, string varName) {
-	try {
-		//get stmtList from PKB then add variable to varList
-		unordered_set<int> stmtList = getAssignStmtByVar(varName);
-		stmtList.emplace(stmtNo);
-		//add it to varModifiesStmtTable
-		assignVarTable[varName] = stmtList;
-		return true;
-	}
-	catch (errc) {
-		return false;
-	}
-}
-*/
-
 
 ////////////////////////////////////
 // whileTable APIs
 ////////////////////////////////////
 
 STMT_LIST PKB::getWhiles() {
-	return PKBStmt::getAllStmtByType("while");
+	return PKBStmt::getStmtsByType("while");
 };
 
 
@@ -466,7 +423,7 @@ STMT_LIST PKB::getWhiles() {
 ////////////////////////////////////
 
 STMT_LIST PKB::getIfs() {
-	return PKBStmt::getAllStmtByType("if");
+	return PKBStmt::getStmtsByType("if");
 };
 
 ////////////////////////////////////
@@ -474,39 +431,32 @@ STMT_LIST PKB::getIfs() {
 ////////////////////////////////////
 
 STMT_LIST PKB::getPrints() {
-	return PKBStmt::getAllStmtByType("print");
+	return PKBStmt::getStmtsByType("print");
 };
 
-bool PKB::setPrint(STMT_NO stmtNo, VAR_NAME varName) {
-	return PKBPrint::setPrint(stmtNo, varName);
+bool PKB::setPrint(VAR_NAME varName) {
+	return PKBPrint::setPrint(varName);
 };
 
 VAR_LIST PKB::getAllPrintVar() {
 	return PKBPrint::getAllPrintVar();
 }
 
-VAR_NAME PKB::getPrintVar(STMT_NO stmtNo) {
-	return PKBPrint::getPrintVar(stmtNo);
-}
 
 ////////////////////////////////////
 // ReadTable APIs
 ////////////////////////////////////
 
 STMT_LIST PKB::getReads() {
-	return PKBStmt::getAllStmtByType("read");
+	return PKBStmt::getStmtsByType("read");
 };
 
-bool PKB::setRead(STMT_NO stmtNo, VAR_NAME varName) {
-	return PKBRead::setRead(stmtNo, varName);
+bool PKB::setRead(VAR_NAME varName) {
+	return PKBRead::setRead(varName);
 };
 
 VAR_LIST PKB::getAllReadVar() {
 	return PKBRead::getAllReadVar();
-}
-
-VAR_NAME PKB::getReadVar(STMT_NO stmtNo) {
-	return PKBRead::getReadVar(stmtNo);
 }
 
 
@@ -529,7 +479,7 @@ bool PKB::setProcedure(PROC_NAME procName) {
 ////////////////////////////////////
 
 STMT_LIST PKB::getCalls() {
-	return PKBStmt::getAllStmtByType("call");
+	return PKBStmt::getStmtsByType("call");
 };
 
 bool PKB::setCallProc(PROC_NAME caller, PROC_NAME callee) {
@@ -616,7 +566,7 @@ TABLE PKB::getCallsTEntEnt() {
 // NextTable APIs
 ////////////////////////////////////
 STMT_LIST PKB::getProgLines() {
-	return PKBStmt::getAllStmt();
+	return PKBStmt::getStmts();
 }
 
 bool PKB::setNext(PROG_LINE n1, PROG_LINE n2) {
@@ -808,4 +758,20 @@ TABLE PKB::getPatternAssignEntPartial(EXPR_SPEC expression) {
 }
 TABLE PKB::getPatternAssignEntFull(EXPR_SPEC expression) {
 	return PKBPattern::getPatternAssignEntFull(expression);
+}
+
+STMT_LIST PKB::getWithIdentAttr(IDENT iden, ENT_TYPE ent, ATTR attr) {
+	return PKBWith::getWithIdentAttr(iden, ent, attr);
+}
+STMT_LIST PKB::getWithIdentLine(IDENT iden) {
+	return PKBWith::getWithIdentLine(iden);
+}
+TABLE PKB::getWithAttrAttr(ENT_TYPE ent1, ATTR attr1, ENT_TYPE ent2, ATTR attr2) {
+	return PKBWith::getWithAttrAttr(ent1, attr1, ent2, attr2);
+}
+TABLE PKB::getWithAttrLine(ENT_TYPE ent, ATTR attr) {
+	return PKBWith::getWithAttrLine(ent, attr);
+}
+TABLE PKB::getWithLineLine() {
+	return PKBWith::getWithLineLine();
 }

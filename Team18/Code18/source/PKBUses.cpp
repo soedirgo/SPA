@@ -100,7 +100,7 @@ STMT_LIST PKBUses::getUsesSEntAny(STMT_TYPE type) {
 	}
 	
 	else { 
-		STMT_LIST stmtList = PKBStmt::getAllStmtByType(type);
+		STMT_LIST stmtList = PKBStmt::getStmtsByType(type);
 		for (auto stmt : stmtList) {
 			for (auto usesStmt: usesStmtTable) {
 				if (stmt.front() == usesStmt.front()) {
@@ -129,7 +129,7 @@ STMT_LIST PKBUses::getUsesSEntIdent(STMT_TYPE type, VAR_NAME varName) {
 		}
 	}
 	else {
-		STMT_LIST stmtList = PKBStmt::getAllStmtByType(type);
+		STMT_LIST stmtList = PKBStmt::getStmtsByType(type);
 
 		for (auto stmt : stmtList) {
 			for (auto usesStmt : usesStmtTable) {
@@ -171,7 +171,7 @@ TABLE PKBUses::getUsesSEntEnt(STMT_TYPE type) {
 		return usesStmtTable; 
 	}
 	else{
-		STMT_LIST stmtList = PKBStmt::getAllStmtByType(type);
+		STMT_LIST stmtList = PKBStmt::getStmtsByType(type);
 		for (auto stmt : stmtList) {
 			for (auto usesStmt : usesStmtTable) {
 				if (usesStmt.front() == stmt.front()) {
