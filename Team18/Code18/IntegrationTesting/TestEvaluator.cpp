@@ -58,14 +58,14 @@ namespace IntegrationTesting
             pkb.setVariable("i");
             pkb.setVariable("j");
 
-            pkb.setConstant("1", "1");
-            pkb.setConstant("2", "2");
-            pkb.setConstant("3", "3");
-            pkb.setConstant("4", "4");
-            pkb.setConstant("5", "5");
-            pkb.setConstant("6", "6");
-            pkb.setConstant("8", "7");
-            pkb.setConstant("12", "8");
+            pkb.setConstant("1");
+            pkb.setConstant("2");
+            pkb.setConstant("3");
+            pkb.setConstant("4");
+            pkb.setConstant("5");
+            pkb.setConstant("6");
+            pkb.setConstant("7");
+            pkb.setConstant("8");
 
             pkb.setStmt("1", "assign");
             pkb.setStmt("2", "if");
