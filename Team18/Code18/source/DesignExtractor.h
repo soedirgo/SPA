@@ -9,6 +9,10 @@ public:
 	static void extractDesign();
 	static void extractNextT();
 	static void extractAffects();
+	static void affectsAll();
+	static void affectedBy(STMT_NO a1);
+	static void isAffecting(STMT_NO a2);
+	static void isAffects(STMT_NO a1, STMT_NO a2);
 	static void extractAffectsT();
 
 private:
