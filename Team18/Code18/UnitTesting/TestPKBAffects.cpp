@@ -186,16 +186,18 @@ namespace UnitTesting
 			PKB.setUsesP("Second", "z");
 			PKB.setUsesP("Third", "v");
 			PKB.setUsesP("Third", "z");
-			
+
+
 
 			DesignExtractor DesignExtractor;
 			DesignExtractor.extractDesign();
-			
 		}
 		
 		TEST_METHOD(AffectsRelationship)
 		{
-
+			DesignExtractor DesignExtractor;
+			DesignExtractor.extractAffects();
+			
 			PKBAffects PKB;
 			Assert::IsTrue(PKB.isAffectsIdentIdent("4", "7"));
 			Assert::IsTrue(PKB.isAffectsIdentIdent("4", "11"));
@@ -214,6 +216,7 @@ namespace UnitTesting
 			Assert::IsTrue(PKB.isAffectsIdentIdent("13", "15"));
 			Assert::IsTrue(PKB.isAffectsIdentIdent("14", "15"));
 			Assert::IsTrue(PKB.isAffectsIdentIdent("16", "17"));
+			
 			
 		}
 		/*

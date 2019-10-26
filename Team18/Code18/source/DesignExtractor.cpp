@@ -22,9 +22,9 @@ void DesignExtractor::extractDesign()
 	extractModifiesS();
 	extractUsesP();
 	extractUsesS();
-	
-	TABLE test = PKBPattern::getAssignPatternTable();
-	int i = test.size();
+
+	//TABLE test = PKBPattern::getAssignPatternTable();
+	//int i = test.size();
 	//TABLE test = PKBUses::getUsesPTable();
 	//int i = test.size();
 	//TABLE test2 = PKBCall::getCallProcTable();
@@ -246,14 +246,15 @@ void DesignExtractor::recurseUses(PROC_NAME callee) {
 
 void DesignExtractor::extractAffects()
 {
+	extractNextT();
 	TABLE assignStmtTable = PKBStmt::getStmtsByType("assign");
 	TABLE callStmtTable = PKBStmt::getStmtsByType("call");
-	TABLE nextTTable = PKBNext::getNextTable();
+	TABLE nextTTable = PKBNext::getNextTTable();
 
 	for (auto vectorIter3 : nextTTable) {
 		STMT_NO a1 = vectorIter3.front();
 		STMT_NO a2 = vectorIter3.back();
-		if (PKBStmt::getTypeByStmtNo(a1)=="assign" && PKBStmt::getTypeByStmtNo(a2) == "assign") {
+		if (PKBStmt::getTypeByStmtNo(a1) == "assign" && PKBStmt::getTypeByStmtNo(a2) == "assign") {
 			bool affectsHold = false;
 			// will only have 1 in varList
 			VAR_LIST varList1 = PKBModifies::getModifiesSIdentEnt(a1);
@@ -270,7 +271,7 @@ void DesignExtractor::extractAffects()
 				}
 			}
 			//Validate if affects Hold and var is not modified in between
-			TABLE stmtList = PKBNext::getNextIdentEnt(a1,"stmt");
+			TABLE stmtList = PKBNext::getNextTIdentEnt(a1, "stmt");
 			vector<int> v;
 			for (auto vectorIter1 : stmtList) {
 				if (stoi(vectorIter1.front()) < stoi(a2)) {
@@ -284,7 +285,7 @@ void DesignExtractor::extractAffects()
 					//for (int i = stoi(a1) + 1; i < stoi(a2); i++) {
 					if (PKBStmt::getTypeByStmtNo(to_string(i)) == "while" || PKBStmt::getTypeByStmtNo(to_string(i)) == "if") {
 						STMT_NO follows = PKBFollows::getFollowsStmt(to_string(i));
-						if (follows != "" && stoi(follows) <= stoi(a2)) {						
+						if (follows != "" && stoi(follows) <= stoi(a2)) {
 							followIterator = stoi(follows);
 						}
 					}
@@ -344,16 +345,18 @@ void DesignExtractor::recurseParent(STMT_NO parent, STMT_NO child) {
 
 void DesignExtractor::recurseNext(PROG_LINE nextByLine, PROG_LINE nextLine) {
 	LINE_LIST lineList = PKBNext::getNext(nextLine);
-	if (lineList.size() == 0 ) {
+	if (lineList.size() == 0) {
 		return;
 	}
-	
+
 	for (auto vectorIter : lineList) {
 		PROG_LINE newNextLine = vectorIter.back();
 		if (!PKBNext::isNextTInserted(nextByLine, newNextLine)) {
 			PKBNext::setNextT(nextByLine, newNextLine);
 			recurseNext(nextByLine, newNextLine);
+
 		}
+
 	}
 }
 
