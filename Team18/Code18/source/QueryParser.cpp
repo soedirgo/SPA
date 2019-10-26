@@ -239,23 +239,14 @@ Query QueryParser::parse(string query) {
 
 			secondV = removeWhiteSpaces(secondV, whitespacech);
 
-			bool exprValidationResult = Validator::isExprSpecValid(secondV);
-			if (exprValidationResult == false) {
-				incorrectSemanticValidation = true;
-				return semanticInvalidQ;
-			}
-
 			//Check if the second parameter is just "_"
 			if (!(secondV.size() == 1 && secondV.at(0) == '_')) {
-				if (!Validator::isExprSpecValid(secondV))
+				if (!Validator::isExprSpecValid(secondV)) {
 					incorrectValidation = true;
+					return invalidQ;
+				}
 				secondV = PatternProcessor::infixtoRPNexpression(secondV);
 			}
-
-			//if (flag3 && flag4 && countQuote == 2) {
-				//secondV.insert(0, 1, '"');
-				//secondV.insert(secondV.length(), 1, '"');
-			//}
 
 			if (flag && flag2 && countUnderScore == 2) {
 				secondV.insert(0, "_");
