@@ -115,3 +115,19 @@ procedure NestedWhileSWhileSWhile {
 60		print k;
    }
 }
+
+procedure NestedWhile3 {
+61  while (k >= i) { 
+62	print i;
+63	while (k >= i) {
+64		while (k >= i) {
+65			i = k;
+		}
+	}
+66	while (k >= i) {
+67		while (k >= i) {
+68			i = k;
+		}
+	}
+   }
+}

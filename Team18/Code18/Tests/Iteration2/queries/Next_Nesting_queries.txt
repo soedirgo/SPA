@@ -423,3 +423,88 @@ prog_line n;
 Select n such that Next(n,n)
 
 5000
+85 - Set 4.6 - NestedWhileSWhileSWhile - Triple nested - First while, two adj while, nested third while 
+prog_line n; 
+Select n such that Next(61,n)
+62
+5000
+86 - Set 4.6 - NestedWhileSWhileSWhile - Triple nested - First while, two adj while, nested third while 
+prog_line n; 
+Select n such that Next(62,n)
+63
+5000
+87 - Set 4.6 - NestedWhileSWhileSWhile - Triple nested - First while, two adj while, nested third while 
+prog_line n; 
+Select n such that Next(63,n)
+64,66
+5000
+88 - Set 4.6 - NestedWhileSWhileSWhile - Triple nested - First while, two adj while, nested third while 
+prog_line n; 
+Select n such that Next(64,n)
+65,63
+5000
+89 - Set 4.6 - NestedWhileSWhileSWhile - Triple nested - First while, two adj while, nested third while 
+prog_line n; 
+Select n such that Next(65,n)
+64
+5000
+90 - Set 4.6 - NestedWhileSWhileSWhile - Triple nested - First while, two adj while, nested third while 
+prog_line n; 
+Select n such that Next(66, n)
+61,67
+5000
+91 - Set 4.6 - NestedWhileSWhileSWhile - Triple nested - First while, two adj while, nested third while 
+prog_line n; 
+Select n such that Next(67,n)
+66,68
+5000
+92 - Set 4.6 - NestedWhileSWhileSWhile - Triple nested - First while, two adj while, nested third while 
+prog_line n; 
+Select n such that Next(68, n)
+67
+5000
+93 - Set 4.6 - NestedWhileSWhileSWhile - Triple nested - First while, two adj while, nested third while 
+prog_line n; 
+Select n such that Next(n,61)
+66
+5000
+94 - Set 4.6 - NestedWhileSWhileSWhile - Triple nested - First while, two adj while, nested third while 
+prog_line n; 
+Select n such that Next(n,62)
+61
+5000
+95 - Set 4.6 - NestedWhileSWhileSWhile - Triple nested - First while, two adj while, nested third while 
+prog_line n; 
+Select n such that Next(n,63)
+62,64
+5000
+96 - Set 4.6 - NestedWhileSWhileSWhile - Triple nested - First while, two adj while, nested third while 
+prog_line n; 
+Select n such that Next(n,64)
+63,65
+5000
+97 - Set 4.6 - NestedWhileSWhileSWhile - Triple nested - First while, two adj while, nested third while 
+prog_line n; 
+Select n such that Next(n,65)
+64
+5000
+98 - Set 4.6 - NestedWhileSWhileSWhile - Triple nested - First while, two adj while, nested third while 
+prog_line n; 
+Select n such that Next(n,66)
+63,67
+5000
+99 - Set 4.6 - NestedWhileSWhileSWhile - Triple nested - First while, two adj while, nested third while 
+prog_line n; 
+Select n such that Next(n,67)
+66,68
+5000
+100 - Set 4.6 - NestedWhileSWhileSWhile - Triple nested - First while, two adj while, nested third while 
+prog_line n; 
+Select n such that Next(n,68)
+67
+5000
+101 - Set 4.5 - NestedWhileSWhileSWhile - Triple nested - First while, stmt list, second while , third while , stmt list
+prog_line n; 
+Select n such that Next(n,n)
+
+5000
