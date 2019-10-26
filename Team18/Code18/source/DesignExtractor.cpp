@@ -35,15 +35,39 @@ void DesignExtractor::extractDesign()
 }
 
 void DesignExtractor::affectsAll() {
-	;
+	STMT_LIST assignStmtTable1 = PKB::getAssigns();
+	STMT_LIST assignStmtTable2 = PKB::getAssigns();
+	for (auto stmt1 : assignStmtTable1) {
+		STMT_NO stmtNo1 = stmt1.front();
+		for (auto stmt2 : assignStmtTable2) {
+			STMT_NO stmtNo2 = stmt2.front();
+			isAffects(stmtNo1, stmtNo2);
+		}
+	}
 }
 
 void DesignExtractor::affectedBy(STMT_NO a1) {
-	;
+	STMT_LIST assignStmtTable = PKB::getAssigns();
+	for (auto stmt : assignStmtTable) {
+		STMT_NO stmtNo = stmt.front();
+		isAffects(a1, stmtNo);
+	}
 }
 
 void DesignExtractor::isAffecting(STMT_NO a2) {
-	;
+	STMT_LIST assignStmtTable = PKB::getAssigns();
+	for (auto stmt : assignStmtTable) {
+		STMT_NO stmtNo = stmt.front();
+		isAffects(stmtNo, a2);
+	}
+}
+
+void DesignExtractor::isAffectsSelf() {
+	STMT_LIST assignStmtTable = PKB::getAssigns();
+	for (auto stmt : assignStmtTable) {
+		STMT_NO s = stmt.front();
+		isAffects(s, s);
+	}
 }
 
 void DesignExtractor::isAffects(STMT_NO a1, STMT_NO a2) {

@@ -13,6 +13,7 @@ public:
 	static void affectedBy(STMT_NO a1);
 	static void isAffecting(STMT_NO a2);
 	static void isAffects(STMT_NO a1, STMT_NO a2);
+	static void isAffectsSelf();
 	static void extractAffectsT();
 
 private:

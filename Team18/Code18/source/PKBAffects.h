@@ -2,6 +2,7 @@
 
 #include "AbstractType.h"
 #include "PKBHash.h"
+#include "DesignExtractor.h"
 #include <unordered_set>
 
 class PKBAffects {

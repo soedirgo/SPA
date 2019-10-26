@@ -30,12 +30,14 @@ bool PKBAffects::setAffectsT(STMT_NO a1, STMT_NO a2) {
 }
 
 bool PKBAffects::isAffectsAnyAny() {
+	DesignExtractor::affectsAll();
 	bool status = !affectsTable.empty();
 	clear();
 	return status;
 }
 bool PKBAffects::isAffectsAnyIdent(STMT_NO stmtNo) {
 	clear();
+	DesignExtractor::isAffecting(stmtNo);
 	for (auto vectorIter : affectsTable) {
 		if (vectorIter.back() == stmtNo) {
 			clear();
@@ -47,6 +49,7 @@ bool PKBAffects::isAffectsAnyIdent(STMT_NO stmtNo) {
 }
 bool PKBAffects::isAffectsIdentAny(STMT_NO stmtNo) {
 	clear();
+	DesignExtractor::affectedBy(stmtNo);
 	for (auto vectorIter : affectsTable) {
 		if (vectorIter.front() == stmtNo) {
 			clear();
@@ -58,6 +61,7 @@ bool PKBAffects::isAffectsIdentAny(STMT_NO stmtNo) {
 }
 bool PKBAffects::isAffectsIdentIdent(STMT_NO a1, STMT_NO a2) {
 	clear();
+	DesignExtractor::isAffects(a1, a2);
 	for (auto vectorIter : affectsTable) {
 		if (vectorIter.front() == a1) {
 			if (vectorIter.back() == a2) {
@@ -103,6 +107,7 @@ bool PKBAffects::isAffectsTIdentIdent(STMT_NO a1, STMT_NO a2) {
 //NEW EVALUATION API
 TABLE PKBAffects::getAffectsAnyEnt() {
 	clear();
+	DesignExtractor::affectsAll();
 	PROC_LIST resultTable;
 	LINE_LIST list;
 	PROG_LINE n;
@@ -123,6 +128,7 @@ TABLE PKBAffects::getAffectsAnyEnt() {
 
 TABLE PKBAffects::getAffectsEntAny() {
 	clear();
+	DesignExtractor::affectsAll();
 	PROC_LIST resultTable;
 	LINE_LIST list;
 	PROG_LINE n;
@@ -143,6 +149,7 @@ TABLE PKBAffects::getAffectsEntAny() {
 
 TABLE PKBAffects::getAffectsIdentEnt(STMT_NO stmtNo) {
 	clear();
+	DesignExtractor::affectedBy(stmtNo);
 	PROC_LIST resultTable;
 	LINE_LIST list;
 	PROG_LINE n;
@@ -163,6 +170,7 @@ TABLE PKBAffects::getAffectsIdentEnt(STMT_NO stmtNo) {
 
 TABLE PKBAffects::getAffectsEntIdent(STMT_NO stmtNo) {
 	clear();
+	DesignExtractor::isAffecting(stmtNo);
 	PROC_LIST resultTable;
 	LINE_LIST list;
 	PROG_LINE n;
@@ -182,6 +190,7 @@ TABLE PKBAffects::getAffectsEntIdent(STMT_NO stmtNo) {
 }
 
 TABLE PKBAffects::getAffectsEntEnt() {
+	DesignExtractor::affectsAll();
 	TABLE resultTable = affectsTable;
 	clear();
 	return resultTable;
@@ -189,6 +198,7 @@ TABLE PKBAffects::getAffectsEntEnt() {
 
 TABLE PKBAffects::getAffectsSelf() {
 	clear();
+	DesignExtractor::isAffectsSelf();
 	STMT_LIST resultTable;
 	STMT_LIST list;
 	STMT_NO s;
