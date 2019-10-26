@@ -92,8 +92,38 @@ void DesignExtractor::isAffects(STMT_NO a1, STMT_NO a2) {
 		if (!PKB::isNextTIdentIdent(a1, a2)) {
 			affectsHold = false;
 		}
-		if (!traverseAffects(a1, a2, varNameModified)) {
-			affectsHold = false;
+		//Validate if affects Hold and var is not modified in between
+		TABLE stmtList = PKBNext::getNextIdentEnt(a1, "stmt");
+		vector<int> v;
+		for (auto vectorIter1 : stmtList) {
+			if (stoi(vectorIter1.front()) < stoi(a2)) {
+				v.push_back(stoi(vectorIter1.front()));
+			}
+		}
+		sort(v.begin(), v.end());
+		int followIterator = 0;
+		for (auto i : v) {
+			if (i >= followIterator) {
+				//for (int i = stoi(a1) + 1; i < stoi(a2); i++) {
+				if (PKBStmt::getTypeByStmtNo(to_string(i)) == "while" || PKBStmt::getTypeByStmtNo(to_string(i)) == "if") {
+					STMT_NO follows = PKBFollows::getFollowsStmt(to_string(i));
+					if (follows != "" && stoi(follows) <= stoi(a2)) {
+						followIterator = stoi(follows);
+					}
+				}
+				else {
+					if (i != stoi(a1)) {
+						if (PKBStmt::getTypeByStmtNo(to_string(i)) == "call" || PKBStmt::getTypeByStmtNo(to_string(i)) == "assign") {
+							VAR_LIST varList3 = PKBModifies::getModifiesSIdentEnt(to_string(i));
+							for (auto vectorIter4 : varList3) {
+								if (varNameModified == vectorIter4.front()) {
+									affectsHold = false;
+								}
+							}
+						}
+					}
+				}
+			}
 		}
 	}
 	if (affectsHold == true) {
