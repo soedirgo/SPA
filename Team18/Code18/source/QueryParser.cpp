@@ -252,15 +252,15 @@ Query QueryParser::parse(string query) {
 				secondV = PatternProcessor::infixtoRPNexpression(secondV);
 			}
 
-			if (flag3 && flag4 && countQuote == 2) {
-				secondV.insert(0, 1, '"');
-				secondV.insert(secondV.length(), 1, '"');
-			}
+			//if (flag3 && flag4 && countQuote == 2) {
+				//secondV.insert(0, 1, '"');
+				//secondV.insert(secondV.length(), 1, '"');
+			//}
 
-			if (flag && flag2 && countUnderScore == 2) {
-				secondV.insert(0, "_");
-				secondV.insert(secondV.length(), "_");
-			}
+			//if (flag && flag2 && countUnderScore == 2) {
+				//secondV.insert(0, "_");
+				//secondV.insert(secondV.length(), "_");
+			//}
 
 			patternStr.pop_back();
 			patternStr.push_back(secondV);
