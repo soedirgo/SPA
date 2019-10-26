@@ -10,6 +10,7 @@
 #include "PKBAffects.h"
 #include "PKBPattern.h"
 #include <algorithm>
+#include <queue>
 
 using namespace std;
 
@@ -88,17 +89,11 @@ void DesignExtractor::isAffects(STMT_NO a1, STMT_NO a2) {
 		if (varNameModified == varNameUses) {
 			affectsHold = true;
 		}
-		vector<std::string> validAssigns;
-		for (auto stmt : assignStmtTable) {
-			STMT_NO stmtNo = stmt.front();
-			if (PKB::isModifiesSIdentIdent(stmtNo, varNameModified) && !(stmtNo == a1) && !(stmtNo == a2)) {
-				validAssigns.push_back(stmtNo);
-			}
+		if (!PKB::isNextTIdentIdent(a1, a2)) {
+			affectsHold = false;
 		}
-		for (auto stmt : validAssigns) {
-			if (PKB::isNextTIdentIdent(a1, stmt) && PKB::isNextTIdentIdent(stmt, a2)) {
-				affectsHold = false;
-			}
+		if (!traverseAffects(a1, a2, varNameModified)) {
+			affectsHold = false;
 		}
 	}
 	if (affectsHold == true) {
@@ -455,4 +450,33 @@ void DesignExtractor::recurseAffects(STMT_NO a1, STMT_NO a2) {
 		recurseAffects(a1, newAssignStmt);
 
 	}
+}
+
+bool DesignExtractor::traverseAffects(STMT_NO a1, STMT_NO a2, VAR_NAME v) {
+	queue<STMT_NO> q;
+	TABLE nexts = PKBNext::getNextIdentEnt(a1, "stmt");
+	for (auto item : nexts) {
+		for (auto stmt : item) {
+			if (stmt == a2) {
+				return true;
+			}
+ 			if (!PKB::isModifiesSIdentIdent(stmt, v) && !(PKBStmt::getTypeByStmtNo(stmt) == "if") && !(PKBStmt::getTypeByStmtNo(stmt) == "while")) {
+				q.push(stmt);
+			}
+		}
+	}
+	while (!q.empty()) {
+		TABLE nexts = PKBNext::getNextIdentEnt(a1, "stmt");
+		for (auto item : nexts) {
+			for (auto stmt : item) {
+				if (stmt == a2) {
+					return true;
+				}
+				if (!PKB::isModifiesSIdentIdent(stmt, v) && !(PKBStmt::getTypeByStmtNo(stmt) == "if") && !(PKBStmt::getTypeByStmtNo(stmt) == "while")) {
+					q.push(stmt);
+				}
+			}
+		}
+	}
+	return false;
 }
