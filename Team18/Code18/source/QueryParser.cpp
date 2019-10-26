@@ -257,10 +257,10 @@ Query QueryParser::parse(string query) {
 				//secondV.insert(secondV.length(), 1, '"');
 			//}
 
-			//if (flag && flag2 && countUnderScore == 2) {
-				//secondV.insert(0, "_");
-				//secondV.insert(secondV.length(), "_");
-			//}
+			if (flag && flag2 && countUnderScore == 2) {
+				secondV.insert(0, "_");
+				secondV.insert(secondV.length(), "_");
+			}
 
 			patternStr.pop_back();
 			patternStr.push_back(secondV);
