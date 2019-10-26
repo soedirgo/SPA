@@ -1,0 +1,117 @@
+procedure UnestedIf {
+1  if (x > y) then {
+2    y = x; 
+3	z = x; }
+  else {
+4    x = y;
+5	y = z; }
+6  read z; 
+7  read y; 
+}
+
+procedure UnestedWhile {
+8  k = i; 
+9  while (k >= i) {
+10    i = k;
+11    read o; }
+12  k = i; 
+}
+
+procedure  NestedIfIf{
+13  if (x > y) then {
+14	  if (x > y) then {
+15		y = x; }
+		else {
+16		 x = y;}}
+
+  else {
+17    x = y; }
+}
+
+
+procedure  NestedIfSIf{
+18  if (x > y) then {
+19	  print x; 
+20	  if (x > y) then {
+21		y = x; 
+		}
+		else {
+22		 x = y;}}
+
+  else {
+23    x = y; }
+}
+
+
+procedure  NestedIfSIfS{
+24  if (x > y) then {
+25	  print x; 
+26	  if (x > y) then {
+27		y = x; 
+		}
+		else {
+28		 x = y;}}
+29	 print y; 
+  else {
+30    x = y; }
+}
+
+
+procedure  NestedIfSIfSEndS{
+31  if (x > y) then {
+32	  print x; 
+33	  if (x > y) then {
+34		y = x; 
+		}
+		else {
+35		 x = y;}}
+36	 print y; 
+  else {
+37    x = y; }
+38	print x; 
+}
+
+procedure NestedWhileWhile {
+39  while (k >= i) {
+40   while (k >= i) {
+41    i = k;} }
+}
+
+procedure NestedWhileSWhile {
+42  while (k >= i) {
+43		print k; 
+44		while (k >= i) {
+45			i = k;
+}}}
+
+procedure NestedWhileWhileS {
+46  while (k >= i) { 
+47	 while (k >= i) {
+48		i = k;
+	 } 
+49	 print k;
+   }
+}
+
+
+procedure NestedWhileSWhileS {
+50  while (k >= i) { 
+51	print i;
+52	while (k >= i) {
+53		i = k;
+	} 
+54	print k;
+   }
+}
+
+procedure NestedWhileSWhileSWhile {
+55  while (k >= i) { 
+56		print i;
+57		while (k >= i) {
+58			while (k >= i) {
+59				i = k;
+	} 
+		} 
+60		print k;
+   }
+}
