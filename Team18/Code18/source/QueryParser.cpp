@@ -37,12 +37,12 @@ unordered_set<string> validFirstArgsModifies = { "stmt", "read", "while", "if",
 unordered_set<string> validSecondArgsUsesModifies = { "variable" };
 unordered_set<string> validFirstSecondArgCall = { "procedure" };
 
-bool QueryParser::maryHadALittleLamb = false;
-bool QueryParser::itsFleeceWasWhiteAsSnow = false;
+bool QueryParser::incorrectValidation = false;
+bool QueryParser::incorrectSemanticValidation = false;
 
 Query QueryParser::parse(string query) {
-    maryHadALittleLamb = false;
-    itsFleeceWasWhiteAsSnow = false;
+	incorrectValidation = false;
+	incorrectSemanticValidation = false;
 	unordered_map<string, string> invalid1{ {"Invalidd", "Invalidd"} };
 	vector<string> invalid2;
 	invalid2.push_back("Invalidd");
@@ -63,11 +63,13 @@ Query QueryParser::parse(string query) {
 
 	resultString = initialValidation(query);
 	if (resultString == "Invalid" || resultString == "None") {
+		incorrectValidation = true;
 		return invalidQ;
 	}
 
 	vector<string> statements = findInitialDecleration(query);
 	if (statements.empty()) {
+		incorrectValidation = true;
 		return invalidQ;
 	}
 
@@ -75,6 +77,7 @@ Query QueryParser::parse(string query) {
 	
 	resultString = declarationsValidation(declerationVariables);
 	if (resultString == "Invalid" || resultString == "None") {
+		incorrectValidation = true;
 		return invalidQ;
 	}
 	
@@ -83,18 +86,21 @@ Query QueryParser::parse(string query) {
 	vector<string> selectVars;
 	vector<pair<string, pair<string, string>>> suchThat;
 	vector<pair<string, pair<string, string>>> pattern;
+	vector<pair<string, string>> with;
 
 	vector<string> suchThatClauses;
 	vector<string> patternClauses;
+	vector<string> withClauses;
 
 	//Finds the first occurance of such that and pattern in the string
 	int suchThatIndex = select.find("such that ");
 	int patternIndex = select.find("pattern ");
 	int andIndex = maxInt;
+	int withIndex = select.find("with ");
 
 	string previousClause;
 
-	vector<int> indexes = { suchThatIndex, patternIndex};
+	vector<int> indexes = { suchThatIndex, patternIndex, withIndex};
 	int currentIndex = getMinimumIndex(indexes);
 
 	//Only have select variables
@@ -111,6 +117,7 @@ Query QueryParser::parse(string query) {
 
 	resultString = selectVariablesValidation(declerationVariables, selectVars);
 	if (resultString == "Invalid") {
+		incorrectValidation = true;
 		return invalidQ;
 	}
 
@@ -119,7 +126,8 @@ Query QueryParser::parse(string query) {
 		suchThatIndex = select.substr(1).find(" such that");
 		patternIndex = select.substr(1).find(" pattern ");
 		andIndex = select.substr(1).find(" and ");
-		indexes = { suchThatIndex, patternIndex, andIndex};
+		withIndex = select.substr(1).find(" with ");
+		indexes = { suchThatIndex, patternIndex, andIndex , withIndex};
 		currentIndex = getMinimumIndex(indexes) + 1;
 
 		if (currentIndex == 0) {
@@ -141,11 +149,17 @@ Query QueryParser::parse(string query) {
 			patternClauses.push_back(currentClause);
 		}
 		
+		else if (currentClause.find("with ") != -1 || (currentClause.find("and ") != -1 && previousClause == "with")) {
+			previousClause = "with";
+			withClauses.push_back(currentClause);
+		}
+
 		select = select.substr(currentIndex);
 	}
 
 	suchThat = splitSuchThat(suchThatClauses);
-	pattern = splitPattern(patternClauses, declerationVariables);
+	pattern = splitPattern(patternClauses);
+	with = splitWith(withClauses);
 
 	bool selectBoolean = false;
 	if (selectVars.size() == 1 && selectVars[0] == "BOOLEAN") {
@@ -154,14 +168,17 @@ Query QueryParser::parse(string query) {
 
 	resultString = suchThatValidation(declerationVariables, suchThat);
 	if (resultString == "Invalid") {
+		incorrectValidation = true;
 		return invalidQ;
 	}
 
 	if (resultString == "Semantic Invalid" && selectBoolean == false) {
+		incorrectValidation = true;
 		return invalidQ;
 	}
 
 	if (resultString == "Semantic Invalid" && selectBoolean == true) {
+		incorrectSemanticValidation = true;
 		return semanticInvalidQ;
 	}
 
@@ -183,24 +200,83 @@ Query QueryParser::parse(string query) {
 		patternStr.push_back(pattern[j].first);
 		patternStr.push_back(pattern[j].second.first);
 		patternStr.push_back(pattern[j].second.second);
-		int x = patternStr.size() - 1;
 
 		bool validationResult = Validator::isPatternValid(patternStr, declerationVariables);
 		if (validationResult == false) {
 			return semanticInvalidQ;
 		}
 
-		int flag3 = (patternStr[x].find('"') != -1);
-		int flag4 = (patternStr[x].length() > 1);
-		if (flag3 && flag4) {
-			while (patternStr[x].find('"') != -1) {
-				int index = patternStr[x].find('"');
-				patternStr[x] = patternStr[x].erase(index, 1);
+		string patternType;
+		if (declerationVariables.find(pattern[j].first) != declerationVariables.end()) {
+			patternType = declerationVariables.find(pattern[j].first)->second;
+		}
+
+
+		//Do pattern processor and have to check for expr Valid first
+		if (patternType == "assign") {
+			string secondV = pattern[j].second.second;
+			int flag = (secondV.find("_") != -1);
+			int flag2 = (secondV.length() > 1);
+			int countUnderScore = 0;
+			if (flag && flag2) {
+				while (secondV.find("_") != -1) {
+					int index = secondV.find("_");
+					secondV = secondV.erase(index, 1);
+					countUnderScore = countUnderScore + 1;
+				}
 			}
+
+			int flag3 = (secondV.find('"') != -1);
+			int flag4 = (secondV.length() > 1);
+			int countQuote = 0;
+			if (flag3 && flag4) {
+				while (secondV.find('"') != -1) {
+					int index = secondV.find('"');
+					secondV = secondV.erase(index, 1);
+					countQuote = countQuote + 1;
+				}
+			}
+
+			secondV = removeWhiteSpaces(secondV, whitespacech);
+
+			bool exprValidationResult = Validator::isExprSpecValid(secondV);
+			if (exprValidationResult == false) {
+				incorrectSemanticValidation = true;
+				return semanticInvalidQ;
+			}
+
+			//Check if the second parameter is just "_"
+			if (!(secondV.size() == 1 && secondV.at(0) == '_')) {
+				if (!Validator::isExprSpecValid(secondV))
+					incorrectValidation = true;
+				secondV = PatternProcessor::infixtoRPNexpression(secondV);
+			}
+
+			if (flag3 && flag4 && countQuote == 2) {
+				secondV.insert(0, 1, '"');
+				secondV.insert(secondV.length(), 1, '"');
+			}
+
+			if (flag && flag2 && countUnderScore == 2) {
+				secondV.insert(0, "_");
+				secondV.insert(secondV.length(), "_");
+			}
+
+			patternStr.pop_back();
+			patternStr.push_back(secondV);
 		}
 
 		Clause patternC = Clause("pattern", patternStr);
 		clausesVector.push_back(patternC);
+	}
+
+	for (int k = 0; k < with.size(); k++) {
+		vector<string> str;
+		str.push_back(with[k].first);
+		str.push_back(with[k].second);
+
+		Clause withC = Clause("with", str);
+		clausesVector.push_back(withC);
 	}
 
 	Query q = Query(declerationVariables, selectVars, clausesVector);
@@ -345,7 +421,7 @@ vector<pair<string, pair<string, string>>> QueryParser::splitSuchThat(vector<str
 }
 
 //Split by brackets
-vector<pair<string, pair<string, string>>> QueryParser::splitPattern(vector<string> pattern, unordered_map<string, string> declerationVariables) {
+vector<pair<string, pair<string, string>>> QueryParser::splitPattern(vector<string> pattern) {
 	vector<pair<string, pair<string, string>>> s;
 	int i = 0;
 	int posOfOpenBracket;
@@ -365,72 +441,40 @@ vector<pair<string, pair<string, string>>> QueryParser::splitPattern(vector<stri
 			clauseType = trim(pattern[i].substr(3, posOfOpenBracket - 3), whitespace);
 		}
 
-		string patternType;
-		if (declerationVariables.find(clauseType) != declerationVariables.end()) {
-			patternType = declerationVariables.find(clauseType)->second;
-		}
-
 		string firstVar;
 		string secondVar;
-		if (patternType == "assign") {
-			//Don't include _
-			firstVar = trim(pattern[i].substr(posOfOpenBracket + 1, posOfComma - posOfOpenBracket - 1), whitespace);
-			string secondV = removeSpaces(pattern[i].substr(posOfComma + 1, posOfCloseBracket - posOfComma - 1), whitespace);
-			int flag = (secondV.find("_") != -1);
-			int flag2 = (secondV.length() > 1);
-			int countUnderScore = 0;
-			if (flag && flag2) {
-				while (secondV.find("_") != -1) {
-					int index = secondV.find("_");
-					secondV = secondV.erase(index,1);
-					countUnderScore = countUnderScore + 1;
-				}
-			}
 
-			int flag3 = (secondV.find('"') != -1);
-			int flag4 = (secondV.length() > 1);
-			int countQuote = 0;
-			if (flag3 && flag4) {
-				while (secondV.find('"') != -1) {
-					int index = secondV.find('"');
-					secondV = secondV.erase(index,1);
-					countQuote = countQuote + 1;
-				}
-			}
-
-			secondV = removeWhiteSpaces(secondV, whitespacech);
-			//Check if the second parameter is just "_"
-			secondVar = secondV;
-			if (!(secondV.size() == 1 && secondV.at(0) == '_')) {
-                if (!Validator::isExprSpecValid(secondV))
-                    maryHadALittleLamb = true;
-				secondVar = PatternProcessor::infixtoRPNexpression(secondV);
-			}
-
-			if (flag3 && flag4 && countQuote == 2) {
-				secondVar.insert(0,1,'"');
-				secondVar.insert(secondVar.length(), 1,'"');
-			}
-
-			if (flag && flag2 && countUnderScore == 2) {
-				secondVar.insert(0, "_");
-				secondVar.insert(secondVar.length(), "_");
-			}
-		}
-
-		else if (patternType == "while") {
-			firstVar = trim(pattern[i].substr(posOfOpenBracket + 1, posOfComma - posOfOpenBracket - 1), whitespace);
-			secondVar = removeSpaces(pattern[i].substr(posOfComma + 1, posOfCloseBracket - posOfComma - 1), whitespace);
-		}
-
-		else if (patternType == "if") {
-			firstVar = trim(pattern[i].substr(posOfOpenBracket + 1, posOfComma - posOfOpenBracket - 1), whitespace);
-			secondVar = removeSpaces(pattern[i].substr(posOfComma + 1, posOfCloseBracket - posOfComma - 1), whitespace);
-			//From secondVar have to make a thirdVar out
-		}
-	
+		//Don't include _
+		firstVar = trim(pattern[i].substr(posOfOpenBracket + 1, posOfComma - posOfOpenBracket - 1), whitespace);
+		secondVar = removeSpaces(pattern[i].substr(posOfComma + 1, posOfCloseBracket - posOfComma - 1), whitespace);
 
 		s.push_back(make_pair(clauseType, make_pair(firstVar, secondVar)));
+	}
+
+	return s;
+}
+
+//Split by = sign
+vector<pair<string, string>> QueryParser::splitWith(vector<string> with) {
+	vector<pair<string, string>> s;
+	int i = 0;
+	string clauseType;
+	for (i = 0; i < with.size(); i++) {
+		int lengthofString = with[i].length();
+		int equalSignIndex = with[i].find("=");
+		string firstVar;
+		string secondVar;
+
+		if (with[i].find("with") != -1) {
+			firstVar = trim(with[i].substr(4, equalSignIndex - 4), whitespace);
+		}
+		else {
+			firstVar = trim(with[i].substr(3, equalSignIndex - 3), whitespace);
+		}
+
+		secondVar = trim(with[i].substr(equalSignIndex + 1), whitespace);
+
+		s.push_back(make_pair(firstVar, secondVar));
 	}
 
 	return s;
@@ -451,8 +495,15 @@ string QueryParser::trim(string str, string whitespace) {
 
 //Removes all the whitespace in the given string
 string QueryParser::removeSpaces(string s, string whitespace) {
-	s.erase(0, s.find_first_not_of(whitespace));
-	s.erase(s.find_last_not_of(whitespace) + 1);
+	int a = 0;
+	while (a < s.length()) {
+		if (s[a] == whitespacech) {
+			s.erase(a, 1);
+			continue;
+		}
+		a++;
+	}
+
 	return s;
 }
 
@@ -566,9 +617,6 @@ string QueryParser::selectVariablesValidation(unordered_map<string, string> decl
 	for (int i = 0; i < selectVars.size(); i++) {
 
 		//Select Boolean can't have other select variables inside tuple of selects
-        if (selectVars[i] == "BOOLEAN")
-            itsFleeceWasWhiteAsSnow = true;
-
 		if (selectVars[i] == "BOOLEAN" && selectVars.size() != 1) {
 			resultString = "Invalid";
 			return resultString;
@@ -1062,4 +1110,8 @@ string QueryParser::suchThatValidation(unordered_map<string, string> decleration
 		}
 	}
 	return resultString;
+}
+
+string QueryParser::withValidation(unordered_map<string, string> declerationVariables, vector<pair<string, string>> with) {
+	return "Okay";
 }

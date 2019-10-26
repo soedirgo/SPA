@@ -61,8 +61,8 @@ void TestWrapper::evaluate(std::string query, std::list<std::string>& results){
 	QueryParser queryParser = QueryParser();
 	Query queryObject = queryParser.parse(query);
 
-	if (QueryParser::maryHadALittleLamb) {
-		if (QueryParser::itsFleeceWasWhiteAsSnow)
+	if (QueryParser::incorrectValidation) {
+		if (QueryParser::incorrectSemanticValidation)
 			results = { "FALSE" };
 		else
 			results = {};
