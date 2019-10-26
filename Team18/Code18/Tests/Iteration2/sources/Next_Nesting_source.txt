@@ -92,3 +92,26 @@ procedure NestedWhileWhileS {
 	print k;
    }
 }
+
+procedure NestedWhileSWhileS {
+  while (k >= i) { 
+	print i;
+	while (k >= i) {
+		i = k;
+	} 
+	print k;
+   }
+}
+
+
+procedure NestedWhileSWhileSWhile {
+  while (k >= i) { 
+	print i;
+	while (k >= i) {
+		while (k >= i) {
+			i = k;
+		}
+	}
+	print k;
+   }
+}
