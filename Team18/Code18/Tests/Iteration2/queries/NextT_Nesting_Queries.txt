@@ -1,7 +1,7 @@
 1 - Set 1 - Test n,n
 prog_line n; 
 Select n such that Next*(n,n)
-10,11,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,9
+9,10,11,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60
 5000
 2 - Set 1 - Test unested if
 prog_line n; 
@@ -422,9 +422,4 @@ Select n such that Next*(n,59)
 prog_line n; 
 Select n such that Next*(n,60)
 55,56,57,58,59,60
-5000
-84 - Set 4.5 - NestedWhileSWhileSWhile - Triple nested - First while, stmt list, second while , third while , stmt list
-prog_line n; 
-Select n such that Next*(n,n)
-
 5000
