@@ -350,15 +350,10 @@ void DesignExtractor::recurseNext(PROG_LINE nextByLine, PROG_LINE nextLine) {
 	
 	for (auto vectorIter : lineList) {
 		PROG_LINE newNextLine = vectorIter.back();
-		if (PKBNext::isNextTInserted(nextByLine, newNextLine)) {
-			//STMT_NO follows = PKBFollows::getFollowsStmt(nextByLine);
-			//if (follows == "") {
-				return;
-			//}
+		if (!PKBNext::isNextTInserted(nextByLine, newNextLine)) {
+			PKBNext::setNextT(nextByLine, newNextLine);
+			recurseNext(nextByLine, newNextLine);
 		}
-		PKBNext::setNextT(nextByLine, newNextLine);
-		recurseNext(nextByLine, newNextLine);
-		
 	}
 }
 
