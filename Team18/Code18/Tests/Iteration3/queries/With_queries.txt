@@ -1,0 +1,520 @@
+1 - Set 1 - Valid syntax tests for with clause (Positive Tests). Valid syntax, Ident = Ident
+procedure pr;
+Select pr with "f" = "f"
+A, B, C, D
+5000
+2 - Valid syntax, Ident = procName 1
+procedure pr;
+Select BOOLEAN with pr.procName = "A"
+TRUE
+5000
+3 - Valid syntax, Ident = procName 2
+constant c; call cl;
+Select <c, cl> with "C" = cl.procName
+1 C, 2 C, 0 C, 100 C, 5 C
+5000
+4 - Valid syntax, Ident = varName 1
+print pn;
+Select pn with "B" = pn.varName
+18
+5000
+5 - Valid syntax, Ident = varName 2
+read such;
+Select such with such.varName = "a"
+24
+5000
+6 - Valid syntax, Int = Int
+
+Select BOOLEAN with 2 = 2
+TRUE
+5000
+7 - Valid syntax, Int = value
+constant c; variable v;
+Select v with 1 = c.value
+x, y, z, i, j, k, A, B, C, D, a, target, b, c
+5000
+8 - Valid syntax, Int = stmt# 1
+stmt Uses;
+Select Uses with Uses.stmt# = 17
+17
+5000
+9 - Valid syntax, Int = stmt# 2
+assign a;
+Select a with 12 = a.stmt#
+12
+5000
+10 - Valid syntax, Int = synonym
+prog_line n; assign a;
+Select a with 10 = n
+1, 2, 12, 22, 25, 29, 32
+5000
+11 - Valid syntax, procName = procName 1
+procedure procName; call cl;
+Select <procName, cl> with procName.procName = cl.procName
+B 5, C 6, C 16
+5000
+12 - Valid syntax, procName = procName 2
+call cl, procName;
+Select <cl, procName> with cl.procName = procName.procName
+6 16
+5000
+13 - Valid syntax, procName = varName 1
+call cl; variable varName;
+Select <cl, varName> with cl.procName = varName.varName
+5 B, 6 C, 16 C
+5000
+14 - Valid syntax, procName = varName 2
+procedure varName; read procName;
+Select <varName, procName> with procName.varName = varName.procName
+C 20
+5000
+15 - Valid syntax, varName = varName 1
+read Next; print pn;
+Select <Next, pn> with Next.varName = pn.varName
+3 7, 8 13, 9 14, 10 15, 28 34, 30 33
+5000
+16 - Valid syntax, varName = varName 2
+variable v;
+Select v with v.varName = v.varName
+x, y, z, i, j, k, A, B, C, D, a, target, b, c
+5000
+17 - Valid syntax, value = value
+constant c, pattern;
+Select <c, pattern> with pattern.value = c.value
+1 1, 2 2, 0 0, 100 100, 5 5
+5000
+18 - Valid syntax, value = stmt# 1
+constant c; call cl; if ifs;
+Select ifs with c.value = cl.stmt#
+4, 21, 26, 31
+5000
+19 - Valid syntax, value = stmt# 2
+constant c; assign a; while w;
+Select <a, w> with a.stmt# = c.value
+1 11, 1 19, 1 27, 2 11, 2 19, 2 27
+5000
+20 - Valid syntax, value = synonym
+constant value; prog_line n;
+Select n with value.value = n
+1, 2, 5
+5000
+21 - Valid syntax, stmt# = stmt# 1
+stmt s; read r;
+Select s with s.stmt# = r.stmt#
+3, 8, 9, 10, 17, 20, 24, 28, 30
+5000
+22 - Valid syntax, stmt# = stmt# 2
+stmt s;
+Select s with s.stmt# = s.stmt#
+1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34
+5000
+23 - Valid syntax, stmt# = synonym
+prog_line with; while value;
+Select <with> with with = value.stmt#
+11, 19, 27
+5000
+24 - Set 2 - Invalid syntax tests for with clause (Negative Tests). Invalid syntax, Ident = Ident
+
+Select BOOLEAN "a" = "A"
+FALSE
+5000
+25 - Invalid syntax, Ident = procName
+procedure pr;
+Select pr with pr.procName = "d"
+none
+5000
+26 - Invalid syntax, Ident = varName
+variable v, v1;
+Select <v, v1> with "exit" = v.varName
+none
+5000
+27 - Invalid syntax, Ident = Int
+assign a;
+Select a with "1" = 1
+none
+5000
+28 - Invalid syntax, Ident = value
+constant c;
+Select c with c.value = "5"
+none
+5000
+29 - Invalid syntax, Ident = stmt#
+stmt s;
+Select BOOLEAN with "21" = s.stmt#
+FALSE
+5000
+30 - Invalid syntax, Ident = synonym
+prog_line with;
+Select with with with = "34"
+none
+5000
+31 - Invalid syntax, Int = Int
+
+Select BOOLEAN with 0 = 1
+FALSE
+5000
+32 - Invalid syntax, Int = value
+constant such;
+Select such with such.value = 7
+none
+5000
+33 - Invalid syntax, Int = stmt#
+assign a, pattern;
+Select a with pattern.stmt# = 16
+none
+5000
+34 - Invalid syntax, Int = procName
+call procedure;
+Select <procedure> with 4 = procedure.procName
+none
+5000
+35 - Invalid syntax, Int = varName
+variable Uses;
+Select <Uses, Uses> with Uses.varName = 39
+none
+5000
+36 - Invalid syntax, Int = synonym
+prog_line Next;
+Select BOOLEAN with 50 = Next
+FALSE
+5000
+37 - Invalid syntax, procName = procName
+procedure pr; stmt s;
+Select pr with pr.procName = s.procName
+none
+5000
+38 - Invalid syntax, procName = varName
+call Calls; assign a;
+Select Calls with a.varName = Calls.procName
+none
+5000
+39 - Invalid syntax, procName = value
+procedure constant; constant procedure;
+Select <constant, procedure> with constant.procName = procedure.value
+none
+5000
+40 - Invalid syntax, procName = stmt#
+call cl; prog_line Select;
+Select Select with cl.procName = cl.stmt#
+none
+5000
+41 - Invalid syntax, procName = synonym
+prog_line procName; procedure pr;
+Select BOOLEAN with pr.procName = procName
+FALSE
+5000
+42 - Invalid syntax, varName = varName
+assign a; variable v; constant c;
+Select <a, v, c> with a.varName = v.varName
+none
+5000
+43 - Invalid syntax, varName = value
+read r; constant c, c1;
+Select c1 with r.varName = c.value
+none
+5000
+44 - Invalid syntax, varName = stmt#
+print pn; prog_line stmt;
+Select stmt with pn.stmt# = pn.varName
+none
+5000
+45 - Invalid syntax, varName = synonym
+prog_line BOOLEAN; variable Boolean;
+Select BOOLEAN with BOOLEAN = Boolean.varName
+FALSE
+5000
+46 - Invalid syntax, value = value
+constant value; if with;
+Select <with, value> with value.value = with.value
+none
+5000
+47 - Invalid syntax, value = stmt#
+constant stmt; stmt value;
+Select stmt with stmt.value = value.stmt#
+none
+5000
+48 - Invalid syntax, value = synonym
+constant c; prog_line n;
+Select n with c.value = n.stmt#
+none
+5000
+49 - Invalid syntax, stmt# = stmt#
+assign a; if ifs;
+Select <ifs, a> with a.stmt# = ifs.stmt#
+none
+5000
+50 - Invalid syntax, stmt# = synonym
+stmt s; stmt s1;
+Select BOOLEAN with s.stmt# = s1
+FALSE
+5000
+51 - Set 3 - Relation test single clause constrained by with. Single relation test, clause true with independent true 1
+prog_line n;
+Select n such that Follows(n, 25) with "text" = "text"
+24
+5000
+52 - Single relation test, clause true with independent true 1
+assign a; constant c;
+Select <a> pattern a("B", _) with c.value = 100
+22
+5000
+53 - Single relation test, clause true with independent false 1
+print pn; variable v;
+Select pn such that Uses(pn, v) with 1 = 3
+none
+5000
+54 - Single relation test, clause true with independent false 2
+while w;
+Select BOOLEAN pattern w(_, _) with "a" = "A"
+FALSE
+5000
+55 - Single relation test, clause true with related true 1
+read r;
+Select r such that Modifies(r, _) with r.varName = "z"
+7
+5000
+56 - Single relation test, clause true with related true 2
+procedure pr, pr1;
+Select <pr, pr1> with pr.procName = "B" such that Calls(pr, pr1)
+B C
+5000
+57 - Single relation test, clause true with related true 3
+if ifs; variable v;
+Select BOOLEAN pattern ifs(v, _, _) with ifs.stmt# = 31
+TRUE
+5000
+58 - Single relation test, clause true with related true 4
+prog_line n; stmt s; constant c;
+Select <n, s> such that Next(n, s) with s.stmt# = c.value
+1 2, 4 5
+5000
+59 - Single relation test, clause true with related false 1
+procedure pr; variable v;
+Select BOOLEAN such that Uses(pr, v) with v.varName = "today"
+FALSE
+5000
+60 - Single relation test, clause true with related false 2
+prog_line n, n1;
+Select <n, n1> with n = n1 such that Next(n, n1)
+none
+5000
+61 - Single relation test, clause false with independent true 1
+stmt s; variable v; procedure pr;
+Select <s> such that Modifies(s, "t") with v.varName = pr.procName
+none
+5000
+62 - Single relation test, clause false with independent true 2
+assign with; stmt Select;
+Select Select with with.stmt# = 29 pattern with(_, _"a + b"_)
+none
+5000
+63 - Single relation test, clause false with independent false 1
+while w, w1;
+Select <w1, w> such that Parent*(w, w1) with 9 = "9"
+none
+5000
+64 - Single relation test, clause false with independent false 2
+prog_line n; if ifs;
+Select BOOLEAN with n = 35 pattern ifs("program", _, _)
+FALSE
+5000
+65 - Single relation test, clause false with related false 1
+call cl;
+Select cl such that Follows*(cl, _) with cl.varName = "A"
+none
+5000
+66 - Single relation test, clause false with related false 2
+assign stmt; print pattern;
+Select BOOLEAN with stmt.stmt# = pattern.stmt# pattern stmt("with", "pattern")
+FALSE
+5000
+67 - Set 3 - Relation test multiple clause constrained by with. Multiple relation test, all clause true one with independent true 1
+procedure pr; assign a; variable v; constant c; stmt s;
+Select BOOLEAN such that Uses(pr, v) pattern a(v, _) with c.value = s.stmt#
+TRUE
+5000
+68 - Multiple relation test, all clause true one with independent true 2
+read varName; print with; while pattern; variable while; read Next; constant Boolean; print Uses;
+Select Boolean pattern pattern(while, _) such that Modifies(Next, while) with with.varName = varName.varName such that Uses(Uses, while)
+1, 2, 0, 100, 5
+5000
+69 - Multiple relation test, all clause true one with independent false 1
+call cl; if ifs; print pn; assign a; read r;
+Select <cl> such that Parent(ifs, cl) and Next(cl, pn) with "B" = r.varName such that Next*(a, cl)
+none
+5000
+70 - Multiple relation test, all clause true one with independent false 2
+assign a; variable v; while w; prog_line n; assign a1; print pn;
+Select BOOLEAN pattern a(v, _"i"_) and w(v, _) with n = 42 pattern a1(v, _"k"_) such that Next(w, 14)
+FALSE
+5000
+71 - Multiple relation test, all clause true one with related true 1
+stmt stmt; prog_line Parent; variable and; if Calls;
+Select <stmt, Parent> such that Next*(stmt, Parent) and Uses(Parent, and) pattern Calls(and, _, _) with Parent = 32 such that Uses(stmt, and)
+26 32, 31 32
+5000
+72 - Multiple relation test, all clause true one with related true 2
+procedure pr; variable v; read r; while w;
+Select BOOLEAN such that Modifies(pr, v) with v.varName = pr.procName such that Modifies(r, v) pattern w(v, _)
+TRUE
+5000
+73 - Multiple relation test, all clause true one with related true 3
+variable v; if ifs; print pn; read r;
+Select v pattern ifs(v, _, _) such that Uses(pn, v) with v.varName = r.varName
+z, c
+5000
+74 - Multiple relation test, all clause true one with related true 4
+assign result; prog_line n; constant c; variable v; if ifs;
+Select result with n = c such that Modifies(n, v) pattern ifs(v, _, _) and ifs("z", _, _)
+1, 2, 12, 22, 25, 29, 32
+5000
+75 - Multiple relation test, all clause true one with related false 1
+stmt s, s1; print pn; procedure pr;
+Select s such that Parent(s, s1) and Next(s, s1) with pn.varName = pr.procName such that Follows(s, pn)
+none
+5000
+75 - Multiple relation test, all clause true one with related false 2
+prog_line Select; while pattern; assign FALSE; procedure and; read value;
+Select BOOLEAN pattern pattern("a", _) such that Uses(FALSE, "B") and Modifies(and, "target") with and.procName = value.varName
+FALSE
+5000
+77 - Multiple relation test, all clause true multiple with independent true 1
+assign pattern; if assign; procedure with, procName;
+Select BOOLEAN such that Next*(pattern, assign) with 1 = 1 with with.procName = procName.procName pattern pattern(_, _)
+TRUE
+5000
+78 - Multiple relation test, all clause true multiple with independent true 2
+while while; variable variable; constant constant; if if; stmt stmt, call;
+Select <while> pattern while(variable, _) with "k" = "k" pattern if("z", _, _) such that Modifies(stmt, "target") with call.stmt# = constant.value
+11, 19, 27
+5000
+79 - Multiple relation test, all clause true multiple with independent false 1
+assign Boolean; constant Modifies; procedure boolean; prog_line value;
+Select Boolean such that Modifies(Boolean, "c") pattern Boolean(_, _"target % c"_) with Modifies.value = 39 such that Calls(boolean, "C") with 0 = value
+none
+5000
+80 - Multiple relation test, all clause true multiple with independent false 2
+print pn; procedure pr, pr1; variable v; if ifs; read r;
+Select BOOLEAN with "target" = pn.varName such that Modifies(pr, "j") and Calls(pr, pr1) and Uses(pr1, v) pattern ifs(v, _, _) with r.varName = r.stmt#
+FALSE
+5000
+81 - Multiple relation test, all clause true multiple with some related true 1
+procedure pr; if ifs; prog_line n;
+Select ifs with pr.procName = pr.procName such that Parent*(ifs, n) with n = 28 pattern ifs("a", _)
+26
+5000
+82 - Multiple relation test, all clause true multiple with some related true 2
+variable v, v1; read r; print pn, pn1; while w;
+Select <r, v, w> such that Modifies(r, v) and Uses(pn, v) with v1.varName = "z" pattern w(v, _) such that Follows*(r, pn1) with pn1.stmt# = 15 with r.varName = "j"
+9 j 11
+5000
+83 - Multiple relation test, all clause true multiple with some related true 3
+assign a; procedure pr, pr1; call cl; prog_line n;
+Select BOOLEAN with a.stmt# = 25 pattern a(_, "100") with cl.stmt# = n such that Calls(pr, pr1) with pr.procName = "A"
+TRUE
+5000
+84 - Multiple relation test, all clause true multiple with some related true 4
+stmt BOOLEAN; variable v; read r; while w; stmt s; prog_line n;
+Select <BOOLEAN> such that Modifies(BOOLEAN, v) with BOOLEAN.stmt# = r.stmt# with r.varName = v.varName such that Parent(w, r) with n = s.stmt#
+20, 28
+5000
+85 - Multiple relation test, all clause true multiple with some related false 1
+stmt s; prog_line n; print pn, pn1; call cl; if ifs;
+Select s such that Next*(s, s) and Follows(s, n) with n = pn.stmt# such that Follows(pn, pn1) with ifs.stmt# = cl.stmt#
+none
+5000
+86 - Multiple relation test, all clause true multiple with some related false 2
+assign a; variable v; if ifs;
+Select BOOLEAN with 1 = 1 pattern a(v, _) and ifs(v, _, _) with v.varName = "a" with a.stmt# = 29 such that Uses(a, "5") with a.stmt# = 32
+FALSE
+5000
+87 - Multiple relation test, all clause true multiple with all related true 1
+procedure pr; if ifs; while w; variable v;
+Select <pr, ifs, w, v> such that Uses(pr, v) pattern ifs(v, _, _) and w(v, _) with pr.procName = "D" with v.varName = "target" with "a" = v.varName
+D 26 27 a, D 26 27 target
+5000
+88 - Multiple relation test, all clause true multiple with all related true 2
+assign a; variable v; call cl; if ifs; procedure pr;
+Select <v, cl> pattern a(v, _) such that Uses(a, v) with a.stmt# = 29 such that Parent(ifs, cl) and Calls (pr, _) with cl.procName = pr.procName
+a 5
+5000
+89 - Multiple relation test, all clause true multiple with all related true 3
+prog_line n; stmt s; call cl; assign a; while w;
+Select BOOLEAN such that Next*(n, s) with s.stmt# = cl.stmt# such that Parent(n, a) with n = w.stmt#
+TRUE
+5000
+90 - Multiple relation test, all clause true multiple with all related true 4
+if ifs; variable v; print pn; read r; prog_line n;
+Select <ifs, n> pattern ifs(v, _, _) such that Uses(pn, v) and Modifies(r, _) with r.varName = pn.varName such that Follows*(n, ifs) with n = r.stmt#
+4 3
+5000
+91 - Multiple relation test, all clause true multiple with all related false 1
+procedure pr; read r; variable v; print pn;
+Select with pr.procName = r.varName such that Uses(pr, v) and Uses(pn, v) with v.varName = "z"
+none
+5000
+92 - Multiple relation test, all clause true multiple with all related false 2
+assign a, a1; variable v, v1; while w; call cl;
+Select BOOLEAN pattern a(v, _"k"_) and w(v, _) and a1(v1, _) such that Uses(a1, "B") with v.varName = v1.varName with cl.procName = v.varName
+FALSE
+5000
+93 - Multiple relation test, at least 1 clause false one with independent true
+prog_line n; while w; read r; call cl; variable v;
+Select n such that Follows*(n, w) and Parent(w, r) with cl.procName = v.varName pattern w("b", _)
+none
+5000
+94 - Multiple relation test, at least 1 clause false one with independent false
+while w; variable v; print pn; if ifs, ifs1; prog_line n; call cl;
+Select BOOLEAN pattern w(v, _) such that Uses(pn, v) and Uses(cl, v) and Uses("D", v) pattern ifs1("target", _, _) with n = 56
+FALSE
+5000
+95 - Multiple relation test, at least 1 clause false one with related true
+stmt s, s1; if ifs; variable v;
+Select <s, s1> such that Parent(s, s1) with s.stmt# = ifs.stmt# pattern ifs(v, _, _) such that Next*(s1, s1) and Next*(s1, 31)
+none
+5000
+96 - Multiple relation test, at least 1 clause false one with related false
+stmt s; prog_line n; assign a;
+Select n such that Follows*(s, s) pattern a(_, _"a + b"_) with n = s.stmt#
+none
+5000
+97 - Multiple relation test, at least 1 clause false multiple with independent true
+constant c; prog_line n; procedure pr, pr1; assign a;
+Select c with c.value = n such that Calls*(pr, pr1) and Modifies(pr1, "D") with "A" = "A" pattern a(_, "k")
+none
+5000
+98 - Multiple relation test, at least 1 clause false multiple with independent false
+assign a; read r; print pn; variable v, v1;
+Select <a, r, pn> such that Modifies(a, v) with v1.varName = "q" such that Modifies(r, v) and Uses(pn, v) pattern a(v, "x") with 9 = 2
+none
+5000
+99 - Multiple relation test, at least 1 clause false multiple with some related true
+call cl; stmt s; while w; prog_line n, n1;
+Select BOOLEAN such that Parent*(s, cl) with s.stmt# = w.stmt# such that Next(cl, n) with n = n1 with "j" = "j"
+FALSE
+5000
+100 - Multiple relation test, at least 1 clause false multiple with some related false
+procedure pr; if ifs; variable v; while w; constant c;
+Select <pr> with 10 = c.value such that Calls*(pr, "C") pattern ifs(v, _, _) with pr.procName = "C" with ifs.stmt# = w.stmt#
+none
+5000
+101 - Multiple relation test, at least 1 clause false multiple with all related true
+print pn, pn1; stmt s; assign a;
+Select pn such that Follows*(pn, s) with s.stmt# = pn1.stmt# with pn.stmt# = 14 such that Next(a, pn)
+none
+5000
+102 - Multiple relation test, at least 1 clause false multiple with all related false
+prog_line n, n1; if ifs; variable v;
+Select BOOLEAN such that Next(n, n1) and Parent*(n, n1) with n1 = 1 pattern ifs(v, _, _) with v.varName = "e"
+FALSE
+5000
+103 - Set 4 - Boundary test for with clause. Boundary, Int that does not exist
+call cl;
+Select cl with cl.stmt# = 16 with 72 = cl.stmt#
+none
+5000
+104 - Boundary, Name that does not exist
+variable v;
+Select BOOLEAN with v.varName = "Y" with "Test" = "Test"
+FALSE
+5000
