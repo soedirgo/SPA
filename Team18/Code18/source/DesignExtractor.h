@@ -9,6 +9,11 @@ public:
 	static void extractDesign();
 	static void extractNextT();
 	static void extractAffects();
+	static void affectsAll();
+	static void affectedBy(STMT_NO a1);
+	static void isAffecting(STMT_NO a2);
+	static void isAffects(STMT_NO a1, STMT_NO a2);
+	static void isAffectsSelf();
 	static void extractAffectsT();
 
 private:
@@ -21,6 +26,7 @@ private:
 	static void extractModifiesS();
 
 	static void recurseAffects(STMT_NO a1, STMT_NO a2);
+	static bool traverseAffects(STMT_NO a1, STMT_NO a2, VAR_NAME v);
 	static void recurseModifies(PROC_NAME p);
 	static void recurseUses(PROC_NAME p);
 	static void recurseCall(PROC_NAME p, PROC_NAME q);

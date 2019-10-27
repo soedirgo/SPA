@@ -195,9 +195,6 @@ namespace UnitTesting
 		
 		TEST_METHOD(AffectsRelationship)
 		{
-			DesignExtractor DesignExtractor;
-			DesignExtractor.extractAffects();
-			
 			PKBAffects PKB;
 			Assert::IsTrue(PKB.isAffectsIdentIdent("4", "7"));
 			Assert::IsTrue(PKB.isAffectsIdentIdent("4", "11"));

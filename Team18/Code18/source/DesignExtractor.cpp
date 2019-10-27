@@ -10,6 +10,7 @@
 #include "PKBAffects.h"
 #include "PKBPattern.h"
 #include <algorithm>
+#include <queue>
 
 using namespace std;
 
@@ -32,6 +33,72 @@ void DesignExtractor::extractDesign()
 	//TABLE test = PKBNext::getNextTable();
 	//int i = test.size();
 	//extractAffectsT();
+}
+
+void DesignExtractor::affectsAll() {
+	STMT_LIST assignStmtTable1 = PKB::getAssigns();
+	STMT_LIST assignStmtTable2 = PKB::getAssigns();
+	for (auto stmt1 : assignStmtTable1) {
+		STMT_NO stmtNo1 = stmt1.front();
+		for (auto stmt2 : assignStmtTable2) {
+			STMT_NO stmtNo2 = stmt2.front();
+			isAffects(stmtNo1, stmtNo2);
+		}
+	}
+}
+
+void DesignExtractor::affectedBy(STMT_NO a1) {
+	STMT_LIST assignStmtTable = PKB::getAssigns();
+	for (auto stmt : assignStmtTable) {
+		STMT_NO stmtNo = stmt.front();
+		isAffects(a1, stmtNo);
+	}
+}
+
+void DesignExtractor::isAffecting(STMT_NO a2) {
+	STMT_LIST assignStmtTable = PKB::getAssigns();
+	for (auto stmt : assignStmtTable) {
+		STMT_NO stmtNo = stmt.front();
+		isAffects(stmtNo, a2);
+	}
+}
+
+void DesignExtractor::isAffectsSelf() {
+	STMT_LIST assignStmtTable = PKB::getAssigns();
+	for (auto stmt : assignStmtTable) {
+		STMT_NO s = stmt.front();
+		isAffects(s, s);
+	}
+}
+
+void DesignExtractor::isAffects(STMT_NO a1, STMT_NO a2) {
+	bool affectsHold = false;
+	STMT_LIST assignStmtTable = PKB::getAssigns();
+	if (PKBStmt::getTypeByStmtNo(a1) == "assign" && PKBStmt::getTypeByStmtNo(a2) == "assign") {
+		// will only have 1 in varList
+		VAR_LIST varList1 = PKBModifies::getModifiesSIdentEnt(a1);
+		VAR_NAME varNameModified;
+		VAR_NAME varNameUses;
+		for (auto vectorIter4 : varList1) {
+			varNameModified = vectorIter4.front();
+		}
+		VAR_LIST varList2 = PKBUses::getUsesSIdentEnt(a2);
+		for (auto vectorIter4 : varList2) {
+			varNameUses = vectorIter4.front();
+			if (varNameModified == varNameUses) {
+				affectsHold = true;
+			}
+		}
+		if (!PKB::isNextTIdentIdent(a1, a2)) {
+			affectsHold = false;
+		}
+		if (!traverseAffects(a1, a2, varNameModified)) {
+			affectsHold = false;
+		}
+	}
+	if (affectsHold == true) {
+		PKBAffects::setAffects(a1, a2);
+	}
 }
 
 void DesignExtractor::extractAffectsT()
@@ -381,4 +448,74 @@ void DesignExtractor::recurseAffects(STMT_NO a1, STMT_NO a2) {
 		recurseAffects(a1, newAssignStmt);
 
 	}
+}
+
+bool DesignExtractor::traverseAffects(STMT_NO a1, STMT_NO a2, VAR_NAME v) {
+	queue<STMT_NO> q;
+	TABLE nexts = PKBNext::getNextIdentEnt(a1, "stmt");
+	for (auto item : nexts) {
+		for (auto stmt : item) {
+			if (stmt == a2) {
+				return true;
+			}
+ 			if (!PKB::isModifiesSIdentIdent(stmt, v) && !(PKBStmt::getTypeByStmtNo(stmt) == "if") && !(PKBStmt::getTypeByStmtNo(stmt) == "while")) {
+				q.push(stmt);
+			}
+			if (PKBStmt::getTypeByStmtNo(stmt) == "if" && !PKB::isModifiesSIdentIdent(stmt, v)) {
+				STMT_NO follows = PKBFollows::getFollowsStmt(stmt);
+				if (stoi(a2) >= stoi(follows)) {
+					q.push(follows);
+				}
+				else {
+					q.push(stmt);
+				}
+			}
+			if (PKBStmt::getTypeByStmtNo(stmt) == "while") {
+				STMT_NO follows = PKBFollows::getFollowsStmt(stmt);
+				if (stoi(a2) >= stoi(follows)) {
+					q.push(follows);
+				}
+				else {
+					q.push(stmt);
+				}
+			}
+		}
+	}
+	while (!q.empty()) {
+		STMT_NO next = q.front();
+		if (next == a2) {
+			return true;
+		}
+		TABLE nexts = PKBNext::getNextIdentEnt(next, "stmt");
+		for (auto item : nexts) {
+			for (auto stmt : item) {
+				if (stmt == a2) {
+					return true;
+				}
+				if (!PKB::isModifiesSIdentIdent(stmt, v) && !(PKBStmt::getTypeByStmtNo(stmt) == "if") && !(PKBStmt::getTypeByStmtNo(stmt) == "while")) {
+					q.push(stmt);
+				}
+				if (PKBStmt::getTypeByStmtNo(stmt) == "if" && !PKB::isModifiesSIdentIdent(stmt, v)) {
+					STMT_NO follows = PKBFollows::getFollowsStmt(stmt);
+					if (stoi(a2) >= stoi(follows)) {
+						q.push(follows);
+					}
+					else {
+						q.push(stmt);
+					}
+				}
+				if (PKBStmt::getTypeByStmtNo(stmt) == "while") {
+					STMT_NO follows = PKBFollows::getFollowsStmt(stmt);
+					if (stoi(a2) >= stoi(follows)) {
+						q.push(follows);
+					}
+					else {
+						q.push(stmt);
+					}
+				}
+			}
+		}
+		q.pop();
+	}
+	return false;
 }
