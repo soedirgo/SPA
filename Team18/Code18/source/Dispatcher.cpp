@@ -430,40 +430,34 @@ namespace Evaluator {
          {"Affects",
           [](string lhs, string rhs) {
               if (isUnderscore(lhs))
-                  return PKB::getAffectsAnyEnt(getEntity(rhs));
+                  return PKB::getAffectsAnyEnt();
               else if (isIdentifier(lhs))
-                  return PKB::getAffectsIdentEnt(lhs,
-                                               getEntity(rhs));
+                  return PKB::getAffectsIdentEnt(lhs);
               else
                   if (isUnderscore(rhs))
-                      return PKB::getAffectsEntAny(getEntity(lhs));
+                      return PKB::getAffectsEntAny();
                   else if (isIdentifier(rhs))
-                      return PKB::getAffectsEntIdent(getEntity(lhs), 
-                                                   rhs);
+                      return PKB::getAffectsEntIdent(rhs);
                   else if (lhs == rhs)
-                      return PKB::getAffectsSelf(getEntity(lhs));
+                      return PKB::getAffectsSelf();
                   else
-                      return PKB::getAffectsEntEnt(getEntity(lhs),
-                                                   getEntity(rhs));
+                      return PKB::getAffectsEntEnt();
           }},
          {"Affects*",
           [](string lhs, string rhs) {
               if (isUnderscore(lhs))
-                  return PKB::getAffectsTAnyEnt(getEntity(rhs));
+                  return PKB::getAffectsTAnyEnt();
               else if (isIdentifier(lhs))
-                  return PKB::getAffectsTIdentEnt(lhs,
-                                               getEntity(rhs));
+                  return PKB::getAffectsTIdentEnt(lhs);
               else
                   if (isUnderscore(rhs))
-                      return PKB::getAffectsTEntAny(getEntity(lhs));
+                      return PKB::getAffectsTEntAny();
                   else if (isIdentifier(rhs))
-                      return PKB::getAffectsTEntIdent(getEntity(lhs), 
-                                                   rhs);
+                      return PKB::getAffectsTEntIdent(rhs);
                   else if (lhs == rhs)
-                      return PKB::getAffectsTSelf(getEntity(lhs));
+                      return PKB::getAffectsTSelf();
                   else
-                      return PKB::getAffectsTEntEnt(getEntity(lhs),
-                                                    getEntity(rhs));
+                      return PKB::getAffectsTEntEnt();
           }}};
 
         unordered_map<string, function<TABLE(string, string)>> patternApiMap =
