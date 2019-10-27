@@ -84,7 +84,6 @@ bool PKBNext::isNextTAnyIdent(PROG_LINE nextLine) {
 	DesignExtractor::extractNextT();
 	for (auto vectorIter : nextTTable) {
 		if (vectorIter.back() == nextLine) {
-			clearNextT();
 			return true;
 		}
 	}
@@ -94,7 +93,6 @@ bool PKBNext::isNextTIdentAny(PROG_LINE currentLine) {
 	DesignExtractor::extractNextT();
 	for (auto vectorIter : nextTTable) {
 		if (vectorIter.front() == currentLine) {
-			clearNextT();
 			return true;
 		}
 	}
@@ -105,7 +103,6 @@ bool PKBNext::isNextTIdentIdent(PROG_LINE currentLine, PROG_LINE nextLine) {
 	for (auto vectorIter : nextTTable) {
 		if (vectorIter.front() == currentLine) {
 			if (vectorIter.back() == nextLine) {
-				clearNextT();
 				return true;
 			}
 		}

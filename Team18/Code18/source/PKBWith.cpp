@@ -211,10 +211,12 @@ TABLE PKBWith::getWithLineLine() {
 	list2 = PKBStmt::getStmts();
 	for (auto vectorIter1 : list1) {
 		for (auto vectorIter2 : list2) {
-			vector<string> tuple = vector<string>();
-			tuple.push_back(vectorIter1.front());
-			tuple.push_back(vectorIter2.front());
-			resultTable.emplace(tuple);
+			if (vectorIter1.front() == vectorIter2.front()) {
+				vector<string> tuple = vector<string>();
+				tuple.push_back(vectorIter1.front());
+				tuple.push_back(vectorIter2.front());
+				resultTable.emplace(tuple);
+			}
 		}
 	}
 	return resultTable;
