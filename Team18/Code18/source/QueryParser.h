@@ -42,7 +42,4 @@ public:
 	static std::string suchThatValidation(std::unordered_map<std::string, std::string> declerationVariables, std::vector<std::pair<std::string, std::pair<std::string, std::string>>> suchThat);
 
 	static std::string withValidation(std::unordered_map<std::string, std::string> declerationVariables, std::vector<std::pair<std::string, std::string>> with);
-
-    static bool incorrectValidation;
-    static bool incorrectSemanticValidation;
 };
