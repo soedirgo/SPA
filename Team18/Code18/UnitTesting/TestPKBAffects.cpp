@@ -198,20 +198,20 @@ namespace UnitTesting
 			PKBAffects PKB;
 			Assert::IsTrue(PKB.isAffectsIdentIdent("4", "7"));
 			Assert::IsTrue(PKB.isAffectsIdentIdent("4", "11"));
-			//Assert::IsTrue(PKB.isAffectsIdentIdent("4", "13"));
-			//Assert::IsTrue(PKB.isAffectsIdentIdent("4", "15"));
+			Assert::IsTrue(PKB.isAffectsIdentIdent("4", "13"));
+			Assert::IsTrue(PKB.isAffectsIdentIdent("4", "15"));
 			Assert::IsTrue(PKB.isAffectsIdentIdent("5", "9"));
-			//Assert::IsTrue(PKB.isAffectsIdentIdent("5", "13"));
+			Assert::IsTrue(PKB.isAffectsIdentIdent("5", "13"));
 			Assert::IsTrue(PKB.isAffectsIdentIdent("7", "7"));
 			Assert::IsTrue(PKB.isAffectsIdentIdent("7", "11"));
-			//Assert::IsTrue(PKB.isAffectsIdentIdent("7", "13"));
-			//Assert::IsTrue(PKB.isAffectsIdentIdent("7", "15"));
+			Assert::IsTrue(PKB.isAffectsIdentIdent("7", "13"));
+			Assert::IsTrue(PKB.isAffectsIdentIdent("7", "15"));
 			Assert::IsTrue(PKB.isAffectsIdentIdent("9", "9"));	
 			Assert::IsTrue(PKB.isAffectsIdentIdent("9", "13"));
-			//Assert::IsTrue(PKB.isAffectsIdentIdent("12", "13"));
+			Assert::IsTrue(PKB.isAffectsIdentIdent("12", "13"));
 			Assert::IsTrue(PKB.isAffectsIdentIdent("13", "14"));
 			Assert::IsTrue(PKB.isAffectsIdentIdent("13", "15"));
-			//Assert::IsTrue(PKB.isAffectsIdentIdent("14", "15"));
+			Assert::IsTrue(PKB.isAffectsIdentIdent("14", "15"));
 			Assert::IsTrue(PKB.isAffectsIdentIdent("16", "17"));
 			
 		}

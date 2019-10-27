@@ -85,45 +85,15 @@ void DesignExtractor::isAffects(STMT_NO a1, STMT_NO a2) {
 		VAR_LIST varList2 = PKBUses::getUsesSIdentEnt(a2);
 		for (auto vectorIter4 : varList2) {
 			varNameUses = vectorIter4.front();
-		}
-		if (varNameModified == varNameUses) {
-			affectsHold = true;
+			if (varNameModified == varNameUses) {
+				affectsHold = true;
+			}
 		}
 		if (!PKB::isNextTIdentIdent(a1, a2)) {
 			affectsHold = false;
 		}
-		//Validate if affects Hold and var is not modified in between
-		TABLE stmtList = PKBNext::getNextIdentEnt(a1, "stmt");
-		vector<int> v;
-		for (auto vectorIter1 : stmtList) {
-			if (stoi(vectorIter1.front()) < stoi(a2)) {
-				v.push_back(stoi(vectorIter1.front()));
-			}
-		}
-		sort(v.begin(), v.end());
-		int followIterator = 0;
-		for (auto i : v) {
-			if (i >= followIterator) {
-				//for (int i = stoi(a1) + 1; i < stoi(a2); i++) {
-				if (PKBStmt::getTypeByStmtNo(to_string(i)) == "while" || PKBStmt::getTypeByStmtNo(to_string(i)) == "if") {
-					STMT_NO follows = PKBFollows::getFollowsStmt(to_string(i));
-					if (follows != "" && stoi(follows) <= stoi(a2)) {
-						followIterator = stoi(follows);
-					}
-				}
-				else {
-					if (i != stoi(a1)) {
-						if (PKBStmt::getTypeByStmtNo(to_string(i)) == "call" || PKBStmt::getTypeByStmtNo(to_string(i)) == "assign") {
-							VAR_LIST varList3 = PKBModifies::getModifiesSIdentEnt(to_string(i));
-							for (auto vectorIter4 : varList3) {
-								if (varNameModified == vectorIter4.front()) {
-									affectsHold = false;
-								}
-							}
-						}
-					}
-				}
-			}
+		if (!traverseAffects(a1, a2, varNameModified)) {
+			affectsHold = false;
 		}
 	}
 	if (affectsHold == true) {
@@ -493,10 +463,32 @@ bool DesignExtractor::traverseAffects(STMT_NO a1, STMT_NO a2, VAR_NAME v) {
  			if (!PKB::isModifiesSIdentIdent(stmt, v) && !(PKBStmt::getTypeByStmtNo(stmt) == "if") && !(PKBStmt::getTypeByStmtNo(stmt) == "while")) {
 				q.push(stmt);
 			}
+			if (PKBStmt::getTypeByStmtNo(stmt) == "if" && !PKB::isModifiesSIdentIdent(stmt, v)) {
+				STMT_NO follows = PKBFollows::getFollowsStmt(stmt);
+				if (stoi(a2) >= stoi(follows)) {
+					q.push(follows);
+				}
+				else {
+					q.push(stmt);
+				}
+			}
+			if (PKBStmt::getTypeByStmtNo(stmt) == "while") {
+				STMT_NO follows = PKBFollows::getFollowsStmt(stmt);
+				if (stoi(a2) >= stoi(follows)) {
+					q.push(follows);
+				}
+				else {
+					q.push(stmt);
+				}
+			}
 		}
 	}
 	while (!q.empty()) {
-		TABLE nexts = PKBNext::getNextIdentEnt(a1, "stmt");
+		STMT_NO next = q.front();
+		if (next == a2) {
+			return true;
+		}
+		TABLE nexts = PKBNext::getNextIdentEnt(next, "stmt");
 		for (auto item : nexts) {
 			for (auto stmt : item) {
 				if (stmt == a2) {
@@ -505,8 +497,27 @@ bool DesignExtractor::traverseAffects(STMT_NO a1, STMT_NO a2, VAR_NAME v) {
 				if (!PKB::isModifiesSIdentIdent(stmt, v) && !(PKBStmt::getTypeByStmtNo(stmt) == "if") && !(PKBStmt::getTypeByStmtNo(stmt) == "while")) {
 					q.push(stmt);
 				}
+				if (PKBStmt::getTypeByStmtNo(stmt) == "if" && !PKB::isModifiesSIdentIdent(stmt, v)) {
+					STMT_NO follows = PKBFollows::getFollowsStmt(stmt);
+					if (stoi(a2) >= stoi(follows)) {
+						q.push(follows);
+					}
+					else {
+						q.push(stmt);
+					}
+				}
+				if (PKBStmt::getTypeByStmtNo(stmt) == "while") {
+					STMT_NO follows = PKBFollows::getFollowsStmt(stmt);
+					if (stoi(a2) >= stoi(follows)) {
+						q.push(follows);
+					}
+					else {
+						q.push(stmt);
+					}
+				}
 			}
 		}
+		q.pop();
 	}
 	return false;
 }
