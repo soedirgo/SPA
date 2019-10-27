@@ -101,17 +101,6 @@ void DesignExtractor::isAffects(STMT_NO a1, STMT_NO a2) {
 	}
 }
 
-void DesignExtractor::extractAffectsT()
-{
-	TABLE affectsTable = PKBAffects::getAffectsEntEnt();
-	for (auto vectorIter : affectsTable) {
-		string n1 = vectorIter.front();
-		string n2 = vectorIter.back();
-		PKBAffects::setAffectsT(n1, n2);
-		recurseAffects(n1, n2);
-	}
-}
-
 void DesignExtractor::extractNextT()
 {
 	TABLE nextTable = PKBNext::getNextTable();
@@ -310,7 +299,7 @@ void DesignExtractor::recurseUses(PROC_NAME callee) {
 	}
 }
 
-
+/*
 void DesignExtractor::extractAffects()
 {
 	extractNextT();
@@ -376,6 +365,7 @@ void DesignExtractor::extractAffects()
 		}
 	}
 }
+*/
 
 void DesignExtractor::recurseCall(PROC_NAME caller, PROC_NAME callee) {
 	PROC_LIST calleeList = PKBCall::getCalleeProc(callee);
@@ -427,6 +417,7 @@ void DesignExtractor::recurseNext(PROG_LINE nextByLine, PROG_LINE nextLine) {
 	}
 }
 
+/*
 void DesignExtractor::recurseAffects(STMT_NO a1, STMT_NO a2) {
 	STMT_LIST lineList = PKBAffects::getAffectsIdentEnt(a2);
 	if (lineList.size() == 0) {
@@ -449,6 +440,7 @@ void DesignExtractor::recurseAffects(STMT_NO a1, STMT_NO a2) {
 
 	}
 }
+*/
 
 bool DesignExtractor::traverseAffects(STMT_NO a1, STMT_NO a2, VAR_NAME v) {
 	queue<STMT_NO> q;
