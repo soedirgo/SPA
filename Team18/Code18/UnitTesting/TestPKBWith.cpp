@@ -71,9 +71,9 @@ namespace UnitTesting
 			PKBStmts.setStmt("8", "assign");
 			PKBStmts.setStmt("9", "print");
 
-			PKBCalls.setCallProc("First", "Second");
-			PKBCalls.setCallProc("First", "Third");
-			PKBCalls.setCallProc("Second", "Third");
+			PKBCalls.setCallStmt("2", "Second");
+			PKBCalls.setCallStmt("3", "Third");
+			PKBCalls.setCallStmt("5", "Third");
 
 		}
 		TEST_METHOD(getWithIdentAttr) {
@@ -109,7 +109,7 @@ namespace UnitTesting
 			Assert::IsTrue(actual == expected);
 
 			actual = PKB.getWithIdentAttr("Second", "call", "procName");
-			expected = { {"Second"} };
+			expected = { {"2"} };
 			Assert::IsTrue(actual == expected);
 
 			actual = PKB.getWithIdentAttr("x", "variable", "varName");
@@ -163,7 +163,7 @@ namespace UnitTesting
 			Assert::IsTrue(actual == expected);
 			
 			actual = PKB.getWithAttrAttr("procedure", "procName", "call", "procName");
-			expected = { {"Second","Second"} ,  {"Third","Third"}  };
+			expected = { {"Second","2"} ,  {"Third","3"}  ,  {"Third","5"} };
 			Assert::IsTrue(actual == expected);
 			
 			actual = PKB.getWithAttrAttr("stmt", "stmt#", "call", "stmt#");

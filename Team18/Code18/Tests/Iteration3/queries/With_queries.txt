@@ -11,7 +11,7 @@ TRUE
 3 - Valid syntax, Ident = procName 2
 constant c; call cl;
 Select <c, cl> with "C" = cl.procName
-1 C, 2 C, 0 C, 100 C, 5 C
+1 6, 2 6, 0 6, 100 6, 5 6, 1 16, 2 16, 0 16, 100 16, 5 16
 5000
 4 - Valid syntax, Ident = varName 1
 print pn;
@@ -56,7 +56,7 @@ B 5, C 6, C 16
 12 - Valid syntax, procName = procName 2
 call cl, procName;
 Select <cl, procName> with cl.procName = procName.procName
-6 16
+6 16, 6 6, 16 6, 16 16, 5 5
 5000
 13 - Valid syntax, procName = varName 1
 call cl; variable varName;

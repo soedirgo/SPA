@@ -14,10 +14,10 @@ bool PKBCall::setCallProc(PROC_NAME caller, PROC_NAME callee) {
 	return true;
 }
 
-bool PKBCall::setCallStmt(STMT_NO stmtNo, PROC_NAME caller) {
+bool PKBCall::setCallStmt(STMT_NO stmtNo, PROC_NAME callee) {
 	vector<string> tuple = vector<string>();
 	tuple.push_back(stmtNo);
-	tuple.push_back(caller);
+	tuple.push_back(callee);
 	callStmtTable.emplace(tuple);
 	return true;
 }
@@ -54,16 +54,6 @@ PROC_LIST PKBCall::getCalleeProc(PROC_NAME caller) {
 			tuple.push_back(vectorIter.back());
 			list.emplace(tuple);
 		}
-	}
-	return list;
-}
-
-PROC_LIST PKBCall::getAllCalleeProc() {
-	PROC_LIST list;
-	for (auto vectorIter : callsProcTable) {
-		vector<string> tuple = vector<string>();
-		tuple.push_back(vectorIter.back());
-		list.emplace(tuple);
 	}
 	return list;
 }
