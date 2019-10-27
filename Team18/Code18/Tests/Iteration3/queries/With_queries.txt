@@ -66,7 +66,7 @@ Select <cl, varName> with cl.procName = varName.varName
 14 - Valid syntax, procName = varName 2
 procedure varName; read procName;
 Select <varName, procName> with procName.varName = varName.procName
-C 20
+A 17, C 20
 5000
 15 - Valid syntax, varName = varName 1
 read Next; print pn;
@@ -109,8 +109,8 @@ Select s with s.stmt# = s.stmt#
 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34
 5000
 23 - Valid syntax, stmt# = synonym
-prog_line with; while value;
-Select <with> with with = value.stmt#
+prog_line n; while value;
+Select <n> with n = value.stmt#
 11, 19, 27
 5000
 24 - Set 2 - Invalid syntax tests for with clause (Negative Tests). Invalid syntax, Ident = Ident
@@ -271,7 +271,7 @@ FALSE
 55 - Single relation test, clause true with related true 1
 read r;
 Select r such that Modifies(r, _) with r.varName = "z"
-7
+3
 5000
 56 - Single relation test, clause true with related true 2
 procedure pr, pr1;
@@ -446,7 +446,7 @@ TRUE
 90 - Multiple relation test, all clause true multiple with all related true 4
 if ifs; variable v; print pn; read r; prog_line n;
 Select <ifs, n> pattern ifs(v, _, _) such that Uses(pn, v) and Modifies(r, _) with r.varName = pn.varName such that Follows*(n, ifs) with n = r.stmt#
-4 3
+4 3, 31 30
 5000
 91 - Multiple relation test, all clause true multiple with all related false 1
 procedure pr; read r; variable v; print pn;
