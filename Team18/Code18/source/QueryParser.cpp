@@ -36,6 +36,7 @@ unordered_set<string> validFirstArgsModifies = { "stmt", "read", "while", "if",
 "assign", "call","prog_line" ,"procedure"};
 unordered_set<string> validSecondArgsUsesModifies = { "variable" };
 unordered_set<string> validFirstSecondArgCall = { "procedure" };
+unordered_set<string> validArgsAffects = { "assign","stmt","prog_line" };
 
 bool QueryParser::incorrectValidation = false;
 bool QueryParser::incorrectSemanticValidation = false;
@@ -1081,6 +1082,84 @@ string QueryParser::suchThatValidation(unordered_map<string, string> decleration
 			}
 
 			else if ((suchThat[i].second.second[0] != '"' && validFirstSecondArgCall.find(secondArgsType) != validFirstSecondArgCall.end())) {
+				if (!isalpha(suchThat[i].second.second[0])) {
+					resultString = "Semantic Invalid";
+					return resultString;
+				}
+
+				//Rest must be alphabets or numbers
+				for (int j = 1; j < suchThat[i].second.second.length(); j++) {
+					if (!isalnum(suchThat[i].second.second[j])) {
+						resultString = "Semantic Invalid";
+						return resultString;
+					}
+				}
+			}
+			else {
+				resultString = "Semantic Invalid";
+				return resultString;
+			}
+		}
+
+		else if (suchThat[i].first == "Affects" || suchThat[i].first == "Affects*") {
+			
+			if (suchThat[i].second.first == "_") {
+				//valid
+			}
+
+			else if (isdigit(suchThat[i].second.first[0])) {
+				for (size_t j = 0; j < suchThat[i].second.first.length(); j++) {
+					if (!isdigit(suchThat[i].second.first[j])) {
+						resultString = "Semantic Invalid";
+						return resultString;
+					}
+				}
+
+				if (!(std::stoi(suchThat[i].second.first) > 0)) {
+					resultString = "Semantic Invalid";
+					return resultString;
+				}
+			}
+
+			else if (validArgsAffects.find(firstArgsType) != validArgsAffects.end()) {
+				if (!isalpha(suchThat[i].second.first[0])) {
+					resultString = "Semantic Invalid";
+					return resultString;
+				}
+
+				//Rest must be alphabets or numbers
+				for (int j = 1; j < suchThat[i].second.first.length(); j++) {
+					if (!isalnum(suchThat[i].second.first[j])) {
+						resultString = "Semantic Invalid";
+						return resultString;
+					}
+				}
+			}
+			else {
+				resultString = "Semantic Invalid";
+				return resultString;
+			}
+
+			// Validating second args
+			if (suchThat[i].second.second == "_") {
+				//valid
+			}
+
+			else if (isdigit(suchThat[i].second.second[0])) {
+				for (size_t j = 0; j < suchThat[i].second.second.length(); j++) {
+					if (!isdigit(suchThat[i].second.second[j])) {
+						resultString = "Semantic Invalid";
+						return resultString;
+					}
+				}
+
+				if (!(std::stoi(suchThat[i].second.second) > 0)) {
+					resultString = "Semantic Invalid";
+					return resultString;
+				}
+			}
+
+			else if (validArgsAffects.find(secondArgsType) != validArgsAffects.end()) {
 				if (!isalpha(suchThat[i].second.second[0])) {
 					resultString = "Semantic Invalid";
 					return resultString;
