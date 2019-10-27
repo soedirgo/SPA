@@ -179,3 +179,52 @@ procedure NestedSIfWhileS {
 		k=i;
    }
 }
+
+procedure NestedWhileIf {
+  while (k >= i)  { 
+		if (k >= i) then {
+			i=k;
+		}
+		else {
+			k=i;
+		}
+   }
+}
+
+procedure NestedWhileSIf {
+  while (k >= i)  { 
+		print i; 
+		if (k >= i) then {
+			i=k;
+		}
+		else {
+			k=i;
+		}
+   }
+}
+
+
+procedure NestedWhileIfS {
+  while (k >= i)  { 
+		if (k >= i) then {
+			i=k;
+		}
+		else {
+			k=i;
+		}
+		print i; 
+   }
+}
+
+procedure NestedWhileSIfS {
+  while (k >= i)  { 
+		print k; 
+		if (k >= i) then {
+			i=k;
+		}
+		else {
+			k=i;
+		}
+		print i; 
+   }
+}
