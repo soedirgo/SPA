@@ -41,13 +41,25 @@ ENT_LIST PKBWith::getWithIdentAttr(IDENT iden, ENT_TYPE ent, ATTR attr) {
 			return resultTable;
 		}
 	}
-	for (auto vectorIter : list) {
-		vector<string> tuple = vector<string>();
-		if (vectorIter.front() == iden) {
-			tuple.push_back(vectorIter.front());
-			resultTable.emplace(tuple);
+	if ((ent == "read" || ent == "print")) {
+		for (auto vectorIter : list) {
+			vector<string> tuple = vector<string>();
+				if (vectorIter.back() == iden) {
+					tuple.push_back(vectorIter.front());
+						resultTable.emplace(tuple);
+				}
 		}
 	}
+	else {
+		for (auto vectorIter : list) {
+			vector<string> tuple = vector<string>();
+			if (vectorIter.front() == iden) {
+				tuple.push_back(vectorIter.front());
+				resultTable.emplace(tuple);
+			}
+		}
+	}
+	
 	return resultTable;
 }
 
@@ -127,9 +139,18 @@ TABLE PKBWith::getWithAttrAttr(ENT_TYPE ent1, ATTR attr1, ENT_TYPE ent2, ATTR at
 			return resultTable;
 		}
 	}
+
 	for (auto vectorIter1 : list1) {
 		for (auto vectorIter2 : list2) {
-			if (vectorIter1.front() == vectorIter2.front()) {
+			string ident1 = vectorIter1.front();
+			string ident2 = vectorIter2.front();
+			if ((ent1 == "read" || ent1 == "print")) {
+				ident1 = vectorIter1.back();
+			}
+			if ((ent2 == "read" || ent2 == "print")) {
+				ident2 = vectorIter2.back();
+			}
+			if (ident1 == ident2) {
 				vector<string> tuple = vector<string>();
 				tuple.push_back(vectorIter1.front());
 				tuple.push_back(vectorIter2.front());
@@ -159,13 +180,28 @@ TABLE PKBWith::getWithAttrLine(ENT_TYPE ent, ATTR attr) {
 			return resultTable;
 		}
 	}
-	for (auto vectorIter1 : list1) {
-		for (auto vectorIter2 : list2) {
-			if (vectorIter1.front() == vectorIter2.front()) {
-				vector<string> tuple = vector<string>();
-				tuple.push_back(vectorIter1.front());
-				tuple.push_back(vectorIter2.front());
-				resultTable.emplace(tuple);
+	
+	if ((ent == "read" || ent == "print")) {
+		for (auto vectorIter1 : list1) {
+			for (auto vectorIter2 : list2) {
+				if (vectorIter1.back() == vectorIter2.front()) {
+					vector<string> tuple = vector<string>();
+					tuple.push_back(vectorIter1.front());
+					tuple.push_back(vectorIter2.front());
+					resultTable.emplace(tuple);
+				}
+			}
+		}
+	}
+	else {
+		for (auto vectorIter1 : list1) {
+			for (auto vectorIter2 : list2) {
+				if (vectorIter1.front() == vectorIter2.front()) {
+					vector<string> tuple = vector<string>();
+					tuple.push_back(vectorIter1.front());
+					tuple.push_back(vectorIter2.front());
+					resultTable.emplace(tuple);
+				}
 			}
 		}
 	}

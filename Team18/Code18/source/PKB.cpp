@@ -358,8 +358,8 @@ STMT_LIST PKB::getPrints() {
 	return PKBStmt::getStmtsByType("print");
 };
 
-bool PKB::setPrint(VAR_NAME varName) {
-	return PKBPrint::setPrint(varName);
+bool PKB::setPrint(STMT_NO stmtNo, VAR_NAME varName) {
+	return PKBPrint::setPrint(stmtNo, varName);
 };
 
 VAR_LIST PKB::getAllPrintVar() {
@@ -375,8 +375,8 @@ STMT_LIST PKB::getReads() {
 	return PKBStmt::getStmtsByType("read");
 };
 
-bool PKB::setRead(VAR_NAME varName) {
-	return PKBRead::setRead(varName);
+bool PKB::setRead(STMT_NO stmtNo, VAR_NAME varName) {
+	return PKBRead::setRead(stmtNo, varName);
 };
 
 VAR_LIST PKB::getAllReadVar() {

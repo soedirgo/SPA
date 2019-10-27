@@ -83,10 +83,10 @@ namespace IntegrationTesting
 
             pkb.setCallStmt("9", "sub");
 
-            pkb.setRead("g");
-            pkb.setRead("i");
+            pkb.setRead("7","g");
+            pkb.setRead("10","i");
 
-            pkb.setPrint("j");
+            pkb.setPrint("11","j");
 
             pkb.setUsesP("main", "a");
             pkb.setUsesP("main", "b");

@@ -58,8 +58,8 @@ namespace UnitTesting
 			PKBVariable.setVariable("i");
 			PKBVariable.setVariable("c");
 
-			PKBPrint.setPrint("c");
-			PKBRead.setRead("x");
+			PKBPrint.setPrint("9","c");
+			PKBRead.setRead("1","x");
 
 			PKBStmts.setStmt("1", "read");
 			PKBStmts.setStmt("2", "call");
@@ -117,11 +117,11 @@ namespace UnitTesting
 			Assert::IsTrue(actual == expected);
 
 			actual = PKB.getWithIdentAttr("x", "read", "varName");
-			expected = { {"x"} };
+			expected = { {"1"} };
 			Assert::IsTrue(actual == expected);
 
 			actual = PKB.getWithIdentAttr("c", "print", "varName");
-			expected = { {"c"} };
+			expected = { {"9"} };
 			Assert::IsTrue(actual == expected);
 		}
 
@@ -151,15 +151,15 @@ namespace UnitTesting
 			Assert::IsTrue(actual == expected);
 			
 			actual = PKB.getWithAttrAttr("print", "varName", "print", "varName");
-			expected = { {"c","c"} };
+			expected = { {"9","9"} };
 			Assert::IsTrue(actual == expected);
 			
 			actual = PKB.getWithAttrAttr("read", "varName", "read", "varName");
-			expected = { {"x","x"} };
+			expected = { {"1","1"} };
 			Assert::IsTrue(actual == expected);
 
 			actual = PKB.getWithAttrAttr("variable", "varName", "read", "varName");
-			expected = { {"x","x"} };
+			expected = { {"x","1"} };
 			Assert::IsTrue(actual == expected);
 			
 			actual = PKB.getWithAttrAttr("procedure", "procName", "call", "procName");

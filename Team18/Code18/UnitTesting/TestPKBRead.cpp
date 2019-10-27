@@ -44,8 +44,8 @@ namespace UnitTesting
 			PKBRead PKB;
 			PKB.clear();
 
-			PKB.setRead("x");
-			PKB.setRead("z");
+			PKB.setRead("1","x");
+			PKB.setRead("2","z");
 
 		}
 
@@ -53,7 +53,7 @@ namespace UnitTesting
 		{
 			PKBRead PKB;
 			STMT_LIST actual = PKB.getAllReadVar();
-			STMT_LIST expected = { {"x"},{"z"} };
+			STMT_LIST expected = { {"1","x"},{"2","z"} };
 			Assert::IsTrue(actual == expected);
 		}
 	};

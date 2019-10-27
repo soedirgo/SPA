@@ -6,7 +6,7 @@
 
 class PKBPrint {
 public:
-	static bool setPrint(VAR_NAME varName);
+	static bool setPrint(STMT_NO stmtNo, VAR_NAME varName);
 	static VAR_LIST getAllPrintVar();
 	// Clear
 	static bool clear();

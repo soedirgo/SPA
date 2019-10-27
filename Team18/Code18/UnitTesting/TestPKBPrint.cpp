@@ -43,14 +43,14 @@ namespace UnitTesting
 			PKBPrint PKB;
 			PKB.clear();
 
-			PKB.setPrint("v");
+			PKB.setPrint("18","v");
 
 		}
 		TEST_METHOD(getPrintStmt)
 		{
 			PKBPrint PKB;
 			STMT_LIST actual = PKB.getAllPrintVar();
-			STMT_LIST expected = { {"v"} };
+			STMT_LIST expected = { {"18","v"} };
 			Assert::IsTrue(actual == expected);
 		}
 	};

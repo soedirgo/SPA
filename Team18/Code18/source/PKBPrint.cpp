@@ -3,8 +3,9 @@
 using namespace std;
 TABLE PKBPrint::printTable;
 
-bool PKBPrint::setPrint(VAR_NAME varName) {
+bool PKBPrint::setPrint(STMT_NO stmtNo, VAR_NAME varName) {
 	vector<string> tuple = vector<string>();
+	tuple.push_back(stmtNo);
 	tuple.push_back(varName);
 	printTable.emplace(tuple);
 	return true;
@@ -15,6 +16,7 @@ VAR_LIST PKBPrint::getAllPrintVar() {
 	for (auto vectorIter : printTable) {
 		vector<string> tuple = vector<string>();
 		tuple.push_back(vectorIter.front());
+		tuple.push_back(vectorIter.back());
 		list.emplace(tuple);
 	}
 	return list;

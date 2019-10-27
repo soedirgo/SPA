@@ -29,11 +29,11 @@ public:
 	static bool setProcedure(PROC_NAME procName);
 
 	//Print Functions
-	static bool setPrint(VAR_NAME varName);
+	static bool setPrint(STMT_NO stmtNo, VAR_NAME varName);
 	static VAR_LIST getAllPrintVar();
 
 	//Read Functions
-	static bool setRead(VAR_NAME varName);
+	static bool setRead(STMT_NO stmtNo, VAR_NAME varName);
 	static VAR_LIST getAllReadVar();
 
 	//Constant Functions
