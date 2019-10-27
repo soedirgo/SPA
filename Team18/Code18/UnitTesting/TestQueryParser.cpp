@@ -294,6 +294,73 @@ namespace UnitTesting
 			Assert::AreEqual(actual7 == expected7, true);
 		}
 
+		TEST_METHOD(withValidation) {
+			vector<pair<string, string>> input1{ {"1", "1"}, {"pl", "5"}, {"9", "p2"} };
+			unordered_map<string, string> declerationsVariables1 = { {"pl", "prog_line"}, {"p2", "prog_line"} };
+			string actual1 = QueryParser::withValidation(declerationsVariables1, input1);
+			string expected1 = "Okay";
+			Assert::AreEqual(actual1 == expected1, true);
+
+			vector<pair<string, string>> input2{ {"s.stmt#", "5"}, {"2", "s.stmt#"},
+					{"r.stmt#", "1"}, {"p.stmt#", "6"},
+					{"w.stmt#", "5"}, {"2", "w.stmt#"}, {"ifs.stmt#", "1"},
+					{"a.stmt#", "4"}, {"c.stmt#", "3"},
+					{"r.stmt#", "s.stmt#"}, {"r.stmt#", "p.stmt#"}, {"w.stmt#", "p.stmt#"},
+					{"w.stmt#", "ifs.stmt#"}, {"ifs.stmt#", "a.stmt#"}, {"c.stmt#", "a.stmt#"}, };
+			unordered_map<string, string> declerationsVariables2 = { {"s", "stmt"},
+				{"r", "read"}, {"p", "print"}, {"w", "while"}, {"ifs", "if"}, {"a", "assign"},
+				{"c", "call"} };
+			string actual2 = QueryParser::withValidation(declerationsVariables2, input2);
+			string expected2 = "Okay";
+			Assert::AreEqual(actual2 == expected2, true);
+
+			vector<pair<string, string>> input3{ {"c1.value", "1"},
+				{"1", "c2.value"}, {"c1.value", "1"}, {"1", "c2.value"}, {"c1.value", "c2.value"} };
+			unordered_map<string, string> declerationsVariables3 = { {"c1", "constant"},
+				{"c2", "constant"} };
+			string actual3 = QueryParser::withValidation(declerationsVariables3, input3);
+			string expected3 = "Okay";
+			Assert::AreEqual(actual3 == expected3, true);
+
+			vector<pair<string, string>> input4{ {"\"erfgre\"", "\"glfpblfp\""}, {"\"d42050fff\"", "\"hgk4\""} };
+			unordered_map<string, string> declerationsVariables4 = { {"s", "stmt"} };
+			string actual4 = QueryParser::withValidation(declerationsVariables4, input4);
+			string expected4 = "Okay";
+			Assert::AreEqual(actual4 == expected4, true);
+
+			vector<pair<string, string>> input5{ { "p.procName", "\"string\"" },
+			{ "\"int\"", "c.procName" }, { "c.procName", "\"string\"" },
+			{ "\"constant\"", "p.procName" }, { "c.procName", "p.procName" } };
+			unordered_map<string, string> declerationsVariables5 = { {"c", "call"},
+				{"p", "procedure"} };
+			string actual5 = QueryParser::withValidation(declerationsVariables5, input5);
+			string expected5 = "Okay";
+			Assert::AreEqual(actual5 == expected5, true);
+
+			vector<pair<string, string>> input6{ {"variable.varName", "\"var1\""},
+				{"\"var21\"", "variable.varName"}, {"read.varName", "\"awht\""}, {"\"azzf\"", "read.varName"},
+				{"print.varName", "\"gert\""}, {"\"gdf\"", "print.varName"}, {"variable.varName", "read.varName"},
+				{"read.varName", "print.varName"}, {"print.varName", "variable.varName"} };
+			unordered_map<string, string> declerationsVariables6 = { {"variable", "variable"}, {"read", "read"}, {"print", "print"} };
+			string actual6 = QueryParser::withValidation(declerationsVariables6, input6);
+			string expected6 = "Okay";
+			Assert::AreEqual(actual6 == expected6, true);
+
+			vector<pair<string, string>> input7{ {"r.varName", "while.stmt#"} };
+			unordered_map<string, string> declerationsVariables7 = { {"r", "variable"},
+				{"while", "stmt"} };
+			string actual7 = QueryParser::withValidation(declerationsVariables7, input7);
+			string expected7 = "Semantic Invalid";
+			Assert::AreEqual(actual7 == expected7, true);
+
+			vector<pair<string, string>> input8{ {"8", "\"string\""} };
+			unordered_map<string, string> declerationsVariables8 = { {"v", "variable"},
+				{"s", "stmt"} };
+			string actual8 = QueryParser::withValidation(declerationsVariables8, input8);
+			string expected8 = "Semantic Invalid";
+			
+		}
+
 		TEST_METHOD(infixToRPNexpression)
 		{
 			string input = "a+b";

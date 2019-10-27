@@ -36,6 +36,7 @@ unordered_set<string> validFirstArgsModifies = { "stmt", "read", "while", "if",
 "assign", "call","prog_line" ,"procedure"};
 unordered_set<string> validSecondArgsUsesModifies = { "variable" };
 unordered_set<string> validFirstSecondArgCall = { "procedure" };
+unordered_set<string> validArgsAffects = { "assign","stmt","prog_line" };
 
 bool QueryParser::incorrectValidation = false;
 bool QueryParser::incorrectSemanticValidation = false;
@@ -167,6 +168,22 @@ Query QueryParser::parse(string query) {
 	}
 
 	resultString = suchThatValidation(declerationVariables, suchThat);
+	if (resultString == "Invalid") {
+		incorrectValidation = true;
+		return invalidQ;
+	}
+
+	if (resultString == "Semantic Invalid" && selectBoolean == false) {
+		incorrectValidation = true;
+		return invalidQ;
+	}
+
+	if (resultString == "Semantic Invalid" && selectBoolean == true) {
+		incorrectSemanticValidation = true;
+		return semanticInvalidQ;
+	}
+
+	resultString = withValidation(declerationVariables, with);
 	if (resultString == "Invalid") {
 		incorrectValidation = true;
 		return invalidQ;
@@ -1099,10 +1116,390 @@ string QueryParser::suchThatValidation(unordered_map<string, string> decleration
 				return resultString;
 			}
 		}
+
+		else if (suchThat[i].first == "Affects" || suchThat[i].first == "Affects*") {
+			
+			if (suchThat[i].second.first == "_") {
+				//valid
+			}
+
+			else if (isdigit(suchThat[i].second.first[0])) {
+				for (size_t j = 0; j < suchThat[i].second.first.length(); j++) {
+					if (!isdigit(suchThat[i].second.first[j])) {
+						resultString = "Semantic Invalid";
+						return resultString;
+					}
+				}
+
+				if (!(std::stoi(suchThat[i].second.first) > 0)) {
+					resultString = "Semantic Invalid";
+					return resultString;
+				}
+			}
+
+			else if (validArgsAffects.find(firstArgsType) != validArgsAffects.end()) {
+				if (!isalpha(suchThat[i].second.first[0])) {
+					resultString = "Semantic Invalid";
+					return resultString;
+				}
+
+				//Rest must be alphabets or numbers
+				for (int j = 1; j < suchThat[i].second.first.length(); j++) {
+					if (!isalnum(suchThat[i].second.first[j])) {
+						resultString = "Semantic Invalid";
+						return resultString;
+					}
+				}
+			}
+			else {
+				resultString = "Semantic Invalid";
+				return resultString;
+			}
+
+			// Validating second args
+			if (suchThat[i].second.second == "_") {
+				//valid
+			}
+
+			else if (isdigit(suchThat[i].second.second[0])) {
+				for (size_t j = 0; j < suchThat[i].second.second.length(); j++) {
+					if (!isdigit(suchThat[i].second.second[j])) {
+						resultString = "Semantic Invalid";
+						return resultString;
+					}
+				}
+
+				if (!(std::stoi(suchThat[i].second.second) > 0)) {
+					resultString = "Semantic Invalid";
+					return resultString;
+				}
+			}
+
+			else if (validArgsAffects.find(secondArgsType) != validArgsAffects.end()) {
+				if (!isalpha(suchThat[i].second.second[0])) {
+					resultString = "Semantic Invalid";
+					return resultString;
+				}
+
+				//Rest must be alphabets or numbers
+				for (int j = 1; j < suchThat[i].second.second.length(); j++) {
+					if (!isalnum(suchThat[i].second.second[j])) {
+						resultString = "Semantic Invalid";
+						return resultString;
+					}
+				}
+			}
+			else {
+				resultString = "Semantic Invalid";
+				return resultString;
+			}
+		}
 	}
 	return resultString;
 }
 
 string QueryParser::withValidation(unordered_map<string, string> declerationVariables, vector<pair<string, string>> with) {
-	return "Okay";
+	string resultString = "Okay";
+
+	unordered_set<string> typesForProcName = { "procedure","call" };
+	unordered_set<string> typesForVarName = { "variable", "read", "print"};
+	unordered_set<string> typesForIntValue = { "constant" };
+	unordered_set<string> typesForIntStmt = { "stmt", "read", "print","call","while","if","assign"};
+	unordered_set<string> typesForInt = { "prog_line" };
+
+	for (int i = 0; i < with.size(); i++) {
+		string left = with[i].first;
+		string right = with[i].second;
+		string synonym;
+		string synonymType;
+		string leftType = "";
+		string rightType = "";
+
+		if (isdigit(left[0])) {
+			int intflagLeft = 1;
+			for (size_t j = 0; j < left.length(); j++) {
+				if (!isdigit(left[j])) {
+					intflagLeft = 0;
+				}
+			}
+			if (intflagLeft) {
+				leftType = "int";
+			}
+		}
+
+		//Find type for the left
+		else if (left.find(".stmt#") != -1) {
+			synonym = left.substr(0, left.find("."));
+			if (declerationVariables.find(synonym) != declerationVariables.end()) {
+				synonymType = declerationVariables.find(synonym)->second;
+			}
+			else {
+				resultString = "Semantic Invalid";
+				return resultString;
+			}
+			
+			if (typesForIntStmt.find(synonymType) != typesForIntStmt.end()) {
+				leftType = "int";
+			}
+
+			else {
+				resultString = "Semantic Invalid";
+				return resultString;
+			}
+		}
+
+		else if (left.find(".value") != -1) {
+			synonym = left.substr(0, left.find("."));
+			if (declerationVariables.find(synonym) != declerationVariables.end()) {
+				synonymType = declerationVariables.find(synonym)->second;
+			}
+			else {
+				resultString = "Semantic Invalid";
+				return resultString;
+			}
+
+			if (typesForIntValue.find(synonymType) != typesForIntValue.end()) {
+				leftType = "int";
+			}
+
+			else {
+				resultString = "Semantic Invalid";
+				return resultString;
+			}
+		}
+
+		else if (left.find(".procName") != -1) {
+			synonym = left.substr(0, left.find("."));
+			
+			if (declerationVariables.find(synonym) != declerationVariables.end()) {
+				synonymType = declerationVariables.find(synonym)->second;
+			}
+			else {
+				resultString = "Semantic Invalid";
+				return resultString;
+			}
+
+			if (typesForProcName.find(synonymType) != typesForProcName.end()) {
+				leftType = "str";
+			}
+
+			else {
+				resultString = "Semantic Invalid";
+				return resultString;
+			}
+		}
+
+		else if (left.find(".varName") != -1) {
+			synonym = left.substr(0, left.find("."));
+
+			if (declerationVariables.find(synonym) != declerationVariables.end()) {
+				synonymType = declerationVariables.find(synonym)->second;
+			}
+			else {
+				resultString = "Semantic Invalid";
+				return resultString;
+			}
+
+			if (typesForVarName.find(synonymType) != typesForVarName.end()) {
+				leftType = "str";
+			}
+
+			else {
+				resultString = "Semantic Invalid";
+				return resultString;
+			}
+		}
+
+		else if (isalpha(left[0])) {
+			//Rest must be alphabets or numbers
+			for (int j = 1; j < left.length(); j++) {
+				if (!(isalnum(left[j]))) {
+					resultString = "Invalid";
+					return resultString;
+				}
+			}
+
+			if (declerationVariables.find(left) != declerationVariables.end()) {
+				synonymType = declerationVariables.find(left)->second;
+			}
+			else {
+				resultString = "Semantic Invalid";
+				return resultString;
+			}
+
+			if (typesForInt.find(synonymType) != typesForInt.end()) {
+				leftType = "int";
+			}
+			else {
+				resultString = "Semantic Invalid";
+				return resultString;
+			}
+		}
+
+		else if (left[0] == '"') {
+			string name = left.substr(1, left.length() - 2);
+
+			if (!isalpha(name[0])) {
+				resultString = "Semantic Invalid";
+				return resultString;
+			}
+
+			//Rest must be alphabets or numbers
+			for (int j = 1; j < name.length(); j++) {
+				if (!isalnum(name[j])) {
+					resultString = "Semantic Invalid";
+					return resultString;
+				}
+			}
+
+			leftType = "str";
+		}
+
+		if (isdigit(right[0])) {
+			int intflagRight = 1;
+			for (size_t j = 0; j < right.length(); j++) {
+				if (!isdigit(right[j])) {
+					intflagRight = 0;
+				}
+			}
+			if (intflagRight) {
+				rightType = "int";
+			}
+		}
+
+		//Find type for the right
+		else if (right.find(".stmt#") != -1) {
+			synonym = right.substr(0, right.find("."));
+			if (declerationVariables.find(synonym) != declerationVariables.end()) {
+				synonymType = declerationVariables.find(synonym)->second;
+			}
+			else {
+				resultString = "Semantic Invalid";
+				return resultString;
+			}
+
+			if (typesForIntStmt.find(synonymType) != typesForIntStmt.end()) {
+				rightType = "int";
+			}
+
+			else {
+				resultString = "Semantic Invalid";
+				return resultString;
+			}
+		}
+
+		else if (right.find(".value") != -1) {
+			synonym = right.substr(0, right.find("."));
+			if (declerationVariables.find(synonym) != declerationVariables.end()) {
+				synonymType = declerationVariables.find(synonym)->second;
+			}
+			else {
+				resultString = "Semantic Invalid";
+				return resultString;
+			}
+
+			if (typesForIntValue.find(synonymType) != typesForIntValue.end()) {
+				rightType = "int";
+			}
+
+			else {
+				resultString = "Semantic Invalid";
+				return resultString;
+			}
+		}
+
+		else if (right.find(".procName") != -1) {
+			synonym = right.substr(0, right.find("."));
+
+			if (declerationVariables.find(synonym) != declerationVariables.end()) {
+				synonymType = declerationVariables.find(synonym)->second;
+			}
+			else {
+				resultString = "Semantic Invalid";
+				return resultString;
+			}
+
+			if (typesForProcName.find(synonymType) != typesForProcName.end()) {
+				rightType = "str";
+			}
+
+			else {
+				resultString = "Semantic Invalid";
+				return resultString;
+			}
+		}
+
+		else if (right.find(".varName") != -1) {
+			synonym = right.substr(0, right.find("."));
+
+			if (declerationVariables.find(synonym) != declerationVariables.end()) {
+				synonymType = declerationVariables.find(synonym)->second;
+			}
+			else {
+				resultString = "Semantic Invalid";
+				return resultString;
+			}
+
+			if (typesForVarName.find(synonymType) != typesForVarName.end()) {
+				rightType = "str";
+			}
+
+			else {
+				resultString = "Semantic Invalid";
+				return resultString;
+			}
+		}
+
+		else if (isalpha(right[0])) {
+			//Rest must be alphabets or numbers
+			for (int j = 1; j < right.length(); j++) {
+				if (!(isalnum(right[j]) || right[j] == '#')) {
+					resultString = "Invalid";
+					return resultString;
+				}
+			}
+
+			if (declerationVariables.find(right) != declerationVariables.end()) {
+				synonymType = declerationVariables.find(right)->second;
+			}
+			else {
+				resultString = "Semantic Invalid";
+				return resultString;
+			}
+
+			if (typesForInt.find(synonymType) != typesForInt.end()) {
+				rightType = "int";
+			}
+			else {
+				resultString = "Semantic Invalid";
+				return resultString;
+			}
+		}
+
+		else if (right[0] == '"') {
+			string name = right.substr(1, right.length() - 2);
+
+			if (!isalpha(name[0])) {
+				resultString = "Semantic Invalid";
+				return resultString;
+			}
+
+			//Rest must be alphabets or numbers
+			for (int j = 1; j < name.length(); j++) {
+				if (!isalnum(name[j])) {
+					resultString = "Semantic Invalid";
+					return resultString;
+				}
+			}
+
+			rightType = "str";
+		}
+
+		if (leftType == "" || rightType == "" || leftType != rightType) {
+			resultString = "Semantic Invalid";
+			return resultString;
+		}
+	}
+	
+	return resultString;
 }
