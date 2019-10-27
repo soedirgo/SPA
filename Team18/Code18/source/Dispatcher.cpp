@@ -202,6 +202,34 @@ namespace Evaluator {
                   else
                       return PKB::isNextTIdentIdent(lhs,
                                                     rhs);
+          }},
+         {"Affects",
+          [](string lhs, string rhs) {
+              if (isUnderscore(lhs))
+                  if (isUnderscore(rhs))
+                      return PKB::isAffectsAnyAny();
+                  else
+                      return PKB::isAffectsAnyIdent(rhs);
+              else
+                  if (isUnderscore(rhs)) 
+                      return PKB::isAffectsIdentAny(lhs);
+                  else
+                      return PKB::isAffectsIdentIdent(lhs,
+                                                      rhs);
+          }},
+         {"Affects*",
+          [](string lhs, string rhs) {
+              if (isUnderscore(lhs))
+                  if (isUnderscore(rhs))
+                      return PKB::isAffectsTAnyAny();
+                  else
+                      return PKB::isAffectsTAnyIdent(rhs);
+              else
+                  if (isUnderscore(rhs)) 
+                      return PKB::isAffectsTIdentAny(lhs);
+                  else
+                      return PKB::isAffectsTIdentIdent(lhs,
+                                                       rhs);
           }}};
 
         unordered_map<string, function<TABLE(string, string)>> suchThatTableApiMap =
@@ -398,6 +426,38 @@ namespace Evaluator {
                   else
                       return PKB::getNextTEntEnt(getEntity(lhs),
                                                  getEntity(rhs));
+          }},
+         {"Affects",
+          [](string lhs, string rhs) {
+              if (isUnderscore(lhs))
+                  return PKB::getAffectsAnyEnt();
+              else if (isIdentifier(lhs))
+                  return PKB::getAffectsIdentEnt(lhs);
+              else
+                  if (isUnderscore(rhs))
+                      return PKB::getAffectsEntAny();
+                  else if (isIdentifier(rhs))
+                      return PKB::getAffectsEntIdent(rhs);
+                  else if (lhs == rhs)
+                      return PKB::getAffectsSelf();
+                  else
+                      return PKB::getAffectsEntEnt();
+          }},
+         {"Affects*",
+          [](string lhs, string rhs) {
+              if (isUnderscore(lhs))
+                  return PKB::getAffectsTAnyEnt();
+              else if (isIdentifier(lhs))
+                  return PKB::getAffectsTIdentEnt(lhs);
+              else
+                  if (isUnderscore(rhs))
+                      return PKB::getAffectsTEntAny();
+                  else if (isIdentifier(rhs))
+                      return PKB::getAffectsTEntIdent(rhs);
+                  else if (lhs == rhs)
+                      return PKB::getAffectsTSelf();
+                  else
+                      return PKB::getAffectsTEntEnt();
           }}};
 
         unordered_map<string, function<TABLE(string, string)>> patternApiMap =
