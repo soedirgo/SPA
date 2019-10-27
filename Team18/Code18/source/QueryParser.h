@@ -21,8 +21,10 @@ public:
 
 	static std::vector<std::pair<std::string, std::pair<std::string, std::string>>> splitSuchThat(std::vector<std::string> suchThat);
 
-	static std::vector<std::pair<std::string, std::pair<std::string, std::string>>> splitPattern(std::vector<std::string> pattern, std::unordered_map<std::string, std::string> declerationVariables);
+	static std::vector<std::pair<std::string, std::pair<std::string, std::string>>> splitPattern(std::vector<std::string> pattern);
 
+	static std::vector<std::pair<std::string, std::string>> splitWith(std::vector<std::string> with);
+	
 	static std::string trim(std::string str, std::string whitespace);
 
 	static std::string removeSpaces(std::string s, std::string whitespace);
@@ -39,6 +41,8 @@ public:
 
 	static std::string suchThatValidation(std::unordered_map<std::string, std::string> declerationVariables, std::vector<std::pair<std::string, std::pair<std::string, std::string>>> suchThat);
 
-    static bool maryHadALittleLamb;
-    static bool itsFleeceWasWhiteAsSnow;
+	static std::string withValidation(std::unordered_map<std::string, std::string> declerationVariables, std::vector<std::pair<std::string, std::string>> with);
+
+    static bool incorrectValidation;
+    static bool incorrectSemanticValidation;
 };

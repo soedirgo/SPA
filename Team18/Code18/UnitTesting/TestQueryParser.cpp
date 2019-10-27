@@ -74,48 +74,67 @@ namespace UnitTesting
 
 		TEST_METHOD(splitPatternCondition)
 		{
-			
-			unordered_map<string, string> d{ {"a", "assign"} };
 			vector<string> input = { "pattern a(_, _)" };
-			vector<pair<string, pair<string, string>>> actual = QueryParser::splitPattern(input,d);
+			vector<pair<string, pair<string, string>>> actual = QueryParser::splitPattern(input);
 			vector<pair<string, pair<string, string>>> expected{ {"a", {"_", "_"}} };
 			Assert::AreEqual(actual == expected, true);
 
-			unordered_map<string, string> d2{ {"a", "assign"} };
 			vector<string> input2 = { "pattern a(_, a+b*c)" };
-			vector<pair<string, pair<string, string>>> actual2 = QueryParser::splitPattern(input2,d2);
-			vector<pair<string, pair<string, string>>> expected2{ {"a", {"_", " a  b  c *+"}} };
+			vector<pair<string, pair<string, string>>> actual2 = QueryParser::splitPattern(input2);
+			vector<pair<string, pair<string, string>>> expected2{ {"a", {"_", "a+b*c"}} };
 			Assert::AreEqual(actual2 == expected2, true);
 
-			unordered_map<string, string> d3{ {"a", "assign"} };
 			vector<string> input3 = { "pattern a(_, _\"a+b*c\"_)" };
-			vector<pair<string, pair<string, string>>> actual3 = QueryParser::splitPattern(input3,d3);
-			vector<pair<string, pair<string, string>>> expected3{ {"a", {"_", "_\" a  b  c *+\"_"}} };
+			vector<pair<string, pair<string, string>>> actual3 = QueryParser::splitPattern(input3);
+			vector<pair<string, pair<string, string>>> expected3{ {"a", {"_", "_\"a+b*c\"_"}} };
 			Assert::AreEqual(actual3 == expected3, true);
 
-			unordered_map<string, string> d4{ {"a", "assign"}};
 			vector<string> input4 = { "pattern a(_, _  \"  a+b*c  \"  _)" };
-			vector<pair<string, pair<string, string>>> actual4 = QueryParser::splitPattern(input4,d4);
-			vector<pair<string, pair<string, string>>> expected4{ {"a", {"_", "_\" a  b  c *+\"_"}} };
+			vector<pair<string, pair<string, string>>> actual4 = QueryParser::splitPattern(input4);
+			vector<pair<string, pair<string, string>>> expected4{ {"a", {"_", "_\"a+b*c\"_"}} };
 			Assert::AreEqual(actual4 == expected4, true);
 
-			unordered_map<string, string> d5{ {"w", "while"}, };
 			vector<string> input5 = { "pattern w(\"x\",'_')" };
-			vector<pair<string, pair<string, string>>> actual5 = QueryParser::splitPattern(input5,d5);
+			vector<pair<string, pair<string, string>>> actual5 = QueryParser::splitPattern(input5);
 			vector<pair<string, pair<string, string>>> expected5{ {"w", {"\"x\"","'_'"}} };
 			Assert::AreEqual(actual5 == expected5, true);
 
-			unordered_map<string, string> d6{ {"ifs", "if"} };
 			vector<string> input6 = { "pattern ifs(x,\'_\',\'_\')" };
-			vector<pair<string, pair<string, string>>> actual6 = QueryParser::splitPattern(input6,d6);
+			vector<pair<string, pair<string, string>>> actual6 = QueryParser::splitPattern(input6);
 			vector<pair<string, pair<string, string>>> expected6{ {"ifs", {"x","\'_\',\'_\'"}} };
 			Assert::AreEqual(actual6 == expected6, true);
 			
-			unordered_map<string, string> d7{ {"a", "assign"} };
 			vector<string> input7 = { "pattern a(\"x\",\"1\")" };
-			vector<pair<string, pair<string, string>>> actual7 = QueryParser::splitPattern(input7, d7);
-			vector<pair<string, pair<string, string>>> expected7{ {"a", {"\"x\"", "\" 1 \""}} };
+			vector<pair<string, pair<string, string>>> actual7 = QueryParser::splitPattern(input7);
+			vector<pair<string, pair<string, string>>> expected7{ {"a", {"\"x\"", "\"1\""}} };
 			Assert::AreEqual(actual7 == expected7, true);
+		}
+
+		TEST_METHOD(splitWith)
+		{
+			vector<string> input = { "with a.stmt# = 20" };
+			vector<pair<string, string>> actual = QueryParser::splitWith(input);
+			vector<pair<string, string>> expected{{"a.stmt#","20"} };
+			Assert::AreEqual(actual == expected, true);
+
+			vector<string> input2 = { "with     a.stmt#     =       20" };
+			vector<pair<string, string>> actual2 = QueryParser::splitWith(input2);
+			vector<pair<string, string>> expected2{ {"a.stmt#","20"} };
+			Assert::AreEqual(actual2 == expected2, true);
+
+			vector<string> input3 = { "with s.stmt# = 16", "and w.stmt# = 6", "with p.procName = \"What\"", "and procName.procName = \"procName\"", "and c.value = 123" };
+			vector<pair<string, string>> actual3 = QueryParser::splitWith(input3);
+			vector<pair<string, string>> expected3{ {"s.stmt#", "16"},
+				{"w.stmt#", "6"}, {"p.procName", "\"What\""}, {"procName.procName", "\"procName\""} ,
+				{"c.value", "123"} };
+			Assert::AreEqual(actual3 == expected3, true);
+
+			vector<string> input4 = { "with      a.stmt# = 18", "and r.stmt# = 3", "with call.procName = \"call\"", "and proc.procName     = \"proc\"", "and c.value =     1" };
+			vector<pair<string, string>> actual4 = QueryParser::splitWith(input4);
+			vector<pair<string, string>> expected4{ {"a.stmt#", "18"},
+				{"r.stmt#", "3"}, {"call.procName", "\"call\""}, {"proc.procName", "\"proc\""} ,
+				{"c.value", "1"} };
+			Assert::AreEqual(actual4 == expected4, true);
 		}
 
 		TEST_METHOD(initialValidation)
