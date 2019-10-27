@@ -229,7 +229,7 @@ Select <with, value> with value.value = with.value
 none
 5000
 47 - Invalid syntax, value = stmt#
-constant stmt; stmt value;
+constant stmt; constant value;
 Select stmt with stmt.value = value.stmt#
 none
 5000
