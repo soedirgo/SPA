@@ -1,0 +1,69 @@
+procedure UltraNested {
+	while (k >= i) {
+		print i;
+		while (k >= i) {
+			if (x > y) then {
+				if (x > y) then {
+					y = x; 
+				}
+				else {
+					x = y;}
+			}
+			else {
+				x = y; 
+			}
+			while (k >= i) {
+				while (k >= i) {
+					i = k;
+				} 
+				if (x > y) then {
+					print x; 
+					if (x > y) then {
+						y = x; 
+					}
+					else {
+						x = y;}
+					}
+				else {
+					x = y; 
+				}
+			}
+		}
+		while (k >= i) {
+			if (x > y) then {
+				print x; 
+				if (x > y) then {
+					y = x; 
+				}
+				else {
+					x = y;
+				}
+		
+				print y; 
+				}
+			else {
+				x = y; 
+			}
+			while (k >= i) {
+				if (x > y) then {
+					print x; 
+					if (x > y) then {
+						y = x; 
+					}
+					else {
+						x = y;
+					}
+				}
+				else {
+					x = y; 
+				}
+				print x; 
+			}
+		}
+   }
+}
+
+
+
+
+
