@@ -131,3 +131,55 @@ procedure NestedWhile3 {
 	}
    }
 }
+
+
+procedure NestedIfWhile {
+69  if (k >= i) then { 
+70	while (k >= i) {
+71		i=k;
+	}
+   }
+   else {
+72		k=i;
+   }
+}
+
+
+procedure NestedIfSWhile {
+73  if (k >= i) then { 
+74		print k;
+75		while (k >= i) {
+76			i=k;
+		}
+   }
+   else {
+77		k=i;
+   }
+}
+
+procedure NestedIfWhileS {
+78  if (k >= i) then { 
+79		while (k >= i) {
+80			i=k;
+		}
+81		print k;
+   }
+   else {
+82		k=i;
+   }
+}
+
+
+procedure NestedSIfWhileS {
+83  if (k >= i) then { 
+84		print i;
+85		while (k >= i) {
+86			i=k;
+		}
+87		print k;
+   }
+   else {
+88		k=i;
+   }
+}
+
