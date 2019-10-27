@@ -11,6 +11,14 @@ bool PKBPrint::setPrint(STMT_NO stmtNo, VAR_NAME varName) {
 	return true;
 }
 
+VAR_NAME PKBPrint::getPrintVariable(STMT_NO stmtNo) {
+	for (auto vectorIter : printTable) {
+		if (vectorIter.front() == stmtNo) {
+			return vectorIter.back();
+		}
+	}
+}
+
 VAR_LIST PKBPrint::getAllPrintVar() {
 	VAR_LIST list;
 	for (auto vectorIter : printTable) {

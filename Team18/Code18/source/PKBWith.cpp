@@ -40,7 +40,7 @@ ENT_LIST PKBWith::getWithIdentAttr(IDENT iden, ENT_TYPE ent, ATTR attr) {
 		return resultTable;
 	}
 
-	if ((ent == "read" || ent == "print") || (ent == "call" && attr == "procName")) {
+	if ((ent == "read" && attr == "varName") || (ent == "print" && attr == "varName") || (ent == "call" && attr == "procName")) {
 		for (auto vectorIter : list) {
 			vector<string> tuple = vector<string>();
 				if (vectorIter.back() == iden) {
@@ -140,10 +140,10 @@ TABLE PKBWith::getWithAttrAttr(ENT_TYPE ent1, ATTR attr1, ENT_TYPE ent2, ATTR at
 		for (auto vectorIter2 : list2) {
 			string ident1 = vectorIter1.front();
 			string ident2 = vectorIter2.front();
-			if ((ent1 == "read" || ent1 == "print") || (ent1 == "call" && attr1 == "procName")) {
+			if ((ent1 == "read" && attr1 == "varName")  || (ent1 == "print" && attr1 == "varName") || (ent1 == "call" && attr1 == "procName")) {
 				ident1 = vectorIter1.back();
 			}
-			if ((ent2 == "read" || ent2 == "print") || (ent2 == "call" && attr2 == "procName")) {
+			if ((ent2 == "read" && attr2 == "varName")  || (ent2 == "print" && attr2 == "varName") || (ent2 == "call" && attr2 == "procName")) {
 				ident2 = vectorIter2.back();
 			}
 			if (ident1 == ident2) {
@@ -177,7 +177,7 @@ TABLE PKBWith::getWithAttrLine(ENT_TYPE ent, ATTR attr) {
 		}
 	}
 	
-	if ((ent == "read" || ent == "print") || (ent == "call" && attr == "procName")) {
+	if ((ent == "read" && attr == "varName" ) || (ent == "print" && attr == "varName") || (ent == "call" && attr == "procName")) {
 		for (auto vectorIter1 : list1) {
 			for (auto vectorIter2 : list2) {
 				if (vectorIter1.back() == vectorIter2.front()) {

@@ -258,4 +258,7 @@ public:
 	static TABLE getWithAttrAttr(ENT_TYPE ent1, ATTR attr1, ENT_TYPE ent2, ATTR attr2);
 	static TABLE getWithAttrLine(ENT_TYPE ent, ATTR attr);
 	static TABLE getWithLineLine();
+
+	//Attributes
+	static IDENT getAttribute(IDENT iden, ENT_TYPE ent, ATTR attr);
 };
