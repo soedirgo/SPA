@@ -57,7 +57,6 @@ namespace UnitTesting
 			DesignExtractor DesignExtractor;
 			DesignExtractor.extractDesign();
 		}
-
 		TEST_METHOD(CallRelationship)
 		{
 			PKBCall PKB;
@@ -142,6 +141,14 @@ namespace UnitTesting
 
 			actual = PKB.getCallsTIdentEnt("First");
 			expected = { {"Second"},{"Third"} };
+			Assert::IsTrue(actual == expected);
+		}
+
+		TEST_METHOD(getCallProcedure)
+		{
+			PKBCall PKB;
+			PROC_NAME actual = PKB.getCallProcByStmt("3");
+			PROC_NAME expected = "Second";
 			Assert::IsTrue(actual == expected);
 		}
 	};

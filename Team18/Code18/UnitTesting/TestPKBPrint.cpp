@@ -46,6 +46,14 @@ namespace UnitTesting
 			PKB.setPrint("18","v");
 
 		}
+
+		TEST_METHOD(getPrintVariable)
+		{
+			PKBPrint PKB;
+			VAR_NAME actual = PKB.getPrintVariable("18");
+			VAR_NAME expected = "v";
+			Assert::IsTrue(actual == expected);
+		}
 		TEST_METHOD(getPrintStmt)
 		{
 			PKBPrint PKB;

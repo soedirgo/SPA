@@ -48,7 +48,13 @@ namespace UnitTesting
 			PKB.setRead("2","z");
 
 		}
-
+		TEST_METHOD(getReadVariable)
+		{
+			PKBRead PKB;
+			VAR_NAME actual = PKB.getReadVariable("1");
+			VAR_NAME expected = "x";
+			Assert::IsTrue(actual == expected);
+		}
 		TEST_METHOD(getReadStmt)
 		{
 			PKBRead PKB;
