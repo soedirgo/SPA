@@ -18,6 +18,7 @@ namespace Evaluator {
         // extract info from query object
         unordered_map<string, string> declarations = q.getDeclarations();
         vector<string> selSyns = q.getSelectSynonyms();
+        unordered_map<string, string> selSynAttrMap;
         vector<Clause> clauses = q.getClauses();
         vector<Result> intermediateResults;
 
@@ -29,6 +30,13 @@ namespace Evaluator {
 
         // evaluate select clause
         for (auto syn : selSyns) {
+            size_t pos = syn.find('.');
+            string attr;
+            if (pos == string::npos) {
+                attr = syn.substr(pos + 1, string::npos);
+                syn = syn.substr(0, pos);
+                selSynAttrMap[syn] = attr;
+            }
             TABLE initTable;
             if (syn == "BOOLEAN") {}
             else if (declarations[syn] == "stmt")
@@ -85,7 +93,11 @@ namespace Evaluator {
                     isFirstSyn = false;
                 else
                     projectedResult.append(" ");
-                projectedResult.append(res[finalResultSyns[syn]]);
+                projectedResult.append(selSynAttrMap.count(syn)
+                                       ? PKB::getAttribute(res[finalResultSyns[syn]],
+                                                           declarations[syn],
+                                                           selSynAttrMap[syn])
+                                       : res[finalResultSyns[syn]]);
             }
             selectResults.push_back(projectedResult);
         }
