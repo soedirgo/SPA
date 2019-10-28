@@ -699,3 +699,20 @@ TABLE PKB::getWithAttrLine(ENT_TYPE ent, ATTR attr) {
 TABLE PKB::getWithLineLine() {
 	return PKBWith::getWithLineLine();
 }
+
+//Attributes
+
+IDENT PKB::getAttribute(IDENT iden, ENT_TYPE ent, ATTR attr) {
+	if (ent == "call" && attr == "procName") {
+		return PKBCall::getCallProcByStmt(iden);
+	}
+	else if (ent == "print" && attr == "varName") {
+		return PKBPrint::getPrintVariable(iden);
+	}
+	else if (ent == "read" && attr == "varName") {
+		return PKBRead::getReadVariable(iden);
+	}
+	else {
+		return iden;
+	}
+}

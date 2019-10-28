@@ -11,6 +11,14 @@ bool PKBRead::setRead(STMT_NO stmtNo, VAR_NAME varName) {
 	return true;
 }
 
+VAR_NAME PKBRead::getReadVariable(STMT_NO stmtNo) {
+	for (auto vectorIter : readTable) {
+		if (vectorIter.front() == stmtNo) {
+			return vectorIter.back();
+		}
+	}
+}
+
 VAR_LIST PKBRead::getAllReadVar() {
 	VAR_LIST list;
 	for (auto vectorIter : readTable) {

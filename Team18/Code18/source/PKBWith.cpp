@@ -15,7 +15,7 @@ ENT_LIST PKBWith::getWithIdentAttr(IDENT iden, ENT_TYPE ent, ATTR attr) {
 		list = PKBProcedure::getProcedures();
 	}
 	else if (ent == "call" && attr == "procName") {
-		list = PKBCall ::getAllCalleeProc();
+		list = PKBCall ::getCallStmtTable();
 	}
 	else if (ent == "variable" && attr == "varName") {
 		list = PKBVariable::getVariables();
@@ -29,19 +29,18 @@ ENT_LIST PKBWith::getWithIdentAttr(IDENT iden, ENT_TYPE ent, ATTR attr) {
 	else if (ent == "constant" && attr == "value") {
 		list = PKBConstant::getConstants();
 	}
-	else {
-		if (ent == "stmt" && attr == "stmt#") {
-			list = PKBStmt::getStmts();
-		}
-		else if ((ent == "read" || ent == "print"  || ent == "call" || ent == "while" 
-			|| ent == "if" || ent == "assign") && attr == "stmt#") {
-			list = PKBStmt::getStmtsByType(ent);
-		}
-		else {
-			return resultTable;
-		}
+	else if (ent == "stmt" && attr == "stmt#") {
+		list = PKBStmt::getStmts();
 	}
-	if ((ent == "read" || ent == "print")) {
+	else if ((ent == "read" || ent == "print"  || ent == "call" || ent == "while" 
+		|| ent == "if" || ent == "assign") && attr == "stmt#") {
+		list = PKBStmt::getStmtsByType(ent);
+	}
+	else {
+		return resultTable;
+	}
+
+	if ((ent == "read" && attr == "varName") || (ent == "print" && attr == "varName") || (ent == "call" && attr == "procName")) {
 		for (auto vectorIter : list) {
 			vector<string> tuple = vector<string>();
 				if (vectorIter.back() == iden) {
@@ -83,7 +82,7 @@ TABLE PKBWith::getWithAttrAttr(ENT_TYPE ent1, ATTR attr1, ENT_TYPE ent2, ATTR at
 		list1 = PKBProcedure::getProcedures();
 	}
 	else if (ent1 == "call" && attr1 == "procName") {
-		list1 = PKBCall::getAllCalleeProc();
+		list1 = PKBCall::getCallStmtTable();
 	}
 	else if (ent1 == "variable" && attr1 == "varName") {
 		list1 = PKBVariable::getVariables();
@@ -97,23 +96,22 @@ TABLE PKBWith::getWithAttrAttr(ENT_TYPE ent1, ATTR attr1, ENT_TYPE ent2, ATTR at
 	else if (ent1 == "constant" && attr1 == "value") {
 		list1 = PKBConstant::getConstants();
 	}
-	else {
-		if (ent1 == "stmt" && attr1 =="stmt#") {
+	else if (ent1 == "stmt" && attr1 =="stmt#") {
 			list1 = PKBStmt::getStmts();
-		}
-		else if ((ent1 == "read" || ent1 == "print" || ent1 == "call" || ent1 == "while"
-			|| ent1 == "if" || ent1 == "assign") && attr1 == "stmt#") {
-			list1 = PKBStmt::getStmtsByType(ent1);
-		}
-		else {
-			return resultTable;
-		}
 	}
+	else if ((ent1 == "read" || ent1 == "print" || ent1 == "call" || ent1 == "while"
+		|| ent1 == "if" || ent1 == "assign") && attr1 == "stmt#") {
+		list1 = PKBStmt::getStmtsByType(ent1);
+	}
+	else {
+		return resultTable;
+	}
+
 	if (ent2 == "procedure" && attr2 == "procName") {
 		list2 = PKBProcedure::getProcedures();
 	}
 	else if (ent2 == "call" && attr2 == "procName") {
-		list2 = PKBCall::getAllCalleeProc();
+		list2 = PKBCall::getCallStmtTable();
 	}
 	else if (ent2 == "variable" && attr2 == "varName") {
 		list2 = PKBVariable::getVariables();
@@ -127,27 +125,25 @@ TABLE PKBWith::getWithAttrAttr(ENT_TYPE ent1, ATTR attr1, ENT_TYPE ent2, ATTR at
 	else if (ent2 == "constant" && attr2 == "value") {
 		list2 = PKBConstant::getConstants();
 	}
+	else if (ent2 == "stmt" && attr2 == "stmt#") {
+		list2 = PKBStmt::getStmts();
+	}
+	else if ((ent2 == "read" || ent2 == "print" || ent2 == "call" || ent2 == "while"
+		|| ent2 == "if" || ent2 == "assign") && attr2 == "stmt#") {
+		list2 = PKBStmt::getStmtsByType(ent2);
+	}
 	else {
-		if (ent2 == "stmt" && attr2 == "stmt#") {
-			list2 = PKBStmt::getStmts();
-		}
-		else if ((ent2 == "read" || ent2 == "print" || ent2 == "call" || ent2 == "while"
-			|| ent2 == "if" || ent2 == "assign") && attr2 == "stmt#") {
-			list2 = PKBStmt::getStmtsByType(ent2);
-		}
-		else {
-			return resultTable;
-		}
+		return resultTable;
 	}
 
 	for (auto vectorIter1 : list1) {
 		for (auto vectorIter2 : list2) {
 			string ident1 = vectorIter1.front();
 			string ident2 = vectorIter2.front();
-			if ((ent1 == "read" || ent1 == "print")) {
+			if ((ent1 == "read" && attr1 == "varName")  || (ent1 == "print" && attr1 == "varName") || (ent1 == "call" && attr1 == "procName")) {
 				ident1 = vectorIter1.back();
 			}
-			if ((ent2 == "read" || ent2 == "print")) {
+			if ((ent2 == "read" && attr2 == "varName")  || (ent2 == "print" && attr2 == "varName") || (ent2 == "call" && attr2 == "procName")) {
 				ident2 = vectorIter2.back();
 			}
 			if (ident1 == ident2) {
@@ -181,7 +177,7 @@ TABLE PKBWith::getWithAttrLine(ENT_TYPE ent, ATTR attr) {
 		}
 	}
 	
-	if ((ent == "read" || ent == "print")) {
+	if ((ent == "read" && attr == "varName" ) || (ent == "print" && attr == "varName") || (ent == "call" && attr == "procName")) {
 		for (auto vectorIter1 : list1) {
 			for (auto vectorIter2 : list2) {
 				if (vectorIter1.back() == vectorIter2.front()) {
@@ -215,10 +211,12 @@ TABLE PKBWith::getWithLineLine() {
 	list2 = PKBStmt::getStmts();
 	for (auto vectorIter1 : list1) {
 		for (auto vectorIter2 : list2) {
-			vector<string> tuple = vector<string>();
-			tuple.push_back(vectorIter1.front());
-			tuple.push_back(vectorIter2.front());
-			resultTable.emplace(tuple);
+			if (vectorIter1.front() == vectorIter2.front()) {
+				vector<string> tuple = vector<string>();
+				tuple.push_back(vectorIter1.front());
+				tuple.push_back(vectorIter2.front());
+				resultTable.emplace(tuple);
+			}
 		}
 	}
 	return resultTable;

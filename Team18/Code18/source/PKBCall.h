@@ -17,7 +17,6 @@ public:
 	static PROC_LIST getCalleeProc(PROC_NAME caller);
 	static PROC_LIST getCallerProc(PROC_NAME callee);
 	static PROC_LIST getAllCallProc();
-	static PROC_LIST getAllCalleeProc();
 	
 	//Bool Evaluation
 	static bool isCallsAnyAny();

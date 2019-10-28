@@ -1,12 +1,17 @@
-1 - Set 1.0 - Unested If
+0 - Set 1.0 - Unested If
 prog_line n; 
 Select BOOLEAN such that Next(7 , n )
 FALSE
 5000
-2 - Set 1.0 - Unested If
+1 - Set 1.0 - Unested If
 prog_line n; 
 Select n such that Next(7 , n )
 
+5000
+2 - Set 1.0 - Unested If
+prog_line n; 
+Select BOOLEAN such that Next(1,2)
+TRUE
 5000
 3 - Set 1.0 - Unested If
 prog_line n; 
@@ -15,65 +20,60 @@ TRUE
 5000
 4 - Set 1.0 - Unested If
 prog_line n; 
-Select BOOLEAN such that Next(1,2)
-TRUE
-5000
-5 - Set 1.0 - Unested If
-prog_line n; 
 Select n such that Next(1,n)
 2,4
 5000
-6 - Set 1.0 - Unested If
+5 - Set 1.0 - Unested If
 prog_line n; 
 Select BOOLEAN such that Next(3,4)
 FALSE
 5000
-7 - Set 1.0 - Unested If
+6 - Set 1.0 - Unested If
 prog_line n; 
 Select BOOLEAN such that Next(5,6)
 TRUE
 5000
-8 - Set 1.0 - Unested If
+7 - Set 1.0 - Unested If
 prog_line n; 
 Select BOOLEAN such that Next(3,6)
 TRUE
 5000
-9 - Set 2.0 - Unested While
+8 - Set 2.0 - Unested While
 prog_line n; 
 Select BOOLEAN such that Next(7 , 8)
 FALSE
 5000
-10 - Set 2.0 - Unested While
+9 - Set 2.0 - Unested While
 prog_line n; 
 Select BOOLEAN such that Next(11,12)
 FALSE
 5000
-11 - Set 2.0 - Unested While
+10 - Set 2.0 - Unested While
 prog_line n; 
 Select BOOLEAN such that Next(11,9)
 TRUE
 5000
-12 - Set 2.0 - Unested While
+11 - Set 2.0 - Unested While
 prog_line n; 
 Select BOOLEAN such that Next(9,10)
 TRUE
 5000
-13 - Set 2.0 - Unested While
+12 - Set 2.0 - Unested While
 prog_line n; 
 Select n such that Next(n,11)
 10
 5000
-14 - Set 2.0 - Unested While
+13 - Set 2.0 - Unested While
 prog_line n; 
 Select n such that Next(n,12)
 9
 5000
-15 - Set 2.0 - Unested While
+14 - Set 2.0 - Unested While
 prog_line n; 
 Select n such that Next(n,n)
 
 5000
-16 - Set 2.0 - Unested While
+15 - Set 2.0 - Unested While
 prog_line n; 
 Select n such that Next(n,n)
 
@@ -422,4 +422,509 @@ Select n such that Next(n,60)
 prog_line n; 
 Select n such that Next(n,n)
 
+5000
+85 - Set 4.6 - NestedWhileSWhileSWhile - Triple nested - First while, two adj while, nested third while 
+prog_line n; 
+Select n such that Next(61,n)
+62
+5000
+86 - Set 4.6 - NestedWhileSWhileSWhile - Triple nested - First while, two adj while, nested third while 
+prog_line n; 
+Select n such that Next(62,n)
+63
+5000
+87 - Set 4.6 - NestedWhileSWhileSWhile - Triple nested - First while, two adj while, nested third while 
+prog_line n; 
+Select n such that Next(63,n)
+64,66
+5000
+88 - Set 4.6 - NestedWhileSWhileSWhile - Triple nested - First while, two adj while, nested third while 
+prog_line n; 
+Select n such that Next(64,n)
+65,63
+5000
+89 - Set 4.6 - NestedWhileSWhileSWhile - Triple nested - First while, two adj while, nested third while 
+prog_line n; 
+Select n such that Next(65,n)
+64
+5000
+90 - Set 4.6 - NestedWhileSWhileSWhile - Triple nested - First while, two adj while, nested third while 
+prog_line n; 
+Select n such that Next(66, n)
+61,67
+5000
+91 - Set 4.6 - NestedWhileSWhileSWhile - Triple nested - First while, two adj while, nested third while 
+prog_line n; 
+Select n such that Next(67,n)
+66,68
+5000
+92 - Set 4.6 - NestedWhileSWhileSWhile - Triple nested - First while, two adj while, nested third while 
+prog_line n; 
+Select n such that Next(68, n)
+67
+5000
+93 - Set 4.6 - NestedWhileSWhileSWhile - Triple nested - First while, two adj while, nested third while 
+prog_line n; 
+Select n such that Next(n,61)
+66
+5000
+94 - Set 4.6 - NestedWhileSWhileSWhile - Triple nested - First while, two adj while, nested third while 
+prog_line n; 
+Select n such that Next(n,62)
+61
+5000
+95 - Set 4.6 - NestedWhileSWhileSWhile - Triple nested - First while, two adj while, nested third while 
+prog_line n; 
+Select n such that Next(n,63)
+62,64
+5000
+96 - Set 4.6 - NestedWhileSWhileSWhile - Triple nested - First while, two adj while, nested third while 
+prog_line n; 
+Select n such that Next(n,64)
+63,65
+5000
+97 - Set 4.6 - NestedWhileSWhileSWhile - Triple nested - First while, two adj while, nested third while 
+prog_line n; 
+Select n such that Next(n,65)
+64
+5000
+98 - Set 4.6 - NestedWhileSWhileSWhile - Triple nested - First while, two adj while, nested third while 
+prog_line n; 
+Select n such that Next(n,66)
+63,67
+5000
+99 - Set 4.6 - NestedWhileSWhileSWhile - Triple nested - First while, two adj while, nested third while 
+prog_line n; 
+Select n such that Next(n,67)
+66,68
+5000
+100 - Set 4.6 - NestedWhileSWhileSWhile - Triple nested - First while, two adj while, nested third while 
+prog_line n; 
+Select n such that Next(n,68)
+67
+5000
+101 - Set 4.5 - NestedWhileSWhileSWhile - Triple nested - First while, stmt list, second while , third while , stmt list
+prog_line n; 
+Select n such that Next(n,n)
+
+5000
+102 - Set 5.1 - NestedIfWhile - If - While
+prog_line n; 
+Select n such that Next(69,n)
+70,72
+5000
+103 - Set 5.1 - NestedIfWhile - If - While
+prog_line n; 
+Select n such that Next(70,n)
+71
+5000
+104 - Set 5.1 - NestedIfWhile - If - While
+prog_line n; 
+Select n such that Next(71,n)
+70
+5000
+105 - Set 5.1 - NestedIfWhile - If - While
+prog_line n; 
+Select n such that Next(72,n)
+
+5000
+106 - Set 5.1 - NestedIfWhile - If - While
+prog_line n; 
+Select n such that Next(n,69)
+
+5000
+107 - Set 5.1 - NestedIfWhile - If - While
+prog_line n; 
+Select n such that Next(n,70)
+69,71
+5000
+108 - Set 5.1 - NestedIfWhile - If - While
+prog_line n; 
+Select n such that Next(n,71)
+70
+5000
+109 - Set 5.1 - NestedIfWhile - If - While
+prog_line n; 
+Select n such that Next(n,72)
+69
+5000
+110 - Set 5.1 - NestedIfWhile - If - While
+prog_line n; 
+Select n such that Next(n,n)
+
+5000
+111 - Set 5.2 - NestedIfSWhile - If, stmt list, While
+prog_line n; 
+Select n such that Next(73,n)
+74,77
+5000
+112 - Set 5.2 - NestedIfSWhile - If, stmt list, While
+prog_line n; 
+Select n such that Next(74,n)
+75
+5000
+113 - Set 5.2 - NestedIfSWhile - If, stmt list, While
+prog_line n; 
+Select n such that Next(75,n)
+76
+5000
+114 - Set 5.2 - NestedIfSWhile - If, stmt list, While
+prog_line n; 
+Select n such that Next(76,n)
+75
+5000
+115 - Set 5.2 - NestedIfSWhile - If, stmt list, While
+prog_line n; 
+Select n such that Next(77,n)
+
+5000
+116 - Set 5.2 - NestedIfSWhile - If, stmt list, While
+prog_line n; 
+Select n such that Next(n,73)
+
+5000
+117 - Set 5.2 - NestedIfSWhile - If, stmt list, While
+prog_line n; 
+Select n such that Next(n,74)
+73
+5000
+118 - Set 5.2 - NestedIfSWhile - If, stmt list, While
+prog_line n; 
+Select n such that Next(n,75)
+74,76
+5000
+119 - Set 5.2 - NestedIfSWhile - If, stmt list, While
+prog_line n; 
+Select n such that Next(n,76)
+75
+5000
+120 - Set 5.2 - NestedIfSWhile - If, stmt list, While
+prog_line n; 
+Select n such that Next(n,77)
+73
+5000
+121 - Set 5.2 - NestedIfSWhile - If, stmt list, While
+prog_line n; 
+Select n such that Next(n,n)
+
+5000
+122 - Set 5.3 - NestedIfWhileS - If, While, StmtList
+prog_line n; 
+Select n such that Next(78,n)
+79,82
+5000
+123 - Set 5.3 - NestedIfWhileS - If, While, StmtList
+prog_line n; 
+Select n such that Next(79,n)
+80,81
+5000
+124 - Set 5.3 - NestedIfWhileS - If, While, StmtList
+prog_line n; 
+Select n such that Next(80,n)
+79
+5000
+125 - Set 5.3 - NestedIfWhileS - If, While, StmtList
+prog_line n; 
+Select n such that Next(81,n)
+
+5000
+126 - Set 5.3 - NestedIfWhileS - If, While, StmtList
+prog_line n; 
+Select n such that Next(82,n)
+
+5000
+127 - Set 5.3 - NestedIfWhileS - If, While, StmtList
+prog_line n; 
+Select n such that Next(n,78)
+
+5000
+128 - Set 5.3 - NestedIfWhileS - If, While, StmtList
+prog_line n; 
+Select n such that Next(n,79)
+78,80
+5000
+129 - Set 5.3 - NestedIfWhileS - If, While, StmtList
+prog_line n; 
+Select n such that Next(n,80)
+79
+5000
+130 - Set 5.3 - NestedIfWhileS - If, While, StmtList
+prog_line n; 
+Select n such that Next(n,81)
+79
+5000
+131 - Set 5.3 - NestedIfWhileS - If, While, StmtList
+prog_line n; 
+Select n such that Next(n,82)
+78
+5000
+132 - Set 5.3 - NestedIfWhileS - If, While, StmtList
+prog_line n; 
+Select n such that Next(n,n)
+
+5000
+133 - Set 5.4 - NestedIfSWhileS - If, Stmt list, While, StmtList
+prog_line n; 
+Select n such that Next(83,n)
+84,88
+5000
+134 - Set 5.4 - NestedIfSWhileS - If, Stmt list, While, StmtList
+prog_line n; 
+Select n such that Next(84,n)
+85
+5000
+135 - Set 5.4 - NestedIfSWhileS - If, Stmt list, While, StmtList
+prog_line n; 
+Select n such that Next(85,n)
+86,87
+5000
+136 - Set 5.4 - NestedIfSWhileS - If, Stmt list, While, StmtList
+prog_line n; 
+Select n such that Next(86,n)
+85
+5000
+137 - Set 5.4 - NestedIfSWhileS - If, Stmt list, While, StmtList
+prog_line n; 
+Select n such that Next(87,n)
+
+5000
+138 - Set 5.4 - NestedIfSWhileS - If, Stmt list, While, StmtList
+prog_line n; 
+Select n such that Next(88,n)
+
+5000
+139 - Set 5.4 - NestedIfSWhileS - If, Stmt list, While, StmtList
+prog_line n; 
+Select n such that Next(n,83)
+
+5000
+140 - Set 5.4 - NestedIfSWhileS - If, Stmt list, While, StmtList
+prog_line n; 
+Select n such that Next(n,84)
+83
+5000
+141 - Set 5.4 - NestedIfSWhileS - If, Stmt list, While, StmtList
+prog_line n; 
+Select n such that Next(n,85)
+84,86
+5000
+142 - Set 5.4 - NestedIfSWhileS - If, Stmt list, While, StmtList
+prog_line n; 
+Select n such that Next(n,86)
+85
+5000
+143 - Set 5.4 - NestedIfSWhileS - If, Stmt list, While, StmtList
+prog_line n; 
+Select n such that Next(n,87)
+85
+5000
+144 - Set 5.4 - NestedIfSWhileS - If, Stmt list, While, StmtList
+prog_line n; 
+Select n such that Next(n,88)
+83
+5000
+145 - Set 5.4 - NestedIfSWhileS - If, Stmt list, While, StmtList
+prog_line n; 
+Select n such that Next(n,n)
+
+5000
+146 - Set 6.1 - NestedWhileIf - While, if
+prog_line n; 
+Select n such that Next(89,n)
+90
+5000
+147 - Set 6.1 - NestedWhileIf - While, if
+prog_line n; 
+Select n such that Next(90,n)
+91,92
+5000
+148 - Set 6.1 - NestedWhileIf - While, if
+prog_line n; 
+Select n such that Next(91,n)
+89
+5000
+149 - Set 6.1 - NestedWhileIf - While, if
+prog_line n; 
+Select n such that Next(92,n)
+89
+5000
+150 - Set 6.1 - NestedWhileIf - While, if
+prog_line n; 
+Select n such that Next(n,89)
+91,92
+5000
+151 - Set 6.1 - NestedWhileIf - While, if
+prog_line n; 
+Select n such that Next(n,90)
+89
+5000
+152 - Set 6.1 - NestedWhileIf - While, if
+prog_line n; 
+Select n such that Next(n,91)
+90
+5000
+153 - Set 6.1 - NestedWhileIf - While, if
+prog_line n; 
+Select n such that Next(n,92)
+90
+5000
+154 - Set 6.2 - NestedWhileSIf - While, stmt list, if 
+prog_line n; 
+Select n such that Next(93,n)
+94
+5000
+155 - Set 6.2 - NestedWhileSIf - While, stmt list, if 
+prog_line n; 
+Select n such that Next(94,n)
+95
+5000
+156 - Set 6.2 - NestedWhileSIf - While, stmt list, if 
+prog_line n; 
+Select n such that Next(95,n)
+96,97
+5000
+157 - Set 6.2 - NestedWhileSIf - While, stmt list, if 
+prog_line n; 
+Select n such that Next(96,n)
+93
+5000
+158 - Set 6.2 - NestedWhileSIf - While, stmt list, if 
+prog_line n; 
+Select n such that Next(97,n)
+93
+5000
+159 - Set 6.2 - NestedWhileSIf - While, stmt list, if 
+prog_line n; 
+Select n such that Next(n,93)
+96,97
+5000
+160 - Set 6.2 - NestedWhileSIf - While, stmt list, if 
+prog_line n; 
+Select n such that Next(n,94)
+93
+5000
+161 - Set 6.2 - NestedWhileSIf - While, stmt list, if 
+prog_line n; 
+Select n such that Next(n,95)
+94
+5000
+162 - Set 6.2 - NestedWhileSIf - While, stmt list, if 
+prog_line n; 
+Select n such that Next(n,96)
+95
+5000
+163 - Set 6.2 - NestedWhileSIf - While, stmt list, if 
+prog_line n; 
+Select n such that Next(n,97)
+95
+5000
+164 - Set 6.3 - NestedWhileIfS - While, If, stmt list 
+prog_line n; 
+Select n such that Next(98,n)
+99
+5000
+165 - Set 6.3 - NestedWhileIfS - While, If, stmt list 
+prog_line n; 
+Select n such that Next(99,n)
+100,101
+5000
+166 - Set 6.3 - NestedWhileIfS - While, If, stmt list 
+prog_line n; 
+Select n such that Next(100,n)
+102
+5000
+167 - Set 6.3 - NestedWhileIfS - While, If, stmt list 
+prog_line n; 
+Select n such that Next(101,n)
+102
+5000
+168 - Set 6.3 - NestedWhileIfS - While, If, stmt list 
+prog_line n; 
+Select n such that Next(102,n)
+98
+5000
+169 - Set 6.3 - NestedWhileIfS - While, If, stmt list 
+prog_line n; 
+Select n such that Next(n,98)
+102
+5000
+170 - Set 6.3 - NestedWhileIfS - While, If, stmt list 
+prog_line n; 
+Select n such that Next(n,99)
+98
+5000
+171 - Set 6.3 - NestedWhileIfS - While, If, stmt list 
+prog_line n; 
+Select n such that Next(n,100)
+99
+5000
+172 - Set 6.3 - NestedWhileIfS - While, If, stmt list 
+prog_line n; 
+Select n such that Next(n,101)
+99
+5000
+173 - Set 6.3 - NestedWhileIfS - While, If, stmt list 
+prog_line n; 
+Select n such that Next(n,102)
+100,101
+5000
+174 - Set 6.4 - NestedWhileSIfS - While, stmt lists, If, stmt list 
+prog_line n; 
+Select n such that Next(103,n)
+104
+5000
+175 - Set 6.4 - NestedWhileSIfS - While, stmt lists, If, stmt list 
+prog_line n; 
+Select n such that Next(104,n)
+105
+5000
+176 - Set 6.4 - NestedWhileSIfS - While, stmt lists, If, stmt list 
+prog_line n; 
+Select n such that Next(105,n)
+106,107
+5000
+177 - Set 6.4 - NestedWhileSIfS - While, stmt lists, If, stmt list 
+prog_line n; 
+Select n such that Next(106,n)
+108
+5000
+178 - Set 6.4 - NestedWhileSIfS - While, stmt lists, If, stmt list 
+prog_line n; 
+Select n such that Next(107,n)
+108
+5000
+179 - Set 6.4 - NestedWhileSIfS - While, stmt lists, If, stmt list 
+prog_line n; 
+Select n such that Next(108,n)
+103
+5000
+180 - Set 6.4 - NestedWhileSIfS - While, stmt lists, If, stmt list 
+prog_line n; 
+Select n such that Next(n,103)
+108
+5000
+181 - Set 6.4 - NestedWhileSIfS - While, stmt lists, If, stmt list 
+prog_line n; 
+Select n such that Next(n,104)
+103
+5000
+182 - Set 6.4 - NestedWhileSIfS - While, stmt lists, If, stmt list 
+prog_line n; 
+Select n such that Next(n,105)
+104
+5000
+183 - Set 6.4 - NestedWhileSIfS - While, stmt lists, If, stmt list 
+prog_line n; 
+Select n such that Next(n,106)
+105
+5000
+184 - Set 6.4 - NestedWhileSIfS - While, stmt lists, If, stmt list 
+prog_line n; 
+Select n such that Next(n,107)
+105
+5000
+185 - Set 6.4 - NestedWhileSIfS - While, stmt lists, If, stmt list 
+prog_line n; 
+Select n such that Next(n,108)
+107,106
 5000
