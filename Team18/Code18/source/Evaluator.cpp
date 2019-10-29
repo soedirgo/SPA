@@ -18,7 +18,7 @@ namespace Evaluator {
         // extract info from query object
         unordered_map<string, string> declarations = q.getDeclarations();
         vector<string> selSyns = q.getSelectSynonyms();
-        unordered_map<string, string> selSynAttrMap;
+        unordered_map<int, string> selSynAttrMap;
         vector<Clause> clauses = q.getClauses();
         vector<Result> intermediateResults;
 
@@ -29,13 +29,14 @@ namespace Evaluator {
         }
 
         // evaluate select clause
-        for (auto& syn : selSyns) {
+        for (int i = 0; i < selSyns.size(); ++i) {
+            string& syn = selSyns[i];
             size_t pos = syn.find('.');
             string attr;
             if (pos != string::npos) {
                 attr = syn.substr(pos + 1, string::npos);
                 syn = syn.substr(0, pos);
-                selSynAttrMap[syn] = attr;
+                selSynAttrMap[i] = attr;
             }
             TABLE initTable;
             if (syn == "BOOLEAN") {}
@@ -88,15 +89,13 @@ namespace Evaluator {
         for (auto res : finalResults) {
             string projectedResult;
             bool isFirstSyn = true;
-            for (auto syn : selSyns) {
-                if (isFirstSyn)
-                    isFirstSyn = false;
-                else
-                    projectedResult.append(" ");
-                projectedResult.append(selSynAttrMap.count(syn)
+            for (int i = 0; i < selSyns.size(); ++i) {
+                if (i) projectedResult.append(" ");
+                string syn = selSyns[i];
+                projectedResult.append(selSynAttrMap.count(i)
                                        ? PKB::getAttribute(res[finalResultSyns[syn]],
                                                            declarations[syn],
-                                                           selSynAttrMap[syn])
+                                                           selSynAttrMap[i])
                                        : res[finalResultSyns[syn]]);
             }
             selectResults.push_back(projectedResult);
