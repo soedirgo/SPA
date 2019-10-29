@@ -1,0 +1,64 @@
+procedure A {
+  x = 1;
+  read y;
+  call B;
+  if (x > y) then {
+    y = x; }
+  else {
+    x = y;
+    read z; }
+  read i;
+  print i;
+  while (i < 20) {
+    i = i + (z - 1);
+    print i; }
+  print endofA;
+}
+
+procedure B {
+  if ( (cond1 == yes) && ( !(cond2 != yes) ) ) then {
+    if ( f != g ) then {
+      h = f % (g + 4); 
+      f = g + h; 
+      print g; }
+    else {
+      print h; } }
+  else {
+    while (i <= 7) {
+      i = i + 4 / 2; } 
+    print i; }
+  read k;
+  j = k;
+  while (k >= i) {
+    i = k;
+    read o;
+    while (o != j) {
+      o = j; }
+    print endofB; }
+}
+
+procedure C {
+  read blue;
+  sky = blue;
+  grass = green;
+  call A;
+  print sun;
+  while (sun >= moon) {
+    moon = moon + 4;
+    print moon;
+    read star;
+    if (star > moon) then {
+      print star;
+      while ( (star + 5 > moon) || (space > moon) ) {
+        moon = (space - 2); 
+        moon = moon + 3; }
+      print moon; }
+    else {
+      if (solid >= liquid) then {
+        read gas; }
+      else {
+        print solid;
+        print liquid; } } }
+  messy = yes;
+  print endofC;
+}

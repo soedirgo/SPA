@@ -29,10 +29,10 @@ namespace Evaluator {
         }
 
         // evaluate select clause
-        for (auto syn : selSyns) {
+        for (auto& syn : selSyns) {
             size_t pos = syn.find('.');
             string attr;
-            if (pos == string::npos) {
+            if (pos != string::npos) {
                 attr = syn.substr(pos + 1, string::npos);
                 syn = syn.substr(0, pos);
                 selSynAttrMap[syn] = attr;

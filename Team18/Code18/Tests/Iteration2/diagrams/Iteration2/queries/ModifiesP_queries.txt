@@ -1,0 +1,300 @@
+1 - Set 1 - Test syntax of ModifiesP. ModifiesP syntax, LHS synonym RHS synonym
+procedure pr; variable v;
+Select v such that Modifies(pr, v)
+x, y, j, k, i, rainbow, green, purple, black, Sat, Fri, Thu, mod1, mod2, apple, pear, banana, pineapple
+5000
+2 - ModifiesP syntax, LHS invalid synonym RHS synonym
+constant c; variable v;
+Select c such that Modifies(c, v)
+none
+5000
+3 - ModifiesP syntax, LHS synonym RHS invalid synonym
+procedure pr; prog_line n;
+Select pr such that Modifies(pr, n)
+none
+5000
+4 - ModifiesP syntax, LHS invalid synonym RHS invalid synonym
+variable v; while w;
+Select v such that Modifies(v, w)
+none
+5000
+5 - ModifiesP syntax, LHS synonym RHS wildcard
+procedure pr;
+Select pr such that Modifies(pr, _)
+A, B, C, D, F, H, I, J, K, L
+5000
+6 - ModifiesP syntax, LHS wildcard RHS synonym
+variable v;
+Select v such that Modifies(_, v)
+none
+5000
+7 - ModifiesP syntax, LHS wildcard RHS wildcard
+assign a;
+Select a such that Modifies(_, _)
+none
+5000
+8 - ModifiesP syntax, LHS synonym RHS Ident
+procedure pr;
+Select pr such that Modifies(pr, "banana")
+I, J, K, L
+5000
+9 - ModifiesP syntax, LHS synonym RHS invalid Ident
+procedure pr;
+Select pr such that Modifies(pr, "d4")
+none
+5000
+10 - ModifiesP syntax, LHS Ident RHS synonym
+variable v;
+Select v such that Modifies("J", v)
+banana, apple, j, k, i
+5000
+11 - ModifiesP syntax, LHS invalid Ident RHS synonym
+variable v;
+Select v such that Modifies("6c", v)
+none
+5000
+12 - ModifiesP syntax, LHS Ident RHS Ident
+stmt s;
+Select s such that Modifies("L", "k")
+1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50
+5000
+13 - ModifiesP syntax, LHS invalid Ident RHS Ident
+if ifs;
+Select ifs such that Modifies("Y", "black")
+none
+5000
+14 - ModifiesP syntax, LHS Ident RHS invalid Ident
+print pn;
+Select pn such that Modifies("F", "fiction")
+none
+5000
+15 - ModifiesP syntax, LHS invalid Ident RHS invalid Ident
+read r;
+Select r such that Modifies("Mon", "D")
+none
+5000
+16 - Set 2 - Relation tests for ModifiesP. Relation, Procedure that does not exist
+variable v;
+Select v such that Modifies("proc", v)
+none
+5000
+17 - Relation, Variable that does not exist
+procedure pr;
+Select pr such that Modifies(pr, "light")
+none
+5000
+18 - Relation, Procedure that does not modify any variable 1
+assign a; variable v;
+Select a such that Modifies("E", v)
+none
+5000
+19 - Relation, Procedure that does not modify any variable 1
+assign a; variable v;
+Select a such that Modifies("G", v)
+none
+5000
+20 - Relation, Variable that is not modified in any procedure 1
+procedure pr;
+Select pr such that Modifies(pr, "use2")
+none
+5000
+21 - Relation, Variable that is not modified in any procedure 2
+procedure pr;
+Select pr such that Modifies(pr, "Sun")
+none
+5000
+22 - Relation, Variable that is used but not modified 1
+procedure pr;
+Select pr such that Modifies(pr, "z")
+none
+5000
+23 - Relation, Variable that is used but not modified 2
+procedure pr;
+Select pr such that Modifies(pr, "mango")
+none
+5000
+24 - Relation, Variable that is modified but not used 1
+procedure pr;
+Select pr such that Modifies(pr, "black")
+C
+5000
+25 - Relation, Variable that is modified but not used 2
+procedure pr;
+Select pr such that Modifies(pr, "mod1")
+F, H
+5000
+26 - Relation, Variable that is used and modified 1
+procedure pr;
+Select pr such that Modifies(pr, "green")
+C
+5000
+27 - Relation, Variable that is used and modified 2
+procedure pr;
+Select pr such that Modifies(pr, "i")
+B, J, K, L
+5000
+28 - Relation, Select all procedure that modifies a variable
+procedure pr; variable v;
+Select pr such that Modifies(pr, v)
+A, B, C, D, F, H, I, J, K, L
+5000
+29 - Relation, Select all variable that is modified
+procedure pr; variable v;
+Select v such that Modifies(pr, v)
+x, y, j, k, i, rainbow, green, purple, black, Sat, Fri, Thu, mod1, mod2, apple, pear, banana, pineapple
+5000
+30 - Relation, Select all procedures that modifies a specific variable 1
+procedure pr;
+Select pr such that Modifies(pr, "purple")
+C
+5000
+31 - Relation, Select all procedures that modifies a specific variable 2
+procedure pr;
+Select pr such that Modifies(pr, "banana")
+I, J, K, L
+5000
+32 - Relation, Select all variables modified by a specific procedure 1
+variable v;
+Select v such that Modifies("I", v)
+pear, banana, pineapple, Sat, Fri, Thu, apple
+5000
+33 - Relation, Select all variables modified by a specific procedure 2
+variable v;
+Select v such that Modifies("L", v)
+banana, apple, j, k, i
+5000
+34 - Relation, Procedure modifies a variable due to assign definition of modifies 1
+procedure pr;
+Select pr such that Modifies(pr, "rainbow")
+C
+5000
+35 - Relation, Procedure modifies a variable due to assign definition of modifies 2
+procedure pr;
+Select pr such that Modifies(pr, "apple")
+I, J, K, L
+5000
+36 - Relation, Procedure modifies a variable due to read definition of modifies 1
+procedure pr;
+Select pr such that Modifies(pr, "j")
+B, J, K, L
+5000
+37 - Relation, Procedure modifies a variable due to read definition of modifies 2
+procedure pr;
+Select pr such that Modifies(pr, "Fri")
+D, I
+5000
+38 - Relation, Procedure modifies a variable due to if/while definition of modifies 1
+procedure pr;
+Select pr such that Modifies(pr, "Sat")
+D, I
+5000
+39 - Relation, Procedure modifies a variable due to if/while definition of modifies 1
+procedure pr;
+Select pr such that Modifies(pr, "banana")
+I, J, K, L
+5000
+40 - Relation, Procedure modifies a variable due to call definition of modifies 1
+procedure pr;
+Select pr such that Modifies(pr, "mod1")
+F, H
+5000
+41 - Relation, Procedure modifies a variable due to call definition of modifies 2
+procedure pr;
+Select pr such that Modifies(pr, "i")
+B, J, K, L
+5000
+42 - Relation, Procedure modifies a variable due to procedure definition of modifies 1
+procedure pr;
+Select pr such that Modifies(pr, "green")
+C
+5000
+43 - Relation, Procedure modifies a variable due to procedure definition of modifies 2
+procedure pr;
+Select pr such that Modifies(pr, "mod2")
+F, H
+5000
+44 - Relation, Procedure that modifies a variable in itself 1
+procedure pr;
+Select pr such that Modifies("C", "black")
+A, B, C, D, E, F, G, H, I, J, K, L
+5000
+45 - Relation, Procedure that modifies a variable in itself 2
+procedure pr;
+Select pr such that Modifies("I", "apple")
+A, B, C, D, E, F, G, H, I, J, K, L
+5000
+46 - Relation, Procedure that does not modify a variable itself but calls another that does 1
+constant c;
+Select c such that Modifies("H", "mod1")
+1, 10, 4, 8, 0, 2, 5
+5000
+47 - Relation, Procedure that does not modify a variable itself but calls another that does 2
+constant c;
+Select c such that Modifies("I", "Thu")
+1, 10, 4, 8, 0, 2, 5
+5000
+48 - Relation, Procedure that does not modify a variable itself but transitively calls another that does 1
+print pn;
+Select pn such that Modifies("K", "k")
+4, 6, 12, 19, 21, 22, 27, 29, 37, 43
+5000
+49 - Relation, Procedure that does not modify a variable itself but transitively calls another that does 2
+read r;
+Select r such that Modifies("L", "banana")
+2, 8, 11, 20, 25, 26, 30, 32
+5000
+50 - Relation, If Container statement in procedure that does not modifies variable but through call it does.
+read r;
+Select r such that Modifies(39, "Sat")
+2, 8, 11, 20, 25, 26, 30, 32
+5000
+51 - Relation, While Container statement in procedure that does not modifies variable but through call it does.
+print pn;
+Select pn such that Modifies(36, "Fri")
+4, 6, 12, 19, 21, 22, 27, 29, 37, 43
+5000
+52 - Relation, Get all modified variables through different procedure by calls (Last node)
+variable v;
+Select v such that Modifies(50, v)
+banana, apple, j, k, i
+5000
+53 - Relation, Get all modified variables through different procedure by calls (2nd Last node)
+variable v;
+Select v such that Modifies(49, v)
+banana, apple, j, k, i
+5000
+54 - Relation, Get all modified variables through different procedure by calls (3rd Last node)
+variable v;
+Select v such that Modifies(48, v)
+j, k, i
+5000
+55 - Relation, Get all modified variables (Last node)
+variable v;
+Select v such that Modifies(7, v)
+j, k
+5000
+56 - Relation, Get all modified variables through different procedure by calls in else (3rd Last node)
+variable v;
+Select v such that Modifies(44, v)
+none
+5000
+57 - Relation, Get all modified variables through different procedure by calls in if (2nd Last node)
+variable v;
+Select v such that Modifies(41, v)
+Sat, Fri, Thu
+5000
+58 - Relation, Get all modified variables through different procedure by calls
+variable v; call c;
+Select v such that Modifies(c, v)
+apple, banana, i, j, k, mod1, mod2, Fri, Sat, Thu
+5000
+59 - Relation, Get all call stmts that modifies v
+variable v; call c;
+Select c such that Modifies(c, v)
+34,41,48,49,50
+5000
+
+
+
+
+
