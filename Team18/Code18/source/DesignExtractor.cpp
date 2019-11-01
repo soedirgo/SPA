@@ -72,6 +72,9 @@ void DesignExtractor::isAffectsSelf() {
 }
 
 void DesignExtractor::isAffects(STMT_NO a1, STMT_NO a2) {
+	if (PKBAffects::isCheckedAffects(a1, a2)) {
+		return;
+	}
 	bool affectsHold = false;
 	STMT_LIST assignStmtTable = PKB::getAssigns();
 	if (PKBStmt::getTypeByStmtNo(a1) == "assign" && PKBStmt::getTypeByStmtNo(a2) == "assign") {
@@ -99,6 +102,7 @@ void DesignExtractor::isAffects(STMT_NO a1, STMT_NO a2) {
 	if (affectsHold == true) {
 		PKBAffects::setAffects(a1, a2);
 	}
+	PKBAffects::setCheckedAffects(a1, a2);
 }
 
 void DesignExtractor::extractNextT()

@@ -13,6 +13,22 @@ bool PKBAffects::clear() {
 	return true;
 }
 
+/*bool PKBAffects::isCheckedAffects(STMT_NO a1, STMT_NO a2) {
+	string toCheck = a1 + ' ' + a2;
+	if (affectsChecked.find(toCheck) != affectsChecked.end()) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+bool PKBAffects::setCheckedAffects(STMT_NO a1, STMT_NO a2) {
+	string checked = a1 + ' ' + a2;
+	affectsChecked.insert(make_pair(checked, true));
+	return true;
+}*/
+
 bool PKBAffects::setAffects(STMT_NO a1, STMT_NO a2) {
 	vector<string> tuple = vector<string>();
 	tuple.push_back(a1);

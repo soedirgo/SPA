@@ -4,10 +4,12 @@
 #include "PKBHash.h"
 #include "DesignExtractor.h"
 #include <unordered_set>
+#include <map>
 
 class PKBAffects {
 public:
-
+	static bool isCheckedAffects(STMT_NO a1, STMT_NO a2);
+	static bool setCheckedAffects(STMT_NO a1, STMT_NO a2);
 	static bool setAffects(STMT_NO a1, STMT_NO a2);
 	static bool setAffectsT(STMT_NO a1, STMT_NO a2);
 
@@ -41,6 +43,7 @@ public:
 	static bool clear();
 
 private:
+	static TABLE affectsChecked;
 	static TABLE affectsTable;
 	static TABLE affectsTTable;
 };
