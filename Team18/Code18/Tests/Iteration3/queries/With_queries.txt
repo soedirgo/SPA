@@ -334,8 +334,8 @@ Select BOOLEAN such that Uses(pr, v) pattern a(v, _) with c.value = s.stmt#
 TRUE
 5000
 68 - Multiple relation test, all clause true one with independent true 2
-read varName; print with; while w; variable while; read Next; constant Boolean; print Uses;
-Select Boolean pattern w(while, _) such that Modifies(Next, while) with with.varName = varName.varName such that Uses(Uses, while)
+read r; print pn; while w; variable v; read r1; constant Boolean; print pn1;
+Select Boolean pattern w(v, _) such that Modifies(r1, v) with pn.varName = r.varName such that Uses(pn1, v)
 1, 2, 0, 100, 5
 5000
 69 - Multiple relation test, all clause true one with independent false 1
