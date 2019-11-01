@@ -105,6 +105,74 @@ void DesignExtractor::isAffects(STMT_NO a1, STMT_NO a2) {
 	PKBAffects::setCheckedAffects(a1, a2);
 }
 
+void DesignExtractor::affectsTAll() {
+	STMT_LIST assignStmtTable1 = PKB::getAssigns();
+	STMT_LIST assignStmtTable2 = PKB::getAssigns();
+	for (auto stmt1 : assignStmtTable1) {
+		STMT_NO stmtNo1 = stmt1.front();
+		for (auto stmt2 : assignStmtTable2) {
+			STMT_NO stmtNo2 = stmt2.front();
+			isAffectsT(stmtNo1, stmtNo2);
+		}
+	}
+}
+
+void DesignExtractor::affectedTBy(STMT_NO a1) {
+	STMT_LIST assignStmtTable = PKB::getAssigns();
+	for (auto stmt : assignStmtTable) {
+		STMT_NO stmtNo = stmt.front();
+		isAffectsT(a1, stmtNo);
+	}
+}
+
+void DesignExtractor::isAffectingT(STMT_NO a2) {
+	STMT_LIST assignStmtTable = PKB::getAssigns();
+	for (auto stmt : assignStmtTable) {
+		STMT_NO stmtNo = stmt.front();
+		isAffectsT(stmtNo, a2);
+	}
+}
+
+void DesignExtractor::isAffectsTSelf() {
+	STMT_LIST assignStmtTable = PKB::getAssigns();
+	for (auto stmt : assignStmtTable) {
+		STMT_NO s = stmt.front();
+		isAffectsT(s, s);
+	}
+}
+
+void DesignExtractor::isAffectsT(STMT_NO a1, STMT_NO a2) {
+	if (PKBAffects::isCheckedAffectsT(a1, a2)) {
+		return;
+	}
+	bool affectsTHold = false;
+	STMT_LIST assignStmtTable = PKB::getAssigns();
+	if (PKBStmt::getTypeByStmtNo(a1) == "assign" && PKBStmt::getTypeByStmtNo(a2) == "assign") {
+		// will only have 1 in varList
+		VAR_LIST varList1 = PKBModifies::getModifiesSIdentEnt(a1);
+		VAR_NAME varNameModified;
+		VAR_NAME varNameUses;
+		for (auto vectorIter4 : varList1) {
+			varNameModified = vectorIter4.front();
+		}
+		VAR_LIST varList2 = PKBUses::getUsesSIdentEnt(a2);
+		for (auto vectorIter4 : varList2) {
+			varNameUses = vectorIter4.front();
+			if (varNameModified == varNameUses) {
+				affectsTHold = true;
+			}
+		}
+		TABLE affectsA1 = PKB::getAffectsIdentEnt(a1);
+		if (!recurseAffectsT(a1, a2)) {
+			affectsTHold = false;
+		}
+	}
+	if (affectsTHold == true) {
+		PKBAffects::setAffectsT(a1, a2);
+	}
+	PKBAffects::setCheckedAffectsT(a1, a2);
+}
+
 void DesignExtractor::extractNextT()
 {
 	TABLE nextTable = PKBNext::getNextTable();
@@ -512,6 +580,17 @@ bool DesignExtractor::traverseAffects(STMT_NO a1, STMT_NO a2, VAR_NAME v) {
 			}
 		}
 		q.pop();
+	}
+	return false;
+}
+
+bool DesignExtractor::recurseAffectsT(STMT_NO a1, STMT_NO a2) {
+	TABLE affectsA1 = PKB::getAffectsIdentEnt(a1);
+	for (auto elem : affectsA1) {
+		STMT_NO next = elem.back();
+		if (PKB::isAffectsTIdentIdent(next, a2)) {
+			return true;
+		}
 	}
 	return false;
 }
