@@ -70,6 +70,16 @@ namespace UnitTesting
 			vector<pair<string, pair<string, string>>> actual3 = QueryParser::splitSuchThat(suchThatString3);
 			vector<pair<string, pair<string, string>>> expected3 = { {"Modifies", {"2","x"}} };
 			Assert::AreEqual(actual3 == expected3, true);
+
+			vector<string> suchThatString4 = { "such that NextBip (a   ,  x)" };
+			vector<pair<string, pair<string, string>>> actual4 = QueryParser::splitSuchThat(suchThatString4);
+			vector<pair<string, pair<string, string>>> expected4 = { {"NextBip", {"a","x"}} };
+			Assert::AreEqual(actual4 == expected4, true);
+
+			vector<string> suchThatString5 = { "such that NextBip* (a   ,  x)" };
+			vector<pair<string, pair<string, string>>> actual5 = QueryParser::splitSuchThat(suchThatString5);
+			vector<pair<string, pair<string, string>>> expected5 = { {"NextBip*", {"a","x"}} };
+			Assert::AreEqual(actual5 == expected5, true);
 		}
 
 		TEST_METHOD(splitPatternCondition)
@@ -266,32 +276,44 @@ namespace UnitTesting
 			unordered_map<string, string> declerationVariables3 = { {"a", "assign"}, {"v", "variable"} };
 			vector<pair<string, pair<string, string>>> suchThat3{ {"Parent*", { "a-", "2" }} };
 			string actual3 = QueryParser::suchThatValidation(declerationVariables3, suchThat3);
-			string expected3 = "Semantic Invalid";
+			string expected3 = "Invalid";
 			Assert::AreEqual(actual3 == expected3, true);
 
 			unordered_map<string, string> declerationVariables4 = { {"a", "assign"}, {"v", "variable"} };
 			vector<pair<string, pair<string, string>>> suchThat4{ {"Next*", { "2", "v" }} };
 			string actual4 = QueryParser::suchThatValidation(declerationVariables4, suchThat4);
-			string expected4 = "Semantic Invalid";
+			string expected4 = "Invalid";
 			Assert::AreEqual(actual4 == expected4, true);
 
 			unordered_map<string, string> declerationVariables5 = { {"a", "assign"}, {"v", "variable"} };
 			vector<pair<string, pair<string, string>>> suchThat5{ {"Uses", { "a*", "v" }} };
 			string actual5 = QueryParser::suchThatValidation(declerationVariables5, suchThat5);
-			string expected5 = "Semantic Invalid";
+			string expected5 = "Invalid";
 			Assert::AreEqual(actual5 == expected5, true);
 
 			unordered_map<string, string> declerationVariables6 = { {"a", "assign"}, {"v", "variable"} };
 			vector<pair<string, pair<string, string>>> suchThat6{ {"Modifies", { "v", "v" }} };
 			string actual6 = QueryParser::suchThatValidation(declerationVariables6, suchThat6);
-			string expected6 = "Semantic Invalid";
+			string expected6 = "Invalid";
 			Assert::AreEqual(actual6 == expected6, true);
 
 			unordered_map<string, string> declerationVariables7 = { {"a", "procedure"}, {"v", "variable"} };
 			vector<pair<string, pair<string, string>>> suchThat7{ {"Calls", { "a", "v" }} };
 			string actual7 = QueryParser::suchThatValidation(declerationVariables7, suchThat7);
-			string expected7 = "Semantic Invalid";
+			string expected7 = "Invalid";
 			Assert::AreEqual(actual7 == expected7, true);
+
+			unordered_map<string, string> declerationVariables8 = { {"a", "assign"}, {"v", "variable"} };
+			vector<pair<string, pair<string, string>>> suchThat8{ {"NextBip", { "a", "v" }} };
+			string actual8 = QueryParser::suchThatValidation(declerationVariables8, suchThat8);
+			string expected8 = "Invalid";
+			Assert::AreEqual(actual8 == expected8, true);
+
+			unordered_map<string, string> declerationVariables9 = { {"a", "assign"}, {"v", "variable"} };
+			vector<pair<string, pair<string, string>>> suchThat9{ {"NextBip*", { "_", "v" }} };
+			string actual9 = QueryParser::suchThatValidation(declerationVariables9, suchThat9);
+			string expected9 = "Invalid";
+			Assert::AreEqual(actual9 == expected9, true);
 		}
 
 		TEST_METHOD(withValidation) {
@@ -350,14 +372,14 @@ namespace UnitTesting
 			unordered_map<string, string> declerationsVariables7 = { {"r", "variable"},
 				{"while", "stmt"} };
 			string actual7 = QueryParser::withValidation(declerationsVariables7, input7);
-			string expected7 = "Semantic Invalid";
+			string expected7 = "Invalid";
 			Assert::AreEqual(actual7 == expected7, true);
 
 			vector<pair<string, string>> input8{ {"8", "\"string\""} };
 			unordered_map<string, string> declerationsVariables8 = { {"v", "variable"},
 				{"s", "stmt"} };
 			string actual8 = QueryParser::withValidation(declerationsVariables8, input8);
-			string expected8 = "Semantic Invalid";
+			string expected8 = "Invalid";
 			
 		}
 

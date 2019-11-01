@@ -115,7 +115,7 @@ Select <n> with n = value.stmt#
 5000
 24 - Set 2 - Invalid syntax tests for with clause (Negative Tests). Invalid syntax, Ident = Ident
 
-Select BOOLEAN "a" = "A"
+Select BOOLEAN with "a" = "A"
 FALSE
 5000
 25 - Invalid syntax, Ident = procName
@@ -335,7 +335,7 @@ TRUE
 5000
 68 - Multiple relation test, all clause true one with independent true 2
 read varName; print with; while w; variable while; read Next; constant Boolean; print Uses;
-Select Boolean w pattern(while, _) such that Modifies(Next, while) with with.varName = varName.varName such that Uses(Uses, while)
+Select Boolean pattern w(while, _) such that Modifies(Next, while) with with.varName = varName.varName such that Uses(Uses, while)
 1, 2, 0, 100, 5
 5000
 69 - Multiple relation test, all clause true one with independent false 1
@@ -365,7 +365,7 @@ z, c
 5000
 74 - Multiple relation test, all clause true one with related true 4
 assign result; prog_line n; constant c; variable v; if ifs;
-Select result with n = c such that Modifies(n, v) pattern ifs(v, _, _) and ifs("z", _, _)
+Select result with n = c.value such that Modifies(n, v) pattern ifs(v, _, _) and ifs("z", _, _)
 1, 2, 12, 22, 25, 29, 32
 5000
 75 - Multiple relation test, all clause true one with related false 1
@@ -373,7 +373,7 @@ stmt s, s1; print pn; procedure pr;
 Select s such that Parent(s, s1) and Next(s, s1) with pn.varName = pr.procName such that Follows(s, pn)
 none
 5000
-75 - Multiple relation test, all clause true one with related false 2
+76 - Multiple relation test, all clause true one with related false 2
 prog_line Select; while pattern; assign FALSE; procedure and; read value;
 Select BOOLEAN pattern pattern("a", _) such that Uses(FALSE, "B") and Modifies(and, "target") with and.procName = value.varName
 FALSE
@@ -400,7 +400,7 @@ FALSE
 5000
 81 - Multiple relation test, all clause true multiple with some related true 1
 procedure pr; if ifs; prog_line n;
-Select ifs with pr.procName = pr.procName such that Parent*(ifs, n) with n = 28 pattern ifs("a", _)
+Select ifs with pr.procName = pr.procName such that Parent*(ifs, n) with n = 28 pattern ifs("a", _,_)
 26
 5000
 82 - Multiple relation test, all clause true multiple with some related true 2
