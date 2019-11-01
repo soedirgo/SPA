@@ -5,4 +5,4 @@
 
 namespace Evaluator {
 	std::list<std::string> evaluate(Query q);
-}
+} // namespace Evaluator

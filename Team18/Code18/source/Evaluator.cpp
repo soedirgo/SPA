@@ -2,6 +2,7 @@
 #include "AbstractType.h"
 #include "Clause.h"
 #include "Dispatcher.h"
+#include "Optim.h"
 #include "PKB.h"
 #include "Query.h"
 #include "Result.h"
@@ -20,16 +21,13 @@ namespace Evaluator {
         vector<string> selSyns = q.getSelectSynonyms();
         unordered_map<int, string> selSynAttrMap;
         vector<Clause> clauses = q.getClauses();
-        vector<Result> intermediateResults;
+        vector<Result> ungroupedResults;
+        vector<Result> noSynGroup;
+        vector<Result> selSynGroup;
+        vector<vector<Result>> otherGroups;
 
-        // for every clause, get results and store in intermediate
-        // results
-        for (auto& clause : clauses) {
-            intermediateResults.push_back(dispatch(clause, declarations));
-        }
-
-        // evaluate select clause
-        for (int i = 0; i < selSyns.size(); ++i) {
+        // separate attributes from select synonyms
+        for (size_t i = 0; i < selSyns.size(); ++i) {
             string& syn = selSyns[i];
             size_t pos = syn.find('.');
             string attr;
@@ -38,6 +36,10 @@ namespace Evaluator {
                 syn = syn.substr(0, pos);
                 selSynAttrMap[i] = attr;
             }
+        }
+
+        // evaluate select clause
+        for (auto syn : selSyns) {
             TABLE initTable;
             if (syn == "BOOLEAN") {}
             else if (declarations[syn] == "stmt")
@@ -62,13 +64,61 @@ namespace Evaluator {
                 initTable = PKB::getProgLines();
             else if (declarations[syn] == "procedure")
                 initTable = PKB::getProcedures();
-            intermediateResults.push_back(Result(true, {{syn, 0}}, initTable));
+            ungroupedResults.push_back(Result(true, {{syn, 0}}, initTable));
         }
 
-        // merge everything in intermediateResults
-        Result currentResult = Result(true, {}, {});
-        for (auto& otherResult : intermediateResults) {
-            currentResult = Result::merge(currentResult, otherResult);
+        // evaluate clauses
+        for (auto& clause : clauses) {
+            ungroupedResults.push_back(dispatch(clause, declarations));
+        }
+
+        // group the results into no synonym, select synonym group, and other groups
+        vector<vector<Result>> allResults = group(ungroupedResults, selSyns);
+        noSynGroup = allResults[0];
+        selSynGroup = allResults[1];
+        otherGroups = vector<vector<Result>>(allResults.begin() + 2, allResults.end());
+
+        // merge no synonym group
+        sort(noSynGroup);
+        Result noSynResult = Result(true, {}, {});
+        for (auto resultIt : noSynGroup) {
+            noSynResult = Result::merge(noSynResult, resultIt);
+        }
+        if (!noSynResult.hasResults()) {
+            if (selSyns[0] == "BOOLEAN")
+                return { "FALSE" };
+            else
+                return {};
+        }
+
+        // merge other groups
+        Result otherResult = Result(true, {}, {});
+        for (auto groupIt : otherGroups) {
+            sort(groupIt);
+            Result groupResult = Result(true, {}, {});
+            for (auto& resultIt : groupIt) {
+                groupResult = Result::merge(groupResult, resultIt);
+            }
+            if (!groupResult.hasResults()) {
+                if (selSyns[0] == "BOOLEAN")
+                    return { "FALSE" };
+                else
+                    return {};
+            }
+            otherResult = Result::merge(otherResult, groupResult);
+        }
+        if (!otherResult.hasResults()) {
+            if (selSyns[0] == "BOOLEAN")
+                return { "FALSE" };
+            else
+                return {};
+        }
+
+        // merge select synonym group
+        sort(selSynGroup);
+        Result selectResult = Result(true, {}, {});
+        for (auto& resultIt : selSynGroup) {
+            selectResult = Result::merge(selectResult, resultIt);
         }
 
         // return results (projection)
@@ -76,20 +126,19 @@ namespace Evaluator {
 
         // case Select BOOLEAN
         if (selSyns[0] == "BOOLEAN") {
-            selectResults.push_back(currentResult.hasResults() ? "TRUE" : "FALSE");
+            selectResults.push_back(selectResult.hasResults() ? "TRUE" : "FALSE");
             return selectResults;
         }
 
         // otherwise project select synonyms
-        if (!currentResult.hasResults())
+        if (!selectResult.hasResults())
             return {};
 
-        TABLE finalResults = currentResult.getResults();
-        unordered_map<string, int> finalResultSyns = currentResult.getSynonyms();
+        TABLE finalResults = selectResult.getResults();
+        unordered_map<string, int> finalResultSyns = selectResult.getSynonyms();
         for (auto res : finalResults) {
             string projectedResult;
-            bool isFirstSyn = true;
-            for (int i = 0; i < selSyns.size(); ++i) {
+            for (size_t i = 0; i < selSyns.size(); ++i) {
                 if (i) projectedResult.append(" ");
                 string syn = selSyns[i];
                 projectedResult.append(selSynAttrMap.count(i)
