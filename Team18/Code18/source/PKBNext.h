@@ -11,7 +11,7 @@ public:
 	static bool setNextT(PROG_LINE nextByLine, PROG_LINE nextLine);
 	static bool setNextBip(PROG_LINE nextByLine, PROG_LINE nextLine);
 	static bool setNextBipT(PROG_LINE nextByLine, PROG_LINE nextLine);
-	static LINE_LIST getNext(PROG_LINE nextByLine);
+	static bool getNextT(PROG_LINE nextByLine, PROG_LINE nextLine);
 
 	static TABLE getNextTable();
 	static TABLE getNextTTable();

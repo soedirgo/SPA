@@ -182,8 +182,12 @@ void DesignExtractor::extractNextT()
 	for (auto vectorIter : nextTable) {
 		string n1 = vectorIter.front();
 		string n2 = vectorIter.back();
-		PKBNext::setNextT(n1, n2);
-		recurseNext(n1, n2);
+		bool nextTValue = PKBNext::getNextT(n1,n2);
+		//optimization
+		if (nextTValue == false) {
+			PKBNext::setNextT(n1, n2);
+			recurseNext(n1, n2);
+		}
 	}
 }
 

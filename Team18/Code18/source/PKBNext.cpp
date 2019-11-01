@@ -43,16 +43,15 @@ bool PKBNext::setNextBipT(PROG_LINE nextByLine, PROG_LINE nextLine) {
 }
 
 
-LINE_LIST PKBNext::getNext(PROG_LINE nextByLine) {
-	LINE_LIST list;
-	for (auto vectorIter : nextTable) {
-		if (vectorIter.front() == nextByLine) {
-			vector<string> tuple = vector<string>();
-			tuple.push_back(vectorIter.back());
-			list.emplace(tuple);
+bool PKBNext::getNextT(PROG_LINE currentLine, PROG_LINE nextLine) {
+	for (auto vectorIter : nextTTable) {
+		if (vectorIter.front() == currentLine) {
+			if (vectorIter.back() == nextLine) {
+				return true;
+			}
 		}
 	}
-	return list;
+	return false;
 }
 
 TABLE PKBNext::getNextTable() {
