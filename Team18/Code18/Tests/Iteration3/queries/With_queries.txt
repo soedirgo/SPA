@@ -219,8 +219,8 @@ Select stmt with pn.stmt# = pn.varName
 none
 5000
 45 - Invalid syntax, varName = synonym
-prog_line BOOLEAN; variable Boolean;
-Select BOOLEAN with BOOLEAN = Boolean.varName
+prog_line n; variable Boolean;
+Select BOOLEAN with n = Boolean.varName
 FALSE
 5000
 46 - Invalid syntax, value = value
@@ -334,8 +334,8 @@ Select BOOLEAN such that Uses(pr, v) pattern a(v, _) with c.value = s.stmt#
 TRUE
 5000
 68 - Multiple relation test, all clause true one with independent true 2
-read varName; print with; while pattern; variable while; read Next; constant Boolean; print Uses;
-Select Boolean pattern pattern(while, _) such that Modifies(Next, while) with with.varName = varName.varName such that Uses(Uses, while)
+read varName; print with; while w; variable while; read Next; constant Boolean; print Uses;
+Select Boolean w pattern(while, _) such that Modifies(Next, while) with with.varName = varName.varName such that Uses(Uses, while)
 1, 2, 0, 100, 5
 5000
 69 - Multiple relation test, all clause true one with independent false 1
@@ -414,8 +414,8 @@ Select BOOLEAN with a.stmt# = 25 pattern a(_, "100") with cl.stmt# = n such that
 TRUE
 5000
 84 - Multiple relation test, all clause true multiple with some related true 4
-stmt BOOLEAN; variable v; read r; while w; stmt s; prog_line n;
-Select <BOOLEAN> such that Modifies(BOOLEAN, v) with BOOLEAN.stmt# = r.stmt# with r.varName = v.varName such that Parent(w, r) with n = s.stmt#
+stmt s; variable v; read r; while w; stmt s; prog_line n;
+Select <s> such that Modifies(s, v) with s.stmt# = r.stmt# with r.varName = v.varName such that Parent(w, r) with n = s.stmt#
 20, 28
 5000
 85 - Multiple relation test, all clause true multiple with some related false 1
