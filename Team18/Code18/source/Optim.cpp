@@ -1,13 +1,13 @@
 #include "Optim.h"
 #include "Result.h"
 #include <string>
+#include <unordered_map>
 #include <vector>
-#include <set>
 
 using namespace std;
 namespace Evaluator {
     namespace {
-        vector<int> id;
+        unordered_map<int, int> id;
 
         int ufFind(int i) {
             if (i == id[i])
@@ -69,18 +69,20 @@ namespace Evaluator {
         vector<vector<Result>> groups;
         // no synonym results group is the first entry
         synToGroup[-2] = synToGroup.size();
-        groups[0] = noSynGroup;
+        groups.push_back(noSynGroup);
         // select synonym results group is the second entry
         // if BOOLEAN, add a dummy
         if (selSyns[0] == "BOOLEAN") {
             synToGroup[-1] = synToGroup.size();
-            groups[1] = { Result(true, {}, {}) };
+            groups.push_back({ Result(true, {}, {}) });
         }
+        groups.push_back({});
         // add other groups (including select synonyms group, if not BOOLEAN)
         // assume first group is always select synonyms (if not BOOLEAN)
         for (auto it : id) {
-            if (it == ufFind(it)) {
-                synToGroup[it] = synToGroup.size();
+            if (it.first == ufFind(it.first)) {
+                synToGroup[it.first] = synToGroup.size();
+                groups.push_back({});
             }
         }
         for (auto& result : resultsWithSynonyms) {

@@ -16,6 +16,7 @@
     <ClCompile Include="..\source\Dispatcher.cpp" />
     <ClCompile Include="..\source\Evaluator.cpp" />
     <ClCompile Include="..\source\NestedResult.cpp" />
+    <ClCompile Include="..\source\Optim.cpp" />
     <ClCompile Include="..\source\Parser.cpp" />
     <ClCompile Include="..\source\PKB.cpp" />
     <ClCompile Include="..\source\PKBAffects.cpp" />
@@ -47,6 +48,7 @@
     <ClInclude Include="..\source\Entity.h" />
     <ClInclude Include="..\source\Evaluator.h" />
     <ClInclude Include="..\source\NestedResult.h" />
+    <ClInclude Include="..\source\Optim.h" />
     <ClInclude Include="..\source\Parser.h" />
     <ClInclude Include="..\source\PKB.h" />
     <ClInclude Include="..\source\PKBAffects.h" />

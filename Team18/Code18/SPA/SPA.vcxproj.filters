@@ -156,6 +156,9 @@
     <ClCompile Include="..\source\PKBWith.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\source\Optim.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\source\Clause.h">
@@ -327,6 +330,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\source\PKBWith.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\Optim.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
