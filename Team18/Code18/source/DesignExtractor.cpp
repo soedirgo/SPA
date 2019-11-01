@@ -9,6 +9,7 @@
 #include "PKBModifies.h"
 #include "PKBAffects.h"
 #include "PKBPattern.h"
+#include "PKBProcedure.h"
 #include <algorithm>
 #include <queue>
 
@@ -23,8 +24,10 @@ void DesignExtractor::extractDesign()
 	extractModifiesS();
 	extractUsesP();
 	extractUsesS();
+	extractNextBip();
+	extractNextBipT();
 
-	//TABLE test = PKBPattern::getAssignPatternTable();
+	//TABLE test = PKBNext::getNextBipTable();
 	//int i = test.size();
 	//TABLE test = PKBUses::getUsesPTable();
 	//int i = test.size();
@@ -181,6 +184,57 @@ void DesignExtractor::extractNextT()
 		string n2 = vectorIter.back();
 		PKBNext::setNextT(n1, n2);
 		recurseNext(n1, n2);
+	}
+}
+
+void DesignExtractor::extractNextBip() {
+	TABLE nextTable = PKBNext::getNextTable();
+	TABLE callTable = PKBCall::getCallStmtTable();
+
+	STMT_NO startStmt, endStmt, endAltStmt;
+	for (auto vectorIter : nextTable) {
+		string n1 = vectorIter.front();
+		string n2 = vectorIter.back();
+		for (auto vectorIter2 : callTable) {
+			if (n2 == vectorIter2.front()) {
+				PROC_NAME callee = vectorIter2.back();
+				TABLE procedureTable = PKBProcedure::getProcedureStartEnd(callee);
+				
+				if (procedureTable.size() > 0) {
+					
+					for (auto vectorIter3 : procedureTable) {
+						startStmt = vectorIter3[0];
+						endStmt = vectorIter3[1];
+						endAltStmt = vectorIter3[2];
+					}
+					PKBNext::setNextBip(n2, startStmt);
+					STMT_NO nextStmt;
+					TABLE nextValue = PKBNext::getNextIdentEnt(n2,"prog_line");
+					for (auto vectorIter3 : nextValue) {
+						nextStmt = vectorIter3.front();
+						if (!(nextStmt == "")) {
+							PKBNext::setNextBip(endStmt, nextStmt);
+							if (!(endAltStmt == "")) {
+								PKBNext::setNextBip(endAltStmt, nextStmt);
+							}
+						}
+					}
+				}
+			}
+			//no call stmt
+			PKBNext::setNextBip(n1, n2);
+		}
+	}
+}
+
+void DesignExtractor::extractNextBipT()
+{
+	TABLE nextBipTable = PKBNext::getNextBipTable();
+	for (auto vectorIter : nextBipTable) {
+		string n1 = vectorIter.front();
+		string n2 = vectorIter.back();
+		PKBNext::setNextBipT(n1, n2);
+		recurseNextBipT(n1, n2);
 	}
 }
 
@@ -473,7 +527,7 @@ void DesignExtractor::recurseParent(STMT_NO parent, STMT_NO child) {
 }
 
 void DesignExtractor::recurseNext(PROG_LINE nextByLine, PROG_LINE nextLine) {
-	LINE_LIST lineList = PKBNext::getNext(nextLine);
+	LINE_LIST lineList = PKBNext::getNextIdentEnt(nextLine, "stmt");
 	if (lineList.size() == 0) {
 		return;
 	}
@@ -483,6 +537,23 @@ void DesignExtractor::recurseNext(PROG_LINE nextByLine, PROG_LINE nextLine) {
 		if (!PKBNext::isNextTInserted(nextByLine, newNextLine)) {
 			PKBNext::setNextT(nextByLine, newNextLine);
 			recurseNext(nextByLine, newNextLine);
+
+		}
+
+	}
+}
+
+void DesignExtractor::recurseNextBipT(PROG_LINE nextByLine, PROG_LINE nextLine) {
+	LINE_LIST lineList = PKBNext::getNextBipIdentEnt(nextLine,"stmt");
+	if (lineList.size() == 0) {
+		return;
+	}
+
+	for (auto vectorIter : lineList) {
+		PROG_LINE newNextLine = vectorIter.back();
+		if (!PKBNext::isNextBipTInserted(nextByLine, newNextLine)) {
+			PKBNext::setNextBipT(nextByLine, newNextLine);
+			recurseNextBipT(nextByLine, newNextLine);
 
 		}
 

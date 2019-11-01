@@ -393,8 +393,8 @@ PROC_LIST PKB::getProcedures() {
 };
 
 
-bool PKB::setProcedure(PROC_NAME procName) {
-	return PKBProcedure::setProcedure(procName);
+bool PKB::setProcedure(PROC_NAME procName,STMT_NO start, STMT_NO end, STMT_NO endAlt) {
+	return PKBProcedure::setProcedure(procName, start, end, endAlt);
 };
 
 
@@ -524,6 +524,32 @@ bool PKB::isNextTIdentIdent(PROG_LINE n1, PROG_LINE n2) {
 	return PKBNext::isNextTIdentIdent(n1,n2);
 }
 
+bool PKB::isNextBipAnyAny() {
+	return PKBNext::isNextBipAnyAny();
+}
+bool PKB::isNextBipAnyIdent(PROG_LINE n2) {
+	return PKBNext::isNextBipAnyIdent(n2);
+}
+bool PKB::isNextBipIdentAny(PROG_LINE n1) {
+	return PKBNext::isNextBipIdentAny(n1);
+}
+bool PKB::isNextBipIdentIdent(PROG_LINE n1, PROG_LINE n2) {
+	return PKBNext::isNextBipIdentIdent(n1, n2);
+}
+
+bool PKB::isNextBipTAnyAny() {
+	return PKBNext::isNextBipTAnyAny();
+}
+bool PKB::isNextBipTAnyIdent(PROG_LINE n2) {
+	return PKBNext::isNextBipTAnyIdent(n2);
+}
+bool PKB::isNextBipTIdentAny(PROG_LINE n1) {
+	return PKBNext::isNextBipTIdentAny(n1);
+}
+bool PKB::isNextBipTIdentIdent(PROG_LINE n1, PROG_LINE n2) {
+	return PKBNext::isNextBipTIdentIdent(n1, n2);
+}
+
 //Next Table Evaluation
 TABLE PKB::getNextAnyEnt(STMT_TYPE stmtType) {
 	return PKBNext::getNextAnyEnt(stmtType);
@@ -556,9 +582,43 @@ TABLE PKB::getNextTEntIdent(STMT_TYPE stmtType, PROG_LINE n2) {
 TABLE PKB::getNextTEntEnt(STMT_TYPE stmtType1, STMT_TYPE stmtType2) {
 	return PKBNext::getNextTEntEnt(stmtType1, stmtType2);
 }
-
 TABLE PKB::getNextTSelf(STMT_TYPE stmtType) {
 	return PKBNext::getNextTSelf(stmtType);
+}
+
+TABLE PKB::getNextBipAnyEnt(STMT_TYPE stmtType) {
+	return PKBNext::getNextBipAnyEnt(stmtType);
+}
+TABLE PKB::getNextBipIdentEnt(PROG_LINE n1, STMT_TYPE stmtType) {
+	return PKBNext::getNextBipIdentEnt(n1, stmtType);
+}
+TABLE PKB::getNextBipEntAny(STMT_TYPE stmtType) {
+	return PKBNext::getNextBipEntAny(stmtType);
+}
+TABLE PKB::getNextBipEntIdent(STMT_TYPE stmtType, PROG_LINE n2) {
+	return PKBNext::getNextBipEntIdent(stmtType, n2);
+}
+TABLE PKB::getNextBipEntEnt(STMT_TYPE stmtType1, STMT_TYPE stmtType2) {
+	return PKBNext::getNextBipEntEnt(stmtType1, stmtType2);
+}
+
+TABLE PKB::getNextBipTAnyEnt(STMT_TYPE stmtType) {
+	return PKBNext::getNextBipTAnyEnt(stmtType);
+}
+TABLE PKB::getNextBipTIdentEnt(PROG_LINE n1, STMT_TYPE stmtType) {
+	return PKBNext::getNextBipTIdentEnt(n1, stmtType);
+}
+TABLE PKB::getNextBipTEntAny(STMT_TYPE stmtType) {
+	return PKBNext::getNextBipTEntAny(stmtType);
+}
+TABLE PKB::getNextBipTEntIdent(STMT_TYPE stmtType, PROG_LINE n2) {
+	return PKBNext::getNextBipTEntIdent(stmtType, n2);
+}
+TABLE PKB::getNextBipTEntEnt(STMT_TYPE stmtType1, STMT_TYPE stmtType2) {
+	return PKBNext::getNextBipTEntEnt(stmtType1, stmtType2);
+}
+TABLE PKB::getNextBipTSelf(STMT_TYPE stmtType) {
+	return PKBNext::getNextBipTSelf(stmtType);
 }
 
 bool PKB::isAffectsAnyAny() {

@@ -9,13 +9,17 @@ public:
 
 	static bool setNext(PROG_LINE nextByLine, PROG_LINE nextLine);
 	static bool setNextT(PROG_LINE nextByLine, PROG_LINE nextLine);
+	static bool setNextBip(PROG_LINE nextByLine, PROG_LINE nextLine);
+	static bool setNextBipT(PROG_LINE nextByLine, PROG_LINE nextLine);
 	static LINE_LIST getNext(PROG_LINE nextByLine);
 
 	static TABLE getNextTable();
 	static TABLE getNextTTable();
+	static TABLE getNextBipTable();
 
 	//Helper
 	static bool isNextTInserted(PROG_LINE n1, PROG_LINE n2);
+	static bool isNextBipTInserted(PROG_LINE n1, PROG_LINE n2);
 
 	//Bool Evaluation
 	static bool isNextAnyAny();
@@ -27,6 +31,16 @@ public:
 	static bool isNextTAnyIdent(PROG_LINE n2);
 	static bool isNextTIdentAny(PROG_LINE n1);
 	static bool isNextTIdentIdent(PROG_LINE n1, PROG_LINE n2);
+
+	static bool isNextBipAnyAny();
+	static bool isNextBipAnyIdent(PROG_LINE n2);
+	static bool isNextBipIdentAny(PROG_LINE n1);
+	static bool isNextBipIdentIdent(PROG_LINE n1, PROG_LINE n2);
+
+	static bool isNextBipTAnyAny();
+	static bool isNextBipTAnyIdent(PROG_LINE n2);
+	static bool isNextBipTIdentAny(PROG_LINE n1);
+	static bool isNextBipTIdentIdent(PROG_LINE n1, PROG_LINE n2);
 
 	//Table Evaluation
 	static TABLE getNextAnyEnt(STMT_TYPE stmtType);
@@ -42,6 +56,19 @@ public:
 	static TABLE getNextTEntEnt(STMT_TYPE stmtType1, STMT_TYPE stmtType2);
 	static TABLE getNextTSelf(STMT_TYPE stmtType);
 
+	static TABLE getNextBipAnyEnt(STMT_TYPE stmtType);
+	static TABLE getNextBipIdentEnt(PROG_LINE n1, STMT_TYPE stmtType);
+	static TABLE getNextBipEntAny(STMT_TYPE stmtType);
+	static TABLE getNextBipEntIdent(STMT_TYPE stmtType, PROG_LINE n2);
+	static TABLE getNextBipEntEnt(STMT_TYPE stmtType1, STMT_TYPE stmtType2);
+
+	static TABLE getNextBipTAnyEnt(STMT_TYPE stmtType);
+	static TABLE getNextBipTIdentEnt(PROG_LINE n1, STMT_TYPE stmtType);
+	static TABLE getNextBipTEntAny(STMT_TYPE stmtType);
+	static TABLE getNextBipTEntIdent(STMT_TYPE stmtType, PROG_LINE n2);
+	static TABLE getNextBipTEntEnt(STMT_TYPE stmtType1, STMT_TYPE stmtType2);
+	static TABLE getNextBipTSelf(STMT_TYPE stmtType);
+
 	// Clear
 	static bool clear();
 
@@ -51,4 +78,6 @@ public:
 private:
 	static TABLE nextTable;
 	static TABLE nextTTable;
+	static TABLE nextBipTable;
+	static TABLE nextBipTTable;
 };
