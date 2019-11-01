@@ -11,6 +11,8 @@
 #include "PKBPattern.h"
 #include <algorithm>
 #include <queue>
+#include <stack>
+#include <map>
 
 using namespace std;
 
@@ -586,10 +588,35 @@ bool DesignExtractor::traverseAffects(STMT_NO a1, STMT_NO a2, VAR_NAME v) {
 
 bool DesignExtractor::recurseAffectsT(STMT_NO a1, STMT_NO a2) {
 	TABLE affectsA1 = PKB::getAffectsIdentEnt(a1);
+	stack<STMT_NO> frontier;
+	map<STMT_NO, bool> visited;
+
 	for (auto elem : affectsA1) {
 		STMT_NO next = elem.back();
-		if (PKB::isAffectsTIdentIdent(next, a2)) {
+		PKBAffects::setAffectsT(a1, next);
+		PKBAffects::setCheckedAffectsT(a1, next);
+		if (next == a2) {
 			return true;
+		}
+		frontier.push(next);
+		visited.insert(make_pair(next, true));
+	}
+
+	while (!frontier.empty()) {
+		STMT_NO item = frontier.top();
+		frontier.pop();
+		TABLE affectsCurr = PKB::getAffectsIdentEnt(item);
+		for (auto affect : affectsCurr) {
+			STMT_NO curr = affect.back();
+			if (visited.find(curr) == visited.end()) {
+				PKBAffects::setAffectsT(a1, curr);
+				PKBAffects::setCheckedAffectsT(a1, curr);
+				if (curr == a2) {
+					return true;
+				}
+				frontier.push(curr);
+				visited.insert(make_pair(curr, true));
+			}
 		}
 	}
 	return false;
