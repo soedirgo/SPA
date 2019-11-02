@@ -18,7 +18,7 @@ PROC_NAME PKBProcedure::getProcByStmt(STMT_NO stmtNo) {
 	}
 };
 
-bool PKBProcedure::setProcedure(PROC_NAME procName, STMT_NO startStmt, STMT_LIST endStmtList) {
+bool PKBProcedure::setProcedure(PROC_NAME procName, STMT_NO startStmtNo, STMT_LIST endStmtList) {
 	vector<string> tuple = vector<string>();
 	for (auto vectorIter : endStmtList) {
 		STMT_NO endStmtNo = vectorIter.front();

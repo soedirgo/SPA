@@ -35,7 +35,7 @@ void DesignExtractor::extractDesign()
 	//int i = test.size();
 	//TABLE test2 = PKBCall::getCallProcTable();
 	//int i2 = test2.size();
-	
+
 	//extractAffectsT();
 }
 
@@ -279,16 +279,16 @@ void DesignExtractor::extractNextBip() {
 			if (n2 == vectorIter2.front()) {
 				PROC_NAME callee = vectorIter2.back();
 				TABLE procedureTable = PKBProcedure::getProcedureStartEnd(callee);
-				
+
 				if (procedureTable.size() > 0) {
-					
+
 					for (auto vectorIter3 : procedureTable) {
 						startStmt = vectorIter3[0];
 						endStmt = vectorIter3[1];
 					}
 					PKBNext::setNextBip(n2, startStmt);
 					STMT_NO nextStmt;
-					TABLE nextValue = PKBNext::getNextIdentEnt(n2,"prog_line");
+					TABLE nextValue = PKBNext::getNextIdentEnt(n2, "prog_line");
 					for (auto vectorIter3 : nextValue) {
 						nextStmt = vectorIter3.front();
 						if (!(nextStmt == "")) {
@@ -641,7 +641,7 @@ void DesignExtractor::recurseNextReverse(PROG_LINE nextByLine, PROG_LINE nextLin
 }
 
 void DesignExtractor::recurseNextBipT(PROG_LINE nextByLine, PROG_LINE nextLine) {
-	LINE_LIST lineList = PKBNext::getNextBipIdentEnt(nextLine,"stmt");
+	LINE_LIST lineList = PKBNext::getNextBipIdentEnt(nextLine, "stmt");
 	if (lineList.size() == 0) {
 		return;
 	}
