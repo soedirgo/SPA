@@ -529,7 +529,7 @@ void DesignExtractor::recurseParent(STMT_NO parent, STMT_NO child) {
 }
 
 void DesignExtractor::recurseNext(PROG_LINE nextByLine, PROG_LINE nextLine) {
-	LINE_LIST lineList = PKBNext::getNextIdentEnt(nextLine, "stmt");
+	LINE_LIST lineList = PKBNext::getNext(nextLine);
 	if (lineList.size() == 0) {
 		return;
 	}

@@ -54,6 +54,19 @@ bool PKBNext::getNextT(PROG_LINE currentLine, PROG_LINE nextLine) {
 	return false;
 }
 
+LINE_LIST PKBNext::getNext(PROG_LINE nextByLine) {
+	LINE_LIST list;
+	for (auto vectorIter : nextTable) {
+		if (vectorIter.front() == nextByLine) {
+			vector<string> tuple = vector<string>();
+			tuple.push_back(vectorIter.back());
+			list.emplace(tuple);
+		}
+	}
+	return list;
+}
+
+
 TABLE PKBNext::getNextTable() {
 	return nextTable;
 }
