@@ -492,10 +492,13 @@ TABLE PKBNext::getNextTEntIdent(STMT_TYPE type, PROG_LINE stmtNo) {
 TABLE PKBNext::getNextTEntEnt(STMT_TYPE type1, STMT_TYPE type2) {
 	
 	TABLE resultTable;
+	STMT_LIST list1, list2;
 	if (type1 == "stmt" && type2 == "stmt") {
+		list1 = PKBStmt::getStmts();
+		list2 = PKBStmt::getStmts();
+		DesignExtractor::extractNextT(list1, list2);
 		return nextTTable;
 	}
-	STMT_LIST list1, list2;
 	if (type1 == "stmt" || type1 == "prog_line") {
 		list1 = PKBStmt::getStmts();
 	}

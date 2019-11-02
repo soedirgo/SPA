@@ -180,7 +180,28 @@ void DesignExtractor::isAffectsT(STMT_NO a1, STMT_NO a2) {
 
 void DesignExtractor::extractNextT(STMT_LIST nextTList1, STMT_LIST nextTList2)
 {
-	if (nextTList2.size() <= nextTList1.size()) {
+	//For Next*("1", n)
+	if (nextTList1.size() == 1) {
+		for (auto vectorIter1 : nextTList1) {
+			TABLE nextTable = PKBNext::getNextTable();
+			for (auto vectorIter2 : nextTable) {
+				PROG_LINE next1 = vectorIter2.front();
+				PROG_LINE next2 = vectorIter2.back();
+				//optimization
+				if (vectorIter1.front() == next1) {
+					bool nextTValue = PKBNext::isNextT(next1, next2);
+					//optimization
+					if (nextTValue == false) {
+						PKBNext::setNextT(next1, next2);
+						//Recursive forward
+						recurseNext(next1, next2);
+					}
+				}
+			}
+		}
+	}
+	//For Next*(n,"1")
+	else if (nextTList2.size() == 1) {
 		for (auto vectorIter1 : nextTList2) {
 			TABLE nextTable = PKBNext::getNextTable();
 			for (auto vectorIter2 : nextTable) {
@@ -192,12 +213,14 @@ void DesignExtractor::extractNextT(STMT_LIST nextTList1, STMT_LIST nextTList2)
 					//optimization
 					if (nextTValue == false) {
 						PKBNext::setNextT(next1, next2);
+						//Recursive backward
 						recurseNextReverse(next1, next2);
 					}
 				}
 			}
 		}
 	}
+	//For Next*(n,n)
 	else {
 		for (auto vectorIter1 : nextTList1) {
 			TABLE nextTable = PKBNext::getNextTable();
@@ -210,7 +233,25 @@ void DesignExtractor::extractNextT(STMT_LIST nextTList1, STMT_LIST nextTList2)
 					//optimization
 					if (nextTValue == false) {
 						PKBNext::setNextT(next1, next2);
+						//Recursive forward
 						recurseNext(next1, next2);
+					}
+				}
+			}
+		}
+		for (auto vectorIter1 : nextTList2) {
+			TABLE nextTable = PKBNext::getNextTable();
+			for (auto vectorIter2 : nextTable) {
+				PROG_LINE next1 = vectorIter2.front();
+				PROG_LINE next2 = vectorIter2.back();
+				//optimization
+				if (vectorIter1.front() == next2) {
+					bool nextTValue = PKBNext::isNextT(next1, next2);
+					//optimization
+					if (nextTValue == false) {
+						PKBNext::setNextT(next1, next2);
+						//Recursive backward
+						recurseNextReverse(next1, next2);
 					}
 				}
 			}
