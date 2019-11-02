@@ -27,7 +27,7 @@ void DesignExtractor::extractDesign()
 	extractUsesP();
 	extractUsesS();
 	extractNextBip();
-	//extractNextBipT();
+	extractNextBipT();
 
 	TABLE test = PKBNext::getNextBipTable();
 	int i = test.size();
@@ -662,7 +662,7 @@ void DesignExtractor::recurseNextReverse(PROG_LINE nextByLine, PROG_LINE nextLin
 }
 
 void DesignExtractor::recurseNextBipT(PROG_LINE nextByLine, PROG_LINE nextLine) {
-	LINE_LIST lineList = PKBNext::getNextBipIdentEnt(nextLine, "stmt");
+	LINE_LIST lineList = PKBNext::getNextBip(nextLine);
 	if (lineList.size() == 0) {
 		return;
 	}
