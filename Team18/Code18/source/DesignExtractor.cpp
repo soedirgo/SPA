@@ -191,28 +191,7 @@ void DesignExtractor::isAffectsT(STMT_NO a1, STMT_NO a2) {
 void DesignExtractor::extractNextT(STMT_LIST nextTList1, STMT_LIST nextTList2)
 {
 	//Check which stmtList size is smaller and do recursive forward / backward 
-	if (nextTList1.size() <= nextTList2.size() && nextTList1.size() > 0) {
-		for (auto vectorIter1 : nextTList1) {
-			TABLE nextTable = PKBNext::getNextTable();
-			for (auto vectorIter2 : nextTable) {
-				PROG_LINE next1 = vectorIter2.front();
-				PROG_LINE next2 = vectorIter2.back();
-				//optimization
-				if (vectorIter1.front() == next1) {
-					bool nextTValue = PKBNext::isNextT(next1, next2);
-					//optimization
-					if (nextTValue == false) {
-						PKBNext::setNextT(next1, next2);
-						vector<string> visted = {};
-						visted.push_back(next2);
-						//Recursive forward
-						recurseNext(next1, next2, visted);
-					}
-				}
-			}
-		}
-	}
-	else {
+	if (nextTList2.size() <= nextTList1.size() && nextTList2.size() > 0) {
 		for (auto vectorIter1 : nextTList2) {
 			TABLE nextTable = PKBNext::getNextTable();
 			for (auto vectorIter2 : nextTable) {
@@ -232,6 +211,28 @@ void DesignExtractor::extractNextT(STMT_LIST nextTList1, STMT_LIST nextTList2)
 				}
 			}
 		}
+	}
+	else {
+		for (auto vectorIter1 : nextTList1) {
+			TABLE nextTable = PKBNext::getNextTable();
+			for (auto vectorIter2 : nextTable) {
+				PROG_LINE next1 = vectorIter2.front();
+				PROG_LINE next2 = vectorIter2.back();
+				//optimization
+				if (vectorIter1.front() == next1) {
+					bool nextTValue = PKBNext::isNextT(next1, next2);
+					//optimization
+					if (nextTValue == false) {
+						PKBNext::setNextT(next1, next2);
+						vector<string> visted = {};
+						visted.push_back(next2);
+						//Recursive forward
+						recurseNext(next1, next2, visted);
+					}
+				}
+			}
+		}
+		
 	}
 	/*
 	else {
