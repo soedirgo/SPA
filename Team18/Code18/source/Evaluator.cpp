@@ -73,7 +73,7 @@ namespace Evaluator {
         }
 
         // group the results into no synonym, select synonym group, and other groups
-        vector<vector<Result>> allResults = group(ungroupedResults, selSyns);
+        vector<vector<Result>>& allResults = group(ungroupedResults, selSyns);
         noSynGroup = allResults[0];
         selSynGroup = allResults[1];
         otherGroups = vector<vector<Result>>(allResults.begin() + 2, allResults.end());

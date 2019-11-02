@@ -1,5 +1,6 @@
 #include "Optim.h"
 #include "Result.h"
+#include <algorithm>
 #include <string>
 #include <unordered_map>
 #include <vector>
@@ -19,16 +20,16 @@ namespace Evaluator {
         void ufUnion(int i, int j) {
             int iRep = ufFind(i);
             int jRep = ufFind(j);
-            id[jRep] = iRep;
+            id[max(iRep, jRep)] = min(iRep, jRep);
         }
     }
 
-    vector<vector<Result>> group(vector<Result> results,
-                                 vector<string> selSyns) {
+    vector<vector<Result>> group(vector<Result>& results,
+                                 vector<string>& selSyns) {
         // separate result tables with no synonym
         vector<Result> noSynGroup;
         vector<Result> resultsWithSynonyms;
-        for (auto& result : results) {
+        for (const auto& result : results) {
             if (result.getSynonyms().size())
                 resultsWithSynonyms.push_back(result);
             else
@@ -39,8 +40,8 @@ namespace Evaluator {
 
         // get all synonyms
         unordered_map<string, int> synonyms;
-        for (auto& result : resultsWithSynonyms) {
-            for (auto& syn : result.getSynonyms())
+        for (const auto& result : resultsWithSynonyms) {
+            for (const auto& syn : result.getSynonyms())
                 if (!synonyms.count(syn.first))
                     synonyms[syn.first] = synonyms.size();
         }
@@ -52,12 +53,12 @@ namespace Evaluator {
 
         // build synonym connections
         if (selSyns[0] != "BOOLEAN")
-            for (auto& syn : selSyns) {
+            for (const auto& syn : selSyns) {
                 ufUnion(synonyms[selSyns[0]], synonyms[syn]);
             }
-        for (auto& result : resultsWithSynonyms) {
+        for (const auto& result : resultsWithSynonyms) {
             vector<string> resultSynonyms;
-            for (auto& syn : result.getSynonyms()) {
+            for (const auto& syn : result.getSynonyms()) {
                 resultSynonyms.push_back(syn.first);
             }
             if (resultSynonyms.size() == 2)
@@ -79,13 +80,13 @@ namespace Evaluator {
         groups.push_back({});
         // add other groups (including select synonyms group, if not BOOLEAN)
         // assume first group is always select synonyms (if not BOOLEAN)
-        for (auto it : id) {
+        for (const auto& it : id) {
             if (it.first == ufFind(it.first)) {
                 synToGroup[it.first] = synToGroup.size();
                 groups.push_back({});
             }
         }
-        for (auto& result : resultsWithSynonyms) {
+        for (const auto& result : resultsWithSynonyms) {
             string syn = result.getSynonyms().begin()->first;
             int groupIdx = synToGroup[ufFind(synonyms[syn])];
             groups[groupIdx].push_back(result);
