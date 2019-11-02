@@ -48,6 +48,24 @@ int Parser::Parse(string filename) {
 		if (line.find("procedure") != string::npos) {
 			if (stmtNo != 1) {
 				procedures.push_back(currProc);
+				if (prevIf) {
+					vector<STMT_NO> ends;
+					for (auto elem : prevIfStmtNo) {
+						ends.push_back(to_string(elem));
+					}
+					pkb.setProcedure(currProc.getProcName(), to_string(startStmtNo), ends);
+				}
+				else if (prevWhile) {
+					vector<STMT_NO> ends;
+					ends.push_back(to_string(prevWhileStmtNo));
+					pkb.setProcedure(currProc.getProcName(), to_string(startStmtNo), ends);
+				}
+				else {
+					vector<STMT_NO> ends;
+					int end = stmtNo - 1;
+					ends.push_back(to_string(end));
+					pkb.setProcedure(currProc.getProcName(), to_string(startStmtNo), ends);
+				}
 				currProc = NestedResult();
 				startStmtNo = stmtNo;
 				prevIf = false;
@@ -59,7 +77,6 @@ int Parser::Parse(string filename) {
 			}
 			//Calls PKB API to set procedure name
 			currProc.setProcName(header);
-			//pkb.setProcedure(header);
 		}
 		else if (line.find("while") != string::npos && line.find('{') != string::npos) {
 			pkb.setStmt(to_string(stmtNo), "while");
@@ -299,6 +316,24 @@ int Parser::Parse(string filename) {
 		}
 	}
 	procedures.push_back(currProc);
+	if (prevIf) {
+		vector<STMT_NO> ends;
+		for (auto elem : prevIfStmtNo) {
+			ends.push_back(to_string(elem));
+		}
+		pkb.setProcedure(currProc.getProcName(), to_string(startStmtNo), ends);
+	}
+	else if (prevWhile) {
+		vector<STMT_NO> ends;
+		ends.push_back(to_string(prevWhileStmtNo));
+		pkb.setProcedure(currProc.getProcName(), to_string(startStmtNo), ends);
+	}
+	else {
+		vector<STMT_NO> ends;
+		int end = stmtNo - 1;
+		ends.push_back(to_string(end));
+		pkb.setProcedure(currProc.getProcName(), to_string(startStmtNo), ends);
+	}
 	/*
 	//sets all the uses and modifies from the calls statements (brute force now - to be changed to a topo-sort algorithm)
 	for (NestedResult proc : procedures) {
