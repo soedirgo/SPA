@@ -33,6 +33,7 @@ private:
 	static void extractNextBipT();
 
 	static bool traverseAffects(STMT_NO a1, STMT_NO a2, VAR_NAME v);
+	static void traverseAffectsAll(STMT_NO a1, VAR_NAME v);
 	static bool recurseAffectsT(STMT_NO a1, STMT_NO a2);
 	static void recurseModifies(PROC_NAME p);
 	static void recurseUses(PROC_NAME p);
