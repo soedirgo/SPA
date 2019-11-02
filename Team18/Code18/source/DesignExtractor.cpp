@@ -184,7 +184,7 @@ void DesignExtractor::extractNextT()
 	for (auto vectorIter : nextTable) {
 		string n1 = vectorIter.front();
 		string n2 = vectorIter.back();
-		bool nextTValue = PKBNext::getNextT(n1,n2);
+		bool nextTValue = PKBNext::isNextT(n1,n2);
 		//optimization
 		if (nextTValue == false) {
 			PKBNext::setNextT(n1, n2);
@@ -235,8 +235,12 @@ void DesignExtractor::extractNextBipT()
 	for (auto vectorIter : nextBipTable) {
 		string n1 = vectorIter.front();
 		string n2 = vectorIter.back();
-		PKBNext::setNextBipT(n1, n2);
-		recurseNextBipT(n1, n2);
+		bool nextBipTValue = PKBNext::isNextBipT(n1, n2);
+		//optimization
+		if (nextBipTValue == false) {
+			PKBNext::setNextBipT(n1, n2);
+			recurseNextBipT(n1, n2);
+		}
 	}
 }
 
@@ -536,7 +540,7 @@ void DesignExtractor::recurseNext(PROG_LINE nextByLine, PROG_LINE nextLine) {
 
 	for (auto vectorIter : lineList) {
 		PROG_LINE newNextLine = vectorIter.back();
-		if (!PKBNext::isNextTInserted(nextByLine, newNextLine)) {
+		if (!PKBNext::isNextT(nextByLine, newNextLine)) {
 			PKBNext::setNextT(nextByLine, newNextLine);
 			recurseNext(nextByLine, newNextLine);
 
@@ -553,7 +557,7 @@ void DesignExtractor::recurseNextBipT(PROG_LINE nextByLine, PROG_LINE nextLine) 
 
 	for (auto vectorIter : lineList) {
 		PROG_LINE newNextLine = vectorIter.back();
-		if (!PKBNext::isNextBipTInserted(nextByLine, newNextLine)) {
+		if (!PKBNext::isNextBipT(nextByLine, newNextLine)) {
 			PKBNext::setNextBipT(nextByLine, newNextLine);
 			recurseNextBipT(nextByLine, newNextLine);
 

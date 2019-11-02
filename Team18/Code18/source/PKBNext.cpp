@@ -43,7 +43,7 @@ bool PKBNext::setNextBipT(PROG_LINE nextByLine, PROG_LINE nextLine) {
 }
 
 
-bool PKBNext::getNextT(PROG_LINE currentLine, PROG_LINE nextLine) {
+bool PKBNext::isNextT(PROG_LINE currentLine, PROG_LINE nextLine) {
 	for (auto vectorIter : nextTTable) {
 		if (vectorIter.front() == currentLine) {
 			if (vectorIter.back() == nextLine) {
@@ -144,18 +144,8 @@ bool PKBNext::isNextTIdentIdent(PROG_LINE currentLine, PROG_LINE nextLine) {
 	return false;
 }
 
-bool PKBNext::isNextTInserted(PROG_LINE currentLine, PROG_LINE nextLine) {
-	for (auto vectorIter : nextTTable) {
-		if (vectorIter.front() == currentLine) {
-			if (vectorIter.back() == nextLine) {
-				return true;
-			}
-		}
-	}
-	return false;
-}
 
-bool PKBNext::isNextBipTInserted(PROG_LINE currentLine, PROG_LINE nextLine) {
+bool PKBNext::isNextBipT(PROG_LINE currentLine, PROG_LINE nextLine) {
 	for (auto vectorIter : nextBipTTable) {
 		if (vectorIter.front() == currentLine) {
 			if (vectorIter.back() == nextLine) {

@@ -11,7 +11,6 @@ public:
 	static bool setNextT(PROG_LINE nextByLine, PROG_LINE nextLine);
 	static bool setNextBip(PROG_LINE nextByLine, PROG_LINE nextLine);
 	static bool setNextBipT(PROG_LINE nextByLine, PROG_LINE nextLine);
-	static bool getNextT(PROG_LINE nextByLine, PROG_LINE nextLine);
 	static STMT_LIST getNext(PROG_LINE nextByLine);
 
 	static TABLE getNextTable();
@@ -19,8 +18,8 @@ public:
 	static TABLE getNextBipTable();
 
 	//Helper
-	static bool isNextTInserted(PROG_LINE n1, PROG_LINE n2);
-	static bool isNextBipTInserted(PROG_LINE n1, PROG_LINE n2);
+	static bool isNextBipT(PROG_LINE n1, PROG_LINE n2);
+	static bool isNextT(PROG_LINE nextByLine, PROG_LINE nextLine);
 
 	//Bool Evaluation
 	static bool isNextAnyAny();
