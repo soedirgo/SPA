@@ -142,7 +142,7 @@ namespace UnitTesting
 			Assert::IsTrue(PKB.isNextTIdentIdent("9", "6"));
 			Assert::IsTrue(PKB.isNextTIdentIdent("6", "10"));
 			Assert::IsTrue(PKB.isNextTIdentIdent("10", "11"));
-			//Assert::IsTrue(PKB.isNextTIdentIdent("10", "12"));
+			Assert::IsTrue(PKB.isNextTIdentIdent("10", "12"));
 			Assert::IsTrue(PKB.isNextTIdentIdent("11", "13"));
 			Assert::IsTrue(PKB.isNextTIdentIdent("12", "13"));
 			Assert::IsTrue(PKB.isNextTIdentIdent("13", "14"));
@@ -195,12 +195,10 @@ namespace UnitTesting
 			Assert::IsTrue(PKB.isNextTIdentIdent("9", "13"));
 			Assert::IsTrue(PKB.isNextTIdentIdent("9", "14"));
 			Assert::IsTrue(PKB.isNextTIdentIdent("9", "15"));
-			/*
 			Assert::IsTrue(PKB.isNextTIdentIdent("10", "12"));
 			Assert::IsTrue(PKB.isNextTIdentIdent("10", "13"));
 			Assert::IsTrue(PKB.isNextTIdentIdent("10", "14"));
 			Assert::IsTrue(PKB.isNextTIdentIdent("10", "15"));
-			*/
 			Assert::IsTrue(PKB.isNextTIdentIdent("11", "13"));
 			Assert::IsTrue(PKB.isNextTIdentIdent("11", "14"));
 			Assert::IsTrue(PKB.isNextTIdentIdent("11", "15"));
@@ -208,8 +206,6 @@ namespace UnitTesting
 			Assert::IsTrue(PKB.isNextTIdentIdent("12", "15"));
 			Assert::IsTrue(PKB.isNextTIdentIdent("13", "15"));
 			Assert::IsTrue(PKB.isNextTIdentIdent("16", "18"));
-			
-
 			Assert::IsTrue(PKB.isNextTIdentIdent("6", "6"));
 			Assert::IsTrue(PKB.isNextTIdentIdent("7", "7"));
 			Assert::IsTrue(PKB.isNextTIdentIdent("8", "8"));
