@@ -50,9 +50,9 @@ namespace UnitTesting
 			PKBRead.clear();
 			PKBPrint.clear();
 
-			PKBProcedure.setProcedure("First","1","3","");
-			PKBProcedure.setProcedure("Second","4","7","8");
-			PKBProcedure.setProcedure("Third","9","9","");
+			PKBProcedure.setProcedure("First","1", { {"3"} });
+			PKBProcedure.setProcedure("Second","4", { {"7","8"} });
+			PKBProcedure.setProcedure("Third","9", { {"9"} });
 
 			PKBVariable.setVariable("x");
 			PKBVariable.setVariable("i");

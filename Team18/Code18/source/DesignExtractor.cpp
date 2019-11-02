@@ -209,7 +209,6 @@ void DesignExtractor::extractNextBip() {
 					for (auto vectorIter3 : procedureTable) {
 						startStmt = vectorIter3[0];
 						endStmt = vectorIter3[1];
-						endAltStmt = vectorIter3[2];
 					}
 					PKBNext::setNextBip(n2, startStmt);
 					STMT_NO nextStmt;
@@ -218,9 +217,6 @@ void DesignExtractor::extractNextBip() {
 						nextStmt = vectorIter3.front();
 						if (!(nextStmt == "")) {
 							PKBNext::setNextBip(endStmt, nextStmt);
-							if (!(endAltStmt == "")) {
-								PKBNext::setNextBip(endAltStmt, nextStmt);
-							}
 						}
 					}
 				}

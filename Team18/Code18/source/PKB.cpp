@@ -393,8 +393,8 @@ PROC_LIST PKB::getProcedures() {
 };
 
 
-bool PKB::setProcedure(PROC_NAME procName,STMT_NO start, STMT_NO end, STMT_NO endAlt) {
-	return PKBProcedure::setProcedure(procName, start, end, endAlt);
+bool PKB::setProcedure(PROC_NAME procName,STMT_NO start, STMT_LIST end) {
+	return PKBProcedure::setProcedure(procName, start, end);
 };
 
 

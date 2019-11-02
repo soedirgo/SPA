@@ -95,9 +95,9 @@ namespace UnitTesting
 			PKB.setFollows("16", "17");
 			PKB.setFollows("17", "18");
 
-			PKB.setProcedure("First", "1", "2", "");
-			PKB.setProcedure("Second", "4", "11", "15");
-			PKB.setProcedure("Third", "16", "18", "");
+			PKB.setProcedure("First", "1", { {"2"} });
+			PKB.setProcedure("Second", "4", { {"11","15"} });
+			PKB.setProcedure("Third", "16", { {"18"} });
 
 			PKB.setCallStmt("3", "Second");
 			PKB.setCallStmt("8", "Third");

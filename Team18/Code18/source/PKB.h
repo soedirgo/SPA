@@ -26,7 +26,7 @@ public:
 
 	//Procedure Functions
 	static PROC_LIST getProcedures();
-	static bool setProcedure(PROC_NAME procName, STMT_NO start, vector<STMT_NO> end);
+	static bool setProcedure(PROC_NAME procName, STMT_NO start, STMT_LIST end);
 
 	//Print Functions
 	static bool setPrint(STMT_NO stmtNo, VAR_NAME varName);

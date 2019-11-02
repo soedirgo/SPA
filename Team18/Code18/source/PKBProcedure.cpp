@@ -3,13 +3,15 @@ using namespace std;
 
 TABLE PKBProcedure::procedureTable;
 
-bool PKBProcedure::setProcedure(PROC_NAME procName, STMT_NO start, STMT_NO end, STMT_NO endAlt) {
+bool PKBProcedure::setProcedure(PROC_NAME procName, STMT_NO startStmt, STMT_LIST endStmtList) {
 	vector<string> tuple = vector<string>();
-	tuple.push_back(procName);
-	tuple.push_back(start);
-	tuple.push_back(end);
-	tuple.push_back(endAlt);
-	procedureTable.emplace(tuple);
+	for (auto vectorIter : endStmtList) {
+		STMT_NO endStmt = vectorIter.front();
+		tuple.push_back(procName);
+		tuple.push_back(startStmt);
+		tuple.push_back(endStmt);
+		procedureTable.emplace(tuple);
+	}
 	return true;
 };
 
@@ -30,7 +32,6 @@ PROC_LIST PKBProcedure::getProcedureStartEnd(PROC_NAME procName) {
 			vector<string> tuple = vector<string>();
 			tuple.push_back(vectorIter[1]);
 			tuple.push_back(vectorIter[2]);
-			tuple.push_back(vectorIter[3]);
 			list.emplace(tuple);
 		}
 	}

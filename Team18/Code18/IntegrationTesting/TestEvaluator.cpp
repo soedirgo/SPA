@@ -44,8 +44,8 @@ namespace IntegrationTesting
 
             pkb.clear();
 
-            pkb.setProcedure("main","1","3","11");
-            pkb.setProcedure("sub","12","13","");
+            pkb.setProcedure("main","1", { {"3","11"} });
+            pkb.setProcedure("sub","12", { {"13"} });
 
             pkb.setVariable("a");
             pkb.setVariable("b");

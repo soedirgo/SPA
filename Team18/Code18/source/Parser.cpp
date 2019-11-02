@@ -49,21 +49,27 @@ int Parser::Parse(string filename) {
 			if (stmtNo != 1) {
 				procedures.push_back(currProc);
 				if (prevIf) {
-					vector<STMT_NO> ends;
+					STMT_LIST ends;
 					for (auto elem : prevIfStmtNo) {
-						ends.push_back(to_string(elem));
+						vector<string> vec = vector<string>();
+						vec.push_back(to_string(elem));
+						ends.emplace(vec);
 					}
 					pkb.setProcedure(currProc.getProcName(), to_string(startStmtNo), ends);
 				}
 				else if (prevWhile) {
-					vector<STMT_NO> ends;
-					ends.push_back(to_string(prevWhileStmtNo));
+					STMT_LIST ends;
+					vector<string> vec = vector<string>();
+					vec.push_back(to_string(prevWhileStmtNo));
+					ends.emplace(vec);
 					pkb.setProcedure(currProc.getProcName(), to_string(startStmtNo), ends);
 				}
 				else {
-					vector<STMT_NO> ends;
 					int end = stmtNo - 1;
-					ends.push_back(to_string(end));
+					STMT_LIST ends;
+					vector<string> vec = vector<string>();
+					vec.push_back(to_string(end));
+					ends.emplace(vec);
 					pkb.setProcedure(currProc.getProcName(), to_string(startStmtNo), ends);
 				}
 				currProc = NestedResult();
@@ -317,21 +323,27 @@ int Parser::Parse(string filename) {
 	}
 	procedures.push_back(currProc);
 	if (prevIf) {
-		vector<STMT_NO> ends;
+		STMT_LIST ends;
 		for (auto elem : prevIfStmtNo) {
-			ends.push_back(to_string(elem));
+			vector<string> vec = vector<string>();
+			vec.push_back(to_string(elem));
+			ends.emplace(vec);
 		}
 		pkb.setProcedure(currProc.getProcName(), to_string(startStmtNo), ends);
 	}
 	else if (prevWhile) {
-		vector<STMT_NO> ends;
-		ends.push_back(to_string(prevWhileStmtNo));
+		STMT_LIST ends;
+		vector<string> vec = vector<string>();
+		vec.push_back(to_string(prevWhileStmtNo));
+		ends.emplace(vec);
 		pkb.setProcedure(currProc.getProcName(), to_string(startStmtNo), ends);
 	}
 	else {
-		vector<STMT_NO> ends;
 		int end = stmtNo - 1;
-		ends.push_back(to_string(end));
+		STMT_LIST ends;
+		vector<string> vec = vector<string>();
+		vec.push_back(to_string(end));
+		ends.emplace(vec);
 		pkb.setProcedure(currProc.getProcName(), to_string(startStmtNo), ends);
 	}
 	/*

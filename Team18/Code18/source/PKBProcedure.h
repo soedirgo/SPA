@@ -7,7 +7,7 @@
 class PKBProcedure {
 public:
 	static PROC_LIST getProcedures();
-	static bool setProcedure(PROC_NAME procName, STMT_NO start, STMT_NO end, STMT_NO endAlt);
+	static bool setProcedure(PROC_NAME procName, STMT_NO start, STMT_LIST end);
 	static STMT_LIST getProcedureStartEnd(PROC_NAME procName);
 
 	// Clear
