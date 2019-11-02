@@ -2,6 +2,21 @@
 using namespace std;
 
 TABLE PKBProcedure::procedureTable;
+HASHMAP PKBProcedure::procByStmtTable;
+
+bool PKBProcedure::setProcByStmt(STMT_NO stmtNo, PROC_NAME proc) {
+	procByStmtTable.insert(pair<STMT_NO, PROC_NAME>(stmtNo, proc));
+	return true;
+};
+
+PROC_NAME PKBProcedure::getProcByStmt(STMT_NO stmtNo) {
+	if (procByStmtTable.find(stmtNo) != procByStmtTable.end()) {
+		return procByStmtTable[stmtNo];
+	}
+	else {
+		return "";
+	}
+};
 
 bool PKBProcedure::setProcedure(PROC_NAME procName, STMT_NO startStmt, STMT_LIST endStmtList) {
 	vector<string> tuple = vector<string>();
@@ -40,5 +55,6 @@ PROC_LIST PKBProcedure::getProcedureStartEnd(PROC_NAME procName) {
 
 bool PKBProcedure::clear() {
 	procedureTable.clear();
+	procByStmtTable.clear();
 	return true;
 }

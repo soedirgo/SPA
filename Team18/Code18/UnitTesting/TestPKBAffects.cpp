@@ -196,6 +196,7 @@ namespace UnitTesting
 		TEST_METHOD(AffectsRelationship)
 		{
 			PKBAffects PKB;
+			PKB.getAffectsEntEnt();
 			Assert::IsTrue(PKB.isAffectsIdentIdent("4", "7"));
 			Assert::IsTrue(PKB.isAffectsIdentIdent("4", "11"));
 			Assert::IsTrue(PKB.isAffectsIdentIdent("4", "13"));

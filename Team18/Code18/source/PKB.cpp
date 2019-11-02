@@ -388,6 +388,14 @@ VAR_LIST PKB::getAllReadVar() {
 // ProecedureTable APIs
 ////////////////////////////////////
 
+bool PKB::setProcByStmt(STMT_NO stmtNo, PROC_NAME proc) {
+	return PKBProcedure::setProcByStmt(stmtNo, proc);
+};
+
+PROC_NAME PKB::getProcByStmt(STMT_NO stmtNo) {
+	return PKBProcedure::getProcByStmt(stmtNo);
+}
+
 PROC_LIST PKB::getProcedures() {
 	return PKBProcedure::getProcedures();
 };
