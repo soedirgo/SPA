@@ -136,6 +136,12 @@ bool PKBNext::isNextTAnyAny() {
 	return !nextTable.empty();
 }
 bool PKBNext::isNextTAnyIdent(PROG_LINE nextLine) {
+	STMT_LIST emptyList, n2List;
+	vector<string> tuple2 = vector<string>();
+	tuple2.push_back(nextLine);
+	n2List.emplace(tuple2);
+
+	DesignExtractor::extractNextT(emptyList, n2List);
 	for (auto vectorIter : nextTable) {
 		if (vectorIter.back() == nextLine) {
 			return true;
@@ -144,6 +150,12 @@ bool PKBNext::isNextTAnyIdent(PROG_LINE nextLine) {
 	return false;
 }
 bool PKBNext::isNextTIdentAny(PROG_LINE currentLine) {
+	STMT_LIST n1List, emptyList;
+	vector<string> tuple1 = vector<string>();
+	tuple1.push_back(currentLine);
+	n1List.emplace(tuple1);
+
+	DesignExtractor::extractNextT(n1List, emptyList);
 	for (auto vectorIter : nextTable) {
 		if (vectorIter.front() == currentLine) {
 			return true;
@@ -250,6 +262,7 @@ bool PKBNext::isNextBipTIdentIdent(PROG_LINE currentLine, PROG_LINE nextLine) {
 bool PKBNext::clear() {
 	nextTable.clear();
 	nextBipTable.clear();
+	nextBipTTable.clear();
 	return true;
 }
 

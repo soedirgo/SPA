@@ -146,7 +146,6 @@ namespace Evaluator {
         }
         selectResults.sort();
         selectResults.unique();
-		PKB::clearTempPKB();
         return selectResults;
     }
 } // namespace Evaluator 

@@ -58,6 +58,7 @@ void TestWrapper::evaluate(std::string query, std::list<std::string>& results){
         //return;
     //}
 
+	PKB::clearTempPKB();
 	QueryParser queryParser = QueryParser();
 	Query queryObject = queryParser.parse(query);
 	if (queryObject.getSelectSynonyms()[0] == "Invalid") {
@@ -69,7 +70,8 @@ void TestWrapper::evaluate(std::string query, std::list<std::string>& results){
 		results = { "FALSE" };
 		return;
 	}
-
+	//Clears Next*, Affects, Affects* PKB Temp Tables
+	//PKB::clearTempPKB();
 	results = Evaluator::evaluate(queryObject);
 	
 
