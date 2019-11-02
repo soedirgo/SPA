@@ -60,22 +60,13 @@ void TestWrapper::evaluate(std::string query, std::list<std::string>& results){
 
 	QueryParser queryParser = QueryParser();
 	Query queryObject = queryParser.parse(query);
-
-	if (QueryParser::incorrectValidation) {
-		if (QueryParser::incorrectSemanticValidation)
-			results = { "FALSE" };
-		else
-			results = {};
-		return;
-	}
-
-	if (queryObject.getSelectSynonyms()[0] == "Invalidd") {
+	if (queryObject.getSelectSynonyms()[0] == "Invalid") {
 		results = {};
 		return;
 	}
 
-	if (queryObject.getSelectSynonyms()[0] == "Semantic Invalidd") {
-		string results = "FALSE";
+	if (queryObject.getSelectSynonyms()[0] == "Semantic Invalid") {
+		results = { "FALSE" };
 		return;
 	}
 

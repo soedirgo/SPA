@@ -216,7 +216,7 @@ namespace UnitTesting
 			
 			
 		}
-		/*
+		
 		TEST_METHOD(AffectsTRelationship)
 		{
 			PKBAffects PKB;
@@ -240,7 +240,6 @@ namespace UnitTesting
 
 			Assert::IsTrue(PKB.isAffectsTIdentIdent("4", "14"));
 		}
-		*/
 	};
 };
 

@@ -12,7 +12,12 @@ public:
 	static void affectedBy(STMT_NO a1);
 	static void isAffecting(STMT_NO a2);
 	static void isAffects(STMT_NO a1, STMT_NO a2);
+	static void affectsTAll();
+	static void affectedTBy(STMT_NO a1);
+	static void isAffectingT(STMT_NO a2);
+	static void isAffectsT(STMT_NO a1, STMT_NO a2);
 	static void isAffectsSelf();
+	static void isAffectsTSelf();
 
 private:
 	static void extractFollowsT();
@@ -24,6 +29,7 @@ private:
 	static void extractModifiesS();
 
 	static bool traverseAffects(STMT_NO a1, STMT_NO a2, VAR_NAME v);
+	static bool recurseAffectsT(STMT_NO a1, STMT_NO a2);
 	static void recurseModifies(PROC_NAME p);
 	static void recurseUses(PROC_NAME p);
 	static void recurseCall(PROC_NAME p, PROC_NAME q);
