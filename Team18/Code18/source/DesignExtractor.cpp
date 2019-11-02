@@ -180,8 +180,8 @@ void DesignExtractor::isAffectsT(STMT_NO a1, STMT_NO a2) {
 
 void DesignExtractor::extractNextT(STMT_LIST nextTList1, STMT_LIST nextTList2)
 {
-	//For Next*("1", n)
-	if (nextTList1.size() == 1) {
+	//Check which stmtList size is smaller and do recursive forward / backward 
+	if (nextTList1.size() <= nextTList2.size()) {
 		for (auto vectorIter1 : nextTList1) {
 			TABLE nextTable = PKBNext::getNextTable();
 			for (auto vectorIter2 : nextTable) {
@@ -200,8 +200,7 @@ void DesignExtractor::extractNextT(STMT_LIST nextTList1, STMT_LIST nextTList2)
 			}
 		}
 	}
-	//For Next*(n,"1")
-	else if (nextTList2.size() == 1) {
+	else {
 		for (auto vectorIter1 : nextTList2) {
 			TABLE nextTable = PKBNext::getNextTable();
 			for (auto vectorIter2 : nextTable) {
@@ -220,7 +219,7 @@ void DesignExtractor::extractNextT(STMT_LIST nextTList1, STMT_LIST nextTList2)
 			}
 		}
 	}
-	//For Next*(n,n)
+	/*
 	else {
 		for (auto vectorIter1 : nextTList1) {
 			TABLE nextTable = PKBNext::getNextTable();
@@ -257,6 +256,7 @@ void DesignExtractor::extractNextT(STMT_LIST nextTList1, STMT_LIST nextTList2)
 			}
 		}
 	}
+	*/
 }
 
 void DesignExtractor::extractNextBip() {
