@@ -1,0 +1,129 @@
+procedure A {
+  a = c - 2;
+  b = (a + 4) / 2;
+  c = b * 3;
+  read a;
+  print b;
+  d = a + b - c % d;
+  if (a <= b) then {
+    b = 10;
+    c = b % 4; }
+  else {
+    d = d * d + c; }
+  while (a + b != c) {
+    b = d;
+    call B;
+    c = b - d; }
+  e = (b + c) / a + 5;
+}
+
+procedure B {
+  if (a * c != d * c) then {
+    d = e + a; }
+  else {
+    print d; }
+  a = d;
+}
+
+procedure C {
+  Mon = a;
+  Tue = Wed;
+  if (Mon <= Tue) then {
+    Wed = Tue * Fri;
+    Thu = Tue + Wed;
+    call D; }
+  else {
+    Fri = Mon - Wed;
+    Mon = Fri; }
+  Sat = Fri - Wed;
+  Wed = Thu;
+  Tue = Wed;
+  Fri = 10 % 2;
+  Sun = Sat + Fri;
+  Week = Sun + Mon - Tue / Wed;
+}
+
+procedure D {
+  while (date == day) {
+    read Tue;
+    call E; }
+  print Thu;
+}
+
+procedure E {
+  Wed = Mon + 2;
+  print Week;
+}
+
+procedure F {
+  red = 1;
+  orange = 2;
+  while (red <= orange + 1) {
+    yellow = red + orange;
+    green = green + yellow + blue;
+    blue = blue + green;
+    call G;
+    if (white != black) then {
+      white = white - black; }
+    else {
+      black = black + white; }
+    call H;
+    purple = green - green + blue + red; }
+  color1 = color1 + red + green + blue;
+  color2 = color1 + yellow + orange;
+  color3 = color2 + purple;
+}
+
+procedure G {
+  read yellow;
+  orange = red + yellow;
+}
+
+procedure H {
+  print red;
+  green = blue + yellow + red - red;
+}
+
+procedure I {
+  i = j * k;
+  while (i < j) {
+    k = i + j;
+    j = k * i;
+    if (i < k) then {
+      read j;
+      k = k + j;
+      while (fact == fiction) {
+        i = k; } 
+      read i; }
+    else {
+      i = j * k + i;
+      if (fact != fiction) then {
+        j = j - k;
+        i = i + k - j;
+        read j;
+        k = k; }
+      else {
+        read k;
+        read i; } } 
+    i = i % j - k; }
+  k = i * j;
+}
+
+procedure J {
+  sky = 2;
+  ground = 1;
+  call K;
+  earth = sky + ground;
+}
+
+procedure K {
+  if (sky != ground) then {
+    print sky;
+    print ground; }
+  else {
+    call L; }
+}
+
+procedure L {
+  sky = ground + 9;
+}
