@@ -29,8 +29,8 @@ void DesignExtractor::extractDesign()
 	extractNextBip();
 	extractNextBipT();
 
-	//TABLE test = PKBNext::getNextBipTable();
-	//int i = test.size();
+	TABLE test = PKBNext::getNextBipTable();
+	int i = test.size();
 	//TABLE test = PKBUses::getUsesPTable();
 	//int i = test.size();
 	//TABLE test2 = PKBCall::getCallProcTable();

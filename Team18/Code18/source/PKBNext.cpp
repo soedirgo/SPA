@@ -78,6 +78,17 @@ LINE_LIST PKBNext::getNextBy(PROG_LINE nextLine) {
 	return list;
 }
 
+LINE_LIST PKBNext::getNextBip(PROG_LINE nextByLine) {
+	LINE_LIST list;
+	for (auto vectorIter : nextBipTable) {
+		if (vectorIter.front() == nextByLine) {
+			vector<string> tuple = vector<string>();
+			tuple.push_back(vectorIter.back());
+			list.emplace(tuple);
+		}
+	}
+	return list;
+}
 
 TABLE PKBNext::getNextTable() {
 	return nextTable;
@@ -342,17 +353,23 @@ TABLE PKBNext::getNextEntIdent(STMT_TYPE type, PROG_LINE stmtNo) {
 
 TABLE PKBNext::getNextEntEnt(STMT_TYPE type1, STMT_TYPE type2) {
 	TABLE resultTable;
+	if (type1 == "prog_line") {
+		type1 = "stmt";
+	}
+	if (type2 == "prog_line") {
+		type2 = "stmt";
+	}
 	if (type1 == "stmt" && type2 == "stmt") {
 		return nextTable;
 	}
 	STMT_LIST list1, list2;
-	if (type1 == "stmt" || type1 == "prog_line") {
+	if (type1 == "stmt") {
 		list1 = PKBStmt::getStmts();
 	}
 	else {
 		list1 = PKBStmt::getStmtsByType(type1);
 	}
-	if (type2 == "stmt" || type2 == "prog_line") {
+	if (type2 == "stmt") {
 		list2 = PKBStmt::getStmts();
 	}
 	else {
@@ -493,19 +510,25 @@ TABLE PKBNext::getNextTEntEnt(STMT_TYPE type1, STMT_TYPE type2) {
 	
 	TABLE resultTable;
 	STMT_LIST list1, list2;
-	if (type1 == "stmt" && type2 == "stmt") {
+	if (type1 == "prog_line") {
+		type1 = "stmt";
+	}
+	if (type2 == "prog_line") {
+		type2 = "stmt";
+	}
+	if ((type1 == "stmt" && type2 == "stmt")) {
 		list1 = PKBStmt::getStmts();
 		list2 = PKBStmt::getStmts();
 		DesignExtractor::extractNextT(list1, list2);
 		return nextTTable;
 	}
-	if (type1 == "stmt" || type1 == "prog_line") {
+	if (type1 == "stmt") {
 		list1 = PKBStmt::getStmts();
 	}
 	else {
 		list1 = PKBStmt::getStmtsByType(type1);
 	}
-	if (type2 == "stmt" || type2 == "prog_line") {
+	if (type2 == "stmt") {
 		list2 = PKBStmt::getStmts();
 	}
 	else {
@@ -652,17 +675,23 @@ TABLE PKBNext::getNextBipEntIdent(STMT_TYPE type, PROG_LINE stmtNo) {
 
 TABLE PKBNext::getNextBipEntEnt(STMT_TYPE type1, STMT_TYPE type2) {
 	TABLE resultTable;
+	if (type1 == "prog_line") {
+		type1 = "stmt";
+	}
+	if (type2 == "prog_line") {
+		type2 = "stmt";
+	}
 	if (type1 == "stmt" && type2 == "stmt") {
-		return nextTable;
+		return nextBipTable;
 	}
 	STMT_LIST list1, list2;
-	if (type1 == "stmt" || type1 == "prog_line") {
+	if (type1 == "stmt") {
 		list1 = PKBStmt::getStmts();
 	}
 	else {
 		list1 = PKBStmt::getStmtsByType(type1);
 	}
-	if (type2 == "stmt" || type2 == "prog_line") {
+	if (type2 == "stmt") {
 		list2 = PKBStmt::getStmts();
 	}
 	else {
@@ -782,8 +811,14 @@ TABLE PKBNext::getNextBipTEntIdent(STMT_TYPE type, PROG_LINE stmtNo) {
 
 TABLE PKBNext::getNextBipTEntEnt(STMT_TYPE type1, STMT_TYPE type2) {
 	TABLE resultTable;
+	if (type1 == "prog_line") {
+		type1 = "stmt";
+	}
+	if (type2 == "prog_line") {
+		type2 = "stmt";
+	}
 	if (type1 == "stmt" && type2 == "stmt") {
-		return nextTTable;
+		return nextBipTTable;
 	}
 	STMT_LIST list1, list2;
 	if (type1 == "stmt" || type1 == "prog_line") {
