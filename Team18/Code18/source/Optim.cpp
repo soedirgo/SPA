@@ -1,8 +1,9 @@
 #include "Optim.h"
 #include "Result.h"
+#include <limits>
+#include <set>
 #include <string>
 #include <vector>
-#include <set>
 
 using namespace std;
 namespace Evaluator {
@@ -93,5 +94,50 @@ namespace Evaluator {
     }
 
     void sort(vector<Result>& results) {
+
+        vector<Result> temp = results;
+        unordered_set<string> currentSynonyms;
+        // maps result idx to its merge order, first to last
+        unordered_map<int, int> resultOrder;
+
+        // resolve ordering
+        for (size_t i = 0; i < results.size(); ++i) {
+            size_t nextResultIdx = -1;
+            int nextResultNewSynsCount = numeric_limits<int>::max();
+            size_t nextResultSize = numeric_limits<int>::max();
+            // get best candidate for next result table to merge
+            for (size_t j = 0; j < results.size(); ++j) {
+                // only consider result tables that hasn't been included
+                if (!resultOrder.count(j)) {
+                    // get num of new synonyms of candidate
+                    int newSynsCount = 0;
+                    for (auto& syn : results[j].getSynonyms())
+                        if (!currentSynonyms.count(syn.first))
+                            ++newSynsCount;
+                    // get size of result table of candidate
+                    size_t size = results[j].getResults().size();
+                    // update if smaller num of new synonyms OR equal
+                    // num AND size is smaller
+                    if (newSynsCount < nextResultNewSynsCount
+                        || (newSynsCount == nextResultNewSynsCount
+                            && size < nextResultSize)) {
+                        nextResultIdx = j;
+                        nextResultNewSynsCount = newSynsCount;
+                        nextResultSize = results[j].getResults().size();
+                    }
+                }
+            }
+            // add new synonyms to currentSynonyms
+            for (auto& syn : results[nextResultIdx].getSynonyms()) {
+                currentSynonyms.insert(syn.first);
+            }
+            // update resultOrder with nextResultIdx
+            resultOrder[nextResultIdx] = resultOrder.size();
+        }
+
+        // sort results according to ordering
+        for (auto& it : resultOrder) {
+            results[it.second] = temp[it.first];
+        }
     }
 } // namespace Evaluator

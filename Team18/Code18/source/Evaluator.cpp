@@ -79,7 +79,6 @@ namespace Evaluator {
         otherGroups = vector<vector<Result>>(allResults.begin() + 2, allResults.end());
 
         // merge no synonym group
-        sort(noSynGroup);
         Result noSynResult = Result(true, {}, {});
         for (auto resultIt : noSynGroup) {
             noSynResult = Result::merge(noSynResult, resultIt);
@@ -93,7 +92,7 @@ namespace Evaluator {
 
         // merge other groups
         Result otherResult = Result(true, {}, {});
-        for (auto groupIt : otherGroups) {
+        for (auto& groupIt : otherGroups) {
             sort(groupIt);
             Result groupResult = Result(true, {}, {});
             for (auto& resultIt : groupIt) {
@@ -114,26 +113,22 @@ namespace Evaluator {
                 return {};
         }
 
+        // case Select BOOLEAN
+        if (selSyns[0] == "BOOLEAN") {
+            return { "TRUE" };
+        }
+
         // merge select synonym group
         sort(selSynGroup);
         Result selectResult = Result(true, {}, {});
         for (auto& resultIt : selSynGroup) {
             selectResult = Result::merge(selectResult, resultIt);
         }
-
-        // return results (projection)
-        list<string> selectResults;
-
-        // case Select BOOLEAN
-        if (selSyns[0] == "BOOLEAN") {
-            selectResults.push_back(selectResult.hasResults() ? "TRUE" : "FALSE");
-            return selectResults;
-        }
-
-        // otherwise project select synonyms
         if (!selectResult.hasResults())
             return {};
 
+        // return results (projection)
+        list<string> selectResults;
         TABLE finalResults = selectResult.getResults();
         unordered_map<string, int> finalResultSyns = selectResult.getSynonyms();
         for (auto res : finalResults) {
