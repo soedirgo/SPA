@@ -63,6 +63,10 @@ procedure F {
     green = green + yellow + blue;
     blue = blue + green;
     call G;
+    if (white != black) then {
+      white = white - black; }
+    else {
+      black = black + white; }
     call H;
     purple = green - green + blue + red; }
   color1 = color1 + red + green + blue;
