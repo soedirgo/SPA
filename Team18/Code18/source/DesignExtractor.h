@@ -7,8 +7,9 @@
 class DesignExtractor {
 public:
 	static void extractDesign();
-	static void extractNextT();
+	//static void extractNextT(STMT_TYPE ent1, PROG_LINE n1, STMT_TYPE ent2, PROG_LINE n2);
 
+	static void extractNextT(STMT_LIST n1, STMT_LIST n2);
 	static void affectsAll();
 	static void affectedBy(STMT_NO a1);
 	static void isAffecting(STMT_NO a2);
@@ -39,5 +40,6 @@ private:
 	static void recurseParent(STMT_NO parent, STMT_NO child);
 	static void recurseFollows(STMT_NO followedBy, STMT_NO follow);
 	static void recurseNext(PROG_LINE n1, PROG_LINE n2);
+	static void recurseNextReverse(PROG_LINE n1, PROG_LINE n2);
 	static void recurseNextBipT(PROG_LINE n1, PROG_LINE n2);
 };

@@ -35,10 +35,10 @@ void DesignExtractor::extractDesign()
 	//int i = test.size();
 	//TABLE test2 = PKBCall::getCallProcTable();
 	//int i2 = test2.size();
-	//TABLE test = PKBNext::getNextTable();
-	//int i = test.size();
+	
 	//extractAffectsT();
 }
+
 
 void DesignExtractor::affectsAll() {
 	STMT_LIST assignStmtTable1 = PKB::getAssigns();
@@ -178,17 +178,42 @@ void DesignExtractor::isAffectsT(STMT_NO a1, STMT_NO a2) {
 	PKBAffects::setCheckedAffectsT(a1, a2);
 }
 
-void DesignExtractor::extractNextT()
+void DesignExtractor::extractNextT(STMT_LIST nextTList1, STMT_LIST nextTList2)
 {
-	TABLE nextTable = PKBNext::getNextTable();
-	for (auto vectorIter : nextTable) {
-		string n1 = vectorIter.front();
-		string n2 = vectorIter.back();
-		bool nextTValue = PKBNext::isNextT(n1,n2);
-		//optimization
-		if (nextTValue == false) {
-			PKBNext::setNextT(n1, n2);
-			recurseNext(n1, n2);
+	if (nextTList2.size() <= nextTList1.size()) {
+		for (auto vectorIter1 : nextTList2) {
+			TABLE nextTable = PKBNext::getNextTable();
+			for (auto vectorIter2 : nextTable) {
+				PROG_LINE next1 = vectorIter2.front();
+				PROG_LINE next2 = vectorIter2.back();
+				//optimization
+				if (vectorIter1.front() == next2) {
+					bool nextTValue = PKBNext::isNextT(next1, next2);
+					//optimization
+					if (nextTValue == false) {
+						PKBNext::setNextT(next1, next2);
+						recurseNextReverse(next1, next2);
+					}
+				}
+			}
+		}
+	}
+	else {
+		for (auto vectorIter1 : nextTList1) {
+			TABLE nextTable = PKBNext::getNextTable();
+			for (auto vectorIter2 : nextTable) {
+				PROG_LINE next1 = vectorIter2.front();
+				PROG_LINE next2 = vectorIter2.back();
+				//optimization
+				if (vectorIter1.front() == next1) {
+					bool nextTValue = PKBNext::isNextT(next1, next2);
+					//optimization
+					if (nextTValue == false) {
+						PKBNext::setNextT(next1, next2);
+						recurseNext(next1, next2);
+					}
+				}
+			}
 		}
 	}
 }
@@ -543,6 +568,23 @@ void DesignExtractor::recurseNext(PROG_LINE nextByLine, PROG_LINE nextLine) {
 		if (!PKBNext::isNextT(nextByLine, newNextLine)) {
 			PKBNext::setNextT(nextByLine, newNextLine);
 			recurseNext(nextByLine, newNextLine);
+
+		}
+
+	}
+}
+
+void DesignExtractor::recurseNextReverse(PROG_LINE nextByLine, PROG_LINE nextLine) {
+	LINE_LIST lineList = PKBNext::getNextBy(nextByLine);
+	if (lineList.size() == 0) {
+		return;
+	}
+
+	for (auto vectorIter : lineList) {
+		PROG_LINE newNextByLine = vectorIter.back();
+		if (!PKBNext::isNextT(newNextByLine, nextLine)) {
+			PKBNext::setNextT(newNextByLine, nextLine);
+			recurseNextReverse(newNextByLine, nextLine);
 
 		}
 
