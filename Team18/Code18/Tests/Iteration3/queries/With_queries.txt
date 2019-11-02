@@ -115,7 +115,7 @@ Select <n> with n = value.stmt#
 5000
 24 - Set 2 - Invalid syntax tests for with clause (Negative Tests). Invalid syntax, Ident = Ident
 
-Select BOOLEAN "a" = "A"
+Select BOOLEAN with "a" = "A"
 FALSE
 5000
 25 - Invalid syntax, Ident = procName
@@ -219,8 +219,8 @@ Select stmt with pn.stmt# = pn.varName
 none
 5000
 45 - Invalid syntax, varName = synonym
-prog_line BOOLEAN; variable Boolean;
-Select BOOLEAN with BOOLEAN = Boolean.varName
+prog_line n; variable Boolean;
+Select BOOLEAN with n = Boolean.varName
 FALSE
 5000
 46 - Invalid syntax, value = value
@@ -334,8 +334,8 @@ Select BOOLEAN such that Uses(pr, v) pattern a(v, _) with c.value = s.stmt#
 TRUE
 5000
 68 - Multiple relation test, all clause true one with independent true 2
-read varName; print with; while pattern; variable while; read Next; constant Boolean; print Uses;
-Select Boolean pattern pattern(while, _) such that Modifies(Next, while) with with.varName = varName.varName such that Uses(Uses, while)
+read r; print pn; while w; variable v; read r1; constant Boolean; print pn1;
+Select Boolean pattern w(v, _) such that Modifies(r1, v) with pn.varName = r.varName such that Uses(pn1, v)
 1, 2, 0, 100, 5
 5000
 69 - Multiple relation test, all clause true one with independent false 1
@@ -365,7 +365,7 @@ z, c
 5000
 74 - Multiple relation test, all clause true one with related true 4
 assign result; prog_line n; constant c; variable v; if ifs;
-Select result with n = c such that Modifies(n, v) pattern ifs(v, _, _) and ifs("z", _, _)
+Select result with n = c.value such that Modifies(n, v) pattern ifs(v, _, _) and ifs("z", _, _)
 1, 2, 12, 22, 25, 29, 32
 5000
 75 - Multiple relation test, all clause true one with related false 1
@@ -373,7 +373,7 @@ stmt s, s1; print pn; procedure pr;
 Select s such that Parent(s, s1) and Next(s, s1) with pn.varName = pr.procName such that Follows(s, pn)
 none
 5000
-75 - Multiple relation test, all clause true one with related false 2
+76 - Multiple relation test, all clause true one with related false 2
 prog_line Select; while pattern; assign FALSE; procedure and; read value;
 Select BOOLEAN pattern pattern("a", _) such that Uses(FALSE, "B") and Modifies(and, "target") with and.procName = value.varName
 FALSE
@@ -400,7 +400,7 @@ FALSE
 5000
 81 - Multiple relation test, all clause true multiple with some related true 1
 procedure pr; if ifs; prog_line n;
-Select ifs with pr.procName = pr.procName such that Parent*(ifs, n) with n = 28 pattern ifs("a", _)
+Select ifs with pr.procName = pr.procName such that Parent*(ifs, n) with n = 28 pattern ifs("a", _,_)
 26
 5000
 82 - Multiple relation test, all clause true multiple with some related true 2
@@ -414,8 +414,8 @@ Select BOOLEAN with a.stmt# = 25 pattern a(_, "100") with cl.stmt# = n such that
 TRUE
 5000
 84 - Multiple relation test, all clause true multiple with some related true 4
-stmt BOOLEAN; variable v; read r; while w; stmt s; prog_line n;
-Select <BOOLEAN> such that Modifies(BOOLEAN, v) with BOOLEAN.stmt# = r.stmt# with r.varName = v.varName such that Parent(w, r) with n = s.stmt#
+stmt s; variable v; read r; while w; stmt s; prog_line n;
+Select <s> such that Modifies(s, v) with s.stmt# = r.stmt# with r.varName = v.varName such that Parent(w, r) with n = s.stmt#
 20, 28
 5000
 85 - Multiple relation test, all clause true multiple with some related false 1
