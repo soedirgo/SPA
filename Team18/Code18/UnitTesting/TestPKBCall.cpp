@@ -44,9 +44,9 @@ namespace UnitTesting
 
 			PKB PKB;
 			PKB.clear();
-			PKB.setProcedure("First");
-			PKB.setProcedure("Second");
-			PKB.setProcedure("Third");
+			PKB.setProcedure("First", "1", { {"3"} });
+			PKB.setProcedure("Second","4", { {"15"} });
+			PKB.setProcedure("Third","16", { {"18"} });
 
 			PKB.setCallProc("First", "Second");
 			PKB.setCallProc("Second", "Third");

@@ -95,6 +95,13 @@ namespace UnitTesting
 			PKB.setFollows("16", "17");
 			PKB.setFollows("17", "18");
 
+			PKB.setProcedure("First", "1", { {"2"} });
+			PKB.setProcedure("Second", "4", { {"11","15"} });
+			PKB.setProcedure("Third", "16", { {"18"} });
+
+			PKB.setCallStmt("3", "Second");
+			PKB.setCallStmt("8", "Third");
+
 			DesignExtractor DesignExtractor;
 			DesignExtractor.extractDesign();
 		}
@@ -125,6 +132,7 @@ namespace UnitTesting
 			PKBNext PKB;
 			
 			Assert::IsTrue(PKB.isNextTIdentIdent("1", "2"));
+			
 			Assert::IsTrue(PKB.isNextTIdentIdent("2", "3"));
 			Assert::IsTrue(PKB.isNextTIdentIdent("4", "5"));
 			Assert::IsTrue(PKB.isNextTIdentIdent("5", "6"));
@@ -198,12 +206,197 @@ namespace UnitTesting
 			Assert::IsTrue(PKB.isNextTIdentIdent("12", "15"));
 			Assert::IsTrue(PKB.isNextTIdentIdent("13", "15"));
 			Assert::IsTrue(PKB.isNextTIdentIdent("16", "18"));
-
 			Assert::IsTrue(PKB.isNextTIdentIdent("6", "6"));
 			Assert::IsTrue(PKB.isNextTIdentIdent("7", "7"));
 			Assert::IsTrue(PKB.isNextTIdentIdent("8", "8"));
 			Assert::IsTrue(PKB.isNextTIdentIdent("9", "9"));
 			
+		}
+
+		TEST_METHOD(NextBipRelationship)
+		{
+			PKBNext PKB;
+			Assert::IsTrue(PKB.isNextBipIdentIdent("1", "2"));
+			Assert::IsTrue(PKB.isNextBipIdentIdent("2", "3"));
+			Assert::IsTrue(PKB.isNextBipIdentIdent("4", "5"));
+			Assert::IsTrue(PKB.isNextBipIdentIdent("5", "6"));
+			Assert::IsTrue(PKB.isNextBipIdentIdent("6", "7"));
+			Assert::IsTrue(PKB.isNextBipIdentIdent("7", "8"));
+			Assert::IsTrue(PKB.isNextBipIdentIdent("8", "9"));
+			Assert::IsTrue(PKB.isNextBipIdentIdent("9", "6"));
+			Assert::IsTrue(PKB.isNextBipIdentIdent("6", "10"));
+			Assert::IsTrue(PKB.isNextBipIdentIdent("10", "11"));
+			Assert::IsTrue(PKB.isNextBipIdentIdent("10", "12"));
+			Assert::IsTrue(PKB.isNextBipIdentIdent("11", "13"));
+			Assert::IsTrue(PKB.isNextBipIdentIdent("12", "13"));
+			Assert::IsTrue(PKB.isNextBipIdentIdent("13", "14"));
+			Assert::IsTrue(PKB.isNextBipIdentIdent("14", "15"));
+			Assert::IsTrue(PKB.isNextBipIdentIdent("16", "17"));
+			Assert::IsTrue(PKB.isNextBipIdentIdent("17", "18"));
+
+			Assert::IsTrue(PKB.isNextBipIdentIdent("3", "4"));
+			Assert::IsTrue(PKB.isNextBipIdentIdent("8", "16"));
+			Assert::IsTrue(PKB.isNextBipIdentIdent("18", "9"));
+		}
+
+		TEST_METHOD(NextBipStarRelationship)
+		{
+			PKBNext PKB;
+
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("1", "2"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("1", "3"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("1", "4"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("1", "5"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("1", "6"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("1", "7"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("1", "8"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("1", "9"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("1", "10"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("1", "11"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("1", "12"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("1", "13"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("1", "14"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("1", "15"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("1", "16"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("1", "17"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("1", "18"));
+
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("2", "3"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("2", "4"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("2", "5"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("2", "6"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("2", "7"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("2", "8"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("2", "9"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("2", "10"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("2", "11"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("2", "12"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("2", "13"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("2", "14"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("2", "15"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("2", "16"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("2", "17"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("2", "18"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("3", "4"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("3", "5"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("3", "6"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("3", "7"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("3", "8"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("3", "9"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("3", "10"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("3", "11"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("3", "12"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("3", "13"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("3", "14"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("3", "15"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("3", "16"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("3", "17"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("3", "18"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("4", "5"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("4", "6"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("4", "7"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("4", "8"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("4", "9"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("4", "10"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("4", "11"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("4", "12"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("4", "13"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("4", "14"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("4", "15"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("4", "16"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("4", "17"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("4", "18"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("5", "6"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("5", "7"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("5", "8"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("5", "9"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("5", "10"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("5", "11"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("5", "12"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("5", "13"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("5", "14"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("5", "15"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("5", "16"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("5", "17"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("5", "18"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("6", "7"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("6", "8"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("6", "9"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("6", "10"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("6", "11"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("6", "12"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("6", "13"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("6", "14"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("6", "15"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("6", "16"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("6", "17"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("6", "18"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("7", "8"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("7", "9"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("7", "6"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("7", "11"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("7", "12"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("7", "13"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("7", "14"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("7", "15"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("7", "16"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("7", "17"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("7", "18"));
+
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("8", "9"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("9", "6"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("6", "10"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("10", "11"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("10", "12"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("11", "13"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("12", "13"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("13", "14"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("14", "15"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("16", "17"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("17", "18"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("8", "10"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("8", "11"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("8", "12"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("8", "13"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("8", "14"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("8", "15"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("8", "16"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("8", "17"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("8", "18"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("9", "11"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("9", "12"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("9", "13"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("9", "14"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("9", "15"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("9", "16"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("9", "17"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("9", "18"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("10", "12"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("10", "13"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("10", "14"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("10", "15"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("11", "13"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("11", "14"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("11", "15"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("12", "14"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("12", "15"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("13", "15"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("16", "18"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("6", "6"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("7", "7"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("8", "8"));
+			Assert::IsTrue(PKB.isNextBipTIdentIdent("9", "9"));
+
+			Assert::IsFalse(PKB.isNextBipTIdentIdent("10", "16"));
+			Assert::IsFalse(PKB.isNextBipTIdentIdent("10", "17"));
+			Assert::IsFalse(PKB.isNextBipTIdentIdent("10", "18"));
+			Assert::IsFalse(PKB.isNextBipTIdentIdent("11", "16"));
+			Assert::IsFalse(PKB.isNextBipTIdentIdent("11", "17"));
+			Assert::IsFalse(PKB.isNextBipTIdentIdent("11", "18"));
+			Assert::IsFalse(PKB.isNextBipTIdentIdent("12", "16"));
+			Assert::IsFalse(PKB.isNextBipTIdentIdent("12", "17"));
+			Assert::IsFalse(PKB.isNextBipTIdentIdent("12", "18"));
+
 		}
 		
 		TEST_METHOD(NextGenericBoth)

@@ -26,7 +26,7 @@ public:
 
 	//Procedure Functions
 	static PROC_LIST getProcedures();
-	static bool setProcedure(PROC_NAME procName);
+	static bool setProcedure(PROC_NAME procName, STMT_NO start, STMT_LIST end);
 
 	//Print Functions
 	static bool setPrint(STMT_NO stmtNo, VAR_NAME varName);
@@ -187,6 +187,16 @@ public:
 	static bool isNextTIdentAny(PROG_LINE n1);
 	static bool isNextTIdentIdent(PROG_LINE n1, PROG_LINE n2);
 
+	static bool isNextBipAnyAny();
+	static bool isNextBipAnyIdent(PROG_LINE n2);
+	static bool isNextBipIdentAny(PROG_LINE n1);
+	static bool isNextBipIdentIdent(PROG_LINE n1, PROG_LINE n2);
+
+	static bool isNextBipTAnyAny();
+	static bool isNextBipTAnyIdent(PROG_LINE n2);
+	static bool isNextBipTIdentAny(PROG_LINE n1);
+	static bool isNextBipTIdentIdent(PROG_LINE n1, PROG_LINE n2);
+
 	static TABLE getNextAnyEnt(STMT_TYPE stmtType);
 	static TABLE getNextIdentEnt(PROG_LINE n1, STMT_TYPE stmtType);
 	static TABLE getNextEntAny(STMT_TYPE stmtType);
@@ -199,6 +209,19 @@ public:
 	static TABLE getNextTEntIdent(STMT_TYPE stmtType, PROG_LINE n2);
 	static TABLE getNextTEntEnt(STMT_TYPE stmtType1, STMT_TYPE stmtType2);
 	static TABLE getNextTSelf(STMT_TYPE stmtType);
+
+	static TABLE getNextBipAnyEnt(STMT_TYPE stmtType);
+	static TABLE getNextBipIdentEnt(PROG_LINE n1, STMT_TYPE stmtType);
+	static TABLE getNextBipEntAny(STMT_TYPE stmtType);
+	static TABLE getNextBipEntIdent(STMT_TYPE stmtType, PROG_LINE n2);
+	static TABLE getNextBipEntEnt(STMT_TYPE stmtType1, STMT_TYPE stmtType2);
+
+	static TABLE getNextBipTAnyEnt(STMT_TYPE stmtType);
+	static TABLE getNextBipTIdentEnt(PROG_LINE n1, STMT_TYPE stmtType);
+	static TABLE getNextBipTEntAny(STMT_TYPE stmtType);
+	static TABLE getNextBipTEntIdent(STMT_TYPE stmtType, PROG_LINE n2);
+	static TABLE getNextBipTEntEnt(STMT_TYPE stmtType1, STMT_TYPE stmtType2);
+	static TABLE getNextBipTSelf(STMT_TYPE stmtType);
 
 	//Pattern 
 	static bool setIfPattern(STMT_NO stmtNo, VAR_NAME varName);
