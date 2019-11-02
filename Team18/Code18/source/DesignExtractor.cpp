@@ -644,10 +644,15 @@ bool DesignExtractor::traverseAffects(STMT_NO a1, STMT_NO a2, VAR_NAME v) {
  			if (!PKB::isModifiesSIdentIdent(stmt, v) && !(PKBStmt::getTypeByStmtNo(stmt) == "if") && !(PKBStmt::getTypeByStmtNo(stmt) == "while")) {
 				q.push(stmt);
 			}
-			if (PKBStmt::getTypeByStmtNo(stmt) == "if" && !PKB::isModifiesSIdentIdent(stmt, v)) {
-				STMT_NO follows = PKBFollows::getFollowsStmt(stmt);
-				if (stoi(a2) >= stoi(follows)) {
-					q.push(follows);
+			if (PKBStmt::getTypeByStmtNo(stmt) == "if") {
+				if (!PKB::isModifiesSIdentIdent(stmt, v)) {
+					STMT_NO follows = PKBFollows::getFollowsStmt(stmt);
+					if (stoi(a2) >= stoi(follows)) {
+						q.push(follows);
+					}
+					else {
+						q.push(stmt);
+					}
 				}
 				else {
 					q.push(stmt);
@@ -678,10 +683,15 @@ bool DesignExtractor::traverseAffects(STMT_NO a1, STMT_NO a2, VAR_NAME v) {
 				if (!PKB::isModifiesSIdentIdent(stmt, v) && !(PKBStmt::getTypeByStmtNo(stmt) == "if") && !(PKBStmt::getTypeByStmtNo(stmt) == "while")) {
 					q.push(stmt);
 				}
-				if (PKBStmt::getTypeByStmtNo(stmt) == "if" && !PKB::isModifiesSIdentIdent(stmt, v)) {
-					STMT_NO follows = PKBFollows::getFollowsStmt(stmt);
-					if (stoi(a2) >= stoi(follows)) {
-						q.push(follows);
+				if (PKBStmt::getTypeByStmtNo(stmt) == "if") {
+					if (!PKB::isModifiesSIdentIdent(stmt, v)) {
+						STMT_NO follows = PKBFollows::getFollowsStmt(stmt);
+						if (stoi(a2) >= stoi(follows)) {
+							q.push(follows);
+						}
+						else {
+							q.push(stmt);
+						}
 					}
 					else {
 						q.push(stmt);
