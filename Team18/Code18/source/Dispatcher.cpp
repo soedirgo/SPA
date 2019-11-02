@@ -230,6 +230,34 @@ namespace Evaluator {
                   else
                       return PKB::isAffectsTIdentIdent(lhs,
                                                        rhs);
+          }},
+         {"NextBip",
+          [](string lhs, string rhs) {
+              if (isUnderscore(lhs))
+                  if (isUnderscore(rhs))
+                      return PKB::isNextBipAnyAny();
+                  else
+                      return PKB::isNextBipAnyIdent(rhs);
+              else
+                  if (isUnderscore(rhs))
+                      return PKB::isNextBipIdentAny(lhs);
+                  else
+                      return PKB::isNextBipIdentIdent(lhs,
+                                                      rhs);
+          }},
+         {"NextBip*",
+          [](string lhs, string rhs) {
+              if (isUnderscore(lhs))
+                  if (isUnderscore(rhs))
+                      return PKB::isNextBipTAnyAny();
+                  else
+                      return PKB::isNextBipTAnyIdent(rhs);
+              else
+                  if (isUnderscore(rhs))
+                      return PKB::isNextBipTIdentAny(lhs);
+                  else
+                      return PKB::isNextBipTIdentIdent(lhs,
+                                                       rhs);
           }}};
 
         unordered_map<string, function<TABLE(string, string)>> suchThatTableApiMap =
@@ -458,6 +486,44 @@ namespace Evaluator {
                       return PKB::getAffectsTSelf();
                   else
                       return PKB::getAffectsTEntEnt();
+          }},
+         {"NextBip",
+          [](string lhs, string rhs) {
+              if (isUnderscore(lhs))
+                  return PKB::getNextBipAnyEnt(getEntity(rhs));
+              else if (isIdentifier(lhs))
+                  return PKB::getNextBipIdentEnt(lhs,
+                                                 getEntity(rhs));
+              else
+                  if (isUnderscore(rhs))
+                      return PKB::getNextBipEntAny(getEntity(lhs));
+                  else if (isIdentifier(rhs))
+                      return PKB::getNextBipEntIdent(getEntity(lhs),
+                                                     rhs);
+                  else if (lhs == rhs)
+                      return TABLE();
+                  else
+                      return PKB::getNextBipEntEnt(getEntity(lhs),
+                                                   getEntity(rhs));
+          }},
+         {"NextBip*",
+          [](string lhs, string rhs) {
+              if (isUnderscore(lhs))
+                  return PKB::getNextBipTAnyEnt(getEntity(rhs));
+              else if (isIdentifier(lhs))
+                  return PKB::getNextBipTIdentEnt(lhs,
+                                                  getEntity(rhs));
+              else
+                  if (isUnderscore(rhs))
+                      return PKB::getNextBipTEntAny(getEntity(lhs));
+                  else if (isIdentifier(rhs))
+                      return PKB::getNextBipTEntIdent(getEntity(lhs),
+                                                      rhs);
+                  else if (lhs == rhs)
+                      return PKB::getNextBipTSelf(getEntity(lhs));
+                  else
+                      return PKB::getNextBipTEntEnt(getEntity(lhs),
+                                                    getEntity(rhs));
           }}};
 
         unordered_map<string, function<TABLE(string, string)>> patternApiMap =
