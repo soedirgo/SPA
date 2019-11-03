@@ -24,8 +24,8 @@ STMT_LIST PKBStmt::getStmts() {
 STMT_LIST PKBStmt::getStmtsByType(STMT_TYPE type) {
 	STMT_LIST list;
 	for (auto vectorIter : stmtTable) {
-		vector<string> tuple = vector<string>();
 		if (vectorIter.back() == type) {
+			vector<string> tuple = vector<string>();
 			tuple.push_back(vectorIter.front());
 			list.emplace(tuple);
 		}

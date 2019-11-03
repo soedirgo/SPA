@@ -59,6 +59,7 @@ void TestWrapper::evaluate(std::string query, std::list<std::string>& results){
     //}
 
 	PKB::clearTempPKB();
+	//DesignExtractor::clearCache();
 	QueryParser queryParser = QueryParser();
 	Query queryObject = queryParser.parse(query);
 	if (queryObject.getSelectSynonyms()[0] == "Invalid") {

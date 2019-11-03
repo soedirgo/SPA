@@ -42,17 +42,17 @@ ENT_LIST PKBWith::getWithIdentAttr(IDENT iden, ENT_TYPE ent, ATTR attr) {
 
 	if ((ent == "read" && attr == "varName") || (ent == "print" && attr == "varName") || (ent == "call" && attr == "procName")) {
 		for (auto vectorIter : list) {
-			vector<string> tuple = vector<string>();
-				if (vectorIter.back() == iden) {
-					tuple.push_back(vectorIter.front());
-						resultTable.emplace(tuple);
-				}
+			if (vectorIter.back() == iden) {
+				vector<string> tuple = vector<string>();
+				tuple.push_back(vectorIter.front());
+				resultTable.emplace(tuple);
+			}
 		}
 	}
 	else {
 		for (auto vectorIter : list) {
-			vector<string> tuple = vector<string>();
 			if (vectorIter.front() == iden) {
+				vector<string> tuple = vector<string>();
 				tuple.push_back(vectorIter.front());
 				resultTable.emplace(tuple);
 			}

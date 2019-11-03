@@ -39,6 +39,11 @@ void DesignExtractor::extractDesign()
 	//extractAffectsT();
 }
 
+unordered_set<string> DesignExtractor::nextNodeVisitedCache;
+void DesignExtractor::clearCache() {
+	nextNodeVisitedCache.clear();
+}
+
 void DesignExtractor::affectsAny() {
 	STMT_LIST assignStmtTable1 = PKBStmt::getStmtsByType("assign");
 	for (auto stmt1 : assignStmtTable1) {
@@ -237,13 +242,15 @@ void DesignExtractor::extractNextT(STMT_LIST nextTList1, STMT_LIST nextTList2)
 					bool nextTValue = PKBNext::isNextT(next1, next2);
 					//optimization
 					if (nextTValue == false) {
+					//if (nextNodeVisitedCache.find(next1 + next2) == nextNodeVisitedCache.end()) {
+						nextNodeVisitedCache.insert(next1+ next2);
 						PKBNext::setNextT(next1, next2);
 						//Recursive backward
 						//vector<string> visted = {};
 						//visted.push_back(next1);
 
-						unordered_map<string, int> visited;
-						visited.insert({ next1,1 });
+						unordered_set<string> visited;
+						visited.insert(next1);
 						recurseNextReverse(next1, next2, visited);
 					}
 				}
@@ -261,11 +268,13 @@ void DesignExtractor::extractNextT(STMT_LIST nextTList1, STMT_LIST nextTList2)
 					bool nextTValue = PKBNext::isNextT(next1, next2);
 					//optimization
 					if (nextTValue == false) {
+					//if (nextNodeVisitedCache.find(next1 + next2) == nextNodeVisitedCache.end()) {
+						nextNodeVisitedCache.insert(next1 + next2);
 						PKBNext::setNextT(next1, next2);
 						//vector<string> visted = {};
 						//visted.push_back(next2);
-						unordered_map<string, int> visited;
-						visited.insert({ next2,1 });
+						unordered_set<string> visited;
+						visited.insert(next2);
 						//Recursive forward
 						recurseNext(next1, next2, visited);
 					}
@@ -653,7 +662,7 @@ void DesignExtractor::recurseParent(STMT_NO parent, STMT_NO child) {
 	}
 }
 
-void DesignExtractor::recurseNext(PROG_LINE nextByLine, PROG_LINE nextLine, unordered_map<string, int> visited) {
+void DesignExtractor::recurseNext(PROG_LINE nextByLine, PROG_LINE nextLine, unordered_set<string> visited) {
 	LINE_LIST lineList = PKBNext::getNext(nextLine);
 	if (lineList.size() == 0) {
 		return;
@@ -673,8 +682,9 @@ void DesignExtractor::recurseNext(PROG_LINE nextByLine, PROG_LINE nextLine, unor
 		if (visited.find(newNextLine) == visited.end()) {
 			//if (visitedStatus == false) {
 				//visited.push_back(newNextLine);
-			visited.insert({ newNextLine ,1 });
+			visited.insert(newNextLine);
 			PKBNext::setNextT(nextByLine, newNextLine);
+			nextNodeVisitedCache.insert(nextByLine + newNextLine);
 			recurseNext(nextByLine, newNextLine, visited);
 
 		}
@@ -682,7 +692,7 @@ void DesignExtractor::recurseNext(PROG_LINE nextByLine, PROG_LINE nextLine, unor
 	}
 }
 
-void DesignExtractor::recurseNextReverse(PROG_LINE nextByLine, PROG_LINE nextLine, unordered_map<string, int> visited) {
+void DesignExtractor::recurseNextReverse(PROG_LINE nextByLine, PROG_LINE nextLine, unordered_set<string> visited) {
 
 	LINE_LIST lineList = PKBNext::getNextBy(nextByLine);
 	if (lineList.size() == 0) {
@@ -703,8 +713,9 @@ void DesignExtractor::recurseNextReverse(PROG_LINE nextByLine, PROG_LINE nextLin
 		*/
 		if (visited.find(newNextByLine) == visited.end()) {
 			//visited.push_back(newNextByLine);
-			visited.insert({ newNextByLine,1 });
+			visited.insert( newNextByLine);
 			PKBNext::setNextT(newNextByLine, nextLine);
+			nextNodeVisitedCache.insert(newNextByLine + nextLine);
 			recurseNextReverse(newNextByLine, nextLine, visited);
 		}
 	}

@@ -76,6 +76,7 @@ bool PKBCall::setCallTProc(PROC_NAME caller, PROC_NAME callee) {
 	return true;
 }
 
+
 TABLE PKBCall::getCallProcTable() {
 	return callsProcTable;
 }
@@ -154,53 +155,31 @@ bool PKBCall::isCallsTIdentIdent(PROC_NAME caller, PROC_NAME calleeT) {
 //NEW EVALUATION API
 TABLE PKBCall::getCallsAnyEnt() {
 	PROC_LIST resultTable;
-	PROC_LIST list;
-	PROC_NAME p;
-	list = PKBProcedure::getProcedures();
-	for (auto iter : list) {
-		p = iter.front();
-		for (auto vectorIter : callsProcTable) {
-			vector<string> tuple = vector<string>();
-			if (vectorIter.back() == p) {
-				tuple.push_back(vectorIter.back());
-				resultTable.emplace(tuple);
-			}
-		}
+	for (auto vectorIter : callsProcTable) {
+		vector<string> tuple = vector<string>();
+		tuple.push_back(vectorIter.back());
+		resultTable.emplace(tuple);
 	}
 	return resultTable;
 }
 
 TABLE PKBCall::getCallsEntAny() {
 	PROC_LIST resultTable;
-	PROC_LIST list;
-	PROC_NAME p;
-	list = PKBProcedure::getProcedures();
-	for (auto iter : list) {
-		p = iter.front();
-		for (auto vectorIter : callsProcTable) {
-			vector<string> tuple = vector<string>();
-			if (vectorIter.front() == p) {
-				tuple.push_back(vectorIter.front());
-				resultTable.emplace(tuple);
-			}
-		}
+	for (auto vectorIter : callsProcTable) {
+		vector<string> tuple = vector<string>();
+		tuple.push_back(vectorIter.front());
+		resultTable.emplace(tuple);
 	}
 	return resultTable;
 }
 
 TABLE PKBCall::getCallsIdentEnt(PROC_NAME procName) {
 	PROC_LIST resultTable;
-	PROC_LIST list;
-	PROC_NAME p;
-	list = PKBProcedure::getProcedures();
-	for (auto iter : list) {
-		p = iter.front();
-		for (auto vectorIter : callsProcTable) {
+	for (auto vectorIter : callsProcTable) {
+		if (vectorIter.front() == procName) {
 			vector<string> tuple = vector<string>();
-			if (vectorIter.front() == procName && vectorIter.back() == p) {
-				tuple.push_back(vectorIter.back());
-				resultTable.emplace(tuple);
-			}
+			tuple.push_back(vectorIter.back());
+			resultTable.emplace(tuple);
 		}
 	}
 	return resultTable;
@@ -208,17 +187,11 @@ TABLE PKBCall::getCallsIdentEnt(PROC_NAME procName) {
 
 TABLE PKBCall::getCallsEntIdent(PROC_NAME procName) {
 	PROC_LIST resultTable;
-	PROC_LIST list;
-	PROC_NAME p;
-	list = PKBProcedure::getProcedures();
-	for (auto iter : list) {
-		p = iter.front();
-		for (auto vectorIter : callsProcTable) {
+	for (auto vectorIter : callsProcTable) {
+		if (vectorIter.back() == procName) {
 			vector<string> tuple = vector<string>();
-			if (vectorIter.front() == p && vectorIter.back() == procName) {
-				tuple.push_back(vectorIter.front());
-				resultTable.emplace(tuple);
-			}
+			tuple.push_back(vectorIter.front());
+			resultTable.emplace(tuple);
 		}
 	}
 	return resultTable;
@@ -230,53 +203,31 @@ TABLE PKBCall::getCallsEntEnt() {
 
 TABLE PKBCall::getCallsTAnyEnt() {
 	PROC_LIST resultTable;
-	PROC_LIST list;
-	PROC_NAME p;
-	list = PKBProcedure::getProcedures();
-	for (auto iter : list) {
-		p = iter.front();
-		for (auto vectorIter : callsTProcTable) {
-			vector<string> tuple = vector<string>();
-			if (vectorIter.back() == p) {
-				tuple.push_back(vectorIter.back());
-				resultTable.emplace(tuple);
-			}
-		}
+	for (auto vectorIter : callsTProcTable) {
+		vector<string> tuple = vector<string>();
+		tuple.push_back(vectorIter.back());
+		resultTable.emplace(tuple);
 	}
 	return resultTable;
 }
 
 TABLE PKBCall::getCallsTEntAny() {
 	PROC_LIST resultTable;
-	PROC_LIST list;
-	PROC_NAME p;
-	list = PKBProcedure::getProcedures();
-	for (auto iter : list) {
-		p = iter.front();
-		for (auto vectorIter : callsTProcTable) {
-			vector<string> tuple = vector<string>();
-			if (vectorIter.front() == p) {
-				tuple.push_back(vectorIter.front());
-				resultTable.emplace(tuple);
-			}
-		}
+	for (auto vectorIter : callsTProcTable) {
+		vector<string> tuple = vector<string>();
+		tuple.push_back(vectorIter.front());
+		resultTable.emplace(tuple);
 	}
 	return resultTable;
 }
 
 TABLE PKBCall::getCallsTIdentEnt(PROC_NAME procName) {
 	PROC_LIST resultTable;
-	PROC_LIST list;
-	PROC_NAME p;
-	list = PKBProcedure::getProcedures();
-	for (auto iter : list) {
-		p = iter.front();
-		for (auto vectorIter : callsTProcTable) {
+	for (auto vectorIter : callsTProcTable) {
+		if (vectorIter.front() == procName) {
 			vector<string> tuple = vector<string>();
-			if (vectorIter.front() == procName && vectorIter.back() == p) {
-				tuple.push_back(vectorIter.back());
-				resultTable.emplace(tuple);
-			}
+			tuple.push_back(vectorIter.back());
+			resultTable.emplace(tuple);
 		}
 	}
 	return resultTable;
@@ -284,17 +235,11 @@ TABLE PKBCall::getCallsTIdentEnt(PROC_NAME procName) {
 
 TABLE PKBCall::getCallsTEntIdent(PROC_NAME procName) {
 	PROC_LIST resultTable;
-	PROC_LIST list;
-	PROC_NAME p;
-	list = PKBProcedure::getProcedures();
-	for (auto iter : list) {
-		p = iter.front();
-		for (auto vectorIter : callsTProcTable) {
+	for (auto vectorIter : callsTProcTable) {
+		if (vectorIter.back() == procName) {
 			vector<string> tuple = vector<string>();
-			if (vectorIter.front() == p && vectorIter.back() == procName) {
-				tuple.push_back(vectorIter.front());
-				resultTable.emplace(tuple);
-			}
+			tuple.push_back(vectorIter.front());
+			resultTable.emplace(tuple);
 		}
 	}
 	return resultTable;

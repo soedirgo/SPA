@@ -7,7 +7,7 @@
 class DesignExtractor {
 public:
 	static void extractDesign();
-	//static void extractNextT(STMT_TYPE ent1, PROG_LINE n1, STMT_TYPE ent2, PROG_LINE n2);
+	static void clearCache();
 
 	static void extractNextT(STMT_LIST n1, STMT_LIST n2);
 	static void affectsAll();
@@ -44,7 +44,9 @@ private:
 	static void recurseCall(PROC_NAME p, PROC_NAME q);
 	static void recurseParent(STMT_NO parent, STMT_NO child);
 	static void recurseFollows(STMT_NO followedBy, STMT_NO follow);
-	static void recurseNext(PROG_LINE n1, PROG_LINE n2, std::unordered_map<std::string, int> visited );
-	static void recurseNextReverse(PROG_LINE n1, PROG_LINE n2, std::unordered_map<std::string, int> visited );
+	static void recurseNext(PROG_LINE n1, PROG_LINE n2, std::unordered_set<std::string> visited );
+	static void recurseNextReverse(PROG_LINE n1, PROG_LINE n2, std::unordered_set<std::string> visited );
 	static void recurseNextBipT(PROG_LINE n1, PROG_LINE n2);
+
+	static std::unordered_set<std::string>nextNodeVisitedCache;
 };

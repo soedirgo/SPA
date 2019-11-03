@@ -101,21 +101,26 @@ TABLE PKBFollows::getFollowsAnyEnt(STMT_TYPE type) {
 	STMT_LIST list;
 	STMT_NO s;
 	if (type == "stmt" || type == "prog_line") {
-		list = PKBStmt::getStmts();
+		for (auto vectorIter : followsTable) {
+			vector<string> tuple = vector<string>();
+			tuple.push_back(vectorIter.back());
+			resultTable.emplace(tuple);
+		}
 	}
 	else {
 		list = PKBStmt::getStmtsByType(type);
-	}
-	for (auto iter : list) {
-		s = iter.front();
-		for (auto vectorIter : followsTable) {
-			vector<string> tuple = vector<string>();
-			if (vectorIter.back() == s) {
-				tuple.push_back(vectorIter.back());
-				resultTable.emplace(tuple);
+		for (auto iter : list) {
+			s = iter.front();
+			for (auto vectorIter : followsTable) {
+				if (vectorIter.back() == s) {
+					vector<string> tuple = vector<string>();
+					tuple.push_back(vectorIter.back());
+					resultTable.emplace(tuple);
+				}
 			}
 		}
 	}
+	
 	return resultTable;
 }
 
@@ -124,21 +129,26 @@ TABLE PKBFollows::getFollowsEntAny(STMT_TYPE type) {
 	STMT_LIST list;
 	STMT_NO s;
 	if (type == "stmt" || type == "prog_line") {
-		list = PKBStmt::getStmts();
+		for (auto vectorIter : followsTable) {
+			vector<string> tuple = vector<string>();
+			tuple.push_back(vectorIter.front());
+			resultTable.emplace(tuple);
+		}
 	}
 	else {
 		list = PKBStmt::getStmtsByType(type);
-	}
-	for (auto iter : list) {
-		s = iter.front();
-		for (auto vectorIter : followsTable) {
-			vector<string> tuple = vector<string>();
-			if (vectorIter.front() == s) {
-				tuple.push_back(vectorIter.front());
-				resultTable.emplace(tuple);
+		for (auto iter : list) {
+			s = iter.front();
+			for (auto vectorIter : followsTable) {
+				if (vectorIter.front() == s) {
+					vector<string> tuple = vector<string>();
+					tuple.push_back(vectorIter.front());
+					resultTable.emplace(tuple);
+				}
 			}
 		}
 	}
+	
 	return resultTable;
 }
 
@@ -147,21 +157,28 @@ TABLE PKBFollows::getFollowsIdentEnt(STMT_NO stmtNo, STMT_TYPE type) {
 	STMT_LIST list;
 	STMT_NO s;
 	if (type == "stmt" || type == "prog_line") {
-		list = PKBStmt::getStmts();
-	}
-	else {
-		list = PKBStmt::getStmtsByType(type);
-	}
-	for (auto iter : list) {
-		s = iter.front();
 		for (auto vectorIter : followsTable) {
 			vector<string> tuple = vector<string>();
-			if (vectorIter.front() == stmtNo && vectorIter.back() == s) {
+			if (vectorIter.front() == stmtNo) {
 				tuple.push_back(vectorIter.back());
 				resultTable.emplace(tuple);
 			}
 		}
 	}
+	else {
+		list = PKBStmt::getStmtsByType(type);
+		for (auto iter : list) {
+			s = iter.front();
+			for (auto vectorIter : followsTable) {
+				vector<string> tuple = vector<string>();
+				if (vectorIter.front() == stmtNo && vectorIter.back() == s) {
+					tuple.push_back(vectorIter.back());
+					resultTable.emplace(tuple);
+				}
+			}
+		}
+	}
+	
 	return resultTable;
 }
 
@@ -170,56 +187,89 @@ TABLE PKBFollows::getFollowsEntIdent(STMT_TYPE type, STMT_NO stmtNo) {
 	STMT_LIST list;
 	STMT_NO s;
 	if (type == "stmt" || type == "prog_line") {
-		list = PKBStmt::getStmts();
-	}
-	else {
-		list = PKBStmt::getStmtsByType(type);
-	}
-	for (auto iter : list) {
-		s = iter.front();
 		for (auto vectorIter : followsTable) {
 			vector<string> tuple = vector<string>();
-			if (vectorIter.front() == s && vectorIter.back() == stmtNo) {
+			if (vectorIter.back() == stmtNo) {
 				tuple.push_back(vectorIter.front());
 				resultTable.emplace(tuple);
 			}
 		}
 	}
+	else {
+		list = PKBStmt::getStmtsByType(type);
+		for (auto iter : list) {
+			s = iter.front();
+			for (auto vectorIter : followsTable) {
+				vector<string> tuple = vector<string>();
+				if (vectorIter.front() == s && vectorIter.back() == stmtNo) {
+					tuple.push_back(vectorIter.front());
+					resultTable.emplace(tuple);
+				}
+			}
+		}
+	}
+	
 	return resultTable;
 }
 
 TABLE PKBFollows::getFollowsEntEnt(STMT_TYPE type1, STMT_TYPE type2) {
 	TABLE resultTable;
-	if ((type1 == "stmt" && type2 == "stmt") || (type1 == "prog_line" && type2 == "prog_line")
-		|| (type1 == "prog_line" && type2 == "stmt") || (type1 == "stmt" && type2 == "prog_line")) {
+	STMT_NO s1;
+	STMT_NO s2;
+	if (type1 == "prog_line") {
+		type1 = "stmt";
+	}
+	if (type2 == "prog_line") {
+		type2 = "stmt";
+	}
+	if ((type1 == "stmt" && type2 == "stmt")) {
 		return followsTable;
 	}
 	STMT_LIST list1, list2;
-	if (type1 == "stmt" || type1 == "prog_line") {
+	if (type1 == "stmt" && type2 != "stmt") {
 		list1 = PKBStmt::getStmts();
-	}
-	else {
-		list1 = PKBStmt::getStmtsByType(type1);
-	}
-	if (type2 == "stmt" || type2 == "prog_line") {
-		list2 = PKBStmt::getStmts();
-	}
-	else {
 		list2 = PKBStmt::getStmtsByType(type2);
-	}
-
-	STMT_NO s1;
-	STMT_NO s2;
-	for (auto iter1 : list1) {
-		s1 = iter1.front();
 		for (auto iter2 : list2) {
 			s2 = iter2.front();
 			for (auto vectorIter : followsTable) {
-				vector<string> tuple = vector<string>();
-				if (vectorIter.front() == s1 && vectorIter.back() == s2) {
+				if (vectorIter.back() == s2) {
+					vector<string> tuple = vector<string>();
 					tuple.push_back(vectorIter.front());
 					tuple.push_back(vectorIter.back());
 					resultTable.emplace(tuple);
+				}
+			}
+		}
+	}
+	else if (type1 != "stmt" && type2 == "stmt") {
+		list1 = PKBStmt::getStmtsByType(type1);
+		list2 = PKBStmt::getStmts();
+		for (auto iter1 : list1) {
+			s1 = iter1.front();
+			for (auto vectorIter : followsTable) {
+				if (vectorIter.front() == s1) {
+					vector<string> tuple = vector<string>();
+					tuple.push_back(vectorIter.front());
+					tuple.push_back(vectorIter.back());
+					resultTable.emplace(tuple);
+				}
+			}
+		}
+	}
+	else if (type1 != "stmt" && type2 != "stmt") {
+		list1 = PKBStmt::getStmtsByType(type1);
+		list2 = PKBStmt::getStmtsByType(type2);
+		for (auto iter1 : list1) {
+			s1 = iter1.front();
+			for (auto iter2 : list2) {
+				s2 = iter2.front();
+				for (auto vectorIter : followsTable) {
+					if (vectorIter.front() == s1 && vectorIter.back() == s2) {
+						vector<string> tuple = vector<string>();
+						tuple.push_back(vectorIter.front());
+						tuple.push_back(vectorIter.back());
+						resultTable.emplace(tuple);
+					}
 				}
 			}
 		}
@@ -233,21 +283,26 @@ TABLE PKBFollows::getFollowsTAnyEnt(STMT_TYPE type) {
 	STMT_LIST list;
 	STMT_NO s;
 	if (type == "stmt" || type == "prog_line") {
-		list = PKBStmt::getStmts();
+		for (auto vectorIter : followsTTable) {
+			vector<string> tuple = vector<string>();
+			tuple.push_back(vectorIter.back());
+			resultTable.emplace(tuple);
+		}
 	}
 	else {
 		list = PKBStmt::getStmtsByType(type);
-	}
-	for (auto iter : list) {
-		s = iter.front();
-		for (auto vectorIter : followsTTable) {
-			vector<string> tuple = vector<string>();
-			if (vectorIter.back() == s) {
-				tuple.push_back(vectorIter.back());
-				resultTable.emplace(tuple);
+		for (auto iter : list) {
+			s = iter.front();
+			for (auto vectorIter : followsTTable) {
+				if (vectorIter.back() == s) {
+					vector<string> tuple = vector<string>();
+					tuple.push_back(vectorIter.back());
+					resultTable.emplace(tuple);
+				}
 			}
 		}
 	}
+	
 	return resultTable;
 }
 
@@ -256,21 +311,26 @@ TABLE PKBFollows::getFollowsTEntAny(STMT_TYPE type) {
 	STMT_LIST list;
 	STMT_NO s;
 	if (type == "stmt" || type == "prog_line") {
-		list = PKBStmt::getStmts();
+		for (auto vectorIter : followsTTable) {
+			vector<string> tuple = vector<string>();
+			tuple.push_back(vectorIter.front());
+			resultTable.emplace(tuple);
+		}
 	}
 	else {
 		list = PKBStmt::getStmtsByType(type);
-	}
-	for (auto iter : list) {
-		s = iter.front();
-		for (auto vectorIter : followsTTable) {
-			vector<string> tuple = vector<string>();
-			if (vectorIter.front() == s) {
-				tuple.push_back(vectorIter.front());
-				resultTable.emplace(tuple);
+		for (auto iter : list) {
+			s = iter.front();
+			for (auto vectorIter : followsTTable) {
+				if (vectorIter.front() == s) {
+					vector<string> tuple = vector<string>();
+					tuple.push_back(vectorIter.front());
+					resultTable.emplace(tuple);
+				}
 			}
 		}
 	}
+	
 	return resultTable;
 }
 
@@ -279,21 +339,28 @@ TABLE PKBFollows::getFollowsTIdentEnt(STMT_NO stmtNo, STMT_TYPE type) {
 	STMT_LIST list;
 	STMT_NO s;
 	if (type == "stmt" || type == "prog_line") {
-		list = PKBStmt::getStmts();
-	}
-	else {
-		list = PKBStmt::getStmtsByType(type);
-	}
-	for (auto iter : list) {
-		s = iter.front();
 		for (auto vectorIter : followsTTable) {
 			vector<string> tuple = vector<string>();
-			if (vectorIter.front() == stmtNo && vectorIter.back() == s) {
+			if (vectorIter.front() == stmtNo) {
 				tuple.push_back(vectorIter.back());
 				resultTable.emplace(tuple);
 			}
 		}
 	}
+	else {
+		list = PKBStmt::getStmtsByType(type);
+		for (auto iter : list) {
+			s = iter.front();
+			for (auto vectorIter : followsTTable) {
+				vector<string> tuple = vector<string>();
+				if (vectorIter.front() == stmtNo && vectorIter.back() == s) {
+					tuple.push_back(vectorIter.back());
+					resultTable.emplace(tuple);
+				}
+			}
+		}
+	}
+	
 	return resultTable;
 }
 
@@ -302,56 +369,89 @@ TABLE PKBFollows::getFollowsTEntIdent(STMT_TYPE type, STMT_NO stmtNo) {
 	STMT_LIST list;
 	STMT_NO s;
 	if (type == "stmt" || type == "prog_line") {
-		list = PKBStmt::getStmts();
-	}
-	else {
-		list = PKBStmt::getStmtsByType(type);
-	}
-	for (auto iter : list) {
-		s = iter.front();
 		for (auto vectorIter : followsTTable) {
-			vector<string> tuple = vector<string>();
-			if (vectorIter.front() == s && vectorIter.back() == stmtNo) {
+			if (vectorIter.back() == stmtNo) {
+				vector<string> tuple = vector<string>();
 				tuple.push_back(vectorIter.front());
 				resultTable.emplace(tuple);
 			}
 		}
 	}
+	else {
+		list = PKBStmt::getStmtsByType(type);
+		for (auto iter : list) {
+			s = iter.front();
+			for (auto vectorIter : followsTTable) {
+				if (vectorIter.front() == s && vectorIter.back() == stmtNo) {
+					vector<string> tuple = vector<string>();
+					tuple.push_back(vectorIter.front());
+					resultTable.emplace(tuple);
+				}
+			}
+		}
+	}
+	
 	return resultTable;
 }
 
 TABLE PKBFollows::getFollowsTEntEnt(STMT_TYPE type1, STMT_TYPE type2) {
 	TABLE resultTable;
-	if ((type1 == "stmt" && type2 == "stmt") || (type1 == "prog_line" && type2 == "prog_line")
-		|| (type1 == "prog_line" && type2 == "stmt") || (type1 == "stmt" && type2 == "prog_line")) {
+	STMT_NO s1;
+	STMT_NO s2;
+	if (type1 == "prog_line") {
+		type1 = "stmt";
+	}
+	if (type2 == "prog_line") {
+		type2 = "stmt";
+	}
+	if ((type1 == "stmt" && type2 == "stmt")) {
 		return followsTTable;
 	}
 	STMT_LIST list1, list2;
-	if (type1 == "stmt" || type1 == "prog_line") {
+	if (type1 == "stmt" && type2 != "stmt") {
 		list1 = PKBStmt::getStmts();
-	}
-	else {
-		list1 = PKBStmt::getStmtsByType(type1);
-	}
-	if (type2 == "stmt" || type2 == "prog_line") {
-		list2 = PKBStmt::getStmts();
-	}
-	else {
 		list2 = PKBStmt::getStmtsByType(type2);
-	}
-
-	STMT_NO s1;
-	STMT_NO s2;
-	for (auto iter1 : list1) {
-		s1 = iter1.front();
 		for (auto iter2 : list2) {
 			s2 = iter2.front();
 			for (auto vectorIter : followsTTable) {
-				vector<string> tuple = vector<string>();
-				if (vectorIter.front() == s1 && vectorIter.back() == s2) {
+				if (vectorIter.back() == s2) {
+					vector<string> tuple = vector<string>();
 					tuple.push_back(vectorIter.front());
 					tuple.push_back(vectorIter.back());
 					resultTable.emplace(tuple);
+				}
+			}
+		}
+	}
+	else if (type1 != "stmt" && type2 == "stmt") {
+		list1 = PKBStmt::getStmtsByType(type1);
+		list2 = PKBStmt::getStmts();
+		for (auto iter1 : list1) {
+			s1 = iter1.front();
+			for (auto vectorIter : followsTTable) {
+				if (vectorIter.front() == s1) {
+					vector<string> tuple = vector<string>();
+					tuple.push_back(vectorIter.front());
+					tuple.push_back(vectorIter.back());
+					resultTable.emplace(tuple);
+				}
+			}
+		}
+	}
+	else if (type1 != "stmt" && type2 != "stmt") {
+		list1 = PKBStmt::getStmtsByType(type1);
+		list2 = PKBStmt::getStmtsByType(type2);
+		for (auto iter1 : list1) {
+			s1 = iter1.front();
+			for (auto iter2 : list2) {
+				s2 = iter2.front();
+				for (auto vectorIter : followsTTable) {
+					if (vectorIter.front() == s1 && vectorIter.back() == s2) {
+						vector<string> tuple = vector<string>();
+						tuple.push_back(vectorIter.front());
+						tuple.push_back(vectorIter.back());
+						resultTable.emplace(tuple);
+					}
 				}
 			}
 		}
