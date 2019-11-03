@@ -44,7 +44,7 @@ private:
 	static void recurseCall(PROC_NAME p, PROC_NAME q);
 	static void recurseParent(STMT_NO parent, STMT_NO child);
 	static void recurseFollows(STMT_NO followedBy, STMT_NO follow);
-	static void recurseNext(PROG_LINE n1, PROG_LINE n2, std::vector<std::string> visited);
-	static void recurseNextReverse(PROG_LINE n1, PROG_LINE n2, std::vector<std::string> visited);
+	static void recurseNext(PROG_LINE n1, PROG_LINE n2, std::unordered_map<std::string, int> visited );
+	static void recurseNextReverse(PROG_LINE n1, PROG_LINE n2, std::unordered_map<std::string, int> visited );
 	static void recurseNextBipT(PROG_LINE n1, PROG_LINE n2);
 };

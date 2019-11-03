@@ -68,7 +68,7 @@ void DesignExtractor::isAnyAffecting(STMT_NO a2) {
 		STMT_NO stmtNo = stmt.front();
 		if (isAffects(stmtNo, a2)) {
 			break;
-		}	
+		}
 	}
 }
 
@@ -239,9 +239,12 @@ void DesignExtractor::extractNextT(STMT_LIST nextTList1, STMT_LIST nextTList2)
 					if (nextTValue == false) {
 						PKBNext::setNextT(next1, next2);
 						//Recursive backward
-						vector<string> visted = {};
-						visted.push_back(next1);
-						recurseNextReverse(next1, next2, visted);
+						//vector<string> visted = {};
+						//visted.push_back(next1);
+
+						unordered_map<string, int> visited;
+						visited.insert({ next1,1 });
+						recurseNextReverse(next1, next2, visited);
 					}
 				}
 			}
@@ -259,15 +262,17 @@ void DesignExtractor::extractNextT(STMT_LIST nextTList1, STMT_LIST nextTList2)
 					//optimization
 					if (nextTValue == false) {
 						PKBNext::setNextT(next1, next2);
-						vector<string> visted = {};
-						visted.push_back(next2);
+						//vector<string> visted = {};
+						//visted.push_back(next2);
+						unordered_map<string, int> visited;
+						visited.insert({ next2,1 });
 						//Recursive forward
-						recurseNext(next1, next2, visted);
+						recurseNext(next1, next2, visited);
 					}
 				}
 			}
 		}
-		
+
 	}
 	/*
 	else {
@@ -648,7 +653,7 @@ void DesignExtractor::recurseParent(STMT_NO parent, STMT_NO child) {
 	}
 }
 
-void DesignExtractor::recurseNext(PROG_LINE nextByLine, PROG_LINE nextLine, vector<string> visited) {
+void DesignExtractor::recurseNext(PROG_LINE nextByLine, PROG_LINE nextLine, unordered_map<string, int> visited) {
 	LINE_LIST lineList = PKBNext::getNext(nextLine);
 	if (lineList.size() == 0) {
 		return;
@@ -657,14 +662,18 @@ void DesignExtractor::recurseNext(PROG_LINE nextByLine, PROG_LINE nextLine, vect
 	for (auto vectorIter : lineList) {
 		PROG_LINE newNextLine = vectorIter.back();
 		bool visitedStatus = false;
+		/*
 		for (auto vectorIter2 : visited) {
 			if (vectorIter2 == newNextLine) {
 				visitedStatus = true;
 				break;
 			}
 		}
-		if (visitedStatus == false) {
-			visited.push_back(newNextLine);
+		*/
+		if (visited.find(newNextLine) == visited.end()) {
+			//if (visitedStatus == false) {
+				//visited.push_back(newNextLine);
+			visited.insert({ newNextLine ,1 });
 			PKBNext::setNextT(nextByLine, newNextLine);
 			recurseNext(nextByLine, newNextLine, visited);
 
@@ -673,8 +682,8 @@ void DesignExtractor::recurseNext(PROG_LINE nextByLine, PROG_LINE nextLine, vect
 	}
 }
 
-void DesignExtractor::recurseNextReverse(PROG_LINE nextByLine, PROG_LINE nextLine,  vector<string> visited) {
-	
+void DesignExtractor::recurseNextReverse(PROG_LINE nextByLine, PROG_LINE nextLine, unordered_map<string, int> visited) {
+
 	LINE_LIST lineList = PKBNext::getNextBy(nextByLine);
 	if (lineList.size() == 0) {
 		return;
@@ -683,6 +692,7 @@ void DesignExtractor::recurseNextReverse(PROG_LINE nextByLine, PROG_LINE nextLin
 	for (auto vectorIter : lineList) {
 		PROG_LINE newNextByLine = vectorIter.back();
 		bool visitedStatus = false;
+		/*
 		for (auto vectorIter2 : visited) {
 			if (vectorIter2 == newNextByLine) {
 				visitedStatus = true;
@@ -690,7 +700,10 @@ void DesignExtractor::recurseNextReverse(PROG_LINE nextByLine, PROG_LINE nextLin
 			}
 		}
 		if (visitedStatus == false) {
-			visited.push_back(newNextByLine);
+		*/
+		if (visited.find(newNextByLine) == visited.end()) {
+			//visited.push_back(newNextByLine);
+			visited.insert({ newNextByLine,1 });
 			PKBNext::setNextT(newNextByLine, nextLine);
 			recurseNextReverse(newNextByLine, nextLine, visited);
 		}
