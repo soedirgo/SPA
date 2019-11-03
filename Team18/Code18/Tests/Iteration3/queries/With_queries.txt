@@ -429,9 +429,9 @@ Select BOOLEAN with 1 = 1 pattern a(v, _) and ifs(v, _, _) with v.varName = "a" 
 FALSE
 5000
 87 - Multiple relation test, all clause true multiple with all related true 1
-procedure pr; if ifs; while w; variable v;
-Select <pr, ifs, w, v> such that Uses(pr, v) pattern ifs(v, _, _) and w(v, _) with pr.procName = "D" with v.varName = "target" with "a" = v.varName
-D 26 27 a, D 26 27 target
+procedure pr; if ifs; while w; variable v, v1;
+Select <pr, ifs, w, v, v1> such that Uses(pr, v) pattern ifs(v, _, _) and w(v, _) with pr.procName = "D" with v.varName = "target" pattern ifs(v1, _, _) and w(v1, _) with ifs.stmt# = 26
+D 26 27 target a, D 26 27 target target
 5000
 88 - Multiple relation test, all clause true multiple with all related true 2
 assign a; variable v; call cl; if ifs; procedure pr;
