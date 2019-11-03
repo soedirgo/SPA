@@ -112,7 +112,7 @@ void DesignExtractor::isAffectsSelf() {
 
 bool DesignExtractor::isAffects(STMT_NO a1, STMT_NO a2) {
 	if (PKBAffects::isCheckedAffects(a1, a2)) {
-		return;
+		return PKBAffects::isCheckedAffectsIdentIdent(a1, a2);
 	}
 	bool affectsHold = false;
 	bool sameProc = true;
@@ -147,10 +147,8 @@ bool DesignExtractor::isAffects(STMT_NO a1, STMT_NO a2) {
 		PKBAffects::setCheckedAffects(a1, a2);
 		return true;
 	}
-	else {
-		PKBAffects::setCheckedAffects(a1, a2);
-		return false;
-	}
+	PKBAffects::setCheckedAffects(a1, a2);
+	return false;
 }
 
 void DesignExtractor::affectsTAll() {

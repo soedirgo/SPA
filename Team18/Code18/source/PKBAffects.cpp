@@ -106,6 +106,17 @@ bool PKBAffects::isAffectsIdentIdent(STMT_NO a1, STMT_NO a2) {
 	return false;
 }
 
+bool PKBAffects::isCheckedAffectsIdentIdent(STMT_NO a1, STMT_NO a2) {
+	for (auto vectorIter : affectsTable) {
+		if (vectorIter.front() == a1) {
+			if (vectorIter.back() == a2) {
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
 bool PKBAffects::isAffectsTAnyAny() {
 	DesignExtractor::affectsTAll();
 	return !affectsTTable.empty();

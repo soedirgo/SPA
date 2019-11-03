@@ -15,6 +15,7 @@ public:
 	static bool isAffectsAnyIdent(STMT_NO a2);
 	static bool isAffectsIdentAny(STMT_NO a1);
 	static bool isAffectsIdentIdent(STMT_NO a1, STMT_NO a2);
+	static bool isCheckedAffectsIdentIdent(STMT_NO a1, STMT_NO a2);
 	static bool isCheckedAffects(STMT_NO a1, STMT_NO a2);
 	static bool setCheckedAffects(STMT_NO a1, STMT_NO a2);
 
