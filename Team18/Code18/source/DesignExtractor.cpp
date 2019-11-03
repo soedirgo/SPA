@@ -39,6 +39,38 @@ void DesignExtractor::extractDesign()
 	//extractAffectsT();
 }
 
+void DesignExtractor::affectsAny() {
+	STMT_LIST assignStmtTable1 = PKBStmt::getStmtsByType("assign");
+	for (auto stmt1 : assignStmtTable1) {
+		STMT_NO stmtNo1 = stmt1.front();
+		VAR_NAME varNameModified;
+		VAR_LIST varList1 = PKBModifies::getModifiesSIdentEnt(stmtNo1);
+		for (auto vectorIter4 : varList1) {
+			varNameModified = vectorIter4.front();
+		}
+		if (traverseAffectsAny(stmtNo1, varNameModified)) {
+			break;
+		}
+	}
+}
+void DesignExtractor::isAnyAffectedBy(STMT_NO a1) {
+	VAR_NAME varNameModified;
+	VAR_LIST varList1 = PKBModifies::getModifiesSIdentEnt(a1);
+	for (auto vectorIter4 : varList1) {
+		varNameModified = vectorIter4.front();
+	}
+	traverseAffectsAny(a1, varNameModified);
+}
+
+void DesignExtractor::isAnyAffecting(STMT_NO a2) {
+	STMT_LIST assignStmtTable = PKBStmt::getStmtsByType("assign");
+	for (auto stmt : assignStmtTable) {
+		STMT_NO stmtNo = stmt.front();
+		if (isAffects(stmtNo, a2)) {
+			break;
+		}	
+	}
+}
 
 void DesignExtractor::affectsAll() {
 	STMT_LIST assignStmtTable1 = PKBStmt::getStmtsByType("assign");
@@ -78,7 +110,7 @@ void DesignExtractor::isAffectsSelf() {
 	}
 }
 
-void DesignExtractor::isAffects(STMT_NO a1, STMT_NO a2) {
+bool DesignExtractor::isAffects(STMT_NO a1, STMT_NO a2) {
 	if (PKBAffects::isCheckedAffects(a1, a2)) {
 		return;
 	}
@@ -112,8 +144,13 @@ void DesignExtractor::isAffects(STMT_NO a1, STMT_NO a2) {
 	}
 	if (affectsHold == true) {
 		PKBAffects::setAffects(a1, a2);
+		PKBAffects::setCheckedAffects(a1, a2);
+		return true;
 	}
-	PKBAffects::setCheckedAffects(a1, a2);
+	else {
+		PKBAffects::setCheckedAffects(a1, a2);
+		return false;
+	}
 }
 
 void DesignExtractor::affectsTAll() {
@@ -847,6 +884,102 @@ void DesignExtractor::traverseAffectsAll(STMT_NO a1, VAR_NAME v) {
 				}
 			}
 		}
+	}
+	while (!q.empty()) {
+		STMT_NO next = q.front();
+		TABLE nexts = PKBNext::getNextIdentEnt(next, "stmt");
+		for (auto item : nexts) {
+			for (auto stmt : item) {
+				if (visited.find(stmt) == visited.end()) {
+					if (!PKB::isModifiesSIdentIdent(stmt, v) || PKBStmt::getTypeByStmtNo(stmt) == "while" || PKBStmt::getTypeByStmtNo(stmt) == "if") {
+						q.push(stmt);
+						visited.insert(make_pair(stmt, true));
+						if (PKBStmt::getTypeByStmtNo(stmt) == "assign") {
+							VAR_NAME varNameUses;
+							bool affects = false;
+							VAR_LIST varList2 = PKBUses::getUsesSIdentEnt(stmt);
+							for (auto vectorIter4 : varList2) {
+								varNameUses = vectorIter4.front();
+								if (v == varNameUses) {
+									affects = true;
+								}
+							}
+							if (affects) {
+								PKBAffects::setAffects(a1, stmt);
+								PKBAffects::setCheckedAffects(a1, stmt);
+							}
+						}
+					}
+					else {
+						if (PKBStmt::getTypeByStmtNo(stmt) == "assign") {
+							VAR_NAME varNameUses;
+							bool affects = false;
+							VAR_LIST varList2 = PKBUses::getUsesSIdentEnt(stmt);
+							for (auto vectorIter4 : varList2) {
+								varNameUses = vectorIter4.front();
+								if (v == varNameUses) {
+									affects = true;
+								}
+							}
+							if (affects) {
+								PKBAffects::setAffects(a1, stmt);
+								PKBAffects::setCheckedAffects(a1, stmt);
+							}
+						}
+					}
+				}
+			}
+		}
+		q.pop();
+	}
+}
+
+bool DesignExtractor::traverseAffectsAny(STMT_NO a1, VAR_NAME v) {
+	queue<STMT_NO> q;
+	map<STMT_NO, bool> visited;
+	TABLE nexts = PKBNext::getNextIdentEnt(a1, "stmt");
+	for (auto item : nexts) {
+		for (auto stmt : item) {
+			if (!PKB::isModifiesSIdentIdent(stmt, v) || PKBStmt::getTypeByStmtNo(stmt) == "while" || PKBStmt::getTypeByStmtNo(stmt) == "if") {
+				q.push(stmt);
+				visited.insert(make_pair(stmt, true));
+				if (PKBStmt::getTypeByStmtNo(stmt) == "assign") {
+					VAR_NAME varNameUses;
+					bool affects = false;
+					VAR_LIST varList2 = PKBUses::getUsesSIdentEnt(stmt);
+					for (auto vectorIter4 : varList2) {
+						varNameUses = vectorIter4.front();
+						if (v == varNameUses) {
+							affects = true;
+						}
+					}
+					if (affects) {
+						PKBAffects::setAffects(a1, stmt);
+						PKBAffects::setCheckedAffects(a1, stmt);
+						return true;
+					}
+				}
+			}
+			else {
+				if (PKBStmt::getTypeByStmtNo(stmt) == "assign") {
+					VAR_NAME varNameUses;
+					bool affects = false;
+					VAR_LIST varList2 = PKBUses::getUsesSIdentEnt(stmt);
+					for (auto vectorIter4 : varList2) {
+						varNameUses = vectorIter4.front();
+						if (v == varNameUses) {
+							affects = true;
+						}
+					}
+					if (affects) {
+						PKBAffects::setAffects(a1, stmt);
+						PKBAffects::setCheckedAffects(a1, stmt);
+						return true;
+					}
+				}
+			}
+		}
+		return false;
 	}
 	while (!q.empty()) {
 		STMT_NO next = q.front();
