@@ -1,7 +1,7 @@
 1 - Set 1 - Valid syntax tests for Affects (Positive Tests). Valid syntax, LHS synonym RHS synonym
 stmt s; prog_line n;
 Select s such that Affects(s, n)
-1, 2, 3, 6, 8, 9, 10, 12, 14, 17, 20, 21, 23, 24, 26, 27, 28, 29, 30, 31, 32, 40, 41, 43, 44, 45, 48, 49, 51, 52, 53, 59, 61, 62, 65, 67, 69, 71, 72, 74, 77, 80
+1, 2, 3, 6, 8, 9, 10, 12, 14, 17, 20, 21, 23, 24, 26, 27, 28, 29, 30, 31, 32, 40, 41, 43, 44, 45, 48, 49, 51, 52, 53, 59, 61, 62, 65, 69, 71, 72, 74, 77, 80
 20000
 2 - Valid syntax, LHS synonym RHS int
 assign a;
@@ -11,7 +11,7 @@ Select a such that Affects(a, 48)
 3 - Valid syntax, LHS synonym RHS wildcard
 prog_line n;
 Select n such that Affects(n, _)
-1, 2, 3, 6, 8, 9, 10, 12, 14, 17, 20, 21, 23, 24, 26, 27, 28, 29, 30, 31, 32, 40, 41, 43, 44, 45, 48, 49, 51, 52, 53, 59, 61, 62, 65, 67, 69, 71, 72, 74, 77, 80
+1, 2, 3, 6, 8, 9, 10, 12, 14, 17, 20, 21, 23, 24, 26, 27, 28, 29, 30, 31, 32, 40, 41, 43, 44, 45, 48, 49, 51, 52, 53, 59, 61, 62, 65, 69, 71, 72, 74, 77, 80
 20000
 4 - Valid syntax, LHS int RHS synonym
 stmt s;
@@ -31,7 +31,7 @@ FALSE
 7 - Valid syntax, LHS wildcard RHS synonym
 assign a;
 Select a such that Affects(_, a)
-2, 3, 6, 8, 9, 10, 12, 14, 15, 19, 23, 24, 26, 27, 28, 29, 30, 32, 33, 43, 44, 45, 48, 49, 51, 52, 53, 54, 61, 62, 65, 67, 69, 71, 72, 74, 77, 78, 82
+2, 3, 6, 9, 10, 12, 14, 15, 19, 23, 24, 26, 27, 28, 29, 30, 32, 33, 43, 44, 45, 48, 49, 51, 52, 53, 54, 61, 62, 65, 67, 69, 71, 72, 74, 77, 78, 82
 20000
 8 - Valid syntax, LHS wildcard RHS int
 procedure pr;
@@ -146,7 +146,7 @@ none
 30 - Nest, In while true
 while w;
 Select w such that Affects(12, 14)
-11, 34, 42, 60
+11, 34, 42, 60, 66
 20000
 31 - Nest, In while false
 variable v;
@@ -256,17 +256,17 @@ none
 52 - Set 5 - Relation tests for Affects (Algorithmic Tests). Relation, Select all stmt that Affects
 stmt s, s1;
 Select s such that Affects(s, s1)
-1, 2, 3, 6, 8, 9, 10, 12, 14, 17, 20, 21, 23, 24, 26, 27, 28, 29, 30, 31, 32, 40, 41, 43, 44, 45, 48, 49, 51, 52, 53, 59, 61, 62, 65, 67, 69, 71, 72, 74, 77, 80
+1, 2, 3, 6, 8, 9, 10, 12, 14, 17, 20, 21, 23, 24, 26, 27, 28, 29, 30, 31, 32, 40, 41, 43, 44, 45, 48, 49, 51, 52, 53, 59, 61, 62, 65, 69, 71, 72, 74, 77, 80
 20000
 53 - Relation, Select all Affected stmt
 stmt s, s1;
 Select s1 such that Affects(s, s1)
-2, 3, 6, 8, 9, 10, 12, 14, 15, 19, 23, 24, 26, 27, 28, 29, 30, 32, 33, 43, 44, 45, 48, 49, 51, 52, 53, 54, 61, 62, 65, 67, 69, 71, 72, 74, 77, 78, 82
+2, 3, 6, 9, 10, 12, 14, 15, 19, 23, 24, 26, 27, 28, 29, 30, 32, 33, 43, 44, 45, 48, 49, 51, 52, 53, 54, 61, 62, 65, 67, 69, 71, 72, 74, 77, 78, 82
 20000
 54 - Relation, Select all stmt that affects a specific stmt 1
 stmt s;
 Select s such that Affects(s, 15)
-2, 3, 6, 8, 9, 10, 12, 14
+2, 3, 8, 9, 12, 14
 20000
 55 - Relation, Select all stmt that affects a specific stmt 2
 prog_line n;
@@ -296,7 +296,7 @@ a, c, b, d, e, Mon, Tue, Wed, Fri, Thu, Sat, Sun, Week, date, day, red, orange, 
 60 - Relation, Affects true if modifies but stmt is inside and before
 read r;
 Select r such that Affects(23, 24)
-4, 35, 55, 64, 68, 71, 75, 76
+4, 35, 55, 64, 68, 73, 75, 76
 20000
 61 - Relation, Affects true while modifies but stmt is outside
 print pn;

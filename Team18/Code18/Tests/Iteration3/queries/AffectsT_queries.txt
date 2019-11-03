@@ -1,7 +1,7 @@
 1 - Set 1 - Valid syntax tests for Affects* (Positive Tests). Valid syntax, LHS synonym RHS synonym
 stmt s; prog_line n;
 Select n such that Affects*(n, s)
-1, 2, 3, 6, 8, 9, 10, 12, 14, 17, 20, 21, 23, 24, 26, 27, 28, 29, 30, 31, 32, 40, 41, 43, 44, 45, 48, 49, 51, 52, 53, 59, 61, 62, 65, 67, 69, 71, 72, 74, 77, 80
+1, 2, 3, 6, 8, 9, 10, 12, 14, 17, 20, 21, 23, 24, 26, 27, 28, 29, 30, 31, 32, 40, 41, 43, 44, 45, 48, 49, 51, 52, 53, 59, 61, 62, 65, 69, 71, 72, 74, 77, 80
 20000
 2 - Valid syntax, LHS synonym RHS int
 assign a;
@@ -11,7 +11,7 @@ Select a such that Affects*(a, 71)
 3 - Valid syntax, LHS synonym RHS wildcard
 prog_line n;
 Select n such that Affects*(n, _)
-1, 2, 3, 6, 8, 9, 10, 12, 14, 17, 20, 21, 23, 24, 26, 27, 28, 29, 30, 31, 32, 40, 41, 43, 44, 45, 48, 49, 51, 52, 53, 59, 61, 62, 65, 67, 69, 71, 72, 74, 77, 80
+1, 2, 3, 6, 8, 9, 10, 12, 14, 17, 20, 21, 23, 24, 26, 27, 28, 29, 30, 31, 32, 40, 41, 43, 44, 45, 48, 49, 51, 52, 53, 59, 61, 62, 65, 69, 71, 72, 74, 77, 80
 20000
 4 - Valid syntax, LHS int RHS synonym
 stmt s;
@@ -31,7 +31,7 @@ A, B, C, D, E, F, G, H, I, J, K, L
 7 - Valid syntax, LHS wildcard RHS synonym
 prog_line n;
 Select n such that Affects*(_, n)
-2, 3, 6, 8, 9, 10, 12, 14, 15, 19, 23, 24, 26, 27, 28, 29, 30, 32, 33, 43, 44, 45, 48, 49, 51, 52, 53, 54, 61, 62, 65, 67, 69, 71, 72, 74, 77, 78, 82
+2, 3, 6, 9, 10, 12, 14, 15, 19, 23, 24, 26, 27, 28, 29, 30, 32, 33, 43, 44, 45, 48, 49, 51, 52, 53, 54, 61, 62, 65, 67, 69, 71, 72, 74, 77, 78, 82
 20000
 8 - Valid syntax, LHS wildcard RHS int
 
@@ -266,12 +266,12 @@ none
 54 - Set 5 - Relation tests for Affects* (Algorithmic Tests). Relation, Select all stmt that Affects*
 stmt s, s1;
 Select s such that Affects*(s, s1)
-1, 2, 3, 6, 8, 9, 10, 12, 14, 17, 20, 21, 23, 24, 26, 27, 28, 29, 30, 31, 32, 40, 41, 43, 44, 45, 48, 49, 51, 52, 53, 59, 61, 62, 65, 67, 69, 71, 72, 74, 77, 80
-5000
+1, 2, 3, 6, 8, 9, 10, 12, 14, 17, 20, 21, 23, 24, 26, 27, 28, 29, 30, 31, 32, 40, 41, 43, 44, 45, 48, 49, 51, 52, 53, 59, 61, 62, 65, 69, 71, 72, 74, 77, 80
+20000
 55 - Relation, Select all Affected* stmt
 stmt s, s1;
 Select s1 such that Affects*(s, s1)
-2, 3, 6, 8, 9, 10, 12, 14, 15, 19, 23, 24, 26, 27, 28, 29, 30, 32, 33, 43, 44, 45, 48, 49, 51, 52, 53, 54, 61, 62, 65, 67, 69, 71, 72, 74, 77, 78, 82
+2, 3, 6, 9, 10, 12, 14, 15, 19, 23, 24, 26, 27, 28, 29, 30, 32, 33, 43, 44, 45, 48, 49, 51, 52, 53, 54, 61, 62, 65, 67, 69, 71, 72, 74, 77, 78, 82
 20000
 56 - Relation, Select all stmt that Affects* a specific stmt 1
 assign a;
@@ -291,7 +291,7 @@ Select s such that Affects*(44, s)
 59 - Relation, Select all stmt that is Affected* by a specific stmt 2
 prog_line n;
 Select n such that Affects*(65, n)
-61, 62, 65, 67, 69, 71, 72, 74, 77
+61, 62, 65, 67, 69, 71, 72, 74, 77, 78
 20000
 60 - Relation, Affects* true if then modifies but else does not and stmt is outside
 procedure pr;
@@ -306,7 +306,7 @@ TRUE
 62 - Relation, Affects* true if modifies but stmt is inside and before
 while w;
 Select w such that Affects*(71, 72)
-11, 34, 42, 60
+11, 34, 42, 60, 66
 20000
 63 - Relation, Affects* true while modifies but stmt is outside
 if ifs;
