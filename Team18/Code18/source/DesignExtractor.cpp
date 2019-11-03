@@ -13,7 +13,7 @@
 #include <algorithm>
 #include <queue>
 #include <stack>
-#include <map>
+#include <unordered_map>
 
 using namespace std;
 
@@ -741,7 +741,7 @@ void DesignExtractor::recurseAffects(STMT_NO a1, STMT_NO a2) {
 
 bool DesignExtractor::traverseAffects(STMT_NO a1, STMT_NO a2, VAR_NAME v) {
 	queue<STMT_NO> q;
-	map<STMT_NO, bool> visited;
+	unordered_map<STMT_NO, bool> visited;
 	TABLE nexts = PKBNext::getNextIdentEnt(a1, "stmt");
 	for (auto item : nexts) {
 		for (auto stmt : item) {
@@ -841,7 +841,7 @@ bool DesignExtractor::traverseAffects(STMT_NO a1, STMT_NO a2, VAR_NAME v) {
 
 void DesignExtractor::traverseAffectsAll(STMT_NO a1, VAR_NAME v) {
 	queue<STMT_NO> q;
-	map<STMT_NO, bool> visited;
+	unordered_map<STMT_NO, bool> visited;
 	TABLE nexts = PKBNext::getNextIdentEnt(a1, "stmt");
 	for (auto item : nexts) {
 		for (auto stmt : item) {
@@ -934,7 +934,7 @@ void DesignExtractor::traverseAffectsAll(STMT_NO a1, VAR_NAME v) {
 
 bool DesignExtractor::traverseAffectsAny(STMT_NO a1, VAR_NAME v) {
 	queue<STMT_NO> q;
-	map<STMT_NO, bool> visited;
+	unordered_map<STMT_NO, bool> visited;
 	TABLE nexts = PKBNext::getNextIdentEnt(a1, "stmt");
 	for (auto item : nexts) {
 		for (auto stmt : item) {
@@ -1031,7 +1031,7 @@ bool DesignExtractor::traverseAffectsAny(STMT_NO a1, VAR_NAME v) {
 bool DesignExtractor::recurseAffectsT(STMT_NO a1, STMT_NO a2) {
 	TABLE affectsA1 = PKB::getAffectsIdentEnt(a1);
 	stack<STMT_NO> frontier;
-	map<STMT_NO, bool> visited;
+	unordered_map<STMT_NO, bool> visited;
 
 	for (auto elem : affectsA1) {
 		STMT_NO next = elem.back();
