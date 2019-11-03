@@ -72,12 +72,12 @@ bool PKBAffects::setAffectsT(STMT_NO a1, STMT_NO a2) {
 }
 
 bool PKBAffects::isAffectsAnyAny() {
-	DesignExtractor::affectsAll();
+	DesignExtractor::affectsAny();
 	bool status = !affectsTable.empty();
 	return status;
 }
 bool PKBAffects::isAffectsAnyIdent(STMT_NO stmtNo) {
-	DesignExtractor::isAffecting(stmtNo);
+	DesignExtractor::isAnyAffecting(stmtNo);
 	for (auto vectorIter : affectsTable) {
 		if (vectorIter.back() == stmtNo) {
 			return true;
@@ -86,7 +86,7 @@ bool PKBAffects::isAffectsAnyIdent(STMT_NO stmtNo) {
 	return false;
 }
 bool PKBAffects::isAffectsIdentAny(STMT_NO stmtNo) {
-	DesignExtractor::affectedBy(stmtNo);
+	DesignExtractor::isAnyAffectedBy(stmtNo);
 	for (auto vectorIter : affectsTable) {
 		if (vectorIter.front() == stmtNo) {
 			return true;
@@ -110,6 +110,7 @@ bool PKBAffects::isAffectsTAnyAny() {
 	DesignExtractor::affectsTAll();
 	return !affectsTTable.empty();
 }
+
 bool PKBAffects::isAffectsTAnyIdent(STMT_NO stmtNo) {
 	DesignExtractor::isAffectingT(stmtNo);
 	for (auto vectorIter : affectsTTable) {

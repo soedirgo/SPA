@@ -1,7 +1,7 @@
 1 - Set 1 - Valid syntax tests for Affects (Positive Tests). Valid syntax, LHS synonym RHS synonym
 stmt s; prog_line n;
 Select s such that Affects(s, n)
-1, 2, 3, 6, 8, 9, 10, 12, 14, 17, 20, 21, 23, 24, 26, 27, 28, 29, 30, 31, 32, 40, 41, 43, 44, 45, 48, 49, 51, 52, 53, 59, 61, 62, 65, 69, 71, 72, 74, 77, 80
+1, 2, 3, 6, 8, 9, 10, 12, 14, 17, 20, 21, 23, 24, 26, 27, 28, 29, 30, 31, 32, 40, 41, 43, 44, 45, 48, 49, 51, 52, 53, 59, 61, 62, 65, 67, 69, 71, 72, 74, 77, 80
 20000
 2 - Valid syntax, LHS synonym RHS int
 assign a;
@@ -11,12 +11,12 @@ Select a such that Affects(a, 48)
 3 - Valid syntax, LHS synonym RHS wildcard
 prog_line n;
 Select n such that Affects(n, _)
-1, 2, 3, 6, 8, 9, 10, 12, 14, 17, 20, 21, 23, 24, 26, 27, 28, 29, 30, 31, 32, 40, 41, 43, 44, 45, 48, 49, 51, 52, 53, 59, 61, 62, 65, 69, 71, 72, 74, 77, 80
+1, 2, 3, 6, 8, 9, 10, 12, 14, 17, 20, 21, 23, 24, 26, 27, 28, 29, 30, 31, 32, 40, 41, 43, 44, 45, 48, 49, 51, 52, 53, 59, 61, 62, 65, 67, 69, 71, 72, 74, 77, 80
 20000
 4 - Valid syntax, LHS int RHS synonym
 stmt s;
 Select s such that Affects(59, s)
-61, 62, 67, 69, 77, 78
+61, 62, 69, 78
 20000
 5 - Valid syntax, LHS int RHS int
 procedure boolean;
@@ -256,7 +256,7 @@ none
 52 - Set 5 - Relation tests for Affects (Algorithmic Tests). Relation, Select all stmt that Affects
 stmt s, s1;
 Select s such that Affects(s, s1)
-1, 2, 3, 6, 8, 9, 10, 12, 14, 17, 20, 21, 23, 24, 26, 27, 28, 29, 30, 31, 32, 40, 41, 43, 44, 45, 48, 49, 51, 52, 53, 59, 61, 62, 65, 69, 71, 72, 74, 77, 80
+1, 2, 3, 6, 8, 9, 10, 12, 14, 17, 20, 21, 23, 24, 26, 27, 28, 29, 30, 31, 32, 40, 41, 43, 44, 45, 48, 49, 51, 52, 53, 59, 61, 62, 65, 67, 69, 71, 72, 74, 77, 80
 20000
 53 - Relation, Select all Affected stmt
 stmt s, s1;
