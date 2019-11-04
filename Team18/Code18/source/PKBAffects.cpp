@@ -9,6 +9,8 @@ TABLE PKBAffects::affectsTTable;
 TABLE PKBAffects::affectsChecked;
 TABLE PKBAffects::affectsTChecked;
 
+TABLE PKBAffects::affectsBipTable;
+
 bool PKBAffects::clear() {
 	affectsTable.clear();
 	affectsTTable.clear();
@@ -68,6 +70,14 @@ bool PKBAffects::setAffectsT(STMT_NO a1, STMT_NO a2) {
 	tuple.push_back(a1);
 	tuple.push_back(a2);
 	affectsTTable.emplace(tuple);
+	return true;
+}
+
+bool PKBAffects::setAffectsBip(STMT_NO a1, STMT_NO a2) {
+	vector<string> tuple = vector<string>();
+	tuple.push_back(a1);
+	tuple.push_back(a2);
+	affectsBipTable.emplace(tuple);
 	return true;
 }
 
@@ -294,4 +304,8 @@ STMT_LIST PKBAffects::getAffectsTSelf() {
 		}
 	}
 	return resultTable;
+}
+
+TABLE PKBAffects::getAffectsBipEntEnt() {
+	return affectsBipTable;
 }

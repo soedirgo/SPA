@@ -37,6 +37,7 @@ private:
 	static void extractModifiesS();
 	static void extractNextBip();
 	static void extractNextBipT();
+	static void extractAffectsBip();
 
 	static bool traverseAffects(STMT_NO a1, STMT_NO a2, VAR_NAME v);
 	static void traverseAffectsAll(STMT_NO a1, VAR_NAME v);

@@ -102,6 +102,10 @@ TABLE PKBNext::getNextBipTable() {
 	return nextBipTable;
 }
 
+TABLE PKBNext::getNextBipTTable() {
+	return nextBipTTable;
+}
+
 bool PKBNext::isNextAnyAny() {
 	return !nextTable.empty();
 }

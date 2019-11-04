@@ -9,6 +9,7 @@ class PKBAffects {
 public:
 	static bool setAffects(STMT_NO a1, STMT_NO a2);
 	static bool setAffectsT(STMT_NO a1, STMT_NO a2);
+	static bool setAffectsBip(STMT_NO a1, STMT_NO a2);
 
 	//Bool Evaluation
 	static bool isAffectsAnyAny();
@@ -42,6 +43,8 @@ public:
 	static TABLE getAffectsTEntEnt();
 	static STMT_LIST getAffectsTSelf();
 
+	static TABLE getAffectsBipEntEnt();
+
 	// Clear
 	static bool clear();
 
@@ -50,4 +53,5 @@ private:
 	static TABLE affectsTChecked;
 	static TABLE affectsTable;
 	static TABLE affectsTTable;
+	static TABLE affectsBipTable;
 };

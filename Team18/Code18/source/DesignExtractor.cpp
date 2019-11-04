@@ -28,9 +28,10 @@ void DesignExtractor::extractDesign()
 	extractUsesS();
 	extractNextBip();
 	extractNextBipT();
+	extractAffectsBip();
 
-	//TABLE test = PKBNext::getNextBipTable();
-	//int i = test.size();
+	TABLE test = PKBAffects::getAffectsBipEntEnt();
+	int i = test.size();
 	//TABLE test = PKBUses::getUsesPTable();
 	//int i = test.size();
 	//TABLE test2 = PKBCall::getCallProcTable();
@@ -410,7 +411,7 @@ void DesignExtractor::extractNextBip() {
 		string n2 = vectorIter.back();
 		callStatus = false;
 		for (auto vectorIter2 : callTable) {
-			if (n2 == vectorIter2.front() || n1 == vectorIter2.front()) {
+			if (n1 == vectorIter2.front()) {
 				callStatus = true;
 			}
 		}
@@ -665,18 +666,17 @@ void DesignExtractor::recurseUses(PROC_NAME callee) {
 	}
 }
 
-/*
-void DesignExtractor::extractAffects()
+
+void DesignExtractor::extractAffectsBip()
 {
-	extractNextT();
 	TABLE assignStmtTable = PKBStmt::getStmtsByType("assign");
 	TABLE callStmtTable = PKBStmt::getStmtsByType("call");
-	TABLE nextTTable = PKBNext::getNextTTable();
+	TABLE nextBipTTable = PKBNext::getNextBipTTable();
 
-	for (auto vectorIter3 : nextTTable) {
+	for (auto vectorIter3 : nextBipTTable) {
 		STMT_NO a1 = vectorIter3.front();
 		STMT_NO a2 = vectorIter3.back();
-		if (PKBStmt::getTypeByStmtNo(a1) == "assign" && PKBStmt::getTypeByStmtNo(a2) == "assign") {
+		if ((PKBStmt::getTypeByStmtNo(a1) == "assign" && PKBStmt::getTypeByStmtNo(a2) == "assign")) {
 			bool affectsHold = false;
 			// will only have 1 in varList
 			VAR_LIST varList1 = PKBModifies::getModifiesSIdentEnt(a1);
@@ -693,7 +693,7 @@ void DesignExtractor::extractAffects()
 				}
 			}
 			//Validate if affects Hold and var is not modified in between
-			TABLE stmtList = PKBNext::getNextTIdentEnt(a1, "stmt");
+			TABLE stmtList = PKBNext::getNextBipTIdentEnt(a1, "stmt");
 			vector<int> v;
 			for (auto vectorIter1 : stmtList) {
 				if (stoi(vectorIter1.front()) < stoi(a2)) {
@@ -713,7 +713,7 @@ void DesignExtractor::extractAffects()
 					}
 					else {
 						if (i != stoi(a1)) {
-							if (PKBStmt::getTypeByStmtNo(to_string(i)) == "call" || PKBStmt::getTypeByStmtNo(to_string(i)) == "assign") {
+							if (PKBStmt::getTypeByStmtNo(to_string(i)) == "assign") {
 								VAR_LIST varList3 = PKBModifies::getModifiesSIdentEnt(to_string(i));
 								for (auto vectorIter4 : varList3) {
 									if (varNameModified == vectorIter4.front()) {
@@ -726,12 +726,12 @@ void DesignExtractor::extractAffects()
 				}
 			}
 			if (affectsHold == true) {
-				PKBAffects::setAffects(a1, a2);
+				PKBAffects::setAffectsBip(a1, a2);
 			}
 		}
 	}
 }
-*/
+
 
 void DesignExtractor::recurseCall(PROC_NAME caller, PROC_NAME callee) {
 	PROC_LIST calleeList = PKBCall::getCalleeProc(callee);

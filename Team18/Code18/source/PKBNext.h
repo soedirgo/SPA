@@ -18,6 +18,7 @@ public:
 	static TABLE getNextTable();
 	static TABLE getNextTTable();
 	static TABLE getNextBipTable();
+	static TABLE getNextBipTTable();
 
 	//Helper
 	static bool isNextBipT(PROG_LINE n1, PROG_LINE n2);

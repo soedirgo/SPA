@@ -1,0 +1,15 @@
+procedure A {
+  x = 1;
+  call B;
+  while(i>0){
+    call D;}}
+
+procedure B {
+  x = x;
+  read mon;
+  y = x;
+  while ( mon != tue) {
+    wed = wed + tues;
+    print i; }
+  call C;
+}
