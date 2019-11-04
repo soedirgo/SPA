@@ -343,7 +343,12 @@ procedure pr;
 Select pr such that Affects(19, 20)
 none
 5000
-70 - Set 6 - Boundary tests for Affects (Boundary Tests). Boundary, Non-existent int
+70 - Relation, Select all stmt that Affects self
+stmt s;
+Select s such that Affects(s, s)
+45, 48, 49
+5000
+71 - Set 6 - Boundary tests for Affects (Boundary Tests). Boundary, Non-existent int
 prog_line n;
 Select <n, n> such that Affects(0, 100) 
 none

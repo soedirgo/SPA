@@ -353,7 +353,12 @@ none
 Select BOOLEAN such that Affects*(1, 20)
 FALSE
 5000
-72 - Set 6 - Boundary tests for Affects* (Boundary Tests). Boundary, Non-existent int
+72 - Relation, Select all stmt that Affects* self
+stmt s;
+Select s such that Affects*(s, s)
+44, 45, 48, 49, 61, 62, 65, 69, 71, 72, 74, 77
+5000
+73 - Set 6 - Boundary tests for Affects* (Boundary Tests). Boundary, Non-existent int
 
 Select BOOLEAN such that Affects*(0, 100)
 FALSE
