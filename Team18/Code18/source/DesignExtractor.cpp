@@ -158,22 +158,14 @@ bool DesignExtractor::isAffects(STMT_NO a1, STMT_NO a2) {
 
 void DesignExtractor::affectsTAll() {
 	STMT_LIST assignStmtTable1 = PKBStmt::getStmtsByType("assign");
-	STMT_LIST assignStmtTable2 = PKBStmt::getStmtsByType("assign");
 	for (auto stmt1 : assignStmtTable1) {
 		STMT_NO stmtNo1 = stmt1.front();
-		for (auto stmt2 : assignStmtTable2) {
-			STMT_NO stmtNo2 = stmt2.front();
-			isAffectsT(stmtNo1, stmtNo2);
-		}
+		recurseAffectsTAll(stmtNo1);
 	}
 }
 
 void DesignExtractor::affectedTBy(STMT_NO a1) {
-	STMT_LIST assignStmtTable = PKBStmt::getStmtsByType("assign");
-	for (auto stmt : assignStmtTable) {
-		STMT_NO stmtNo = stmt.front();
-		isAffectsT(a1, stmtNo);
-	}
+	recurseAffectsTAll(a1);
 }
 
 void DesignExtractor::isAffectingT(STMT_NO a2) {
@@ -181,6 +173,30 @@ void DesignExtractor::isAffectingT(STMT_NO a2) {
 	for (auto stmt : assignStmtTable) {
 		STMT_NO stmtNo = stmt.front();
 		isAffectsT(stmtNo, a2);
+	}
+}
+
+void DesignExtractor::affectsTAny() {
+	STMT_LIST assignStmtTable1 = PKBStmt::getStmtsByType("assign");
+	for (auto stmt1 : assignStmtTable1) {
+		STMT_NO stmtNo1 = stmt1.front();
+		if (recurseAffectsTAny(stmtNo1)) {
+			break;
+		}
+	}
+}
+
+void DesignExtractor::isAnyAffectedTBy(STMT_NO a1) {
+	recurseAffectsTAny(a1);
+}
+
+void DesignExtractor::isAnyAffectingT(STMT_NO a2) {
+	STMT_LIST assignStmtTable = PKBStmt::getStmtsByType("assign");
+	for (auto stmt : assignStmtTable) {
+		STMT_NO stmtNo = stmt.front();
+		if (isAffectsT(stmtNo, a2)) {
+			break;
+		}
 	}
 }
 
@@ -192,9 +208,9 @@ void DesignExtractor::isAffectsTSelf() {
 	}
 }
 
-void DesignExtractor::isAffectsT(STMT_NO a1, STMT_NO a2) {
+bool DesignExtractor::isAffectsT(STMT_NO a1, STMT_NO a2) {
 	if (PKBAffects::isCheckedAffectsT(a1, a2)) {
-		return;
+		return PKBAffects::isCheckedAffectsTIdentIdent(a1, a2);
 	}
 	bool affectsTHold = false;
 	bool sameProc = true;
@@ -224,8 +240,11 @@ void DesignExtractor::isAffectsT(STMT_NO a1, STMT_NO a2) {
 	}
 	if (affectsTHold == true) {
 		PKBAffects::setAffectsT(a1, a2);
+		PKBAffects::setCheckedAffectsT(a1, a2);
+		return true;
 	}
 	PKBAffects::setCheckedAffectsT(a1, a2);
+	return false;
 }
 
 void DesignExtractor::extractNextT(STMT_LIST nextTList1, STMT_LIST nextTList2)
@@ -1086,4 +1105,42 @@ bool DesignExtractor::recurseAffectsT(STMT_NO a1, STMT_NO a2) {
 		}
 	}
 	return false;
+}
+
+void DesignExtractor::recurseAffectsTAll(STMT_NO a1) {
+	TABLE affectsA1 = PKBAffects::getAffectsIdentEnt(a1);
+	stack<STMT_NO> frontier;
+	unordered_map<STMT_NO, bool> visited;
+
+	for (auto elem : affectsA1) {
+		STMT_NO next = elem.front();
+		PKBAffects::setAffectsT(a1, next);
+		PKBAffects::setCheckedAffectsT(a1, next);
+		frontier.push(next);
+		visited.insert(make_pair(next, true));
+	}
+
+	while (!frontier.empty()) {
+		STMT_NO item = frontier.top();
+		frontier.pop();
+		TABLE affectsCurr = PKBAffects::getAffectsIdentEnt(item);
+		for (auto affect : affectsCurr) {
+			STMT_NO curr = affect.front();
+			if (visited.find(curr) == visited.end()) {
+				PKBAffects::setAffectsT(a1, curr);
+				PKBAffects::setCheckedAffectsT(a1, curr);
+				frontier.push(curr);
+				visited.insert(make_pair(curr, true));
+			}
+		}
+	}
+}
+
+bool DesignExtractor::recurseAffectsTAny(STMT_NO a1) {
+	VAR_NAME varNameModified;
+	VAR_LIST varList1 = PKBModifies::getModifiesSIdentEnt(a1);
+	for (auto vectorIter4 : varList1) {
+		varNameModified = vectorIter4.front();
+	}
+	return traverseAffectsAny(a1, varNameModified);
 }

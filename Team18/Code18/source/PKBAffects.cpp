@@ -118,12 +118,12 @@ bool PKBAffects::isCheckedAffectsIdentIdent(STMT_NO a1, STMT_NO a2) {
 }
 
 bool PKBAffects::isAffectsTAnyAny() {
-	DesignExtractor::affectsTAll();
+	DesignExtractor::affectsTAny();
 	return !affectsTTable.empty();
 }
 
 bool PKBAffects::isAffectsTAnyIdent(STMT_NO stmtNo) {
-	DesignExtractor::isAffectingT(stmtNo);
+	DesignExtractor::isAnyAffectingT(stmtNo);
 	for (auto vectorIter : affectsTTable) {
 		if (vectorIter.back() == stmtNo) {
 			return true;
@@ -132,7 +132,7 @@ bool PKBAffects::isAffectsTAnyIdent(STMT_NO stmtNo) {
 	return false;
 }
 bool PKBAffects::isAffectsTIdentAny(STMT_NO stmtNo) {
-	DesignExtractor::affectedTBy(stmtNo);
+	DesignExtractor::isAnyAffectedTBy(stmtNo);
 	for (auto vectorIter : affectsTTable) {
 		if (vectorIter.front() == stmtNo) {
 			return true;
@@ -142,6 +142,17 @@ bool PKBAffects::isAffectsTIdentAny(STMT_NO stmtNo) {
 }
 bool PKBAffects::isAffectsTIdentIdent(STMT_NO a1, STMT_NO a2) {
 	DesignExtractor::isAffectsT(a1, a2);
+	for (auto vectorIter : affectsTTable) {
+		if (vectorIter.front() == a1) {
+			if (vectorIter.back() == a2) {
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+bool PKBAffects::isCheckedAffectsTIdentIdent(STMT_NO a1, STMT_NO a2) {
 	for (auto vectorIter : affectsTTable) {
 		if (vectorIter.front() == a1) {
 			if (vectorIter.back() == a2) {

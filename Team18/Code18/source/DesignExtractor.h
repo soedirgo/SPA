@@ -18,9 +18,12 @@ public:
 	static void isAffecting(STMT_NO a2);
 	static bool isAffects(STMT_NO a1, STMT_NO a2);
 	static void affectsTAll();
+	static void affectsTAny();
+	static void isAnyAffectedTBy(STMT_NO a1);
+	static void isAnyAffectingT(STMT_NO a2);
 	static void affectedTBy(STMT_NO a1);
 	static void isAffectingT(STMT_NO a2);
-	static void isAffectsT(STMT_NO a1, STMT_NO a2);
+	static bool isAffectsT(STMT_NO a1, STMT_NO a2);
 	static void isAffectsSelf();
 	static void isAffectsTSelf();
 
@@ -39,6 +42,8 @@ private:
 	static void traverseAffectsAll(STMT_NO a1, VAR_NAME v);
 	static bool traverseAffectsAny(STMT_NO a1, VAR_NAME v);
 	static bool recurseAffectsT(STMT_NO a1, STMT_NO a2);
+	static void recurseAffectsTAll(STMT_NO a1);
+	static bool recurseAffectsTAny(STMT_NO a1);
 	static void recurseModifies(PROC_NAME p);
 	static void recurseUses(PROC_NAME p);
 	static void recurseCall(PROC_NAME p, PROC_NAME q);
