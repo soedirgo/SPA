@@ -1020,7 +1020,6 @@ bool DesignExtractor::traverseAffectsAny(STMT_NO a1, VAR_NAME v) {
 				}
 			}
 		}
-		return false;
 	}
 	while (!q.empty()) {
 		STMT_NO next = q.front();
@@ -1044,6 +1043,7 @@ bool DesignExtractor::traverseAffectsAny(STMT_NO a1, VAR_NAME v) {
 							if (affects) {
 								PKBAffects::setAffects(a1, stmt);
 								PKBAffects::setCheckedAffects(a1, stmt);
+								return true;
 							}
 						}
 					}
@@ -1061,6 +1061,7 @@ bool DesignExtractor::traverseAffectsAny(STMT_NO a1, VAR_NAME v) {
 							if (affects) {
 								PKBAffects::setAffects(a1, stmt);
 								PKBAffects::setCheckedAffects(a1, stmt);
+								return true;
 							}
 						}
 					}
@@ -1069,6 +1070,7 @@ bool DesignExtractor::traverseAffectsAny(STMT_NO a1, VAR_NAME v) {
 		}
 		q.pop();
 	}
+	return false;
 }
 
 bool DesignExtractor::recurseAffectsT(STMT_NO a1, STMT_NO a2) {
