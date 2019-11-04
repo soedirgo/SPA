@@ -428,7 +428,7 @@ vector<pair<string, pair<string, string>>> QueryParser::splitPattern(vector<stri
 		string secondVar;
 
 		//Don't include _
-		firstVar = trim(pattern[i].substr(posOfOpenBracket + 1, posOfComma - posOfOpenBracket - 1), whitespace);
+		firstVar = removeSpaces(pattern[i].substr(posOfOpenBracket + 1, posOfComma - posOfOpenBracket - 1), whitespace);
 		secondVar = removeSpaces(pattern[i].substr(posOfComma + 1, posOfCloseBracket - posOfComma - 1), whitespace);
 
 		s.push_back(make_pair(clauseType, make_pair(firstVar, secondVar)));
@@ -449,13 +449,13 @@ vector<pair<string, string>> QueryParser::splitWith(vector<string> with) {
 		string secondVar;
 
 		if (with[i].find("with") != -1) {
-			firstVar = trim(with[i].substr(4, equalSignIndex - 4), whitespace);
+			firstVar = removeSpaces(with[i].substr(4, equalSignIndex - 4), whitespace);
 		}
 		else {
-			firstVar = trim(with[i].substr(3, equalSignIndex - 3), whitespace);
+			firstVar = removeSpaces(with[i].substr(3, equalSignIndex - 3), whitespace);
 		}
 
-		secondVar = trim(with[i].substr(equalSignIndex + 1), whitespace);
+		secondVar = removeSpaces(with[i].substr(equalSignIndex + 1), whitespace);
 
 		s.push_back(make_pair(firstVar, secondVar));
 	}
@@ -480,7 +480,7 @@ string QueryParser::trim(string str, string whitespace) {
 string QueryParser::removeSpaces(string s, string whitespace) {
 	int a = 0;
 	while (a < s.length()) {
-		if (s[a] == whitespacech) {
+		if (s[a] == whitespacech || s[a] == '\t' || s[a] == '\r' || s[a] == '\n' || s[a] == '\v' || s[a] == '\f') {
 			s.erase(a, 1);
 			continue;
 		}
