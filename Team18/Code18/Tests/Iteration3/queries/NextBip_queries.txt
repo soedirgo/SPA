@@ -1,0 +1,5 @@
+1 - Valid syntax tests for clause (Positive Tests). Valid syntax, Ident = Ident
+prog_line n;
+Select n such that NextBip(1,n);
+7
+5000
