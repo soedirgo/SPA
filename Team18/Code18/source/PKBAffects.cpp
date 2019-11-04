@@ -221,17 +221,11 @@ TABLE PKBAffects::getAffectsEntEnt() {
 TABLE PKBAffects::getAffectsSelf() {
 	DesignExtractor::isAffectsSelf();
 	STMT_LIST resultTable;
-	STMT_LIST list;
-	STMT_NO s;
-	list = PKBStmt::getStmts();
-	for (auto iter1 : list) {
-		s = iter1.front();
-		for (auto vectorIter : affectsTable) {
-			vector<string> tuple = vector<string>();
-			if (vectorIter.front() == s && vectorIter.back() == s) {
-				tuple.push_back(vectorIter.front());
-				resultTable.emplace(tuple);
-			}
+	for (auto vectorIter : affectsTable) {
+		vector<string> tuple = vector<string>();
+		if (vectorIter.front() == vectorIter.back()) {
+			tuple.push_back(vectorIter.front());
+			resultTable.emplace(tuple);
 		}
 	}
 	return resultTable;
@@ -295,17 +289,11 @@ TABLE PKBAffects::getAffectsTEntEnt() {
 TABLE PKBAffects::getAffectsTSelf() {
 	DesignExtractor::isAffectsTSelf();
 	STMT_LIST resultTable;
-	STMT_LIST list;
-	STMT_NO s;
-	list = PKBStmt::getStmts();
-	for (auto iter1 : list) {
-		s = iter1.front();
-		for (auto vectorIter : affectsTTable) {
-			vector<string> tuple = vector<string>();
-			if (vectorIter.front() == s && vectorIter.back() == s) {
-				tuple.push_back(vectorIter.front());
-				resultTable.emplace(tuple);
-			}
+	for (auto vectorIter : affectsTTable) {
+		vector<string> tuple = vector<string>();
+		if (vectorIter.front() == vectorIter.back()) {
+			tuple.push_back(vectorIter.front());
+			resultTable.emplace(tuple);
 		}
 	}
 	return resultTable;

@@ -674,21 +674,30 @@ TABLE PKBNext::getNextTSelf(STMT_TYPE type) {
 	PROG_LINE n;
 	if (type == "stmt" || type == "prog_line") {
 		list = PKBStmt::getStmts();
-	}
-	else {
-		list = PKBStmt::getStmtsByType(type);
-	}
-	DesignExtractor::extractNextT(list, list);
-	for (auto iter1 : list) {
-		n = iter1.front();
+		DesignExtractor::extractNextT(list, list);
 		for (auto vectorIter : nextTTable) {
 			vector<string> tuple = vector<string>();
-			if (vectorIter.front() == n && vectorIter.back() == n) {
+			if (vectorIter.front() == vectorIter.back()) {
 				tuple.push_back(vectorIter.front());
 				resultTable.emplace(tuple);
 			}
 		}
 	}
+	else {
+		list = PKBStmt::getStmtsByType(type);
+		DesignExtractor::extractNextT(list, list);
+		for (auto iter1 : list) {
+			n = iter1.front();
+			for (auto vectorIter : nextTTable) {
+				vector<string> tuple = vector<string>();
+				if (vectorIter.front() == n && vectorIter.back() == n) {
+					tuple.push_back(vectorIter.front());
+					resultTable.emplace(tuple);
+				}
+			}
+		}
+	}
+	
 	return resultTable;
 }
 
