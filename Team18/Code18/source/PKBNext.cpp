@@ -793,8 +793,8 @@ TABLE PKBNext::getNextBipEntIdent(STMT_TYPE type, PROG_LINE stmtNo) {
 	STMT_NO s;
 	if (type == "stmt" || type == "prog_line") {
 		for (auto vectorIter : nextBipTable) {
-			vector<string> tuple = vector<string>();
 			if (vectorIter.back() == stmtNo) {
+				vector<string> tuple = vector<string>();
 				tuple.push_back(vectorIter.front());
 				resultTable.emplace(tuple);
 			}
