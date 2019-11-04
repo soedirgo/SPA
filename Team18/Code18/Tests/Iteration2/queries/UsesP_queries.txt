@@ -20,7 +20,7 @@ none
 5000
 5 - UsesP syntax, LHS synonym RHS wildcard
 procedure pr;
-Select pr such that Uses(pr, _)
+Select pr such that Uses(pr  , _)
 A, B, C, D, E, G, I, J, K, L
 5000
 6 - UsesP syntax, LHS wildcard RHS synonym
@@ -40,7 +40,7 @@ B, J, K, L
 5000
 9 - UsesP syntax, LHS synonym RHS invalid Ident
 procedure pr;
-Select pr such that Uses(pr, "3g")
+Select pr such that Uses(pr,   "  3g  ")
 none
 5000
 10 - UsesP syntax, LHS Ident RHS synonym

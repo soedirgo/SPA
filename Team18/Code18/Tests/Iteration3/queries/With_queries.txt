@@ -10,7 +10,7 @@ TRUE
 5000
 3 - Valid syntax, Ident = procName 2
 constant c; call cl;
-Select <c, cl> with "C" = cl.procName
+Select <c  , cl  > with "  C  " =   cl.procName
 1 6, 2 6, 0 6, 100 6, 5 6, 1 16, 2 16, 0 16, 100 16, 5 16
 5000
 4 - Valid syntax, Ident = varName 1
@@ -495,7 +495,7 @@ FALSE
 5000
 100 - Multiple relation test, at least 1 clause false multiple with some related false
 procedure pr; if ifs; variable v; while w; constant c;
-Select <pr> with 10 = c.value such that Calls*(pr, "C") pattern ifs(v, _, _) with pr.procName = "C" with ifs.stmt# = w.stmt#
+Select <pr> with 10 = c.value such that Calls*(pr, "  C  ") pattern ifs(v, _, _) with pr.procName = "  C  " with ifs.stmt# = w.stmt#
 none
 5000
 101 - Multiple relation test, at least 1 clause false multiple with all related true
@@ -505,7 +505,7 @@ none
 5000
 102 - Multiple relation test, at least 1 clause false multiple with all related false
 prog_line n, n1; if ifs; variable v;
-Select BOOLEAN such that Next(n, n1) and Parent*(n, n1) with n1 = 1 pattern ifs(v, _, _) with v.varName = "e"
+Select BOOLEAN such that Next(n, n1) and Parent*(n, n1) with n1 = 1   pattern   ifs(v, _  ,   _) with v.varName = "e"
 FALSE
 5000
 103 - Set 4 - Boundary test for with clause. Boundary, Int that does not exist
@@ -600,7 +600,7 @@ i, D, c
 5000
 121 - Result attrRef, Result related Single clause true 2
 variable v; assign a;
-Select <a.stmt#, v.varName> pattern a(v, _"C"_)
+Select <a.stmt#,   v.varName> pattern a(v, _"  C  "_)
 22 B
 5000
 122 - Result attrRef, Result related Single clause false 1

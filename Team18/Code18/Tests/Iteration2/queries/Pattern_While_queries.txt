@@ -100,12 +100,12 @@ Select w pattern w("j", _)
 5000
 21 - Relation, Select all while that has a specific variable in condition 2
 while w;
-Select w pattern w("red", _)
+Select w pattern w(  "red"  , _)
 21
 5000
 22 - Relation, Select all while that has a specific variable in condition 3
 while w;
-Select w pattern w("fiction", _)
+Select w pattern w("  fiction  "  , _)
 30
 5000
 23 - Relation, Variable that is in if condition but not while 1

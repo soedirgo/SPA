@@ -15,7 +15,7 @@ Select n such that Affects*(n, _)
 5000
 4 - Valid syntax, LHS int RHS synonym
 stmt s;
-Select <s> such that Affects*(59, s)
+Select <s> such that Affects*(  59,   s)
 61, 62, 65, 67, 69, 71, 72, 74, 77, 78
 5000
 5 - Valid syntax, LHS int RHS int

@@ -20,7 +20,7 @@ none
 5000
 5 - Pattern if syntax, LHS wildcard MID wildcard RHS wildcard
 if ifs;
-Select ifs pattern ifs(_, _, _)
+Select ifs pattern ifs(_  , _  ,  _)
 1, 10, 19, 20, 31, 35
 5000
 6 - Pattern if syntax, LHS Integer MID wildcard RHS wildcard
@@ -150,12 +150,12 @@ Select ifs pattern ifs("right", _, _)
 5000
 31 - Relation, Variable that is in while condition but not if 1
 if ifs;
-Select ifs pattern ifs("pear", _, _)
+Select ifs pattern ifs(  "  pear  "  , _, _)
 none
 5000
 32 - Relation, variable that is in while condition but not if 2
 if ifs;
-Select ifs pattern ifs("rain", _, _)
+Select ifs pattern ifs("rain",    _,   _)
 none
 5000
 33 - Relation, Variable that is in if and while condition 1
