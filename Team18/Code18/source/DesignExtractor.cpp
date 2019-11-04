@@ -1142,5 +1142,14 @@ bool DesignExtractor::recurseAffectsTAny(STMT_NO a1) {
 	for (auto vectorIter4 : varList1) {
 		varNameModified = vectorIter4.front();
 	}
-	return traverseAffectsAny(a1, varNameModified);
+	if (traverseAffectsAny(a1, varNameModified)) {
+		TABLE affectsA1 = PKBAffects::getAffectsIdentEnt(a1);
+		for (auto elem : affectsA1) {
+			STMT_NO next = elem.front();
+			PKBAffects::setAffectsT(a1, next);
+			PKBAffects::setCheckedAffectsT(a1, next);
+			return true;
+		}
+	}
+	return false;
 }
