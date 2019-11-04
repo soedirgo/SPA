@@ -195,11 +195,11 @@ none
 5000
 40 - Relation, Variable that is nested but not in if condition 2
 if ifs;
-Select ifs pattern ifs("black", _, _)
+Select ifs pattern ifs("black",    _, _)
 none
 5000
 41 - Set 4 - Boundary tests for Pattern if (Boundary tests). Boundary, Non-existent variable
 if ifs;
-Select ifs pattern ifs("oasis", _, _)
+Select ifs pattern ifs("   oasis   ",  _  ,   _)
 none
 5000

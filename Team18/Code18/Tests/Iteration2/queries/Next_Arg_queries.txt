@@ -305,7 +305,7 @@ Select n such that Next(ifs, n)
 5000
 62 - Relation, Select all synonym that is nexted by/next of an synonym type 7
 stmt s; call cl;
-Select s such that Next(s, cl)
+Select s such that Next(s,    cl)
 2, 33
 5000
 63 - Relation, Select all synonym that is nexted by/next of an synonym type 8
@@ -330,6 +330,6 @@ none
 5000
 67 - Relation, Next into different procedure 4
 constant c;
-Select c such that Next(34, 1)
+Select c such that Next(   34, 1   )
 none
 5000

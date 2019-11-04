@@ -225,12 +225,12 @@ A, B, C, D, E, F, G, H, I, J, K, L
 5000
 46 - Relation, Procedure that does not modify a variable itself but calls another that does 1
 constant c;
-Select c such that Modifies("H", "mod1")
+Select c such that Modifies(  "  H  ", "  mod1  ")
 1, 10, 4, 8, 0, 2, 5
 5000
 47 - Relation, Procedure that does not modify a variable itself but calls another that does 2
 constant c;
-Select c such that Modifies("I", "Thu")
+Select c such that Modifies("  I  ", "  Thu   ")
 1, 10, 4, 8, 0, 2, 5
 5000
 48 - Relation, Procedure that does not modify a variable itself but transitively calls another that does 1

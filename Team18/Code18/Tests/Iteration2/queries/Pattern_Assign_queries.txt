@@ -60,7 +60,7 @@ none
 5000
 13 - Pattern assign syntax, LHS Ident RHS invalid expr
 assign a;
-Select a pattern a("end", end")
+Select a pattern a("  end  ", end")
 none
 5000
 14 - Pattern assign syntax, LHS invalid Ident RHS invalid expr
@@ -70,12 +70,12 @@ none
 5000
 15 - Pattern assign syntax, LHS Ident RHS _expr_
 assign a;
-Select a pattern a("avg", _"max + min"_)
+Select a pattern a(  "  avg  "  , _"  max + min   "_)
 12
 5000
 16 - Pattern assign syntax, LHS invalid Ident RHS _expr_
 assign a;
-Select a pattern a("1", _"a"_)
+Select a pattern a(  "1"  , _"a"_)
 none
 5000
 17 - Pattern assign syntax, LHS Ident RHS invalid _expr_
@@ -305,7 +305,7 @@ Select a pattern a(_, "(min + max) / 2")
 5000
 62 - Relation, Pattern is made of 2 expr/term/factor 2
 assign a;
-Select a pattern a(_, _"dog % 10 / 5 * x"_)
+Select a pattern a(   _   , _"dog % 10 / 5 * x"_)
 27
 5000
 63 - Relation, Pattern is made of 2 expr/term/factor 3
@@ -320,7 +320,7 @@ cat
 5000
 65 - Relation, Pattern is made of at least 3 expr/term/factor 1
 assign a;
-Select a pattern a(_, "b * (d * 10)")
+Select a pattern a(_    , "b * (d * 10)")
 7
 5000
 66 - Relation, Pattern is made of at least 3 expr/term/factor 2
@@ -330,7 +330,7 @@ Select a pattern a(_, _"( ( (8 - 4 + 20 - 1 + 3) ) )"_)
 5000
 67 - Relation, Pattern is made of at least 3 expr/term/factor 3
 assign a; variable v;
-Select v pattern a(v, "( (8 - 4) + ( (20 - ( (1 + 3) ) ) ) )")
+Select v pattern a(v, "( (8 - 4) + ( (20 - ( (   1 + 3  ) ) ) ) )")
 a
 5000
 68 - Relation, Pattern is made of at least 3 expr/term/factor 4
@@ -340,7 +340,7 @@ cat
 5000
 69 - Set 4 - Boundary tests for Pattern assign (Boundary tests). Boundary, Non-existent pattern
 assign a; variable v;
-Select a pattern a(v, _"8 + 3"_)
+Select a pattern a(  v  , _"  8 + 3  "_)
 none
 5000
 70 - Set 5 - AST tests for Pattern assign, expr AST uses same variables/constant but leaf node order is different. (Algorithmic tests). AST, different order 1
@@ -355,21 +355,21 @@ none
 5000
 72 - AST, different order 3
 assign a;
-Select a pattern a(_, _"d * 10 * b"_)
+Select a pattern a(  _  ,   _"d * 10 * b"_  )
 none
 5000
 73 - AST, different order 4
 assign a;
-Select a pattern a(_, _"cloud - 7 + sky"_)
+Select a pattern a(_  , _"cloud    - 7 + sky"_)
 none
 5000
 74 - AST, different order 5
 assign a; variable v;
-Select v pattern a(v, _"b / ((10 - 6) * d)"_)
+Select v pattern a(v, _"b     / ((10 - 6) * d)"_)
 none
 5000
 75 - AST, different order 6
 assign a; variable v;
-Select v pattern a(v, _"dog % 10 / 5 * x + 3"_)
+Select v pattern a(   v    , _  "dog % 10 / 5 * x + 3"  _)
 none
 5000
