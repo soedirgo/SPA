@@ -1,5 +1,15 @@
-1 - Valid syntax tests for clause (Positive Tests). Valid syntax, Ident = Ident
+1 - Relation
 prog_line n;
-Select n such that NextBip(1,n);
+Select n such that NextBip(1, n)
 7
+5000
+2 - Relation
+prog_line n;
+Select n such that NextBip(2, n)
+4
+5000
+3 - Relation
+prog_line n;
+Select n such that NextBip(3, n)
+16
 5000

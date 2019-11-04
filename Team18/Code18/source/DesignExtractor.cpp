@@ -29,8 +29,8 @@ void DesignExtractor::extractDesign()
 	extractNextBip();
 	extractNextBipT();
 
-	TABLE test = PKBNext::getNextBipTable();
-	int i = test.size();
+	//TABLE test = PKBNext::getNextBipTable();
+	//int i = test.size();
 	//TABLE test = PKBUses::getUsesPTable();
 	//int i = test.size();
 	//TABLE test2 = PKBCall::getCallProcTable();
@@ -343,38 +343,123 @@ void DesignExtractor::extractNextT(STMT_LIST nextTList1, STMT_LIST nextTList2)
 }
 
 void DesignExtractor::extractNextBip() {
-	TABLE nextTable = PKBNext::getNextTable();
+	TABLE callProcTable = PKBCall::getCallProcTable();
+	STMT_LIST procListWithoutCall;
+	for (auto vectorIter1 : callProcTable) {
+		PROC_NAME callee = vectorIter1.back();
+		PROC_NAME caller = vectorIter1.front();
+		bool isCaller = false;
+		for (auto vectorIter2 : callProcTable) {
+			//Check if callee is a caller then set flag to true
+			if (callee == vectorIter2.front()) {
+				isCaller = true;
+				break;
+			}
+		}
+		if (isCaller == false) {
+			vector<string> tuple = vector<string>();
+			tuple.push_back(caller);
+			tuple.push_back(callee);
+			procListWithoutCall.emplace(tuple);
+		}
+	}
 	TABLE callTable = PKBCall::getCallStmtTable();
+	for (auto vectorIter1 : procListWithoutCall) {
+		
+		PROC_NAME callee = vectorIter1.back();
+		PROC_NAME caller = vectorIter1.front();
+		//TABLE usesPTable = PKBModifies::getModifiesPIdentEnt(callee);
+		
+		TABLE procedureStartEnd = PKBProcedure::getProcedureStartEnd(callee);
 
-	STMT_NO startStmt, endStmt, endAltStmt;
-	for (auto vectorIter : nextTable) {
-		string n1 = vectorIter.front();
-		string n2 = vectorIter.back();
-		for (auto vectorIter2 : callTable) {
-			if (n2 == vectorIter2.front()) {
-				PROC_NAME callee = vectorIter2.back();
-				TABLE procedureTable = PKBProcedure::getProcedureStartEnd(callee);
+		for (auto vectorIter : callTable) {
+			STMT_NO callStmt = vectorIter.front();
+			//Check if the callee is being called
+			if (callee == vectorIter.back()) {
+				TABLE procedureStartEnd = PKBProcedure::getProcedureStartEnd(callee);
+				TABLE nextCallValues = PKBNext::getNext(callStmt);
 
-				if (procedureTable.size() > 0) {
+				if (procedureStartEnd.size() > 0) {
+					STMT_NO startStmt, endStmt;
+					for (auto vectorIter2 : procedureStartEnd) {
+						startStmt = vectorIter2[0];
+						endStmt = vectorIter2[1];
 
-					for (auto vectorIter3 : procedureTable) {
-						startStmt = vectorIter3[0];
-						endStmt = vectorIter3[1];
-					}
-					PKBNext::setNextBip(n2, startStmt);
-					STMT_NO nextStmt;
-					TABLE nextValue = PKBNext::getNextIdentEnt(n2, "prog_line");
-					for (auto vectorIter3 : nextValue) {
-						nextStmt = vectorIter3.front();
-						if (!(nextStmt == "")) {
-							PKBNext::setNextBip(endStmt, nextStmt);
+						PKBNext::setNextBip(callStmt, startStmt);
+						if (nextCallValues.size() > 0) {
+							for (auto vectorIter3 : nextCallValues) {
+								STMT_NO nextStmt = vectorIter3.front();
+								PKBNext::setNextBip(endStmt, nextStmt);
+							}
 						}
+						else {
+							PKBNext::setNextBip(endStmt, callStmt);
+						}
+
 					}
 				}
 			}
-			//no call stmt
+		}
+		recurseNextBip(caller, callTable);
+	}
+	
+	TABLE nextTable = PKBNext::getNextTable();
+	bool callStatus = false;
+	for (auto vectorIter : nextTable) {
+		string n1 = vectorIter.front();
+		string n2 = vectorIter.back();
+		callStatus = false;
+		for (auto vectorIter2 : callTable) {
+			if (n2 == vectorIter2.front() || n1 == vectorIter2.front()) {
+				callStatus = true;
+			}
+		}
+		//no call stmt
+		if (callStatus == false) {
 			PKBNext::setNextBip(n1, n2);
 		}
+	}
+	
+}
+
+void DesignExtractor::recurseNextBip(PROC_NAME callee, TABLE callTable) {
+	TABLE callerList = PKBCall::getCallerProc(callee);
+	if (callerList.size() == 0) {
+		return;
+	}
+	for (auto callerElem : callerList) {
+		PROC_NAME newCaller = callerElem.front();
+		
+		for (auto vectorIter : callTable) {
+			STMT_NO callStmt = vectorIter.front();
+			//Check if the callee is being called
+			if (callee == vectorIter.back()) {
+				TABLE procedureStartEnd = PKBProcedure::getProcedureStartEnd(callee);
+				TABLE nextCallValues = PKBNext::getNext(callStmt);
+
+				if (procedureStartEnd.size() > 0) {
+					STMT_NO startStmt, endStmt;
+					for (auto vectorIter2 : procedureStartEnd) {
+						startStmt = vectorIter2[0];
+						endStmt = vectorIter2[1];
+
+						PKBNext::setNextBip(callStmt, startStmt);
+						if (nextCallValues.size() > 0) {
+							for (auto vectorIter3 : nextCallValues) {
+								STMT_NO nextStmt = vectorIter3.front();
+								PKBNext::setNextBip(endStmt, nextStmt);
+							}
+						}
+						else {
+							PKBNext::setNextBip(endStmt, callStmt);
+						}
+
+					}
+				}
+			}
+
+		}
+		recurseModifies(newCaller);
 	}
 }
 

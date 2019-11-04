@@ -1,9 +1,9 @@
 procedure A {
   call B;
   while(i>0){
-    call C;}
+    call D;}
   if(i>0) then {
-    calll D;}
+    call C;}
   else{
     call E;}}
 
