@@ -10,7 +10,7 @@ Select <pn, cl>
 5000
 3 - Relation, 0 clause Select while/if
 while w; if ifs;
-Select <w, ifs>
+Select <  w,    ifs>
 8 3, 8 14, 10 3, 10 14, 15 3, 15 14
 5000
 4 - Relation, 0 clause Select assign/variable

@@ -170,6 +170,6 @@ none
 5000
 35 - Set 4 - Boundary tests for Pattern while (Boundary tests). Boundary, Non-existent variable
 while w;
-Select w pattern w("sos", _)
+Select w pattern w(  "   sos   "   , _   )
 none
 5000

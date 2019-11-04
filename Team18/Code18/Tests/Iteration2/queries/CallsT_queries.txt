@@ -205,7 +205,7 @@ D, E, G
 5000
 42 - Relation, Select all caller of a specific callee 1
 procedure pr;
-Select pr such that Calls*(pr, "E")
+Select pr such that Calls*(pr,  "  E  ")
 C, D, H, I, J
 5000
 43 - Relation, Select all caller of a specific callee 2
@@ -220,7 +220,7 @@ Select c such that Calls*("A", pr)
 5000
 45 - Relation, Select all callee of a procedure that does not call 1
 procedure pr;
-Select pr such that Calls*("B", pr)
+Select pr such that Calls*("  B   ", pr)
 none
 5000
 46 - Relation, Select all callee of a procedure that does not call 2

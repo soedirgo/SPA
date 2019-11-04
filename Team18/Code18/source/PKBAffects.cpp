@@ -167,18 +167,10 @@ bool PKBAffects::isCheckedAffectsTIdentIdent(STMT_NO a1, STMT_NO a2) {
 TABLE PKBAffects::getAffectsAnyEnt() {
 	DesignExtractor::affectsAll();
 	PROC_LIST resultTable;
-	LINE_LIST list;
-	PROG_LINE n;
-	list = PKBStmt::getStmts();
-	for (auto iter : list) {
-		n = iter.front();
-		for (auto vectorIter : affectsTable) {
-			vector<string> tuple = vector<string>();
-			if (vectorIter.back() == n) {
-				tuple.push_back(vectorIter.back());
-				resultTable.emplace(tuple);
-			}
-		}
+	for (auto vectorIter : affectsTable) {
+		vector<string> tuple = vector<string>();
+		tuple.push_back(vectorIter.back());
+		resultTable.emplace(tuple);
 	}
 	return resultTable;
 }
@@ -186,18 +178,10 @@ TABLE PKBAffects::getAffectsAnyEnt() {
 TABLE PKBAffects::getAffectsEntAny() {
 	DesignExtractor::affectsAll();
 	PROC_LIST resultTable;
-	LINE_LIST list;
-	PROG_LINE n;
-	list = PKBStmt::getStmts();
-	for (auto iter : list) {
-		n = iter.front();
-		for (auto vectorIter : affectsTable) {
-			vector<string> tuple = vector<string>();
-			if (vectorIter.front() == n) {
-				tuple.push_back(vectorIter.front());
-				resultTable.emplace(tuple);
-			}
-		}
+	for (auto vectorIter : affectsTable) {
+		vector<string> tuple = vector<string>();
+		tuple.push_back(vectorIter.front());
+		resultTable.emplace(tuple);
 	}
 	return resultTable;
 }
@@ -205,17 +189,11 @@ TABLE PKBAffects::getAffectsEntAny() {
 TABLE PKBAffects::getAffectsIdentEnt(STMT_NO stmtNo) {
 	DesignExtractor::affectedBy(stmtNo);
 	PROC_LIST resultTable;
-	LINE_LIST list;
-	PROG_LINE n;
-	list = PKBStmt::getStmts();
-	for (auto iter : list) {
-		n = iter.front();
-		for (auto vectorIter : affectsTable) {
+	for (auto vectorIter : affectsTable) {
+		if (vectorIter.front() == stmtNo) {
 			vector<string> tuple = vector<string>();
-			if (vectorIter.front() == stmtNo && vectorIter.back() == n) {
-				tuple.push_back(vectorIter.back());
-				resultTable.emplace(tuple);
-			}
+			tuple.push_back(vectorIter.back());
+			resultTable.emplace(tuple);
 		}
 	}
 	return resultTable;
@@ -224,17 +202,11 @@ TABLE PKBAffects::getAffectsIdentEnt(STMT_NO stmtNo) {
 TABLE PKBAffects::getAffectsEntIdent(STMT_NO stmtNo) {
 	DesignExtractor::isAffecting(stmtNo);
 	PROC_LIST resultTable;
-	LINE_LIST list;
-	PROG_LINE n;
-	list = PKBStmt::getStmts();
-	for (auto iter : list) {
-		n = iter.front();
-		for (auto vectorIter : affectsTable) {
-			vector<string> tuple = vector<string>();
-			if (vectorIter.front() == n && vectorIter.back() == stmtNo) {
-				tuple.push_back(vectorIter.front());
-				resultTable.emplace(tuple);
-			}
+	for (auto vectorIter : affectsTable) {
+		vector<string> tuple = vector<string>();
+		if (vectorIter.back() == stmtNo) {
+			tuple.push_back(vectorIter.front());
+			resultTable.emplace(tuple);
 		}
 	}
 	return resultTable;
@@ -270,16 +242,10 @@ TABLE PKBAffects::getAffectsTAnyEnt() {
 	PROC_LIST resultTable;
 	LINE_LIST list;
 	PROG_LINE n;
-	list = PKBStmt::getStmts();
-	for (auto iter : list) {
-		n = iter.front();
-		for (auto vectorIter : affectsTTable) {
-			vector<string> tuple = vector<string>();
-			if (vectorIter.back() == n) {
-				tuple.push_back(vectorIter.back());
-				resultTable.emplace(tuple);
-			}
-		}
+	for (auto vectorIter : affectsTTable) {
+		vector<string> tuple = vector<string>();
+		tuple.push_back(vectorIter.back());
+		resultTable.emplace(tuple);
 	}
 	return resultTable;
 }
@@ -287,18 +253,10 @@ TABLE PKBAffects::getAffectsTAnyEnt() {
 TABLE PKBAffects::getAffectsTEntAny() {
 	DesignExtractor::affectsTAll();
 	PROC_LIST resultTable;
-	LINE_LIST list;
-	PROG_LINE n;
-	list = PKBStmt::getStmts();
-	for (auto iter : list) {
-		n = iter.front();
-		for (auto vectorIter : affectsTTable) {
-			vector<string> tuple = vector<string>();
-			if (vectorIter.front() == n) {
-				tuple.push_back(vectorIter.front());
-				resultTable.emplace(tuple);
-			}
-		}
+	for (auto vectorIter : affectsTTable) {
+		vector<string> tuple = vector<string>();
+		tuple.push_back(vectorIter.front());
+		resultTable.emplace(tuple);
 	}
 	return resultTable;
 }
@@ -306,17 +264,11 @@ TABLE PKBAffects::getAffectsTEntAny() {
 TABLE PKBAffects::getAffectsTIdentEnt(STMT_NO stmtNo) {
 	DesignExtractor::affectedTBy(stmtNo);
 	PROC_LIST resultTable;
-	LINE_LIST list;
-	PROG_LINE n;
-	list = PKBStmt::getStmts();
-	for (auto iter : list) {
-		n = iter.front();
-		for (auto vectorIter : affectsTTable) {
+	for (auto vectorIter : affectsTTable) {	
+		if (vectorIter.front() == stmtNo) {
 			vector<string> tuple = vector<string>();
-			if (vectorIter.front() == stmtNo && vectorIter.back() == n) {
-				tuple.push_back(vectorIter.back());
-				resultTable.emplace(tuple);
-			}
+			tuple.push_back(vectorIter.back());
+			resultTable.emplace(tuple);
 		}
 	}
 	return resultTable;
@@ -325,17 +277,11 @@ TABLE PKBAffects::getAffectsTIdentEnt(STMT_NO stmtNo) {
 TABLE PKBAffects::getAffectsTEntIdent(STMT_NO stmtNo) {
 	DesignExtractor::isAffectingT(stmtNo);
 	PROC_LIST resultTable;
-	LINE_LIST list;
-	PROG_LINE n;
-	list = PKBStmt::getStmts();
-	for (auto iter : list) {
-		n = iter.front();
-		for (auto vectorIter : affectsTTable) {
+	for (auto vectorIter : affectsTTable) {
+		if (vectorIter.back() == stmtNo) {
 			vector<string> tuple = vector<string>();
-			if (vectorIter.front() == n && vectorIter.back() == stmtNo) {
-				tuple.push_back(vectorIter.front());
-				resultTable.emplace(tuple);
-			}
+			tuple.push_back(vectorIter.front());
+			resultTable.emplace(tuple);
 		}
 	}
 	return resultTable;
