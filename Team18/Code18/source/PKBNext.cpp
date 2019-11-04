@@ -272,8 +272,8 @@ bool PKBNext::clearNextT() {
 }
 
 //NEW EVALUATION API
-TABLE PKBNext::getNextAnyEnt(STMT_TYPE type) {
-	TABLE resultTable;
+LINE_LIST PKBNext::getNextAnyEnt(STMT_TYPE type) {
+	LINE_LIST resultTable;
 	STMT_LIST list;
 	STMT_NO s;
 	if (type == "stmt" || type == "prog_line") {
@@ -300,8 +300,8 @@ TABLE PKBNext::getNextAnyEnt(STMT_TYPE type) {
 	return resultTable;
 }
 
-TABLE PKBNext::getNextEntAny(STMT_TYPE type) {
-	TABLE resultTable;
+LINE_LIST PKBNext::getNextEntAny(STMT_TYPE type) {
+	LINE_LIST resultTable;
 	STMT_LIST list;
 	STMT_NO s;
 	if (type == "stmt" || type == "prog_line") {
@@ -328,8 +328,8 @@ TABLE PKBNext::getNextEntAny(STMT_TYPE type) {
 	return resultTable;
 }
 
-TABLE PKBNext::getNextIdentEnt(PROG_LINE stmtNo, STMT_TYPE type) {
-	TABLE resultTable;
+LINE_LIST PKBNext::getNextIdentEnt(PROG_LINE stmtNo, STMT_TYPE type) {
+	LINE_LIST resultTable;
 	STMT_LIST list;
 	STMT_NO s;
 	if (type == "stmt" || type == "prog_line") {
@@ -358,8 +358,8 @@ TABLE PKBNext::getNextIdentEnt(PROG_LINE stmtNo, STMT_TYPE type) {
 	return resultTable;
 }
 
-TABLE PKBNext::getNextEntIdent(STMT_TYPE type, PROG_LINE stmtNo) {
-	TABLE resultTable;
+LINE_LIST PKBNext::getNextEntIdent(STMT_TYPE type, PROG_LINE stmtNo) {
+	LINE_LIST resultTable;
 	STMT_LIST list;
 	STMT_NO s;
 	if (type == "stmt" || type == "prog_line") {
@@ -454,9 +454,9 @@ TABLE PKBNext::getNextEntEnt(STMT_TYPE type1, STMT_TYPE type2) {
 	return resultTable;
 }
 
-TABLE PKBNext::getNextTAnyEnt(STMT_TYPE type) {
+LINE_LIST PKBNext::getNextTAnyEnt(STMT_TYPE type) {
 	
-	TABLE resultTable;
+	LINE_LIST resultTable;
 	STMT_LIST list, emptyList;
 	STMT_NO s;
 	if (type == "stmt" || type == "prog_line") {
@@ -485,9 +485,9 @@ TABLE PKBNext::getNextTAnyEnt(STMT_TYPE type) {
 	return resultTable;
 }
 
-TABLE PKBNext::getNextTEntAny(STMT_TYPE type) {
+LINE_LIST PKBNext::getNextTEntAny(STMT_TYPE type) {
 	
-	TABLE resultTable;
+	LINE_LIST resultTable;
 	STMT_LIST list, emptyList;
 	STMT_NO s;
 	if (type == "stmt" || type == "prog_line") {
@@ -516,9 +516,9 @@ TABLE PKBNext::getNextTEntAny(STMT_TYPE type) {
 	return resultTable;
 }
 
-TABLE PKBNext::getNextTIdentEnt(PROG_LINE stmtNo, STMT_TYPE type) {
+LINE_LIST PKBNext::getNextTIdentEnt(PROG_LINE stmtNo, STMT_TYPE type) {
 	
-	TABLE resultTable;
+	LINE_LIST resultTable;
 	STMT_LIST list;
 	STMT_NO s;
 	STMT_LIST n1List;
@@ -553,8 +553,8 @@ TABLE PKBNext::getNextTIdentEnt(PROG_LINE stmtNo, STMT_TYPE type) {
 	return resultTable;
 }
 
-TABLE PKBNext::getNextTEntIdent(STMT_TYPE type, PROG_LINE stmtNo) {
-	TABLE resultTable;
+LINE_LIST PKBNext::getNextTEntIdent(STMT_TYPE type, PROG_LINE stmtNo) {
+	LINE_LIST resultTable;
 	STMT_LIST list;
 	STMT_NO s;
 	STMT_LIST n2List;
@@ -667,9 +667,9 @@ TABLE PKBNext::getNextTEntEnt(STMT_TYPE type1, STMT_TYPE type2) {
 	return resultTable;
 }
 
-TABLE PKBNext::getNextTSelf(STMT_TYPE type) {
+LINE_LIST PKBNext::getNextTSelf(STMT_TYPE type) {
 	
-	PROC_LIST resultTable;
+	LINE_LIST resultTable;
 	LINE_LIST list;
 	PROG_LINE n;
 	if (type == "stmt" || type == "prog_line") {
@@ -729,8 +729,8 @@ TABLE PKBNext::getNextBipAnyEnt(STMT_TYPE type) {
 	return resultTable;
 }
 
-TABLE PKBNext::getNextBipEntAny(STMT_TYPE type) {
-	TABLE resultTable;
+LINE_LIST PKBNext::getNextBipEntAny(STMT_TYPE type) {
+	LINE_LIST resultTable;
 	STMT_LIST list;
 	STMT_NO s;
 	if (type == "stmt" || type == "prog_line") {
@@ -757,8 +757,8 @@ TABLE PKBNext::getNextBipEntAny(STMT_TYPE type) {
 	return resultTable;
 }
 
-TABLE PKBNext::getNextBipIdentEnt(PROG_LINE stmtNo, STMT_TYPE type) {
-	TABLE resultTable;
+LINE_LIST PKBNext::getNextBipIdentEnt(PROG_LINE stmtNo, STMT_TYPE type) {
+	LINE_LIST resultTable;
 	STMT_LIST list;
 	STMT_NO s;
 	if (type == "stmt" || type == "prog_line") {
@@ -787,8 +787,8 @@ TABLE PKBNext::getNextBipIdentEnt(PROG_LINE stmtNo, STMT_TYPE type) {
 	return resultTable;
 }
 
-TABLE PKBNext::getNextBipEntIdent(STMT_TYPE type, PROG_LINE stmtNo) {
-	TABLE resultTable;
+LINE_LIST PKBNext::getNextBipEntIdent(STMT_TYPE type, PROG_LINE stmtNo) {
+	LINE_LIST resultTable;
 	STMT_LIST list;
 	STMT_NO s;
 	if (type == "stmt" || type == "prog_line") {
@@ -884,8 +884,8 @@ TABLE PKBNext::getNextBipEntEnt(STMT_TYPE type1, STMT_TYPE type2) {
 	return resultTable;
 }
 
-TABLE PKBNext::getNextBipTAnyEnt(STMT_TYPE type) {
-	TABLE resultTable;
+LINE_LIST PKBNext::getNextBipTAnyEnt(STMT_TYPE type) {
+	LINE_LIST resultTable;
 	STMT_LIST list;
 	STMT_NO s;
 	if (type == "stmt" || type == "prog_line") {
@@ -912,8 +912,8 @@ TABLE PKBNext::getNextBipTAnyEnt(STMT_TYPE type) {
 	return resultTable;
 }
 
-TABLE PKBNext::getNextBipTEntAny(STMT_TYPE type) {
-	TABLE resultTable;
+LINE_LIST PKBNext::getNextBipTEntAny(STMT_TYPE type) {
+	LINE_LIST resultTable;
 	STMT_LIST list;
 	STMT_NO s;
 	if (type == "stmt" || type == "prog_line") {
@@ -940,8 +940,8 @@ TABLE PKBNext::getNextBipTEntAny(STMT_TYPE type) {
 	return resultTable;
 }
 
-TABLE PKBNext::getNextBipTIdentEnt(PROG_LINE stmtNo, STMT_TYPE type) {
-	TABLE resultTable;
+LINE_LIST PKBNext::getNextBipTIdentEnt(PROG_LINE stmtNo, STMT_TYPE type) {
+	LINE_LIST resultTable;
 	STMT_LIST list;
 	STMT_NO s;
 	if (type == "stmt" || type == "prog_line") {
@@ -970,8 +970,8 @@ TABLE PKBNext::getNextBipTIdentEnt(PROG_LINE stmtNo, STMT_TYPE type) {
 	return resultTable;
 }
 
-TABLE PKBNext::getNextBipTEntIdent(STMT_TYPE type, PROG_LINE stmtNo) {
-	TABLE resultTable;
+LINE_LIST PKBNext::getNextBipTEntIdent(STMT_TYPE type, PROG_LINE stmtNo) {
+	LINE_LIST resultTable;
 	STMT_LIST list;
 	STMT_NO s;
 	if (type == "stmt" || type == "prog_line") {
@@ -1065,7 +1065,7 @@ TABLE PKBNext::getNextBipTEntEnt(STMT_TYPE type1, STMT_TYPE type2) {
 	}
 }
 
-TABLE PKBNext::getNextBipTSelf(STMT_TYPE type) {
+LINE_LIST PKBNext::getNextBipTSelf(STMT_TYPE type) {
 	PROC_LIST resultTable;
 	LINE_LIST list;
 	PROG_LINE n;

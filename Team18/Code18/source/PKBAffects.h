@@ -28,19 +28,19 @@ public:
 	static bool setCheckedAffectsT(STMT_NO a1, STMT_NO a2);
 
 	//Table Evaluation
-	static TABLE getAffectsAnyEnt();
-	static TABLE getAffectsIdentEnt(STMT_NO a1);
-	static TABLE getAffectsEntAny();
-	static TABLE getAffectsEntIdent(STMT_NO a2);
+	static STMT_LIST getAffectsAnyEnt();
+	static STMT_LIST getAffectsIdentEnt(STMT_NO a1);
+	static STMT_LIST getAffectsEntAny();
+	static STMT_LIST getAffectsEntIdent(STMT_NO a2);
 	static TABLE getAffectsEntEnt();
-	static TABLE getAffectsSelf();
+	static STMT_LIST getAffectsSelf();
 
-	static TABLE getAffectsTAnyEnt();
-	static TABLE getAffectsTIdentEnt(STMT_NO a1);
-	static TABLE getAffectsTEntAny();
-	static TABLE getAffectsTEntIdent(STMT_NO a2);
+	static STMT_LIST getAffectsTAnyEnt();
+	static STMT_LIST getAffectsTIdentEnt(STMT_NO a1);
+	static STMT_LIST getAffectsTEntAny();
+	static STMT_LIST getAffectsTEntIdent(STMT_NO a2);
 	static TABLE getAffectsTEntEnt();
-	static TABLE getAffectsTSelf();
+	static STMT_LIST getAffectsTSelf();
 
 	// Clear
 	static bool clear();

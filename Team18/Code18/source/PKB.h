@@ -58,16 +58,16 @@ public:
 	static bool isFollowsTIdentIdent(STMT_NO s1, STMT_NO s2);
 
 	//Follow Table Evaluation
-	static TABLE getFollowsAnyEnt(STMT_TYPE s2);
-	static TABLE getFollowsIdentEnt(STMT_NO s1, STMT_TYPE s2);
-	static TABLE getFollowsEntAny(STMT_TYPE s1);
-	static TABLE getFollowsEntIdent(STMT_TYPE s1, STMT_NO s2);
+	static STMT_LIST getFollowsAnyEnt(STMT_TYPE s2);
+	static STMT_LIST getFollowsIdentEnt(STMT_NO s1, STMT_TYPE s2);
+	static STMT_LIST getFollowsEntAny(STMT_TYPE s1);
+	static STMT_LIST getFollowsEntIdent(STMT_TYPE s1, STMT_NO s2);
 	static TABLE getFollowsEntEnt(STMT_TYPE s1, STMT_TYPE s2);
 
-	static TABLE getFollowsTAnyEnt(STMT_TYPE s2);
-	static TABLE getFollowsTIdentEnt(STMT_NO s1, STMT_TYPE s2);
-	static TABLE getFollowsTEntAny(STMT_TYPE s1);
-	static TABLE getFollowsTEntIdent(STMT_TYPE s1, STMT_NO s2);
+	static STMT_LIST getFollowsTAnyEnt(STMT_TYPE s2);
+	static STMT_LIST getFollowsTIdentEnt(STMT_NO s1, STMT_TYPE s2);
+	static STMT_LIST getFollowsTEntAny(STMT_TYPE s1);
+	static STMT_LIST getFollowsTEntIdent(STMT_TYPE s1, STMT_NO s2);
 	static TABLE getFollowsTEntEnt(STMT_TYPE s1, STMT_TYPE s2);
 
 	//Parent Functions
@@ -88,16 +88,16 @@ public:
 	static bool isParentTIdentIdent(STMT_NO s1, STMT_NO s2);
 	
 	//Parent Table Evaluation
-	static TABLE getParentAnyEnt(STMT_TYPE s2);
-	static TABLE getParentIdentEnt(STMT_NO s1, STMT_TYPE s2);
-	static TABLE getParentEntAny(STMT_TYPE s1);
-	static TABLE getParentEntIdent(STMT_TYPE s1, STMT_NO s2);
+	static STMT_LIST getParentAnyEnt(STMT_TYPE s2);
+	static STMT_LIST getParentIdentEnt(STMT_NO s1, STMT_TYPE s2);
+	static STMT_LIST getParentEntAny(STMT_TYPE s1);
+	static STMT_LIST getParentEntIdent(STMT_TYPE s1, STMT_NO s2);
 	static TABLE getParentEntEnt(STMT_TYPE s1, STMT_TYPE s2);
 
-	static TABLE getParentTAnyEnt(STMT_TYPE s2);
-	static TABLE getParentTIdentEnt(STMT_NO s1, STMT_TYPE s2);
-	static TABLE getParentTEntAny(STMT_TYPE s1);
-	static TABLE getParentTEntIdent(STMT_TYPE s1, STMT_NO s2);
+	static STMT_LIST getParentTAnyEnt(STMT_TYPE s2);
+	static STMT_LIST getParentTIdentEnt(STMT_NO s1, STMT_TYPE s2);
+	static STMT_LIST getParentTEntAny(STMT_TYPE s1);
+	static STMT_LIST getParentTEntIdent(STMT_TYPE s1, STMT_NO s2);
 	static TABLE getParentTEntEnt(STMT_TYPE s1, STMT_TYPE s2);
 
 	//Modifies Function
@@ -163,16 +163,16 @@ public:
 	static bool isCallsTIdentIdent(PROC_NAME p1, PROC_NAME p2);
 
 	//Call Table Evaluation
-	static TABLE getCallsAnyEnt();
-	static TABLE getCallsIdentEnt(PROC_NAME p1);
-	static TABLE getCallsEntAny();
-	static TABLE getCallsEntIdent(PROC_NAME p2);
+	static PROC_LIST getCallsAnyEnt();
+	static PROC_LIST getCallsIdentEnt(PROC_NAME p1);
+	static PROC_LIST getCallsEntAny();
+	static PROC_LIST getCallsEntIdent(PROC_NAME p2);
 	static TABLE getCallsEntEnt();
 
-	static TABLE getCallsTAnyEnt();
-	static TABLE getCallsTIdentEnt(PROC_NAME p1);
-	static TABLE getCallsTEntAny();
-	static TABLE getCallsTEntIdent(PROC_NAME p2);
+	static PROC_LIST getCallsTAnyEnt();
+	static PROC_LIST getCallsTIdentEnt(PROC_NAME p1);
+	static PROC_LIST getCallsTEntAny();
+	static PROC_LIST getCallsTEntIdent(PROC_NAME p2);
 	static TABLE getCallsTEntEnt();
 
 	//Next Function
@@ -199,29 +199,29 @@ public:
 	static bool isNextBipTIdentAny(PROG_LINE n1);
 	static bool isNextBipTIdentIdent(PROG_LINE n1, PROG_LINE n2);
 
-	static TABLE getNextAnyEnt(STMT_TYPE stmtType);
-	static TABLE getNextIdentEnt(PROG_LINE n1, STMT_TYPE stmtType);
-	static TABLE getNextEntAny(STMT_TYPE stmtType);
-	static TABLE getNextEntIdent(STMT_TYPE stmtType, PROG_LINE n2);
+	static LINE_LIST getNextAnyEnt(STMT_TYPE stmtType);
+	static LINE_LIST getNextIdentEnt(PROG_LINE n1, STMT_TYPE stmtType);
+	static LINE_LIST getNextEntAny(STMT_TYPE stmtType);
+	static LINE_LIST getNextEntIdent(STMT_TYPE stmtType, PROG_LINE n2);
 	static TABLE getNextEntEnt(STMT_TYPE stmtType1, STMT_TYPE stmtType2);
 
-	static TABLE getNextTAnyEnt(STMT_TYPE stmtType);
-	static TABLE getNextTIdentEnt(PROG_LINE n1, STMT_TYPE stmtType);
-	static TABLE getNextTEntAny(STMT_TYPE stmtType);
-	static TABLE getNextTEntIdent(STMT_TYPE stmtType, PROG_LINE n2);
+	static LINE_LIST getNextTAnyEnt(STMT_TYPE stmtType);
+	static LINE_LIST getNextTIdentEnt(PROG_LINE n1, STMT_TYPE stmtType);
+	static LINE_LIST getNextTEntAny(STMT_TYPE stmtType);
+	static LINE_LIST getNextTEntIdent(STMT_TYPE stmtType, PROG_LINE n2);
 	static TABLE getNextTEntEnt(STMT_TYPE stmtType1, STMT_TYPE stmtType2);
 	static TABLE getNextTSelf(STMT_TYPE stmtType);
 
-	static TABLE getNextBipAnyEnt(STMT_TYPE stmtType);
-	static TABLE getNextBipIdentEnt(PROG_LINE n1, STMT_TYPE stmtType);
-	static TABLE getNextBipEntAny(STMT_TYPE stmtType);
-	static TABLE getNextBipEntIdent(STMT_TYPE stmtType, PROG_LINE n2);
+	static LINE_LIST getNextBipAnyEnt(STMT_TYPE stmtType);
+	static LINE_LIST getNextBipIdentEnt(PROG_LINE n1, STMT_TYPE stmtType);
+	static LINE_LIST getNextBipEntAny(STMT_TYPE stmtType);
+	static LINE_LIST getNextBipEntIdent(STMT_TYPE stmtType, PROG_LINE n2);
 	static TABLE getNextBipEntEnt(STMT_TYPE stmtType1, STMT_TYPE stmtType2);
 
-	static TABLE getNextBipTAnyEnt(STMT_TYPE stmtType);
-	static TABLE getNextBipTIdentEnt(PROG_LINE n1, STMT_TYPE stmtType);
-	static TABLE getNextBipTEntAny(STMT_TYPE stmtType);
-	static TABLE getNextBipTEntIdent(STMT_TYPE stmtType, PROG_LINE n2);
+	static LINE_LIST getNextBipTAnyEnt(STMT_TYPE stmtType);
+	static LINE_LIST getNextBipTIdentEnt(PROG_LINE n1, STMT_TYPE stmtType);
+	static LINE_LIST getNextBipTEntAny(STMT_TYPE stmtType);
+	static LINE_LIST getNextBipTEntIdent(STMT_TYPE stmtType, PROG_LINE n2);
 	static TABLE getNextBipTEntEnt(STMT_TYPE stmtType1, STMT_TYPE stmtType2);
 	static TABLE getNextBipTSelf(STMT_TYPE stmtType);
 
@@ -239,12 +239,12 @@ public:
 	static STMT_LIST getPatternWhileIdent(VAR_NAME varName);
 	static TABLE getPatternWhileEnt();
 
-	static TABLE getPatternAssignAnyAny();
-	static TABLE getPatternAssignAnyPartial(EXPR_SPEC expression);
-	static TABLE getPatternAssignAnyFull(EXPR_SPEC expression);
-	static TABLE getPatternAssignIdentAny(VAR_NAME varName);
-	static TABLE getPatternAssignIdentPartial(VAR_NAME varName, EXPR_SPEC expression);
-	static TABLE getPatternAssignIdentFull(VAR_NAME varName, EXPR_SPEC expression);
+	static STMT_LIST getPatternAssignAnyAny();
+	static STMT_LIST getPatternAssignAnyPartial(EXPR_SPEC expression);
+	static STMT_LIST getPatternAssignAnyFull(EXPR_SPEC expression);
+	static STMT_LIST getPatternAssignIdentAny(VAR_NAME varName);
+	static STMT_LIST getPatternAssignIdentPartial(VAR_NAME varName, EXPR_SPEC expression);
+	static STMT_LIST getPatternAssignIdentFull(VAR_NAME varName, EXPR_SPEC expression);
 	static TABLE getPatternAssignEntAny();
 	static TABLE getPatternAssignEntPartial(EXPR_SPEC expression);
 	static TABLE getPatternAssignEntFull(EXPR_SPEC expression);
@@ -263,19 +263,19 @@ public:
 	static bool isAffectsTIdentIdent(STMT_NO a1, STMT_NO a2);
 
 	//Affects Table Evaluation
-	static TABLE getAffectsAnyEnt();
-	static TABLE getAffectsIdentEnt(STMT_NO a1);
-	static TABLE getAffectsEntAny();
-	static TABLE getAffectsEntIdent(STMT_NO a2);
+	static STMT_LIST getAffectsAnyEnt();
+	static STMT_LIST getAffectsIdentEnt(STMT_NO a1);
+	static STMT_LIST getAffectsEntAny();
+	static STMT_LIST getAffectsEntIdent(STMT_NO a2);
 	static TABLE getAffectsEntEnt();
-	static TABLE getAffectsSelf();
+	static STMT_LIST getAffectsSelf();
 
-	static TABLE getAffectsTAnyEnt();
-	static TABLE getAffectsTIdentEnt(STMT_NO a1);
-	static TABLE getAffectsTEntAny();
-	static TABLE getAffectsTEntIdent(STMT_NO a2);
+	static STMT_LIST getAffectsTAnyEnt();
+	static STMT_LIST getAffectsTIdentEnt(STMT_NO a1);
+	static STMT_LIST getAffectsTEntAny();
+	static STMT_LIST getAffectsTEntIdent(STMT_NO a2);
 	static TABLE getAffectsTEntEnt();
-	static TABLE getAffectsTSelf();
+	static STMT_LIST getAffectsTSelf();
 
 	//with Clause
 	static STMT_LIST getWithIdentAttr(IDENT iden, ENT_TYPE ent, ATTR attr);

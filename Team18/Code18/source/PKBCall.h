@@ -31,16 +31,16 @@ public:
 	static bool isCallsTIdentIdent(PROC_NAME p1, PROC_NAME p2);
 
 	//Table Evaluation
-	static TABLE getCallsAnyEnt();
-	static TABLE getCallsIdentEnt(PROC_NAME p1);
-	static TABLE getCallsEntAny();
-	static TABLE getCallsEntIdent(PROC_NAME p2);
+	static PROC_LIST getCallsAnyEnt();
+	static PROC_LIST getCallsIdentEnt(PROC_NAME p1);
+	static PROC_LIST getCallsEntAny();
+	static PROC_LIST getCallsEntIdent(PROC_NAME p2);
 	static TABLE getCallsEntEnt();
 
-	static TABLE getCallsTAnyEnt();
-	static TABLE getCallsTIdentEnt(PROC_NAME p1);
-	static TABLE getCallsTEntAny();
-	static TABLE getCallsTEntIdent(PROC_NAME p2);
+	static PROC_LIST getCallsTAnyEnt();
+	static PROC_LIST getCallsTIdentEnt(PROC_NAME p1);
+	static PROC_LIST getCallsTEntAny();
+	static PROC_LIST getCallsTEntIdent(PROC_NAME p2);
 	static TABLE getCallsTEntEnt();
 	
 	// Clear

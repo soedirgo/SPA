@@ -122,9 +122,8 @@ bool PKBParent::isParentTIdentIdent(STMT_NO parent, STMT_NO childT) {
 }
 
 //NEW EVALUATION API
-TABLE PKBParent::getParentAnyEnt(STMT_TYPE type) {
-	TABLE resultTable;
-	STMT_LIST list;
+STMT_LIST PKBParent::getParentAnyEnt(STMT_TYPE type) {
+	STMT_LIST resultTable, list;
 	STMT_NO s;
 	if (type == "stmt" || type == "prog_line") {
 		for (auto vectorIter : parentTable) {
@@ -150,9 +149,8 @@ TABLE PKBParent::getParentAnyEnt(STMT_TYPE type) {
 	return resultTable;
 }
 
-TABLE PKBParent::getParentEntAny(STMT_TYPE type) {
-	TABLE resultTable;
-	STMT_LIST list;
+STMT_LIST PKBParent::getParentEntAny(STMT_TYPE type) {
+	STMT_LIST resultTable, list;
 	STMT_NO s;
 	if (type == "stmt" || type == "prog_line") {
 		for (auto vectorIter : parentTable) {
@@ -178,9 +176,8 @@ TABLE PKBParent::getParentEntAny(STMT_TYPE type) {
 	return resultTable;
 }
 
-TABLE PKBParent::getParentIdentEnt(STMT_NO stmtNo, STMT_TYPE type) {
-	TABLE resultTable;
-	STMT_LIST list;
+STMT_LIST PKBParent::getParentIdentEnt(STMT_NO stmtNo, STMT_TYPE type) {
+	TABLE resultTable, list;
 	STMT_NO s;
 	if (type == "stmt" || type == "prog_line") {
 		for (auto vectorIter : parentTable) {
@@ -208,9 +205,8 @@ TABLE PKBParent::getParentIdentEnt(STMT_NO stmtNo, STMT_TYPE type) {
 	return resultTable;
 }
 
-TABLE PKBParent::getParentEntIdent(STMT_TYPE type, STMT_NO stmtNo) {
-	TABLE resultTable;
-	STMT_LIST list;
+STMT_LIST PKBParent::getParentEntIdent(STMT_TYPE type, STMT_NO stmtNo) {
+	TABLE resultTable, list;
 	STMT_NO s;
 	if (type == "stmt" || type == "prog_line") {
 		for (auto vectorIter : parentTable) {
@@ -304,9 +300,8 @@ TABLE PKBParent::getParentEntEnt(STMT_TYPE type1, STMT_TYPE type2) {
 	return resultTable;
 }
 
-TABLE PKBParent::getParentTAnyEnt(STMT_TYPE type) {
-	TABLE resultTable;
-	STMT_LIST list;
+STMT_LIST PKBParent::getParentTAnyEnt(STMT_TYPE type) {
+	STMT_LIST resultTable, list;
 	STMT_NO s;
 	if (type == "stmt" || type == "prog_line") {
 		for (auto vectorIter : parentTTable) {
@@ -327,14 +322,12 @@ TABLE PKBParent::getParentTAnyEnt(STMT_TYPE type) {
 				}
 			}
 		}
-	}
-	
+	}	
 	return resultTable;
 }
 
-TABLE PKBParent::getParentTEntAny(STMT_TYPE type) {
-	TABLE resultTable;
-	STMT_LIST list;
+STMT_LIST PKBParent::getParentTEntAny(STMT_TYPE type) {
+	STMT_LIST resultTable, list;
 	STMT_NO s;
 	if (type == "stmt" || type == "prog_line") {
 		for (auto vectorIter : parentTTable) {
@@ -356,13 +349,11 @@ TABLE PKBParent::getParentTEntAny(STMT_TYPE type) {
 			}
 		}
 	}
-	
 	return resultTable;
 }
 
-TABLE PKBParent::getParentTIdentEnt(STMT_NO stmtNo, STMT_TYPE type) {
-	TABLE resultTable;
-	STMT_LIST list;
+STMT_LIST PKBParent::getParentTIdentEnt(STMT_NO stmtNo, STMT_TYPE type) {
+	STMT_LIST resultTable, list;
 	STMT_NO s;
 	if (type == "stmt" || type == "prog_line") {
 		for (auto vectorIter : parentTTable) {
@@ -390,9 +381,8 @@ TABLE PKBParent::getParentTIdentEnt(STMT_NO stmtNo, STMT_TYPE type) {
 	return resultTable;
 }
 
-TABLE PKBParent::getParentTEntIdent(STMT_TYPE type, STMT_NO stmtNo) {
-	TABLE resultTable;
-	STMT_LIST list;
+STMT_LIST PKBParent::getParentTEntIdent(STMT_TYPE type, STMT_NO stmtNo) {
+	STMT_LIST resultTable, list;
 	STMT_NO s;
 	if (type == "stmt" || type == "prog_line") {
 		for (auto vectorIter : parentTTable) {
@@ -483,10 +473,8 @@ TABLE PKBParent::getParentTEntEnt(STMT_TYPE type1, STMT_TYPE type2) {
 			}
 		}
 	}
-
 	return resultTable;
 }
-
 
 bool PKBParent::clear() {
 	parentTable.clear();

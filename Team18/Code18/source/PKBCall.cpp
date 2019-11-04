@@ -157,7 +157,7 @@ bool PKBCall::isCallsTIdentIdent(PROC_NAME caller, PROC_NAME calleeT) {
 }
 
 //NEW EVALUATION API
-TABLE PKBCall::getCallsAnyEnt() {
+PROC_LIST PKBCall::getCallsAnyEnt() {
 	PROC_LIST resultTable;
 	for (auto vectorIter : callsProcTable) {
 		vector<string> tuple = vector<string>();
@@ -167,7 +167,7 @@ TABLE PKBCall::getCallsAnyEnt() {
 	return resultTable;
 }
 
-TABLE PKBCall::getCallsEntAny() {
+PROC_LIST PKBCall::getCallsEntAny() {
 	PROC_LIST resultTable;
 	for (auto vectorIter : callsProcTable) {
 		vector<string> tuple = vector<string>();
@@ -177,7 +177,7 @@ TABLE PKBCall::getCallsEntAny() {
 	return resultTable;
 }
 
-TABLE PKBCall::getCallsIdentEnt(PROC_NAME procName) {
+PROC_LIST PKBCall::getCallsIdentEnt(PROC_NAME procName) {
 	PROC_LIST resultTable;
 	for (auto vectorIter : callsProcTable) {
 		if (vectorIter.front() == procName) {
@@ -189,7 +189,7 @@ TABLE PKBCall::getCallsIdentEnt(PROC_NAME procName) {
 	return resultTable;
 }
 
-TABLE PKBCall::getCallsEntIdent(PROC_NAME procName) {
+PROC_LIST PKBCall::getCallsEntIdent(PROC_NAME procName) {
 	PROC_LIST resultTable;
 	for (auto vectorIter : callsProcTable) {
 		if (vectorIter.back() == procName) {
@@ -205,7 +205,7 @@ TABLE PKBCall::getCallsEntEnt() {
 	return callsProcTable;
 }
 
-TABLE PKBCall::getCallsTAnyEnt() {
+PROC_LIST PKBCall::getCallsTAnyEnt() {
 	PROC_LIST resultTable;
 	for (auto vectorIter : callsTProcTable) {
 		vector<string> tuple = vector<string>();
@@ -215,7 +215,7 @@ TABLE PKBCall::getCallsTAnyEnt() {
 	return resultTable;
 }
 
-TABLE PKBCall::getCallsTEntAny() {
+PROC_LIST PKBCall::getCallsTEntAny() {
 	PROC_LIST resultTable;
 	for (auto vectorIter : callsTProcTable) {
 		vector<string> tuple = vector<string>();
@@ -225,7 +225,7 @@ TABLE PKBCall::getCallsTEntAny() {
 	return resultTable;
 }
 
-TABLE PKBCall::getCallsTIdentEnt(PROC_NAME procName) {
+PROC_LIST PKBCall::getCallsTIdentEnt(PROC_NAME procName) {
 	PROC_LIST resultTable;
 	for (auto vectorIter : callsTProcTable) {
 		if (vectorIter.front() == procName) {
@@ -237,7 +237,7 @@ TABLE PKBCall::getCallsTIdentEnt(PROC_NAME procName) {
 	return resultTable;
 }
 
-TABLE PKBCall::getCallsTEntIdent(PROC_NAME procName) {
+PROC_LIST PKBCall::getCallsTEntIdent(PROC_NAME procName) {
 	PROC_LIST resultTable;
 	for (auto vectorIter : callsTProcTable) {
 		if (vectorIter.back() == procName) {

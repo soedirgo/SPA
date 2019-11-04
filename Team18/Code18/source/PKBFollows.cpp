@@ -96,9 +96,8 @@ bool PKBFollows::isFollowsTIdentIdent(STMT_NO followedBy, STMT_NO follows) {
 }
 
 //NEW EVALUATION API
-TABLE PKBFollows::getFollowsAnyEnt(STMT_TYPE type) {
-	TABLE resultTable;
-	STMT_LIST list;
+STMT_LIST PKBFollows::getFollowsAnyEnt(STMT_TYPE type) {
+	STMT_LIST resultTable, list;
 	STMT_NO s;
 	if (type == "stmt" || type == "prog_line") {
 		for (auto vectorIter : followsTable) {
@@ -124,9 +123,8 @@ TABLE PKBFollows::getFollowsAnyEnt(STMT_TYPE type) {
 	return resultTable;
 }
 
-TABLE PKBFollows::getFollowsEntAny(STMT_TYPE type) {
-	TABLE resultTable;
-	STMT_LIST list;
+STMT_LIST PKBFollows::getFollowsEntAny(STMT_TYPE type) {
+	STMT_LIST resultTable, list;
 	STMT_NO s;
 	if (type == "stmt" || type == "prog_line") {
 		for (auto vectorIter : followsTable) {
@@ -152,9 +150,8 @@ TABLE PKBFollows::getFollowsEntAny(STMT_TYPE type) {
 	return resultTable;
 }
 
-TABLE PKBFollows::getFollowsIdentEnt(STMT_NO stmtNo, STMT_TYPE type) {
-	TABLE resultTable;
-	STMT_LIST list;
+STMT_LIST PKBFollows::getFollowsIdentEnt(STMT_NO stmtNo, STMT_TYPE type) {
+	STMT_LIST resultTable, list;
 	STMT_NO s;
 	if (type == "stmt" || type == "prog_line") {
 		for (auto vectorIter : followsTable) {
@@ -182,9 +179,8 @@ TABLE PKBFollows::getFollowsIdentEnt(STMT_NO stmtNo, STMT_TYPE type) {
 	return resultTable;
 }
 
-TABLE PKBFollows::getFollowsEntIdent(STMT_TYPE type, STMT_NO stmtNo) {
-	TABLE resultTable;
-	STMT_LIST list;
+STMT_LIST PKBFollows::getFollowsEntIdent(STMT_TYPE type, STMT_NO stmtNo) {
+	STMT_LIST resultTable, list;
 	STMT_NO s;
 	if (type == "stmt" || type == "prog_line") {
 		for (auto vectorIter : followsTable) {
@@ -278,9 +274,8 @@ TABLE PKBFollows::getFollowsEntEnt(STMT_TYPE type1, STMT_TYPE type2) {
 	return resultTable;
 }
 
-TABLE PKBFollows::getFollowsTAnyEnt(STMT_TYPE type) {
-	TABLE resultTable;
-	STMT_LIST list;
+STMT_LIST PKBFollows::getFollowsTAnyEnt(STMT_TYPE type) {
+	STMT_LIST resultTable, list;
 	STMT_NO s;
 	if (type == "stmt" || type == "prog_line") {
 		for (auto vectorIter : followsTTable) {
@@ -306,9 +301,8 @@ TABLE PKBFollows::getFollowsTAnyEnt(STMT_TYPE type) {
 	return resultTable;
 }
 
-TABLE PKBFollows::getFollowsTEntAny(STMT_TYPE type) {
-	TABLE resultTable;
-	STMT_LIST list;
+STMT_LIST PKBFollows::getFollowsTEntAny(STMT_TYPE type) {
+	STMT_LIST resultTable, list;
 	STMT_NO s;
 	if (type == "stmt" || type == "prog_line") {
 		for (auto vectorIter : followsTTable) {
@@ -334,9 +328,8 @@ TABLE PKBFollows::getFollowsTEntAny(STMT_TYPE type) {
 	return resultTable;
 }
 
-TABLE PKBFollows::getFollowsTIdentEnt(STMT_NO stmtNo, STMT_TYPE type) {
-	TABLE resultTable;
-	STMT_LIST list;
+STMT_LIST PKBFollows::getFollowsTIdentEnt(STMT_NO stmtNo, STMT_TYPE type) {
+	STMT_LIST resultTable, list;
 	STMT_NO s;
 	if (type == "stmt" || type == "prog_line") {
 		for (auto vectorIter : followsTTable) {
@@ -364,9 +357,8 @@ TABLE PKBFollows::getFollowsTIdentEnt(STMT_NO stmtNo, STMT_TYPE type) {
 	return resultTable;
 }
 
-TABLE PKBFollows::getFollowsTEntIdent(STMT_TYPE type, STMT_NO stmtNo) {
-	TABLE resultTable;
-	STMT_LIST list;
+STMT_LIST PKBFollows::getFollowsTEntIdent(STMT_TYPE type, STMT_NO stmtNo) {
+	STMT_LIST resultTable, list;
 	STMT_NO s;
 	if (type == "stmt" || type == "prog_line") {
 		for (auto vectorIter : followsTTable) {
@@ -456,11 +448,8 @@ TABLE PKBFollows::getFollowsTEntEnt(STMT_TYPE type1, STMT_TYPE type2) {
 			}
 		}
 	}
-
 	return resultTable;
 }
-
-
 
 bool PKBFollows::clear() {
 	followsTable.clear();

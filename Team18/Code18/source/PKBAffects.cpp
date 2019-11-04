@@ -164,9 +164,9 @@ bool PKBAffects::isCheckedAffectsTIdentIdent(STMT_NO a1, STMT_NO a2) {
 }
 
 //NEW EVALUATION API
-TABLE PKBAffects::getAffectsAnyEnt() {
+STMT_LIST PKBAffects::getAffectsAnyEnt() {
 	DesignExtractor::affectsAll();
-	PROC_LIST resultTable;
+	STMT_LIST resultTable;
 	for (auto vectorIter : affectsTable) {
 		vector<string> tuple = vector<string>();
 		tuple.push_back(vectorIter.back());
@@ -175,9 +175,9 @@ TABLE PKBAffects::getAffectsAnyEnt() {
 	return resultTable;
 }
 
-TABLE PKBAffects::getAffectsEntAny() {
+STMT_LIST PKBAffects::getAffectsEntAny() {
 	DesignExtractor::affectsAll();
-	PROC_LIST resultTable;
+	STMT_LIST resultTable;
 	for (auto vectorIter : affectsTable) {
 		vector<string> tuple = vector<string>();
 		tuple.push_back(vectorIter.front());
@@ -186,9 +186,9 @@ TABLE PKBAffects::getAffectsEntAny() {
 	return resultTable;
 }
 
-TABLE PKBAffects::getAffectsIdentEnt(STMT_NO stmtNo) {
+STMT_LIST PKBAffects::getAffectsIdentEnt(STMT_NO stmtNo) {
 	DesignExtractor::affectedBy(stmtNo);
-	PROC_LIST resultTable;
+	STMT_LIST resultTable;
 	for (auto vectorIter : affectsTable) {
 		if (vectorIter.front() == stmtNo) {
 			vector<string> tuple = vector<string>();
@@ -199,9 +199,9 @@ TABLE PKBAffects::getAffectsIdentEnt(STMT_NO stmtNo) {
 	return resultTable;
 }
 
-TABLE PKBAffects::getAffectsEntIdent(STMT_NO stmtNo) {
+STMT_LIST PKBAffects::getAffectsEntIdent(STMT_NO stmtNo) {
 	DesignExtractor::isAffecting(stmtNo);
-	PROC_LIST resultTable;
+	STMT_LIST resultTable;
 	for (auto vectorIter : affectsTable) {
 		vector<string> tuple = vector<string>();
 		if (vectorIter.back() == stmtNo) {
@@ -214,11 +214,10 @@ TABLE PKBAffects::getAffectsEntIdent(STMT_NO stmtNo) {
 
 TABLE PKBAffects::getAffectsEntEnt() {
 	DesignExtractor::affectsAll();
-	TABLE resultTable = affectsTable;
-	return resultTable;
+	return affectsTable;
 }
 
-TABLE PKBAffects::getAffectsSelf() {
+STMT_LIST PKBAffects::getAffectsSelf() {
 	DesignExtractor::isAffectsSelf();
 	STMT_LIST resultTable;
 	for (auto vectorIter : affectsTable) {
@@ -231,11 +230,9 @@ TABLE PKBAffects::getAffectsSelf() {
 	return resultTable;
 }
 
-TABLE PKBAffects::getAffectsTAnyEnt() {
+STMT_LIST PKBAffects::getAffectsTAnyEnt() {
 	DesignExtractor::affectsTAll();
-	PROC_LIST resultTable;
-	LINE_LIST list;
-	PROG_LINE n;
+	STMT_LIST resultTable;
 	for (auto vectorIter : affectsTTable) {
 		vector<string> tuple = vector<string>();
 		tuple.push_back(vectorIter.back());
@@ -244,9 +241,9 @@ TABLE PKBAffects::getAffectsTAnyEnt() {
 	return resultTable;
 }
 
-TABLE PKBAffects::getAffectsTEntAny() {
+STMT_LIST PKBAffects::getAffectsTEntAny() {
 	DesignExtractor::affectsTAll();
-	PROC_LIST resultTable;
+	STMT_LIST resultTable;
 	for (auto vectorIter : affectsTTable) {
 		vector<string> tuple = vector<string>();
 		tuple.push_back(vectorIter.front());
@@ -255,9 +252,9 @@ TABLE PKBAffects::getAffectsTEntAny() {
 	return resultTable;
 }
 
-TABLE PKBAffects::getAffectsTIdentEnt(STMT_NO stmtNo) {
+STMT_LIST PKBAffects::getAffectsTIdentEnt(STMT_NO stmtNo) {
 	DesignExtractor::affectedTBy(stmtNo);
-	PROC_LIST resultTable;
+	STMT_LIST resultTable;
 	for (auto vectorIter : affectsTTable) {	
 		if (vectorIter.front() == stmtNo) {
 			vector<string> tuple = vector<string>();
@@ -268,9 +265,9 @@ TABLE PKBAffects::getAffectsTIdentEnt(STMT_NO stmtNo) {
 	return resultTable;
 }
 
-TABLE PKBAffects::getAffectsTEntIdent(STMT_NO stmtNo) {
+STMT_LIST PKBAffects::getAffectsTEntIdent(STMT_NO stmtNo) {
 	DesignExtractor::isAffectingT(stmtNo);
-	PROC_LIST resultTable;
+	STMT_LIST resultTable;
 	for (auto vectorIter : affectsTTable) {
 		if (vectorIter.back() == stmtNo) {
 			vector<string> tuple = vector<string>();
@@ -286,7 +283,7 @@ TABLE PKBAffects::getAffectsTEntEnt() {
 	return affectsTTable;
 }
 
-TABLE PKBAffects::getAffectsTSelf() {
+STMT_LIST PKBAffects::getAffectsTSelf() {
 	DesignExtractor::isAffectsTSelf();
 	STMT_LIST resultTable;
 	for (auto vectorIter : affectsTTable) {

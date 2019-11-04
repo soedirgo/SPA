@@ -45,31 +45,31 @@ public:
 	static bool isNextBipTIdentIdent(PROG_LINE n1, PROG_LINE n2);
 
 	//Table Evaluation
-	static TABLE getNextAnyEnt(STMT_TYPE stmtType);
-	static TABLE getNextIdentEnt(PROG_LINE n1, STMT_TYPE stmtType);
-	static TABLE getNextEntAny(STMT_TYPE stmtType);
-	static TABLE getNextEntIdent(STMT_TYPE stmtType,PROG_LINE n2);
+	static LINE_LIST getNextAnyEnt(STMT_TYPE stmtType);
+	static LINE_LIST getNextIdentEnt(PROG_LINE n1, STMT_TYPE stmtType);
+	static LINE_LIST getNextEntAny(STMT_TYPE stmtType);
+	static LINE_LIST getNextEntIdent(STMT_TYPE stmtType,PROG_LINE n2);
 	static TABLE getNextEntEnt(STMT_TYPE stmtType1, STMT_TYPE stmtType2);
 
-	static TABLE getNextTAnyEnt(STMT_TYPE stmtType);
-	static TABLE getNextTIdentEnt(PROG_LINE n1, STMT_TYPE stmtType);
-	static TABLE getNextTEntAny(STMT_TYPE stmtType);
-	static TABLE getNextTEntIdent(STMT_TYPE stmtType, PROG_LINE n2);
+	static LINE_LIST getNextTAnyEnt(STMT_TYPE stmtType);
+	static LINE_LIST getNextTIdentEnt(PROG_LINE n1, STMT_TYPE stmtType);
+	static LINE_LIST getNextTEntAny(STMT_TYPE stmtType);
+	static LINE_LIST getNextTEntIdent(STMT_TYPE stmtType, PROG_LINE n2);
 	static TABLE getNextTEntEnt(STMT_TYPE stmtType1, STMT_TYPE stmtType2);
-	static TABLE getNextTSelf(STMT_TYPE stmtType);
+	static LINE_LIST getNextTSelf(STMT_TYPE stmtType);
 
-	static TABLE getNextBipAnyEnt(STMT_TYPE stmtType);
-	static TABLE getNextBipIdentEnt(PROG_LINE n1, STMT_TYPE stmtType);
-	static TABLE getNextBipEntAny(STMT_TYPE stmtType);
-	static TABLE getNextBipEntIdent(STMT_TYPE stmtType, PROG_LINE n2);
+	static LINE_LIST getNextBipAnyEnt(STMT_TYPE stmtType);
+	static LINE_LIST getNextBipIdentEnt(PROG_LINE n1, STMT_TYPE stmtType);
+	static LINE_LIST getNextBipEntAny(STMT_TYPE stmtType);
+	static LINE_LIST getNextBipEntIdent(STMT_TYPE stmtType, PROG_LINE n2);
 	static TABLE getNextBipEntEnt(STMT_TYPE stmtType1, STMT_TYPE stmtType2);
 
-	static TABLE getNextBipTAnyEnt(STMT_TYPE stmtType);
-	static TABLE getNextBipTIdentEnt(PROG_LINE n1, STMT_TYPE stmtType);
-	static TABLE getNextBipTEntAny(STMT_TYPE stmtType);
-	static TABLE getNextBipTEntIdent(STMT_TYPE stmtType, PROG_LINE n2);
+	static LINE_LIST getNextBipTAnyEnt(STMT_TYPE stmtType);
+	static LINE_LIST getNextBipTIdentEnt(PROG_LINE n1, STMT_TYPE stmtType);
+	static LINE_LIST getNextBipTEntAny(STMT_TYPE stmtType);
+	static LINE_LIST getNextBipTEntIdent(STMT_TYPE stmtType, PROG_LINE n2);
 	static TABLE getNextBipTEntEnt(STMT_TYPE stmtType1, STMT_TYPE stmtType2);
-	static TABLE getNextBipTSelf(STMT_TYPE stmtType);
+	static LINE_LIST getNextBipTSelf(STMT_TYPE stmtType);
 
 	// Clear
 	static bool clear();
