@@ -142,7 +142,7 @@ bool PKBNext::isNextTAnyIdent(PROG_LINE nextLine) {
 	n2List.emplace(tuple2);
 
 	DesignExtractor::extractNextT(emptyList, n2List);
-	for (auto vectorIter : nextTable) {
+	for (auto vectorIter : nextTTable) {
 		if (vectorIter.back() == nextLine) {
 			return true;
 		}
@@ -156,7 +156,7 @@ bool PKBNext::isNextTIdentAny(PROG_LINE currentLine) {
 	n1List.emplace(tuple1);
 
 	DesignExtractor::extractNextT(n1List, emptyList);
-	for (auto vectorIter : nextTable) {
+	for (auto vectorIter : nextTTable) {
 		if (vectorIter.front() == currentLine) {
 			return true;
 		}
@@ -615,6 +615,7 @@ TABLE PKBNext::getNextTEntEnt(STMT_TYPE type1, STMT_TYPE type2) {
 	if (type1 == "stmt" && type2 != "stmt") {
 		list1 = PKBStmt::getStmts();
 		list2 = PKBStmt::getStmtsByType(type2);
+		DesignExtractor::extractNextT(list1, list2);
 		for (auto iter2 : list2) {
 			s2 = iter2.front();
 			for (auto vectorIter : nextTTable) {
@@ -630,6 +631,7 @@ TABLE PKBNext::getNextTEntEnt(STMT_TYPE type1, STMT_TYPE type2) {
 	else if (type1 != "stmt" && type2 == "stmt") {
 		list1 = PKBStmt::getStmtsByType(type1);
 		list2 = PKBStmt::getStmts();
+		DesignExtractor::extractNextT(list1, list2);
 		for (auto iter1 : list1) {
 			s1 = iter1.front();
 			for (auto vectorIter : nextTTable) {
@@ -646,6 +648,7 @@ TABLE PKBNext::getNextTEntEnt(STMT_TYPE type1, STMT_TYPE type2) {
 	else if (type1 != "stmt" && type2 != "stmt") {
 		list1 = PKBStmt::getStmtsByType(type1);
 		list2 = PKBStmt::getStmtsByType(type2);
+		DesignExtractor::extractNextT(list1, list2);
 		for (auto iter1 : list1) {
 			s1 = iter1.front();
 			for (auto iter2 : list2) {
