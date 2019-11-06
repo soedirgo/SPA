@@ -40,7 +40,7 @@ bool PKB::clearTempPKB()
 {
 	//Clear Next* table
 	//Clear Affects and Affects* Table
-	PKBNext::clearNextT();
+	PKBNext::clearCache();
 	PKBAffects::clearCache();
 	return true;
 }
@@ -655,6 +655,32 @@ bool PKB::isAffectsTIdentIdent(STMT_NO a1, STMT_NO a2) {
 	return PKBAffects::isAffectsTIdentIdent(a1,a2);
 }
 
+bool PKB::isAffectsBipAnyAny() {
+	return PKBAffects::isAffectsBipAnyAny();
+}
+bool PKB::isAffectsBipAnyIdent(STMT_NO a2) {
+	return PKBAffects::isAffectsBipAnyIdent(a2);
+}
+bool PKB::isAffectsBipIdentAny(STMT_NO a1) {
+	return PKBAffects::isAffectsBipIdentAny(a1);
+}
+bool PKB::isAffectsBipIdentIdent(STMT_NO a1, STMT_NO a2) {
+	return PKBAffects::isAffectsBipIdentIdent(a1, a2);
+}
+
+bool PKB::isAffectsBipTAnyAny() {
+	return PKBAffects::isAffectsBipTAnyAny();
+}
+bool PKB::isAffectsBipTAnyIdent(STMT_NO a2) {
+	return PKBAffects::isAffectsBipTAnyIdent(a2);
+}
+bool PKB::isAffectsBipTIdentAny(STMT_NO a1) {
+	return PKBAffects::isAffectsBipTIdentAny(a1);
+}
+bool PKB::isAffectsBipTIdentIdent(STMT_NO a1, STMT_NO a2) {
+	return PKBAffects::isAffectsBipTIdentIdent(a1, a2);
+}
+
 //Affects Table Evaluation
 TABLE PKB::getAffectsAnyEnt() {
 	return PKBAffects::getAffectsAnyEnt();
@@ -692,6 +718,44 @@ TABLE PKB::getAffectsTEntEnt() {
 }
 TABLE PKB::getAffectsTSelf() {
 	return PKBAffects::getAffectsTSelf();
+}
+
+TABLE PKB::getAffectsBipAnyEnt() {
+	return PKBAffects::getAffectsBipAnyEnt();
+}
+TABLE PKB::getAffectsBipIdentEnt(STMT_NO a1) {
+	return PKBAffects::getAffectsBipIdentEnt(a1);
+}
+TABLE PKB::getAffectsBipEntAny() {
+	return PKBAffects::getAffectsBipEntAny();
+}
+TABLE PKB::getAffectsBipEntIdent(STMT_NO a2) {
+	return PKBAffects::getAffectsBipEntIdent(a2);
+}
+TABLE PKB::getAffectsBipEntEnt() {
+	return PKBAffects::getAffectsBipEntEnt();
+}
+TABLE PKB::getAffectsBipSelf() {
+	return PKBAffects::getAffectsBipSelf();
+}
+
+TABLE PKB::getAffectsBipTAnyEnt() {
+	return PKBAffects::getAffectsBipTAnyEnt();
+}
+TABLE PKB::getAffectsBipTIdentEnt(STMT_NO a1) {
+	return PKBAffects::getAffectsBipTIdentEnt(a1);
+}
+TABLE PKB::getAffectsBipTEntAny() {
+	return PKBAffects::getAffectsBipTEntAny();
+}
+TABLE PKB::getAffectsBipTEntIdent(STMT_NO a2) {
+	return PKBAffects::getAffectsBipTEntIdent(a2);
+}
+TABLE PKB::getAffectsBipTEntEnt() {
+	return PKBAffects::getAffectsBipTEntEnt();
+}
+TABLE PKB::getAffectsBipTSelf() {
+	return PKBAffects::getAffectsBipTSelf();
 }
 
 bool PKB::setIfPattern(STMT_NO stmtNo, VAR_NAME varName) {

@@ -262,6 +262,16 @@ public:
 	static bool isAffectsTIdentAny(STMT_NO a1);
 	static bool isAffectsTIdentIdent(STMT_NO a1, STMT_NO a2);
 
+	static bool isAffectsBipAnyAny();
+	static bool isAffectsBipAnyIdent(STMT_NO a2);
+	static bool isAffectsBipIdentAny(STMT_NO a1);
+	static bool isAffectsBipIdentIdent(STMT_NO a1, STMT_NO a2);
+
+	static bool isAffectsBipTAnyAny();
+	static bool isAffectsBipTAnyIdent(STMT_NO a2);
+	static bool isAffectsBipTIdentAny(STMT_NO a1);
+	static bool isAffectsBipTIdentIdent(STMT_NO a1, STMT_NO a2);
+
 	//Affects Table Evaluation
 	static STMT_LIST getAffectsAnyEnt();
 	static STMT_LIST getAffectsIdentEnt(STMT_NO a1);
@@ -276,6 +286,20 @@ public:
 	static STMT_LIST getAffectsTEntIdent(STMT_NO a2);
 	static TABLE getAffectsTEntEnt();
 	static STMT_LIST getAffectsTSelf();
+
+	static STMT_LIST getAffectsBipAnyEnt();
+	static STMT_LIST getAffectsBipIdentEnt(STMT_NO a1);
+	static STMT_LIST getAffectsBipEntAny();
+	static STMT_LIST getAffectsBipEntIdent(STMT_NO a2);
+	static TABLE getAffectsBipEntEnt();
+	static STMT_LIST getAffectsBipSelf();
+
+	static STMT_LIST getAffectsBipTAnyEnt();
+	static STMT_LIST getAffectsBipTIdentEnt(STMT_NO a1);
+	static STMT_LIST getAffectsBipTEntAny();
+	static STMT_LIST getAffectsBipTEntIdent(STMT_NO a2);
+	static TABLE getAffectsBipTEntEnt();
+	static STMT_LIST getAffectsBipTSelf();
 
 	//with Clause
 	static STMT_LIST getWithIdentAttr(IDENT iden, ENT_TYPE ent, ATTR attr);

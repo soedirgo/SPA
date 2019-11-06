@@ -57,13 +57,13 @@ namespace UnitTesting
 			DesignExtractor DesignExtractor;
 			DesignExtractor.extractDesign();
 		}
-		//Calls("_","_")
+		//Calls(_ , _)
 		TEST_METHOD(isCallsAnyAny)
 		{
 			PKBCall PKB;
 			Assert::IsTrue(PKB.isCallsAnyAny());
 		}
-		//Calls("_","First")
+		//Calls(_,"First")
 		TEST_METHOD(isCallsAnyIdent)
 		{
 			PKBCall PKB;
@@ -71,7 +71,7 @@ namespace UnitTesting
 			Assert::IsTrue(PKB.isCallsAnyIdent("Second"));
 			Assert::IsTrue(PKB.isCallsAnyIdent("Third"));
 		}
-		//Calls("First","_")
+		//Calls("First",_)
 		TEST_METHOD(isCallsIdentAny)
 		{
 			PKBCall PKB;
@@ -143,13 +143,13 @@ namespace UnitTesting
 			expected = { {"Second"} };
 			Assert::IsTrue(actual == expected);
 		}
-		//Calls*("_","_")
+		//Calls*(_,_)
 		TEST_METHOD(isCallsTAnyAny)
 		{
 			PKBCall PKB;
 			Assert::IsTrue(PKB.isCallsTAnyAny());
 		}
-		//Calls*("_","First")
+		//Calls*(_,"First")
 		TEST_METHOD(isCallsTAnyIdent)
 		{
 			PKBCall PKB;
@@ -157,7 +157,7 @@ namespace UnitTesting
 			Assert::IsTrue(PKB.isCallsTAnyIdent("Second"));
 			Assert::IsTrue(PKB.isCallsTAnyIdent("Third"));
 		}
-		//Calls*("First","_")
+		//Calls*("First",_)
 		TEST_METHOD(isCallsTIdentAny)
 		{
 			PKBCall PKB;

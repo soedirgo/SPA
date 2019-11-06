@@ -270,7 +270,7 @@ bool PKBNext::clear() {
 	return true;
 }
 
-bool PKBNext::clearNextT() {
+bool PKBNext::clearCache() {
 	nextTTable.clear();
 	return true;
 }

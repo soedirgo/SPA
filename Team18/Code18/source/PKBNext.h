@@ -76,7 +76,7 @@ public:
 	static bool clear();
 
 	// Clear Next*
-	static bool clearNextT();
+	static bool clearCache();
 
 private:
 	static TABLE nextTable;
