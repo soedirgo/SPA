@@ -12,13 +12,20 @@ TABLE PKBAffects::affectsBipTable;
 TABLE PKBAffects::affectsBipTTable;
 
 
-bool PKBAffects::clear() {
+bool PKBAffects::clearCache() {
 	affectsTable.clear();
 	affectsTTable.clear();
 	affectsChecked.clear();
 	affectsTChecked.clear();
 	return true;
 }
+
+bool PKBAffects::clear() {
+	affectsBipTable.clear();
+	affectsBipTTable.clear();
+	return true;
+}
+
 
 bool PKBAffects::isCheckedAffects(STMT_NO a1, STMT_NO a2) {
 	for (auto vectorIter : affectsChecked) {

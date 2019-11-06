@@ -70,6 +70,7 @@ public:
 
 	// Clear
 	static bool clear();
+	static bool clearCache();
 
 private:
 	static TABLE affectsChecked;
