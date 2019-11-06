@@ -57,22 +57,57 @@ namespace UnitTesting
 			DesignExtractor DesignExtractor;
 			DesignExtractor.extractDesign();
 		}
-		TEST_METHOD(CallRelationship)
+		//Calls("_","_")
+		TEST_METHOD(isCallsAnyAny)
+		{
+			PKBCall PKB;
+			Assert::IsTrue(PKB.isCallsAnyAny());
+		}
+		//Calls("_","First")
+		TEST_METHOD(isCallsAnyIdent)
+		{
+			PKBCall PKB;
+			Assert::IsFalse(PKB.isCallsAnyIdent("First"));
+			Assert::IsTrue(PKB.isCallsAnyIdent("Second"));
+			Assert::IsTrue(PKB.isCallsAnyIdent("Third"));
+		}
+		//Calls("First","_")
+		TEST_METHOD(isCallsIdentAny)
+		{
+			PKBCall PKB;
+			Assert::IsTrue(PKB.isCallsIdentAny("First"));
+			Assert::IsTrue(PKB.isCallsIdentAny("Second"));
+			Assert::IsFalse(PKB.isCallsIdentAny("Third"));
+		}
+		//Calls("First","Second")
+		TEST_METHOD(isCallsIdentIdent)
 		{
 			PKBCall PKB;
 			Assert::IsTrue(PKB.isCallsIdentIdent("First", "Second"));
 			Assert::IsTrue(PKB.isCallsIdentIdent("Second", "Third"));
 		}
-
-		TEST_METHOD(CallStarRelationship)
+		//Calls(_,proc2)
+		TEST_METHOD(getCallsAnyEnt)
 		{
 			PKBCall PKB;
-			Assert::IsTrue(PKB.isCallsTIdentIdent("First", "Second"));
-			Assert::IsTrue(PKB.isCallsTIdentIdent("Second", "Third"));
-			Assert::IsTrue(PKB.isCallsTIdentIdent("First", "Third"));
-		}
+			TABLE actual, expected;
 
-		TEST_METHOD(CallsEntEnt)
+			actual = PKB.getCallsAnyEnt();
+			expected = { {"Second"} ,{"Third"} };
+			Assert::IsTrue(actual == expected);
+		}
+		//Calls(proc1,_)
+		TEST_METHOD(getCallsEntAny)
+		{
+			PKBCall PKB;
+			TABLE actual, expected;
+
+			actual = PKB.getCallsEntAny();
+			expected = { {"First"} ,{"Second"} };
+			Assert::IsTrue(actual == expected);
+		}
+		//Calls(proc1,proc2)
+		TEST_METHOD(getCallsEntEnt)
 		{
 			PKBCall PKB;
 			TABLE actual, expected;
@@ -82,6 +117,7 @@ namespace UnitTesting
 			Assert::IsTrue(actual == expected);
 		}
 
+		//Calls(proc,"First")
 		TEST_METHOD(CallsEntIdent)
 		{
 			PKBCall PKB;
@@ -94,6 +130,7 @@ namespace UnitTesting
 			expected = { {"First"} };
 			Assert::IsTrue(actual == expected);
 		}
+		//Calls("First",proc)
 		TEST_METHOD(CallsIdentEnt)
 		{
 			PKBCall PKB;
@@ -106,8 +143,59 @@ namespace UnitTesting
 			expected = { {"Second"} };
 			Assert::IsTrue(actual == expected);
 		}
+		//Calls*("_","_")
+		TEST_METHOD(isCallsTAnyAny)
+		{
+			PKBCall PKB;
+			Assert::IsTrue(PKB.isCallsTAnyAny());
+		}
+		//Calls*("_","First")
+		TEST_METHOD(isCallsTAnyIdent)
+		{
+			PKBCall PKB;
+			Assert::IsFalse(PKB.isCallsTAnyIdent("First"));
+			Assert::IsTrue(PKB.isCallsTAnyIdent("Second"));
+			Assert::IsTrue(PKB.isCallsTAnyIdent("Third"));
+		}
+		//Calls*("First","_")
+		TEST_METHOD(isCallsTIdentAny)
+		{
+			PKBCall PKB;
+			Assert::IsTrue(PKB.isCallsTIdentAny("First"));
+			Assert::IsTrue(PKB.isCallsTIdentAny("Second"));
+			Assert::IsFalse(PKB.isCallsTIdentAny("Third"));
+		}
 
-		TEST_METHOD(CallsTEntEnt)
+		//Calls*("First","Second")
+		TEST_METHOD(CallStarRelationship)
+		{
+			PKBCall PKB;
+			Assert::IsTrue(PKB.isCallsTIdentIdent("First", "Second"));
+			Assert::IsTrue(PKB.isCallsTIdentIdent("Second", "Third"));
+			Assert::IsTrue(PKB.isCallsTIdentIdent("First", "Third"));
+		}
+		//Calls*(_,proc2)
+		TEST_METHOD(getCallsTAnyEnt)
+		{
+			PKBCall PKB;
+			TABLE actual, expected;
+
+			actual = PKB.getCallsTAnyEnt();
+			expected = { {"Second"} ,{"Third"} };
+			Assert::IsTrue(actual == expected);
+		}
+		//Calls*(proc1,_)
+		TEST_METHOD(getCallsTEntAny)
+		{
+			PKBCall PKB;
+			TABLE actual, expected;
+
+			actual = PKB.getCallsTEntAny();
+			expected = { {"First"} ,{"Second"} };
+			Assert::IsTrue(actual == expected);
+		}
+		//Calls*(proc1,proc2)
+		TEST_METHOD(getCallsTEntEnt)
 		{
 			PKBCall PKB;
 			TABLE actual, expected;
@@ -119,7 +207,8 @@ namespace UnitTesting
 			Assert::IsTrue(PKB.isCallsTAnyAny());
 		}
 
-		TEST_METHOD(CallsTEntIdent)
+		//Calls*(proc,"First")
+		TEST_METHOD(getCallsTEntIdent)
 		{
 			PKBCall PKB;
 			PROC_LIST actual, expected;
@@ -131,7 +220,8 @@ namespace UnitTesting
 			expected = { {"First"}, {"Second"} };
 			Assert::IsTrue(actual == expected);
 		}
-		TEST_METHOD(CallsTIdentEnt)
+		//Calls*("First",proc)
+		TEST_METHOD(getCallsTIdentEnt)
 		{
 			PKBCall PKB;
 			PROC_LIST actual, expected;

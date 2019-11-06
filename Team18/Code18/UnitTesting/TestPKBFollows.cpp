@@ -78,7 +78,7 @@ namespace UnitTesting
 			DesignExtractor DesignExtractor;
 			DesignExtractor.extractDesign();
 		}
-		TEST_METHOD(FollowsRelationship)
+		TEST_METHOD(isFollowsIdentIdent)
 		{
 			PKBFollows PKB;
 			Assert::IsTrue(PKB.isFollowsIdentIdent("1", "2"));
@@ -94,7 +94,7 @@ namespace UnitTesting
 			Assert::IsTrue(PKB.isFollowsIdentIdent("16", "17"));
 			Assert::IsTrue(PKB.isFollowsIdentIdent("17", "18"));
 		}
-		TEST_METHOD(FollowsStarRelationship)
+		TEST_METHOD(isFollowsTIdentIdent)
 		{
 			PKBFollows PKB;
 			Assert::IsTrue(PKB.isFollowsTIdentIdent("1", "2"));
@@ -116,7 +116,7 @@ namespace UnitTesting
 			Assert::IsTrue(PKB.isFollowsTIdentIdent("13", "15"));
 			Assert::IsTrue(PKB.isFollowsTIdentIdent("16", "18"));
 		}
-		TEST_METHOD(FollowsGenericBoth)
+		TEST_METHOD(getFollowsEntEnt)
 		{
 			PKBFollows PKB;
 			TABLE actual, expected;
@@ -133,7 +133,7 @@ namespace UnitTesting
 			Assert::IsTrue(actual == expected);
 			
 		}
-		TEST_METHOD(FollowsGenericLeft)
+		TEST_METHOD(getFollowsEntIdent)
 		{
 			PKBFollows PKB;
 			TABLE actual, expected;
@@ -150,7 +150,7 @@ namespace UnitTesting
 			Assert::IsTrue(actual == expected);
 			
 		}
-		TEST_METHOD(FollowsGenericRight)
+		TEST_METHOD(getFollowsIdentEnt)
 		{
 			
 			PKBFollows PKB;
@@ -168,7 +168,7 @@ namespace UnitTesting
 			Assert::IsTrue(actual == expected);
 			
 		}
-		TEST_METHOD(FollowsStarGenericBoth)
+		TEST_METHOD(getFollowsTEntEnt)
 		{
 			PKBFollows PKB;
 			TABLE actual, expected;
@@ -194,10 +194,6 @@ namespace UnitTesting
 			};
 
 			Assert::IsTrue(actual == expected);
-			
-
-			//actual = PKB.getAllFollowedByFollowsStarStmt("stmt", "stmt");
-			//Assert::IsTrue(actual.size() == 0);
 		}
 		TEST_METHOD(FollowsStarGenericLeft)
 		{

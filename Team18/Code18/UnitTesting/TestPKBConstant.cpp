@@ -55,7 +55,7 @@ namespace UnitTesting
 			PKB.setConstant("5");
 		}
 
-		TEST_METHOD(getAllConstantStmtByVal)
+		TEST_METHOD(getConstants)
 		{
 			PKBConstant PKB;
 			STMT_LIST actual = PKB.getConstants();

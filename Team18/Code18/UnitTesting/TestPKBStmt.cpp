@@ -71,42 +71,42 @@ namespace UnitTesting
 			STMT_LIST expected = { {"1"},{"2"},{"3"},{"4"},{"5"},{"6"},{"7"},{"8"},{"9"},{"10"},{"11"},{"12"},{"13"},{"14"},{"15"},{"16"},{"17"},{"18"} };
 			Assert::IsTrue(actual == expected);
 		}
-		TEST_METHOD(getAllReadStmt)
+		TEST_METHOD(getReads)
 		{
 			PKBStmt PKB;
 			STMT_LIST actual = PKB.getStmtsByType("read");
 			STMT_LIST expected = { {"1"},{"2"} };
 			Assert::IsTrue(actual == expected);
 		}
-		TEST_METHOD(getAllPrintStmt)
+		TEST_METHOD(getPrints)
 		{
 			PKBStmt PKB;
 			STMT_LIST actual = PKB.getStmtsByType("print");
 			STMT_LIST expected = { {"18"} };
 			Assert::IsTrue(actual == expected);
 		}
-		TEST_METHOD(getAllCallStmt)
+		TEST_METHOD(getCalls)
 		{
 			PKBStmt PKB;
 			STMT_LIST actual = PKB.getStmtsByType("call");
 			STMT_LIST expected = { {"3"},{"8"} };
 			Assert::IsTrue(actual == expected);
 		}
-		TEST_METHOD(getAllWhileStmt)
+		TEST_METHOD(getWhiles)
 		{
 			PKBStmt PKB;
 			STMT_LIST actual = PKB.getStmtsByType("while");
 			STMT_LIST expected = { {"6"} };
 			Assert::IsTrue(actual == expected);
 		}
-		TEST_METHOD(getAllIfStmt)
+		TEST_METHOD(getIfs)
 		{
 			PKBStmt PKB;
 			STMT_LIST actual = PKB.getStmtsByType("if");
 			STMT_LIST expected = { {"10"} };
 			Assert::IsTrue(actual == expected);
 		}
-		TEST_METHOD(getAllIfAssign)
+		TEST_METHOD(getAssigns)
 		{
 			PKBStmt PKB;
 			STMT_LIST actual = PKB.getStmtsByType("assign");
