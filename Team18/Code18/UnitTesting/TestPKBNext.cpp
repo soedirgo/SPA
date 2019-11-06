@@ -398,8 +398,6 @@ namespace UnitTesting
 			Assert::IsTrue(PKB.isNextBipTIdentIdent("8", "8"));
 			Assert::IsTrue(PKB.isNextBipTIdentIdent("9", "9"));
 			
-			
-			/*
 			Assert::IsFalse(PKB.isNextBipTIdentIdent("10", "16"));
 			Assert::IsFalse(PKB.isNextBipTIdentIdent("10", "17"));
 			Assert::IsFalse(PKB.isNextBipTIdentIdent("10", "18"));
@@ -409,8 +407,6 @@ namespace UnitTesting
 			Assert::IsFalse(PKB.isNextBipTIdentIdent("12", "16"));
 			Assert::IsFalse(PKB.isNextBipTIdentIdent("12", "17"));
 			Assert::IsFalse(PKB.isNextBipTIdentIdent("12", "18"));
-			*/
-
 		}
 		
 		TEST_METHOD(NextGenericBoth)

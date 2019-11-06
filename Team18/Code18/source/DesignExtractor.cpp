@@ -452,7 +452,7 @@ void DesignExtractor::recurseNextBip(PROC_NAME callee, TABLE callTable) {
 							}
 						}
 						else {
-							PKBNext::setNextBip(endStmt, callStmt);
+							//PKBNext::setNextBip(endStmt, callStmt);
 						}
 
 					}
