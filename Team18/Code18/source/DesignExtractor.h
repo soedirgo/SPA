@@ -38,6 +38,7 @@ private:
 	static void extractNextBip();
 	static void extractNextBipT();
 	static void extractAffectsBip();
+	static void extractAffectsTBip();
 
 	static bool traverseAffects(STMT_NO a1, STMT_NO a2, VAR_NAME v);
 	static void traverseAffectsAll(STMT_NO a1, VAR_NAME v);
@@ -45,6 +46,8 @@ private:
 	static bool recurseAffectsT(STMT_NO a1, STMT_NO a2);
 	static void recurseAffectsTAll(STMT_NO a1);
 	static bool recurseAffectsTAny(STMT_NO a1);
+	static void traverseAffectsBipAll(STMT_NO a1, VAR_NAME v);
+	static void recurseAffectsBipTAll(STMT_NO a1);
 	static void recurseModifies(PROC_NAME p);
 	static void recurseUses(PROC_NAME p);
 	static void recurseCall(PROC_NAME p, PROC_NAME q);

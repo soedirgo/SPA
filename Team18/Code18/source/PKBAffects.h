@@ -19,7 +19,9 @@ public:
 	static bool isAffectsIdentIdent(STMT_NO a1, STMT_NO a2);
 	static bool isCheckedAffectsIdentIdent(STMT_NO a1, STMT_NO a2);
 	static bool isCheckedAffects(STMT_NO a1, STMT_NO a2);
+	static bool isCheckedAffectsBip(STMT_NO a1, STMT_NO a2);
 	static bool setCheckedAffects(STMT_NO a1, STMT_NO a2);
+	static bool setCheckedAffectsBip(STMT_NO a1, STMT_NO a2);
 
 	static bool isAffectsTAnyAny();
 	static bool isAffectsTAnyIdent(STMT_NO a2);
@@ -27,7 +29,9 @@ public:
 	static bool isAffectsTIdentIdent(STMT_NO a1, STMT_NO a2);
 	static bool isCheckedAffectsTIdentIdent(STMT_NO a1, STMT_NO a2);
 	static bool isCheckedAffectsT(STMT_NO a1, STMT_NO a2);
+	static bool isCheckedAffectsBipT(STMT_NO a1, STMT_NO a2);
 	static bool setCheckedAffectsT(STMT_NO a1, STMT_NO a2);
+	static bool setCheckedAffectsBipT(STMT_NO a1, STMT_NO a2);
 
 	static bool isAffectsBipAnyAny();
 	static bool isAffectsBipAnyIdent(STMT_NO a2);
@@ -77,6 +81,8 @@ private:
 	static TABLE affectsTChecked;
 	static TABLE affectsTable;
 	static TABLE affectsTTable;
+	static TABLE affectsBipChecked;
+	static TABLE affectsBipTChecked;
 	static TABLE affectsBipTable;
 	static TABLE affectsBipTTable;
 };

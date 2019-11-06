@@ -669,66 +669,24 @@ void DesignExtractor::recurseUses(PROC_NAME callee) {
 
 void DesignExtractor::extractAffectsBip()
 {
-	TABLE assignStmtTable = PKBStmt::getStmtsByType("assign");
-	TABLE callStmtTable = PKBStmt::getStmtsByType("call");
-	TABLE nextBipTTable = PKBNext::getNextBipTTable();
-
-	for (auto vectorIter3 : nextBipTTable) {
-		STMT_NO a1 = vectorIter3.front();
-		STMT_NO a2 = vectorIter3.back();
-		if ((PKBStmt::getTypeByStmtNo(a1) == "assign" && PKBStmt::getTypeByStmtNo(a2) == "assign")) {
-			bool affectsHold = false;
-			// will only have 1 in varList
-			VAR_LIST varList1 = PKBModifies::getModifiesSIdentEnt(a1);
-			VAR_NAME varNameModified;
-			for (auto vectorIter4 : varList1) {
-				varNameModified = vectorIter4.front();
-			}
-			VAR_LIST varList2 = PKBUses::getUsesSIdentEnt(a2);
-			for (auto vectorIter4 : varList2) {
-				VAR_NAME varNameUses = vectorIter4.front();
-				//Means Affects Hold but havent check if modifies changed in between
-				if (varNameModified == varNameUses) {
-					affectsHold = true;
-				}
-			}
-			//Validate if affects Hold and var is not modified in between
-			TABLE stmtList = PKBNext::getNextBipTIdentEnt(a1, "stmt");
-			vector<int> v;
-			for (auto vectorIter1 : stmtList) {
-				if (stoi(vectorIter1.front()) < stoi(a2)) {
-					v.push_back(stoi(vectorIter1.front()));
-				}
-			}
-			sort(v.begin(), v.end());
-			int followIterator = 0;
-			for (auto i : v) {
-				if (i >= followIterator) {
-					//for (int i = stoi(a1) + 1; i < stoi(a2); i++) {
-					if (PKBStmt::getTypeByStmtNo(to_string(i)) == "while" || PKBStmt::getTypeByStmtNo(to_string(i)) == "if") {
-						STMT_NO follows = PKBFollows::getFollowsStmt(to_string(i));
-						if (follows != "" && stoi(follows) <= stoi(a2)) {
-							followIterator = stoi(follows);
-						}
-					}
-					else {
-						if (i != stoi(a1)) {
-							if (PKBStmt::getTypeByStmtNo(to_string(i)) == "assign") {
-								VAR_LIST varList3 = PKBModifies::getModifiesSIdentEnt(to_string(i));
-								for (auto vectorIter4 : varList3) {
-									if (varNameModified == vectorIter4.front()) {
-										affectsHold = false;
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-			if (affectsHold == true) {
-				PKBAffects::setAffectsBip(a1, a2);
-			}
+	STMT_LIST assignStmtTable1 = PKBStmt::getStmtsByType("assign");
+	for (auto stmt1 : assignStmtTable1) {
+		STMT_NO stmtNo1 = stmt1.front();
+		VAR_NAME varNameModified;
+		VAR_LIST varList1 = PKBModifies::getModifiesSIdentEnt(stmtNo1);
+		for (auto vectorIter4 : varList1) {
+			varNameModified = vectorIter4.front();
 		}
+		traverseAffectsBipAll(stmtNo1, varNameModified);
+	}
+}
+
+void DesignExtractor::extractAffectsTBip()
+{
+	STMT_LIST assignStmtTable1 = PKBStmt::getStmtsByType("assign");
+	for (auto stmt1 : assignStmtTable1) {
+		STMT_NO stmtNo1 = stmt1.front();
+		recurseAffectsBipTAll(stmtNo1);
 	}
 }
 
@@ -1058,6 +1016,99 @@ void DesignExtractor::traverseAffectsAll(STMT_NO a1, VAR_NAME v) {
 	}
 }
 
+void DesignExtractor::traverseAffectsBipAll(STMT_NO a1, VAR_NAME v) {
+	queue<STMT_NO> q;
+	unordered_map<STMT_NO, bool> visited;
+	TABLE nexts = PKBNext::getNextBipIdentEnt(a1, "stmt");
+	for (auto item : nexts) {
+		for (auto stmt : item) {
+			if (!PKB::isModifiesSIdentIdent(stmt, v) || PKBStmt::getTypeByStmtNo(stmt) == "while" || PKBStmt::getTypeByStmtNo(stmt) == "if" || PKBStmt::getTypeByStmtNo(stmt) == "call") {
+				q.push(stmt);
+				visited.insert(make_pair(stmt, true));
+				if (PKBStmt::getTypeByStmtNo(stmt) == "assign") {
+					VAR_NAME varNameUses;
+					bool affects = false;
+					VAR_LIST varList2 = PKBUses::getUsesSIdentEnt(stmt);
+					for (auto vectorIter4 : varList2) {
+						varNameUses = vectorIter4.front();
+						if (v == varNameUses) {
+							affects = true;
+						}
+					}
+					if (affects) {
+						PKBAffects::setAffectsBip(a1, stmt);
+						PKBAffects::setCheckedAffectsBip(a1, stmt);
+					}
+				}
+			}
+			else {
+				if (PKBStmt::getTypeByStmtNo(stmt) == "assign") {
+					VAR_NAME varNameUses;
+					bool affects = false;
+					VAR_LIST varList2 = PKBUses::getUsesSIdentEnt(stmt);
+					for (auto vectorIter4 : varList2) {
+						varNameUses = vectorIter4.front();
+						if (v == varNameUses) {
+							affects = true;
+						}
+					}
+					if (affects) {
+						PKBAffects::setAffectsBip(a1, stmt);
+						PKBAffects::setCheckedAffectsBip(a1, stmt);
+					}
+				}
+			}
+		}
+	}
+	while (!q.empty()) {
+		STMT_NO next = q.front();
+		TABLE nexts = PKBNext::getNextBipIdentEnt(next, "stmt");
+		for (auto item : nexts) {
+			for (auto stmt : item) {
+				if (visited.find(stmt) == visited.end()) {
+					if (!PKB::isModifiesSIdentIdent(stmt, v) || PKBStmt::getTypeByStmtNo(stmt) == "while" || PKBStmt::getTypeByStmtNo(stmt) == "if" || PKBStmt::getTypeByStmtNo(stmt) == "call") {
+						q.push(stmt);
+						visited.insert(make_pair(stmt, true));
+						if (PKBStmt::getTypeByStmtNo(stmt) == "assign") {
+							VAR_NAME varNameUses;
+							bool affects = false;
+							VAR_LIST varList2 = PKBUses::getUsesSIdentEnt(stmt);
+							for (auto vectorIter4 : varList2) {
+								varNameUses = vectorIter4.front();
+								if (v == varNameUses) {
+									affects = true;
+								}
+							}
+							if (affects) {
+								PKBAffects::setAffectsBip(a1, stmt);
+								PKBAffects::setCheckedAffectsBip(a1, stmt);
+							}
+						}
+					}
+					else {
+						if (PKBStmt::getTypeByStmtNo(stmt) == "assign") {
+							VAR_NAME varNameUses;
+							bool affects = false;
+							VAR_LIST varList2 = PKBUses::getUsesSIdentEnt(stmt);
+							for (auto vectorIter4 : varList2) {
+								varNameUses = vectorIter4.front();
+								if (v == varNameUses) {
+									affects = true;
+								}
+							}
+							if (affects) {
+								PKBAffects::setAffectsBip(a1, stmt);
+								PKBAffects::setCheckedAffectsBip(a1, stmt);
+							}
+						}
+					}
+				}
+			}
+		}
+		q.pop();
+	}
+}
+
 bool DesignExtractor::traverseAffectsAny(STMT_NO a1, VAR_NAME v) {
 	queue<STMT_NO> q;
 	unordered_map<STMT_NO, bool> visited;
@@ -1214,6 +1265,35 @@ void DesignExtractor::recurseAffectsTAll(STMT_NO a1) {
 			if (visited.find(curr) == visited.end()) {
 				PKBAffects::setAffectsT(a1, curr);
 				PKBAffects::setCheckedAffectsT(a1, curr);
+				frontier.push(curr);
+				visited.insert(make_pair(curr, true));
+			}
+		}
+	}
+}
+
+void DesignExtractor::recurseAffectsBipTAll(STMT_NO a1) {
+	TABLE affectsA1 = PKBAffects::getAffectsBipIdentEnt(a1);
+	stack<STMT_NO> frontier;
+	unordered_map<STMT_NO, bool> visited;
+
+	for (auto elem : affectsA1) {
+		STMT_NO next = elem.front();
+		PKBAffects::setAffectsBipT(a1, next);
+		PKBAffects::setCheckedAffectsBipT(a1, next);
+		frontier.push(next);
+		visited.insert(make_pair(next, true));
+	}
+
+	while (!frontier.empty()) {
+		STMT_NO item = frontier.top();
+		frontier.pop();
+		TABLE affectsCurr = PKBAffects::getAffectsBipIdentEnt(item);
+		for (auto affect : affectsCurr) {
+			STMT_NO curr = affect.front();
+			if (visited.find(curr) == visited.end()) {
+				PKBAffects::setAffectsBipT(a1, curr);
+				PKBAffects::setCheckedAffectsBipT(a1, curr);
 				frontier.push(curr);
 				visited.insert(make_pair(curr, true));
 			}

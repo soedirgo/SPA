@@ -9,7 +9,9 @@ TABLE PKBAffects::affectsTTable;
 TABLE PKBAffects::affectsChecked;
 TABLE PKBAffects::affectsTChecked;
 TABLE PKBAffects::affectsBipTable;
+TABLE PKBAffects::affectsBipChecked;
 TABLE PKBAffects::affectsBipTTable;
+TABLE PKBAffects::affectsBipTChecked;
 
 
 bool PKBAffects::clearCache() {
@@ -62,6 +64,44 @@ bool PKBAffects::setCheckedAffectsT(STMT_NO a1, STMT_NO a2) {
 	tuple.push_back(a1);
 	tuple.push_back(a2);
 	affectsTChecked.emplace(tuple);
+	return true;
+}
+
+bool PKBAffects::isCheckedAffectsBip(STMT_NO a1, STMT_NO a2) {
+	for (auto vectorIter : affectsBipChecked) {
+		if (vectorIter.front() == a1) {
+			if (vectorIter.back() == a2) {
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+bool PKBAffects::setCheckedAffectsBip(STMT_NO a1, STMT_NO a2) {
+	vector<string> tuple = vector<string>();
+	tuple.push_back(a1);
+	tuple.push_back(a2);
+	affectsBipChecked.emplace(tuple);
+	return true;
+}
+
+bool PKBAffects::isCheckedAffectsBipT(STMT_NO a1, STMT_NO a2) {
+	for (auto vectorIter : affectsBipTChecked) {
+		if (vectorIter.front() == a1) {
+			if (vectorIter.back() == a2) {
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+bool PKBAffects::setCheckedAffectsBipT(STMT_NO a1, STMT_NO a2) {
+	vector<string> tuple = vector<string>();
+	tuple.push_back(a1);
+	tuple.push_back(a2);
+	affectsBipTChecked.emplace(tuple);
 	return true;
 }
 
