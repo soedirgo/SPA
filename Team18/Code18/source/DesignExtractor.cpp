@@ -29,8 +29,9 @@ void DesignExtractor::extractDesign()
 	extractNextBip();
 	extractNextBipT();
 	extractAffectsBip();
+	extractAffectsBipT();
 
-	TABLE test = PKBNext::getNextBipTable();
+	TABLE test = PKBAffects::getAffectsBipEntEnt();
 	int i = test.size();
 	//TABLE test = PKBUses::getUsesPTable();
 	//int i = test.size();
@@ -681,7 +682,7 @@ void DesignExtractor::extractAffectsBip()
 	}
 }
 
-void DesignExtractor::extractAffectsTBip()
+void DesignExtractor::extractAffectsBipT()
 {
 	STMT_LIST assignStmtTable1 = PKBStmt::getStmtsByType("assign");
 	for (auto stmt1 : assignStmtTable1) {
