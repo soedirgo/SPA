@@ -393,9 +393,9 @@ void DesignExtractor::extractNextBip() {
 								PKBNext::setNextBip(endStmt, nextStmt);
 							}
 						}
-						else {
-							PKBNext::setNextBip(endStmt, callStmt);
-						}
+						//else {
+							//PKBNext::setNextBip(endStmt, callStmt);
+						//}
 
 					}
 				}

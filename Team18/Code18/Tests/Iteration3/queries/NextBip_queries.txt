@@ -1,6 +1,6 @@
 1 - Relation
 prog_line n;
-Select n such that NextBip(1, n)
+Select n such that NextBip(n, 5)
 7
 5000
 2 - Relation
