@@ -524,6 +524,38 @@ namespace Evaluator {
                   else
                       return PKB::getNextBipTEntEnt(getEntity(lhs),
                                                     getEntity(rhs));
+          }},
+         {"AffectsBip",
+          [](string lhs, string rhs) {
+              if (isUnderscore(lhs))
+                  return PKB::getAffectsBipAnyEnt();
+              else if (isIdentifier(lhs))
+                  return PKB::getAffectsBipIdentEnt(lhs);
+              else
+                  if (isUnderscore(rhs))
+                      return PKB::getAffectsBipEntAny();
+                  else if (isIdentifier(rhs))
+                      return PKB::getAffectsBipEntIdent(rhs);
+                  else if (lhs == rhs)
+                      return PKB::getAffectsBipSelf();
+                  else
+                      return PKB::getAffectsBipEntEnt();
+          }},
+         {"AffectsBip*",
+          [](string lhs, string rhs) {
+              if (isUnderscore(lhs))
+                  return PKB::getAffectsBipTAnyEnt();
+              else if (isIdentifier(lhs))
+                  return PKB::getAffectsBipTIdentEnt(lhs);
+              else
+                  if (isUnderscore(rhs))
+                      return PKB::getAffectsBipTEntAny();
+                  else if (isIdentifier(rhs))
+                      return PKB::getAffectsBipTEntIdent(rhs);
+                  else if (lhs == rhs)
+                      return PKB::getAffectsBipTSelf();
+                  else
+                      return PKB::getAffectsBipTEntEnt();
           }}};
 
         unordered_map<string, function<TABLE(string, string)>> patternApiMap =
