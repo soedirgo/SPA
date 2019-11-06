@@ -105,10 +105,11 @@ TABLE PKBNext::getNextBipTable() {
 TABLE PKBNext::getNextBipTTable() {
 	return nextBipTTable;
 }
-
+//Get boolean for Next(_,_)
 bool PKBNext::isNextAnyAny() {
 	return !nextTable.empty();
 }
+//Get boolean for Next(_,2)
 bool PKBNext::isNextAnyIdent(PROG_LINE nextLine) {
 	for (auto vectorIter : nextTable) {
 		if (vectorIter.back() == nextLine) {
@@ -117,6 +118,7 @@ bool PKBNext::isNextAnyIdent(PROG_LINE nextLine) {
 	}
 	return false;
 }
+//Get boolean for Next(1,_)
 bool PKBNext::isNextIdentAny(PROG_LINE currentLine) {
 	for (auto vectorIter : nextTable) {
 		if (vectorIter.front() == currentLine) {
@@ -125,6 +127,7 @@ bool PKBNext::isNextIdentAny(PROG_LINE currentLine) {
 	}
 	return false;
 }
+//Get boolean for Next(1,2)
 bool PKBNext::isNextIdentIdent(PROG_LINE currentLine, PROG_LINE nextLine) {
 	for (auto vectorIter : nextTable) {
 		if (vectorIter.front() == currentLine) {
@@ -135,10 +138,11 @@ bool PKBNext::isNextIdentIdent(PROG_LINE currentLine, PROG_LINE nextLine) {
 	}
 	return false;
 }
-
+//Get boolean for Next*(_,_)
 bool PKBNext::isNextTAnyAny() {
 	return !nextTable.empty();
 }
+//Get boolean for Next*(_,2)
 bool PKBNext::isNextTAnyIdent(PROG_LINE nextLine) {
 	STMT_LIST emptyList, n2List;
 	vector<string> tuple2 = vector<string>();
@@ -153,6 +157,7 @@ bool PKBNext::isNextTAnyIdent(PROG_LINE nextLine) {
 	}
 	return false;
 }
+//Get boolean for Next*(1,_)
 bool PKBNext::isNextTIdentAny(PROG_LINE currentLine) {
 	STMT_LIST n1List, emptyList;
 	vector<string> tuple1 = vector<string>();
@@ -167,6 +172,7 @@ bool PKBNext::isNextTIdentAny(PROG_LINE currentLine) {
 	}
 	return false;
 }
+//Get boolean for Next*(1,2)
 bool PKBNext::isNextTIdentIdent(PROG_LINE currentLine, PROG_LINE nextLine) {
 	
 	STMT_LIST n1List, n2List;
@@ -189,22 +195,11 @@ bool PKBNext::isNextTIdentIdent(PROG_LINE currentLine, PROG_LINE nextLine) {
 	}
 	return false;
 }
-
-
-bool PKBNext::isNextBipT(PROG_LINE currentLine, PROG_LINE nextLine) {
-	for (auto vectorIter : nextBipTTable) {
-		if (vectorIter.front() == currentLine) {
-			if (vectorIter.back() == nextLine) {
-				return true;
-			}
-		}
-	}
-	return false;
-}
-
+//Get boolean for NextBip(_,_)
 bool PKBNext::isNextBipAnyAny() {
 	return !nextBipTable.empty();
 }
+//Get boolean for NextBip(_,2)
 bool PKBNext::isNextBipAnyIdent(PROG_LINE nextLine) {
 	for (auto vectorIter : nextBipTable) {
 		if (vectorIter.back() == nextLine) {
@@ -213,6 +208,7 @@ bool PKBNext::isNextBipAnyIdent(PROG_LINE nextLine) {
 	}
 	return false;
 }
+//Get boolean for NextBip(1,_)
 bool PKBNext::isNextBipIdentAny(PROG_LINE currentLine) {
 	for (auto vectorIter : nextBipTable) {
 		if (vectorIter.front() == currentLine) {
@@ -221,6 +217,7 @@ bool PKBNext::isNextBipIdentAny(PROG_LINE currentLine) {
 	}
 	return false;
 }
+//Get boolean for NextBip(1,2)
 bool PKBNext::isNextBipIdentIdent(PROG_LINE currentLine, PROG_LINE nextLine) {
 	for (auto vectorIter : nextBipTable) {
 		if (vectorIter.front() == currentLine) {
@@ -232,27 +229,8 @@ bool PKBNext::isNextBipIdentIdent(PROG_LINE currentLine, PROG_LINE nextLine) {
 	return false;
 }
 
-bool PKBNext::isNextBipTAnyAny() {
-	bool status = !nextBipTTable.empty();
-	return status;
-}
-bool PKBNext::isNextBipTAnyIdent(PROG_LINE nextLine) {
-	for (auto vectorIter : nextBipTTable) {
-		if (vectorIter.back() == nextLine) {
-			return true;
-		}
-	}
-	return false;
-}
-bool PKBNext::isNextBipTIdentAny(PROG_LINE currentLine) {
-	for (auto vectorIter : nextBipTTable) {
-		if (vectorIter.front() == currentLine) {
-			return true;
-		}
-	}
-	return false;
-}
-bool PKBNext::isNextBipTIdentIdent(PROG_LINE currentLine, PROG_LINE nextLine) {
+//Get boolean for NextBip*(1,2) for design extractor using cache data instead 
+bool PKBNext::isNextBipT(PROG_LINE currentLine, PROG_LINE nextLine) {
 	for (auto vectorIter : nextBipTTable) {
 		if (vectorIter.front() == currentLine) {
 			if (vectorIter.back() == nextLine) {
@@ -263,19 +241,54 @@ bool PKBNext::isNextBipTIdentIdent(PROG_LINE currentLine, PROG_LINE nextLine) {
 	return false;
 }
 
+//Get boolean for NextBip*(_,_)
+bool PKBNext::isNextBipTAnyAny() {
+	bool status = !nextBipTTable.empty();
+	return status;
+}
+//Get boolean for NextBip*(_,2)
+bool PKBNext::isNextBipTAnyIdent(PROG_LINE nextLine) {
+	for (auto vectorIter : nextBipTTable) {
+		if (vectorIter.back() == nextLine) {
+			return true;
+		}
+	}
+	return false;
+}
+//Get boolean for NextBip*(1,_)
+bool PKBNext::isNextBipTIdentAny(PROG_LINE currentLine) {
+	for (auto vectorIter : nextBipTTable) {
+		if (vectorIter.front() == currentLine) {
+			return true;
+		}
+	}
+	return false;
+}
+//Get boolean for NextBip*(1,2)
+bool PKBNext::isNextBipTIdentIdent(PROG_LINE currentLine, PROG_LINE nextLine) {
+	for (auto vectorIter : nextBipTTable) {
+		if (vectorIter.front() == currentLine) {
+			if (vectorIter.back() == nextLine) {
+				return true;
+			}
+		}
+	}
+	return false;
+}
+//Clear Next, NextBip, NextBip* table from PKB
 bool PKBNext::clear() {
 	nextTable.clear();
 	nextBipTable.clear();
 	nextBipTTable.clear();
 	return true;
 }
-
+//Clear cache data, such as Next* data from PKB
 bool PKBNext::clearCache() {
 	nextTTable.clear();
 	return true;
 }
 
-//NEW EVALUATION API
+//Get LINE_LIST for Next(_,n)
 LINE_LIST PKBNext::getNextAnyEnt(STMT_TYPE type) {
 	LINE_LIST resultTable;
 	STMT_LIST list;
@@ -303,7 +316,7 @@ LINE_LIST PKBNext::getNextAnyEnt(STMT_TYPE type) {
 	
 	return resultTable;
 }
-
+//Get LINE_LIST for Next(n,_)
 LINE_LIST PKBNext::getNextEntAny(STMT_TYPE type) {
 	LINE_LIST resultTable;
 	STMT_LIST list;
@@ -331,7 +344,7 @@ LINE_LIST PKBNext::getNextEntAny(STMT_TYPE type) {
 	
 	return resultTable;
 }
-
+//Get LINE_LIST for Next(1,n)
 LINE_LIST PKBNext::getNextIdentEnt(PROG_LINE stmtNo, STMT_TYPE type) {
 	LINE_LIST resultTable;
 	STMT_LIST list;
@@ -361,7 +374,7 @@ LINE_LIST PKBNext::getNextIdentEnt(PROG_LINE stmtNo, STMT_TYPE type) {
 	
 	return resultTable;
 }
-
+//Get LINE_LIST for Next(n,2)
 LINE_LIST PKBNext::getNextEntIdent(STMT_TYPE type, PROG_LINE stmtNo) {
 	LINE_LIST resultTable;
 	STMT_LIST list;
@@ -390,7 +403,7 @@ LINE_LIST PKBNext::getNextEntIdent(STMT_TYPE type, PROG_LINE stmtNo) {
 	}
 	return resultTable;
 }
-
+//Get result table for Next(n1,n2)
 TABLE PKBNext::getNextEntEnt(STMT_TYPE type1, STMT_TYPE type2) {
 	TABLE resultTable;
 	STMT_NO s1;
@@ -457,7 +470,7 @@ TABLE PKBNext::getNextEntEnt(STMT_TYPE type1, STMT_TYPE type2) {
 	
 	return resultTable;
 }
-
+//Get LINE_LIST for Next*(_,n)
 LINE_LIST PKBNext::getNextTAnyEnt(STMT_TYPE type) {
 	
 	LINE_LIST resultTable;
@@ -488,7 +501,7 @@ LINE_LIST PKBNext::getNextTAnyEnt(STMT_TYPE type) {
 	}
 	return resultTable;
 }
-
+//Get LINE_LIST for Next*(n,_)
 LINE_LIST PKBNext::getNextTEntAny(STMT_TYPE type) {
 	
 	LINE_LIST resultTable;
@@ -519,7 +532,7 @@ LINE_LIST PKBNext::getNextTEntAny(STMT_TYPE type) {
 	}
 	return resultTable;
 }
-
+//Get LINE_LIST for Next*(1,n)
 LINE_LIST PKBNext::getNextTIdentEnt(PROG_LINE stmtNo, STMT_TYPE type) {
 	
 	LINE_LIST resultTable;
@@ -556,7 +569,7 @@ LINE_LIST PKBNext::getNextTIdentEnt(PROG_LINE stmtNo, STMT_TYPE type) {
 	}
 	return resultTable;
 }
-
+//Get LINE_LIST for Next*(n,2)
 LINE_LIST PKBNext::getNextTEntIdent(STMT_TYPE type, PROG_LINE stmtNo) {
 	LINE_LIST resultTable;
 	STMT_LIST list;
@@ -598,7 +611,7 @@ LINE_LIST PKBNext::getNextTEntIdent(STMT_TYPE type, PROG_LINE stmtNo) {
 	
 	return resultTable;
 }
-
+//Get result table for Next*(n1,n2)
 TABLE PKBNext::getNextTEntEnt(STMT_TYPE type1, STMT_TYPE type2) {
 	TABLE resultTable;
 	STMT_NO s1;
@@ -670,7 +683,7 @@ TABLE PKBNext::getNextTEntEnt(STMT_TYPE type1, STMT_TYPE type2) {
 	}
 	return resultTable;
 }
-
+//Get LINE_LIST for Next*(n,n)
 LINE_LIST PKBNext::getNextTSelf(STMT_TYPE type) {
 	
 	LINE_LIST resultTable;
@@ -704,7 +717,7 @@ LINE_LIST PKBNext::getNextTSelf(STMT_TYPE type) {
 	
 	return resultTable;
 }
-
+//Get LINE_LIST for NextBip(_,n)
 TABLE PKBNext::getNextBipAnyEnt(STMT_TYPE type) {
 	TABLE resultTable;
 	STMT_LIST list;
@@ -732,7 +745,7 @@ TABLE PKBNext::getNextBipAnyEnt(STMT_TYPE type) {
 	
 	return resultTable;
 }
-
+//Get LINE_LIST for NextBip(n,_)
 LINE_LIST PKBNext::getNextBipEntAny(STMT_TYPE type) {
 	LINE_LIST resultTable;
 	STMT_LIST list;
@@ -760,7 +773,7 @@ LINE_LIST PKBNext::getNextBipEntAny(STMT_TYPE type) {
 	
 	return resultTable;
 }
-
+//Get LINE_LIST for NextBip(1,n)
 LINE_LIST PKBNext::getNextBipIdentEnt(PROG_LINE stmtNo, STMT_TYPE type) {
 	LINE_LIST resultTable;
 	STMT_LIST list;
@@ -790,7 +803,7 @@ LINE_LIST PKBNext::getNextBipIdentEnt(PROG_LINE stmtNo, STMT_TYPE type) {
 	
 	return resultTable;
 }
-
+//Get LINE_LIST for NextBip(n,2)
 LINE_LIST PKBNext::getNextBipEntIdent(STMT_TYPE type, PROG_LINE stmtNo) {
 	LINE_LIST resultTable;
 	STMT_LIST list;
@@ -820,7 +833,7 @@ LINE_LIST PKBNext::getNextBipEntIdent(STMT_TYPE type, PROG_LINE stmtNo) {
 	
 	return resultTable;
 }
-
+//Get LINE_LIST for NextBip(n1,n2)
 TABLE PKBNext::getNextBipEntEnt(STMT_TYPE type1, STMT_TYPE type2) {
 	TABLE resultTable;
 	STMT_NO s1;
@@ -887,7 +900,7 @@ TABLE PKBNext::getNextBipEntEnt(STMT_TYPE type1, STMT_TYPE type2) {
 
 	return resultTable;
 }
-
+//Get LINE_LIST for NextBip*(_,n)
 LINE_LIST PKBNext::getNextBipTAnyEnt(STMT_TYPE type) {
 	LINE_LIST resultTable;
 	STMT_LIST list;
@@ -915,7 +928,7 @@ LINE_LIST PKBNext::getNextBipTAnyEnt(STMT_TYPE type) {
 	
 	return resultTable;
 }
-
+//Get LINE_LIST for NextBip*(n,_)
 LINE_LIST PKBNext::getNextBipTEntAny(STMT_TYPE type) {
 	LINE_LIST resultTable;
 	STMT_LIST list;
@@ -943,7 +956,7 @@ LINE_LIST PKBNext::getNextBipTEntAny(STMT_TYPE type) {
 	
 	return resultTable;
 }
-
+//Get LINE_LIST for NextBip*(1,n)
 LINE_LIST PKBNext::getNextBipTIdentEnt(PROG_LINE stmtNo, STMT_TYPE type) {
 	LINE_LIST resultTable;
 	STMT_LIST list;
@@ -973,7 +986,7 @@ LINE_LIST PKBNext::getNextBipTIdentEnt(PROG_LINE stmtNo, STMT_TYPE type) {
 	
 	return resultTable;
 }
-
+//Get LINE_LIST for NextBip*(n,2)
 LINE_LIST PKBNext::getNextBipTEntIdent(STMT_TYPE type, PROG_LINE stmtNo) {
 	LINE_LIST resultTable;
 	STMT_LIST list;
@@ -1003,7 +1016,7 @@ LINE_LIST PKBNext::getNextBipTEntIdent(STMT_TYPE type, PROG_LINE stmtNo) {
 	
 	return resultTable;
 }
-
+//Get result table for NextBip*(n1,n2)
 TABLE PKBNext::getNextBipTEntEnt(STMT_TYPE type1, STMT_TYPE type2) {
 	TABLE resultTable;
 	STMT_NO s1;
@@ -1068,7 +1081,7 @@ TABLE PKBNext::getNextBipTEntEnt(STMT_TYPE type1, STMT_TYPE type2) {
 		}
 	}
 }
-
+//Get LINE_LIST for NextBip*(n,n)
 LINE_LIST PKBNext::getNextBipTSelf(STMT_TYPE type) {
 	PROC_LIST resultTable;
 	LINE_LIST list;

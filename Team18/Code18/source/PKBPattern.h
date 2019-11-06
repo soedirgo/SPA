@@ -24,12 +24,12 @@ public:
 	static STMT_LIST getPatternWhileIdent(VAR_NAME varName);
 	static TABLE getPatternWhileEnt();
 
-	static TABLE getPatternAssignAnyAny();
-	static TABLE getPatternAssignAnyPartial(EXPR_SPEC expression);
-	static TABLE getPatternAssignAnyFull(EXPR_SPEC expression);
-	static TABLE getPatternAssignIdentAny(VAR_NAME varName);
-	static TABLE getPatternAssignIdentPartial(VAR_NAME varName, EXPR_SPEC expression);
-	static TABLE getPatternAssignIdentFull(VAR_NAME varName, EXPR_SPEC expression);
+	static STMT_LIST getPatternAssignAnyAny();
+	static STMT_LIST getPatternAssignAnyPartial(EXPR_SPEC expression);
+	static STMT_LIST getPatternAssignAnyFull(EXPR_SPEC expression);
+	static STMT_LIST getPatternAssignIdentAny(VAR_NAME varName);
+	static STMT_LIST getPatternAssignIdentPartial(VAR_NAME varName, EXPR_SPEC expression);
+	static STMT_LIST getPatternAssignIdentFull(VAR_NAME varName, EXPR_SPEC expression);
 	static TABLE getPatternAssignEntAny();
 	static TABLE getPatternAssignEntPartial(EXPR_SPEC expression);
 	static TABLE getPatternAssignEntFull(EXPR_SPEC expression);

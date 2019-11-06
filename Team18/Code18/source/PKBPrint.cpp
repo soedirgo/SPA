@@ -3,6 +3,7 @@
 using namespace std;
 TABLE PKBPrint::printTable;
 
+//Set the print stmtNo and its variable name into PKB printTable
 bool PKBPrint::setPrint(STMT_NO stmtNo, VAR_NAME varName) {
 	vector<string> tuple = vector<string>();
 	tuple.push_back(stmtNo);
@@ -10,7 +11,7 @@ bool PKBPrint::setPrint(STMT_NO stmtNo, VAR_NAME varName) {
 	printTable.emplace(tuple);
 	return true;
 }
-
+//Get variable name from printTable given the stmtNo
 VAR_NAME PKBPrint::getPrintVariable(STMT_NO stmtNo) {
 	for (auto vectorIter : printTable) {
 		if (vectorIter.front() == stmtNo) {
@@ -18,7 +19,7 @@ VAR_NAME PKBPrint::getPrintVariable(STMT_NO stmtNo) {
 		}
 	}
 }
-
+//Get variable list from printTable
 VAR_LIST PKBPrint::getAllPrintVar() {
 	VAR_LIST list;
 	for (auto vectorIter : printTable) {
@@ -29,7 +30,7 @@ VAR_LIST PKBPrint::getAllPrintVar() {
 	}
 	return list;
 }
-
+//Clear the PKB printTable
 bool PKBPrint::clear() {
 	printTable.clear();
 	return true;

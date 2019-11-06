@@ -35,9 +35,11 @@ TABLE PKBFollows::getFollowsTable() {
 	return followsTable;
 }
 
+//Get boolean for Follows(_,_)
 bool PKBFollows::isFollowsAnyAny() {
 	return !followsTable.empty();
 }
+//Get boolean for Follows(_,2)
 bool PKBFollows::isFollowsAnyIdent(STMT_NO follows) {
 	for (auto vectorIter : followsTable) {
 		if (vectorIter.back() == follows) {
@@ -46,6 +48,7 @@ bool PKBFollows::isFollowsAnyIdent(STMT_NO follows) {
 	}
 	return false;
 }
+//Get boolean for Follows(1,_)
 bool PKBFollows::isFollowsIdentAny(STMT_NO followedBy) {
 	for (auto vectorIter : followsTable) {
 		if (vectorIter.front() == followedBy) {
@@ -54,6 +57,7 @@ bool PKBFollows::isFollowsIdentAny(STMT_NO followedBy) {
 	}
 	return false;
 }
+//Get boolean for Follows(1,2)
 bool PKBFollows::isFollowsIdentIdent(STMT_NO followedBy, STMT_NO follows) {
 	for (auto vectorIter : followsTable) {
 		if (vectorIter.front() == followedBy) {
@@ -64,10 +68,11 @@ bool PKBFollows::isFollowsIdentIdent(STMT_NO followedBy, STMT_NO follows) {
 	}
 	return false;
 }
-
+//Get boolean for Follows*(_,_)
 bool PKBFollows::isFollowsTAnyAny() {
 	return !followsTTable.empty();
 }
+//Get boolean for Follows*(_,2)
 bool PKBFollows::isFollowsTAnyIdent(STMT_NO follows) {
 	for (auto vectorIter : followsTTable) {
 		if (vectorIter.back() == follows) {
@@ -76,6 +81,7 @@ bool PKBFollows::isFollowsTAnyIdent(STMT_NO follows) {
 	}
 	return false;
 }
+//Get boolean for Follows*(1,_)
 bool PKBFollows::isFollowsTIdentAny(STMT_NO followedBy) {
 	for (auto vectorIter : followsTTable) {
 		if (vectorIter.front() == followedBy) {
@@ -84,6 +90,7 @@ bool PKBFollows::isFollowsTIdentAny(STMT_NO followedBy) {
 	}
 	return false;
 }
+//Get boolean for Follows*(1,2)
 bool PKBFollows::isFollowsTIdentIdent(STMT_NO followedBy, STMT_NO follows) {
 	for (auto vectorIter : followsTTable) {
 		if (vectorIter.front() == followedBy) {
@@ -95,7 +102,7 @@ bool PKBFollows::isFollowsTIdentIdent(STMT_NO followedBy, STMT_NO follows) {
 	return false;
 }
 
-//NEW EVALUATION API
+//Get STMT_LIST for Follows(_,s)
 STMT_LIST PKBFollows::getFollowsAnyEnt(STMT_TYPE type) {
 	STMT_LIST resultTable, list;
 	STMT_NO s;
@@ -122,7 +129,7 @@ STMT_LIST PKBFollows::getFollowsAnyEnt(STMT_TYPE type) {
 	
 	return resultTable;
 }
-
+//Get STMT_LIST for Follows(s,_)
 STMT_LIST PKBFollows::getFollowsEntAny(STMT_TYPE type) {
 	STMT_LIST resultTable, list;
 	STMT_NO s;
@@ -149,7 +156,7 @@ STMT_LIST PKBFollows::getFollowsEntAny(STMT_TYPE type) {
 	
 	return resultTable;
 }
-
+//Get STMT_LIST for Follows(1,s)
 STMT_LIST PKBFollows::getFollowsIdentEnt(STMT_NO stmtNo, STMT_TYPE type) {
 	STMT_LIST resultTable, list;
 	STMT_NO s;
@@ -178,7 +185,7 @@ STMT_LIST PKBFollows::getFollowsIdentEnt(STMT_NO stmtNo, STMT_TYPE type) {
 	
 	return resultTable;
 }
-
+//Get STMT_LIST for Follows(s,2)
 STMT_LIST PKBFollows::getFollowsEntIdent(STMT_TYPE type, STMT_NO stmtNo) {
 	STMT_LIST resultTable, list;
 	STMT_NO s;
@@ -207,7 +214,7 @@ STMT_LIST PKBFollows::getFollowsEntIdent(STMT_TYPE type, STMT_NO stmtNo) {
 	
 	return resultTable;
 }
-
+//Get result table for Follows(s1,s2)
 TABLE PKBFollows::getFollowsEntEnt(STMT_TYPE type1, STMT_TYPE type2) {
 	TABLE resultTable;
 	STMT_NO s1;
@@ -273,7 +280,7 @@ TABLE PKBFollows::getFollowsEntEnt(STMT_TYPE type1, STMT_TYPE type2) {
 
 	return resultTable;
 }
-
+//Get STMT_LIST for Follows*(_,s)
 STMT_LIST PKBFollows::getFollowsTAnyEnt(STMT_TYPE type) {
 	STMT_LIST resultTable, list;
 	STMT_NO s;
@@ -300,7 +307,7 @@ STMT_LIST PKBFollows::getFollowsTAnyEnt(STMT_TYPE type) {
 	
 	return resultTable;
 }
-
+//Get STMT_LIST for Follows*(s,_)
 STMT_LIST PKBFollows::getFollowsTEntAny(STMT_TYPE type) {
 	STMT_LIST resultTable, list;
 	STMT_NO s;
@@ -327,7 +334,7 @@ STMT_LIST PKBFollows::getFollowsTEntAny(STMT_TYPE type) {
 	
 	return resultTable;
 }
-
+//Get STMT_LIST for Follows*(1,s)
 STMT_LIST PKBFollows::getFollowsTIdentEnt(STMT_NO stmtNo, STMT_TYPE type) {
 	STMT_LIST resultTable, list;
 	STMT_NO s;
@@ -356,7 +363,7 @@ STMT_LIST PKBFollows::getFollowsTIdentEnt(STMT_NO stmtNo, STMT_TYPE type) {
 	
 	return resultTable;
 }
-
+//Get STMT_LIST for Follows*(s,2)
 STMT_LIST PKBFollows::getFollowsTEntIdent(STMT_TYPE type, STMT_NO stmtNo) {
 	STMT_LIST resultTable, list;
 	STMT_NO s;
@@ -385,7 +392,7 @@ STMT_LIST PKBFollows::getFollowsTEntIdent(STMT_TYPE type, STMT_NO stmtNo) {
 	
 	return resultTable;
 }
-
+//Get result table for Follows*(s1,s2)
 TABLE PKBFollows::getFollowsTEntEnt(STMT_TYPE type1, STMT_TYPE type2) {
 	TABLE resultTable;
 	STMT_NO s1;
@@ -450,7 +457,7 @@ TABLE PKBFollows::getFollowsTEntEnt(STMT_TYPE type1, STMT_TYPE type2) {
 	}
 	return resultTable;
 }
-
+//clear PKB Follows, Follows* relationship data
 bool PKBFollows::clear() {
 	followsTable.clear();
 	followsTTable.clear();

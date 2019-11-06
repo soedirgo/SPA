@@ -301,7 +301,7 @@ void DesignExtractor::extractNextT(STMT_LIST nextTList1, STMT_LIST nextTList2)
 
 void DesignExtractor::extractNextBip() {
 	//Get the call table
-	TABLE callProcTable = PKBCall::getCallProcTable();
+	TABLE callProcTable = PKBCall::getCallsEntEnt();
 	STMT_LIST procListWithoutCall;
 	for (auto vectorIter1 : callProcTable) {
 		PROC_NAME callee = vectorIter1.back();
@@ -472,7 +472,7 @@ void DesignExtractor::extractNextBipT()
 
 void DesignExtractor::extractParentT()
 {
-	TABLE parentTable = PKBParent::getParentTable();
+	TABLE parentTable = PKBParent::getParentEntEnt("stmt","stmt");
 	for (auto vectorIter : parentTable) {
 		string parent = vectorIter.front();
 		string child = vectorIter.back();
@@ -494,7 +494,7 @@ void DesignExtractor::extractFollowsT()
 
 void DesignExtractor::extractCallsT()
 {
-	TABLE callStmtTable = PKBCall::getCallProcTable();
+	TABLE callStmtTable = PKBCall::getCallsEntEnt();
 	for (auto vectorIter : callStmtTable) {
 		PROC_NAME caller = vectorIter.front();
 		PROC_NAME callee = vectorIter.back();
@@ -505,7 +505,7 @@ void DesignExtractor::extractCallsT()
 
 void DesignExtractor::extractModifiesP()
 {
-	TABLE callProcTable = PKBCall::getCallProcTable();
+	TABLE callProcTable = PKBCall::getCallsEntEnt();
 	STMT_LIST procListWithoutCall;
 	for (auto vectorIter1 : callProcTable) {
 		PROC_NAME callee = vectorIter1.back();
@@ -555,7 +555,8 @@ void DesignExtractor::recurseModifies(PROC_NAME callee) {
 
 void DesignExtractor::extractUsesP()
 {
-	TABLE callProcTable = PKBCall::getCallProcTable();
+	
+	TABLE callProcTable = PKBCall::getCallsEntEnt();
 	STMT_LIST procListWithoutCall;
 	for (auto vectorIter1 : callProcTable) {
 		PROC_NAME callee = vectorIter1.back();
@@ -601,7 +602,7 @@ void DesignExtractor::extractUsesS()
 			PKBUses::setUsesS(stmtNo, varName);
 
 			//To populate the if/while statement with the vars uses from the call stmt
-			TABLE parentTTable = PKBParent::getParentTTable();
+			TABLE parentTTable = PKBParent::getParentTEntEnt("stmt","stmt");
 			for (auto vectorIter1 : parentTTable) {
 				STMT_NO parent = vectorIter1.front();
 				STMT_NO children = vectorIter1.back();
@@ -628,7 +629,7 @@ void DesignExtractor::extractModifiesS()
 			PKBModifies::setModifiesS(stmtNo, varName);
 
 			//To populate the if/while statement with the vars modifies from the call stmt
-			TABLE parentTTable = PKBParent::getParentTTable();
+			TABLE parentTTable = PKBParent::getParentTEntEnt("stmt","stmt");
 			for (auto vectorIter1 : parentTTable) {
 				STMT_NO parent = vectorIter1.front();
 				STMT_NO children = vectorIter1.back();

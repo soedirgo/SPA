@@ -12,8 +12,6 @@ public:
 	static STMT_LIST getChild(STMT_NO parent);
 	static STMT_NO getParent(STMT_NO parent);
 	static bool isParentExist(STMT_NO child);
-	static TABLE getParentTable();
-	static TABLE getParentTTable();
 
 	//Bool Evaluation
 	static bool isParentAnyAny();
