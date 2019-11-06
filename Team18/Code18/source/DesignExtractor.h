@@ -57,5 +57,6 @@ private:
 	static void recurseNextReverse(PROG_LINE n1, PROG_LINE n2, std::unordered_set<std::string> visited );
 	static void recurseNextBipT(PROG_LINE n1, PROG_LINE n2);
 	static void recurseNextBip(PROC_NAME p, TABLE callTable);
+	static void recurseProcedure(STMT_NO nextStmt, PROC_NAME callee, TABLE callTable);
 	static std::unordered_set<std::string>nextNodeVisitedCache;
 };
