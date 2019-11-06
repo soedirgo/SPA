@@ -41,7 +41,7 @@ bool PKB::clearTempPKB()
 	//Clear Next* table
 	//Clear Affects and Affects* Table
 	PKBNext::clearNextT();
-	PKBAffects::clearTemp();
+	PKBAffects::clearCache();
 	return true;
 }
 
