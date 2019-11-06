@@ -447,7 +447,7 @@ namespace UnitTesting
 			PKBAffects PKB;
 			Assert::IsTrue(PKB.isAffectsBipIdentAny("4"));
 			Assert::IsTrue(PKB.isAffectsBipIdentAny("5"));
-			//Assert::IsTrue(PKB.isAffectsBipIdentAny("7"));
+			Assert::IsTrue(PKB.isAffectsBipIdentAny("7"));
 			Assert::IsTrue(PKB.isAffectsBipIdentAny("9"));
 			Assert::IsTrue(PKB.isAffectsBipIdentAny("12"));
 			Assert::IsTrue(PKB.isAffectsBipIdentAny("13"));
@@ -466,10 +466,10 @@ namespace UnitTesting
 			Assert::IsTrue(PKB.isAffectsBipIdentIdent("4", "15"));
 			Assert::IsTrue(PKB.isAffectsBipIdentIdent("5", "9"));
 			Assert::IsTrue(PKB.isAffectsBipIdentIdent("5", "13"));
-			//Assert::IsTrue(PKB.isAffectsBipIdentIdent("7", "7"));
-			//Assert::IsTrue(PKB.isAffectsBipIdentIdent("7", "11"));
-			//Assert::IsTrue(PKB.isAffectsBipIdentIdent("7", "13"));
-			//Assert::IsTrue(PKB.isAffectsBipIdentIdent("7", "15"));
+			Assert::IsTrue(PKB.isAffectsBipIdentIdent("7", "7"));
+			Assert::IsTrue(PKB.isAffectsBipIdentIdent("7", "11"));
+			Assert::IsTrue(PKB.isAffectsBipIdentIdent("7", "13"));
+			Assert::IsTrue(PKB.isAffectsBipIdentIdent("7", "15"));
 			Assert::IsTrue(PKB.isAffectsBipIdentIdent("9", "9"));
 			Assert::IsTrue(PKB.isAffectsBipIdentIdent("9", "13"));
 			Assert::IsTrue(PKB.isAffectsBipIdentIdent("11", "13"));
@@ -478,9 +478,7 @@ namespace UnitTesting
 			Assert::IsTrue(PKB.isAffectsBipIdentIdent("13", "14"));
 			Assert::IsTrue(PKB.isAffectsBipIdentIdent("13", "15"));
 			Assert::IsTrue(PKB.isAffectsBipIdentIdent("14", "15"));
-
-
-			//Assert::IsTrue(PKB.isAffectsBipIdentIdent("7", "16"));
+			Assert::IsTrue(PKB.isAffectsBipIdentIdent("7", "16"));
 		}
 
 		//AffectsBip(_,a2)
@@ -542,6 +540,126 @@ namespace UnitTesting
 			LINE_LIST actual, expected;
 
 			actual = PKB.getAffectsBipSelf();
+			expected = { {"7"} ,{"9"} };
+			Assert::IsTrue(actual == expected);
+		}
+		//AffectsBip*(_ , _)
+		TEST_METHOD(isAffectsBipTAnyAny)
+		{
+			PKBAffects PKB;
+			Assert::IsTrue(PKB.isAffectsBipTAnyAny());
+		}
+		//AffectsBip*(_ , 7)
+		TEST_METHOD(isAffectsBipTAnyIdent)
+		{
+			PKBAffects PKB;
+			Assert::IsTrue(PKB.isAffectsBipTAnyIdent("7"));
+			Assert::IsTrue(PKB.isAffectsBipTAnyIdent("11"));
+			Assert::IsTrue(PKB.isAffectsBipTAnyIdent("13"));
+			Assert::IsTrue(PKB.isAffectsBipTAnyIdent("15"));
+			Assert::IsTrue(PKB.isAffectsBipTAnyIdent("9"));
+			Assert::IsTrue(PKB.isAffectsBipTAnyIdent("14"));
+		}
+		//AffectsBip*(4 , _)
+		TEST_METHOD(isAffectsBipTIdentAny)
+		{
+			PKBAffects PKB;
+			Assert::IsTrue(PKB.isAffectsBipTIdentAny("4"));
+			Assert::IsTrue(PKB.isAffectsBipTIdentAny("5"));
+			Assert::IsTrue(PKB.isAffectsBipTIdentAny("7"));
+			Assert::IsTrue(PKB.isAffectsBipTIdentAny("9"));
+			Assert::IsTrue(PKB.isAffectsBipTIdentAny("12"));
+			Assert::IsTrue(PKB.isAffectsBipTIdentAny("13"));
+			Assert::IsTrue(PKB.isAffectsBipTIdentAny("14"));
+
+		}
+		//AffectsBip*(4,7)
+		TEST_METHOD(isAffectsBipTIdentIdent)
+		{
+			DesignExtractor ds;
+			ds.extractDesign();
+			PKBAffects PKB;
+			Assert::IsTrue(PKB.isAffectsBipTIdentIdent("4", "7"));
+			Assert::IsTrue(PKB.isAffectsBipTIdentIdent("4", "11"));
+			Assert::IsTrue(PKB.isAffectsBipTIdentIdent("4", "13"));
+			Assert::IsTrue(PKB.isAffectsBipTIdentIdent("4", "15"));
+			Assert::IsTrue(PKB.isAffectsBipTIdentIdent("5", "9"));
+			Assert::IsTrue(PKB.isAffectsBipTIdentIdent("5", "13"));
+			Assert::IsTrue(PKB.isAffectsBipTIdentIdent("7", "7"));
+			Assert::IsTrue(PKB.isAffectsBipTIdentIdent("7", "11"));
+			Assert::IsTrue(PKB.isAffectsBipTIdentIdent("7", "13"));
+			Assert::IsTrue(PKB.isAffectsBipTIdentIdent("7", "15"));
+			Assert::IsTrue(PKB.isAffectsBipTIdentIdent("9", "9"));
+			Assert::IsTrue(PKB.isAffectsBipTIdentIdent("9", "13"));
+			Assert::IsTrue(PKB.isAffectsBipTIdentIdent("11", "13"));
+			Assert::IsTrue(PKB.isAffectsBipTIdentIdent("11", "15"));
+			Assert::IsTrue(PKB.isAffectsBipTIdentIdent("12", "13"));
+			Assert::IsTrue(PKB.isAffectsBipTIdentIdent("13", "14"));
+			Assert::IsTrue(PKB.isAffectsBipTIdentIdent("13", "15"));
+			Assert::IsTrue(PKB.isAffectsBipTIdentIdent("14", "15"));
+			Assert::IsTrue(PKB.isAffectsBipTIdentIdent("7", "16"));
+		}
+
+		//AffectsBip*(_,a2)
+		TEST_METHOD(getAffectsBipTAnyEnt)
+		{
+			PKBAffects PKB;
+			TABLE actual, expected;
+
+			actual = PKB.getAffectsBipTAnyEnt();
+			expected = { {"7"},{"11"},{"13"},{"15"},{"9"},{"14"},{"16"},{"17"} };
+			Assert::IsTrue(actual == expected);
+		}
+		//AffectsBip*(a1,_)
+		TEST_METHOD(getAffectsBipTEntAny)
+		{
+			PKBAffects PKB;
+			TABLE actual, expected;
+
+			actual = PKB.getAffectsBipTEntAny();
+			expected = { {"4"},{"5"},{"7"},{"9"},{"11"},{"12"},{"13"},{"14"},{"16"} };
+			Assert::IsTrue(actual == expected);
+		}
+
+		//AffectsBip*(a1,a2)
+		TEST_METHOD(getAffectsBipTEntEnt)
+		{
+			PKBAffects PKB;
+			TABLE actual, expected;
+
+			actual = PKB.getAffectsBipTEntEnt();
+			expected = { {"4","7"},{"4","11"},{"4","13"},{"4","14"},{"4","15"},{"4","16"},{"4","17"},{"5","9"},{"5","13"},{"5","14"},{"5","15"},{"7","7"},{"7","11"},{"7","13"},{"7","14"}
+				,{"7","15"},{"7","16"},{"7","17"},{"9","9"},{"9","13"},{"9","14"},{"9","15"},{"11","13"},{"11","14"},{"11","15"},{"12","13"},{"12","14"},{"12","15"},{"13","14"},{"13","15"}
+			,{"14","15"},{"16","13"},{"16","17"},{"16","14"} ,{"16","15"}};
+			Assert::IsTrue(actual == expected);
+		}
+		//AffectsBip*(a,2)
+		TEST_METHOD(getAffectsBipTEntIdent)
+		{
+			PKBAffects PKB;
+			LINE_LIST actual, expected;
+
+			actual = PKB.getAffectsBipTEntIdent("7");
+			expected = { {"4"},{"7"} };
+			Assert::IsTrue(actual == expected);
+		}
+		//AffectsBip*(1,a)
+		TEST_METHOD(getAffectsBipTIdentEnt)
+		{
+			PKBAffects PKB;
+			LINE_LIST actual, expected;
+
+			actual = PKB.getAffectsBipTIdentEnt("4");
+			expected = { {"7"},{"11"},{"13"},{"14"}, {"15"},{"17"},{"16"} };
+			Assert::IsTrue(actual == expected);
+		}
+		//AffectsBip*(a,a)
+		TEST_METHOD(getAffectsBipTSelf)
+		{
+			PKBAffects PKB;
+			LINE_LIST actual, expected;
+
+			actual = PKB.getAffectsBipTSelf();
 			expected = { {"7"} ,{"9"} };
 			Assert::IsTrue(actual == expected);
 		}
