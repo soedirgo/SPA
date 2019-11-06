@@ -24,7 +24,7 @@ int maxInt = numeric_limits<int>::max();
 unordered_set<string> validTypes = { "stmt", "variable", "assign", "constant", "read", "while", "if",
 "print", "call" , "prog_line" ,"procedure" };
 unordered_set<string> validClauseType = { "Parent", "Parent*", "Follows",
-		"Follows*", "Uses", "Modifies", "Calls", "Calls*", "Next", "Next*", "NextBip","NextBip*","Affects", "Affects*" };
+		"Follows*", "Uses", "Modifies", "Calls", "Calls*", "Next", "Next*", "NextBip","NextBip*","Affects", "Affects*", "AffectsBip","AffectsBip*"};
 unordered_set<string> validArgs = { "stmt", "read", "print", "while", "if",
 	"assign" ,"call", "prog_line" };
 unordered_set<string> validFirstArgsParent = { "stmt", "while", "if","assign","print","read","prog_line" };
@@ -1088,7 +1088,7 @@ string QueryParser::suchThatValidation(unordered_map<string, string> decleration
 			}
 		}
 
-		else if (suchThat[i].first == "Affects" || suchThat[i].first == "Affects*") {
+		else if (suchThat[i].first == "Affects" || suchThat[i].first == "Affects*" || suchThat[i].first == "AffectsBip" || suchThat[i].first == "AffectsBip*") {
 			
 			if (suchThat[i].second.first == "_") {
 				//valid
