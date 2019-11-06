@@ -85,6 +85,11 @@ namespace UnitTesting
 			vector<pair<string, pair<string, string>>> actual6 = QueryParser::splitSuchThat(suchThatString6);
 			vector<pair<string, pair<string, string>>> expected6 = { {"Modifies", {"\"a\"","\"x\""}} };
 			Assert::AreEqual(actual6 == expected6, true);
+
+			vector<string> suchThatString7 = { "such that AffectsBip* (a   ,  x)" };
+			vector<pair<string, pair<string, string>>> actual7 = QueryParser::splitSuchThat(suchThatString7);
+			vector<pair<string, pair<string, string>>> expected7 = { {"AffectsBip*", {"a","x"}} };
+			Assert::AreEqual(actual7 == expected7, true);
 		}
 
 		TEST_METHOD(splitPatternCondition)
@@ -329,6 +334,12 @@ namespace UnitTesting
 			string actual9 = QueryParser::suchThatValidation(declerationVariables9, suchThat9);
 			string expected9 = "Invalid";
 			Assert::AreEqual(actual9 == expected9, true);
+
+			unordered_map<string, string> declerationVariables10 = { {"a", "assign"}, {"v", "variable"} };
+			vector<pair<string, pair<string, string>>> suchThat10{ {"AffectsBip*", { "a", "v" }} };
+			string actual10 = QueryParser::suchThatValidation(declerationVariables10, suchThat10);
+			string expected10 = "Invalid";
+			Assert::AreEqual(actual10 == expected10, true);
 		}
 
 		TEST_METHOD(withValidation) {
