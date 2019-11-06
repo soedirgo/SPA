@@ -30,7 +30,7 @@ void DesignExtractor::extractDesign()
 	extractNextBipT();
 	extractAffectsBip();
 
-	TABLE test = PKBAffects::getAffectsBipEntEnt();
+	TABLE test = PKBNext::getNextBipTable();
 	int i = test.size();
 	//TABLE test = PKBUses::getUsesPTable();
 	//int i = test.size();
@@ -251,7 +251,7 @@ bool DesignExtractor::isAffectsT(STMT_NO a1, STMT_NO a2) {
 void DesignExtractor::extractNextT(STMT_LIST nextTList1, STMT_LIST nextTList2)
 {
 	//Check which stmtList size is smaller and do recursive forward / backward 
-	if (nextTList2.size() <= nextTList1.size() && nextTList2.size() > 0) {
+	if ((nextTList2.size() <= nextTList1.size() && nextTList2.size() > 0)|| nextTList1.size()==0) {
 		for (auto vectorIter1 : nextTList2) {
 			TABLE nextTable = PKBNext::getNextTable();
 			for (auto vectorIter2 : nextTable) {
@@ -836,9 +836,7 @@ void DesignExtractor::recurseNextBipT(PROG_LINE nextByLine, PROG_LINE nextLine) 
 		if (!PKBNext::isNextBipT(nextByLine, newNextLine)) {
 			PKBNext::setNextBipT(nextByLine, newNextLine);
 			recurseNextBipT(nextByLine, newNextLine);
-
 		}
-
 	}
 }
 
