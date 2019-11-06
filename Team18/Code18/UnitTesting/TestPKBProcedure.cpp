@@ -48,8 +48,6 @@ namespace UnitTesting
 			PKB.setProcedure("First", "1", { {"3"} });
 			PKB.setProcedure("Second","4", { {"15"} });
 			PKB.setProcedure("Third","16", { {"18"} });
-
-
 		}
 
 		TEST_METHOD(getProcedures)
@@ -57,6 +55,13 @@ namespace UnitTesting
 			PKBProcedure PKB;
 			VAR_LIST actual = PKB.getProcedures();
 			VAR_LIST expected = { {"First"},{"Second"},{"Third"}};
+			Assert::IsTrue(actual == expected);
+		}
+		TEST_METHOD(getProcedureStartEnd)
+		{
+			PKBProcedure PKB;
+			VAR_LIST actual = PKB.getProcedureStartEnd("First");
+			VAR_LIST expected = { {"1","3"} };
 			Assert::IsTrue(actual == expected);
 		}
 	};

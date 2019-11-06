@@ -74,14 +74,6 @@ namespace UnitTesting
 			Calls.setCallStmt("3", "Second");
 			Calls.setCallStmt("8", "Third");
 
-
-			//Line #3 Calls Second
-			//PKB.setUsesS("3", "y");
-			//PKB.setUsesS("3", "i");
-			//PKB.setUsesS("3", "x");
-			//PKB.setUsesS("3", "z");
-			//PKB.setUsesS("3", "v"); //#3 Calls Second, which calls Third
-
 			//Direct assignment stmts with var on RHS 
 			PKB.setUsesS("6", "i");
 			PKB.setUsesS("7", "x");
@@ -90,8 +82,7 @@ namespace UnitTesting
 			PKB.setUsesS("6", "x");
 			PKB.setUsesS("6", "y");
 			PKB.setUsesS("6", "i");
-			//PKB.setUsesS("8", "z");
-			//PKB.setUsesS("8", "v");
+
 			PKB.setUsesS("10", "x");
 			PKB.setUsesS("11", "x");
 			PKB.setUsesS("13", "z");
@@ -104,27 +95,12 @@ namespace UnitTesting
 			PKB.setUsesS("17", "z");
 			PKB.setUsesS("18", "v");
 
-			//More complex uses 
-
-			
 			PKB.setUsesP("Second", "i");
 			PKB.setUsesP("Second", "x");
 			PKB.setUsesP("Second", "y");
 			PKB.setUsesP("Second", "z");
 			PKB.setUsesP("Third", "v");
 			PKB.setUsesP("Third", "z");
-
-			/*
-			PKB.setUsesP("Second", "v");
-			PKB.setUsesP("First", "i");
-			PKB.setUsesP("First", "x");
-			PKB.setUsesP("First", "y");
-			PKB.setUsesP("First", "z");
-			PKB.setUsesP("First", "v");
-
-			Calls.setCallProc("3", "Second");
-			Calls.setCallProc("8", "Third");
-			*/
 
 			DesignExtractor DesignExtractor;
 			DesignExtractor.extractDesign();
@@ -165,9 +141,6 @@ namespace UnitTesting
 			Assert::IsTrue(PKB.isUsesSIdentIdent("15", "z"));
 			Assert::IsTrue(PKB.isUsesSIdentIdent("17", "z"));
 			Assert::IsTrue(PKB.isUsesSIdentIdent("18", "v"));
-
-
-
 		}
 
 
@@ -177,7 +150,6 @@ namespace UnitTesting
 			Assert::IsTrue(PKB.isUsesPIdentAny("First"));
 			Assert::IsTrue(PKB.isUsesPIdentAny("Second"));
 			Assert::IsTrue(PKB.isUsesPIdentAny("Third"));
-
 		}
 		TEST_METHOD(isUsesPIdentIdent)
 		{
@@ -185,16 +157,9 @@ namespace UnitTesting
 			Assert::IsTrue(PKB.isUsesPIdentIdent("Second", "x"));
 			Assert::IsTrue(PKB.isUsesPIdentIdent("Second", "y"));
 			Assert::IsTrue(PKB.isUsesPIdentIdent("Second", "z"));
-
-
 		}
-
-
-
 		TEST_METHOD(getUsesSEntAny)
 		{//LHS is either a print/if/while/assign/call 
-			
-
 			PKBUses PKB;
 			STMT_LIST ifResult = PKB.getUsesSEntAny("if");
 			STMT_LIST ifExpected = { {"10"} };
@@ -208,7 +173,7 @@ namespace UnitTesting
 			STMT_LIST assignExpected = { {"7"}, {"9"}, {"11"}, {"13"}, {"14"}, {"15"}, {"17"} };
 			Assert::IsTrue(assignExpected == assignResult);
 
-			STMT_LIST callResult = PKB.getUsesSEntAny("call");//Second third firs
+			STMT_LIST callResult = PKB.getUsesSEntAny("call");
 			STMT_LIST callExpected = { {"3"}, {"8"} };
 			Assert::IsTrue(callExpected == callResult);
 
@@ -218,8 +183,6 @@ namespace UnitTesting
 
 			STMT_LIST allUsesResults = PKB.getUsesSEntAny("stmt");
 			STMT_LIST allUsesExpected = { {"3"} , {"6"},{"7"}, {"8"},{"9"},{"10"},{"11"},{"13"},{"14"},{"15"},{"17"},{"18"} };
-
-
 		}
 
 		TEST_METHOD(getUsesSEntIdent)
@@ -297,8 +260,6 @@ namespace UnitTesting
 			result = PKB.getUsesSEntIdent("stmt", "i");
 			expected = { {"3"} , {"6"} ,{"9"} , {"13"} };
 			Assert::IsTrue(result == expected);
-
-
 		}
 
 		TEST_METHOD(getUsesSIdentEnt) {
@@ -441,10 +402,6 @@ namespace UnitTesting
 		}
 
 	};
-
-
-
-
 }
 
 

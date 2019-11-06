@@ -84,7 +84,53 @@ namespace UnitTesting
 			PKBFollows PKB;
 			Assert::IsTrue(PKB.isFollowsAnyAny());
 		}
+		//Follows (_,2)
+		TEST_METHOD(isFollowsAnyIdent)
+		{
+			PKBFollows PKB;
+			Assert::IsTrue(PKB.isFollowsAnyIdent("2"));
+			Assert::IsTrue(PKB.isFollowsAnyIdent("3"));
+			Assert::IsTrue(PKB.isFollowsAnyIdent("5"));
+			Assert::IsTrue(PKB.isFollowsAnyIdent("6"));
+			Assert::IsTrue(PKB.isFollowsAnyIdent("8"));
+			Assert::IsTrue(PKB.isFollowsAnyIdent("9"));
+			Assert::IsTrue(PKB.isFollowsAnyIdent("10"));
+			Assert::IsTrue(PKB.isFollowsAnyIdent("13"));
+			Assert::IsTrue(PKB.isFollowsAnyIdent("14"));
+			Assert::IsTrue(PKB.isFollowsAnyIdent("15"));
+			Assert::IsTrue(PKB.isFollowsAnyIdent("17"));
+			Assert::IsTrue(PKB.isFollowsAnyIdent("18"));
 
+			Assert::IsFalse(PKB.isFollowsAnyIdent("4"));
+			Assert::IsFalse(PKB.isFollowsAnyIdent("7"));
+			Assert::IsFalse(PKB.isFollowsAnyIdent("11"));
+			Assert::IsFalse(PKB.isFollowsAnyIdent("12"));
+			Assert::IsFalse(PKB.isFollowsAnyIdent("16"));
+		}
+		//Follows (1,_)
+		TEST_METHOD(isFollowsIdentAny)
+		{
+			PKBFollows PKB;
+			Assert::IsTrue(PKB.isFollowsIdentAny("1"));
+			Assert::IsTrue(PKB.isFollowsIdentAny("2"));
+			Assert::IsTrue(PKB.isFollowsIdentAny("4"));
+			Assert::IsTrue(PKB.isFollowsIdentAny("5"));
+			Assert::IsTrue(PKB.isFollowsIdentAny("6"));
+			Assert::IsTrue(PKB.isFollowsIdentAny("10"));
+			Assert::IsTrue(PKB.isFollowsIdentAny("7"));
+			Assert::IsTrue(PKB.isFollowsIdentAny("8"));
+			Assert::IsTrue(PKB.isFollowsIdentAny("13"));
+			Assert::IsTrue(PKB.isFollowsIdentAny("14"));
+			Assert::IsTrue(PKB.isFollowsIdentAny("16"));
+			Assert::IsTrue(PKB.isFollowsIdentAny("17"));
+
+			Assert::IsFalse(PKB.isFollowsIdentAny("3"));
+			Assert::IsFalse(PKB.isFollowsIdentAny("9"));
+			Assert::IsFalse(PKB.isFollowsIdentAny("11"));
+			Assert::IsFalse(PKB.isFollowsIdentAny("12"));
+			Assert::IsFalse(PKB.isFollowsIdentAny("15"));
+			Assert::IsFalse(PKB.isFollowsIdentAny("18"));
+		}
 		//Follows (1,2)
 		TEST_METHOD(isFollowsIdentIdent)
 		{
@@ -102,7 +148,59 @@ namespace UnitTesting
 			Assert::IsTrue(PKB.isFollowsIdentIdent("16", "17"));
 			Assert::IsTrue(PKB.isFollowsIdentIdent("17", "18"));
 		}
+		//Follows* (_,_)
+		TEST_METHOD(isFollowsTAnyAny)
+		{
+			PKBFollows PKB;
+			Assert::IsTrue(PKB.isFollowsTAnyAny());
+		}
+		//Follows* (_,2)
+		TEST_METHOD(isFollowsTAnyIdent)
+		{
+			PKBFollows PKB;
+			Assert::IsTrue(PKB.isFollowsTAnyIdent("2"));
+			Assert::IsTrue(PKB.isFollowsTAnyIdent("3"));
+			Assert::IsTrue(PKB.isFollowsTAnyIdent("5"));
+			Assert::IsTrue(PKB.isFollowsTAnyIdent("6"));
+			Assert::IsTrue(PKB.isFollowsTAnyIdent("8"));
+			Assert::IsTrue(PKB.isFollowsTAnyIdent("9"));
+			Assert::IsTrue(PKB.isFollowsTAnyIdent("10"));
+			Assert::IsTrue(PKB.isFollowsTAnyIdent("13"));
+			Assert::IsTrue(PKB.isFollowsTAnyIdent("14"));
+			Assert::IsTrue(PKB.isFollowsTAnyIdent("15"));
+			Assert::IsTrue(PKB.isFollowsTAnyIdent("17"));
+			Assert::IsTrue(PKB.isFollowsTAnyIdent("18"));
 
+			Assert::IsFalse(PKB.isFollowsTAnyIdent("4"));
+			Assert::IsFalse(PKB.isFollowsTAnyIdent("7"));
+			Assert::IsFalse(PKB.isFollowsTAnyIdent("11"));
+			Assert::IsFalse(PKB.isFollowsTAnyIdent("12"));
+			Assert::IsFalse(PKB.isFollowsTAnyIdent("16"));
+		}
+		//Follows* (1,_)
+		TEST_METHOD(isFollowsTIdentAny)
+		{
+			PKBFollows PKB;
+			Assert::IsTrue(PKB.isFollowsTIdentAny("1"));
+			Assert::IsTrue(PKB.isFollowsTIdentAny("2"));
+			Assert::IsTrue(PKB.isFollowsTIdentAny("4"));
+			Assert::IsTrue(PKB.isFollowsTIdentAny("5"));
+			Assert::IsTrue(PKB.isFollowsTIdentAny("6"));
+			Assert::IsTrue(PKB.isFollowsTIdentAny("10"));
+			Assert::IsTrue(PKB.isFollowsTIdentAny("7"));
+			Assert::IsTrue(PKB.isFollowsTIdentAny("8"));
+			Assert::IsTrue(PKB.isFollowsTIdentAny("13"));
+			Assert::IsTrue(PKB.isFollowsTIdentAny("14"));
+			Assert::IsTrue(PKB.isFollowsTIdentAny("16"));
+			Assert::IsTrue(PKB.isFollowsTIdentAny("17"));
+
+			Assert::IsFalse(PKB.isFollowsTIdentAny("3"));
+			Assert::IsFalse(PKB.isFollowsTIdentAny("9"));
+			Assert::IsFalse(PKB.isFollowsTIdentAny("11"));
+			Assert::IsFalse(PKB.isFollowsTIdentAny("12"));
+			Assert::IsFalse(PKB.isFollowsTIdentAny("15"));
+			Assert::IsFalse(PKB.isFollowsTIdentAny("18"));
+		}
 		//Follows*(1,2)
 		TEST_METHOD(isFollowsTIdentIdent)
 		{
@@ -125,6 +223,35 @@ namespace UnitTesting
 			Assert::IsTrue(PKB.isFollowsTIdentIdent("7", "9"));
 			Assert::IsTrue(PKB.isFollowsTIdentIdent("13", "15"));
 			Assert::IsTrue(PKB.isFollowsTIdentIdent("16", "18"));
+		}
+		//Follows(_, s)
+		TEST_METHOD(getFollowsAnyEnt)
+		{
+			PKBFollows PKB;
+			TABLE actual, expected;
+
+			actual = PKB.getFollowsAnyEnt("assign");
+			expected = { {"5"},{"9"},{"13"},{"14"},{"15"},{"17"}};
+			Assert::IsTrue(actual == expected);
+
+			actual = PKB.getFollowsAnyEnt("print");
+			expected = { {"18"} };
+			Assert::IsTrue(actual == expected);
+
+		}
+		//Follows(_, s)
+		TEST_METHOD(getFollowsEntAny)
+		{
+			PKBFollows PKB;
+			TABLE actual, expected;
+
+			actual = PKB.getFollowsEntAny("assign");
+			expected = { {"4"},{"5"}, {"7"},{"13"},{"14"},{"16"} ,{"17"} };
+			Assert::IsTrue(actual == expected);
+
+			actual = PKB.getFollowsEntAny("print");
+			Assert::IsTrue(actual.size() == 0);
+
 		}
 		//Follows(s,s)
 		TEST_METHOD(getFollowsEntEnt)
@@ -180,6 +307,35 @@ namespace UnitTesting
 			expected = { {"6"} };
 			Assert::IsTrue(actual == expected);
 			
+		}
+		//Follows*(_, s)
+		TEST_METHOD(getFollowsTAnyEnt)
+		{
+			PKBFollows PKB;
+			TABLE actual, expected;
+
+			actual = PKB.getFollowsTAnyEnt("assign");
+			expected = { {"5"},{"9"},{"13"},{"14"},{"15"},{"17"} };
+			Assert::IsTrue(actual == expected);
+
+			actual = PKB.getFollowsTAnyEnt("print");
+			expected = { {"18"} };
+			Assert::IsTrue(actual == expected);
+
+		}
+		//Follows*(_, s)
+		TEST_METHOD(getFollowsTEntAny)
+		{
+			PKBFollows PKB;
+			TABLE actual, expected;
+
+			actual = PKB.getFollowsTEntAny("assign");
+			expected = { {"4"},{"5"}, {"7"},{"13"},{"14"},{"16"} ,{"17"} };
+			Assert::IsTrue(actual == expected);
+
+			actual = PKB.getFollowsTEntAny("print");
+			Assert::IsTrue(actual.size() == 0);
+
 		}
 		//Follows*(s,s)
 		TEST_METHOD(getFollowsTEntEnt)
