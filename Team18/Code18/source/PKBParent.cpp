@@ -53,17 +53,11 @@ bool PKBParent::isParentExist(STMT_NO child) {
 	return true;
 }
 
-TABLE PKBParent::getParentTable() {
-	return parentTable;
-}
-
-TABLE PKBParent::getParentTTable() {
-	return parentTTable;
-}
-
+//Get boolean for Parent(_,_)
 bool PKBParent::isParentAnyAny() {
 	return !parentTable.empty();
 }
+//Get boolean for Parent(_,2)
 bool PKBParent::isParentAnyIdent(STMT_NO child) {
 	for (auto vectorIter : parentTable) {
 		if (vectorIter.back() == child) {
@@ -72,6 +66,7 @@ bool PKBParent::isParentAnyIdent(STMT_NO child) {
 	}
 	return false;
 }
+//Get boolean for Parent(1,_)
 bool PKBParent::isParentIdentAny(STMT_NO parent) {
 	for (auto vectorIter : parentTable) {
 		if (vectorIter.front() == parent) {
@@ -80,6 +75,7 @@ bool PKBParent::isParentIdentAny(STMT_NO parent) {
 	}
 	return false;
 }
+//Get boolean for Parent(1,2)
 bool PKBParent::isParentIdentIdent(STMT_NO parent, STMT_NO child) {
 	for (auto vectorIter : parentTable) {
 		if (vectorIter.front() == parent) {
@@ -90,10 +86,11 @@ bool PKBParent::isParentIdentIdent(STMT_NO parent, STMT_NO child) {
 	}
 	return false;
 }
-
+//Get boolean for Parent*(_,_)
 bool PKBParent::isParentTAnyAny() {
 	return !parentTTable.empty();
 }
+//Get boolean for Parent*(s,2)
 bool PKBParent::isParentTAnyIdent(STMT_NO childT) {
 	for (auto vectorIter : parentTTable) {
 		if (vectorIter.back() == childT) {
@@ -102,6 +99,7 @@ bool PKBParent::isParentTAnyIdent(STMT_NO childT) {
 	}
 	return false;
 }
+//Get boolean for Parent*(1,s)
 bool PKBParent::isParentTIdentAny(STMT_NO parent) {
 	for (auto vectorIter : parentTTable) {
 		if (vectorIter.front() == parent) {
@@ -110,6 +108,7 @@ bool PKBParent::isParentTIdentAny(STMT_NO parent) {
 	}
 	return false;
 }
+//Get boolean for Parent*(1,2)
 bool PKBParent::isParentTIdentIdent(STMT_NO parent, STMT_NO childT) {
 	for (auto vectorIter : parentTTable) {
 		if (vectorIter.front() == parent) {
@@ -121,7 +120,7 @@ bool PKBParent::isParentTIdentIdent(STMT_NO parent, STMT_NO childT) {
 	return false;
 }
 
-//NEW EVALUATION API
+//Get STMT_LIST for Parent(_,s)
 STMT_LIST PKBParent::getParentAnyEnt(STMT_TYPE type) {
 	STMT_LIST resultTable, list;
 	STMT_NO s;
@@ -148,7 +147,7 @@ STMT_LIST PKBParent::getParentAnyEnt(STMT_TYPE type) {
 	
 	return resultTable;
 }
-
+//Get STMT_LIST for Parent(s,_)
 STMT_LIST PKBParent::getParentEntAny(STMT_TYPE type) {
 	STMT_LIST resultTable, list;
 	STMT_NO s;
@@ -175,7 +174,7 @@ STMT_LIST PKBParent::getParentEntAny(STMT_TYPE type) {
 	
 	return resultTable;
 }
-
+//Get STMT_LIST for Parent(1,s)
 STMT_LIST PKBParent::getParentIdentEnt(STMT_NO stmtNo, STMT_TYPE type) {
 	TABLE resultTable, list;
 	STMT_NO s;
@@ -204,7 +203,7 @@ STMT_LIST PKBParent::getParentIdentEnt(STMT_NO stmtNo, STMT_TYPE type) {
 	
 	return resultTable;
 }
-
+//Get STMT_LIST for Parent(s,2)
 STMT_LIST PKBParent::getParentEntIdent(STMT_TYPE type, STMT_NO stmtNo) {
 	TABLE resultTable, list;
 	STMT_NO s;
@@ -232,7 +231,7 @@ STMT_LIST PKBParent::getParentEntIdent(STMT_TYPE type, STMT_NO stmtNo) {
 	}
 	return resultTable;
 }
-
+//Get STMT_LIST for Parent(s1,s2)
 TABLE PKBParent::getParentEntEnt(STMT_TYPE type1, STMT_TYPE type2) {
 	TABLE resultTable;
 	STMT_NO s1;
@@ -299,7 +298,7 @@ TABLE PKBParent::getParentEntEnt(STMT_TYPE type1, STMT_TYPE type2) {
 
 	return resultTable;
 }
-
+//Get STMT_LIST for Parent*(_,s)
 STMT_LIST PKBParent::getParentTAnyEnt(STMT_TYPE type) {
 	STMT_LIST resultTable, list;
 	STMT_NO s;
@@ -325,7 +324,7 @@ STMT_LIST PKBParent::getParentTAnyEnt(STMT_TYPE type) {
 	}	
 	return resultTable;
 }
-
+//Get STMT_LIST for Parent*(s,_)
 STMT_LIST PKBParent::getParentTEntAny(STMT_TYPE type) {
 	STMT_LIST resultTable, list;
 	STMT_NO s;
@@ -351,7 +350,7 @@ STMT_LIST PKBParent::getParentTEntAny(STMT_TYPE type) {
 	}
 	return resultTable;
 }
-
+//Get STMT_LIST for Parent*(1,s)
 STMT_LIST PKBParent::getParentTIdentEnt(STMT_NO stmtNo, STMT_TYPE type) {
 	STMT_LIST resultTable, list;
 	STMT_NO s;
@@ -380,7 +379,7 @@ STMT_LIST PKBParent::getParentTIdentEnt(STMT_NO stmtNo, STMT_TYPE type) {
 	
 	return resultTable;
 }
-
+//Get STMT_LIST for Parent*(s,2)
 STMT_LIST PKBParent::getParentTEntIdent(STMT_TYPE type, STMT_NO stmtNo) {
 	STMT_LIST resultTable, list;
 	STMT_NO s;
@@ -410,7 +409,7 @@ STMT_LIST PKBParent::getParentTEntIdent(STMT_TYPE type, STMT_NO stmtNo) {
 	
 	return resultTable;
 }
-
+//Get STMT_LIST for Parent*(s1,s2)
 TABLE PKBParent::getParentTEntEnt(STMT_TYPE type1, STMT_TYPE type2) {
 	TABLE resultTable;
 	STMT_NO s1;
@@ -475,7 +474,7 @@ TABLE PKBParent::getParentTEntEnt(STMT_TYPE type1, STMT_TYPE type2) {
 	}
 	return resultTable;
 }
-
+//Clear all PKB Parent, Parent* tables
 bool PKBParent::clear() {
 	parentTable.clear();
 	parentTTable.clear();

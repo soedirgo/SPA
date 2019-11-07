@@ -10,6 +10,7 @@ TABLE PKBPattern::getAssignPatternTable() {
 	return patternAssignTable;
 }
 
+//Set If Pattern into PKB
 bool PKBPattern::setIfPattern(STMT_NO stmtNo, VAR_NAME varName) {
 	vector<string> tuple = vector<string>();
 	tuple.push_back(stmtNo);
@@ -17,7 +18,7 @@ bool PKBPattern::setIfPattern(STMT_NO stmtNo, VAR_NAME varName) {
 	patternIfTable.emplace(tuple);
 	return true;
 }
-
+//Get STMT_LIST for pattern ifs(_, _, _)
 STMT_LIST PKBPattern::getPatternIfAny() {
 	STMT_LIST resultTable;
 	STMT_LIST list;
@@ -28,7 +29,7 @@ STMT_LIST PKBPattern::getPatternIfAny() {
 	}
 	return resultTable;
 }
-
+//Get STMT_LIST for pattern ifs(“x”, _, _)
 STMT_LIST PKBPattern::getPatternIfIdent(VAR_NAME varName) {
 	STMT_LIST resultTable;
 	STMT_LIST list;
@@ -41,7 +42,7 @@ STMT_LIST PKBPattern::getPatternIfIdent(VAR_NAME varName) {
 	}
 	return resultTable;
 }
-
+//Get result table for pattern ifs(v, _, _)
 TABLE PKBPattern::getPatternIfEnt() {
 	STMT_LIST resultTable;
 	STMT_LIST list;
@@ -53,7 +54,7 @@ TABLE PKBPattern::getPatternIfEnt() {
 	}
 	return resultTable;
 }
-
+//Set While Pattern into PKB
 bool PKBPattern::setWhilePattern(STMT_NO stmtNo, VAR_NAME varName) {
 	vector<string> tuple = vector<string>();
 	tuple.push_back(stmtNo);
@@ -61,7 +62,7 @@ bool PKBPattern::setWhilePattern(STMT_NO stmtNo, VAR_NAME varName) {
 	patternWhileTable.emplace(tuple);
 	return true;
 }
-
+//Get STMT_LIST for pattern w(_, _)
 STMT_LIST PKBPattern::getPatternWhileAny() {
 	STMT_LIST resultTable;
 	STMT_LIST list;
@@ -72,7 +73,7 @@ STMT_LIST PKBPattern::getPatternWhileAny() {
 	}
 	return resultTable;
 }
-
+//Get STMT_LIST for pattern w(“x”, _)
 STMT_LIST PKBPattern::getPatternWhileIdent(VAR_NAME varName) {
 	STMT_LIST resultTable;
 	STMT_LIST list;
@@ -85,7 +86,7 @@ STMT_LIST PKBPattern::getPatternWhileIdent(VAR_NAME varName) {
 	}
 	return resultTable;
 }
-
+//Get result table for pattern w(v, _)
 TABLE PKBPattern::getPatternWhileEnt() {
 	STMT_LIST resultTable;
 	STMT_LIST list;
@@ -97,7 +98,7 @@ TABLE PKBPattern::getPatternWhileEnt() {
 	}
 	return resultTable;
 }
-
+//Set Assign Pattern into PKB
 bool PKBPattern::setAssignPattern(STMT_NO stmtNo, EXPR_SPEC pattern) {
 	vector<string> tuple = vector<string>();
 	tuple.push_back(stmtNo);
@@ -105,7 +106,7 @@ bool PKBPattern::setAssignPattern(STMT_NO stmtNo, EXPR_SPEC pattern) {
 	patternAssignTable.emplace(tuple);
 	return true;
 }
-
+//Get STMT_LIST for pattern a(_, _)
 TABLE PKBPattern::getPatternAssignAnyAny() {
 	TABLE resultTable;
 	for (auto vectorIter : patternAssignTable) {
@@ -115,9 +116,9 @@ TABLE PKBPattern::getPatternAssignAnyAny() {
 	}
 	return resultTable;
 }
-
-TABLE PKBPattern::getPatternAssignAnyPartial(EXPR_SPEC expression) {
-	TABLE resultTable;
+//Get STMT_LIST for pattern a(_, _“a+b”_)
+STMT_LIST PKBPattern::getPatternAssignAnyPartial(EXPR_SPEC expression) {
+	STMT_LIST resultTable;
 	for (auto vectorIter : patternAssignTable) {
 		vector<string> tuple = vector<string>();
 		if (vectorIter.back().find(expression) != string::npos) {
@@ -128,9 +129,9 @@ TABLE PKBPattern::getPatternAssignAnyPartial(EXPR_SPEC expression) {
 	}
 	return resultTable;
 }
-
-TABLE PKBPattern::getPatternAssignAnyFull(EXPR_SPEC expression) {
-	TABLE resultTable;
+//Get STMT_LIST for pattern a(_, “a+b”)
+STMT_LIST PKBPattern::getPatternAssignAnyFull(EXPR_SPEC expression) {
+	STMT_LIST resultTable;
 	for (auto vectorIter : patternAssignTable) {
 		vector<string> tuple = vector<string>();
 		if (vectorIter.back() == expression) {
@@ -140,16 +141,16 @@ TABLE PKBPattern::getPatternAssignAnyFull(EXPR_SPEC expression) {
 	}
 	return resultTable;
 }
-
-TABLE PKBPattern::getPatternAssignIdentAny(VAR_NAME varName) {
-	TABLE resultTable;
+//Get STMT_LIST for pattern a(“x”, _)
+STMT_LIST PKBPattern::getPatternAssignIdentAny(VAR_NAME varName) {
+	STMT_LIST resultTable;
 	resultTable = PKBModifies::getModifiesSEntIdent("assign",varName);
 	return resultTable;
 }
-
-TABLE PKBPattern::getPatternAssignIdentPartial(VAR_NAME varName, EXPR_SPEC expression) {
-	TABLE resultTable;
-	TABLE list;
+//Get STMT_LIST for pattern a(“x”, _“a+b”_)
+STMT_LIST PKBPattern::getPatternAssignIdentPartial(VAR_NAME varName, EXPR_SPEC expression) {
+	STMT_LIST resultTable;
+	STMT_LIST list;
 	STMT_NO stmtNo;
 	list = PKBModifies::getModifiesSEntIdent("assign",varName);
 	for (auto iter : list) {
@@ -165,10 +166,10 @@ TABLE PKBPattern::getPatternAssignIdentPartial(VAR_NAME varName, EXPR_SPEC expre
 	}
 	return resultTable;
 }
-
-TABLE PKBPattern::getPatternAssignIdentFull(VAR_NAME varName, EXPR_SPEC expression) {
-	TABLE resultTable;
-	TABLE list;
+//Get STMT_LIST for pattern a(“x”, “a + b”)
+STMT_LIST PKBPattern::getPatternAssignIdentFull(VAR_NAME varName, EXPR_SPEC expression) {
+	STMT_LIST resultTable;
+	STMT_LIST list;
 	STMT_NO stmtNo;
 	list = PKBModifies::getModifiesSEntIdent("assign", varName);
 	for (auto iter : list) {
@@ -183,13 +184,13 @@ TABLE PKBPattern::getPatternAssignIdentFull(VAR_NAME varName, EXPR_SPEC expressi
 	}
 	return resultTable;
 }
-
+//Get result table for pattern a(v, _)
 TABLE PKBPattern::getPatternAssignEntAny() {
 	TABLE resultTable;
 	resultTable = PKBModifies::getModifiesSEntEnt("assign");
 	return resultTable;
 }
-
+//Get result talbe for pattern a(v, _“a+b”_)
 TABLE PKBPattern::getPatternAssignEntPartial(EXPR_SPEC expression) {
 	TABLE resultTable;
 	TABLE list;
@@ -210,7 +211,7 @@ TABLE PKBPattern::getPatternAssignEntPartial(EXPR_SPEC expression) {
 	}
 	return resultTable;
 }
-
+//Get result talbe for pattern a(v, “a+b”)
 TABLE PKBPattern::getPatternAssignEntFull(EXPR_SPEC expression) {
 	TABLE resultTable;
 	TABLE list;

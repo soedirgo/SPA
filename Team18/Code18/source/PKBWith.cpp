@@ -8,6 +8,7 @@
 #include "PKBPrint.h"
 using namespace std;
 
+//Get ENT_LIST such as STMT_LIST or VAR_LIST for with 1 = s.stmt#
 ENT_LIST PKBWith::getWithIdentAttr(IDENT iden, ENT_TYPE ent, ATTR attr) {
 	ENT_LIST resultTable;
 	TABLE list;
@@ -61,9 +62,9 @@ ENT_LIST PKBWith::getWithIdentAttr(IDENT iden, ENT_TYPE ent, ATTR attr) {
 	
 	return resultTable;
 }
-
-STMT_LIST PKBWith::getWithIdentLine(IDENT iden) {
-	STMT_LIST resultTable;
+//Get LINE_LIST with 1 = n
+LINE_LIST PKBWith::getWithIdentLine(IDENT iden) {
+	LINE_LIST resultTable;
 	TABLE list = PKBStmt::getStmts();
 	for (auto vectorIter : list) {
 		if (vectorIter.front() == iden) {
@@ -74,7 +75,7 @@ STMT_LIST PKBWith::getWithIdentLine(IDENT iden) {
 	}
 	return resultTable;
 }
-
+//Get result table with s1.stmt# = s2.stmt#
 TABLE PKBWith::getWithAttrAttr(ENT_TYPE ent1, ATTR attr1, ENT_TYPE ent2, ATTR attr2) {
 	TABLE resultTable;
 	TABLE list1, list2;
@@ -156,7 +157,7 @@ TABLE PKBWith::getWithAttrAttr(ENT_TYPE ent1, ATTR attr1, ENT_TYPE ent2, ATTR at
 	}
 	return resultTable;
 }
-
+//Get result table with s1.stmt# = n
 TABLE PKBWith::getWithAttrLine(ENT_TYPE ent, ATTR attr) {
 	TABLE resultTable;
 	TABLE list1, list2;
@@ -203,7 +204,7 @@ TABLE PKBWith::getWithAttrLine(ENT_TYPE ent, ATTR attr) {
 	}
 	return resultTable;
 }
-
+//Get result table with n1 = n2
 TABLE PKBWith::getWithLineLine() {
 	TABLE resultTable;
 	TABLE list1, list2;

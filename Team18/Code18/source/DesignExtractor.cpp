@@ -29,15 +29,10 @@ void DesignExtractor::extractDesign()
 	extractNextBip();
 	extractNextBipT();
 	extractAffectsBip();
+	extractAffectsBipT();
 
-	TABLE test = PKBNext::getNextBipTable();
-	int i = test.size();
-	//TABLE test = PKBUses::getUsesPTable();
+	//TABLE test = PKBNext::getNextBipTable();
 	//int i = test.size();
-	//TABLE test2 = PKBCall::getCallProcTable();
-	//int i2 = test2.size();
-
-	//extractAffectsT();
 }
 
 unordered_set<string> DesignExtractor::nextNodeVisitedCache;
@@ -301,50 +296,12 @@ void DesignExtractor::extractNextT(STMT_LIST nextTList1, STMT_LIST nextTList2)
 				}
 			}
 		}
-
 	}
-	/*
-	else {
-		for (auto vectorIter1 : nextTList1) {
-			TABLE nextTable = PKBNext::getNextTable();
-			for (auto vectorIter2 : nextTable) {
-				PROG_LINE next1 = vectorIter2.front();
-				PROG_LINE next2 = vectorIter2.back();
-				//optimization
-				if (vectorIter1.front() == next1) {
-					bool nextTValue = PKBNext::isNextT(next1, next2);
-					//optimization
-					if (nextTValue == false) {
-						PKBNext::setNextT(next1, next2);
-						//Recursive forward
-						recurseNext(next1, next2);
-					}
-				}
-			}
-		}
-		for (auto vectorIter1 : nextTList2) {
-			TABLE nextTable = PKBNext::getNextTable();
-			for (auto vectorIter2 : nextTable) {
-				PROG_LINE next1 = vectorIter2.front();
-				PROG_LINE next2 = vectorIter2.back();
-				//optimization
-				if (vectorIter1.front() == next2) {
-					bool nextTValue = PKBNext::isNextT(next1, next2);
-					//optimization
-					if (nextTValue == false) {
-						PKBNext::setNextT(next1, next2);
-						//Recursive backward
-						recurseNextReverse(next1, next2);
-					}
-				}
-			}
-		}
-	}
-	*/
 }
 
 void DesignExtractor::extractNextBip() {
-	TABLE callProcTable = PKBCall::getCallProcTable();
+	//Get the call table
+	TABLE callProcTable = PKBCall::getCallsEntEnt();
 	STMT_LIST procListWithoutCall;
 	for (auto vectorIter1 : callProcTable) {
 		PROC_NAME callee = vectorIter1.back();
@@ -369,8 +326,7 @@ void DesignExtractor::extractNextBip() {
 		
 		PROC_NAME callee = vectorIter1.back();
 		PROC_NAME caller = vectorIter1.front();
-		//TABLE usesPTable = PKBModifies::getModifiesPIdentEnt(callee);
-		
+		//Get start and end stmtNo of the callee
 		TABLE procedureStartEnd = PKBProcedure::getProcedureStartEnd(callee);
 
 		for (auto vectorIter : callTable) {
@@ -378,25 +334,26 @@ void DesignExtractor::extractNextBip() {
 			//Check if the callee is being called
 			if (callee == vectorIter.back()) {
 				TABLE procedureStartEnd = PKBProcedure::getProcedureStartEnd(callee);
-				TABLE nextCallValues = PKBNext::getNext(callStmt);
+				//Get the stmtNo next after the call stmt
+				TABLE nextCallStmts = PKBNext::getNext(callStmt);
 
-				if (procedureStartEnd.size() > 0) {
-					STMT_NO startStmt, endStmt;
-					for (auto vectorIter2 : procedureStartEnd) {
-						startStmt = vectorIter2[0];
-						endStmt = vectorIter2[1];
+				STMT_NO startStmt, endStmt;
+				for (auto vectorIter2 : procedureStartEnd) {
+					startStmt = vectorIter2[0];
+					endStmt = vectorIter2[1];
 
-						PKBNext::setNextBip(callStmt, startStmt);
-						if (nextCallValues.size() > 0) {
-							for (auto vectorIter3 : nextCallValues) {
-								STMT_NO nextStmt = vectorIter3.front();
+					PKBNext::setNextBip(callStmt, startStmt);
+					if (nextCallStmts.size() > 0) {
+						for (auto vectorIter3 : nextCallStmts) {
+							STMT_NO nextStmt = vectorIter3.front();
+							if (!(PKBStmt::getTypeByStmtNo(endStmt) == "call")) {
 								PKBNext::setNextBip(endStmt, nextStmt);
 							}
 						}
-						//else {
-							//PKBNext::setNextBip(endStmt, callStmt);
-						//}
-
+					}
+					else {
+						//Have no next stmt after the call, have to go to ancestor procedure then
+						recurseProcedure(endStmt, callee, callTable);
 					}
 				}
 			}
@@ -421,6 +378,37 @@ void DesignExtractor::extractNextBip() {
 		}
 	}
 	
+}
+
+void DesignExtractor::recurseProcedure(STMT_NO endStmt, PROC_NAME callee, TABLE callTable) {
+	TABLE callerList = PKBCall::getCallerProc(callee);
+	if (callerList.size() == 0) {
+		return;
+	}
+	for (auto callerElem : callerList) {
+		PROC_NAME newCaller = callerElem.front();
+		for (auto vectorIter : callTable) {
+			STMT_NO callStmt = vectorIter.front();
+			//Check if the callee is being called
+			if (callee == vectorIter.back()) {
+				TABLE procedureStartEnd = PKBProcedure::getProcedureStartEnd(callee);
+				TABLE nextCallValues = PKBNext::getNext(callStmt);
+				if (nextCallValues.size() > 0) {
+
+					for (auto vectorIter3 : nextCallValues) {
+						STMT_NO nextStmt = vectorIter3.front();
+						if (!(PKBStmt::getTypeByStmtNo(endStmt) == "call")) {
+							PKBNext::setNextBip(endStmt, nextStmt);
+						}
+					}
+				}
+				else {
+					//Have no next stmt after the call, have to go to ancestor procedure then
+					recurseProcedure(endStmt, newCaller, callTable);
+				}
+			}
+		}
+	}
 }
 
 void DesignExtractor::recurseNextBip(PROC_NAME callee, TABLE callTable) {
@@ -448,11 +436,14 @@ void DesignExtractor::recurseNextBip(PROC_NAME callee, TABLE callTable) {
 						if (nextCallValues.size() > 0) {
 							for (auto vectorIter3 : nextCallValues) {
 								STMT_NO nextStmt = vectorIter3.front();
-								PKBNext::setNextBip(endStmt, nextStmt);
+								if (!(PKBStmt::getTypeByStmtNo(endStmt) == "call")) {
+									PKBNext::setNextBip(endStmt, nextStmt);
+								}
 							}
 						}
 						else {
-							//PKBNext::setNextBip(endStmt, callStmt);
+							//Have no next stmt after the call, have to go to ancestor procedure then
+							recurseProcedure(endStmt, newCaller, callTable);
 						}
 
 					}
@@ -460,7 +451,7 @@ void DesignExtractor::recurseNextBip(PROC_NAME callee, TABLE callTable) {
 			}
 
 		}
-		recurseModifies(newCaller);
+		recurseNextBip(newCaller, callTable);
 	}
 }
 
@@ -481,7 +472,7 @@ void DesignExtractor::extractNextBipT()
 
 void DesignExtractor::extractParentT()
 {
-	TABLE parentTable = PKBParent::getParentTable();
+	TABLE parentTable = PKBParent::getParentEntEnt("stmt","stmt");
 	for (auto vectorIter : parentTable) {
 		string parent = vectorIter.front();
 		string child = vectorIter.back();
@@ -503,7 +494,7 @@ void DesignExtractor::extractFollowsT()
 
 void DesignExtractor::extractCallsT()
 {
-	TABLE callStmtTable = PKBCall::getCallProcTable();
+	TABLE callStmtTable = PKBCall::getCallsEntEnt();
 	for (auto vectorIter : callStmtTable) {
 		PROC_NAME caller = vectorIter.front();
 		PROC_NAME callee = vectorIter.back();
@@ -514,7 +505,7 @@ void DesignExtractor::extractCallsT()
 
 void DesignExtractor::extractModifiesP()
 {
-	TABLE callProcTable = PKBCall::getCallProcTable();
+	TABLE callProcTable = PKBCall::getCallsEntEnt();
 	STMT_LIST procListWithoutCall;
 	for (auto vectorIter1 : callProcTable) {
 		PROC_NAME callee = vectorIter1.back();
@@ -564,7 +555,8 @@ void DesignExtractor::recurseModifies(PROC_NAME callee) {
 
 void DesignExtractor::extractUsesP()
 {
-	TABLE callProcTable = PKBCall::getCallProcTable();
+	
+	TABLE callProcTable = PKBCall::getCallsEntEnt();
 	STMT_LIST procListWithoutCall;
 	for (auto vectorIter1 : callProcTable) {
 		PROC_NAME callee = vectorIter1.back();
@@ -610,7 +602,7 @@ void DesignExtractor::extractUsesS()
 			PKBUses::setUsesS(stmtNo, varName);
 
 			//To populate the if/while statement with the vars uses from the call stmt
-			TABLE parentTTable = PKBParent::getParentTTable();
+			TABLE parentTTable = PKBParent::getParentTEntEnt("stmt","stmt");
 			for (auto vectorIter1 : parentTTable) {
 				STMT_NO parent = vectorIter1.front();
 				STMT_NO children = vectorIter1.back();
@@ -637,7 +629,7 @@ void DesignExtractor::extractModifiesS()
 			PKBModifies::setModifiesS(stmtNo, varName);
 
 			//To populate the if/while statement with the vars modifies from the call stmt
-			TABLE parentTTable = PKBParent::getParentTTable();
+			TABLE parentTTable = PKBParent::getParentTEntEnt("stmt","stmt");
 			for (auto vectorIter1 : parentTTable) {
 				STMT_NO parent = vectorIter1.front();
 				STMT_NO children = vectorIter1.back();
@@ -681,7 +673,7 @@ void DesignExtractor::extractAffectsBip()
 	}
 }
 
-void DesignExtractor::extractAffectsTBip()
+void DesignExtractor::extractAffectsBipT()
 {
 	STMT_LIST assignStmtTable1 = PKBStmt::getStmtsByType("assign");
 	for (auto stmt1 : assignStmtTable1) {
