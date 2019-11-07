@@ -1,92 +1,95 @@
-1 - Relation
+0 -Testing NextBip
 prog_line n;
 Select n such that NextBip(1, n)
 7
 5000
-2 - Relation
+1 -Testing NextBip
 prog_line n;
 Select n such that NextBip(2, n)
 3,4
 5000
-3 - Relation
+2 -Testing NextBip
 prog_line n;
 Select n such that NextBip(3, n)
 16
 5000
-1 - Relation
+3 -Testing NextBip
 prog_line n;
 Select n such that NextBip(4, n)
 5,6
 5000
-1 - Relation
+4 -Testing NextBip
 prog_line n;
 Select n such that NextBip(5, n)
 12
 5000
-2 - Relation
+5 -Testing NextBip
 prog_line n;
 Select n such that NextBip(6, n)
 19
 5000
-3 - Relation
+6 -Testing NextBip
 prog_line n;
 Select n such that NextBip(11, n)
-12,2
+12
 5000
-3 - Relation
+7 -Testing NextBip
 prog_line n;
 Select n such that NextBip(12, n)
-13
+13,2
 5000
-3 - Relation
+8 -Testing NextBip
 prog_line n;
 Select n such that NextBip(19, n)
 12
 5000
-1 - Relation
+9 -Testing NextBip
 prog_line n;
 Select n such that NextBip( n,1)
 
 5000
-2 - Relation
+10 -Testing NextBip
 prog_line n;
 Select n such that NextBip(n,2)
-11,17,18
+12,17,18
 5000
-3 - Relation
+11 -Testing NextBip
 prog_line n;
 Select n such that NextBip(n,3)
 2
 5000
-1 - Relation
+12 -Testing NextBip
 prog_line n;
 Select n such that NextBip(n,4)
 2
 5000
-2 - Relation
+13 -Testing NextBip
 prog_line n;
 Select n such that NextBip(n,5)
 4
 5000
-3 - Relation
+14 -Testing NextBip
 prog_line n;
 Select n such that NextBip(n,6)
 4
 5000
-3 - Relation
+15 -Testing NextBip
 prog_line n;
 Select n such that NextBip(n,11)
 8
 5000
-3 - Relation
+16 -Testing NextBip
 prog_line n;
 Select n such that NextBip(n,12)
 5,11,19,14,15
 5000
-3 - Relation
+17 -Testing NextBip
 prog_line n;
 Select n such that NextBip(n,13)
 12
 5000
+18 -Testing NextBip
+prog_line n;
+Select n such that NextBip(n, n)
 
-
+5000
