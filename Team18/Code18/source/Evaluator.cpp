@@ -69,11 +69,18 @@ namespace Evaluator {
 
         // evaluate clauses
         for (auto& clause : clauses) {
-            ungroupedResults.push_back(dispatch(clause, declarations));
+            Result temp = dispatch(clause, declarations);
+            if (!temp.hasResults()) {
+                if (selSyns[0] == "BOOLEAN")
+                    return { "FALSE" };
+                else
+                    return {};
+            }
+            ungroupedResults.push_back(temp);
         }
 
         // group the results into no synonym, select synonym group, and other groups
-        vector<vector<Result>>& allResults = group(ungroupedResults, selSyns);
+        vector<vector<Result>> allResults = group(ungroupedResults, selSyns);
         noSynGroup = allResults[0];
         selSynGroup = allResults[1];
         otherGroups = vector<vector<Result>>(allResults.begin() + 2, allResults.end());
@@ -82,12 +89,12 @@ namespace Evaluator {
         Result noSynResult = Result(true, {}, {});
         for (auto resultIt : noSynGroup) {
             noSynResult = Result::merge(noSynResult, resultIt);
-        }
-        if (!noSynResult.hasResults()) {
-            if (selSyns[0] == "BOOLEAN")
-                return { "FALSE" };
-            else
-                return {};
+            if (!noSynResult.hasResults()) {
+                if (selSyns[0] == "BOOLEAN")
+                    return { "FALSE" };
+                else
+                    return {};
+            }
         }
 
         // merge other groups
@@ -97,20 +104,20 @@ namespace Evaluator {
             Result groupResult = Result(true, {}, {});
             for (auto& resultIt : groupIt) {
                 groupResult = Result::merge(groupResult, resultIt);
+                if (!groupResult.hasResults()) {
+                    if (selSyns[0] == "BOOLEAN")
+                        return { "FALSE" };
+                    else
+                        return {};
+                }
             }
-            if (!groupResult.hasResults()) {
+            otherResult = Result::merge(otherResult, groupResult);
+            if (!otherResult.hasResults()) {
                 if (selSyns[0] == "BOOLEAN")
                     return { "FALSE" };
                 else
                     return {};
             }
-            otherResult = Result::merge(otherResult, groupResult);
-        }
-        if (!otherResult.hasResults()) {
-            if (selSyns[0] == "BOOLEAN")
-                return { "FALSE" };
-            else
-                return {};
         }
 
         // case Select BOOLEAN
@@ -123,9 +130,9 @@ namespace Evaluator {
         Result selectResult = Result(true, {}, {});
         for (auto& resultIt : selSynGroup) {
             selectResult = Result::merge(selectResult, resultIt);
+            if (!selectResult.hasResults())
+                return {};
         }
-        if (!selectResult.hasResults())
-            return {};
 
         // return results (projection)
         list<string> selectResults;
@@ -148,4 +155,4 @@ namespace Evaluator {
         selectResults.unique();
         return selectResults;
     }
-} // namespace Evaluator 
+} // namespace Evaluator
