@@ -1,0 +1,228 @@
+procedure A {
+  tries = 3;
+  if (tries >= 1) then {
+    read input;
+    name = input;
+    target = ( (name % 4) * 10) + (tries * name % 7) + 3;
+    while (tries > 0 || state != correct) {
+      num = input;
+      if (num != target) then {
+        tries = tries - 1;
+        state = wrong;
+        msg = msg + wrong;
+        print msg; }
+      else {
+        state = correct;
+        msg = msg + correct;
+        print msg; } }
+    print end; }
+  else {
+    print end;
+    rank = 0;
+    while (rank <= 10) {
+      rank = rank + 1;
+      print rank; } }
+  a = 1 / l;
+  b = c + i;
+  read a;
+  c = a - k;
+  d = b - 3;
+  e = c;
+  f = 8 - d % e;
+  while (d + a != e) {
+    rom = a + 12;
+    c = 2;
+    while (rom < 4 || rom < f) {
+      if (disk <= rom) then {
+        disk = disk + rom * b * 20;
+        print disk; }
+      else {
+        space = disk;
+        disk = disk + e; }
+      read rom; } }
+  c = 8;
+  rom = e + d + rom;
+  merge = merge + tries + msg + name + a + b + c + disk + rom;
+  g = rank;
+  h = input;
+  if (fact == fiction) then {
+    correct = correct + 1; }
+  else {
+    wrong = wrong + 1; }
+  read wrong;
+  query = correct + wrong - merge / tally;
+  while (correct >= wrong) {
+    i = a;
+    j = b;
+    read b;
+    k = g + h - f; }
+  call B;
+  min = i;
+  max = j;
+  avg = min + max / k;
+  while (sun = up) {
+    if (time <= 18 && time >= 7) then {
+      light = bright;
+      work = on; }
+    else {
+      light = dark;
+      work = on; }
+    read work;
+    on = work;
+    while (star <= 50) {
+      on = star;
+      bright = 10;
+      dark = 0;
+      while (moon < 28) {
+        read bright;
+        star = bright * star + moon;
+        dark = dark - star; }
+      print moon;
+      print star; 
+      if (star < moon) then {
+        star = moon;
+        read star; }
+      else {
+        moon = star;
+        read moon; } }
+    total = i + j + k + h + l;
+    limit = break;
+    if (limit != break) then {
+      status = a - d;
+      what = merge / i + f;
+      while (that != this) {
+        genius = genius + madness % 2 / (k + rank);
+        read genius; } }
+    else {
+      status = b - e;
+      what = this + that;
+      this = that;
+      that = light - space; } }
+  Mon = a;
+  Tue = Wed;
+  if (Mon <= Tue) then {
+    Wed = Tue * Fri;
+    Thu = Tue + Wed;
+    call C; }
+  else {
+    Fri = Mon - Wed;
+    Mon = Fri; }
+  Sat = Fri - Wed;
+  Wed = Thu;
+  Tue = Wed;
+  Fri = 10 % 2;
+  Sun = Sat + Fri;
+  Week = Sun + Mon - Tue / Wed;
+}
+
+procedure B {
+  i = j * k;
+  while (i < j) {
+    k = i + j;
+    j = k * i;
+    if (i < k) then {
+      read j;
+      k = k + j;
+      while (fact == fiction) {
+        i = k; } 
+      read i; }
+    else {
+      i = j * k + i;
+      if (fact != fiction) then {
+        j = j - k;
+        i = i + k - j;
+        read j;
+        k = k; }
+      else {
+        read k;
+        read i; } } 
+    i = i % j - k; }
+  k = i * j;
+  red = 1;
+  orange = 2;
+  while (red <= orange + 1) {
+    yellow = red + orange;
+    green = green + yellow + blue;
+    blue = blue + green;
+    call C;
+    if (white != black) then {
+      white = white - black; }
+    else {
+      black = black + white; }
+    call C;
+    purple = green - green + blue + red; }
+  color1 = color1 + red + green + blue;
+  color2 = color1 + yellow + orange;
+  color3 = color2 + purple;
+  while ( (low >= high) || (high <= low) ) {
+    read low;
+    read high; }
+  num = ( (high + low) / 2) + offset;
+  while (game >= state) {
+    read guess;
+    if (guess != num) then {
+      msg = wrong;
+      game = game - 1; }
+    else {
+      msg = correct;
+      game = state - 1; }
+    print msg; }
+}
+
+procedure C {
+  read yellow;
+  orange = red + yellow;
+  print red;
+  green = blue + yellow + red - red;
+  while (date == day) {
+    read Tue;
+    Mon = Thu; }
+  print Thu;
+  Wed = Mon + 2;
+  print Week;
+  sky = 2;
+  ground = 1;
+  grass = sky;
+  read sky;
+  earth = sky + ground;
+  if (sky != ground) then {
+    print sky;
+    print ground; }
+  else {
+    read grass; }
+  sky = ground + grass;
+  read a;
+  target = 100;
+  if (a < target) then {
+    while (a < target) {
+      read b;
+      a = a + (b * 5); } }
+  else {
+    read c;
+    if (c > target) then {
+      c = c - (target % c) + 1; }
+    else {
+      print c; } }
+  print b;
+  while (i < j) {
+    read inc;
+    while (inc < 0) {
+      inc = inc + 1; }
+    i = i + inc; }
+  read target;
+  if (i < target) then {
+    while (i < target) {
+      i = i + 1;
+      print i; } }
+  else {
+    print i;
+    target = i; }
+  print target;
+  while (up != down) {
+    left = c;
+    right = b;
+    down = v;
+    up = f; }
+  msg = end;
+  print msg;
+}
