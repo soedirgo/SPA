@@ -1,25 +1,35 @@
-1 - 
+1- 1 call without if 
 assign a;
-Select a such that AffectsBip(2,a)
-8
+Select a such that AffectsBip(1,a)
+6
 5000
-2-
+2- 3 call without if
+assign a;
+Select a such that AffectsBip(6,a)
+8,24
+5000
+3- 9 is not while statement
+assign a;
+Select a such that AffectsBip(9,a)
+none
+5000
+4- 2 call 
 assign a;
 Select a such that AffectsBip(8,a)
-10
+26
 5000
-3-
-assign a;
-Select a such that AffectsBip(11,a)
-None
-5000
-4-
+5- Going through while loop, 3 call
 assign a;
 Select a such that AffectsBip(10,a)
-None
+10,13,18
 5000
-5-
+6-Going through if and 1 call
 assign a;
-Select a such that AffectsBip(12,a)
-18
+Select a such that AffectsBip(17,a)
+26
+5000
+7-Going through while loop, 4 call
+assign a;
+Select a such that AffectsBip(7,a)
+25,26
 5000
