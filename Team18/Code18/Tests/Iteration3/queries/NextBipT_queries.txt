@@ -1,97 +1,95 @@
-1 - Relation
+0 - Test NextBip*
 prog_line n;
 Select n such that NextBip*(1, n)
 2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19
 5000
-2 - Relation
+1 - Test NextBip*
 prog_line n;
 Select n such that NextBip*(2, n)
-2,3,4,5,6,12,13,14,15,16,17,18,19
+2,3,4,5,6,16,17,18,19
 5000
-3 - Relation
+2 - Test NextBip*
 prog_line n;
 Select n such that NextBip*(3, n)
-2,3,4,5,6,12,13,14,15,16,17,18,19
+2,3,4,5,6,16,17,18,19
 5000
-1 - Relation
+3 - Test NextBip*
 prog_line n;
 Select n such that NextBip*(4, n)
-5,6,12,13,14,15,19
+5,6,19
 5000
-1 - Relation
+4 - Test NextBip*
 prog_line n;
 Select n such that NextBip*(5, n)
-12,13,14,15
+
 5000
-2 - Relation
+5 - Test NextBip*
 prog_line n;
 Select n such that NextBip*(6, n)
-12,13,14,15,19
+19
 5000
-3 - Relation
+6 - Test NextBip*
 prog_line n;
 Select n such that NextBip*(11, n)
 12,13,14,15,2,3,16,17,18,4,5,6,19
 5000
-3 - Relation
+7 - Test NextBip*
 prog_line n;
 Select n such that NextBip*(12, n)
 12,13,14,15,2,3,16,17,18,4,5,6,19
 5000
-3 - Relation
+8 - Test NextBip*
 prog_line n;
 Select n such that NextBip*(19, n)
-12,13,14,15
+
 5000
-1 - Relation
+9 - Test NextBip*
 prog_line n;
 Select n such that NextBip*( n,1)
 
 5000
-2 - Relation
+10 - Test NextBip*
 prog_line n;
 Select n such that NextBip*(n,2)
-1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19
+1,2,3,7,8,9,10,11,12,13,14,15,16,17,18
 5000
-3 - Relation
+11 - Test NextBip*
 prog_line n;
 Select n such that NextBip*(n,3)
-1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19
+1,2,3,7,8,9,10,11,12,13,14,15,16,17,18
 5000
-1 - Relation
+12 - Test NextBip*
 prog_line n;
 Select n such that NextBip*(n,4)
-1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19
+1,2,3,7,8,9,10,11,12,13,14,15,16,17,18
 5000
-2 - Relation
+13 - Test NextBip*
 prog_line n;
 Select n such that NextBip*(n,5)
-1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19
+1,2,3,4,7,8,9,10,11,12,13,14,15,16,17,18
 5000
-3 - Relation
+14 - Test NextBip*
 prog_line n;
 Select n such that NextBip*(n,6)
-1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19
+1,2,3,4,7,8,9,10,11,12,13,14,15,16,17,18
 5000
-3 - Relation
+15 - Test NextBip*
 prog_line n;
 Select n such that NextBip*(n,11)
 1,7,8,9,10
 5000
-3 - Relation
+16 - Test NextBip*
 prog_line n;
 Select n such that NextBip*(n,12)
-1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19
+1,7,8,9,10,11,12,13,14,15
 5000
-3 - Relation
+17 - Test NextBip*
 prog_line n;
 Select n such that NextBip*(n,13)
-1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19
+1,7,8,9,10,11,12,13,14,15
 5000
-1 - Relation
+18 - Test NextBip*
 prog_line n;
 Select n such that NextBip*(n, n)
 8,9,10,12,13,14,15,2,3,16,17,18
 5000
-
-

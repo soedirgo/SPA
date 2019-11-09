@@ -1,11 +1,12 @@
 procedure A {
   call B;
   while(i>0){
-    call C;}
-  if(i>0) then {
     call D;}
+  if(i>0) then {
+    print i;}
   else{
-   call E;}}
+    call E;}}
+
 
 procedure B {
   read mon;
@@ -31,5 +32,5 @@ procedure D {
 }
 
 procedure E {
-  call C;
+  print i;
 }
