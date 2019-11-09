@@ -480,7 +480,7 @@ void DesignExtractor::extractParentT()
 
 void DesignExtractor::extractFollowsT()
 {
-	TABLE followsTable = PKBFollows::getFollowsTable();
+	TABLE followsTable = PKBFollows::getFollowsEntEnt("stmt","stmt");
 	for (auto vectorIter : followsTable) {
 		string followedBy = vectorIter.front();
 		string follows = vectorIter.back();

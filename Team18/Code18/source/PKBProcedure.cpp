@@ -32,11 +32,6 @@ bool PKBProcedure::setProcedure(PROC_NAME procName, STMT_NO startStmtNo, STMT_LI
 	return true;
 };
 
-//Get Procedure Table
-TABLE PKBProcedure::getProcedureTable() {
-	return procedureTable;
-}
-
 //Get LIST_OF_PROC_NAME for Select proc
 LIST_OF_PROC_NAME PKBProcedure::getProcedures() {
 	LIST_OF_PROC_NAME list;

@@ -73,7 +73,6 @@ public:
 	//Parent Functions
 	static bool setParent(STMT_NO parent, STMT_NO child);
 	static bool setParentT(STMT_NO parent, STMT_NO child);
-	static bool isParentExist(STMT_NO child);
 	static STMT_NO getParentStmt(STMT_NO child);
 
 	//Parent Bool Evaluation 

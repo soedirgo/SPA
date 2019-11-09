@@ -45,14 +45,6 @@ STMT_NO PKBParent::getParent(STMT_NO child) {
 	return "";
 }
 
-bool PKBParent::isParentExist(STMT_NO child) {
-	STMT_NO parent = getParent(child);
-	if (parent == "") {
-		return false;
-	}
-	return true;
-}
-
 //Get boolean for Parent(_,_)
 bool PKBParent::isParentAnyAny() {
 	return !parentTable.empty();

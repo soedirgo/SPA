@@ -122,11 +122,6 @@ bool PKB::setParentT(STMT_NO parent, STMT_NO child) {
 	return PKBParent::setParentT(parent, child);
 }
 
-
-bool PKB::isParentExist(STMT_NO child) {
-	return PKBParent::isParentExist(child);
-}
-
 STMT_NO PKB::getParentStmt(STMT_NO child) {
 	return PKBParent::getParent(child);
 }

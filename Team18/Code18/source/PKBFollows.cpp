@@ -31,10 +31,6 @@ STMT_NO PKBFollows::getFollowsStmt(STMT_NO followedBy) {
 	return "";
 }
 
-TABLE PKBFollows::getFollowsTable() {
-	return followsTable;
-}
-
 //Get boolean for Follows(_,_)
 bool PKBFollows::isFollowsAnyAny() {
 	return !followsTable.empty();
