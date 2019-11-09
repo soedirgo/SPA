@@ -23,4 +23,9 @@ assign a;
 Select a such that AffectsBip(10,a)
 10,13,18
 5000
+6-
+assign a;
+Select a such that AffectsBip(17,a)
+26
+5000
 

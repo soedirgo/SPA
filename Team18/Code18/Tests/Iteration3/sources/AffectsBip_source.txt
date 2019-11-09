@@ -24,7 +24,7 @@ procedure C {
 procedure D {
   y = e;
   if(mon<0) then {
-    mon = tues;
+    g = tues;
     tues = wed;
     if(tue<0) then {
        wed = fri;}
