@@ -15,7 +15,7 @@ procedure B {
 }
 
 procedure C {
-  wed = tues;
+  tues = wed;
 }
 
 procedure D {
