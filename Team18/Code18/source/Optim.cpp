@@ -48,6 +48,7 @@ namespace Evaluator {
         }
 
         // initialize synonym connections
+        id.clear();
         for (size_t i = 0; i < synonyms.size(); ++i) {
             id[i] = i;
         }

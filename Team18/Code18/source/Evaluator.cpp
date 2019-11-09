@@ -113,7 +113,6 @@ namespace Evaluator {
         }
 
         // merge other groups
-        Result otherResult = Result(true, {}, {});
         for (auto& groupIt : otherGroups) {
             sort(groupIt);
             Result groupResult = Result(true, {}, {});
@@ -126,8 +125,7 @@ namespace Evaluator {
                         return {};
                 }
             }
-            otherResult = Result::merge(otherResult, groupResult);
-            if (!otherResult.hasResults()) {
+            if (!groupResult.hasResults()) {
                 if (selSyns[0] == "BOOLEAN")
                     return { "FALSE" };
                 else
