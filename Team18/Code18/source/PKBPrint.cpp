@@ -20,8 +20,8 @@ VAR_NAME PKBPrint::getPrintVariable(STMT_NO stmtNo) {
 	}
 }
 //Get variable list from printTable
-VAR_LIST PKBPrint::getAllPrintVar() {
-	VAR_LIST list;
+LIST_OF_VARIABLE_NAME PKBPrint::getAllPrintVar() {
+	LIST_OF_VARIABLE_NAME list;
 	for (auto vectorIter : printTable) {
 		vector<string> tuple = vector<string>();
 		tuple.push_back(vectorIter.front());
@@ -31,7 +31,6 @@ VAR_LIST PKBPrint::getAllPrintVar() {
 	return list;
 }
 //Clear the PKB printTable
-bool PKBPrint::clear() {
+void PKBPrint::clear() {
 	printTable.clear();
-	return true;
 }

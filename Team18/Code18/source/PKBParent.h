@@ -37,7 +37,7 @@ public:
 	static STMT_LIST getParentTEntIdent(STMT_TYPE s1, STMT_NO s2);
 	static TABLE getParentTEntEnt(STMT_TYPE s1, STMT_TYPE s2);
 	// Clear
-	static bool clear();
+	static void clear();
 
 private:
 	static TABLE parentTable;

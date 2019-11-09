@@ -18,7 +18,7 @@
 #include "PKBWith.h"
 using namespace std;
 
-bool PKB::clear()
+void PKB::clear()
 {
 	PKBCall::clear();
 	PKBConstant::clear();
@@ -33,7 +33,6 @@ bool PKB::clear()
 	PKBStmt::clear();
 	PKBUses::clear();
 	PKBVariable::clear();
-	return true;
 }
 
 bool PKB::clearTempPKB()
@@ -224,20 +223,20 @@ STMT_LIST PKB::getModifiesSEntAny(STMT_TYPE type) {
 TABLE PKB::getModifiesSEntIdent(STMT_TYPE type, VAR_NAME varName) {
 	return PKBModifies::getModifiesSEntIdent(type, varName);
 }
-VAR_LIST PKB::getModifiesSIdentEnt(STMT_NO stmtNo) {
+LIST_OF_VARIABLE_NAME PKB::getModifiesSIdentEnt(STMT_NO stmtNo) {
 	return PKBModifies::getModifiesSIdentEnt(stmtNo);
 }
 TABLE PKB::getModifiesSEntEnt(STMT_TYPE type) {
 	return PKBModifies::getModifiesSEntEnt(type);
 }
 
-PROC_LIST PKB::getModifiesPEntAny() {
+LIST_OF_PROC_NAME PKB::getModifiesPEntAny() {
 	return PKBModifies::getModifiesPEntAny();
 }
-PROC_LIST PKB::getModifiesPEntIdent(VAR_NAME varName) {
+LIST_OF_PROC_NAME PKB::getModifiesPEntIdent(VAR_NAME varName) {
 	return PKBModifies::getModifiesPEntIdent(varName);
 }
-VAR_LIST PKB::getModifiesPIdentEnt(PROC_NAME procName) {
+LIST_OF_VARIABLE_NAME PKB::getModifiesPIdentEnt(PROC_NAME procName) {
 	return PKBModifies::getModifiesPIdentEnt(procName);
 }
 TABLE PKB::getModifiesPEntEnt() {
@@ -277,20 +276,20 @@ STMT_LIST PKB::getUsesSEntAny(STMT_TYPE type) {
 STMT_LIST PKB::getUsesSEntIdent(STMT_TYPE type, VAR_NAME varName) {
 	return  PKBUses::getUsesSEntIdent(type, varName);
 }
-VAR_LIST PKB::getUsesSIdentEnt(STMT_NO stmtNo) {
+LIST_OF_VARIABLE_NAME PKB::getUsesSIdentEnt(STMT_NO stmtNo) {
 	return  PKBUses::getUsesSIdentEnt(stmtNo);
 }
 TABLE PKB::getUsesSEntEnt(STMT_TYPE type) {
 	return PKBUses::getUsesSEntEnt(type);
 }
 
-PROC_LIST PKB::getUsesPEntAny() {
+LIST_OF_PROC_NAME PKB::getUsesPEntAny() {
 	return PKBUses::getUsesPEntAny();
 }
-PROC_LIST PKB::getUsesPEntIdent(VAR_NAME varName) {
+LIST_OF_PROC_NAME PKB::getUsesPEntIdent(VAR_NAME varName) {
 	return PKBUses::getUsesPEntIdent(varName);
 }
-VAR_LIST PKB::getUsesPIdentEnt(PROC_NAME procName) {
+LIST_OF_VARIABLE_NAME PKB::getUsesPIdentEnt(PROC_NAME procName) {
 	return PKBUses::getUsesPIdentEnt(procName);
 }
 TABLE PKB::getUsesPEntEnt() {
@@ -303,7 +302,7 @@ bool PKB::setVariable(VAR_NAME varName) {
 	return PKBVariable::setVariable(varName);
 }
 
-VAR_LIST PKB::getVariables() {
+LIST_OF_VARIABLE_NAME PKB::getVariables() {
 	return PKBVariable::getVariables();
 }
 
@@ -313,7 +312,7 @@ bool PKB::setConstant(CONST_VAL constantVal) {
 	return PKBConstant::setConstant(constantVal);
 }
 
-CONST_LIST PKB::getConstants() {
+LIST_OF_CONS_VAL PKB::getConstants() {
 	return PKBConstant::getConstants();
 }
 
@@ -362,7 +361,7 @@ bool PKB::setPrint(STMT_NO stmtNo, VAR_NAME varName) {
 	return PKBPrint::setPrint(stmtNo, varName);
 };
 
-VAR_LIST PKB::getAllPrintVar() {
+LIST_OF_VARIABLE_NAME PKB::getAllPrintVar() {
 	return PKBPrint::getAllPrintVar();
 }
 
@@ -379,7 +378,7 @@ bool PKB::setRead(STMT_NO stmtNo, VAR_NAME varName) {
 	return PKBRead::setRead(stmtNo, varName);
 };
 
-VAR_LIST PKB::getAllReadVar() {
+LIST_OF_VARIABLE_NAME PKB::getAllReadVar() {
 	return PKBRead::getAllReadVar();
 }
 
@@ -396,7 +395,7 @@ PROC_NAME PKB::getProcByStmt(STMT_NO stmtNo) {
 	return PKBProcedure::getProcByStmt(stmtNo);
 }
 
-PROC_LIST PKB::getProcedures() {
+LIST_OF_PROC_NAME PKB::getProcedures() {
 	return PKBProcedure::getProcedures();
 };
 
@@ -426,7 +425,7 @@ bool PKB::setCallT(PROC_NAME caller, PROC_NAME callee) {
 	return PKBCall::setCallTProc(caller, callee);
 };
 
-PROC_LIST PKB::getAllCallProc() {
+LIST_OF_PROC_NAME PKB::getAllCallProc() {
 	return PKBCall::getAllCallProc();
 }
 

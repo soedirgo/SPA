@@ -475,8 +475,7 @@ TABLE PKBParent::getParentTEntEnt(STMT_TYPE type1, STMT_TYPE type2) {
 	return resultTable;
 }
 //Clear all PKB Parent, Parent* tables
-bool PKBParent::clear() {
+void PKBParent::clear() {
 	parentTable.clear();
 	parentTTable.clear();
-	return true;
 }

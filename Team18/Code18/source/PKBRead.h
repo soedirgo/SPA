@@ -8,9 +8,9 @@ class PKBRead {
 public:
 	static bool setRead(STMT_NO stmtNo, VAR_NAME varName);
 	static VAR_NAME getReadVariable(STMT_NO);
-	static VAR_LIST getAllReadVar();
+	static LIST_OF_VARIABLE_NAME getAllReadVar();
 	// Clear
-	static bool clear();
+	static void clear();
 
 private:
 	static TABLE readTable;

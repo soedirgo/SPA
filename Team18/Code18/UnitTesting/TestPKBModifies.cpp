@@ -315,7 +315,7 @@ namespace UnitTesting
 
 			//All empty result queries
 			STMT_LIST expected = {{"x"}};
-			VAR_LIST result = pkb.getModifiesSIdentEnt("1");
+			LIST_OF_VARIABLE_NAME result = pkb.getModifiesSIdentEnt("1");
 			result = pkb.getModifiesSIdentEnt("4");
 			Assert::IsTrue(result == expected);
 			result = pkb.getModifiesSIdentEnt("7");
@@ -354,8 +354,8 @@ namespace UnitTesting
 		}
 		TEST_METHOD(getModifiesPEntAny) {
 			PKBModifies pkb;
-			PROC_LIST expected = { {"First"}, {"Second"}, {"Third"} };
-			PROC_LIST result = pkb.getModifiesPEntAny();
+			LIST_OF_PROC_NAME expected = { {"First"}, {"Second"}, {"Third"} };
+			LIST_OF_PROC_NAME result = pkb.getModifiesPEntAny();
 			Assert::IsTrue(result == expected);
 		}
 
@@ -412,8 +412,8 @@ namespace UnitTesting
 		}
 		TEST_METHOD(getModifiesPEntIdent) {
 			PKBModifies pkb;
-			PROC_LIST expected = { {"First"} , {"Second"}, {"Third"} };
-			PROC_LIST result = pkb.getModifiesPEntIdent("z");
+			LIST_OF_PROC_NAME expected = { {"First"} , {"Second"}, {"Third"} };
+			LIST_OF_PROC_NAME result = pkb.getModifiesPEntIdent("z");
 			Assert::IsTrue(result == expected);
 
 			result = pkb.getModifiesPEntIdent("v");
@@ -428,8 +428,8 @@ namespace UnitTesting
 		}
 		TEST_METHOD(getModifiesPIdentEnt) {
 			PKBModifies pkb;
-			PROC_LIST expected = { {"x"}, {"y"},{"z"}, {"i"}, {"v"} };
-			PROC_LIST result = pkb.getModifiesPIdentEnt("First");
+			LIST_OF_PROC_NAME expected = { {"x"}, {"y"},{"z"}, {"i"}, {"v"} };
+			LIST_OF_PROC_NAME result = pkb.getModifiesPIdentEnt("First");
 			Assert::IsTrue(result == expected);
 
 			result = pkb.getModifiesPIdentEnt("Second");

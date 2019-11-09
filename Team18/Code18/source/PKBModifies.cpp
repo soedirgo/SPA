@@ -6,10 +6,9 @@ using namespace std;
 TABLE PKBModifies::modifiesStmtTable;
 TABLE PKBModifies::modifiesProcTable;
 
-bool PKBModifies::clear() {
+void PKBModifies::clear() {
 	modifiesStmtTable.clear();
 	modifiesProcTable.clear();
-	return true;
 }
 
 bool PKBModifies::setModifiesS(STMT_NO stmtNo, VAR_NAME varName) {
@@ -132,8 +131,8 @@ STMT_LIST PKBModifies::getModifiesSEntIdent(STMT_TYPE type, VAR_NAME varName) {
 
 // Modifies( 3 , v) 
 //LHS fixed, RHS syn
-VAR_LIST PKBModifies::getModifiesSIdentEnt(STMT_NO stmtNo) {
-	VAR_LIST varListResult;
+LIST_OF_VARIABLE_NAME PKBModifies::getModifiesSIdentEnt(STMT_NO stmtNo) {
+	LIST_OF_VARIABLE_NAME varListResult;
 	for (auto vectorIter : modifiesStmtTable) {
 
 		if (vectorIter.front() == stmtNo) {
@@ -169,8 +168,8 @@ TABLE PKBModifies::getModifiesSEntEnt(STMT_TYPE type) {
 }
 
 //Procedure p1 ; Select Modifies(p1,__) 
-PROC_LIST PKBModifies::getModifiesPEntAny() {
-	PROC_LIST result;
+LIST_OF_PROC_NAME PKBModifies::getModifiesPEntAny() {
+	LIST_OF_PROC_NAME result;
 
 	for (auto iter : modifiesProcTable) {
 		vector<string> myVector = vector<string>();
@@ -182,8 +181,8 @@ PROC_LIST PKBModifies::getModifiesPEntAny() {
 
 //select p such that Modifies(p,"x") 
 //LHS proc synnonym, RHS fixed var 
-PROC_LIST PKBModifies::getModifiesPEntIdent(VAR_NAME varName) {
-	PROC_LIST procListResult;
+LIST_OF_PROC_NAME PKBModifies::getModifiesPEntIdent(VAR_NAME varName) {
+	LIST_OF_PROC_NAME procListResult;
 	for (auto vectorIter : modifiesProcTable) {
 		if (vectorIter.back() == varName) {
 			vector<string> myVector = vector<string>();
@@ -197,8 +196,8 @@ PROC_LIST PKBModifies::getModifiesPEntIdent(VAR_NAME varName) {
 
 //Modifies("procName", v)  
 //LHS proc name string, RHS var syn 
-PROC_LIST PKBModifies::getModifiesPIdentEnt(PROC_NAME procName) {
-	VAR_LIST varListResult;
+LIST_OF_PROC_NAME PKBModifies::getModifiesPIdentEnt(PROC_NAME procName) {
+	LIST_OF_VARIABLE_NAME varListResult;
 	for (auto vectorIter : modifiesProcTable) {
 		if (vectorIter.front() == procName) {
 			vector<string> myVector = vector<string>();

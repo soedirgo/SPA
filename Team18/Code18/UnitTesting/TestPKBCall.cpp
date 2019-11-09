@@ -121,7 +121,7 @@ namespace UnitTesting
 		TEST_METHOD(CallsEntIdent)
 		{
 			PKBCall PKB;
-			PROC_LIST actual, expected;
+			LIST_OF_PROC_NAME actual, expected;
 
 			actual = PKB.getCallsEntIdent("First");
 			Assert::IsTrue(actual.size() == 0);
@@ -134,7 +134,7 @@ namespace UnitTesting
 		TEST_METHOD(CallsIdentEnt)
 		{
 			PKBCall PKB;
-			PROC_LIST actual, expected;
+			LIST_OF_PROC_NAME actual, expected;
 
 			actual = PKB.getCallsIdentEnt("Third");
 			Assert::IsTrue(actual.size() == 0);
@@ -211,7 +211,7 @@ namespace UnitTesting
 		TEST_METHOD(getCallsTEntIdent)
 		{
 			PKBCall PKB;
-			PROC_LIST actual, expected;
+			LIST_OF_PROC_NAME actual, expected;
 
 			actual = PKB.getCallsTEntIdent("First");
 			Assert::IsTrue(actual.size() == 0);
@@ -224,7 +224,7 @@ namespace UnitTesting
 		TEST_METHOD(getCallsTIdentEnt)
 		{
 			PKBCall PKB;
-			PROC_LIST actual, expected;
+			LIST_OF_PROC_NAME actual, expected;
 
 			actual = PKB.getCallsTIdentEnt("Third");
 			Assert::IsTrue(actual.size() == 0);

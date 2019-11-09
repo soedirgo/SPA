@@ -11,11 +11,10 @@ bool PKBVariable::setVariable(VAR_NAME varName) {
 	return true;
 }
 //Get Variable List for Select variable
-VAR_LIST PKBVariable::getVariables() {
+LIST_OF_VARIABLE_NAME PKBVariable::getVariables() {
 	return varTable;
 }
 //Clear the PKB data for varTable
-bool PKBVariable::clear() {
+void PKBVariable::clear() {
 	varTable.clear();
-	return true;
 }

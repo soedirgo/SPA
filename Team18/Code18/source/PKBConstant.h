@@ -7,9 +7,9 @@ class PKBConstant {
 public:
 
 	static bool setConstant(CONST_VAL constVal);
-	static CONST_LIST getConstants();
+	static LIST_OF_CONS_VAL getConstants();
 	// Clear
-	static bool clear();
+	static void clear();
 
 private:
 	static TABLE constantTable;

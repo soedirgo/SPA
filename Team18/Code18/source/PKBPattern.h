@@ -35,7 +35,7 @@ public:
 	static TABLE getPatternAssignEntFull(EXPR_SPEC expression);
 
 	// Clear
-	static bool clear();
+	static void clear();
 
 private:
 	static TABLE patternIfTable;

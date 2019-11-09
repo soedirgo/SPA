@@ -20,16 +20,16 @@ public:
 	//Table Evaluation
 	static STMT_LIST getModifiesSEntAny(STMT_TYPE type);
 	static TABLE getModifiesSEntIdent(STMT_TYPE type, VAR_NAME varName);
-	static VAR_LIST getModifiesSIdentEnt(STMT_NO stmtNo);
+	static LIST_OF_VARIABLE_NAME getModifiesSIdentEnt(STMT_NO stmtNo);
 	static TABLE getModifiesSEntEnt(STMT_TYPE type);
 
-	static PROC_LIST getModifiesPEntAny();
-	static PROC_LIST getModifiesPEntIdent(VAR_NAME varName);
-	static VAR_LIST getModifiesPIdentEnt(PROC_NAME procName);
+	static LIST_OF_PROC_NAME getModifiesPEntAny();
+	static LIST_OF_PROC_NAME getModifiesPEntIdent(VAR_NAME varName);
+	static LIST_OF_VARIABLE_NAME getModifiesPIdentEnt(PROC_NAME procName);
 	static TABLE getModifiesPEntEnt();
 
 	// Clear
-	static bool clear();
+	static void clear();
 
 private:
 	static TABLE  modifiesStmtTable;

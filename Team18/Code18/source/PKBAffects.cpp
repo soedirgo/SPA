@@ -23,10 +23,9 @@ bool PKBAffects::clearCache() {
 }
 
 //Clear AffectsBip and AffectsBip* table from PKB
-bool PKBAffects::clear() {
+void PKBAffects::clear() {
 	affectsBipTable.clear();
 	affectsBipTTable.clear();
-	return true;
 }
 
 

@@ -37,7 +37,7 @@ public:
 	static TABLE getFollowsTEntEnt(STMT_TYPE s1, STMT_TYPE s2);
 
 	// Clear
-	static bool clear();
+	static void clear();
 
 private:
 	static TABLE followsTable;

@@ -10,8 +10,8 @@ bool PKBConstant::setConstant(CONST_VAL constValue) {
 	return true;
 }
 
-CONST_LIST PKBConstant::getConstants() {
-	CONST_LIST list;
+LIST_OF_CONS_VAL PKBConstant::getConstants() {
+	LIST_OF_CONS_VAL list;
 	for (auto vectorIter : constantTable) {
 		vector<string> tuple = vector<string>();
 		tuple.push_back(vectorIter.back());
@@ -20,7 +20,6 @@ CONST_LIST PKBConstant::getConstants() {
 	return list;
 }
 
-bool PKBConstant::clear() {
+void PKBConstant::clear() {
 	constantTable.clear();
-	return true;
 }

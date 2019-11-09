@@ -233,9 +233,8 @@ TABLE PKBPattern::getPatternAssignEntFull(EXPR_SPEC expression) {
 }
 
 
-bool PKBPattern::clear() {
+void PKBPattern::clear() {
 	patternIfTable.clear();
 	patternWhileTable.clear();
 	patternAssignTable.clear();
-	return true;
 }

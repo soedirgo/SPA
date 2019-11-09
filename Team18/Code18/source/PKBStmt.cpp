@@ -43,7 +43,6 @@ STMT_TYPE PKBStmt::getTypeByStmtNo(STMT_NO stmtNo) {
 };
 
 //Clear the PKB stmtTable
-bool PKBStmt::clear() {
+void PKBStmt::clear() {
 	stmtTable.clear();
-	return true;
 }

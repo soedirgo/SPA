@@ -11,7 +11,7 @@ public:
 	static STMT_LIST getStmtsByType(STMT_TYPE type);
 	static STMT_TYPE getTypeByStmtNo(STMT_NO stmtNo);
 	// Clear
-	static bool clear();
+	static void clear();
 
 private:
 	static TABLE stmtTable;

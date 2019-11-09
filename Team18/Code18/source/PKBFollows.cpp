@@ -458,8 +458,7 @@ TABLE PKBFollows::getFollowsTEntEnt(STMT_TYPE type1, STMT_TYPE type2) {
 	return resultTable;
 }
 //clear PKB Follows, Follows* relationship data
-bool PKBFollows::clear() {
+void PKBFollows::clear() {
 	followsTable.clear();
 	followsTTable.clear();
-	return true;
 }

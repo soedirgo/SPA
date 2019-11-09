@@ -297,8 +297,8 @@ namespace UnitTesting
 		}
 		TEST_METHOD(getUsesPEntAny) {
 			PKBUses pkb;
-			PROC_LIST expected = { {"First"}, {"Second"}, {"Third"} };
-			PROC_LIST result = pkb.getUsesPEntAny();
+			LIST_OF_PROC_NAME expected = { {"First"}, {"Second"}, {"Third"} };
+			LIST_OF_PROC_NAME result = pkb.getUsesPEntAny();
 			Assert::IsTrue(result == expected);
 		}
 
@@ -353,8 +353,8 @@ namespace UnitTesting
 		}
 		TEST_METHOD(getUsesPEntIdent) {
 			PKBUses pkb;
-			PROC_LIST expected = { {"First"} , {"Second"}, {"Third"} };
-			PROC_LIST result = pkb.getUsesPEntIdent("z");
+			LIST_OF_PROC_NAME expected = { {"First"} , {"Second"}, {"Third"} };
+			LIST_OF_PROC_NAME result = pkb.getUsesPEntIdent("z");
 			Assert::IsTrue(result == expected);
 
 			result = pkb.getUsesPEntIdent("v");
@@ -369,8 +369,8 @@ namespace UnitTesting
 		}
 		TEST_METHOD(getUsesPIdentEnt) {
 			PKBUses pkb;
-			PROC_LIST expected = { {"x"}, {"y"},{"z"}, {"i"}, {"v"} };
-			PROC_LIST result = pkb.getUsesPIdentEnt("First");
+			LIST_OF_PROC_NAME expected = { {"x"}, {"y"},{"z"}, {"i"}, {"v"} };
+			LIST_OF_PROC_NAME result = pkb.getUsesPIdentEnt("First");
 			Assert::IsTrue(result == expected);
 
 			result = pkb.getUsesPIdentEnt("Second");

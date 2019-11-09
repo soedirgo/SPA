@@ -5,7 +5,7 @@
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <LocalDebuggerCommandArguments> ..\Tests\Iteration3\sources\NextBipT_source.txt ..\Tests\Iteration3\queries\NextBipT_queries.txt ..\Tests\out.xml</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments> ..\Tests\Iteration3\sources\With_source.txt ..\Tests\Iteration3\queries\With_queries.txt ..\Tests\out.xml</LocalDebuggerCommandArguments>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup>

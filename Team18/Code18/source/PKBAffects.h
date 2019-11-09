@@ -73,7 +73,7 @@ public:
 	static STMT_LIST getAffectsBipTSelf();
 
 	// Clear
-	static bool clear();
+	static void clear();
 	static bool clearCache();
 
 private:

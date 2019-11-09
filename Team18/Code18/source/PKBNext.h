@@ -73,7 +73,7 @@ public:
 	static LINE_LIST getNextBipTSelf(STMT_TYPE stmtType);
 
 	// Clear
-	static bool clear();
+	static void clear();
 
 	// Clear Next*
 	static bool clearCache();

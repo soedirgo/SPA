@@ -20,19 +20,19 @@ public:
 	//Table Evaluation
 	static STMT_LIST getUsesSEntAny(STMT_TYPE type);
 	static STMT_LIST getUsesSEntIdent(STMT_TYPE type, VAR_NAME varName);
-	static VAR_LIST getUsesSIdentEnt(STMT_NO stmtNo); 
+	static LIST_OF_VARIABLE_NAME getUsesSIdentEnt(STMT_NO stmtNo); 
 	static TABLE getUsesSEntEnt(STMT_TYPE type);
 
-	static PROC_LIST getUsesPEntAny(); 
-	static PROC_LIST getUsesPEntIdent(VAR_NAME varName);
-	static VAR_LIST getUsesPIdentEnt(PROC_NAME procName); 
+	static LIST_OF_PROC_NAME getUsesPEntAny(); 
+	static LIST_OF_PROC_NAME getUsesPEntIdent(VAR_NAME varName);
+	static LIST_OF_VARIABLE_NAME getUsesPIdentEnt(PROC_NAME procName); 
 	static TABLE getUsesPEntEnt();
 	
 	static TABLE getUsesPTable();
 	static TABLE getUsesSTable();
 
 	// Clear
-	static bool clear();
+	static void clear();
 
 private:
 	static TABLE usesStmtTable;

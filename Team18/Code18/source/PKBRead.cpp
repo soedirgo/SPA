@@ -20,8 +20,8 @@ VAR_NAME PKBRead::getReadVariable(STMT_NO stmtNo) {
 	}
 }
 //Get variable list from readTable
-VAR_LIST PKBRead::getAllReadVar() {
-	VAR_LIST list;
+LIST_OF_VARIABLE_NAME PKBRead::getAllReadVar() {
+	LIST_OF_VARIABLE_NAME list;
 	for (auto vectorIter : readTable) {
 		vector<string> tuple = vector<string>();
 		tuple.push_back(vectorIter.front());
@@ -31,7 +31,6 @@ VAR_LIST PKBRead::getAllReadVar() {
 	return list;
 }
 //Clear the PKB readTable
-bool PKBRead::clear() {
+void PKBRead::clear() {
 	readTable.clear();
-	return true;
 }

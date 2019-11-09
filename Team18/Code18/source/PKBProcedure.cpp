@@ -37,9 +37,9 @@ TABLE PKBProcedure::getProcedureTable() {
 	return procedureTable;
 }
 
-//Get PROC_LIST for Select proc
-PROC_LIST PKBProcedure::getProcedures() {
-	PROC_LIST list;
+//Get LIST_OF_PROC_NAME for Select proc
+LIST_OF_PROC_NAME PKBProcedure::getProcedures() {
+	LIST_OF_PROC_NAME list;
 	for (auto vectorIter : procedureTable) {
 		vector<string> tuple = vector<string>();
 		tuple.push_back(vectorIter.front());
@@ -61,8 +61,7 @@ TABLE PKBProcedure::getProcedureStartEnd(PROC_NAME procName) {
 	return list;
 };
 //Clear all PKB procedure Table
-bool PKBProcedure::clear() {
+void PKBProcedure::clear() {
 	procedureTable.clear();
 	procByStmtTable.clear();
-	return true;
 }

@@ -6,12 +6,12 @@ class PKB {
 public:
 	
 	// Clear PKB database
-	static bool clear();
+	static void clear();
 	static bool clearTempPKB();
 
 	//Variable Functions
 	static bool setVariable(VAR_NAME varName);
-	static VAR_LIST getVariables();
+	static LIST_OF_VARIABLE_NAME getVariables();
 
 	//Stmt Functions
 	static bool setStmt(STMT_NO stmtNo, STMT_TYPE type);
@@ -25,22 +25,22 @@ public:
 	static STMT_LIST getProgLines();
 
 	//Procedure Functions
-	static PROC_LIST getProcedures();
+	static LIST_OF_PROC_NAME getProcedures();
 	static bool setProcByStmt(STMT_NO stmtNo, PROC_NAME proc);
 	static PROC_NAME getProcByStmt(STMT_NO stmtNo);
 	static bool setProcedure(PROC_NAME procName, STMT_NO start, STMT_LIST end);
 
 	//Print Functions
 	static bool setPrint(STMT_NO stmtNo, VAR_NAME varName);
-	static VAR_LIST getAllPrintVar();
+	static LIST_OF_VARIABLE_NAME getAllPrintVar();
 
 	//Read Functions
 	static bool setRead(STMT_NO stmtNo, VAR_NAME varName);
-	static VAR_LIST getAllReadVar();
+	static LIST_OF_VARIABLE_NAME getAllReadVar();
 
 	//Constant Functions
 	static bool setConstant( CONST_VAL constantVal);
-	static CONST_LIST getConstants();
+	static LIST_OF_CONS_VAL getConstants();
 
 	//Follow Functions
 	static bool setFollows(STMT_NO followedBy, STMT_NO follow);
@@ -114,12 +114,12 @@ public:
 	//Modifies Table Evaluation
 	static STMT_LIST getModifiesSEntAny(STMT_TYPE type);
 	static TABLE getModifiesSEntIdent(STMT_TYPE type, VAR_NAME varName);
-	static VAR_LIST getModifiesSIdentEnt(STMT_NO stmtNo);
+	static LIST_OF_VARIABLE_NAME getModifiesSIdentEnt(STMT_NO stmtNo);
 	static TABLE getModifiesSEntEnt(STMT_TYPE type);
 
-	static PROC_LIST getModifiesPEntAny();
-	static PROC_LIST getModifiesPEntIdent(VAR_NAME varName);
-	static VAR_LIST getModifiesPIdentEnt(PROC_NAME procName);
+	static LIST_OF_PROC_NAME getModifiesPEntAny();
+	static LIST_OF_PROC_NAME getModifiesPEntIdent(VAR_NAME varName);
+	static LIST_OF_VARIABLE_NAME getModifiesPIdentEnt(PROC_NAME procName);
 	static TABLE getModifiesPEntEnt();
 
 	//Uses Function
@@ -136,19 +136,19 @@ public:
 	//Uses Table Evaluation
 	static STMT_LIST getUsesSEntAny(STMT_TYPE type);
 	static STMT_LIST getUsesSEntIdent(STMT_TYPE type, VAR_NAME varName);
-	static VAR_LIST getUsesSIdentEnt(STMT_NO stmtNo);
+	static LIST_OF_VARIABLE_NAME getUsesSIdentEnt(STMT_NO stmtNo);
 	static TABLE getUsesSEntEnt(STMT_TYPE type);
 
-	static PROC_LIST getUsesPEntAny();
-	static PROC_LIST getUsesPEntIdent(VAR_NAME varName);
-	static VAR_LIST getUsesPIdentEnt(PROC_NAME procName);
+	static LIST_OF_PROC_NAME getUsesPEntAny();
+	static LIST_OF_PROC_NAME getUsesPEntIdent(VAR_NAME varName);
+	static LIST_OF_VARIABLE_NAME getUsesPIdentEnt(PROC_NAME procName);
 	static TABLE getUsesPEntEnt();
 
 	//Call Function
 	static bool setCallStmt(STMT_NO stmtNo, PROC_NAME procName);
 	static bool setCallProc(PROC_NAME caller, PROC_NAME callee);
 	static bool setCallT(PROC_NAME caller, PROC_NAME callee);
-	static PROC_LIST getAllCallProc();
+	static LIST_OF_PROC_NAME getAllCallProc();
 	static PROC_NAME getCallProcByStmt(STMT_NO stmtNo);
 
 	//Call Bool Evaluation
@@ -163,16 +163,16 @@ public:
 	static bool isCallsTIdentIdent(PROC_NAME p1, PROC_NAME p2);
 
 	//Call Table Evaluation
-	static PROC_LIST getCallsAnyEnt();
-	static PROC_LIST getCallsIdentEnt(PROC_NAME p1);
-	static PROC_LIST getCallsEntAny();
-	static PROC_LIST getCallsEntIdent(PROC_NAME p2);
+	static LIST_OF_PROC_NAME getCallsAnyEnt();
+	static LIST_OF_PROC_NAME getCallsIdentEnt(PROC_NAME p1);
+	static LIST_OF_PROC_NAME getCallsEntAny();
+	static LIST_OF_PROC_NAME getCallsEntIdent(PROC_NAME p2);
 	static TABLE getCallsEntEnt();
 
-	static PROC_LIST getCallsTAnyEnt();
-	static PROC_LIST getCallsTIdentEnt(PROC_NAME p1);
-	static PROC_LIST getCallsTEntAny();
-	static PROC_LIST getCallsTEntIdent(PROC_NAME p2);
+	static LIST_OF_PROC_NAME getCallsTAnyEnt();
+	static LIST_OF_PROC_NAME getCallsTIdentEnt(PROC_NAME p1);
+	static LIST_OF_PROC_NAME getCallsTEntAny();
+	static LIST_OF_PROC_NAME getCallsTEntIdent(PROC_NAME p2);
 	static TABLE getCallsTEntEnt();
 
 	//Next Function

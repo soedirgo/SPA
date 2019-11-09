@@ -276,11 +276,10 @@ bool PKBNext::isNextBipTIdentIdent(PROG_LINE currentLine, PROG_LINE nextLine) {
 	return false;
 }
 //Clear Next, NextBip, NextBip* table from PKB
-bool PKBNext::clear() {
+void PKBNext::clear() {
 	nextTable.clear();
 	nextBipTable.clear();
 	nextBipTTable.clear();
-	return true;
 }
 //Clear cache data, such as Next* data from PKB
 bool PKBNext::clearCache() {
@@ -1079,7 +1078,7 @@ TABLE PKBNext::getNextBipTEntEnt(STMT_TYPE type1, STMT_TYPE type2) {
 }
 //Get LINE_LIST for NextBip*(n,n)
 LINE_LIST PKBNext::getNextBipTSelf(STMT_TYPE type) {
-	PROC_LIST resultTable;
+	LIST_OF_PROC_NAME resultTable;
 	LINE_LIST list;
 	PROG_LINE n;
 	if (type == "stmt" || type == "prog_line") {

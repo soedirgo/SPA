@@ -22,10 +22,9 @@ bool PKBUses::setUsesP(PROC_NAME procName, VAR_NAME varName) {
 	return true;
 }
 
-bool PKBUses::clear() {
+void PKBUses::clear() {
 	usesStmtTable.clear();
 	usesProcTable.clear();
-	return true;
 }
 
 TABLE PKBUses::getUsesPTable() {
@@ -148,8 +147,8 @@ STMT_LIST PKBUses::getUsesSEntIdent(STMT_TYPE type, VAR_NAME varName) {
 
 // S Uses( 3 , v) 
 //LHS fixed, RHS syn
-VAR_LIST PKBUses::getUsesSIdentEnt(STMT_NO stmtNo) {
-	VAR_LIST varListResult;
+LIST_OF_VARIABLE_NAME PKBUses::getUsesSIdentEnt(STMT_NO stmtNo) {
+	LIST_OF_VARIABLE_NAME varListResult;
 	for (auto vectorIter : usesStmtTable) {
 
 		if (vectorIter.front() == stmtNo) {
@@ -185,8 +184,8 @@ TABLE PKBUses::getUsesSEntEnt(STMT_TYPE type) {
 }
 
 //Procedure p1 ; Select Uses(p1,__) 
-PROC_LIST PKBUses::getUsesPEntAny() {
-	PROC_LIST result;
+LIST_OF_PROC_NAME PKBUses::getUsesPEntAny() {
+	LIST_OF_PROC_NAME result;
 
 	for (auto iter : usesProcTable) {
 		vector<string> myVector = vector<string>();
@@ -198,8 +197,8 @@ PROC_LIST PKBUses::getUsesPEntAny() {
 
 //select p such that uses(p,"x") 
 //LHS proc synnonym, RHS fixed var 
-PROC_LIST PKBUses::getUsesPEntIdent(VAR_NAME varName) {
-	PROC_LIST procListResult;
+LIST_OF_PROC_NAME PKBUses::getUsesPEntIdent(VAR_NAME varName) {
+	LIST_OF_PROC_NAME procListResult;
 	for (auto vectorIter : usesProcTable) {
 		if (vectorIter.back() == varName) {
 			vector<string> myVector = vector<string>();
@@ -213,8 +212,8 @@ PROC_LIST PKBUses::getUsesPEntIdent(VAR_NAME varName) {
 
 //uses("procName", v)  
 //LHS proc name string, RHS var syn 
-PROC_LIST PKBUses::getUsesPIdentEnt(PROC_NAME procName) {
-	VAR_LIST varListResult;
+LIST_OF_PROC_NAME PKBUses::getUsesPIdentEnt(PROC_NAME procName) {
+	LIST_OF_VARIABLE_NAME varListResult;
 	for (auto vectorIter : usesProcTable) {
 		if (vectorIter.front() == procName) {
 			vector<string> myVector = vector<string>();

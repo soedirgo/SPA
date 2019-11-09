@@ -45,7 +45,7 @@ void DesignExtractor::affectsAny() {
 	for (auto stmt1 : assignStmtTable1) {
 		STMT_NO stmtNo1 = stmt1.front();
 		VAR_NAME varNameModified;
-		VAR_LIST varList1 = PKBModifies::getModifiesSIdentEnt(stmtNo1);
+		LIST_OF_VARIABLE_NAME varList1 = PKBModifies::getModifiesSIdentEnt(stmtNo1);
 		for (auto vectorIter4 : varList1) {
 			varNameModified = vectorIter4.front();
 		}
@@ -56,7 +56,7 @@ void DesignExtractor::affectsAny() {
 }
 void DesignExtractor::isAnyAffectedBy(STMT_NO a1) {
 	VAR_NAME varNameModified;
-	VAR_LIST varList1 = PKBModifies::getModifiesSIdentEnt(a1);
+	LIST_OF_VARIABLE_NAME varList1 = PKBModifies::getModifiesSIdentEnt(a1);
 	for (auto vectorIter4 : varList1) {
 		varNameModified = vectorIter4.front();
 	}
@@ -78,7 +78,7 @@ void DesignExtractor::affectsAll() {
 	for (auto stmt1 : assignStmtTable1) {
 		STMT_NO stmtNo1 = stmt1.front();
 		VAR_NAME varNameModified;
-		VAR_LIST varList1 = PKBModifies::getModifiesSIdentEnt(stmtNo1);
+		LIST_OF_VARIABLE_NAME varList1 = PKBModifies::getModifiesSIdentEnt(stmtNo1);
 		for (auto vectorIter4 : varList1) {
 			varNameModified = vectorIter4.front();
 		}
@@ -88,7 +88,7 @@ void DesignExtractor::affectsAll() {
 
 void DesignExtractor::affectedBy(STMT_NO a1) {
 	VAR_NAME varNameModified;
-	VAR_LIST varList1 = PKBModifies::getModifiesSIdentEnt(a1);
+	LIST_OF_VARIABLE_NAME varList1 = PKBModifies::getModifiesSIdentEnt(a1);
 	for (auto vectorIter4 : varList1) {
 		varNameModified = vectorIter4.front();
 	}
@@ -123,13 +123,13 @@ bool DesignExtractor::isAffects(STMT_NO a1, STMT_NO a2) {
 	}
 	if (PKBStmt::getTypeByStmtNo(a1) == "assign" && PKBStmt::getTypeByStmtNo(a2) == "assign" && sameProc) {
 		// will only have 1 in varList
-		VAR_LIST varList1 = PKBModifies::getModifiesSIdentEnt(a1);
+		LIST_OF_VARIABLE_NAME varList1 = PKBModifies::getModifiesSIdentEnt(a1);
 		VAR_NAME varNameModified;
 		VAR_NAME varNameUses;
 		for (auto vectorIter4 : varList1) {
 			varNameModified = vectorIter4.front();
 		}
-		VAR_LIST varList2 = PKBUses::getUsesSIdentEnt(a2);
+		LIST_OF_VARIABLE_NAME varList2 = PKBUses::getUsesSIdentEnt(a2);
 		for (auto vectorIter4 : varList2) {
 			varNameUses = vectorIter4.front();
 			if (varNameModified == varNameUses) {
@@ -216,13 +216,13 @@ bool DesignExtractor::isAffectsT(STMT_NO a1, STMT_NO a2) {
 	}
 	if (PKBStmt::getTypeByStmtNo(a1) == "assign" && PKBStmt::getTypeByStmtNo(a2) == "assign" && sameProc) {
 		// will only have 1 in varList
-		VAR_LIST varList1 = PKBModifies::getModifiesSIdentEnt(a1);
+		LIST_OF_VARIABLE_NAME varList1 = PKBModifies::getModifiesSIdentEnt(a1);
 		VAR_NAME varNameModified;
 		VAR_NAME varNameUses;
 		for (auto vectorIter4 : varList1) {
 			varNameModified = vectorIter4.front();
 		}
-		VAR_LIST varList2 = PKBUses::getUsesSIdentEnt(a2);
+		LIST_OF_VARIABLE_NAME varList2 = PKBUses::getUsesSIdentEnt(a2);
 		for (auto vectorIter4 : varList2) {
 			varNameUses = vectorIter4.front();
 			if (varNameModified == varNameUses) {
@@ -662,7 +662,7 @@ void DesignExtractor::extractAffectsBip()
 	for (auto stmt1 : assignStmtTable1) {
 		STMT_NO stmtNo1 = stmt1.front();
 		VAR_NAME varNameModified;
-		VAR_LIST varList1 = PKBModifies::getModifiesSIdentEnt(stmtNo1);
+		LIST_OF_VARIABLE_NAME varList1 = PKBModifies::getModifiesSIdentEnt(stmtNo1);
 		for (auto vectorIter4 : varList1) {
 			varNameModified = vectorIter4.front();
 		}
@@ -681,7 +681,7 @@ void DesignExtractor::extractAffectsBipT()
 
 
 void DesignExtractor::recurseCall(PROC_NAME caller, PROC_NAME callee) {
-	PROC_LIST calleeList = PKBCall::getCalleeProc(callee);
+	LIST_OF_PROC_NAME calleeList = PKBCall::getCalleeProc(callee);
 	if (calleeList.size() == 0) {
 		return;
 	}
@@ -702,7 +702,7 @@ void DesignExtractor::recurseFollows(STMT_NO followedBy, STMT_NO follows) {
 }
 
 void DesignExtractor::recurseParent(STMT_NO parent, STMT_NO child) {
-	PROC_LIST childList = PKBParent::getChild(child);
+	LIST_OF_PROC_NAME childList = PKBParent::getChild(child);
 	if (childList.size() == 0) {
 		return;
 	}
@@ -827,7 +827,7 @@ bool DesignExtractor::traverseAffects(STMT_NO a1, STMT_NO a2, VAR_NAME v) {
 				if (PKBStmt::getTypeByStmtNo(stmt) == "assign") {
 					VAR_NAME varNameUses;
 					bool affects = false;
-					VAR_LIST varList2 = PKBUses::getUsesSIdentEnt(stmt);
+					LIST_OF_VARIABLE_NAME varList2 = PKBUses::getUsesSIdentEnt(stmt);
 					for (auto vectorIter4 : varList2) {
 						varNameUses = vectorIter4.front();
 						if (v == varNameUses) {
@@ -844,7 +844,7 @@ bool DesignExtractor::traverseAffects(STMT_NO a1, STMT_NO a2, VAR_NAME v) {
 				if (PKBStmt::getTypeByStmtNo(stmt) == "assign") {
 					VAR_NAME varNameUses;
 					bool affects = false;
-					VAR_LIST varList2 = PKBUses::getUsesSIdentEnt(stmt);
+					LIST_OF_VARIABLE_NAME varList2 = PKBUses::getUsesSIdentEnt(stmt);
 					for (auto vectorIter4 : varList2) {
 						varNameUses = vectorIter4.front();
 						if (v == varNameUses) {
@@ -874,7 +874,7 @@ bool DesignExtractor::traverseAffects(STMT_NO a1, STMT_NO a2, VAR_NAME v) {
 						if (PKBStmt::getTypeByStmtNo(stmt) == "assign") {
 							VAR_NAME varNameUses;
 							bool affects = false;
-							VAR_LIST varList2 = PKBUses::getUsesSIdentEnt(stmt);
+							LIST_OF_VARIABLE_NAME varList2 = PKBUses::getUsesSIdentEnt(stmt);
 							for (auto vectorIter4 : varList2) {
 								varNameUses = vectorIter4.front();
 								if (v == varNameUses) {
@@ -891,7 +891,7 @@ bool DesignExtractor::traverseAffects(STMT_NO a1, STMT_NO a2, VAR_NAME v) {
 						if (PKBStmt::getTypeByStmtNo(stmt) == "assign") {
 							VAR_NAME varNameUses;
 							bool affects = false;
-							VAR_LIST varList2 = PKBUses::getUsesSIdentEnt(stmt);
+							LIST_OF_VARIABLE_NAME varList2 = PKBUses::getUsesSIdentEnt(stmt);
 							for (auto vectorIter4 : varList2) {
 								varNameUses = vectorIter4.front();
 								if (v == varNameUses) {
@@ -924,7 +924,7 @@ void DesignExtractor::traverseAffectsAll(STMT_NO a1, VAR_NAME v) {
 				if (PKBStmt::getTypeByStmtNo(stmt) == "assign") {
 					VAR_NAME varNameUses;
 					bool affects = false;
-					VAR_LIST varList2 = PKBUses::getUsesSIdentEnt(stmt);
+					LIST_OF_VARIABLE_NAME varList2 = PKBUses::getUsesSIdentEnt(stmt);
 					for (auto vectorIter4 : varList2) {
 						varNameUses = vectorIter4.front();
 						if (v == varNameUses) {
@@ -941,7 +941,7 @@ void DesignExtractor::traverseAffectsAll(STMT_NO a1, VAR_NAME v) {
 				if (PKBStmt::getTypeByStmtNo(stmt) == "assign") {
 					VAR_NAME varNameUses;
 					bool affects = false;
-					VAR_LIST varList2 = PKBUses::getUsesSIdentEnt(stmt);
+					LIST_OF_VARIABLE_NAME varList2 = PKBUses::getUsesSIdentEnt(stmt);
 					for (auto vectorIter4 : varList2) {
 						varNameUses = vectorIter4.front();
 						if (v == varNameUses) {
@@ -968,7 +968,7 @@ void DesignExtractor::traverseAffectsAll(STMT_NO a1, VAR_NAME v) {
 						if (PKBStmt::getTypeByStmtNo(stmt) == "assign") {
 							VAR_NAME varNameUses;
 							bool affects = false;
-							VAR_LIST varList2 = PKBUses::getUsesSIdentEnt(stmt);
+							LIST_OF_VARIABLE_NAME varList2 = PKBUses::getUsesSIdentEnt(stmt);
 							for (auto vectorIter4 : varList2) {
 								varNameUses = vectorIter4.front();
 								if (v == varNameUses) {
@@ -985,7 +985,7 @@ void DesignExtractor::traverseAffectsAll(STMT_NO a1, VAR_NAME v) {
 						if (PKBStmt::getTypeByStmtNo(stmt) == "assign") {
 							VAR_NAME varNameUses;
 							bool affects = false;
-							VAR_LIST varList2 = PKBUses::getUsesSIdentEnt(stmt);
+							LIST_OF_VARIABLE_NAME varList2 = PKBUses::getUsesSIdentEnt(stmt);
 							for (auto vectorIter4 : varList2) {
 								varNameUses = vectorIter4.front();
 								if (v == varNameUses) {
@@ -1017,7 +1017,7 @@ void DesignExtractor::traverseAffectsBipAll(STMT_NO a1, VAR_NAME v) {
 				if (PKBStmt::getTypeByStmtNo(stmt) == "assign") {
 					VAR_NAME varNameUses;
 					bool affects = false;
-					VAR_LIST varList2 = PKBUses::getUsesSIdentEnt(stmt);
+					LIST_OF_VARIABLE_NAME varList2 = PKBUses::getUsesSIdentEnt(stmt);
 					for (auto vectorIter4 : varList2) {
 						varNameUses = vectorIter4.front();
 						if (v == varNameUses) {
@@ -1034,7 +1034,7 @@ void DesignExtractor::traverseAffectsBipAll(STMT_NO a1, VAR_NAME v) {
 				if (PKBStmt::getTypeByStmtNo(stmt) == "assign") {
 					VAR_NAME varNameUses;
 					bool affects = false;
-					VAR_LIST varList2 = PKBUses::getUsesSIdentEnt(stmt);
+					LIST_OF_VARIABLE_NAME varList2 = PKBUses::getUsesSIdentEnt(stmt);
 					for (auto vectorIter4 : varList2) {
 						varNameUses = vectorIter4.front();
 						if (v == varNameUses) {
@@ -1061,7 +1061,7 @@ void DesignExtractor::traverseAffectsBipAll(STMT_NO a1, VAR_NAME v) {
 						if (PKBStmt::getTypeByStmtNo(stmt) == "assign") {
 							VAR_NAME varNameUses;
 							bool affects = false;
-							VAR_LIST varList2 = PKBUses::getUsesSIdentEnt(stmt);
+							LIST_OF_VARIABLE_NAME varList2 = PKBUses::getUsesSIdentEnt(stmt);
 							for (auto vectorIter4 : varList2) {
 								varNameUses = vectorIter4.front();
 								if (v == varNameUses) {
@@ -1078,7 +1078,7 @@ void DesignExtractor::traverseAffectsBipAll(STMT_NO a1, VAR_NAME v) {
 						if (PKBStmt::getTypeByStmtNo(stmt) == "assign") {
 							VAR_NAME varNameUses;
 							bool affects = false;
-							VAR_LIST varList2 = PKBUses::getUsesSIdentEnt(stmt);
+							LIST_OF_VARIABLE_NAME varList2 = PKBUses::getUsesSIdentEnt(stmt);
 							for (auto vectorIter4 : varList2) {
 								varNameUses = vectorIter4.front();
 								if (v == varNameUses) {
@@ -1110,7 +1110,7 @@ bool DesignExtractor::traverseAffectsAny(STMT_NO a1, VAR_NAME v) {
 				if (PKBStmt::getTypeByStmtNo(stmt) == "assign") {
 					VAR_NAME varNameUses;
 					bool affects = false;
-					VAR_LIST varList2 = PKBUses::getUsesSIdentEnt(stmt);
+					LIST_OF_VARIABLE_NAME varList2 = PKBUses::getUsesSIdentEnt(stmt);
 					for (auto vectorIter4 : varList2) {
 						varNameUses = vectorIter4.front();
 						if (v == varNameUses) {
@@ -1128,7 +1128,7 @@ bool DesignExtractor::traverseAffectsAny(STMT_NO a1, VAR_NAME v) {
 				if (PKBStmt::getTypeByStmtNo(stmt) == "assign") {
 					VAR_NAME varNameUses;
 					bool affects = false;
-					VAR_LIST varList2 = PKBUses::getUsesSIdentEnt(stmt);
+					LIST_OF_VARIABLE_NAME varList2 = PKBUses::getUsesSIdentEnt(stmt);
 					for (auto vectorIter4 : varList2) {
 						varNameUses = vectorIter4.front();
 						if (v == varNameUses) {
@@ -1156,7 +1156,7 @@ bool DesignExtractor::traverseAffectsAny(STMT_NO a1, VAR_NAME v) {
 						if (PKBStmt::getTypeByStmtNo(stmt) == "assign") {
 							VAR_NAME varNameUses;
 							bool affects = false;
-							VAR_LIST varList2 = PKBUses::getUsesSIdentEnt(stmt);
+							LIST_OF_VARIABLE_NAME varList2 = PKBUses::getUsesSIdentEnt(stmt);
 							for (auto vectorIter4 : varList2) {
 								varNameUses = vectorIter4.front();
 								if (v == varNameUses) {
@@ -1174,7 +1174,7 @@ bool DesignExtractor::traverseAffectsAny(STMT_NO a1, VAR_NAME v) {
 						if (PKBStmt::getTypeByStmtNo(stmt) == "assign") {
 							VAR_NAME varNameUses;
 							bool affects = false;
-							VAR_LIST varList2 = PKBUses::getUsesSIdentEnt(stmt);
+							LIST_OF_VARIABLE_NAME varList2 = PKBUses::getUsesSIdentEnt(stmt);
 							for (auto vectorIter4 : varList2) {
 								varNameUses = vectorIter4.front();
 								if (v == varNameUses) {
@@ -1292,7 +1292,7 @@ void DesignExtractor::recurseAffectsBipTAll(STMT_NO a1) {
 
 bool DesignExtractor::recurseAffectsTAny(STMT_NO a1) {
 	VAR_NAME varNameModified;
-	VAR_LIST varList1 = PKBModifies::getModifiesSIdentEnt(a1);
+	LIST_OF_VARIABLE_NAME varList1 = PKBModifies::getModifiesSIdentEnt(a1);
 	for (auto vectorIter4 : varList1) {
 		varNameModified = vectorIter4.front();
 	}

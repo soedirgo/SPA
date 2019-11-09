@@ -8,7 +8,7 @@
 #include "PKBPrint.h"
 using namespace std;
 
-//Get ENT_LIST such as STMT_LIST or VAR_LIST for with 1 = s.stmt#
+//Get ENT_LIST such as STMT_LIST or LIST_OF_VARIABLE_NAME for with 1 = s.stmt#
 ENT_LIST PKBWith::getWithIdentAttr(IDENT iden, ENT_TYPE ent, ATTR attr) {
 	ENT_LIST resultTable;
 	TABLE list;
@@ -71,6 +71,7 @@ LINE_LIST PKBWith::getWithIdentLine(IDENT iden) {
 			vector<string> tuple = vector<string>();
 			tuple.push_back(vectorIter.front());
 			resultTable.emplace(tuple);
+			break;
 		}
 	}
 	return resultTable;
@@ -207,20 +208,13 @@ TABLE PKBWith::getWithAttrLine(ENT_TYPE ent, ATTR attr) {
 //Get result table with n1 = n2
 TABLE PKBWith::getWithLineLine() {
 	TABLE resultTable;
-	TABLE list1, list2;
+	STMT_LIST list1;
 	list1 = PKBStmt::getStmts();
-	list2 = PKBStmt::getStmts();
 	for (auto vectorIter1 : list1) {
-		for (auto vectorIter2 : list2) {
-			if (vectorIter1.front() == vectorIter2.front()) {
-				vector<string> tuple = vector<string>();
-				tuple.push_back(vectorIter1.front());
-				tuple.push_back(vectorIter2.front());
-				resultTable.emplace(tuple);
-			}
-		}
+		vector<string> tuple = vector<string>();
+		tuple.push_back(vectorIter1.front());
+		tuple.push_back(vectorIter1.front());
+		resultTable.emplace(tuple);
 	}
 	return resultTable;
 }
-
-
