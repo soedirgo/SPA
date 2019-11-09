@@ -37,40 +37,6 @@ PROC_NAME PKBCall::getCallProcByStmt(STMT_NO stmtNo) {
 
 }
 
-LIST_OF_PROC_NAME PKBCall::getCallerProc(PROC_NAME callee) {
-	LIST_OF_PROC_NAME list;
-	for (auto vectorIter : callsProcTable) {
-		vector<string> tuple = vector<string>();
-		if (vectorIter.back() == callee) {
-			tuple.push_back(vectorIter.front());
-			list.emplace(tuple);
-		}
-	}
-	return list;
-}
-
-LIST_OF_PROC_NAME PKBCall::getCalleeProc(PROC_NAME caller) {
-	LIST_OF_PROC_NAME list;
-	for (auto vectorIter : callsProcTable) {
-		vector<string> tuple = vector<string>();
-		if (vectorIter.front() == caller) {
-			tuple.push_back(vectorIter.back());
-			list.emplace(tuple);
-		}
-	}
-	return list;
-}
-
-LIST_OF_PROC_NAME PKBCall::getAllCallProc() {
-	LIST_OF_PROC_NAME list;
-	for (auto vectorIter : callsProcTable) {
-		vector<string> tuple = vector<string>();
-		tuple.push_back(vectorIter.front());
-		list.emplace(tuple);
-	}
-	return list;
-}
-
 //Set Call* Relationship between 2 procedures
 bool PKBCall::setCallTProc(PROC_NAME caller, PROC_NAME callee) {
 	vector<string> tuple = vector<string>();

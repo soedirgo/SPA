@@ -11,9 +11,6 @@ public:
 	static bool setCallTProc(PROC_NAME caller, PROC_NAME callee);
 
 	static PROC_NAME getCallProcByStmt(STMT_NO stmtNo);
-	static LIST_OF_PROC_NAME getCalleeProc(PROC_NAME caller);
-	static LIST_OF_PROC_NAME getCallerProc(PROC_NAME callee);
-	static LIST_OF_PROC_NAME getAllCallProc();
 	static TABLE getCallStmtTable();
 	
 	//Bool Evaluation

@@ -44,13 +44,139 @@ bool PKB::clearTempPKB()
 	return true;
 }
 
+//////////////////////////////////
+//Variable Functions
+//////////////////////////////////
+
+//Set variable into PKB
+bool PKB::setVariable(VAR_NAME varName) {
+	return PKBVariable::setVariable(varName);
+}
+//Get all variables from PKB
+LIST_OF_VARIABLE_NAME PKB::getVariables() {
+	return PKBVariable::getVariables();
+}
+
+//////////////////////////////////
+//Stmt Functions
+//////////////////////////////////
+
+//Set StmtNo into PKB with its type
+bool PKB::setStmt(STMT_NO stmtNo, STMT_TYPE type) {
+	return PKBStmt::setStmt(stmtNo, type);
+}
+//Set all StmtNo from PKB
+STMT_LIST PKB::getStmts() {
+	return PKBStmt::getStmts();
+}
+//Set all while StmtNo from PKB
+STMT_LIST PKB::getWhiles() {
+	return PKBStmt::getStmtsByType("while");
+};
+//Set all assign StmtNo from PKB
+STMT_LIST PKB::getAssigns() {
+	return PKBStmt::getStmtsByType("assign");
+}
+//Set all ifs StmtNo from PKB
+STMT_LIST PKB::getIfs() {
+	return PKBStmt::getStmtsByType("if");
+};
+//Set all print StmtNo from PKB
+STMT_LIST PKB::getPrints() {
+	return PKBStmt::getStmtsByType("print");
+};
+//Set all read StmtNo from PKB
+STMT_LIST PKB::getReads() {
+	return PKBStmt::getStmtsByType("read");
+};
+//Set all call StmtNo from PKB
+STMT_LIST PKB::getCalls() {
+	return PKBStmt::getStmtsByType("call");
+};
+//Set all prog_line StmtNo from PKB
+STMT_LIST PKB::getProgLines() {
+	return PKBStmt::getStmts();
+}
+//Get stmtType by stmtNo from PKB
+STMT_TYPE PKB::getTypeByStmtNo(STMT_NO stmtNo) {
+	return PKBStmt::getTypeByStmtNo(stmtNo);
+}
+
+//Get stmtNo by stmtType from PKB
+STMT_LIST PKB::getStmtsByType(STMT_TYPE type) {
+	return PKBStmt::getStmtsByType(type);
+}
+
+////////////////////////////////////
+// ProecedureTable APIs
+////////////////////////////////////
+
+bool PKB::setProcByStmt(STMT_NO stmtNo, PROC_NAME proc) {
+	return PKBProcedure::setProcByStmt(stmtNo, proc);
+};
+
+bool PKB::setProcedure(PROC_NAME procName, STMT_NO start, STMT_LIST end) {
+	return PKBProcedure::setProcedure(procName, start, end);
+};
+
+PROC_NAME PKB::getProcByStmt(STMT_NO stmtNo) {
+	return PKBProcedure::getProcByStmt(stmtNo);
+}
+
+LIST_OF_PROC_NAME PKB::getProcedures() {
+	return PKBProcedure::getProcedures();
+};
+
+STMT_LIST PKB::getProcedureStartEnd(PROC_NAME procName) {
+	return PKBProcedure::getProcedureStartEnd(procName);
+}
+
+////////////////////////////////////
+// printTable APIs
+////////////////////////////////////
+bool PKB::setPrint(STMT_NO stmtNo, VAR_NAME varName) {
+	return PKBPrint::setPrint(stmtNo, varName);
+};
+
+LIST_OF_VARIABLE_NAME PKB::getAllPrintVar() {
+	return PKBPrint::getAllPrintVar();
+}
+
+////////////////////////////////////
+// ReadTable APIs
+////////////////////////////////////
+bool PKB::setRead(STMT_NO stmtNo, VAR_NAME varName) {
+	return PKBRead::setRead(stmtNo, varName);
+};
+
+LIST_OF_VARIABLE_NAME PKB::getAllReadVar() {
+	return PKBRead::getAllReadVar();
+}
+
+////////////////////////////////////
+// constantTable APIs
+////////////////////////////////////
+bool PKB::setConstant(CONST_VAL constantVal) {
+	return PKBConstant::setConstant(constantVal);
+}
+
+LIST_OF_CONS_VAL PKB::getConstants() {
+	return PKBConstant::getConstants();
+}
+
+////////////////////////////////////
 //Follows 
+////////////////////////////////////
 bool PKB::setFollows(STMT_NO followedBy, STMT_NO follow) {
 	return PKBFollows::setFollows(followedBy, follow);
 }
 
 bool PKB::setFollowsT(STMT_NO followedBy, STMT_NO follow) {
 	return PKBFollows::setFollowsT(followedBy, follow);
+}
+
+STMT_NO PKB::getFollowsStmt(STMT_NO followedBy) {
+	return PKBFollows::getFollowsStmt(followedBy);
 }
 
 //Follow Bool Evaluation
@@ -112,8 +238,9 @@ TABLE PKB::getFollowsTEntIdent(STMT_TYPE s1, STMT_NO s2) {
 TABLE PKB::getFollowsTEntEnt(STMT_TYPE s1, STMT_TYPE s2) {
 	return PKBFollows::getFollowsTEntEnt(s1, s2);
 }
-
+////////////////////////////////////
 //Parents
+////////////////////////////////////
 bool PKB::setParent(STMT_NO parent, STMT_NO child) {
 	return PKBParent::setParent(parent, child);
 }
@@ -186,8 +313,9 @@ TABLE PKB::getParentTEntEnt(STMT_TYPE s1, STMT_TYPE s2) {
 	return PKBParent::getParentTEntEnt(s1, s2);
 }
 
-
+////////////////////////////////////
 //Modifies
+////////////////////////////////////
 bool PKB::setModifiesS(STMT_NO stmtNo, VAR_NAME varName) {
 	return PKBModifies::setModifiesS(stmtNo, varName);
 };
@@ -238,8 +366,9 @@ TABLE PKB::getModifiesPEntEnt() {
 	return PKBModifies::getModifiesPEntEnt();
 }
 
-
+////////////////////////////////////
 //Uses
+////////////////////////////////////
 bool PKB::setUsesS(STMT_NO stmtNo, VAR_NAME varName) {
 	return PKBUses::setUsesS(stmtNo, varName);
 
@@ -291,122 +420,10 @@ TABLE PKB::getUsesPEntEnt() {
 	return PKBUses::getUsesPEntEnt();
 }
 
-//Variable
-
-bool PKB::setVariable(VAR_NAME varName) {
-	return PKBVariable::setVariable(varName);
-}
-
-LIST_OF_VARIABLE_NAME PKB::getVariables() {
-	return PKBVariable::getVariables();
-}
-
-// constantTable APIs
-
-bool PKB::setConstant(CONST_VAL constantVal) {
-	return PKBConstant::setConstant(constantVal);
-}
-
-LIST_OF_CONS_VAL PKB::getConstants() {
-	return PKBConstant::getConstants();
-}
-
-// stmtTable APIs
-
-bool PKB::setStmt(STMT_NO stmtNo, STMT_TYPE type) {
-	return PKBStmt::setStmt(stmtNo, type);
-}
-
-STMT_LIST PKB::getStmts() {
-	return PKBStmt::getStmts();
-}
-
-// assignStmtTable APIs
-
-STMT_LIST PKB::getAssigns() {
-	return PKBStmt::getStmtsByType("assign");
-}
-
-////////////////////////////////////
-// whileTable APIs
-////////////////////////////////////
-
-STMT_LIST PKB::getWhiles() {
-	return PKBStmt::getStmtsByType("while");
-};
-
-
-////////////////////////////////////
-// ifTable APIs
-////////////////////////////////////
-
-STMT_LIST PKB::getIfs() {
-	return PKBStmt::getStmtsByType("if");
-};
-
-////////////////////////////////////
-// printTable APIs
-////////////////////////////////////
-
-STMT_LIST PKB::getPrints() {
-	return PKBStmt::getStmtsByType("print");
-};
-
-bool PKB::setPrint(STMT_NO stmtNo, VAR_NAME varName) {
-	return PKBPrint::setPrint(stmtNo, varName);
-};
-
-LIST_OF_VARIABLE_NAME PKB::getAllPrintVar() {
-	return PKBPrint::getAllPrintVar();
-}
-
-
-////////////////////////////////////
-// ReadTable APIs
-////////////////////////////////////
-
-STMT_LIST PKB::getReads() {
-	return PKBStmt::getStmtsByType("read");
-};
-
-bool PKB::setRead(STMT_NO stmtNo, VAR_NAME varName) {
-	return PKBRead::setRead(stmtNo, varName);
-};
-
-LIST_OF_VARIABLE_NAME PKB::getAllReadVar() {
-	return PKBRead::getAllReadVar();
-}
-
-
-////////////////////////////////////
-// ProecedureTable APIs
-////////////////////////////////////
-
-bool PKB::setProcByStmt(STMT_NO stmtNo, PROC_NAME proc) {
-	return PKBProcedure::setProcByStmt(stmtNo, proc);
-};
-
-PROC_NAME PKB::getProcByStmt(STMT_NO stmtNo) {
-	return PKBProcedure::getProcByStmt(stmtNo);
-}
-
-LIST_OF_PROC_NAME PKB::getProcedures() {
-	return PKBProcedure::getProcedures();
-};
-
-
-bool PKB::setProcedure(PROC_NAME procName,STMT_NO start, STMT_LIST end) {
-	return PKBProcedure::setProcedure(procName, start, end);
-};
-
 
 ////////////////////////////////////
 // CallTable APIs
 ////////////////////////////////////
-
-STMT_LIST PKB::getCalls() {
-	return PKBStmt::getStmtsByType("call");
-};
 
 bool PKB::setCallProc(PROC_NAME caller, PROC_NAME callee) {
 	return PKBCall::setCallProc(caller, callee);
@@ -420,9 +437,10 @@ bool PKB::setCallT(PROC_NAME caller, PROC_NAME callee) {
 	return PKBCall::setCallTProc(caller, callee);
 };
 
-LIST_OF_PROC_NAME PKB::getAllCallProc() {
-	return PKBCall::getAllCallProc();
+TABLE PKB::getCallStmtTable() {
+	return PKBCall::getCallStmtTable();
 }
+
 
 PROC_NAME PKB::getCallProcByStmt(STMT_NO stmtNo) {
 	return PKBCall::getCallProcByStmt(stmtNo);
@@ -488,15 +506,86 @@ TABLE PKB::getCallsTEntEnt() {
 	return PKBCall::getCallsTEntEnt();
 }
 
+//////////////////////////////////
+//Pattern
+//////////////////////////////////
+
+bool PKB::setIfPattern(STMT_NO stmtNo, VAR_NAME varName) {
+	return PKBPattern::setIfPattern(stmtNo, varName);
+}
+bool PKB::setWhilePattern(STMT_NO stmtNo, VAR_NAME varName) {
+	return PKBPattern::setWhilePattern(stmtNo, varName);
+}
+bool PKB::setAssignPattern(STMT_NO stmtNo, EXPR_SPEC pattern) {
+	return PKBPattern::setAssignPattern(stmtNo, pattern);
+}
+
+STMT_LIST PKB::getPatternIfAny() {
+	return PKBPattern::getPatternIfAny();
+}
+STMT_LIST PKB::getPatternIfIdent(VAR_NAME varName) {
+	return PKBPattern::getPatternIfIdent(varName);
+}
+TABLE PKB::getPatternIfEnt() {
+	return PKBPattern::getPatternIfEnt();
+}
+
+STMT_LIST PKB::getPatternWhileAny() {
+	return PKBPattern::getPatternWhileAny();
+}
+STMT_LIST PKB::getPatternWhileIdent(VAR_NAME varName) {
+	return PKBPattern::getPatternWhileIdent(varName);
+}
+TABLE PKB::getPatternWhileEnt() {
+	return PKBPattern::getPatternWhileEnt();
+}
+
+TABLE PKB::getPatternAssignAnyAny() {
+	return PKBPattern::getPatternAssignAnyAny();
+}
+TABLE PKB::getPatternAssignAnyPartial(EXPR_SPEC expression) {
+	return PKBPattern::getPatternAssignAnyPartial(expression);
+}
+TABLE PKB::getPatternAssignAnyFull(EXPR_SPEC expression) {
+	return PKBPattern::getPatternAssignAnyFull(expression);
+}
+TABLE PKB::getPatternAssignIdentAny(VAR_NAME varName) {
+	return PKBPattern::getPatternAssignIdentAny(varName);
+}
+TABLE PKB::getPatternAssignIdentPartial(VAR_NAME varName, EXPR_SPEC expression) {
+	return PKBPattern::getPatternAssignIdentPartial(varName, expression);
+}
+TABLE PKB::getPatternAssignIdentFull(VAR_NAME varName, EXPR_SPEC expression) {
+	return PKBPattern::getPatternAssignIdentFull(varName, expression);
+}
+TABLE PKB::getPatternAssignEntAny() {
+	return PKBPattern::getPatternAssignEntAny();
+}
+TABLE PKB::getPatternAssignEntPartial(EXPR_SPEC expression) {
+	return PKBPattern::getPatternAssignEntPartial(expression);
+}
+TABLE PKB::getPatternAssignEntFull(EXPR_SPEC expression) {
+	return PKBPattern::getPatternAssignEntFull(expression);
+}
+
 ////////////////////////////////////
 // NextTable APIs
 ////////////////////////////////////
-STMT_LIST PKB::getProgLines() {
-	return PKBStmt::getStmts();
-}
 
 bool PKB::setNext(PROG_LINE n1, PROG_LINE n2) {
 	return PKBNext::setNext(n1, n2);
+};
+
+bool PKB::setNextT(PROG_LINE n1, PROG_LINE n2) {
+	return PKBNext::setNextT(n1, n2);
+};
+
+bool PKB::setNextBip(PROG_LINE n1, PROG_LINE n2) {
+	return PKBNext::setNextBip(n1, n2);
+};
+
+bool PKB::setNextBipT(PROG_LINE n1, PROG_LINE n2) {
+	return PKBNext::setNextBipT(n1, n2);
 };
 
 //Next Bool Evaluation
@@ -511,6 +600,10 @@ bool PKB::isNextIdentAny(PROG_LINE n1) {
 }
 bool PKB::isNextIdentIdent(PROG_LINE n1, PROG_LINE n2) {
 	return PKBNext::isNextIdentIdent(n1,n2);
+}
+
+bool isNextT(PROG_LINE nextByLine, PROG_LINE nextLine) {
+	return PKBNext::isNextT(nextByLine, nextLine);
 }
 
 bool PKB::isNextTAnyAny() {
@@ -621,6 +714,23 @@ TABLE PKB::getNextBipTEntEnt(STMT_TYPE stmtType1, STMT_TYPE stmtType2) {
 }
 TABLE PKB::getNextBipTSelf(STMT_TYPE stmtType) {
 	return PKBNext::getNextBipTSelf(stmtType);
+}
+
+//////////////////////////////////
+//Affects
+//////////////////////////////////
+
+bool PKB::setAffects(STMT_NO a1, STMT_NO a2) {
+	return PKBAffects::setAffects(a1, a2);
+}
+bool PKB::setAffectsT(STMT_NO a1, STMT_NO a2) {
+	return PKBAffects::setAffectsT(a1, a2);
+}
+bool PKB::setAffectsBip(STMT_NO a1, STMT_NO a2) {
+	return PKBAffects::setAffectsBip(a1, a2);
+}
+bool PKB::setAffectsBipT(STMT_NO a1, STMT_NO a2) {
+	return PKBAffects::setAffectsBipT(a1, a2);
 }
 
 bool PKB::isAffectsAnyAny() {
@@ -752,63 +862,12 @@ TABLE PKB::getAffectsBipTSelf() {
 	return PKBAffects::getAffectsBipTSelf();
 }
 
-bool PKB::setIfPattern(STMT_NO stmtNo, VAR_NAME varName) {
-	return PKBPattern::setIfPattern(stmtNo, varName);
-}
-bool PKB::setWhilePattern(STMT_NO stmtNo, VAR_NAME varName) {
-	return PKBPattern::setWhilePattern(stmtNo, varName);
-}
-bool PKB::setAssignPattern(STMT_NO stmtNo, EXPR_SPEC pattern) {
-	return PKBPattern::setAssignPattern(stmtNo, pattern);
-}
 
-STMT_LIST PKB::getPatternIfAny() {
-	return PKBPattern::getPatternIfAny();
-}
-STMT_LIST PKB::getPatternIfIdent(VAR_NAME varName) {
-	return PKBPattern::getPatternIfIdent(varName);
-}
-TABLE PKB::getPatternIfEnt() {
-	return PKBPattern::getPatternIfEnt();
-}
 
-STMT_LIST PKB::getPatternWhileAny() {
-	return PKBPattern::getPatternWhileAny();
-}
-STMT_LIST PKB::getPatternWhileIdent(VAR_NAME varName) {
-	return PKBPattern::getPatternWhileIdent(varName);
-}
-TABLE PKB::getPatternWhileEnt() {
-	return PKBPattern::getPatternWhileEnt();
-}
 
-TABLE PKB::getPatternAssignAnyAny() {
-	return PKBPattern::getPatternAssignAnyAny();
-}
-TABLE PKB::getPatternAssignAnyPartial(EXPR_SPEC expression) {
-	return PKBPattern::getPatternAssignAnyPartial(expression);
-}
-TABLE PKB::getPatternAssignAnyFull(EXPR_SPEC expression) {
-	return PKBPattern::getPatternAssignAnyFull(expression);
-}
-TABLE PKB::getPatternAssignIdentAny(VAR_NAME varName) {
-	return PKBPattern::getPatternAssignIdentAny(varName);
-}
-TABLE PKB::getPatternAssignIdentPartial(VAR_NAME varName, EXPR_SPEC expression) {
-	return PKBPattern::getPatternAssignIdentPartial(varName, expression);
-}
-TABLE PKB::getPatternAssignIdentFull(VAR_NAME varName, EXPR_SPEC expression) {
-	return PKBPattern::getPatternAssignIdentFull(varName, expression);
-}
-TABLE PKB::getPatternAssignEntAny() {
-	return PKBPattern::getPatternAssignEntAny();
-}
-TABLE PKB::getPatternAssignEntPartial(EXPR_SPEC expression) {
-	return PKBPattern::getPatternAssignEntPartial(expression);
-}
-TABLE PKB::getPatternAssignEntFull(EXPR_SPEC expression) {
-	return PKBPattern::getPatternAssignEntFull(expression);
-}
+//////////////////////////////////
+//Attributes
+//////////////////////////////////
 
 STMT_LIST PKB::getWithIdentAttr(IDENT iden, ENT_TYPE ent, ATTR attr) {
 	return PKBWith::getWithIdentAttr(iden, ent, attr);
@@ -825,8 +884,6 @@ TABLE PKB::getWithAttrLine(ENT_TYPE ent, ATTR attr) {
 TABLE PKB::getWithLineLine() {
 	return PKBWith::getWithLineLine();
 }
-
-//Attributes
 
 IDENT PKB::getAttribute(IDENT iden, ENT_TYPE ent, ATTR attr) {
 	if (ent == "call" && attr == "procName") {
