@@ -1,8 +1,10 @@
 procedure A {
   x = 1;
+  y = 1;
   call B;
-  while(i>0){
-    call D;}}
+  while ( i>0) {
+    call D;}
+}
 
 procedure B {
   x = x;
@@ -15,9 +17,29 @@ procedure B {
 }
 
 procedure C {
-  tues = wed;
+  thurs = wed;
+  call F;
 }
 
 procedure D {
-  wed = i;
+  y = e;
+  if(mon<0) then {
+    mon = tues;
+    tues = wed;
+    if(tue<0) then {
+       wed = fri;}
+    else {
+       call F;}}
+  else {
+     a=b;
+     call E;}
+  y = x;
+}
+
+procedure E {
+  a = b;
+}
+
+procedure F {
+  f = g + y;
 }
