@@ -604,11 +604,6 @@ LINE_LIST PKBNext::getNextTEntIdent(STMT_TYPE type, PROG_LINE stmtNo) {
 			}
 		}
 	}
-
-	
-
-	
-	
 	return resultTable;
 }
 //Get result table for Next*(n1,n2)
@@ -1080,6 +1075,7 @@ TABLE PKBNext::getNextBipTEntEnt(STMT_TYPE type1, STMT_TYPE type2) {
 			}
 		}
 	}
+	return resultTable;
 }
 //Get LINE_LIST for NextBip*(n,n)
 LINE_LIST PKBNext::getNextBipTSelf(STMT_TYPE type) {

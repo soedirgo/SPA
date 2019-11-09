@@ -31,8 +31,8 @@ void DesignExtractor::extractDesign()
 	extractAffectsBip();
 	extractAffectsBipT();
 
-	//TABLE test = PKBNext::getNextBipTable();
-	//int i = test.size();
+	TABLE test = PKBNext::getNextBipTTable();
+	int i = test.size();
 }
 
 unordered_set<string> DesignExtractor::nextNodeVisitedCache;
@@ -257,13 +257,11 @@ void DesignExtractor::extractNextT(STMT_LIST nextTList1, STMT_LIST nextTList2)
 					bool nextTValue = PKBNext::isNextT(next1, next2);
 					//optimization
 					if (nextTValue == false) {
-					//if (nextNodeVisitedCache.find(next1 + next2) == nextNodeVisitedCache.end()) {
 						nextNodeVisitedCache.insert(next1+ next2);
 						PKBNext::setNextT(next1, next2);
 						//Recursive backward
 						//vector<string> visted = {};
 						//visted.push_back(next1);
-
 						unordered_set<string> visited;
 						visited.insert(next1);
 						recurseNextReverse(next1, next2, visited);
@@ -283,7 +281,6 @@ void DesignExtractor::extractNextT(STMT_LIST nextTList1, STMT_LIST nextTList2)
 					bool nextTValue = PKBNext::isNextT(next1, next2);
 					//optimization
 					if (nextTValue == false) {
-					//if (nextNodeVisitedCache.find(next1 + next2) == nextNodeVisitedCache.end()) {
 						nextNodeVisitedCache.insert(next1 + next2);
 						PKBNext::setNextT(next1, next2);
 						//vector<string> visted = {};
