@@ -3,7 +3,7 @@ procedure A {
   while(i>0){
     call D;}
   if(i>0) then {
-    call C;}
+    print i;}
   else{
     call E;}}
 
@@ -31,5 +31,5 @@ procedure D {
 }
 
 procedure E {
-  call C;
+  print i;
 }

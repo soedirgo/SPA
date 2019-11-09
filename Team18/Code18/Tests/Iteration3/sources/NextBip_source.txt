@@ -1,24 +1,35 @@
 procedure A {
- call B;
- x = 1;
-}
+  call B;
+  while(i>0){
+    call D;}
+  if(i>0) then {
+    print i;}
+  else{
+    call E;}}
+
 procedure B {
+  read mon;
+  while ( mon != tue) {
+    wed = wed + tues;
+    print i; }
   call C;
 }
 
 procedure C {
   while( apple == 2) {
-    call D;
-	}
+    if (banana == orange) then {
+      pineapple = 0; }
+    else {
+      print jackfruit; }}
 }
 
 procedure D {
   if (cat == dog ) then {
-     call E; }
+     print cat; }
   else {
-    call E; }
+    print dog; }
 }
 
 procedure E {
-  x = 1;
+  print i;
 }

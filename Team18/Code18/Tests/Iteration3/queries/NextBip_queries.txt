@@ -21,7 +21,7 @@ Select n such that NextBip(4, n)
 4 -Testing NextBip
 prog_line n;
 Select n such that NextBip(5, n)
-12
+
 5000
 5 -Testing NextBip
 prog_line n;
@@ -41,7 +41,7 @@ Select n such that NextBip(12, n)
 8 -Testing NextBip
 prog_line n;
 Select n such that NextBip(19, n)
-12
+
 5000
 9 -Testing NextBip
 prog_line n;
@@ -81,7 +81,7 @@ Select n such that NextBip(n,11)
 16 -Testing NextBip
 prog_line n;
 Select n such that NextBip(n,12)
-5,11,19,14,15
+11,14,15
 5000
 17 -Testing NextBip
 prog_line n;
