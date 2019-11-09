@@ -13,3 +13,11 @@ procedure B {
     print i; }
   call C;
 }
+
+procedure C {
+  wed = tues;
+}
+
+procedure D {
+  wed = i;
+}
