@@ -67,16 +67,31 @@ namespace Evaluator {
             ungroupedResults.push_back(Result(true, {{syn, 0}}, initTable));
         }
 
+        unordered_set<string> tabooClauses = { "Next*", "Affects", "Affects*", "NextBip", "NextBip*", "AffectsBip", "AffectsBip*" };
         // evaluate clauses
         for (auto& clause : clauses) {
-            Result temp = dispatch(clause, declarations);
-            if (!temp.hasResults()) {
-                if (selSyns[0] == "BOOLEAN")
-                    return { "FALSE" };
-                else
-                    return {};
+            if (clause.getType() != "such that" || !tabooClauses.count(clause.getFields()[0])) {
+                Result temp = dispatch(clause, declarations);
+                if (!temp.hasResults()) {
+                    if (selSyns[0] == "BOOLEAN")
+                        return { "FALSE" };
+                    else
+                        return {};
+                }
+                ungroupedResults.push_back(temp);
             }
-            ungroupedResults.push_back(temp);
+        }
+        for (auto& clause : clauses) {
+            if (clause.getType() == "such that" && tabooClauses.count(clause.getFields()[0])) {
+                Result temp = dispatch(clause, declarations);
+                if (!temp.hasResults()) {
+                    if (selSyns[0] == "BOOLEAN")
+                        return { "FALSE" };
+                    else
+                        return {};
+                }
+                ungroupedResults.push_back(temp);
+            }
         }
 
         // group the results into no synonym, select synonym group, and other groups
