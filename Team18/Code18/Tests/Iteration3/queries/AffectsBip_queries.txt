@@ -6,7 +6,7 @@ Select a such that AffectsBip(1,a)
 2-
 assign a;
 Select a such that AffectsBip(6,a)
-8
+8,24
 5000
 3-
 assign a;
@@ -16,7 +16,7 @@ none
 4-
 assign a;
 Select a such that AffectsBip(8,a)
-28
+26
 5000
 5-
 assign a;
