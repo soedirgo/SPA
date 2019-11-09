@@ -8,7 +8,7 @@ procedure A {
 
 procedure B {
   x = x;
-  read mon;
+  b = m;
   y = x;
   while ( mon != tue) {
     wed = wed + tues;
@@ -31,7 +31,7 @@ procedure D {
     else {
        call F;}}
   else {
-     a=b;
+     a = c;
      call E;}
   y = x;
 }
@@ -41,5 +41,5 @@ procedure E {
 }
 
 procedure F {
-  f = g + y;
+  f = g + y + b;
 }
