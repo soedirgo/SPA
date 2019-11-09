@@ -23,11 +23,6 @@ void DesignExtractor::extractDesign()
 	extractAffectsBipT();
 }
 
-unordered_set<string> DesignExtractor::nextNodeVisitedCache;
-void DesignExtractor::clearCache() {
-	nextNodeVisitedCache.clear();
-}
-
 void DesignExtractor::affectsAny() {
 	STMT_LIST assignStmtTable1 = PKB::getStmtsByType("assign");
 	for (auto stmt1 : assignStmtTable1) {
@@ -124,9 +119,6 @@ bool DesignExtractor::isAffects(STMT_NO a1, STMT_NO a2) {
 				affectsHold = true;
 			}
 		}
-		/*if (!PKB::isNextTIdentIdent(a1, a2)) {
-			affectsHold = false;
-		}*/
 		if (!traverseAffects(a1, a2, varNameModified)) {
 			affectsHold = false;
 		}
@@ -706,17 +698,7 @@ void DesignExtractor::recurseNext(PROG_LINE nextByLine, PROG_LINE nextLine, unor
 	for (auto vectorIter : lineList) {
 		PROG_LINE newNextLine = vectorIter.back();
 		bool visitedStatus = false;
-		/*
-		for (auto vectorIter2 : visited) {
-			if (vectorIter2 == newNextLine) {
-				visitedStatus = true;
-				break;
-			}
-		}
-		*/
 		if (visited.find(newNextLine) == visited.end()) {
-			//if (visitedStatus == false) {
-				//visited.push_back(newNextLine);
 			visited.insert(newNextLine);
 			PKB::setNextT(nextByLine, newNextLine);
 			nextNodeVisitedCache.insert(nextByLine + newNextLine);
@@ -737,17 +719,7 @@ void DesignExtractor::recurseNextReverse(PROG_LINE nextByLine, PROG_LINE nextLin
 	for (auto vectorIter : lineList) {
 		PROG_LINE newNextByLine = vectorIter.back();
 		bool visitedStatus = false;
-		/*
-		for (auto vectorIter2 : visited) {
-			if (vectorIter2 == newNextByLine) {
-				visitedStatus = true;
-				break;
-			}
-		}
-		if (visitedStatus == false) {
-		*/
 		if (visited.find(newNextByLine) == visited.end()) {
-			//visited.push_back(newNextByLine);
 			visited.insert( newNextByLine);
 			PKB::setNextT(newNextByLine, nextLine);
 			nextNodeVisitedCache.insert(newNextByLine + nextLine);
