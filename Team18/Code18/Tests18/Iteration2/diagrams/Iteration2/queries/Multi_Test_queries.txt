@@ -1,0 +1,590 @@
+1 - Set 1 - Test multiple procedures with 0 clause. 0 clause, Select stmt
+stmt s;
+Select s
+1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24
+5000
+2 - 0 clause, Select read
+read r;
+Select r
+2, 5, 17, 24
+5000
+3 - 0 clause, Select print
+print pn;
+Select pn
+9, 10, 12, 16, 18, 21, 22
+5000
+4 - 0 clause, Select while
+while w;
+Select w
+6, 13, 14
+5000
+5 - 0 clause, Select if
+if ifs;
+Select ifs
+3
+5000
+6 - 0 clause, Select assign
+assign a;
+Select a
+1, 4, 7, 8, 11, 15, 19, 20, 23
+5000
+7 - 0 clause, Select variable
+variable v;
+Select v
+x, y, z, dwhilep, diff, i, j, k, l, fin
+5000
+8 - 0 clause, Select constant
+constant c;
+Select c
+1, 2
+5000
+9 - 0 clause, Select procedure
+procedure proc;
+Select proc
+PR1, PR2
+5000
+10 - Set 2 - Test multiple procedures with a few s.t. Follows clause. Follows, Select all stmt that is followed
+stmt s, s1;
+Select s such that Follows(s, s1)
+1, 2, 3, 4, 5, 7, 8, 9, 13, 14, 15, 16, 18, 19, 21, 22, 23
+5000
+11 - Set 2 - Test multiple procedures with a few s.t. Follows clause. Follows, Select all prog_line that act as stmt that is followed
+prog_line n; stmt s1; 
+Select n such that Follows(n, s1)
+1, 2, 3, 4, 5, 7, 8, 9, 13, 14, 15, 16, 18, 19, 21, 22, 23
+5000
+12 - Follows, Select all stmt that follows
+stmt s, s1;
+Select s1 such that Follows(s, s1)
+2, 3, 5, 6, 8, 9, 10, 12, 16, 17, 18, 19, 20, 21, 22, 23, 24
+5000
+13 - Follows, Select all prog_line that act as stmt that follows
+prog_line n; stmt s;
+Select n such that Follows(s, n)
+2, 3, 5, 6, 8, 9, 10, 12, 16, 17, 18, 19, 20, 21, 22, 23, 24
+5000
+14 - Follows, Select all assign that is followed
+assign a; stmt s;
+Select a such that Follows(a, s)
+1, 4, 7, 8, 15, 19, 23
+5000
+15 - Follows, Select all assign that is followed
+assign a; prog_line n;
+Select a such that Follows(a, n)
+1, 4, 7, 8, 15, 19, 23
+5000
+16 - Follows, Select all stmt that follows assign
+assign a; stmt s;
+Select s such that Follows(a, s)
+2, 5, 8, 9, 16, 20, 24
+5000
+17 - Follows, Select all prog_line that act as stmt that follows assign
+assign a; prog_line n;
+Select n such that Follows(a, n)
+2, 5, 8, 9, 16, 20, 24
+5000
+18 - Follows, Sequential stmt in same stmtLst
+constant c;
+Select c such that Follows(16, 17)
+1, 2
+5000
+19 - Follows, Distant stmt in same stmtLst
+procedure proc;
+Select proc such that Follows(3, 12)
+PR1, PR2
+5000
+20 - Follows, Sequential stmt in different stmtLst
+stmt s;
+Select s such that Follows(3, 4)
+none
+5000
+21 - Follows, Distant stmt in different stmtLst
+read r;
+Select r such that Follows(14, 22)
+none
+5000
+22 - Follows, Sequential but different procedure 1
+variable v;
+Select v such that Follows(12, 13)
+none
+5000
+23 - Follows, Sequential but different procedure 2
+variable v;
+Select v such that Follows(13, 12)
+none
+5000
+24 - Follows, Distant but different procedure 1
+if ifs;
+Select ifs such that Follows(1, 24)
+none
+5000
+25 - Follows, Distant but different procedure 2
+if ifs;
+Select ifs such that Follows(4, 14)
+none
+5000
+26 - Set 3 - Test multiple procedures with a few s.t. Follows* clause. Follows*, Select all stmt that is followed*
+stmt s, s1;
+Select s such that Follows*(s, s1)
+1, 2, 3, 4, 5, 7, 8, 9, 13, 14, 15, 16, 18, 19, 21, 22, 23
+5000
+27 - Set 3 - Test multiple procedures with a few s.t. Follows* clause. Follows*, Select all prog_line that act as stmt that is followed*
+prog_line n; stmt s1;
+Select n such that Follows*(n, s1)
+1, 2, 3, 4, 5, 7, 8, 9, 13, 14, 15, 16, 18, 19, 21, 22, 23
+5000
+28 - Follows*, Select all stmt that follows*
+stmt s, s1;
+Select s1 such that Follows*(s, s1)
+2, 3, 5, 6, 8, 9, 10, 12, 16, 17, 18, 19, 20, 21, 22, 23, 24
+5000
+29 - Follows*, Select all prog_line that act as stmt that follows*
+stmt s; prog_line n;
+Select n such that Follows*(s, n)
+2, 3, 5, 6, 8, 9, 10, 12, 16, 17, 18, 19, 20, 21, 22, 23, 24
+5000
+30 - Follows*, Select all print that is followed*
+print pn; stmt s;
+Select pn such that Follows*(pn, s)
+9, 16, 18, 21, 22
+5000
+31 - Follows*, Select all print that is followed*
+print pn; prog_line n;
+Select pn such that Follows*(pn, n)
+9, 16, 18, 21, 22
+5000
+32 - Follows*, Select all stmt that follows* print
+print pn; stmt s;
+Select s such that Follows*(pn, s)
+10, 17, 19, 20, 22, 23, 24
+5000
+33 - Follows*, Select all prog_line that act as stmt that follows* print
+print pn; prog_line n;
+Select n such that Follows*(pn, n)
+10, 17, 19, 20, 22, 23, 24
+5000
+34 - Follows*, Sequential stmt in same stmtLst
+constant c;
+Select c such that Follows*(9, 10)
+1, 2
+5000
+35 - Follows*, Distant stmt in same stmtLst
+constant c;
+Select c such that Follows*(1, 12)
+1, 2
+5000
+36 - Follows*, Sequential stmt in different stmtLst
+stmt s;
+Select s such that Follows*(10, 11)
+none
+5000
+37 - Follows*, Distant stmt in different stmtLst
+assign a;
+Select a such that Follows*(16, 21)
+none
+5000
+38 - Follows*, Sequential but different procedure 1
+while w;
+Select w such that Follows*(12, 13)
+none
+5000
+39 - Follows*, Sequential but different procedure 2
+while w;
+Select w such that Follows*(13, 12)
+none
+5000
+40 - Follows*, Distant but different procedure 1
+variable v;
+Select v such that Follows*(3, 22)
+none
+5000
+41 - Follows*, Distant but different procedure 2
+variable v;
+Select v such that Follows*(21, 12)
+none
+5000
+42 - Set 4 - Test multiple procedures with a few s.t. Parent clause. Parent, Select all parent stmt
+stmt s, s1;
+Select s such that Parent(s, s1)
+3, 6, 13, 14
+5000
+43 - Set 4 - Test multiple procedures with a few s.t. Parent clause. Parent, Select all parent prog_line that act as stmt
+prog_line n; stmt s1;
+Select n such that Parent(n, s1)
+3, 6, 13, 14
+5000
+44 - Parent, Select all child stmt
+stmt s, s1;
+Select s1 such that Parent(s, s1)
+4, 5, 6, 7, 8, 9, 10, 11, 14, 15, 16, 17, 18, 19, 20
+5000
+45 - Parent, Select all child prog_line that act as stmt
+stmt s; prog_line n;
+Select n such that Parent(s, n)
+4, 5, 6, 7, 8, 9, 10, 11, 14, 15, 16, 17, 18, 19, 20
+5000
+46 - Parent, Select all if parent of read
+if ifs; read r;
+Select ifs such that Parent(ifs, r)
+3
+5000
+47 - Parent, Select all read child of if
+if ifs; read r;
+Select r such that Parent(ifs, r)
+5
+5000
+48 - Parent, stmt at same nesting level
+stmt s;
+Select s such that Parent(2, 3)
+none
+5000
+49 - Parent, stmt is directly nested
+constant c;
+Select c such that Parent(3, 11)
+1, 2
+5000
+50 - Parent, stmt is indirectly nested
+variable v;
+Select v such that Parent(13, 16)
+none
+5000
+51 - Parent, stmt is directly nested but different procedure 1
+assign a;
+Select a such that Parent(3, 14)
+none
+5000
+52 - Parent, stmt is directly nested but different procedure 2
+assign a;
+Select a such that Parent(14, 10)
+none
+5000
+53 - stmt is indirectly nested but different procedure 1
+if ifs;
+Select ifs such that Parent(3, 17)
+none
+5000
+54 - stmt is indirectly nested but different procedure 2
+if ifs;
+Select ifs such that Parent(13, 9)
+none
+5000
+55 - Set 5 - Test multiple procedures with a few s.t. Parent* clause. Parent*, Select all parent* stmt
+stmt s, s1;
+Select s such that Parent*(s, s1)
+3, 6, 13, 14
+5000
+56 - Set 5 - Test multiple procedures with a few s.t. Parent* clause. Parent*, Select all parent* prog_line that act as stmt
+prog_line n; stmt s1;
+Select n such that Parent*(n, s1)
+3, 6, 13, 14
+5000
+57 - Parent*, Select all child* stmt
+stmt s, s1;
+Select s1 such that Parent*(s, s1)
+4, 5, 6, 7, 8, 9, 10, 11, 14, 15, 16, 17, 18, 19, 20
+5000
+58 - Parent*, Select all child* prog_line that act as stmt
+stmt s; prog_line n;
+Select n such that Parent*(s, n)
+4, 5, 6, 7, 8, 9, 10, 11, 14, 15, 16, 17, 18, 19, 20
+5000
+59 - Parent*, Select all while parent* of while
+while w, w1;
+Select w such that Parent(w, w1)
+13
+5000
+60 - Parent*, Select all while child* of while
+while w, w1;
+Select w1 such that Parent(w, w1)
+14
+5000
+61 - Parent*, stmt at same nesting level
+variable v;
+Select v such that Parent(13, 23)
+none
+5000
+62 - Parent*, stmt is directly nested
+variable v;
+Select v such that Parent*(14, 17)
+x, y, z, dwhilep, diff, i, j, k, l, fin
+5000
+63 - Parent*, stmt is indirectly nested
+read r;
+Select r such that Parent*(3, 9)
+2, 5, 17, 24
+5000
+64 - Parent*, stmt is directly nested but different procedure 1
+procedure proc;
+Select proc such that Parent*(6, 15)
+none
+5000
+65 - Parent*, stmt is directly nested but different procedure 2
+procedure proc;
+Select proc such that Parent*(13, 5)
+none
+5000
+66 - Parent*, stmt is indirectly nested but different procedure 1
+print pn;
+Select pn such that Parent*(3, 17)
+none
+5000
+67 - Parent*, stmt is indirectly nested but different procedure 2
+print pn;
+Select pn such that Parent*(13, 10)
+none
+5000
+68 - Set 6 - Test multiple procedures with a few s.t. UsesS clause. UsesS, Select all stmt that uses a variable
+stmt s; variable v;
+Select s such that Uses(s, v)
+3, 4, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 18, 19, 20, 21, 22, 23
+5000
+69 - Set 6 - Test multiple procedures with a few s.t. UsesS clause. UsesS, Select all prog_line that act as stmt that uses a variable
+prog_line n; variable v;
+Select n such that Uses(n, v)
+3, 4, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 18, 19, 20, 21, 22, 23
+5000
+70 - UsesS, Select all variable that is used
+stmt s; variable v;
+Select v such that Uses(s, v)
+x, y, z, dwhilep, diff, j, k, l, fin
+5000
+71 - UsesS, Select all variable that is used
+prog_line n; variable v;
+Select v such that Uses(n, v)
+x, y, z, dwhilep, diff, j, k, l, fin
+5000
+72 - UsesS, Select all assign that uses a variable
+assign a; variable v;
+Select a such that Uses(a, v)
+4, 7, 8, 11, 15, 19, 20, 23
+5000
+73 - UsesS, Select all variable that is used by assign
+assign a; variable v;
+Select v such that Uses(a, v)
+x, y, z, l, k, fin
+5000
+74 - UsesS, Select all print that uses a variable
+print pn; variable v;
+Select pn such that Uses(pn, v)
+9, 10, 12, 16, 18, 21, 22
+5000
+75 - UsesS, Select all variable used by print
+print pn; variable v;
+Select v such that Uses(pn, v)
+x, y, z, j, k, l
+5000
+76 - UsesS, Select all while that uses a variable
+while w; variable v;
+Select w such that Uses(w, v)
+6, 13, 14
+5000
+77 - UsesS, Select all variable used by while
+while w; variable v;
+Select v such that Uses(w, v)
+y, x, z, dwhilep, diff, j, l, k
+5000
+78 - UsesS, Select read that uses a variable
+read r; variable v;
+Select r such that Uses(r, v)
+none
+5000
+79 - UsesS, Select all variable used by read
+read r; variable v;
+Select v such that Uses(r, v)
+none
+5000
+80 - UsesS, LHS stmt# RHS wildcard
+procedure proc;
+Select proc such that Uses(3, _)
+PR1, PR2
+5000
+81 - UsesS, LHS wildcard RHS ident
+constant c;
+Select c such that Uses(_, "j")
+none
+5000
+82 - Set 7 - Test multiple procedures with a few s.t. ModifiesS clause. ModifiesS, Select all stmt that modifies a variable
+stmt s; variable v;
+Select s such that Modifies(s, _)
+1, 2, 3, 4, 5, 6, 7, 8, 11, 13, 14, 15, 17, 19, 20, 23, 24
+5000
+83 - Set 7 - Test multiple procedures with a few s.t. ModifiesS clause. ModifiesS, Select all prog_line that acts as stmt that modifies a variable
+prog_line n; variable v;
+Select n such that Modifies(n, _)
+1, 2, 3, 4, 5, 6, 7, 8, 11, 13, 14, 15, 17, 19, 20, 23, 24
+5000
+84 - ModifiesS, Select all variable that is modified
+stmt s; variable v;
+Select v such that Modifies(s, _)
+y, z, i, fin, diff,dwhilep,j,k,l,x
+5000
+85 - ModifiesS, Select all variable that is modified
+prog_line n; variable v;
+Select v such that Modifies(n, _)
+y, z, i, fin, diff,dwhilep,j,k,l,x
+5000
+86 - ModifiesS, Select all assign that modifies a variable
+assign a; variable v;
+Select a such that Modifies(a, _)
+1, 4, 7, 8, 11, 15, 19, 20, 23
+5000
+87 - ModifiesS, Select all variable modified by assign
+assign a; variable v;
+Select v such that Modifies(a, _)
+y, z, i, fin, diff,dwhilep,j,k,l,x
+5000
+88 - ModifiesS, Select all read that modifies a variable
+read r; variable v;
+Select r such that Modifies(r, _)
+2, 5, 17, 24
+5000
+89 - ModifiesS, Select all variable modified by read
+read r; variable v;
+Select v such that Modifies(r, _)
+y, z, i, fin, diff,dwhilep,j,k,l,x
+5000
+90 - ModifiesS, Select all if that modifies a variable
+if ifs; variable v;
+Select ifs such that Modifies(ifs, _)
+3
+5000
+91 - ModifiesS, Select all variable modified by if
+if ifs; variable v;
+Select v such that Modifies(ifs, _)
+y, z, i, fin, diff,dwhilep,j,k,l,x
+5000
+92 - ModifiesS, Select print that modifies a variable
+print pn; variable v;
+Select pn such tht Modifies(pn, _)
+none
+5000
+93 - ModifiesS, Select all variable modified by print
+print pn; variable v;
+Select v such that Modifies(pn, _)
+none
+5000
+94 - ModifiesS, LHS stmt# RHS wildcard
+read r;
+Select r such that Modifies(13, _)
+2, 5, 17, 24
+5000
+95 - Modifies, LHS wildcard RHS ident
+print pn;
+Select pn such that Modifies(_, "i")
+none
+5000
+96 - Set 8 - Test multiple procedures with a few p.a. assign clause. Pattern assign, Select a LHS v RHS v
+assign a; variable v;
+Select a pattern a(v, _)
+1, 4, 7, 8, 11, 15, 19, 20, 23
+5000
+97 - Pattern assign, Select v LHS v RHS v
+assign a; variable v;
+Select v pattern a(v, _)
+x, y, z, fin, k, l
+5000
+98 - Pattern assign, Select a LHS v RHS v1
+assign a; variable v, v1;
+Select a pattern a(v, _)
+1, 7, 8, 4, 11, 15, 19, 20, 23
+5000
+99 - Pattern assign, Select v LHS v RHS v1
+assign a; variable v;
+Select v pattern a(v, _)
+y, z, k, l, fin, x
+5000
+100 - Pattern assign, Select v1 LHS v RHS v1
+assign a; variable v, v1;
+Select v pattern a(v, _)
+x, y, z, l, k, fin
+5000
+101 - Pattern assign, Select a LHS v RHS Ident
+assign a; variable v;
+Select a pattern a(v, _"x"_)
+4, 7, 11, 15
+5000
+102 - Pattern assign, Select v LHS v RHS Ident
+assign a; variable v;
+Select v pattern a(v, _"x"_)
+y, x, z
+5000
+103 - Pattern assign, Select a LHS Ident RHS v
+assign a; variable v;
+Select a pattern a("z", _)
+11, 15
+5000
+104 - Pattern assign, Select v LHS Ident RHS v
+assign a; variable v;
+Select v pattern a("z", _)
+y, z, i, fin, diff,dwhilep,j,k,l,x
+5000
+105 - Pattern assign, Select a LHS wildcard RHS v
+assign a; variable v;
+Select a pattern a(_, _)
+1, 4, 7, 8, 11, 15, 19, 20, 23
+5000
+106 - Pattern assign, Select v LHS wildcard RHS v
+assign a; variable v;
+Select v pattern a(_, _)
+y, z, i, fin, diff,dwhilep,j,k,l,x
+5000
+107 - Pattern assign, Select a LHS v RHS wildcard
+assign a; variable v;
+Select a pattern a(v, _)
+1, 4, 7, 8, 11, 15, 19, 20, 23
+5000
+108 - Pattern assign, Select v LHS v RHS wildcard
+assign a; variable v;
+Select v pattern a(v, _)
+x, y, z, k, l, fin
+5000
+109 - Pattern assign, Select a LHS matches in different procedures
+assign a; variable v;
+Select a pattern a("z", _)
+11, 15
+5000
+110 - Pattern assign, Select v LHS matches in different procedures
+assign a; variable v;
+Select v pattern a("z", _)
+y, z, i, fin, diff,dwhilep,j,k,l,x
+5000
+111 - Pattern assign, Select a LHS matches only in 1 procedure
+assign a; variable v;
+Select a pattern a("l", _)
+20
+5000
+112 - Pattern assign, Select v LHS matches only in 1 procedure
+assign a; variable v;
+Select v pattern a("l", _)
+y, z, i, fin, diff,dwhilep,j,k,l,x
+5000
+113 - Pattern assign, Select a RHS matches in different procedures
+assign a; variable v;
+Select a pattern a(v, _"y"_)
+8, 11, 15, 23
+5000
+114 - Pattern assign, Select v RHS matches in different procedures
+assign a; variable v;
+Select v pattern a(v, _"y"_)
+y, z, fin
+5000
+115 - Pattern assign, Select a RHS matches only in 1 procedure
+assign a; variable v;
+Select a pattern a(v, _"k"_)
+20, 23
+5000
+116 - Pattern assign, Select v RHS matches only in 1 procedure
+assign a; variable v;
+Select v pattern a(v, _"k"_)
+l, fin
+5000
+117 - Pattern assign, LHS and RHS matches in different procedure
+assign a;
+Select a pattern a("z", _"x"_)
+11, 15
+5000
+118 - Pattern assign, LHS and RHS matches only in 1 procedure
+assign a;
+Select a pattern a("k", _"l"_)
+19
+5000

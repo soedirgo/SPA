@@ -1,0 +1,150 @@
+1 - Follows Follows - TRUE
+read rd, rd2; if ifs;
+Select BOOLEAN such that Follows(rd,rd2) and Follows(rd2,ifs)
+TRUE
+5000
+2 - Follows* Follows* - TRUE
+read rd, rd2; print pr1,pr2;
+Select BOOLEAN such that Follows*(rd,rd2) and Follows*(rd2,pr1) and Follows*(pr1,pr2)
+TRUE
+5000
+3 - Follows Follows - FALSE
+read rd, rd2; print pr;
+Select BOOLEAN such that Follows(rd,rd2) and Follows(rd2,pr)
+FALSE
+5000
+4 - Follows Parent - TRUE
+read rd; while w; if ifs; assign a;
+Select BOOLEAN such that Follows(rd,w) and Parent(w,a)
+TRUE
+5000
+5 - Follows* Parent - TRUE
+while w; call cl; print pr; if ifs;
+Select BOOLEAN such that Parent(w,cl) and Follows(cl,pr) and Follows*(cl,ifs)
+TRUE
+5000
+6 - Follows Parent - FALSE
+read rd, rd2; print pr;
+Select BOOLEAN such that Follows(rd,rd2) and Parent(rd2,pr)
+FALSE
+5000
+7 - Multi clauses
+assign a; while w; 
+Select BOOLEAN such that Next(w,11) pattern w("i", _)
+FALSE
+5000
+8 - Multi clauses
+assign a; 
+Select BOOLEAN such that Next(a,25) pattern a("k",_) 
+TRUE
+5000
+9 - Multi clauses
+assign a; 
+Select BOOLEAN such that Next(a,11)
+FALSE
+5000
+10 - Multi clauses
+assign a; while w; 
+Select BOOLEAN such that Next(w,11) pattern w(_,_)
+TRUE
+5000
+11 - Follows* Parent* - TRUE
+while w; call cl; print pr; if ifs,ifs2;
+Select BOOLEAN such that Parent*(ifs2, cl) and Parent(w,cl) and Follows(cl,pr) and Follows*(cl,ifs)
+TRUE
+5000
+12 - Uses Uses 
+assign a; variable v;
+Select BOOLEAN pattern a (v, _) such that Uses (14, "i") and Uses(14, "target") 
+TRUE
+5000
+13 - Uses Pattern 
+assign a; variable v;
+Select BOOLEAN such that Uses (a, v) pattern a (v, _)
+TRUE
+5000
+14 - Uses Follows 
+stmt s;
+Select BOOLEAN such that Uses (s, "k") and Follows(s,25)
+TRUE
+5000
+15 -  Uses Follows*
+stmt s; print pr;
+Select BOOLEAN such that Uses (s, "k") and Follows*(s,pr)
+TRUE
+5000
+16 -  Uses Parent
+stmt s; while w;
+Select BOOLEAN such that Uses (s, "inc") and Parent(s,w)
+TRUE
+5000
+17 - Uses Parent
+stmt s; while w;
+Select BOOLEAN such that Uses (s, "inc") and Parent(w,s)
+TRUE
+5000
+18 - Uses Parent*
+print pr; if ifs;
+Select BOOLEAN such that Uses (pr, "i") and Parent*(ifs,pr)
+TRUE
+5000
+19 - Modifies Modifies 
+assign a; variable v;
+Select BOOLEAN pattern a (v, _) such that Modifies (12, "i") and Modifies(13, "target") 
+TRUE
+5000
+20 - Modifies Pattern 
+assign a; variable v;
+Select BOOLEAN such that Modifies (a, v) pattern a (v, _)
+TRUE
+5000
+21 - Modifies Follows 
+stmt s;
+Select BOOLEAN such that Modifies (s, "k") and Follows(s,25)
+TRUE
+5000
+22 -  Modifies Follows*
+stmt s; print pr;
+Select BOOLEAN such that Modifies (s, "k") and Follows*(s,pr)
+TRUE
+5000
+23 -  Modifies Parent
+stmt s; while w;
+Select BOOLEAN such that Modifies (s, "inc") and Parent(s,w)
+TRUE
+5000
+24 - Modifies Parent
+stmt s; while w;
+Select BOOLEAN such that Modifies (s, "inc") and Parent(w,s)
+TRUE
+5000
+25 - Modifies Parent*
+read rd; if ifs; print pr;
+Select BOOLEAN such that Modifies (rd, "target") and Parent*(ifs,pr)
+TRUE
+5000
+26 - Next Next FALSE
+stmt s,s1;
+Select BOOLEAN such that Next(s1,s) and Next(7,8)
+FALSE
+5000
+27 - Next Next TRUE
+stmt s,s1;
+Select BOOLEAN such that Next(s1,s) and Next(6,7)
+TRUE
+5000
+28 - Next Calls TRUE
+stmt s,s1;
+Select BOOLEAN such that Next(s1,s) and Calls("B","C")
+TRUE
+5000
+29 - Next Calls* TRUE
+stmt s,s1;
+Select BOOLEAN such that Next(s1,s) and Calls*("B","A")
+TRUE
+5000
+30 - Uses Calls* TRUE
+procedure p; 
+Select BOOLEAN such that Uses(p, "num") and Calls*(p,"A")
+TRUE
+5000

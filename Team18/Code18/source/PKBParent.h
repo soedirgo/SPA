@@ -7,13 +7,8 @@
 class PKBParent {
 public:
 
-	static bool setParent(STMT_NO parent, STMT_NO child);
-	static bool setParentT(STMT_NO parent, STMT_NO child);
-	static STMT_LIST getChild(STMT_NO parent);
-	static STMT_NO getParent(STMT_NO parent);
-	static bool isParentExist(STMT_NO child);
-	static TABLE getParentTable();
-	static TABLE getParentTTable();
+	static void setParent(STMT_NO parent, STMT_NO child);
+	static void setParentT(STMT_NO parent, STMT_NO child);
 
 	//Bool Evaluation
 	static bool isParentAnyAny();
@@ -27,19 +22,19 @@ public:
 	static bool isParentTIdentIdent(STMT_NO s1, STMT_NO s2);
 
 	//Table Evaluation
-	static TABLE getParentAnyEnt(STMT_TYPE s2);
-	static TABLE getParentIdentEnt(STMT_NO s1, STMT_TYPE s2);
-	static TABLE getParentEntAny(STMT_TYPE s1);
-	static TABLE getParentEntIdent(STMT_TYPE s1, STMT_NO s2);
+	static STMT_LIST getParentAnyEnt(STMT_TYPE s2);
+	static STMT_LIST getParentIdentEnt(STMT_NO s1, STMT_TYPE s2);
+	static STMT_LIST getParentEntAny(STMT_TYPE s1);
+	static STMT_LIST getParentEntIdent(STMT_TYPE s1, STMT_NO s2);
 	static TABLE getParentEntEnt(STMT_TYPE s1, STMT_TYPE s2);
 
-	static TABLE getParentTAnyEnt(STMT_TYPE s2);
-	static TABLE getParentTIdentEnt(STMT_NO s1, STMT_TYPE s2);
-	static TABLE getParentTEntAny(STMT_TYPE s1);
-	static TABLE getParentTEntIdent(STMT_TYPE s1, STMT_NO s2);
+	static STMT_LIST getParentTAnyEnt(STMT_TYPE s2);
+	static STMT_LIST getParentTIdentEnt(STMT_NO s1, STMT_TYPE s2);
+	static STMT_LIST getParentTEntAny(STMT_TYPE s1);
+	static STMT_LIST getParentTEntIdent(STMT_TYPE s1, STMT_NO s2);
 	static TABLE getParentTEntEnt(STMT_TYPE s1, STMT_TYPE s2);
 	// Clear
-	static bool clear();
+	static void clear();
 
 private:
 	static TABLE parentTable;

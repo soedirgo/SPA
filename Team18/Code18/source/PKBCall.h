@@ -6,18 +6,13 @@
 
 class PKBCall {
 public:
-	static bool setCallStmt(STMT_NO stmtNo, PROC_NAME q);
-	static bool setCallProc(PROC_NAME caller, PROC_NAME callee);
-	static bool setCallTProc(PROC_NAME caller, PROC_NAME callee);
+	static void setCallStmt(STMT_NO stmtNo, PROC_NAME q);
+	static void setCallProc(PROC_NAME caller, PROC_NAME callee);
+	static void setCallTProc(PROC_NAME caller, PROC_NAME callee);
 
-	static PROC_NAME getCallProcByStmt(STMT_NO stmtNo); //not tested
-	//	static STMT_LIST getCallStmtsByProc(STMT_NO stmtNo); //to be implemented
-	static TABLE getCallProcTable();
+	static PROC_NAME getCallProcByStmt(STMT_NO stmtNo);
 	static TABLE getCallStmtTable();
-	static PROC_LIST getCalleeProc(PROC_NAME caller);
-	static PROC_LIST getCallerProc(PROC_NAME callee);
-	static PROC_LIST getAllCallProc();
-
+	
 	//Bool Evaluation
 	static bool isCallsAnyAny();
 	static bool isCallsAnyIdent(PROC_NAME p2);
@@ -30,20 +25,20 @@ public:
 	static bool isCallsTIdentIdent(PROC_NAME p1, PROC_NAME p2);
 
 	//Table Evaluation
-	static TABLE getCallsAnyEnt();
-	static TABLE getCallsIdentEnt(PROC_NAME p1);
-	static TABLE getCallsEntAny();
-	static TABLE getCallsEntIdent(PROC_NAME p2);
+	static LIST_OF_PROC_NAME getCallsAnyEnt();
+	static LIST_OF_PROC_NAME getCallsIdentEnt(PROC_NAME p1);
+	static LIST_OF_PROC_NAME getCallsEntAny();
+	static LIST_OF_PROC_NAME getCallsEntIdent(PROC_NAME p2);
 	static TABLE getCallsEntEnt();
 
-	static TABLE getCallsTAnyEnt();
-	static TABLE getCallsTIdentEnt(PROC_NAME p1);
-	static TABLE getCallsTEntAny();
-	static TABLE getCallsTEntIdent(PROC_NAME p2);
+	static LIST_OF_PROC_NAME getCallsTAnyEnt();
+	static LIST_OF_PROC_NAME getCallsTIdentEnt(PROC_NAME p1);
+	static LIST_OF_PROC_NAME getCallsTEntAny();
+	static LIST_OF_PROC_NAME getCallsTEntIdent(PROC_NAME p2);
 	static TABLE getCallsTEntEnt();
 	
 	// Clear
-	static bool clear();
+	static void clear();
 
 private:
 	static TABLE callsProcTable;

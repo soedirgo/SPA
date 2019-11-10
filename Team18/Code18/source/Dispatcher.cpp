@@ -28,7 +28,7 @@ namespace Evaluator {
             return str.substr(1, str.size() - 2);
         }
 
-        string getEntity(string& str) {
+        string getEntity(string str) {
             return declarations[str];
         }
 
@@ -117,7 +117,7 @@ namespace Evaluator {
 					  return PKB::isCallsTIdentAny(trimEnds(lhs));
 				  else
 					  return PKB::isCallsTIdentIdent(trimEnds(lhs),
-													trimEnds(rhs));
+                                                     trimEnds(rhs));
 		  }},
          {"Follows",
           [](string lhs, string rhs) {
@@ -202,6 +202,62 @@ namespace Evaluator {
                   else
                       return PKB::isNextTIdentIdent(lhs,
                                                     rhs);
+          }},
+         {"Affects",
+          [](string lhs, string rhs) {
+              if (isUnderscore(lhs))
+                  if (isUnderscore(rhs))
+                      return PKB::isAffectsAnyAny();
+                  else
+                      return PKB::isAffectsAnyIdent(rhs);
+              else
+                  if (isUnderscore(rhs)) 
+                      return PKB::isAffectsIdentAny(lhs);
+                  else
+                      return PKB::isAffectsIdentIdent(lhs,
+                                                      rhs);
+          }},
+         {"Affects*",
+          [](string lhs, string rhs) {
+              if (isUnderscore(lhs))
+                  if (isUnderscore(rhs))
+                      return PKB::isAffectsTAnyAny();
+                  else
+                      return PKB::isAffectsTAnyIdent(rhs);
+              else
+                  if (isUnderscore(rhs)) 
+                      return PKB::isAffectsTIdentAny(lhs);
+                  else
+                      return PKB::isAffectsTIdentIdent(lhs,
+                                                       rhs);
+          }},
+         {"NextBip",
+          [](string lhs, string rhs) {
+              if (isUnderscore(lhs))
+                  if (isUnderscore(rhs))
+                      return PKB::isNextBipAnyAny();
+                  else
+                      return PKB::isNextBipAnyIdent(rhs);
+              else
+                  if (isUnderscore(rhs))
+                      return PKB::isNextBipIdentAny(lhs);
+                  else
+                      return PKB::isNextBipIdentIdent(lhs,
+                                                      rhs);
+          }},
+         {"NextBip*",
+          [](string lhs, string rhs) {
+              if (isUnderscore(lhs))
+                  if (isUnderscore(rhs))
+                      return PKB::isNextBipTAnyAny();
+                  else
+                      return PKB::isNextBipTAnyIdent(rhs);
+              else
+                  if (isUnderscore(rhs))
+                      return PKB::isNextBipTIdentAny(lhs);
+                  else
+                      return PKB::isNextBipTIdentIdent(lhs,
+                                                       rhs);
           }}};
 
         unordered_map<string, function<TABLE(string, string)>> suchThatTableApiMap =
@@ -367,18 +423,18 @@ namespace Evaluator {
                   return PKB::getNextAnyEnt(getEntity(rhs));
               else if (isIdentifier(lhs))
                   return PKB::getNextIdentEnt(lhs,
-												getEntity(rhs));
+                                              getEntity(rhs));
               else
                   if (isUnderscore(rhs))
                       return PKB::getNextEntAny(getEntity(lhs));
                   else if (isIdentifier(rhs))
                       return PKB::getNextEntIdent(getEntity(lhs), 
-													rhs);
+                                                  rhs);
                   else if (lhs == rhs)
                       return TABLE();
                   else
                       return PKB::getNextEntEnt(getEntity(lhs),
-												   getEntity(rhs));
+                                                getEntity(rhs));
           }},
          {"Next*",
           [](string lhs, string rhs) {
@@ -386,18 +442,120 @@ namespace Evaluator {
                   return PKB::getNextTAnyEnt(getEntity(rhs));
               else if (isIdentifier(lhs))
                   return PKB::getNextTIdentEnt(lhs,
-												 getEntity(rhs));
+                                               getEntity(rhs));
               else
                   if (isUnderscore(rhs))
                       return PKB::getNextTEntAny(getEntity(lhs));
                   else if (isIdentifier(rhs))
                       return PKB::getNextTEntIdent(getEntity(lhs), 
-													rhs);
+                                                   rhs);
                   else if (lhs == rhs)
                       return PKB::getNextTSelf(getEntity(lhs));
                   else
                       return PKB::getNextTEntEnt(getEntity(lhs),
-												   getEntity(rhs));
+                                                 getEntity(rhs));
+          }},
+         {"Affects",
+          [](string lhs, string rhs) {
+              if (isUnderscore(lhs))
+                  return PKB::getAffectsAnyEnt();
+              else if (isIdentifier(lhs))
+                  return PKB::getAffectsIdentEnt(lhs);
+              else
+                  if (isUnderscore(rhs))
+                      return PKB::getAffectsEntAny();
+                  else if (isIdentifier(rhs))
+                      return PKB::getAffectsEntIdent(rhs);
+                  else if (lhs == rhs)
+                      return PKB::getAffectsSelf();
+                  else
+                      return PKB::getAffectsEntEnt();
+          }},
+         {"Affects*",
+          [](string lhs, string rhs) {
+              if (isUnderscore(lhs))
+                  return PKB::getAffectsTAnyEnt();
+              else if (isIdentifier(lhs))
+                  return PKB::getAffectsTIdentEnt(lhs);
+              else
+                  if (isUnderscore(rhs))
+                      return PKB::getAffectsTEntAny();
+                  else if (isIdentifier(rhs))
+                      return PKB::getAffectsTEntIdent(rhs);
+                  else if (lhs == rhs)
+                      return PKB::getAffectsTSelf();
+                  else
+                      return PKB::getAffectsTEntEnt();
+          }},
+         {"NextBip",
+          [](string lhs, string rhs) {
+              if (isUnderscore(lhs))
+                  return PKB::getNextBipAnyEnt(getEntity(rhs));
+              else if (isIdentifier(lhs))
+                  return PKB::getNextBipIdentEnt(lhs,
+                                                 getEntity(rhs));
+              else
+                  if (isUnderscore(rhs))
+                      return PKB::getNextBipEntAny(getEntity(lhs));
+                  else if (isIdentifier(rhs))
+                      return PKB::getNextBipEntIdent(getEntity(lhs),
+                                                     rhs);
+                  else if (lhs == rhs)
+                      return TABLE();
+                  else
+                      return PKB::getNextBipEntEnt(getEntity(lhs),
+                                                   getEntity(rhs));
+          }},
+         {"NextBip*",
+          [](string lhs, string rhs) {
+              if (isUnderscore(lhs))
+                  return PKB::getNextBipTAnyEnt(getEntity(rhs));
+              else if (isIdentifier(lhs))
+                  return PKB::getNextBipTIdentEnt(lhs,
+                                                  getEntity(rhs));
+              else
+                  if (isUnderscore(rhs))
+                      return PKB::getNextBipTEntAny(getEntity(lhs));
+                  else if (isIdentifier(rhs))
+                      return PKB::getNextBipTEntIdent(getEntity(lhs),
+                                                      rhs);
+                  else if (lhs == rhs)
+                      return PKB::getNextBipTSelf(getEntity(lhs));
+                  else
+                      return PKB::getNextBipTEntEnt(getEntity(lhs),
+                                                    getEntity(rhs));
+          }},
+         {"AffectsBip",
+          [](string lhs, string rhs) {
+              if (isUnderscore(lhs))
+                  return PKB::getAffectsBipAnyEnt();
+              else if (isIdentifier(lhs))
+                  return PKB::getAffectsBipIdentEnt(lhs);
+              else
+                  if (isUnderscore(rhs))
+                      return PKB::getAffectsBipEntAny();
+                  else if (isIdentifier(rhs))
+                      return PKB::getAffectsBipEntIdent(rhs);
+                  else if (lhs == rhs)
+                      return PKB::getAffectsBipSelf();
+                  else
+                      return PKB::getAffectsBipEntEnt();
+          }},
+         {"AffectsBip*",
+          [](string lhs, string rhs) {
+              if (isUnderscore(lhs))
+                  return PKB::getAffectsBipTAnyEnt();
+              else if (isIdentifier(lhs))
+                  return PKB::getAffectsBipTIdentEnt(lhs);
+              else
+                  if (isUnderscore(rhs))
+                      return PKB::getAffectsBipTEntAny();
+                  else if (isIdentifier(rhs))
+                      return PKB::getAffectsBipTEntIdent(rhs);
+                  else if (lhs == rhs)
+                      return PKB::getAffectsBipTSelf();
+                  else
+                      return PKB::getAffectsBipTEntEnt();
           }}};
 
         unordered_map<string, function<TABLE(string, string)>> patternApiMap =
@@ -445,6 +603,50 @@ namespace Evaluator {
               else
                   return PKB::getPatternWhileEnt();
           }}};
+
+        auto withDispatcher =
+            [](string lhs, string rhs) {
+                size_t lhsPos = lhs.find('.');
+                size_t rhsPos = rhs.find('.');
+                if (lhsPos != string::npos)
+                    if (rhsPos != string::npos)
+                        return PKB::getWithAttrAttr(getEntity(lhs.substr(0, lhsPos)),
+                                                    lhs.substr(lhsPos + 1, string::npos),
+                                                    getEntity(rhs.substr(0, rhsPos)),
+                                                    rhs.substr(rhsPos + 1, string::npos));
+                    else if (isIdentifier(rhs))
+                        return PKB::getWithIdentAttr((rhs.front() == '\"')
+                                                     ? trimEnds(rhs)
+                                                     : rhs,
+                                                     getEntity(lhs.substr(0, lhsPos)),
+                                                     lhs.substr(lhsPos + 1, string::npos));
+                    else
+                        return PKB::getWithAttrLine(getEntity(lhs.substr(0, lhsPos)),
+                                                    lhs.substr(lhsPos + 1, string::npos));
+                else if (isIdentifier(lhs))
+                    if (rhsPos != string::npos)
+                        return PKB::getWithIdentAttr((lhs.front() == '\"')
+                                                     ? trimEnds(lhs)
+                                                     : lhs,
+                                                     getEntity(rhs.substr(0, rhsPos)),
+                                                     rhs.substr(rhsPos + 1, string::npos));
+                    else
+                        return PKB::getWithIdentLine((lhs.front() == '\"')
+                                                     ? trimEnds(lhs)
+                                                     : lhs);
+                else
+                    if (rhsPos != string::npos)
+                        return PKB::getWithAttrLine(getEntity(rhs.substr(0, rhsPos)),
+                                                    rhs.substr(rhsPos + 1, string::npos));
+                    else if (isIdentifier(rhs))
+                        return PKB::getWithIdentLine((rhs.front() == '\"')
+                                                     ? trimEnds(rhs)
+                                                     : rhs);
+                    else if (lhs == rhs)
+                        return PKB::getProgLines();
+                    else
+                        return PKB::getWithLineLine();
+            };
     }
 
     Result dispatch(Clause& clause,
@@ -459,10 +661,15 @@ namespace Evaluator {
         for (const auto& field : fields)
             if (type == "such that" && field == fields[0])
                 continue;
-            else if (!isIdentifier(field) && !isUnderscore(field)
-                     && !isPartialPattern(field) && field.front() != ' ')
+            else if (field.front() != ' ' && field.front() != '_'
+                     && field.front() != '\"' && !isdigit(field.front())
+                     && !synonyms.count(field) && field.find('.') == string::npos)
                 synonyms[field] = synonyms.size();
-        
+            else if (field.find('.') != string::npos) {
+                size_t pos = field.find('.');
+                synonyms[field.substr(0, pos)] = synonyms.size();
+            }
+
         if (type == "such that")
             if ((isUnderscore(fields[1]) || isIdentifier(fields[1]))
                 && (isUnderscore(fields[2]) || isIdentifier(fields[2])))
@@ -474,6 +681,15 @@ namespace Evaluator {
         else if (type == "pattern") {
             results = patternApiMap[getEntity(fields[0])](fields[1], fields[2]);
             resultExists = results.size();
+        } else if (type == "with") {
+            if (isIdentifier(fields[0]) && isIdentifier(fields[1]))
+                resultExists = fields[0] == fields[1];
+            else {
+                results = withDispatcher(fields[0], fields[1]);
+                resultExists = results.size();
+            }
+        } else {
+            throw "Unexpected clause type";
         }
 
         return Result(resultExists, synonyms, results);

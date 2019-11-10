@@ -3,28 +3,16 @@ using namespace std;
 
 TABLE PKBConstant::constantTable;
 
-bool PKBConstant::setConstant(STMT_NO stmtNo, CONST_VAL constValue) {
+//Set constant value such as 1 or 2 into the PKB
+void PKBConstant::setConstant(CONST_VAL constValue) {
 	vector<string> tuple = vector<string>();
-	tuple.push_back(stmtNo);
 	tuple.push_back(constValue);
 	constantTable.emplace(tuple);
-	return true;
 }
 
-STMT_LIST PKBConstant::getAllConstantStmtByVal(CONST_VAL constValue) {
-	STMT_LIST list;
-	for (auto vectorIter : constantTable) {
-		vector<string> tuple = vector<string>();
-		if (vectorIter.back() == constValue) {
-			tuple.push_back(vectorIter.front());
-			list.emplace(tuple);
-		}
-	}
-	return list;
-}
-
-CONST_LIST PKBConstant::getConstants() {
-	CONST_LIST list;
+//Returns all the constant values in the PKB into a list
+LIST_OF_CONS_VAL PKBConstant::getConstants() {
+	LIST_OF_CONS_VAL list;
 	for (auto vectorIter : constantTable) {
 		vector<string> tuple = vector<string>();
 		tuple.push_back(vectorIter.back());
@@ -33,17 +21,7 @@ CONST_LIST PKBConstant::getConstants() {
 	return list;
 }
 
-CONST_VAL PKBConstant::getConstantValByStmt(STMT_NO stmtNo) {
-	for (auto vectorIter : constantTable) {
-		if (vectorIter.front() == stmtNo) {
-			return vectorIter.back();
-		}
-	}
-	return "";
-}
-
-
-bool PKBConstant::clear() {
+//Clears the constantTable in the PKB
+void PKBConstant::clear() {
 	constantTable.clear();
-	return true;
 }

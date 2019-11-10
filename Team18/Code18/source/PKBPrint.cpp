@@ -3,46 +3,33 @@
 using namespace std;
 TABLE PKBPrint::printTable;
 
-bool PKBPrint::setPrint(STMT_NO stmtNo, VAR_NAME varName) {
+//Set the print stmtNo and its variable name into PKB printTable
+void PKBPrint::setPrint(STMT_NO stmtNo, VAR_NAME varName) {
 	vector<string> tuple = vector<string>();
 	tuple.push_back(stmtNo);
 	tuple.push_back(varName);
 	printTable.emplace(tuple);
-	return true;
 }
-
-VAR_LIST PKBPrint::getPrintStmt(VAR_NAME varName) {
-	VAR_LIST list;
-	for (auto vectorIter : printTable) {
-		vector<string> tuple = vector<string>();
-		if (vectorIter.back() == varName) {
-			tuple.push_back(vectorIter.front());
-			list.emplace(tuple);
-		}
-	}
-	return list;
-}
-
-VAR_NAME PKBPrint::getPrintVar(STMT_NO stmtNo) {
+//Get variable name from printTable given the stmtNo
+VAR_NAME PKBPrint::getPrintVariable(STMT_NO stmtNo) {
 	for (auto vectorIter : printTable) {
 		if (vectorIter.front() == stmtNo) {
 			return vectorIter.back();
 		}
 	}
-	return "";
 }
-
-VAR_LIST PKBPrint::getAllPrintVar() {
-	VAR_LIST list;
+//Get variable list from printTable
+LIST_OF_VAR_NAME PKBPrint::getAllPrintVar() {
+	LIST_OF_VAR_NAME list;
 	for (auto vectorIter : printTable) {
 		vector<string> tuple = vector<string>();
 		tuple.push_back(vectorIter.front());
+		tuple.push_back(vectorIter.back());
 		list.emplace(tuple);
 	}
 	return list;
 }
-
-bool PKBPrint::clear() {
+//Clear the PKB printTable
+void PKBPrint::clear() {
 	printTable.clear();
-	return true;
 }

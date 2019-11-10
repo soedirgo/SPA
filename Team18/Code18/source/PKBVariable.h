@@ -6,11 +6,11 @@
 class PKBVariable {
 public:
 
-	static bool setVariable(VAR_NAME varName);
-	static VAR_LIST getVariables();
+	static void setVariable(VAR_NAME varName);
+	static LIST_OF_VAR_NAME getVariables();
 
 	// Clear
-	static bool clear();
+	static void clear();
 
 private:
 	static TABLE varTable;

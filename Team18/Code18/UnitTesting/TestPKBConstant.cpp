@@ -45,24 +45,22 @@ namespace UnitTesting
 			PKB PKB;
 			PKB.clear();
 
-			PKB.setConstant("4", "0");
-			PKB.setConstant("5", "5");
-			PKB.setConstant("7", "2");
-			PKB.setConstant("9", "1");
-			PKB.setConstant("14", "2");
-			PKB.setConstant("13", "14");
-			PKB.setConstant("12", "1");
-			PKB.setConstant("16", "5");
+			PKB.setConstant("0");
+			PKB.setConstant("5");
+			PKB.setConstant("2");
+			PKB.setConstant("1");
+			PKB.setConstant("2");
+			PKB.setConstant("14");
+			PKB.setConstant("1");
+			PKB.setConstant("5");
 		}
 
-		TEST_METHOD(getAllConstantStmtByVal)
+		TEST_METHOD(getConstants)
 		{
 			PKBConstant PKB;
-			STMT_LIST actual = PKB.getAllConstantStmtByVal("0");
-			STMT_LIST expected = { { "4" } };
+			STMT_LIST actual = PKB.getConstants();
+			STMT_LIST expected = { { "0" },{ "5" },{ "2" },{ "1" },{ "2" },{ "14" }};
 			Assert::IsTrue(actual == expected);
 		}
 	};
 };
-
-

@@ -6,12 +6,11 @@
 
 class PKBPrint {
 public:
-	static bool setPrint(STMT_NO stmtNo, VAR_NAME varName);
-	static STMT_LIST getPrintStmt(VAR_NAME varName);
-	static VAR_NAME getPrintVar(STMT_NO stmtNo);
-	static VAR_LIST getAllPrintVar();
+	static void setPrint(STMT_NO stmtNo, VAR_NAME varName);
+	static VAR_NAME getPrintVariable(STMT_NO stmtNo);
+	static LIST_OF_VAR_NAME getAllPrintVar();
 	// Clear
-	static bool clear();
+	static void clear();
 
 private:
 	static TABLE printTable;

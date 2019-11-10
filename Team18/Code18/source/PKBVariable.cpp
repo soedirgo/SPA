@@ -3,18 +3,17 @@ using namespace std;
 
 TABLE PKBVariable::varTable;
 
-bool PKBVariable::setVariable(VAR_NAME varName) {
+//Set the variable name into the PKB varTable
+void PKBVariable::setVariable(VAR_NAME varName) {
 	vector<string> tuple = vector<string>();
 	tuple.push_back(varName);
 	varTable.emplace(tuple);
-	return true;
 }
-
-VAR_LIST PKBVariable::getVariables() {
+//Get Variable List for Select variable
+LIST_OF_VAR_NAME PKBVariable::getVariables() {
 	return varTable;
 }
-
-bool PKBVariable::clear() {
+//Clear the PKB data for varTable
+void PKBVariable::clear() {
 	varTable.clear();
-	return true;
 }

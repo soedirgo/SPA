@@ -1,0 +1,46 @@
+procedure A {
+  x = 1;
+  y = 1;
+  call B;
+  while ( i>0) {
+    hi = b;}
+}
+
+procedure B {
+  x = x;
+  b = m;
+  y = x;
+  while ( mon != tue) {
+    wed = wed + tues;
+    print i; }
+  call C;
+}
+
+procedure C {
+  thurs = wed;
+  call F;
+}
+
+procedure D {
+  y = e;
+  if(mon<0) then {
+    g = tues;
+    tues = wed;
+    if(tue<0) then {
+       wed = fri;}
+    else {
+       i = k;}}
+  else {
+     a = c;
+     call E;}
+  y = x;
+}
+
+procedure E {
+  a = b;
+}
+
+procedure F {
+  f = g + y + b;
+  call D
+}

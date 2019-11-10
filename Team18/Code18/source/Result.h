@@ -1,8 +1,8 @@
 #pragma once
+#include "AbstractType.h"
 #include <string>
 #include <unordered_map>
 #include <vector>
-#include "AbstractType.h"
 
 namespace Evaluator {
     class Result {

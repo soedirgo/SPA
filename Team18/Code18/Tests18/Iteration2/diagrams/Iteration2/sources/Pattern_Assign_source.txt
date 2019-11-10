@@ -1,0 +1,39 @@
+procedure A {
+  if (varif1 != varif2 - 4) then {
+    a = a + 1; }
+  else {
+    b = b - (2 + a); }
+  c = d * 10;
+  while ( (varw1 >= c * (d * 10) ) && (varw2 != varw1) ) {
+    read rd;
+    e = b * (d * 10); }
+  print prt;
+}
+
+procedure B {
+  if (fact == fiction) then {
+    f = max * 2 + min / 3;
+    if ( max * 2 >= min ) then {
+      avg = (max + min) / 2; 
+      half = max + min / 2; }
+    else {
+      avg = (min + max) / 2;
+      half = min + max / 2; } 
+    print avg; }
+  else {
+    while ( (sky == cloudy) && (rain == likely) ) {
+      sky = sky + (cloud - 7); 
+      cloud = cloud - (7 + sky); } }
+}
+
+procedure C {
+  a = (8 - 4) + (20 - (1 + 3) );
+  b = ( (car + (bus - ( (seats) ) ) ) );
+  c = b * d * 10;
+  cat = (10 % (20 / 4) + 2 + a );
+  dog = b - 2 + a;
+  bird = 8 - 4 + 20 - 1 + 3;
+  cow = b / (d * (10 - 6) );
+  horse = min / (3 + dog % 10 / 5 * ( (x) ) ) ;
+  end = end;
+}

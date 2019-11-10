@@ -1,0 +1,49 @@
+procedure A {
+  x = 1;
+  y = 2;
+  read z;
+  if (z > x + y) then {
+    call B; }
+  else {
+    call C; }
+  print z;
+}
+
+procedure B {
+  read i;
+  read j;
+  read k;
+  while ( (i * k) <= (j * k) ) {
+    i = i + k;
+    print i; }
+  print j;
+  print k;
+  call C;
+}
+
+procedure C {
+  read A;
+  print B;
+  while (A >= B) {
+    read C;
+    if (C != 0) then {
+      B = B + C; }
+    else {
+      print D; } }
+}
+
+procedure D {
+  read a;
+  target = 100;
+  if (a < target) then {
+    while (a < target) {
+      read b;
+      a = a + (b * 5); } }
+  else {
+    read c;
+    if (c > target) then {
+      c = c - (target % c) + 1; }
+    else {
+      print c; } }
+  print b;
+}

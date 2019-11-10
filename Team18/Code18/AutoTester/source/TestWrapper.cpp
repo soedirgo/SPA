@@ -58,19 +58,23 @@ void TestWrapper::evaluate(std::string query, std::list<std::string>& results){
         //return;
     //}
 
+	PKB::clearTempPKB();
+	//DesignExtractor::clearCache();
 	QueryParser queryParser = QueryParser();
 	Query queryObject = queryParser.parse(query);
-	if (queryObject.getSelectSynonyms()[0] == "Invalidd") {
+	if (queryObject.getSelectSynonyms()[0] == "Invalid") {
 		results = {};
 		return;
 	}
 
-	if (queryObject.getSelectSynonyms()[0] == "Semantic Invalidd") {
-		string results = "FALSE";
+	if (queryObject.getSelectSynonyms()[0] == "Semantic Invalid") {
+		results = { "FALSE" };
 		return;
 	}
-
+	//Clears Next*, Affects, Affects* PKB Temp Tables
+	//PKB::clearTempPKB();
 	results = Evaluator::evaluate(queryObject);
+	
 
   // store the answers to the query in the results list (it is initially empty)
   // each result must be a string.

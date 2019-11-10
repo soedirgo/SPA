@@ -2,16 +2,15 @@
 using namespace std;
 
 TABLE PKBStmt::stmtTable;
-
-bool PKBStmt::setStmt(STMT_NO stmtNo, STMT_TYPE type) {
+//Set StmtNo and its type into PKB stmtTable
+void PKBStmt::setStmt(STMT_NO stmtNo, STMT_TYPE type) {
 	vector<string> tuple = vector<string>();
 	tuple.push_back(stmtNo);
 	tuple.push_back(type);
 	stmtTable.emplace(tuple);
-	return true;
 }
-
-STMT_LIST PKBStmt::getAllStmt() {
+//Get all Stmt from stmtTable
+STMT_LIST PKBStmt::getStmts() {
 	STMT_LIST list;
 	for (auto vectorIter : stmtTable) {
 		vector<string> tuple = vector<string>();
@@ -20,19 +19,19 @@ STMT_LIST PKBStmt::getAllStmt() {
 	}
 	return list;
 }
-
-STMT_LIST PKBStmt::getAllStmtByType(STMT_TYPE type) {
+//Get all Stmt of that given type from stmtTable
+STMT_LIST PKBStmt::getStmtsByType(STMT_TYPE type) {
 	STMT_LIST list;
 	for (auto vectorIter : stmtTable) {
-		vector<string> tuple = vector<string>();
 		if (vectorIter.back() == type) {
+			vector<string> tuple = vector<string>();
 			tuple.push_back(vectorIter.front());
 			list.emplace(tuple);
 		}
 	}
 	return list;
 };
-
+//Get stmt type from stmtTable given the stmtNo 
 STMT_TYPE PKBStmt::getTypeByStmtNo(STMT_NO stmtNo) {
 	for (auto vectorIter : stmtTable) {
 		if (vectorIter.front() == stmtNo) {
@@ -42,7 +41,7 @@ STMT_TYPE PKBStmt::getTypeByStmtNo(STMT_NO stmtNo) {
 	return "";
 };
 
-bool PKBStmt::clear() {
+//Clear the PKB stmtTable
+void PKBStmt::clear() {
 	stmtTable.clear();
-	return true;
 }

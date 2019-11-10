@@ -6,12 +6,12 @@
 
 class PKBStmt {
 public:
-	static bool setStmt(STMT_NO stmtNo, STMT_TYPE type);
-	static STMT_LIST getAllStmt();
-	static STMT_LIST getAllStmtByType(STMT_TYPE type);
+	static void setStmt(STMT_NO stmtNo, STMT_TYPE type);
+	static STMT_LIST getStmts();
+	static STMT_LIST getStmtsByType(STMT_TYPE type);
 	static STMT_TYPE getTypeByStmtNo(STMT_NO stmtNo);
 	// Clear
-	static bool clear();
+	static void clear();
 
 private:
 	static TABLE stmtTable;

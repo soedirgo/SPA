@@ -5,13 +5,10 @@
 
 class PKBConstant {
 public:
-
-	static bool setConstant(STMT_NO stmtNo, CONST_VAL constVal);
-	static STMT_LIST getAllConstantStmtByVal(CONST_VAL constVal);
-	static CONST_VAL getConstantValByStmt(STMT_NO stmtNo);
-	static CONST_LIST getConstants();
+	static void setConstant(CONST_VAL constVal);
+	static LIST_OF_CONS_VAL getConstants();
 	// Clear
-	static bool clear();
+	static void clear();
 
 private:
 	static TABLE constantTable;

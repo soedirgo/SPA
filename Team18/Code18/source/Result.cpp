@@ -66,7 +66,8 @@ namespace Evaluator {
                     results.insert(mergedResult);
                 }
             }
-
+            if (!results.size())
+                resultExists = false;
             return Result(resultExists, synonyms, results);
         }
     }

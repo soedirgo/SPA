@@ -1,0 +1,36 @@
+procedure A {
+  call B;
+  while(i>0){
+    call D;}
+  if(i>0) then {
+    print i;}
+  else{
+    call E;}}
+
+
+procedure B {
+  read mon;
+  while ( mon != tue) {
+    wed = wed + tues;
+    print i; }
+  call C;
+}
+
+procedure C {
+  while( apple == 2) {
+    if (banana == orange) then {
+      pineapple = 0; }
+    else {
+      print jackfruit; }}
+}
+
+procedure D {
+  if (cat == dog ) then {
+     print cat; }
+  else {
+    print dog; }
+}
+
+procedure E {
+  print i;
+}

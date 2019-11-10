@@ -1,0 +1,53 @@
+procedure A {
+  if (x == y) then {
+    print z; }
+  else {
+    read q; }
+  out = not;
+  while (x >= j) {
+    i = k; 
+    print y; }
+}
+
+procedure B {
+  while (one1 != two2) {
+    call C;
+    if (one1 > two2) then {
+      while (apple <= (pear / mango) ) {
+        apple = apple + 1;
+        read orange; } 
+      print three3; }
+    else {
+      num = one1; 
+      print mango; } }
+  die = killed;
+}
+
+procedure C {
+  call A;
+  if ( (red != yellow) && (sky == blue) ) then {
+    if (red >= yellow) then {
+      while (red != black) {
+        red = black; } }
+    else {
+      print h;
+      while (cont == yes) {
+        read t;
+        while ( (yellow != rainbow) || (rain <= rainbow) ) {
+          yellow = yellow + 1;
+          rain = rain + (4 / 2); } } } }
+  else {
+    read tree;
+    while ( !(fact == fiction) ) {
+      if (fact + 8 <= (fiction - 5) ) then {
+        print fact; }
+      else {
+        print fiction;
+        print wrong;
+        if (right == left) then {
+          read mid; }
+        else {
+          read gone; } }
+      print here; } }
+  print end;
+}

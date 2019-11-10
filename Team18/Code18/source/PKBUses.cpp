@@ -6,34 +6,25 @@ using namespace std;
 TABLE PKBUses::usesStmtTable;
 TABLE PKBUses::usesProcTable;
 
-bool PKBUses::setUsesS(STMT_NO stmtNo, VAR_NAME varName) {
+//Set UsesS relationship between a stmtNo and a variable name
+void PKBUses::setUsesS(STMT_NO stmtNo, VAR_NAME varName) {
 	vector<string> tuple = vector<string>();
 	tuple.push_back(stmtNo);
 	tuple.push_back(varName);
 	usesStmtTable.emplace(tuple);
-	return true;
 }
-
-bool PKBUses::setUsesP(PROC_NAME procName, VAR_NAME varName) {
+//Set UsesP relationship between a procedeure name and a variable name
+void PKBUses::setUsesP(PROC_NAME procName, VAR_NAME varName) {
 	vector<string> tuple = vector<string>();
 	tuple.push_back(procName);
 	tuple.push_back(varName);
 	usesProcTable.emplace(tuple);
-	return true;
 }
 
-bool PKBUses::clear() {
+//Clear the UsesStmtTable and usesProcTable in the PKB
+void PKBUses::clear() {
 	usesStmtTable.clear();
 	usesProcTable.clear();
-	return true;
-}
-
-TABLE PKBUses::getUsesPTable() {
-	return usesProcTable;
-}
-
-TABLE PKBUses::getUsesSTable() {
-	return usesStmtTable;
 }
 
 //Uses(1 , _) -> True/False
@@ -84,8 +75,6 @@ bool PKBUses::isUsesPIdentIdent(PROC_NAME procName, VAR_NAME varName) {
 }
 
 
-
-
 //LHS is either a stmt syn or print/if/while/assign/call syn
 //RHS is _
 //Uses(s1,__) , Uses(a1, _ ), Uses(ifs , _ ) 
@@ -100,7 +89,7 @@ STMT_LIST PKBUses::getUsesSEntAny(STMT_TYPE type) {
 	}
 	
 	else { 
-		STMT_LIST stmtList = PKBStmt::getAllStmtByType(type);
+		STMT_LIST stmtList = PKBStmt::getStmtsByType(type);
 		for (auto stmt : stmtList) {
 			for (auto usesStmt: usesStmtTable) {
 				if (stmt.front() == usesStmt.front()) {
@@ -129,7 +118,7 @@ STMT_LIST PKBUses::getUsesSEntIdent(STMT_TYPE type, VAR_NAME varName) {
 		}
 	}
 	else {
-		STMT_LIST stmtList = PKBStmt::getAllStmtByType(type);
+		STMT_LIST stmtList = PKBStmt::getStmtsByType(type);
 
 		for (auto stmt : stmtList) {
 			for (auto usesStmt : usesStmtTable) {
@@ -148,8 +137,8 @@ STMT_LIST PKBUses::getUsesSEntIdent(STMT_TYPE type, VAR_NAME varName) {
 
 // S Uses( 3 , v) 
 //LHS fixed, RHS syn
-VAR_LIST PKBUses::getUsesSIdentEnt(STMT_NO stmtNo) {
-	VAR_LIST varListResult;
+LIST_OF_VAR_NAME PKBUses::getUsesSIdentEnt(STMT_NO stmtNo) {
+	LIST_OF_VAR_NAME varListResult;
 	for (auto vectorIter : usesStmtTable) {
 
 		if (vectorIter.front() == stmtNo) {
@@ -171,7 +160,7 @@ TABLE PKBUses::getUsesSEntEnt(STMT_TYPE type) {
 		return usesStmtTable; 
 	}
 	else{
-		STMT_LIST stmtList = PKBStmt::getAllStmtByType(type);
+		STMT_LIST stmtList = PKBStmt::getStmtsByType(type);
 		for (auto stmt : stmtList) {
 			for (auto usesStmt : usesStmtTable) {
 				if (usesStmt.front() == stmt.front()) {
@@ -185,8 +174,8 @@ TABLE PKBUses::getUsesSEntEnt(STMT_TYPE type) {
 }
 
 //Procedure p1 ; Select Uses(p1,__) 
-PROC_LIST PKBUses::getUsesPEntAny() {
-	PROC_LIST result;
+LIST_OF_PROC_NAME PKBUses::getUsesPEntAny() {
+	LIST_OF_PROC_NAME result;
 
 	for (auto iter : usesProcTable) {
 		vector<string> myVector = vector<string>();
@@ -198,8 +187,8 @@ PROC_LIST PKBUses::getUsesPEntAny() {
 
 //select p such that uses(p,"x") 
 //LHS proc synnonym, RHS fixed var 
-PROC_LIST PKBUses::getUsesPEntIdent(VAR_NAME varName) {
-	PROC_LIST procListResult;
+LIST_OF_PROC_NAME PKBUses::getUsesPEntIdent(VAR_NAME varName) {
+	LIST_OF_PROC_NAME procListResult;
 	for (auto vectorIter : usesProcTable) {
 		if (vectorIter.back() == varName) {
 			vector<string> myVector = vector<string>();
@@ -213,8 +202,8 @@ PROC_LIST PKBUses::getUsesPEntIdent(VAR_NAME varName) {
 
 //uses("procName", v)  
 //LHS proc name string, RHS var syn 
-PROC_LIST PKBUses::getUsesPIdentEnt(PROC_NAME procName) {
-	VAR_LIST varListResult;
+LIST_OF_PROC_NAME PKBUses::getUsesPIdentEnt(PROC_NAME procName) {
+	LIST_OF_VAR_NAME varListResult;
 	for (auto vectorIter : usesProcTable) {
 		if (vectorIter.front() == procName) {
 			vector<string> myVector = vector<string>();

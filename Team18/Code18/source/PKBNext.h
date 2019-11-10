@@ -7,15 +7,14 @@
 class PKBNext {
 public:
 
-	static bool setNext(PROG_LINE nextByLine, PROG_LINE nextLine);
-	static bool setNextT(PROG_LINE nextByLine, PROG_LINE nextLine);
-	static LINE_LIST getNext(PROG_LINE nextByLine);
-
-	static TABLE getNextTable();
-	static TABLE getNextTTable();
+	static void setNext(PROG_LINE nextByLine, PROG_LINE nextLine);
+	static void setNextT(PROG_LINE nextByLine, PROG_LINE nextLine);
+	static void setNextBip(PROG_LINE nextByLine, PROG_LINE nextLine);
+	static void setNextBipT(PROG_LINE nextByLine, PROG_LINE nextLine);
 
 	//Helper
-	static bool isNextTInserted(PROG_LINE n1, PROG_LINE n2);
+	static bool isNextBipT(PROG_LINE n1, PROG_LINE n2);
+	static bool isNextT(PROG_LINE nextByLine, PROG_LINE nextLine);
 
 	//Bool Evaluation
 	static bool isNextAnyAny();
@@ -28,27 +27,52 @@ public:
 	static bool isNextTIdentAny(PROG_LINE n1);
 	static bool isNextTIdentIdent(PROG_LINE n1, PROG_LINE n2);
 
+	static bool isNextBipAnyAny();
+	static bool isNextBipAnyIdent(PROG_LINE n2);
+	static bool isNextBipIdentAny(PROG_LINE n1);
+	static bool isNextBipIdentIdent(PROG_LINE n1, PROG_LINE n2);
+
+	static bool isNextBipTAnyAny();
+	static bool isNextBipTAnyIdent(PROG_LINE n2);
+	static bool isNextBipTIdentAny(PROG_LINE n1);
+	static bool isNextBipTIdentIdent(PROG_LINE n1, PROG_LINE n2);
+
 	//Table Evaluation
-	static TABLE getNextAnyEnt(STMT_TYPE stmtType);
-	static TABLE getNextIdentEnt(PROG_LINE n1, STMT_TYPE stmtType);
-	static TABLE getNextEntAny(STMT_TYPE stmtType);
-	static TABLE getNextEntIdent(STMT_TYPE stmtType,PROG_LINE n2);
+	static LINE_LIST getNextAnyEnt(STMT_TYPE stmtType);
+	static LINE_LIST getNextIdentEnt(PROG_LINE n1, STMT_TYPE stmtType);
+	static LINE_LIST getNextEntAny(STMT_TYPE stmtType);
+	static LINE_LIST getNextEntIdent(STMT_TYPE stmtType,PROG_LINE n2);
 	static TABLE getNextEntEnt(STMT_TYPE stmtType1, STMT_TYPE stmtType2);
 
-	static TABLE getNextTAnyEnt(STMT_TYPE stmtType);
-	static TABLE getNextTIdentEnt(PROG_LINE n1, STMT_TYPE stmtType);
-	static TABLE getNextTEntAny(STMT_TYPE stmtType);
-	static TABLE getNextTEntIdent(STMT_TYPE stmtType, PROG_LINE n2);
+	static LINE_LIST getNextTAnyEnt(STMT_TYPE stmtType);
+	static LINE_LIST getNextTIdentEnt(PROG_LINE n1, STMT_TYPE stmtType);
+	static LINE_LIST getNextTEntAny(STMT_TYPE stmtType);
+	static LINE_LIST getNextTEntIdent(STMT_TYPE stmtType, PROG_LINE n2);
 	static TABLE getNextTEntEnt(STMT_TYPE stmtType1, STMT_TYPE stmtType2);
-	static TABLE getNextTSelf(STMT_TYPE stmtType);
+	static LINE_LIST getNextTSelf(STMT_TYPE stmtType);
+
+	static LINE_LIST getNextBipAnyEnt(STMT_TYPE stmtType);
+	static LINE_LIST getNextBipIdentEnt(PROG_LINE n1, STMT_TYPE stmtType);
+	static LINE_LIST getNextBipEntAny(STMT_TYPE stmtType);
+	static LINE_LIST getNextBipEntIdent(STMT_TYPE stmtType, PROG_LINE n2);
+	static TABLE getNextBipEntEnt(STMT_TYPE stmtType1, STMT_TYPE stmtType2);
+
+	static LINE_LIST getNextBipTAnyEnt(STMT_TYPE stmtType);
+	static LINE_LIST getNextBipTIdentEnt(PROG_LINE n1, STMT_TYPE stmtType);
+	static LINE_LIST getNextBipTEntAny(STMT_TYPE stmtType);
+	static LINE_LIST getNextBipTEntIdent(STMT_TYPE stmtType, PROG_LINE n2);
+	static TABLE getNextBipTEntEnt(STMT_TYPE stmtType1, STMT_TYPE stmtType2);
+	static LINE_LIST getNextBipTSelf(STMT_TYPE stmtType);
 
 	// Clear
-	static bool clear();
+	static void clear();
 
 	// Clear Next*
-	static bool clearNextT();
+	static bool clearCache();
 
 private:
 	static TABLE nextTable;
 	static TABLE nextTTable;
+	static TABLE nextBipTable;
+	static TABLE nextBipTTable;
 };

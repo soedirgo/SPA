@@ -20,7 +20,7 @@ none
 5000
 5 - UsesP syntax, LHS synonym RHS wildcard
 procedure pr;
-Select pr such that Uses(pr, _)
+Select pr such that Uses(pr  , _)
 A, B, C, D, E, G, I, J, K, L
 5000
 6 - UsesP syntax, LHS wildcard RHS synonym
@@ -40,7 +40,7 @@ B, J, K, L
 5000
 9 - UsesP syntax, LHS synonym RHS invalid Ident
 procedure pr;
-Select pr such that Uses(pr, "3g")
+Select pr such that Uses(pr,   "  3g  ")
 none
 5000
 10 - UsesP syntax, LHS Ident RHS synonym
@@ -242,4 +242,54 @@ Select pn such that Uses("L", "mango")
 read r;
 Select r such that Uses("K", "h")
 2, 8, 11, 20, 25, 26, 30, 32
+5000
+50 - Relation, If Container statement in procedure that does not use variable but through call it does.
+read r;
+Select r such that Uses(39, "Sun")
+2, 8, 11, 20, 25, 26, 30, 32
+5000
+51 - Relation, While Container statement in procedure that does not use variable but through call it does.
+print pn;
+Select pn such that Uses(36, "Wed")
+4, 6, 12, 19, 21, 22, 27, 29, 37, 43
+5000
+52 - Relation, Get all used variables through different procedure by calls (Last node)
+variable v;
+Select v such that Uses(50, v)
+apple, i, fresh, green, h, mango
+5000
+53 - Relation, Get all used variables through different procedure by calls (2nd Last node)
+variable v;
+Select v such that Uses(49, v)
+apple, i, fresh, green, h, mango
+5000
+54 - Relation, Get all used variables through different procedure by calls (3rd Last node)
+variable v;
+Select v such that Uses(48, v)
+i, h
+5000
+55 - Relation, Get all used variables (Last node)
+variable v;
+Select v such that Uses(7, v)
+i
+5000
+56 - Relation, Get all used variables through different procedure by calls in else (3rd Last node)
+variable v;
+Select v such that Uses(44, v)
+use1, use2, use3
+5000
+57 - Relation, Get all used variables through different procedure by calls in if (2nd Last node)
+variable v;
+Select v such that Uses(41, v)
+Mon, Tue, Sun, Wed, Sat
+5000
+58 - Relation, Get all used variables through different procedure by calls
+variable v; call c;
+Select v such that Uses(c, v)
+apple, i, Sat, Mon,Sun,Tue,Wed,fresh,green,h,mango,use1,use2,use3
+5000
+59 - Relation, Get all call stmts that uses v
+variable v; call c;
+Select c such that Uses(c, v)
+33,41,44,48,49,50
 5000
