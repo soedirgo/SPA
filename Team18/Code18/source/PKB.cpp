@@ -602,7 +602,7 @@ bool PKB::isNextIdentIdent(PROG_LINE n1, PROG_LINE n2) {
 	return PKBNext::isNextIdentIdent(n1,n2);
 }
 
-bool isNextT(PROG_LINE nextByLine, PROG_LINE nextLine) {
+bool PKB::isNextT(PROG_LINE nextByLine, PROG_LINE nextLine) {
 	return PKBNext::isNextT(nextByLine, nextLine);
 }
 

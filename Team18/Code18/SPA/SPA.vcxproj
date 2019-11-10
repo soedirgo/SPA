@@ -67,7 +67,6 @@
     <ClInclude Include="..\source\PKBUses.h" />
     <ClInclude Include="..\source\PKBVariable.h" />
     <ClInclude Include="..\source\PKBWith.h" />
-    <ClInclude Include="..\source\Preprocessor.h" />
     <ClInclude Include="..\source\Query.h" />
     <ClInclude Include="..\source\QueryParser.h" />
     <ClInclude Include="..\source\Relationship.h" />

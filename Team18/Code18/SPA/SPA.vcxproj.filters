@@ -224,9 +224,6 @@
     <ClInclude Include="..\source\PKBVariable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\source\Preprocessor.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\source\Query.h">
       <Filter>Header Files</Filter>
     </ClInclude>
