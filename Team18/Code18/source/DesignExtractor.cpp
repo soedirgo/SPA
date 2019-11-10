@@ -237,7 +237,6 @@ void DesignExtractor::extractNextT(STMT_LIST nextTList1, STMT_LIST nextTList2)
 					bool nextTValue = PKB::isNextT(next1, next2);
 					//optimization
 					if (nextTValue == false) {
-						nextNodeVisitedCache.insert(next1+ next2);
 						PKB::setNextT(next1, next2);
 						//Recursive backward
 						unordered_set<string> visited;
@@ -259,7 +258,6 @@ void DesignExtractor::extractNextT(STMT_LIST nextTList1, STMT_LIST nextTList2)
 					bool nextTValue = PKB::isNextT(next1, next2);
 					//optimization
 					if (nextTValue == false) {
-						nextNodeVisitedCache.insert(next1 + next2);
 						PKB::setNextT(next1, next2);
 						unordered_set<string> visited;
 						visited.insert(next2);
@@ -701,11 +699,8 @@ void DesignExtractor::recurseNext(PROG_LINE nextByLine, PROG_LINE nextLine, unor
 		if (visited.find(newNextLine) == visited.end()) {
 			visited.insert(newNextLine);
 			PKB::setNextT(nextByLine, newNextLine);
-			nextNodeVisitedCache.insert(nextByLine + newNextLine);
 			recurseNext(nextByLine, newNextLine, visited);
-
 		}
-
 	}
 }
 
@@ -722,7 +717,6 @@ void DesignExtractor::recurseNextReverse(PROG_LINE nextByLine, PROG_LINE nextLin
 		if (visited.find(newNextByLine) == visited.end()) {
 			visited.insert( newNextByLine);
 			PKB::setNextT(newNextByLine, nextLine);
-			nextNodeVisitedCache.insert(newNextByLine + nextLine);
 			recurseNextReverse(newNextByLine, nextLine, visited);
 		}
 	}
