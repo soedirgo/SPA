@@ -1,0 +1,205 @@
+0 -Testing ARG for NextBip*
+
+Select BOOLEAN such that NextBip*(_,_)
+TRUE
+5000
+1 -Testing ARG for NextBip*
+stmt s; while w;
+Select s such that NextBip*(s , w)
+1,7,8,9,10,11,12,13,14,15,2,3,16,17,18
+5000
+2 -Testing ARG for NextBip*
+stmt s; assign a; 
+Select s such that NextBip*(a,s)
+8,9,10,11,12,13,14,15,2,3,16,17,18,4,5,6,19
+5000
+3 -Testing ARG for NextBip*
+stmt s; assign a; 
+Select s such that NextBip*(s, a)
+1,7,8,9,10,11,12,13,14,15
+5000
+4 -Testing ARG for NextBip*
+stmt s; 
+Select s such that NextBip*( s , 1)
+
+5000
+5 -Testing ARG for NextBip*
+stmt s; 
+Select s such that NextBip*( 1, s)
+7,8,9,10,11,12,13,14,15,2,3,16,17,18,4,5,6,19 
+5000
+6 -Testing ARG for NextBip*
+call cl; read rd; 
+Select cl such that NextBip*( cl , rd)
+1
+5000
+7 -Testing ARG for NextBip*
+call cl; print pr; 
+Select cl such that NextBip*( cl , pr)
+1,3,6,11
+5000
+8 -Testing ARG for NextBip*
+if ifs; print pr; 
+Select ifs such that NextBip*( ifs , pr)
+13,16,4
+5000
+9 -Testing ARG for NextBip*
+if ifs; print pr; 
+Select pr such that NextBip*( ifs , pr)
+19,17,18,15,5
+5000
+10 -Testing ARG for NextBip*
+print pr; assign a; read rd; 
+Select a such that NextBip*( a, pr)
+9,14
+5000
+11 -Testing ARG for NextBip*
+print pr; assign a; read rd; 
+Select pr such that NextBip*( a, pr)
+10,15,5,17,18,19
+5000
+12 -Testing ARG for NextBip*
+print pr; while w;
+Select pr such that NextBip*(pr,w)
+10,15,17,18
+5000
+13 -Testing ARG for NextBip*
+print pr; while w;
+Select w such that NextBip*(pr,w)
+8,12,2
+5000
+14 -Testing ARG for NextBip*
+read rd;  
+Select rd such that NextBip*(1, rd)
+7
+5000
+15 -Testing ARG for NextBip*
+read rd;  
+Select rd such that NextBip*(2, rd)
+
+5000
+16 -Testing ARG for NextBip*
+read rd; while w;
+Select rd such that NextBip*(rd,w)
+7
+5000
+17 -Testing ARG for NextBip*
+read rd; while w;
+Select w such that NextBip*(rd,w)
+8,12,2
+5000
+18 -Testing ARG for NextBip*
+prog_line n; 
+Select n such that NextBip*( _ , 1)
+
+5000
+19 -Testing ARG for NextBip*
+prog_line n; 
+Select n such that NextBip*( _ , 2)
+1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19
+5000
+20 -Testing ARG for NextBip*
+prog_line n; 
+Select n such that NextBip*( _ , 7)
+1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19
+5000
+21 -Testing ARG for NextBip*
+prog_line n; 
+Select n such that NextBip*(_, 8)
+1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19
+5000
+22 -Testing ARG for NextBip*
+prog_line n; 
+Select n such that NextBip*( _, 12)
+1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19
+5000
+23 -Testing ARG for NextBip*
+prog_line n; 
+Select n such that NextBip*( _ , n)
+2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19
+5000
+24 -Testing ARG for NextBip*
+stmt s; 
+Select s such that NextBip*( _, s)
+2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19
+5000
+25 -Testing ARG for NextBip*
+prog_line n; 
+Select n such that NextBip*( _, _)
+1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19
+5000
+26 -Testing ARG for NextBip*
+prog_line n; 
+Select n such that NextBip*( 1,_)
+1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19
+5000
+27 -Testing ARG for NextBip*
+prog_line n; 
+Select n such that NextBip*( 1,7)
+1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19
+5000
+28 -Testing ARG for NextBip*
+
+Select BOOLEAN such that NextBip*( 1,2)
+TRUE
+5000
+29 -Testing ARG for NextBip*
+
+Select BOOLEAN such that NextBip( 1,2)
+FALSE
+5000
+30 -Testing ARG for NextBip*
+prog_line n; 
+Select n such that Next( 1,2)
+1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19
+5000
+31 -Testing ARG for NextBip*
+prog_line n; 
+Select n such that NextBip*(8,_)
+1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19
+5000
+32 -Testing ARG for NextBip*
+prog_line n; 
+Select n such that NextBip*( 12,_)
+1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19
+5000
+33 -Testing ARG for NextBip*
+stmt s; 
+Select s such that NextBip*(s,_)
+1,2,3,4,6,7,8,9,10,11,12,13,14,15,16,17,18
+5000
+34 -Testing ARG for NextBip*
+prog_line n,n1; 
+Select n1 such that NextBip*(n,n1)
+2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19
+5000
+35 -Testing ARG for NextBip*
+prog_line n,n1; 
+Select n such that NextBip*(n,n1)
+1,2,3,4,6,7,8,9,10,11,12,13,14,15,16,17,18
+5000
+36 -Testing ARG for NextBip*
+stmt s,s1;
+Select s1 such that NextBip*(s,s1)
+2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19
+5000
+37 -Testing ARG for NextBip*
+stmt s,s1; 
+Select s such that NextBip*(s,s1)
+1,2,3,4,6,7,8,9,10,11,12,13,14,15,16,17,18
+5000
+38 -Testing ARG for NextBip*
+prog_line n,n1; 
+Select n1 such that NextBip*(n,n1)
+2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19
+5000
+39 -Testing ARG for NextBip*
+prog_line n;
+Select n such that NextBip*(n,n)
+8,9,10,12,13,14,15,2,3,16,17,18
+5000
+40 -Testing ARG for NextBip*
+stmt s;
+Select s such that NextBip*(s,s)
+8,9,10,12,13,14,15,2,3,16,17,18
+5000
