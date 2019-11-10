@@ -6,13 +6,14 @@ using namespace std;
 TABLE PKBUses::usesStmtTable;
 TABLE PKBUses::usesProcTable;
 
+//Set UsesS relationship between a stmtNo and a variable name
 void PKBUses::setUsesS(STMT_NO stmtNo, VAR_NAME varName) {
 	vector<string> tuple = vector<string>();
 	tuple.push_back(stmtNo);
 	tuple.push_back(varName);
 	usesStmtTable.emplace(tuple);
 }
-
+//Set UsesP relationship between a procedeure name and a variable name
 void PKBUses::setUsesP(PROC_NAME procName, VAR_NAME varName) {
 	vector<string> tuple = vector<string>();
 	tuple.push_back(procName);
@@ -20,17 +21,10 @@ void PKBUses::setUsesP(PROC_NAME procName, VAR_NAME varName) {
 	usesProcTable.emplace(tuple);
 }
 
+//Clear the UsesStmtTable and usesProcTable in the PKB
 void PKBUses::clear() {
 	usesStmtTable.clear();
 	usesProcTable.clear();
-}
-
-TABLE PKBUses::getUsesPTable() {
-	return usesProcTable;
-}
-
-TABLE PKBUses::getUsesSTable() {
-	return usesStmtTable;
 }
 
 //Uses(1 , _) -> True/False
@@ -79,8 +73,6 @@ bool PKBUses::isUsesPIdentIdent(PROC_NAME procName, VAR_NAME varName) {
 	}
 	return false;
 }
-
-
 
 
 //LHS is either a stmt syn or print/if/while/assign/call syn

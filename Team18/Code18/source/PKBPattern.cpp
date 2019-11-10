@@ -6,10 +6,6 @@ TABLE PKBPattern::patternIfTable;
 TABLE PKBPattern::patternWhileTable;
 TABLE PKBPattern::patternAssignTable;
 
-TABLE PKBPattern::getAssignPatternTable() {
-	return patternAssignTable;
-}
-
 //Set If Pattern into PKB
 void PKBPattern::setIfPattern(STMT_NO stmtNo, VAR_NAME varName) {
 	vector<string> tuple = vector<string>();

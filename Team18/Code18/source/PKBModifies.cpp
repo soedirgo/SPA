@@ -6,11 +6,13 @@ using namespace std;
 TABLE PKBModifies::modifiesStmtTable;
 TABLE PKBModifies::modifiesProcTable;
 
+//Clears the modifiesStmtTable and modifiesProcTable in the PKB 
 void PKBModifies::clear() {
 	modifiesStmtTable.clear();
 	modifiesProcTable.clear();
 }
 
+//Set the modifies relationship between a statement number and a variable name
 void PKBModifies::setModifiesS(STMT_NO stmtNo, VAR_NAME varName) {
 	vector<string> tuple = vector<string>();
 	tuple.push_back(stmtNo);
@@ -18,6 +20,8 @@ void PKBModifies::setModifiesS(STMT_NO stmtNo, VAR_NAME varName) {
 	modifiesStmtTable.emplace(tuple);
 }
 
+
+//Set the modifies relationship between a procedure name and a variable name
 void PKBModifies::setModifiesP(PROC_NAME procName, VAR_NAME varName) {
 	vector<string> tuple = vector<string>();
 	tuple.push_back(procName);
@@ -25,6 +29,7 @@ void PKBModifies::setModifiesP(PROC_NAME procName, VAR_NAME varName) {
 	modifiesProcTable.emplace(tuple);
 }
 
+//ModifiesS(1,"x")
 bool PKBModifies::isModifiesSIdentIdent(STMT_NO stmtNo, VAR_NAME varName) {
 
 	for (auto vectorIter : modifiesStmtTable) {
@@ -35,6 +40,7 @@ bool PKBModifies::isModifiesSIdentIdent(STMT_NO stmtNo, VAR_NAME varName) {
 	return false;
 }
 
+//ModifiesS(1,_)
 bool PKBModifies::isModifiesSIdentAny(STMT_NO stmtNo) {
 
 	for (auto vectorIter : modifiesStmtTable) {
@@ -44,7 +50,7 @@ bool PKBModifies::isModifiesSIdentAny(STMT_NO stmtNo) {
 	}
 	return false;
 }
-
+//ModifiesP("First",_)
 bool PKBModifies::isModifiesPIdentAny(PROC_NAME procName) {
 	for (auto vectorIter : modifiesProcTable) {
 		if (vectorIter.front() == procName) {
@@ -53,7 +59,7 @@ bool PKBModifies::isModifiesPIdentAny(PROC_NAME procName) {
 	}
 	return false;
 }
-
+//ModifiesP("First","x")
 bool PKBModifies::isModifiesPIdentIdent(PROC_NAME procName, VAR_NAME varName) {
 
 	for (auto vectorIter : modifiesProcTable) {

@@ -23,6 +23,7 @@ void PKBCall::setCallStmt(STMT_NO stmtNo, PROC_NAME callee) {
 	callStmtTable.emplace(tuple);
 }
 
+//Get procedure name by the given stmtNo
 PROC_NAME PKBCall::getCallProcByStmt(STMT_NO stmtNo) {
 	PROC_NAME result;
 
@@ -43,7 +44,7 @@ void PKBCall::setCallTProc(PROC_NAME caller, PROC_NAME callee) {
 	callsTProcTable.emplace(tuple);
 }
 
-
+//Returns the call Stmt Table
 TABLE PKBCall::getCallStmtTable() {
 	return callStmtTable;
 }

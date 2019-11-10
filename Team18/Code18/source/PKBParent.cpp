@@ -7,6 +7,7 @@ using namespace std;
 TABLE PKBParent::parentTable;
 TABLE PKBParent::parentTTable;
 
+//Set parent relationship betweem parent and child stmtNo into PKB
 void PKBParent::setParent(STMT_NO parent, STMT_NO child) {
 	vector<string> tuple = vector<string>();
 	tuple.push_back(parent);
@@ -14,6 +15,7 @@ void PKBParent::setParent(STMT_NO parent, STMT_NO child) {
 	parentTable.emplace(tuple);
 }
 
+//Set parent* relationship betweem parent and child stmtNo into PKB
 void PKBParent::setParentT(STMT_NO parent, STMT_NO child) {
 	vector<string> tuple = vector<string>();
 	tuple.push_back(parent);

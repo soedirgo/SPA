@@ -10,6 +10,7 @@ TABLE PKBNext::nextTTable;
 TABLE PKBNext::nextBipTable;
 TABLE PKBNext::nextBipTTable;
 
+//Set the next relationship into PKB with two program line, nextByLine and nextLine
 void PKBNext::setNext(PROG_LINE nextByLine, PROG_LINE nextLine) {
 	vector<string> tuple = vector<string>();
 	tuple.push_back(nextByLine);
@@ -17,6 +18,7 @@ void PKBNext::setNext(PROG_LINE nextByLine, PROG_LINE nextLine) {
 	nextTable.emplace(tuple);
 }
 
+//Set the next* relationship into PKB with two program line, nextByLine and nextLine
 void PKBNext::setNextT(PROG_LINE nextByLine, PROG_LINE nextLine) {
 	vector<string> tuple = vector<string>();
 	tuple.push_back(nextByLine);
@@ -24,6 +26,7 @@ void PKBNext::setNextT(PROG_LINE nextByLine, PROG_LINE nextLine) {
 	nextTTable.emplace(tuple);
 }
 
+//Set the nextBip relationship into PKB with two program line, nextByLine and nextLine
 void PKBNext::setNextBip(PROG_LINE nextByLine, PROG_LINE nextLine) {
 	vector<string> tuple = vector<string>();
 	tuple.push_back(nextByLine);
@@ -31,6 +34,7 @@ void PKBNext::setNextBip(PROG_LINE nextByLine, PROG_LINE nextLine) {
 	nextBipTable.emplace(tuple);
 }
 
+//Set the nextBip* relationship into PKB with two program line, nextByLine and nextLine
 void PKBNext::setNextBipT(PROG_LINE nextByLine, PROG_LINE nextLine) {
 	vector<string> tuple = vector<string>();
 	tuple.push_back(nextByLine);
@@ -38,10 +42,10 @@ void PKBNext::setNextBipT(PROG_LINE nextByLine, PROG_LINE nextLine) {
 	nextBipTTable.emplace(tuple);
 }
 
-
-bool PKBNext::isNextT(PROG_LINE currentLine, PROG_LINE nextLine) {
+//Returns true if there is such Next* relationship given the 2 inputs of nextByLine and nextLine
+bool PKBNext::isNextT(PROG_LINE nextByLine, PROG_LINE nextLine) {
 	for (auto vectorIter : nextTTable) {
-		if (vectorIter.front() == currentLine) {
+		if (vectorIter.front() == nextByLine) {
 			if (vectorIter.back() == nextLine) {
 				return true;
 			}
@@ -50,57 +54,6 @@ bool PKBNext::isNextT(PROG_LINE currentLine, PROG_LINE nextLine) {
 	return false;
 }
 
-LINE_LIST PKBNext::getNext(PROG_LINE nextByLine) {
-	LINE_LIST list;
-	for (auto vectorIter : nextTable) {
-		if (vectorIter.front() == nextByLine) {
-			vector<string> tuple = vector<string>();
-			tuple.push_back(vectorIter.back());
-			list.emplace(tuple);
-		}
-	}
-	return list;
-}
-
-LINE_LIST PKBNext::getNextBy(PROG_LINE nextLine) {
-	LINE_LIST list;
-	for (auto vectorIter : nextTable) {
-		if (vectorIter.back() == nextLine) {
-			vector<string> tuple = vector<string>();
-			tuple.push_back(vectorIter.front());
-			list.emplace(tuple);
-		}
-	}
-	return list;
-}
-
-LINE_LIST PKBNext::getNextBip(PROG_LINE nextByLine) {
-	LINE_LIST list;
-	for (auto vectorIter : nextBipTable) {
-		if (vectorIter.front() == nextByLine) {
-			vector<string> tuple = vector<string>();
-			tuple.push_back(vectorIter.back());
-			list.emplace(tuple);
-		}
-	}
-	return list;
-}
-
-TABLE PKBNext::getNextTable() {
-	return nextTable;
-}
-
-TABLE PKBNext::getNextTTable() {
-	return nextTTable;
-}
-
-TABLE PKBNext::getNextBipTable() {
-	return nextBipTable;
-}
-
-TABLE PKBNext::getNextBipTTable() {
-	return nextBipTTable;
-}
 //Get boolean for Next(_,_)
 bool PKBNext::isNextAnyAny() {
 	return !nextTable.empty();

@@ -27,9 +27,7 @@ public:
 	static LIST_OF_PROC_NAME getUsesPEntIdent(VAR_NAME varName);
 	static LIST_OF_VAR_NAME getUsesPIdentEnt(PROC_NAME procName); 
 	static TABLE getUsesPEntEnt();
-	
-	static TABLE getUsesPTable();
-	static TABLE getUsesSTable();
+
 
 	// Clear
 	static void clear();

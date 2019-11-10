@@ -11,14 +11,6 @@ public:
 	static void setNextT(PROG_LINE nextByLine, PROG_LINE nextLine);
 	static void setNextBip(PROG_LINE nextByLine, PROG_LINE nextLine);
 	static void setNextBipT(PROG_LINE nextByLine, PROG_LINE nextLine);
-	static STMT_LIST getNext(PROG_LINE nextByLine);
-	static STMT_LIST getNextBy(PROG_LINE nextLine);
-	static STMT_LIST getNextBip(PROG_LINE nextLine);
-
-	static TABLE getNextTable();
-	static TABLE getNextTTable();
-	static TABLE getNextBipTable();
-	static TABLE getNextBipTTable();
 
 	//Helper
 	static bool isNextBipT(PROG_LINE n1, PROG_LINE n2);

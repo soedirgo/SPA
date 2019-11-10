@@ -6,20 +6,21 @@ using namespace std;
 TABLE PKBFollows::followsTable;
 TABLE PKBFollows::followsTTable;
 
+//Sets the follows relationship of Follows(STMT_NO followedBy,STMT_NO follows) into the PKB
 void PKBFollows::setFollows(STMT_NO followedBy, STMT_NO follows) {
 	vector<string> tuple = vector<string>();
 	tuple.push_back(followedBy);
 	tuple.push_back(follows);
 	followsTable.emplace(tuple);
 }
-
+//Sets the follows* relationship of Follows*(STMT_NO followedBy,STMT_NO follows) into the PKB
 void PKBFollows::setFollowsT(STMT_NO followedBy, STMT_NO follows) {
 	vector<string> tuple = vector<string>();
 	tuple.push_back(followedBy);
 	tuple.push_back(follows);
 	followsTTable.emplace(tuple);
 }
-
+//Get the follows statement from PKB given the followedBy Statement number
 STMT_NO PKBFollows::getFollowsStmt(STMT_NO followedBy) {
 	for (auto vectorIter : followsTable) {
 		if (vectorIter.front() == followedBy) {

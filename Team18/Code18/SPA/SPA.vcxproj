@@ -69,7 +69,6 @@
     <ClInclude Include="..\source\PKBWith.h" />
     <ClInclude Include="..\source\Query.h" />
     <ClInclude Include="..\source\QueryParser.h" />
-    <ClInclude Include="..\source\Relationship.h" />
     <ClInclude Include="..\source\PatternProcessor.h" />
     <ClInclude Include="..\source\Result.h" />
     <ClInclude Include="..\source\Validator.h" />
