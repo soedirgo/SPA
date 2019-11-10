@@ -106,36 +106,32 @@ bool PKBAffects::setCheckedAffectsBipT(STMT_NO a1, STMT_NO a2) {
 }
 
 //Set Affects relationship into PKB
-bool PKBAffects::setAffects(STMT_NO a1, STMT_NO a2) {
+void PKBAffects::setAffects(STMT_NO a1, STMT_NO a2) {
 	vector<string> tuple = vector<string>();
 	tuple.push_back(a1);
 	tuple.push_back(a2);
 	affectsTable.emplace(tuple);
-	return true;
 }
 //Set Affects* relationship into PKB
-bool PKBAffects::setAffectsT(STMT_NO a1, STMT_NO a2) {
+void PKBAffects::setAffectsT(STMT_NO a1, STMT_NO a2) {
 	vector<string> tuple = vector<string>();
 	tuple.push_back(a1);
 	tuple.push_back(a2);
 	affectsTTable.emplace(tuple);
-	return true;
 }
 //Set AffectsBip relationship into PKB
-bool PKBAffects::setAffectsBip(STMT_NO a1, STMT_NO a2) {
+void PKBAffects::setAffectsBip(STMT_NO a1, STMT_NO a2) {
 	vector<string> tuple = vector<string>();
 	tuple.push_back(a1);
 	tuple.push_back(a2);
 	affectsBipTable.emplace(tuple);
-	return true;
 }
 //Set AffectsBip* relationship into PKB
-bool PKBAffects::setAffectsBipT(STMT_NO a1, STMT_NO a2) {
+void PKBAffects::setAffectsBipT(STMT_NO a1, STMT_NO a2) {
 	vector<string> tuple = vector<string>();
 	tuple.push_back(a1);
 	tuple.push_back(a2);
 	affectsBipTTable.emplace(tuple);
-	return true;
 }
 //Get boolean for Affects(_,_)
 bool PKBAffects::isAffectsAnyAny() {

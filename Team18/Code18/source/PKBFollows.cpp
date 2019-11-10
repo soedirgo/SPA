@@ -6,20 +6,18 @@ using namespace std;
 TABLE PKBFollows::followsTable;
 TABLE PKBFollows::followsTTable;
 
-bool PKBFollows::setFollows(STMT_NO followedBy, STMT_NO follows) {
+void PKBFollows::setFollows(STMT_NO followedBy, STMT_NO follows) {
 	vector<string> tuple = vector<string>();
 	tuple.push_back(followedBy);
 	tuple.push_back(follows);
 	followsTable.emplace(tuple);
-	return true;
 }
 
-bool PKBFollows::setFollowsT(STMT_NO followedBy, STMT_NO follows) {
+void PKBFollows::setFollowsT(STMT_NO followedBy, STMT_NO follows) {
 	vector<string> tuple = vector<string>();
 	tuple.push_back(followedBy);
 	tuple.push_back(follows);
 	followsTTable.emplace(tuple);
-	return true;
 }
 
 STMT_NO PKBFollows::getFollowsStmt(STMT_NO followedBy) {

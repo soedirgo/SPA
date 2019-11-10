@@ -60,8 +60,8 @@ namespace UnitTesting
 		TEST_METHOD(getVariables)
 		{
 			PKBVariable PKB;
-			LIST_OF_VARIABLE_NAME actual = PKB.getVariables();
-			LIST_OF_VARIABLE_NAME expected = { {"x"},{"z"},{"i"},{"y"},{"v"} };
+			LIST_OF_VAR_NAME actual = PKB.getVariables();
+			LIST_OF_VAR_NAME expected = { {"x"},{"z"},{"i"},{"y"},{"v"} };
 			Assert::IsTrue(actual == expected);
 		}
 	};

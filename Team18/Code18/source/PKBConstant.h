@@ -5,7 +5,7 @@
 
 class PKBConstant {
 public:
-	static bool setConstant(CONST_VAL constVal);
+	static void setConstant(CONST_VAL constVal);
 	static LIST_OF_CONS_VAL getConstants();
 	// Clear
 	static void clear();

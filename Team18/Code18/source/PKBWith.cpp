@@ -8,7 +8,7 @@
 #include "PKBPrint.h"
 using namespace std;
 
-//Get ENT_LIST such as STMT_LIST or LIST_OF_VARIABLE_NAME for with 1 = s.stmt#
+//Get ENT_LIST such as STMT_LIST or LIST_OF_VAR_NAME for with 1 = s.stmt#
 ENT_LIST PKBWith::getWithIdentAttr(IDENT iden, ENT_TYPE ent, ATTR attr) {
 	ENT_LIST resultTable;
 	TABLE list;
@@ -63,11 +63,11 @@ ENT_LIST PKBWith::getWithIdentAttr(IDENT iden, ENT_TYPE ent, ATTR attr) {
 	return resultTable;
 }
 //Get LINE_LIST with 1 = n
-LINE_LIST PKBWith::getWithIdentLine(IDENT iden) {
+LINE_LIST PKBWith::getWithIdentLine(PROG_LINE n) {
 	LINE_LIST resultTable;
 	TABLE list = PKBStmt::getStmts();
 	for (auto vectorIter : list) {
-		if (vectorIter.front() == iden) {
+		if (vectorIter.front() == n) {
 			vector<string> tuple = vector<string>();
 			tuple.push_back(vectorIter.front());
 			resultTable.emplace(tuple);

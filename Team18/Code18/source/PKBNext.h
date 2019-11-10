@@ -7,10 +7,10 @@
 class PKBNext {
 public:
 
-	static bool setNext(PROG_LINE nextByLine, PROG_LINE nextLine);
-	static bool setNextT(PROG_LINE nextByLine, PROG_LINE nextLine);
-	static bool setNextBip(PROG_LINE nextByLine, PROG_LINE nextLine);
-	static bool setNextBipT(PROG_LINE nextByLine, PROG_LINE nextLine);
+	static void setNext(PROG_LINE nextByLine, PROG_LINE nextLine);
+	static void setNextT(PROG_LINE nextByLine, PROG_LINE nextLine);
+	static void setNextBip(PROG_LINE nextByLine, PROG_LINE nextLine);
+	static void setNextBipT(PROG_LINE nextByLine, PROG_LINE nextLine);
 	static STMT_LIST getNext(PROG_LINE nextByLine);
 	static STMT_LIST getNextBy(PROG_LINE nextLine);
 	static STMT_LIST getNextBip(PROG_LINE nextLine);

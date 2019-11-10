@@ -11,20 +11,18 @@ void PKBModifies::clear() {
 	modifiesProcTable.clear();
 }
 
-bool PKBModifies::setModifiesS(STMT_NO stmtNo, VAR_NAME varName) {
+void PKBModifies::setModifiesS(STMT_NO stmtNo, VAR_NAME varName) {
 	vector<string> tuple = vector<string>();
 	tuple.push_back(stmtNo);
 	tuple.push_back(varName);
 	modifiesStmtTable.emplace(tuple);
-	return true;
 }
 
-bool PKBModifies::setModifiesP(PROC_NAME procName, VAR_NAME varName) {
+void PKBModifies::setModifiesP(PROC_NAME procName, VAR_NAME varName) {
 	vector<string> tuple = vector<string>();
 	tuple.push_back(procName);
 	tuple.push_back(varName);
 	modifiesProcTable.emplace(tuple);
-	return true;
 }
 
 bool PKBModifies::isModifiesSIdentIdent(STMT_NO stmtNo, VAR_NAME varName) {
@@ -131,8 +129,8 @@ STMT_LIST PKBModifies::getModifiesSEntIdent(STMT_TYPE type, VAR_NAME varName) {
 
 // Modifies( 3 , v) 
 //LHS fixed, RHS syn
-LIST_OF_VARIABLE_NAME PKBModifies::getModifiesSIdentEnt(STMT_NO stmtNo) {
-	LIST_OF_VARIABLE_NAME varListResult;
+LIST_OF_VAR_NAME PKBModifies::getModifiesSIdentEnt(STMT_NO stmtNo) {
+	LIST_OF_VAR_NAME varListResult;
 	for (auto vectorIter : modifiesStmtTable) {
 
 		if (vectorIter.front() == stmtNo) {
@@ -197,7 +195,7 @@ LIST_OF_PROC_NAME PKBModifies::getModifiesPEntIdent(VAR_NAME varName) {
 //Modifies("procName", v)  
 //LHS proc name string, RHS var syn 
 LIST_OF_PROC_NAME PKBModifies::getModifiesPIdentEnt(PROC_NAME procName) {
-	LIST_OF_VARIABLE_NAME varListResult;
+	LIST_OF_VAR_NAME varListResult;
 	for (auto vectorIter : modifiesProcTable) {
 		if (vectorIter.front() == procName) {
 			vector<string> myVector = vector<string>();

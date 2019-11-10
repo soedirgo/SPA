@@ -7,10 +7,10 @@
 
 class PKBAffects {
 public:
-	static bool setAffects(STMT_NO a1, STMT_NO a2);
-	static bool setAffectsT(STMT_NO a1, STMT_NO a2);
-	static bool setAffectsBip(STMT_NO a1, STMT_NO a2);
-	static bool setAffectsBipT(STMT_NO a1, STMT_NO a2);
+	static void setAffects(STMT_NO a1, STMT_NO a2);
+	static void setAffectsT(STMT_NO a1, STMT_NO a2);
+	static void setAffectsBip(STMT_NO a1, STMT_NO a2);
+	static void setAffectsBipT(STMT_NO a1, STMT_NO a2);
 
 	//Bool Evaluation
 	static bool isAffectsAnyAny();

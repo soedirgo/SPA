@@ -315,7 +315,7 @@ namespace UnitTesting
 
 			//All empty result queries
 			STMT_LIST expected = {{"x"}};
-			LIST_OF_VARIABLE_NAME result = pkb.getModifiesSIdentEnt("1");
+			LIST_OF_VAR_NAME result = pkb.getModifiesSIdentEnt("1");
 			result = pkb.getModifiesSIdentEnt("4");
 			Assert::IsTrue(result == expected);
 			result = pkb.getModifiesSIdentEnt("7");

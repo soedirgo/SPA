@@ -6,7 +6,7 @@
 
 class PKBStmt {
 public:
-	static bool setStmt(STMT_NO stmtNo, STMT_TYPE type);
+	static void setStmt(STMT_NO stmtNo, STMT_TYPE type);
 	static STMT_LIST getStmts();
 	static STMT_LIST getStmtsByType(STMT_TYPE type);
 	static STMT_TYPE getTypeByStmtNo(STMT_NO stmtNo);

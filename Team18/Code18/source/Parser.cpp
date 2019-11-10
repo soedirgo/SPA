@@ -352,53 +352,6 @@ int Parser::Parse(string filename) {
 		ends.emplace(vec);
 		pkb.setProcedure(currProc.getProcName(), to_string(startStmtNo), ends);
 	}
-	/*
-	//sets all the uses and modifies from the calls statements (brute force now - to be changed to a topo-sort algorithm)
-	for (NestedResult proc : procedures) {
-		string procName = proc.getProcName();
-		vector<string> calls = proc.getCallList();
-		for (int i = 0; i < procedures.size(); i++) {
-			for (string call : calls) {
-				for (NestedResult procedure : procedures) {
-					if (procedure.getProcName() == call) {
-						for (string var : procedure.getModifies()) {
-							proc.addModifies(var);
-						}
-						for (string var : procedure.getUses()) {
-							proc.addUses(var);
-						}
-					}
-				}
-			}
-		}
-	}
-
-	for (pair<int, std::string> call : callStmts) {
-		int stmtNo = call.first;
-		string procName = call.second;
-		for (NestedResult proc : procedures) {
-			if (proc.getProcName() == procName) {
-				for (string var : proc.getModifies()) {
-					int currStmtNo = stmtNo;
-					pkb.setModifiesS(to_string(stmtNo), var);
-					while (PKB::isParentExist(to_string(currStmtNo))) {
-						currStmtNo = stoi(PKB::getParentStmt(to_string(currStmtNo)));
-						pkb.setModifiesS(to_string(currStmtNo), var);
-					}
-				}
-				for (string var : proc.getUses()) {
-					int currStmtNo = stmtNo;
-					pkb.setUsesS(to_string(stmtNo), var);
-					while (PKB::isParentExist(to_string(currStmtNo))) {
-						currStmtNo = stoi(PKB::getParentStmt(to_string(currStmtNo)));
-						pkb.setUsesS(to_string(currStmtNo), var);
-					}
-				}
-			}
-		}
-	}
-	*/
-
 	for (NestedResult proc : procedures) {
 		string procName = proc.getProcName();
 		for (string var : proc.getModifies()) {

@@ -7,9 +7,9 @@
 class PKBPattern {
 public:
 
-	static bool setIfPattern(STMT_NO stmtNo, VAR_NAME varName);
-	static bool setWhilePattern(STMT_NO stmtNo, VAR_NAME varName);
-	static bool setAssignPattern(STMT_NO stmtNo, EXPR_SPEC pattern);
+	static void setIfPattern(STMT_NO stmtNo, VAR_NAME varName);
+	static void setWhilePattern(STMT_NO stmtNo, VAR_NAME varName);
+	static void setAssignPattern(STMT_NO stmtNo, EXPR_SPEC pattern);
 
 	//Pattern Evaluation
 

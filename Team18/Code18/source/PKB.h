@@ -7,23 +7,23 @@ public:
 	
 	// Clear PKB database
 	static void clear();
-	static bool clearTempPKB();
+	static void clearTempPKB();
 
 	//////////////////////////////////
 	//Variable Functions
 	//////////////////////////////////
 
 	//Set variable into PKB
-	static bool setVariable(VAR_NAME varName);
+	static void setVariable(VAR_NAME varName);
 	//Get all variables from PKB
-	static LIST_OF_VARIABLE_NAME getVariables();
+	static LIST_OF_VAR_NAME getVariables();
 
 	//////////////////////////////////
 	//Stmt Functions
 	//////////////////////////////////
 
 	//Set StmtNo to PKB
-	static bool setStmt(STMT_NO stmtNo, STMT_TYPE type);
+	static void setStmt(STMT_NO stmtNo, STMT_TYPE type);
 
 	//Get STMT_LIST from PKB
 	static STMT_LIST getStmts();
@@ -42,34 +42,34 @@ public:
 	//Procedure Functions
 	//////////////////////////////////
 	static LIST_OF_PROC_NAME getProcedures();
-	static bool setProcByStmt(STMT_NO stmtNo, PROC_NAME proc);
-	static bool setProcedure(PROC_NAME procName, STMT_NO start, STMT_LIST end);
+	static void setProcByStmt(STMT_NO stmtNo, PROC_NAME proc);
+	static void setProcedure(PROC_NAME procName, STMT_NO start, STMT_LIST end);
 	static PROC_NAME getProcByStmt(STMT_NO stmtNo);
-	static STMT_LIST getProcedureStartEnd(PROC_NAME procName);
+	static TABLE getProcedureStartEnd(PROC_NAME procName);
 
 	//////////////////////////////////
 	//Print Functions
 	//////////////////////////////////
-	static bool setPrint(STMT_NO stmtNo, VAR_NAME varName);
-	static LIST_OF_VARIABLE_NAME getAllPrintVar();
+	static void setPrint(STMT_NO stmtNo, VAR_NAME varName);
+	static LIST_OF_VAR_NAME getAllPrintVar();
 
 	//////////////////////////////////
 	//Read Functions
 	//////////////////////////////////
-	static bool setRead(STMT_NO stmtNo, VAR_NAME varName);
-	static LIST_OF_VARIABLE_NAME getAllReadVar();
+	static void setRead(STMT_NO stmtNo, VAR_NAME varName);
+	static LIST_OF_VAR_NAME getAllReadVar();
 
 	//////////////////////////////////
 	//Constant Functions
 	//////////////////////////////////
-	static bool setConstant( CONST_VAL constantVal);
+	static void setConstant( CONST_VAL constantVal);
 	static LIST_OF_CONS_VAL getConstants();
 
 	//////////////////////////////////
-	//Follow Functions
+	//Follows Functions
 	//////////////////////////////////
-	static bool setFollows(STMT_NO followedBy, STMT_NO follow);
-	static bool setFollowsT(STMT_NO followedBy, STMT_NO follow);
+	static void setFollows(STMT_NO followedBy, STMT_NO follow);
+	static void setFollowsT(STMT_NO followedBy, STMT_NO follow);
 
 	static STMT_NO getFollowsStmt(STMT_NO followedBy);
 
@@ -100,9 +100,8 @@ public:
 	//////////////////////////////////
 	//Parent Functions
 	//////////////////////////////////
-	static bool setParent(STMT_NO parent, STMT_NO child);
-	static bool setParentT(STMT_NO parent, STMT_NO child);
-	static STMT_NO getParentStmt(STMT_NO child);
+	static void setParent(STMT_NO parent, STMT_NO child);
+	static void setParentT(STMT_NO parent, STMT_NO child);
 
 	//Parent Bool Evaluation 
 	static bool isParentAnyAny();
@@ -131,8 +130,8 @@ public:
 	//////////////////////////////////
 	//Modifies Function
 	//////////////////////////////////
-	static bool setModifiesS(STMT_NO stmtNo, VAR_NAME varName);
-	static bool setModifiesP(PROC_NAME procName, VAR_NAME varName);
+	static void setModifiesS(STMT_NO stmtNo, VAR_NAME varName);
+	static void setModifiesP(PROC_NAME procName, VAR_NAME varName);
 
 	//Modifies Bool Evaluation
 	static bool isModifiesSIdentAny(STMT_NO stmtNo);
@@ -144,19 +143,19 @@ public:
 	//Modifies Table Evaluation
 	static STMT_LIST getModifiesSEntAny(STMT_TYPE type);
 	static TABLE getModifiesSEntIdent(STMT_TYPE type, VAR_NAME varName);
-	static LIST_OF_VARIABLE_NAME getModifiesSIdentEnt(STMT_NO stmtNo);
+	static LIST_OF_VAR_NAME getModifiesSIdentEnt(STMT_NO stmtNo);
 	static TABLE getModifiesSEntEnt(STMT_TYPE type);
 
 	static LIST_OF_PROC_NAME getModifiesPEntAny();
 	static LIST_OF_PROC_NAME getModifiesPEntIdent(VAR_NAME varName);
-	static LIST_OF_VARIABLE_NAME getModifiesPIdentEnt(PROC_NAME procName);
+	static LIST_OF_VAR_NAME getModifiesPIdentEnt(PROC_NAME procName);
 	static TABLE getModifiesPEntEnt();
 
 	//////////////////////////////////
 	//Uses Function
 	//////////////////////////////////
-	static bool setUsesS(STMT_NO stmtNo, VAR_NAME varName);
-	static bool setUsesP(PROC_NAME procName, VAR_NAME varName);
+	static void setUsesS(STMT_NO stmtNo, VAR_NAME varName);
+	static void setUsesP(PROC_NAME procName, VAR_NAME varName);
 
 	//Uses Bool Evaluation
 	static bool isUsesSIdentAny(STMT_NO stmtNo);
@@ -168,20 +167,20 @@ public:
 	//Uses Table Evaluation
 	static STMT_LIST getUsesSEntAny(STMT_TYPE type);
 	static STMT_LIST getUsesSEntIdent(STMT_TYPE type, VAR_NAME varName);
-	static LIST_OF_VARIABLE_NAME getUsesSIdentEnt(STMT_NO stmtNo);
+	static LIST_OF_VAR_NAME getUsesSIdentEnt(STMT_NO stmtNo);
 	static TABLE getUsesSEntEnt(STMT_TYPE type);
 
 	static LIST_OF_PROC_NAME getUsesPEntAny();
 	static LIST_OF_PROC_NAME getUsesPEntIdent(VAR_NAME varName);
-	static LIST_OF_VARIABLE_NAME getUsesPIdentEnt(PROC_NAME procName);
+	static LIST_OF_VAR_NAME getUsesPIdentEnt(PROC_NAME procName);
 	static TABLE getUsesPEntEnt();
 
 	//////////////////////////////////
 	//Call Function
 	//////////////////////////////////
-	static bool setCallStmt(STMT_NO stmtNo, PROC_NAME procName);
-	static bool setCallProc(PROC_NAME caller, PROC_NAME callee);
-	static bool setCallT(PROC_NAME caller, PROC_NAME callee);
+	static void setCallStmt(STMT_NO stmtNo, PROC_NAME procName);
+	static void setCallProc(PROC_NAME caller, PROC_NAME callee);
+	static void setCallT(PROC_NAME caller, PROC_NAME callee);
 	static PROC_NAME getCallProcByStmt(STMT_NO stmtNo);
 	static TABLE getCallStmtTable();
 
@@ -212,9 +211,9 @@ public:
 	//////////////////////////////////
 	//Pattern 
 	//////////////////////////////////
-	static bool setIfPattern(STMT_NO stmtNo, VAR_NAME varName);
-	static bool setWhilePattern(STMT_NO stmtNo, VAR_NAME varName);
-	static bool setAssignPattern(STMT_NO stmtNo, EXPR_SPEC pattern);
+	static void setIfPattern(STMT_NO stmtNo, VAR_NAME varName);
+	static void setWhilePattern(STMT_NO stmtNo, VAR_NAME varName);
+	static void setAssignPattern(STMT_NO stmtNo, EXPR_SPEC pattern);
 
 	//Pattern Evaluation
 	static STMT_LIST getPatternIfAny();
@@ -238,10 +237,10 @@ public:
 	//////////////////////////////////
 	//Next Function
 	//////////////////////////////////
-	static bool setNext(PROG_LINE n1, PROG_LINE n2);
-	static bool setNextT(PROG_LINE nextByLine, PROG_LINE nextLine);
-	static bool setNextBip(PROG_LINE nextByLine, PROG_LINE nextLine);
-	static bool setNextBipT(PROG_LINE nextByLine, PROG_LINE nextLine);
+	static void setNext(PROG_LINE n1, PROG_LINE n2);
+	static void setNextT(PROG_LINE nextByLine, PROG_LINE nextLine);
+	static void setNextBip(PROG_LINE nextByLine, PROG_LINE nextLine);
+	static void setNextBipT(PROG_LINE nextByLine, PROG_LINE nextLine);
 	static bool isNextT(PROG_LINE nextByLine, PROG_LINE nextLine);
 	
 	//Next Bool Evaluation
@@ -295,10 +294,10 @@ public:
 	//Affects
 	//////////////////////////////////
 
-	static bool setAffects(STMT_NO a1, STMT_NO a2);
-	static bool setAffectsT(STMT_NO a1, STMT_NO a2);
-	static bool setAffectsBip(STMT_NO a1, STMT_NO a2);
-	static bool setAffectsBipT(STMT_NO a1, STMT_NO a2);
+	static void setAffects(STMT_NO a1, STMT_NO a2);
+	static void setAffectsT(STMT_NO a1, STMT_NO a2);
+	static void setAffectsBip(STMT_NO a1, STMT_NO a2);
+	static void setAffectsBipT(STMT_NO a1, STMT_NO a2);
 
 	//Affects Bool Evaluation
 	static bool isAffectsAnyAny();
@@ -354,7 +353,7 @@ public:
 	//with Clause
 	//////////////////////////////////
 	static STMT_LIST getWithIdentAttr(IDENT iden, ENT_TYPE ent, ATTR attr);
-	static STMT_LIST getWithIdentLine(IDENT iden);
+	static STMT_LIST getWithIdentLine(PROG_LINE n);
 	static TABLE getWithAttrAttr(ENT_TYPE ent1, ATTR attr1, ENT_TYPE ent2, ATTR attr2);
 	static TABLE getWithAttrLine(ENT_TYPE ent, ATTR attr);
 	static TABLE getWithLineLine();

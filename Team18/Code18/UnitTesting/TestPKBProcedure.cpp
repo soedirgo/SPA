@@ -53,15 +53,15 @@ namespace UnitTesting
 		TEST_METHOD(getProcedures)
 		{
 			PKBProcedure PKB;
-			LIST_OF_VARIABLE_NAME actual = PKB.getProcedures();
-			LIST_OF_VARIABLE_NAME expected = { {"First"},{"Second"},{"Third"}};
+			LIST_OF_VAR_NAME actual = PKB.getProcedures();
+			LIST_OF_VAR_NAME expected = { {"First"},{"Second"},{"Third"}};
 			Assert::IsTrue(actual == expected);
 		}
 		TEST_METHOD(getProcedureStartEnd)
 		{
 			PKBProcedure PKB;
-			LIST_OF_VARIABLE_NAME actual = PKB.getProcedureStartEnd("First");
-			LIST_OF_VARIABLE_NAME expected = { {"1","3"} };
+			LIST_OF_VAR_NAME actual = PKB.getProcedureStartEnd("First");
+			LIST_OF_VAR_NAME expected = { {"1","3"} };
 			Assert::IsTrue(actual == expected);
 		}
 	};

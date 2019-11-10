@@ -3,11 +3,10 @@ using namespace std;
 
 TABLE PKBConstant::constantTable;
 
-bool PKBConstant::setConstant(CONST_VAL constValue) {
+void PKBConstant::setConstant(CONST_VAL constValue) {
 	vector<string> tuple = vector<string>();
 	tuple.push_back(constValue);
 	constantTable.emplace(tuple);
-	return true;
 }
 
 LIST_OF_CONS_VAL PKBConstant::getConstants() {

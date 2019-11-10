@@ -13,7 +13,7 @@ public:
 	static STMT_LIST getWithIdentAttr(IDENT iden, ENT_TYPE ent, ATTR attr);
 
 	//with 1 = n
-	static STMT_LIST getWithIdentLine(IDENT iden);
+	static STMT_LIST getWithIdentLine(PROG_LINE n);
 
 	//with s1.stmt# = s2.stmt#
 	//with c.value = s2.stmt#

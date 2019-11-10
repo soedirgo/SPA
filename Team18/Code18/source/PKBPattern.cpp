@@ -11,12 +11,11 @@ TABLE PKBPattern::getAssignPatternTable() {
 }
 
 //Set If Pattern into PKB
-bool PKBPattern::setIfPattern(STMT_NO stmtNo, VAR_NAME varName) {
+void PKBPattern::setIfPattern(STMT_NO stmtNo, VAR_NAME varName) {
 	vector<string> tuple = vector<string>();
 	tuple.push_back(stmtNo);
 	tuple.push_back(varName);
 	patternIfTable.emplace(tuple);
-	return true;
 }
 //Get STMT_LIST for pattern ifs(_, _, _)
 STMT_LIST PKBPattern::getPatternIfAny() {
@@ -55,12 +54,11 @@ TABLE PKBPattern::getPatternIfEnt() {
 	return resultTable;
 }
 //Set While Pattern into PKB
-bool PKBPattern::setWhilePattern(STMT_NO stmtNo, VAR_NAME varName) {
+void PKBPattern::setWhilePattern(STMT_NO stmtNo, VAR_NAME varName) {
 	vector<string> tuple = vector<string>();
 	tuple.push_back(stmtNo);
 	tuple.push_back(varName);
 	patternWhileTable.emplace(tuple);
-	return true;
 }
 //Get STMT_LIST for pattern w(_, _)
 STMT_LIST PKBPattern::getPatternWhileAny() {
@@ -99,12 +97,11 @@ TABLE PKBPattern::getPatternWhileEnt() {
 	return resultTable;
 }
 //Set Assign Pattern into PKB
-bool PKBPattern::setAssignPattern(STMT_NO stmtNo, EXPR_SPEC pattern) {
+void PKBPattern::setAssignPattern(STMT_NO stmtNo, EXPR_SPEC pattern) {
 	vector<string> tuple = vector<string>();
 	tuple.push_back(stmtNo);
 	tuple.push_back(pattern);
 	patternAssignTable.emplace(tuple);
-	return true;
 }
 //Get STMT_LIST for pattern a(_, _)
 TABLE PKBPattern::getPatternAssignAnyAny() {

@@ -6,9 +6,9 @@
 
 class PKBCall {
 public:
-	static bool setCallStmt(STMT_NO stmtNo, PROC_NAME q);
-	static bool setCallProc(PROC_NAME caller, PROC_NAME callee);
-	static bool setCallTProc(PROC_NAME caller, PROC_NAME callee);
+	static void setCallStmt(STMT_NO stmtNo, PROC_NAME q);
+	static void setCallProc(PROC_NAME caller, PROC_NAME callee);
+	static void setCallTProc(PROC_NAME caller, PROC_NAME callee);
 
 	static PROC_NAME getCallProcByStmt(STMT_NO stmtNo);
 	static TABLE getCallStmtTable();

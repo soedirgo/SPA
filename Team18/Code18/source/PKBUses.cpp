@@ -6,20 +6,18 @@ using namespace std;
 TABLE PKBUses::usesStmtTable;
 TABLE PKBUses::usesProcTable;
 
-bool PKBUses::setUsesS(STMT_NO stmtNo, VAR_NAME varName) {
+void PKBUses::setUsesS(STMT_NO stmtNo, VAR_NAME varName) {
 	vector<string> tuple = vector<string>();
 	tuple.push_back(stmtNo);
 	tuple.push_back(varName);
 	usesStmtTable.emplace(tuple);
-	return true;
 }
 
-bool PKBUses::setUsesP(PROC_NAME procName, VAR_NAME varName) {
+void PKBUses::setUsesP(PROC_NAME procName, VAR_NAME varName) {
 	vector<string> tuple = vector<string>();
 	tuple.push_back(procName);
 	tuple.push_back(varName);
 	usesProcTable.emplace(tuple);
-	return true;
 }
 
 void PKBUses::clear() {
@@ -147,8 +145,8 @@ STMT_LIST PKBUses::getUsesSEntIdent(STMT_TYPE type, VAR_NAME varName) {
 
 // S Uses( 3 , v) 
 //LHS fixed, RHS syn
-LIST_OF_VARIABLE_NAME PKBUses::getUsesSIdentEnt(STMT_NO stmtNo) {
-	LIST_OF_VARIABLE_NAME varListResult;
+LIST_OF_VAR_NAME PKBUses::getUsesSIdentEnt(STMT_NO stmtNo) {
+	LIST_OF_VAR_NAME varListResult;
 	for (auto vectorIter : usesStmtTable) {
 
 		if (vectorIter.front() == stmtNo) {
@@ -213,7 +211,7 @@ LIST_OF_PROC_NAME PKBUses::getUsesPEntIdent(VAR_NAME varName) {
 //uses("procName", v)  
 //LHS proc name string, RHS var syn 
 LIST_OF_PROC_NAME PKBUses::getUsesPIdentEnt(PROC_NAME procName) {
-	LIST_OF_VARIABLE_NAME varListResult;
+	LIST_OF_VAR_NAME varListResult;
 	for (auto vectorIter : usesProcTable) {
 		if (vectorIter.front() == procName) {
 			vector<string> myVector = vector<string>();

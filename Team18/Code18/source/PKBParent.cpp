@@ -7,42 +7,18 @@ using namespace std;
 TABLE PKBParent::parentTable;
 TABLE PKBParent::parentTTable;
 
-bool PKBParent::setParent(STMT_NO parent, STMT_NO child) {
+void PKBParent::setParent(STMT_NO parent, STMT_NO child) {
 	vector<string> tuple = vector<string>();
 	tuple.push_back(parent);
 	tuple.push_back(child);
 	parentTable.emplace(tuple);
-	return true;
 }
 
-bool PKBParent::setParentT(STMT_NO parent, STMT_NO child) {
+void PKBParent::setParentT(STMT_NO parent, STMT_NO child) {
 	vector<string> tuple = vector<string>();
 	tuple.push_back(parent);
 	tuple.push_back(child);
 	parentTTable.emplace(tuple);
-	return true;
-}
-
-STMT_LIST PKBParent::getChild(STMT_NO parent) {
-	STMT_LIST list;
-	for (auto vectorIter : parentTable) {
-		vector<string> tuple = vector<string>();
-		if (vectorIter.front() == parent) {
-			tuple.push_back(vectorIter.back());
-			list.emplace(tuple);
-		}
-	}
-	return list;
-}
-
-STMT_NO PKBParent::getParent(STMT_NO child) {
-	for (auto vectorIter : parentTable) {
-		vector<string> tuple = vector<string>();
-		if (vectorIter.back() == child) {
-			return vectorIter.front();
-		}
-	}
-	return "";
 }
 
 //Get boolean for Parent(_,_)

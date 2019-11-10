@@ -10,36 +10,32 @@ TABLE PKBNext::nextTTable;
 TABLE PKBNext::nextBipTable;
 TABLE PKBNext::nextBipTTable;
 
-bool PKBNext::setNext(PROG_LINE nextByLine, PROG_LINE nextLine) {
+void PKBNext::setNext(PROG_LINE nextByLine, PROG_LINE nextLine) {
 	vector<string> tuple = vector<string>();
 	tuple.push_back(nextByLine);
 	tuple.push_back(nextLine);
 	nextTable.emplace(tuple);
-	return true;
 }
 
-bool PKBNext::setNextT(PROG_LINE nextByLine, PROG_LINE nextLine) {
+void PKBNext::setNextT(PROG_LINE nextByLine, PROG_LINE nextLine) {
 	vector<string> tuple = vector<string>();
 	tuple.push_back(nextByLine);
 	tuple.push_back(nextLine);
 	nextTTable.emplace(tuple);
-	return true;
 }
 
-bool PKBNext::setNextBip(PROG_LINE nextByLine, PROG_LINE nextLine) {
+void PKBNext::setNextBip(PROG_LINE nextByLine, PROG_LINE nextLine) {
 	vector<string> tuple = vector<string>();
 	tuple.push_back(nextByLine);
 	tuple.push_back(nextLine);
 	nextBipTable.emplace(tuple);
-	return true;
 }
 
-bool PKBNext::setNextBipT(PROG_LINE nextByLine, PROG_LINE nextLine) {
+void PKBNext::setNextBipT(PROG_LINE nextByLine, PROG_LINE nextLine) {
 	vector<string> tuple = vector<string>();
 	tuple.push_back(nextByLine);
 	tuple.push_back(nextLine);
 	nextBipTTable.emplace(tuple);
-	return true;
 }
 
 

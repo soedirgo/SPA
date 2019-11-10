@@ -7,8 +7,8 @@
 
 class PKBProcedure {
 public:
-	static bool setProcedure(PROC_NAME procName, STMT_NO start, STMT_LIST end);
-	static bool setProcByStmt(STMT_NO stmtNo, PROC_NAME proc);
+	static void setProcedure(PROC_NAME procName, STMT_NO start, STMT_LIST end);
+	static void setProcByStmt(STMT_NO stmtNo, PROC_NAME proc);
 	
 	static LIST_OF_PROC_NAME getProcedures();
 	static PROC_NAME getProcByStmt(STMT_NO stmtNo);

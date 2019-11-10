@@ -5,9 +5,8 @@ TABLE PKBProcedure::procedureTable;
 HASHMAP PKBProcedure::procByStmtTable;
 
 //Set procedure by stmtNo
-bool PKBProcedure::setProcByStmt(STMT_NO stmtNo, PROC_NAME proc) {
+void PKBProcedure::setProcByStmt(STMT_NO stmtNo, PROC_NAME proc) {
 	procByStmtTable.insert(pair<STMT_NO, PROC_NAME>(stmtNo, proc));
-	return true;
 };
 
 //Get procedure name by stmtNo
@@ -20,7 +19,7 @@ PROC_NAME PKBProcedure::getProcByStmt(STMT_NO stmtNo) {
 	}
 };
 //Set Procedure with procedureName and its start and end stmtNo
-bool PKBProcedure::setProcedure(PROC_NAME procName, STMT_NO startStmtNo, STMT_LIST endStmtList) {
+void PKBProcedure::setProcedure(PROC_NAME procName, STMT_NO startStmtNo, STMT_LIST endStmtList) {
 	for (auto vectorIter : endStmtList) {
 		vector<string> tuple = vector<string>();
 		STMT_NO endStmtNo = vectorIter.front();
@@ -29,7 +28,6 @@ bool PKBProcedure::setProcedure(PROC_NAME procName, STMT_NO startStmtNo, STMT_LI
 		tuple.push_back(endStmtNo);
 		procedureTable.emplace(tuple);
 	}
-	return true;
 };
 
 //Get LIST_OF_PROC_NAME for Select proc

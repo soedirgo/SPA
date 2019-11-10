@@ -8,21 +8,19 @@ TABLE PKBCall::callStmtTable;
 
 
 //Set Call Relationship between two procedures
-bool PKBCall::setCallProc(PROC_NAME caller, PROC_NAME callee) {
+void PKBCall::setCallProc(PROC_NAME caller, PROC_NAME callee) {
 	vector<string> tuple = vector<string>();
 	tuple.push_back(caller);
 	tuple.push_back(callee);
 	callsProcTable.emplace(tuple);
-	return true;
 }
 
 //Set Call stmt and its procedures
-bool PKBCall::setCallStmt(STMT_NO stmtNo, PROC_NAME callee) {
+void PKBCall::setCallStmt(STMT_NO stmtNo, PROC_NAME callee) {
 	vector<string> tuple = vector<string>();
 	tuple.push_back(stmtNo);
 	tuple.push_back(callee);
 	callStmtTable.emplace(tuple);
-	return true;
 }
 
 PROC_NAME PKBCall::getCallProcByStmt(STMT_NO stmtNo) {
@@ -38,12 +36,11 @@ PROC_NAME PKBCall::getCallProcByStmt(STMT_NO stmtNo) {
 }
 
 //Set Call* Relationship between 2 procedures
-bool PKBCall::setCallTProc(PROC_NAME caller, PROC_NAME callee) {
+void PKBCall::setCallTProc(PROC_NAME caller, PROC_NAME callee) {
 	vector<string> tuple = vector<string>();
 	tuple.push_back(caller);
 	tuple.push_back(callee);
 	callsTProcTable.emplace(tuple);
-	return true;
 }
 
 
