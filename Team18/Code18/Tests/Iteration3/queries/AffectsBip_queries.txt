@@ -23,13 +23,23 @@ assign a;
 Select a such that AffectsBip(10,a)
 10,13,18
 5000
-6-Going through if and 1 call
-assign a;
-Select a such that AffectsBip(17,a)
-26
-5000
-7-Going through while loop, 4 call
+6-Going through while loop, 4 call
 assign a;
 Select a such that AffectsBip(7,a)
-25,26
+5,25,26
+5000
+7- Testing statements for 7
+assign a; stmt s;
+Select s such that AffectsBip(7,s)
+5,25,26
+5000
+8- Testing prog line for 7
+prog_line n;
+Select n such that AffectsBip(7,n)
+5,25,26
+5000
+9- 
+assign a1,a2;
+Select <a1,a2> such that AffectsBip(a1,a2)
+1 6,6 8,6 24,7 5,7 26,7 25,8 26,10 10,10 13,10 18
 5000
